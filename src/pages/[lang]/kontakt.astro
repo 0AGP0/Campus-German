@@ -1,0 +1,453 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/kontakt.css';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'tr' } },
+        { params: { lang: 'de' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Translations
+const t = {
+    tr: {
+        title: "İletişim - CampusGerman",
+        heroTitle: { main: "İletişim", highlight: "Bilgileri" },
+        heroDescription: "CampusGerman ile iletişime geçin. Uzman danışmanlarımız size yardımcı olmaya hazır.",
+        addressTitle: "Adres",
+        addressLines: ["CampusGerman", "Almanya", "Eğitim Merkezi"],
+        phoneTitle: "Telefon",
+        emailTitle: "E-posta",
+        workingHoursTitle: "Çalışma Saatleri",
+        workingHours: {
+            weekdays: "Hafta İçi: 09:00 – 21:00",
+            saturday: "Cumartesi: 09:00 – 18:00",
+            sunday: "Pazar: Kapalı"
+        },
+        socialTitle: "Sosyal Medyada Takip Edin",
+        formTitle: "Ücretsiz Danışmanlık",
+        formSubtitle: "Uzman danışmanlarımızla ücretsiz görüşme",
+        formFields: {
+            name: "Ad Soyad",
+            email: "E-posta",
+            phone: "Telefon",
+            city: "Şehir",
+            service: "İlgilendiğiniz Programı Seçin",
+            message: "Eklemek istediğiniz notlar...",
+            kvkk: "Gizlilik ve cookies Politikasını kabul ediyorum."
+        },
+        serviceOptions: {
+            placeholder: "İlgilendiğiniz Programı Seçin",
+            courses: "Almanca Kursları",
+            university: "Üniversite Hazırlık",
+            test: "Test Hazırlık (TestDaF, DSH)",
+            private: "Özel Ders",
+            online: "Online Kurs",
+            accommodation: "Konaklama Desteği",
+            visa: "Vize Desteği",
+            general: "Genel Bilgi"
+        },
+        submitButton: "Hemen Başvur"
+    },
+    de: {
+        title: "Kontakt - CampusGerman",
+        heroTitle: { main: "Kontakt", highlight: "Informationen" },
+        heroDescription: "Nehmen Sie Kontakt mit CampusGerman auf. Unsere Fachberater sind bereit, Ihnen zu helfen.",
+        addressTitle: "Adresse",
+        addressLines: ["CampusDeutsch", "Deutschland", "Bildungszentrum"],
+        phoneTitle: "Telefon",
+        emailTitle: "E-Mail",
+        workingHoursTitle: "Arbeitszeiten",
+        workingHours: {
+            weekdays: "Wochentage: 09:00 - 21:00",
+            saturday: "Samstag 09:00 - 18:00",
+            sunday: "Markt Geschlossen"
+        },
+        socialTitle: "Folgen Sie auf sozialen Medien",
+        formTitle: "Kostenlose Beratung",
+        formSubtitle: "Kostenlose Beratung durch unsere Fachberater",
+        formFields: {
+            name: "Name Nachname",
+            email: "E-Mail",
+            phone: "Telefon",
+            city: "Stadt",
+            service: "Wählen Sie das Programm, das Sie interessiert",
+            message: "Notizen, die Sie hinzufügen möchten...",
+            kvkk: "Ich akzeptiere die Datenschutz- und Cookie-Richtlinie."
+        },
+        serviceOptions: {
+            placeholder: "Wählen Sie das Programm, das Sie interessiert",
+            courses: "Deutschkurse",
+            university: "Vorbereitung auf die Universität",
+            test: "Testvorbereitung (TestDaF, DSH)",
+            private: "Privatunterricht",
+            online: "Online-Kurs",
+            accommodation: "Unterstützung der Unterkunft",
+            visa: "Visa-Unterstützung",
+            general: "Allgemeine Informationen"
+        },
+        submitButton: "Jetzt bewerben"
+    }
+};
+
+const translations = t[lang as keyof typeof t];
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <!-- Hero Section -->
+    <section class="contact-hero">
+        <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="title-main">{translations.heroTitle.main}</span>
+                        <span class="title-highlight">{translations.heroTitle.highlight}</span>
+                    </h1>
+                    <p class="hero-description">
+                        {translations.heroDescription}
+                    </p>
+                </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-content">
+                <!-- Sol Kısım - İletişim Bilgileri -->
+                <div class="contact-info-section">
+                    <div class="contact-info-card">
+                            <div class="contact-method">
+                                <div class="method-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h4>{translations.addressTitle}</h4>
+                                    <div class="address-info">
+                                        {translations.addressLines.map((line) => <p><strong>{line}</strong></p>)}
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="contact-method">
+                                <div class="method-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h4>{translations.phoneTitle}</h4>
+                                    <div class="phone-numbers">
+                                        <a href="tel:+902121234567">+90 (212) 123 45 67</a>
+                                        <a href="tel:+902121234568">+90 (212) 123 45 68</a>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="contact-method">
+                                <div class="method-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h4>{translations.emailTitle}</h4>
+                                    <div class="email-addresses">
+                                        <a href="mailto:info@campusgerman.com">info@campusgerman.com</a>
+                                        <a href="mailto:kurslar@campusgerman.com">kurslar@campusgerman.com</a>
+                                        <a href="mailto:danismanlik@campusgerman.com">danismanlik@campusgerman.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="contact-method">
+                                <div class="method-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h4>{translations.workingHoursTitle}</h4>
+                                    <div class="working-hours">
+                                        <p><strong>{translations.workingHours.weekdays.split(':')[0]}:</strong> {translations.workingHours.weekdays.split(':').slice(1).join(':')}</p>
+                                        <p><strong>{translations.workingHours.saturday.split(':')[0]}:</strong> {translations.workingHours.saturday.split(':').slice(1).join(':')}</p>
+                                        <p><strong>{translations.workingHours.sunday.split(':')[0]}:</strong> {translations.workingHours.sunday.split(':').slice(1).join(':')}</p>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+
+                        <!-- Sosyal Medya -->
+                        <div class="social-section">
+                            <h3>{translations.socialTitle}</h3>
+                        <div class="social-links">
+                            <a href="#" class="social-link" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                                <span>Facebook</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="YouTube">
+                                <i class="fab fa-youtube"></i>
+                                <span>YouTube</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>WhatsApp</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sağ Kısım - Form -->
+                <div class="contact-form-section">
+                        <div class="form-card">
+                            <div class="form-header">
+                                <div class="form-icon">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <h2>{translations.formTitle}</h2>
+                                <p>{translations.formSubtitle}</p>
+                            </div>
+                        
+                            <form id="contactForm" class="contact-form">
+                                <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
+                                <!-- Honeypot field for spam protection -->
+                                <input type="text" name="website" style="position: absolute; left: -9999px; opacity: 0; pointer-events: none; tabindex: -1;" autocomplete="off" aria-hidden="true" />
+                                <div class="form-group">
+                                    <input type="text" id="fullname" name="fullname" required placeholder={translations.formFields.name}>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" id="email" name="email" required placeholder={translations.formFields.email}>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="tel" id="phone" name="phone" required placeholder={translations.formFields.phone}>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="city" name="city" required placeholder={translations.formFields.city}>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <select id="service" name="service" required>
+                                        <option value="">{translations.serviceOptions.placeholder}</option>
+                                        <option value="almanca-kurslari">{translations.serviceOptions.courses}</option>
+                                        <option value="universite-hazirlik">{translations.serviceOptions.university}</option>
+                                        <option value="test-hazirlik">{translations.serviceOptions.test}</option>
+                                        <option value="ozel-ders">{translations.serviceOptions.private}</option>
+                                        <option value="online-kurs">{translations.serviceOptions.online}</option>
+                                        <option value="konaklama">{translations.serviceOptions.accommodation}</option>
+                                        <option value="vize-destegi">{translations.serviceOptions.visa}</option>
+                                        <option value="genel-bilgi">{translations.serviceOptions.general}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <textarea id="notes" name="notes" placeholder={translations.formFields.message}></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <div class="kvkk-checkbox">
+                                        <input type="checkbox" id="kvkk" name="kvkk" required checked>
+                                        <label for="kvkk">
+                                            <a href="#gizlilik" target="_blank">{translations.formFields.kvkk}</a>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="submit-btn">
+                                        <span>{translations.submitButton}</span>
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>
+
+<script is:inline>
+    // Security utilities
+    const { checkRateLimit, sanitizeObject, validateEmail, validatePhone, checkHoneypot } = (() => {
+        function checkRateLimit(formType, maxRequests = 5, windowMinutes = 1) {
+            const key = `form_rate_limit_${formType}`;
+            const now = Date.now();
+            const windowMs = windowMinutes * 60 * 1000;
+            const stored = localStorage.getItem(key);
+            if (!stored) {
+                localStorage.setItem(key, JSON.stringify([now]));
+                return true;
+            }
+            const requests = JSON.parse(stored);
+            const recentRequests = requests.filter(timestamp => now - timestamp < windowMs);
+            if (recentRequests.length >= maxRequests) return false;
+            recentRequests.push(now);
+            localStorage.setItem(key, JSON.stringify(recentRequests));
+            return true;
+        }
+        
+        function sanitizeInput(input) {
+            if (typeof input !== 'string') return '';
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
+        }
+        
+        function sanitizeObject(obj) {
+            if (typeof obj === 'string') return sanitizeInput(obj);
+            if (Array.isArray(obj)) return obj.map(item => sanitizeObject(item));
+            if (obj && typeof obj === 'object') {
+                const sanitized = {};
+                for (const key in obj) sanitized[key] = sanitizeObject(obj[key]);
+                return sanitized;
+            }
+            return obj;
+        }
+        
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+        
+        function validatePhone(phone) {
+            return /^[\d\s\-\+\(\)]+$/.test(phone) && phone.replace(/\D/g, '').length >= 8;
+        }
+        
+        function checkHoneypot(form, fieldName = 'website') {
+            const honeypot = form.querySelector(`[name="${fieldName}"]`);
+            return !(honeypot && honeypot.value);
+        }
+        
+        return { checkRateLimit, sanitizeObject, validateEmail, validatePhone, checkHoneypot };
+    })();
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.getElementById('contactForm');
+        const lang = '<%- lang %>';
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const submitButton = contactForm.querySelector('button[type="submit"]');
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<span>' + (lang === 'tr' ? 'Gönderiliyor...' : 'Wird gesendet...') + '</span><i class="fas fa-spinner fa-spin"></i>';
+                }
+                
+                // 1. Check rate limiting
+                if (!checkRateLimit('contact', 5, 1)) {
+                    if (window.showSuccessModal) {
+                        window.showSuccessModal('error', window.successModalTranslations?.rateLimitError || 'Çok fazla istek gönderdiniz. Lütfen bir dakika bekleyin.');
+                    } else {
+                        alert(lang === 'tr' ? 'Çok fazla istek gönderdiniz. Lütfen bir dakika bekleyin.' : 'Zu viele Anfragen. Bitte warten Sie eine Minute.');
+                    }
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = '<span>' + (lang === 'tr' ? 'Hemen Başvur' : 'Jetzt bewerben') + '</span><i class="fas fa-paper-plane"></i>';
+                    }
+                    return;
+                }
+                
+                // 2. Check honeypot
+                if (!checkHoneypot(contactForm, 'website')) {
+                    console.warn('Bot detected via honeypot');
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = '<span>' + (lang === 'tr' ? 'Hemen Başvur' : 'Jetzt bewerben') + '</span><i class="fas fa-paper-plane"></i>';
+                    }
+                    return;
+                }
+                
+                const formData = new FormData(contactForm);
+                const data = {};
+                for (let [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
+                
+                // 3. Validate email and phone
+                if (!validateEmail(data.email || '')) {
+                    if (window.showSuccessModal) {
+                        window.showSuccessModal('error', window.successModalTranslations?.emailError || 'Lütfen geçerli bir e-posta adresi girin.');
+                    } else {
+                        alert(lang === 'tr' ? 'Lütfen geçerli bir e-posta adresi girin.' : 'Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+                    }
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = '<span>' + (lang === 'tr' ? 'Hemen Başvur' : 'Jetzt bewerben') + '</span><i class="fas fa-paper-plane"></i>';
+                    }
+                    return;
+                }
+                
+                if (!validatePhone(data.phone || '')) {
+                    if (window.showSuccessModal) {
+                        window.showSuccessModal('error', window.successModalTranslations?.phoneError || 'Lütfen geçerli bir telefon numarası girin.');
+                    } else {
+                        alert(lang === 'tr' ? 'Lütfen geçerli bir telefon numarası girin.' : 'Bitte geben Sie eine gültige Telefonnummer ein.');
+                    }
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = '<span>' + (lang === 'tr' ? 'Hemen Başvur' : 'Jetzt bewerben') + '</span><i class="fas fa-paper-plane"></i>';
+                    }
+                    return;
+                }
+                
+                // Standardize common fields
+                let standardizedData = {
+                    formType: 'contact',
+                    sourcePage: window.location.pathname,
+                    lang: '<%- lang %>',
+                    // Common fields
+                    name: data.fullname || '',
+                    tel: data.phone || '',
+                    email: data.email || '',
+                    // Contact specific fields
+                    city: data.city || '',
+                    service: data.service || '',
+                    notes: data.notes || '',
+                    kvkk: data.kvkk || false,
+                    timestamp: new Date().toISOString()
+                };
+                
+                // Sanitize all inputs
+                standardizedData = sanitizeObject(standardizedData);
+                
+                // Send to webhook
+                try {
+                    const response = await fetch('https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(standardizedData)
+                    });
+                    
+                    if (response.ok) {
+                        if (window.showSuccessModal) {
+                            window.showSuccessModal('success', window.successModalTranslations?.messageSuccess || 'Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
+                        } else {
+                            alert(lang === 'tr' ? 'Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.' : 'Ihre Nachricht wurde erfolgreich gesendet! Wir werden uns so schnell wie möglich bei Ihnen melden.');
+                        }
+                        contactForm.reset();
+                    } else {
+                        throw new Error('Webhook request failed');
+                    }
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    if (window.showSuccessModal) {
+                        window.showSuccessModal('error', window.successModalTranslations?.errorMessage || 'Bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.');
+                    } else {
+                        alert(lang === 'tr' ? 'Bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.' : 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns.');
+                    }
+                } finally {
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = '<span>' + (lang === 'tr' ? 'Hemen Başvur' : 'Jetzt bewerben') + '</span><i class="fas fa-paper-plane"></i>';
+                    }
+                }
+            });
+        }
+    });
+</script>
+

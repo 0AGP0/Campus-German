@@ -1,0 +1,1560 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/kurslar.css';
+import { getCollection } from 'astro:content';
+import { coursePricing } from '../../data/coursePricing';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'tr' } },
+        { params: { lang: 'de' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Slug'dan dil uzantısını temizle
+function cleanSlug(slug: string): string {
+    let clean = slug;
+    // Tire ile biten uzantıları kaldır (bildungszeit-de -> bildungszeit)
+    if (clean.endsWith('-de')) {
+        clean = clean.replace(/-de$/, '');
+    } else if (clean.endsWith('-tr')) {
+        clean = clean.replace(/-tr$/, '');
+    }
+    // Tire olmadan biten uzantıları kaldır (bildungszeitde -> bildungszeit)
+    else if (clean.endsWith('de')) {
+        clean = clean.replace(/de$/, '');
+    } else if (clean.endsWith('tr')) {
+        clean = clean.replace(/tr$/, '');
+    }
+    return clean;
+}
+
+// Tüm kursları al ve kategorilere ayır
+const allKurslar = await getCollection('kurslar');
+const kurslarByLang = allKurslar.filter(kurs => kurs.data.lang === lang);
+
+// Genel bakış sayfalarını filtrele
+const genelBakisSayfalari = ['intensiv-deutsch', 'saisonal-uebersicht', 'online-uebersicht', 'pruefungsvorbereitung-uebersicht', 'intensiv-studentenvisum'];
+
+// Ana kurslar (genel bakış sayfaları hariç)
+const anaKurslar = kurslarByLang.filter(kurs => {
+    const cleanedSlug = cleanSlug(kurs.slug);
+    return !genelBakisSayfalari.includes(cleanedSlug);
+});
+
+// Kategorilere göre ayır
+const yogunKurslar = anaKurslar.filter(kurs => 
+    (kurs.slug.startsWith('intensiv-') || kurs.slug.startsWith('yogun-')) && 
+    !kurs.slug.includes('studentenvisum') && !kurs.slug.includes('ogrenci-vizesi')
+);
+const onlineKurslar = anaKurslar.filter(kurs => 
+    kurs.slug.startsWith('online-')
+);
+const donemselKurslar = anaKurslar.filter(kurs => 
+    kurs.slug.includes('woechentlich-') || 
+    kurs.slug.includes('haftalik-') || 
+    kurs.slug.includes('sommerschule') || 
+    kurs.slug.includes('yaz-okulu') || 
+    kurs.slug.includes('abend-') ||
+    kurs.slug.includes('aksam-') ||
+    kurs.slug.includes('saisonal-') ||
+    kurs.slug.includes('donemsel-')
+);
+const sinavKurslar = anaKurslar.filter(kurs => 
+    kurs.slug.includes('goethe-') || 
+    kurs.slug.includes('telc-') || 
+    kurs.slug.includes('testdaf-') || 
+    kurs.slug.includes('dsh-') ||
+    kurs.slug.includes('pruefungsvorbereitung-')
+);
+const kurumsalKurslar = anaKurslar.filter(kurs => 
+    kurs.slug.includes('firmenkurs') ||
+    kurs.slug.includes('firma-') || 
+    kurs.slug.includes('bildungszeit') || 
+    kurs.slug.includes('daad-') || 
+    kurs.slug.includes('erasmus-') || 
+    kurs.slug.includes('beruf-') ||
+    kurs.slug.includes('meslek-') || 
+    kurs.slug.includes('career-') || 
+    kurs.slug.includes('medizin-') ||
+    kurs.slug.includes('tip-') || 
+    kurs.slug.includes('fsp-') || 
+    kurs.slug.includes('ingenieurwesen-') ||
+    kurs.slug.includes('muhendislik-') || 
+    kurs.slug.includes('wirtschaft-') ||
+    kurs.slug.includes('ekonomi-')
+);
+---
+
+<MainLayout title={lang === 'tr' ? "Kurslar - CampusGerman" : "Kurse - CampusGerman"} lang={lang}>
+    <!-- Hero Section -->
+    <section class="courses-hero-section">
+        <div class="container">
+            <!-- Main Hero Content -->
+            <div class="courses-hero-content">
+                <div class="hero-left">
+                    <h1 class="hero-title">
+                        {lang === 'tr' ? "CampusGerman'da Almanca Dil Kursları!" : "Deutschkurse bei CampusGerman!"}
+                    </h1>
+                    
+                    <div class="hero-content">
+                        <p class="hero-description">
+                            {lang === 'tr' 
+                                ? "Almanya'da üniversite okumak, Almanya'da çalışmak, meslek eğitimi başlatmak veya sadece Almanca bilginizi geliştirmek için Almanca öğrenmek ister misiniz? Motivasyonunuz ne olursa olsun, Almanya'nın canlı üniversite şehirlerindeki CampusGerman Dil Okulu'nda sizin için uygun olan Almanca kursu bulunmaktadır!"
+                                : "Möchten Sie Deutsch lernen, um in Deutschland zu studieren, zu arbeiten, eine Berufsausbildung zu beginnen oder einfach Ihre Deutschkenntnisse zu verbessern? Was auch immer Ihre Motivation ist, bei CampusGerman Sprachschule in den lebendigen Universitätsstädten Deutschlands finden Sie den passenden Deutschkurs für Sie!"}
+                        </p>
+                        
+                        <p class="hero-description">
+                            {lang === 'tr'
+                                ? "CampusGerman'daki Almanca dil kurslarımızı seçmek, hedefinize rahat ve samimi bir öğrenme ortamında verimli ve keyifli bir şekilde ulaşmanızı sağlayacaktır."
+                                : "Die Wahl unserer Deutschkurse bei CampusGerman ermöglicht es Ihnen, Ihr Ziel in einer entspannten und freundlichen Lernumgebung effizient und mit Freude zu erreichen."}
+                        </p>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <a href="#kurs-kartlari" class="btn-primary">
+                            <i class="fas fa-arrow-down"></i>
+                            {lang === 'tr' ? 'Kursları İncele' : 'Kurse entdecken'}
+                        </a>
+                        <button class="btn-secondary" id="contactBtn">
+                            <i class="fas fa-envelope"></i>
+                            {lang === 'tr' ? 'İletişime Geç' : 'Kontakt aufnehmen'}
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-right">
+                    <div class="hero-cta-card">
+                        <div class="cta-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="cta-title">{lang === 'tr' ? 'Kurslarımızı Keşfedin' : 'Entdecken Sie unsere Kurse'}</h3>
+                        <p class="cta-description">
+                            {lang === 'tr'
+                                ? "Her seviyeye uygun özel hazırlanmış kurslar, deneyimli eğitmenler ve esnek program seçenekleri."
+                                : "Speziell entwickelte Kurse für jedes Niveau, erfahrene Lehrkräfte und flexible Programmoptionen."}
+                        </p>
+                        <div class="cta-stats">
+                            <div class="cta-stat">
+                                <div class="stat-number">6</div>
+                                <div class="stat-label">{lang === 'tr' ? 'Seviye' : 'Niveau'}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">50+</div>
+                                <div class="stat-label">{lang === 'tr' ? 'Kurs' : 'Kurs'}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">{lang === 'tr' ? 'Başarı' : 'Erfolg'}</div>
+                            </div>
+                        </div>
+                        <a href="#kurs-kartlari" class="cta-button">
+                            <i class="fas fa-arrow-down"></i>
+                            {lang === 'tr' ? 'Tüm Kursları Görüntüle' : 'Alle Kurse anzeigen'}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CampusGerman Hakkında Section -->
+    <section class="campusgerman-about-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{lang === 'tr' ? "CampusGerman'da Almanca Öğrenin" : "Lernen Sie Deutsch bei CampusGerman"}</h2>
+                <p class="section-subtitle">{lang === 'tr' ? "Almanya'da, dünya standartlarında dil eğitimi" : "Weltklasse-Sprachausbildung in Deutschland"}</p>
+            </div>
+            
+            <div class="content-layout">
+                <div class="content-left">
+                    <div class="content-text">
+                        <p class="content-paragraph">
+                            {lang === 'tr'
+                                ? "Eğer zaten biraz Almanca bilginiz varsa, CampusGerman'da kursunuza herhangi bir Pazartesi günü başlayabilirsiniz. Önceden hiç öğrenme olmadan, kursunuza sabit bir tarihte başlarsınız."
+                                : "Wenn Sie bereits etwas Deutsch können, können Sie Ihren Kurs bei CampusGerman jeden Montag beginnen. Ohne Vorkenntnisse beginnen Sie an einem festen Datum."}
+                        </p>
+                        
+                        <p class="content-paragraph">
+                            {lang === 'tr'
+                                ? "Maksimum 12 kişilik küçük, çok uluslu bir grupta, genel Almanca bilginizi kolayca geliştirebilir, çeşitli dil sınavlarına hazırlanabilir ve bu süreçte dünyanın her yerinden yeni arkadaşlar bulabilirsiniz."
+                                : "In einer kleinen, multinationalen Gruppe von maximal 12 Personen können Sie Ihre allgemeinen Deutschkenntnisse leicht verbessern, sich auf verschiedene Sprachprüfungen vorbereiten und dabei neue Freunde aus aller Welt finden."}
+                        </p>
+                        
+                        <p class="content-paragraph">
+                            {lang === 'tr'
+                                ? "Her sınıfın, her biri öğrencilerinin bireysel dil gelişimine tamamen bağlı iki öğretmeni vardır."
+                                : "Jede Klasse hat zwei Lehrer, die sich jeweils voll und ganz der individuellen Sprachentwicklung ihrer Schüler widmen."}
+                        </p>
+                        
+                        <p class="content-paragraph">
+                            {lang === 'tr'
+                                ? "Almanca derslerine katılmaya ek olarak, öğleden sonra ödev yapmak, daha fazla alıştırma yapmak veya bir sınav için özel olarak çalışmak üzere öğrenme destek grubumuza katılmakta özgürsünüz."
+                                : "Zusätzlich zur Teilnahme am Deutschunterricht können Sie sich unserer Lerngruppe am Nachmittag anschließen, um Hausaufgaben zu machen, weitere Übungen zu machen oder sich speziell auf eine Prüfung vorzubereiten."}
+                        </p>
+                        
+                        <p class="content-paragraph">
+                            {lang === 'tr'
+                                ? "Ve biliyoruz ki: çok çalışan herkesin biraz dinlenmeye ihtiyacı var! Bu yüzden tüm kurslarımız kültürel ve sosyal programımızı içerir. Şehir turları, spor etkinlikleri, müze ziyaretleri, bar geceleri, yaratıcı öğleden sonralar, tüm zevklere hitap ediyoruz. Yeni arkadaşlarınızla etkinliklerimiz için buluşun ve o sabah sınıfta öğrendiklerinizi pratik yapın."
+                                : "Und wir wissen: Wer viel arbeitet, braucht auch etwas Entspannung! Deshalb beinhalten alle unsere Kurse unser kulturelles und soziales Programm. Stadtführungen, Sportveranstaltungen, Museumsbesuche, Barbesuche, kreative Nachmittage - wir bieten für jeden Geschmack etwas. Treffen Sie sich mit Ihren neuen Freunden bei unseren Veranstaltungen und üben Sie, was Sie morgens im Unterricht gelernt haben."}
+                        </p>
+                        
+                        <div class="highlight-box">
+                            <p class="highlight-text">
+                                <strong>{lang === 'tr' ? "Unutmayın:" : "Denken Sie daran:"}</strong> {lang === 'tr'
+                                    ? "Kültürel ve sosyal programımız, öğleden sonraki öğrenme desteğimiz ve tüm öğretim materyalleri (kitaplar ve fotokopiler) kurs ücretine dahildir!"
+                                    : "Unser kulturelles und soziales Programm, unsere Lernunterstützung am Nachmittag und alle Unterrichtsmaterialien (Bücher und Kopien) sind im Kurspreis enthalten!"}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-right">
+                    <div class="content-highlights">
+                        <div class="highlight-section">
+                            <div class="highlight-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3>CampusGerman</h3>
+                            <p>{lang === 'tr' ? "25+ yıllık deneyim ile Almanya'da Almanca öğrenmenin en iyi adresi" : "Die beste Adresse zum Deutschlernen in Deutschland mit über 25 Jahren Erfahrung"}</p>
+                        </div>
+                        
+                        <div class="highlight-section">
+                            <div class="highlight-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3>{lang === 'tr' ? 'Küçük Gruplar' : 'Kleine Gruppen'}</h3>
+                            <p>{lang === 'tr' ? "Maksimum 12 kişilik sınıflarda kişiselleştirilmiş öğrenme deneyimi" : "Personalisierte Lernerfahrung in Klassen mit maximal 12 Personen"}</p>
+                        </div>
+                        
+                        <div class="highlight-section">
+                            <div class="highlight-icon">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <h3>{lang === 'tr' ? 'İki Öğretmen Sistemi' : 'Zwei-Lehrer-System'}</h3>
+                            <p>{lang === 'tr' ? "Her sınıfta iki öğretmen ile bireysel dil gelişimi odaklı eğitim" : "Bildung mit Fokus auf individuelle Sprachentwicklung mit zwei Lehrern in jeder Klasse"}</p>
+                        </div>
+                        
+                        <div class="highlight-section">
+                            <div class="highlight-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h3>{lang === 'tr' ? 'Esnek Başlangıç' : 'Flexibler Start'}</h3>
+                            <p>{lang === 'tr' ? "Herhangi bir Pazartesi günü kursa başlayabilme imkanı" : "Möglichkeit, jeden Montag mit dem Kurs zu beginnen"}</p>
+                        </div>
+                        
+                        <div class="highlight-section">
+                            <div class="highlight-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h3>{lang === 'tr' ? '%98 Başarı Oranı' : '98% Erfolgsquote'}</h3>
+                            <p>{lang === 'tr' ? "Kanıtlanmış başarı ile hedeflerinize ulaşın" : "Erreichen Sie Ihre Ziele mit nachgewiesenem Erfolg"}</p>
+                        </div>
+                        
+                        <div class="highlight-section">
+                            <div class="highlight-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h3>{lang === 'tr' ? 'Kültürel Program' : 'Kulturprogramm'}</h3>
+                            <p>{lang === 'tr' ? "Şehir turları, spor etkinlikleri ve sosyal aktiviteler dahil" : "Stadtführungen, Sportveranstaltungen und soziale Aktivitäten inklusive"}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-section">
+                        <a href={`/${lang}/kontakt`} class="contact-link">
+                            <i class="fas fa-envelope"></i>
+                            <span>{lang === 'tr' ? 'Hemen İletişime Geçin' : 'Jetzt Kontakt aufnehmen'}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Kurs Kartları Section -->
+    <section class="courses-section" id="kurs-kartlari">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{lang === 'tr' ? 'Almanca Kurslarımız' : 'Unsere Deutschkurse'}</h2>
+                <p class="section-subtitle">{lang === 'tr' ? 'Her seviyeye ve ihtiyaca uygun özel hazırlanmış kurslar' : 'Speziell entwickelte Kurse für jedes Niveau und jeden Bedarf'}</p>
+            </div>
+            
+            <!-- Filtreleme ve Arama -->
+            <div class="courses-filter-section">
+                <div class="filter-search-box">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input 
+                            type="text" 
+                            id="courseSearchInput" 
+                            placeholder={lang === 'tr' ? 'Kurs ara...' : 'Kurs suchen...'}
+                        />
+                        <button class="search-clear" id="searchClearBtn" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="filter-buttons-row">
+                    <div class="filter-btn-wrapper">
+                        <button class="filter-btn" id="levelFilterBtn">
+                            <span>{lang === 'tr' ? 'Dil Seviyesi' : 'Sprachniveau'}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="filter-menu" id="levelFilterDropdown">
+                            <a href="#" class="filter-item" data-value="all">{lang === 'tr' ? 'Tüm Seviyeler' : 'Alle Niveaus'}</a>
+                            <a href="#" class="filter-item" data-value="a1">A1</a>
+                            <a href="#" class="filter-item" data-value="a2">A2</a>
+                            <a href="#" class="filter-item" data-value="b1">B1</a>
+                            <a href="#" class="filter-item" data-value="b2">B2</a>
+                            <a href="#" class="filter-item" data-value="c1">C1</a>
+                            <a href="#" class="filter-item" data-value="c2">C2</a>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-btn-wrapper">
+                        <button class="filter-btn" id="typeFilterBtn">
+                            <span>{lang === 'tr' ? 'Kurs Türü' : 'Kurstyp'}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="filter-menu" id="typeFilterDropdown">
+                            <a href="#" class="filter-item" data-value="all">{lang === 'tr' ? 'Tüm Kurslar' : 'Alle Kurse'}</a>
+                            <a href="#" class="filter-item" data-value="yuz-yuze">{lang === 'tr' ? 'Yüz Yüze' : 'Präsenz'}</a>
+                            <a href="#" class="filter-item" data-value="online">Online</a>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-btn-wrapper">
+                        <button class="filter-btn" id="periodFilterBtn">
+                            <span>{lang === 'tr' ? 'Dönem' : 'Zeitraum'}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="filter-menu" id="periodFilterDropdown">
+                            <a href="#" class="filter-item" data-value="all">{lang === 'tr' ? 'Tüm Dönemler' : 'Alle Zeiträume'}</a>
+                            <a href="#" class="filter-item" data-value="yaz-donemi">{lang === 'tr' ? 'Yaz Dönemi' : 'Sommersemester'}</a>
+                            <a href="#" class="filter-item" data-value="yil-boyu">{lang === 'tr' ? 'Yıl Boyu' : 'Ganzjährig'}</a>
+                        </div>
+                    </div>
+                    
+                    <button class="clear-btn" id="clearFiltersBtn" style="display: none;">
+                        <i class="fas fa-times"></i>
+                        {lang === 'tr' ? 'Temizle' : 'Zurücksetzen'}
+                    </button>
+                </div>
+                
+                <div class="results-count" id="resultsInfo">
+                    <span id="resultsCount">{anaKurslar.length}</span> {lang === 'tr' ? 'kurs bulundu' : 'Kurse gefunden'}
+                </div>
+            </div>
+            
+            <div class="courses-grid" id="coursesGrid">
+                {anaKurslar.map(kurs => {
+                    // Kurs tipini belirle (filtreleme için)
+                    let courseType = 'yuz-yuze';
+                    let courseLevel = 'all';
+                    let coursePeriod = 'yil-boyu';
+                    
+                    const cleanedSlug = cleanSlug(kurs.slug);
+                    
+                    if (cleanedSlug.startsWith('online-')) {
+                        courseType = 'online';
+                    }
+                    
+                    // Seviye belirleme
+                    if (cleanedSlug.includes('-a1') || cleanedSlug.includes('a1-')) {
+                        courseLevel = 'a1';
+                    } else if (cleanedSlug.includes('-a2') || cleanedSlug.includes('a2-')) {
+                        courseLevel = 'a2';
+                    } else if (cleanedSlug.includes('-b1') || cleanedSlug.includes('b1-')) {
+                        courseLevel = 'b1';
+                    } else if (cleanedSlug.includes('-b2') || cleanedSlug.includes('b2-')) {
+                        courseLevel = 'b2';
+                    } else if (cleanedSlug.includes('-c1') || cleanedSlug.includes('c1-')) {
+                        courseLevel = 'c1';
+                    }
+                    
+                    // Dönem belirleme
+                    if (cleanedSlug.includes('yaz-okulu')) {
+                        coursePeriod = 'yaz-donemi';
+                    }
+                    
+                    return (
+                        <div class="course-card" data-level={`all ${courseLevel}`} data-type={courseType} data-period={coursePeriod}>
+                            <div class="course-image">
+                                <img src={kurs.data.image} alt={kurs.data.title}>
+                            </div>
+                            <div class="course-content">
+                                <h3 class="course-title">{kurs.data.title}</h3>
+                                <div class="course-details">
+                                    {kurs.data.features.map(feature => (
+                                        <div class="course-detail">
+                                            <i class={feature.icon}></i>
+                                            <span>{feature.description}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <p class="course-description">
+                                    {kurs.data.description}
+                                </p>
+                                <a href={`/${lang}/kurslar/${cleanSlug(kurs.slug)}`} class="course-btn">
+                                    <span>{lang === 'tr' ? 'Detayları Gör' : 'Details ansehen'}</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination-wrapper" id="paginationContainer" style="display: none;">
+                <div class="pagination">
+                    <button class="page-btn prev" id="prevPageBtn" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="page-numbers" id="paginationNumbers"></div>
+                    <button class="page-btn next" id="nextPageBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="page-info" id="paginationInfo">
+                    {lang === 'tr' ? 'Sayfa' : 'Seite'} <span id="currentPageNum">1</span> / <span id="totalPagesNum">1</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Fiyatlar ve Tarihler Section -->
+    <section class="pricing-dates-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{lang === 'tr' ? 'Fiyatlar ve Tarihler' : 'Preise und Termine'}</h2>
+                <p class="section-subtitle">{lang === 'tr' ? 'Almanca Kursları fiyatları ve başlangıç tarihleri' : 'Preise und Starttermine für Deutschkurse'}</p>
+            </div>
+            
+            <div class="pricing-content">
+                <!-- Akademik Almanca Kursları Fiyatları -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">{lang === 'tr' ? 'Akademik Almanca Kursları Fiyatları' : 'Preise für Akademische Deutschkurse'}</h3>
+                    <div class="pricing-table-wrapper">
+                        <table class="pricing-table">
+                            <thead>
+                                <tr>
+                                    <th>{lang === 'tr' ? 'Seviye' : 'Niveau'}</th>
+                                    <th>{lang === 'tr' ? 'Ders Sayısı' : 'Unterrichtsstunden'}</th>
+                                    <th>{lang === 'tr' ? 'Süre' : 'Dauer'}</th>
+                                    <th>{lang === 'tr' ? 'Fiyat' : 'Preis'}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {(['a1', 'a2', 'b1', 'b2', 'c1'] as const).map(level => {
+                                    const pricing = coursePricing[lang as 'tr' | 'de'].intensive[level];
+                                    return (
+                                        <tr>
+                                            <td><strong>{level.toUpperCase()}</strong></td>
+                                            <td>{pricing.lessons}</td>
+                                            <td>{pricing.duration}</td>
+                                            <td><strong>{pricing.fullCourse}</strong></td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Online Kurs Fiyatları -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">{lang === 'tr' ? 'Online Almanca Kursları Fiyatları' : 'Preise für Online Deutschkurse'}</h3>
+                    <div class="pricing-table-wrapper">
+                        <table class="pricing-table">
+                            <thead>
+                                <tr>
+                                    <th>{lang === 'tr' ? 'Seviye' : 'Niveau'}</th>
+                                    <th>{lang === 'tr' ? 'Ders Sayısı' : 'Unterrichtsstunden'}</th>
+                                    <th>{lang === 'tr' ? 'Süre' : 'Dauer'}</th>
+                                    <th>{lang === 'tr' ? 'Fiyat' : 'Preis'}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {(['a1', 'a2', 'b1', 'b2', 'c1'] as const).map(level => {
+                                    const pricing = coursePricing[lang as 'tr' | 'de'].online[level];
+                                    return (
+                                        <tr>
+                                            <td><strong>{level.toUpperCase()}</strong></td>
+                                            <td>{pricing.lessons}</td>
+                                            <td>{pricing.duration}</td>
+                                            <td><strong>{pricing.fullCourse}</strong></td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Sınav Hazırlık Kursları Fiyatları -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">{lang === 'tr' ? 'Sınav Hazırlık Kursları Fiyatları' : 'Preise für Prüfungsvorbereitungskurse'}</h3>
+                    <div class="pricing-table-wrapper">
+                        <table class="pricing-table">
+                            <thead>
+                                <tr>
+                                    <th>{lang === 'tr' ? 'Sınav Tipi' : 'Prüfungstyp'}</th>
+                                    <th>{lang === 'tr' ? 'Ders Sayısı' : 'Unterrichtsstunden'}</th>
+                                    <th>{lang === 'tr' ? 'Süre' : 'Dauer'}</th>
+                                    <th>{lang === 'tr' ? 'Fiyat' : 'Preis'}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {(['a1', 'a2', 'b1', 'b2', 'c1'] as const).map(level => {
+                                    const pricing = coursePricing[lang as 'tr' | 'de'].examPrep.goetheTelc[level];
+                                    return (
+                                        <tr>
+                                            <td><strong>Goethe/TELC {level.toUpperCase()}</strong></td>
+                                            <td>{pricing.lessons}</td>
+                                            <td>{pricing.duration}</td>
+                                            <td><strong>{pricing.fullCourse}</strong></td>
+                                        </tr>
+                                    );
+                                })}
+                                <tr>
+                                    <td><strong>TestDaF/DSH</strong></td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].examPrep.testdafDsh.lessons}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].examPrep.testdafDsh.duration}</td>
+                                    <td><strong>{coursePricing[lang as 'tr' | 'de'].examPrep.testdafDsh.fullCourse}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Kurs Zamanları -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">{lang === 'tr' ? 'Kurs Zamanları' : 'Kurszeiten'}</h3>
+                    <div class="schedule-grid">
+                        <div class="schedule-card">
+                            <h4><i class="fas fa-sun"></i> {lang === 'tr' ? 'Sabah Kursları' : 'Vormittagskurse'}</h4>
+                            <div class="schedule-item">
+                                <strong>A1-A2:</strong>
+                                <p>{coursePricing[lang as 'tr' | 'de'].schedule.morning.a1a2.time}</p>
+                                <p class="schedule-break">{coursePricing[lang as 'tr' | 'de'].schedule.morning.a1a2.break}</p>
+                                <p class="schedule-lessons">{coursePricing[lang as 'tr' | 'de'].schedule.morning.a1a2.lessons}</p>
+                            </div>
+                            <div class="schedule-item">
+                                <strong>B1-C1:</strong>
+                                <p>{coursePricing[lang as 'tr' | 'de'].schedule.morning.b1c1.time}</p>
+                                <p class="schedule-break">{coursePricing[lang as 'tr' | 'de'].schedule.morning.b1c1.break}</p>
+                                <p class="schedule-lessons">{coursePricing[lang as 'tr' | 'de'].schedule.morning.b1c1.lessons}</p>
+                            </div>
+                        </div>
+                        <div class="schedule-card">
+                            <h4><i class="fas fa-moon"></i> {lang === 'tr' ? 'Öğleden Sonra Kursları' : 'Nachmittagskurse'}</h4>
+                            <div class="schedule-item">
+                                <strong>A1-A2:</strong>
+                                <p>{coursePricing[lang as 'tr' | 'de'].schedule.afternoon.a1a2.time}</p>
+                                <p class="schedule-break">{coursePricing[lang as 'tr' | 'de'].schedule.afternoon.a1a2.break}</p>
+                                <p class="schedule-lessons">{coursePricing[lang as 'tr' | 'de'].schedule.afternoon.a1a2.lessons}</p>
+                            </div>
+                            <div class="schedule-item">
+                                <strong>B1-C1:</strong>
+                                <p>{coursePricing[lang as 'tr' | 'de'].schedule.afternoon.b1c1.time}</p>
+                                <p class="schedule-break">{coursePricing[lang as 'tr' | 'de'].schedule.afternoon.b1c1.break}</p>
+                                <p class="schedule-lessons">{coursePricing[lang as 'tr' | 'de'].schedule.afternoon.b1c1.lessons}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="schedule-days"><i class="fas fa-calendar-week"></i> {coursePricing[lang as 'tr' | 'de'].schedule.days}</p>
+                </div>
+                
+                <!-- Kurs Başlangıç Tarihleri -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">{lang === 'tr' ? 'Kurs Tarihlerimiz' : 'Unsere Kurstermine'}</h3>
+                    <p class="pricing-subtitle">{lang === 'tr' ? 'Intensiv Akademik Kurslar / Online Almanca Kursları' : 'Intensiv Akademische Kurse / Online Deutschkurse'}</p>
+                    <div class="course-dates-table-wrapper">
+                        <table class="course-dates-table">
+                            <thead>
+                                <tr>
+                                    <th>A1.1</th>
+                                    <th>A1.2</th>
+                                    <th>A2.1</th>
+                                    <th>A2.2</th>
+                                    <th>B1.1</th>
+                                    <th>B1.2</th>
+                                    <th>B2.1</th>
+                                    <th>B2.2</th>
+                                    <th>C1.1</th>
+                                    <th>C1.2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_1[0]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_2[0]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_1[0]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_2[0]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_1[0]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_2[0]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_1[0]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_2[0]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_1[0]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_2[0]}</td>
+                                </tr>
+                                <tr>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_1[1]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_2[1]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_1[1]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_2[1]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_1[1]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_2[1]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_1[1]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_2[1]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_1[1]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_2[1]}</td>
+                                </tr>
+                                <tr>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_1[2]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_2[2]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_1[2]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_2[2]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_1[2]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_2[2]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_1[2]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_2[2]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_1[2]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_2[2]}</td>
+                                </tr>
+                                <tr>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_1[3]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_2[3]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_1[3]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_2[3]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_1[3]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_2[3]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_1[3]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_2[3]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_1[3]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_2[3]}</td>
+                                </tr>
+                                <tr>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_1[4]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_2[4]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_1[4]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_2[4]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_1[4]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_2[4]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_1[4]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_2[4]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_1[4]}</td>
+                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_2[4]}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="course-dates-info">
+                        <p><strong>{lang === 'tr' ? 'A1-8 W-160LH' : 'A1-8 W-160LH'}</strong></p>
+                        <p><strong>{lang === 'tr' ? 'A2-8 W-160LH' : 'A2-8 W-160LH'}</strong></p>
+                        <p><strong>{lang === 'tr' ? 'B1-8 W-200LH' : 'B1-8 W-200LH'}</strong></p>
+                        <p><strong>{lang === 'tr' ? 'B2-8W-200LH' : 'B2-8W-200LH'}</strong></p>
+                        <p><strong>{lang === 'tr' ? 'C1-8W-200LH' : 'C1-8W-200LH'}</strong></p>
+                    </div>
+                </div>
+                
+                <!-- Tatiller -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">{lang === 'tr' ? 'Tatiller 2026' : 'Feiertage 2026'}</h3>
+                    <div class="holidays-list">
+                        {coursePricing[lang as 'tr' | 'de'].holidays.map(holiday => (
+                            <div class="holiday-item">
+                                <span class="holiday-name">{holiday.name}</span>
+                                <span class="holiday-date">{holiday.date}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                
+                <!-- Vize Bilgisi -->
+                <div class="pricing-block pricing-info-box">
+                    <p><i class="fas fa-info-circle"></i> {coursePricing[lang as 'tr' | 'de'].visaInfo}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Dil Seviyeleri Section -->
+    <section class="language-levels-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{lang === 'tr' ? "Dil Seviyeleri A1 – C1" : "Sprachniveaus A1 – C1"}</h2>
+                <p class="section-subtitle">{lang === 'tr' ? "Almanya'da A1 Almanca Kursları ve çok daha fazlası!" : "A1 Deutschkurse in Deutschland und vieles mehr!"}</p>
+            </div>
+            
+            <div class="levels-content">
+                <div class="levels-text">
+                    <p class="levels-description">
+                        {lang === 'tr'
+                            ? "İlk kurs gününüzde seviye belirleme sınavı yapacaksınız, ardından size en uygun seviyedeki sınıfa katılacaksınız. Okuma, dinleme, yazma ve konuşma olmak üzere dört dil becerisi, Avrupa Ortak Dil Referans Çerçevesi (CEFR) standartlarına göre ölçülür ve seviyeleri şu şekilde yapılandırılmıştır:"
+                            : "Am ersten Kurstag machen Sie einen Einstufungstest und nehmen dann an der Klasse teil, die Ihrem Niveau am besten entspricht. Die vier Sprachfertigkeiten Lesen, Hören, Schreiben und Sprechen werden nach den Standards des Gemeinsamen Europäischen Referenzrahmens (CEFR) gemessen und die Niveaus sind wie folgt strukturiert:"}
+                    </p>
+                    
+                    <div class="levels-info">
+                        <div class="level-group">
+                            <h3>A1 ve A2</h3>
+                            <p>{lang === 'tr' ? "Başlangıç ve temel seviye" : "Anfänger- und Grundstufe"}</p>
+                        </div>
+                        <div class="level-group">
+                            <h3>B1 ve B2</h3>
+                            <p>{lang === 'tr' ? "Orta öncesi ve orta seviye" : "Mittelstufe und obere Mittelstufe"}</p>
+                        </div>
+                        <div class="level-group">
+                            <h3>C1</h3>
+                            <p>{lang === 'tr' ? "Üst orta/ileri seviye" : "Obere Mittelstufe/Fortgeschrittene"}</p>
+                        </div>
+                    </div>
+                    
+                    <p class="levels-description">
+                        {lang === 'tr'
+                            ? "Genel kural olarak, her seviye için 8 hafta hesaplıyoruz; B2 ve C1 için genellikle 12 hafta veya daha fazla sürer."
+                            : "Als allgemeine Regel rechnen wir 8 Wochen für jedes Niveau; für B2 und C1 dauert es normalerweise 12 Wochen oder länger."}
+                    </p>
+                    
+                    <p class="levels-description">
+                        {lang === 'tr'
+                            ? "Almanca kursunuzu başarıyla tamamladıktan sonra, seviyenize uygun bir sertifika alacaksınız (örneğin A2, B1, vb.)."
+                            : "Nach erfolgreichem Abschluss Ihres Deutschkurses erhalten Sie ein Zertifikat, das Ihrem Niveau entspricht (z.B. A2, B1 usw.)."}
+                    </p>
+                    
+                    <p class="levels-description">
+                        {lang === 'tr'
+                            ? "Seviyelerin detaylı açıklamasını burada bulabilirsiniz: "
+                            : "Eine detaillierte Beschreibung der Niveaus finden Sie hier: "}
+                        <a href="#" class="cefr-link">CEFR global scale</a>
+                    </p>
+                </div>
+                
+                <div class="levels-visual">
+                    <div class="levels-pyramid">
+                        <div class="level-c2">
+                            <div class="level-content">
+                                <h4>C2</h4>
+                                <p>Mastery</p>
+                            </div>
+                        </div>
+                        <div class="level-c1">
+                            <div class="level-content">
+                                <h4>C1</h4>
+                                <p>{lang === 'tr' ? "Etkili Operasyonel Yeterlilik" : "Effective Operational Proficiency"}</p>
+                                <span class="level-duration">12+ {lang === 'tr' ? "hafta" : "Wochen"}</span>
+                            </div>
+                        </div>
+                        <div class="level-b2">
+                            <div class="level-content">
+                                <h4>B2</h4>
+                                <p>Vantage</p>
+                                <span class="level-duration">12 {lang === 'tr' ? "hafta" : "Wochen"}</span>
+                            </div>
+                        </div>
+                        <div class="level-b1">
+                            <div class="level-content">
+                                <h4>B1</h4>
+                                <p>Threshold</p>
+                                <span class="level-duration">8 {lang === 'tr' ? "hafta" : "Wochen"}</span>
+                            </div>
+                        </div>
+                        <div class="level-a2">
+                            <div class="level-content">
+                                <h4>A2</h4>
+                                <p>Waystage</p>
+                                <span class="level-duration">8 {lang === 'tr' ? "hafta" : "Wochen"}</span>
+                            </div>
+                        </div>
+                        <div class="level-a1">
+                            <div class="level-content">
+                                <h4>A1</h4>
+                                <p>Breakthrough</p>
+                                <span class="level-duration">8 {lang === 'tr' ? "hafta" : "Wochen"}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="levels-legend">
+                        <div class="legend-item">
+                            <div class="legend-color beginner"></div>
+                            <span>{lang === 'tr' ? "Başlangıç Seviyesi" : "Anfängerniveau"}</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color intermediate"></div>
+                            <span>{lang === 'tr' ? "Orta Seviye" : "Mittleres Niveau"}</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color advanced"></div>
+                            <span>{lang === 'tr' ? "İleri Seviye" : "Fortgeschrittenes Niveau"}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CampusGerman Hizmetleri Section -->
+    <section class="campusgerman-services-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{lang === 'tr' ? "CampusGerman Hizmetleri" : "CampusGerman Dienstleistungen"}</h2>
+                <p class="section-subtitle">{lang === 'tr' ? "Almanca öğrenme yolculuğunuzda yanınızdayız" : "Wir sind an Ihrer Seite auf Ihrer Reise zum Deutschlernen"}</p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- German Language Exams -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 class="service-title">{lang === 'tr' ? "Akredite Dil Okulumuzda Almanca Dil Sınavları" : "Deutschprüfungen in unserer akkreditierten Sprachschule"}</h3>
+                        <p class="service-description">
+                            {lang === 'tr'
+                                ? "CampusGerman, TELC ve TestDaF Enstitüsü için akredite ve lisanslı bir Almanca dil sınav merkezidir. TELC A1, A2, B1, B2 ve C1 Hochschule sınavlarının yanı sıra TestDaF ve DSH sınavlarına da hazırlıyoruz. C1 Hochschule, TestDaF ve DSH, Almanya'da üniversite kabulü için resmi olarak onaylanmış Almanca dil sınavlarıdır. DSH hariç tüm sınavlar CampusGerman'da düzenli olarak yapılabilir."
+                                : "CampusGerman ist ein akkreditiertes und lizenziertes Prüfungszentrum für TELC und das TestDaF-Institut. Wir bereiten auf TELC A1, A2, B1, B2 und C1 Hochschule Prüfungen sowie auf TestDaF und DSH Prüfungen vor. C1 Hochschule, TestDaF und DSH sind offiziell anerkannte Deutschprüfungen für die Universitätszulassung in Deutschland. Alle Prüfungen außer DSH können regelmäßig bei CampusGerman abgelegt werden."}
+                        </p>
+                        <a href="#exam-preparation" class="service-cta">
+                            <span>{lang === 'tr' ? 'Detayları Gör' : 'Details ansehen'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service for CampusGerman Students -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 class="service-title">{lang === 'tr' ? "CampusGerman Öğrencileri İçin Hizmet" : "Service für CampusGerman Studierende"}</h3>
+                        <p class="service-description">
+                            {lang === 'tr'
+                                ? "Almanca dil kursunuzun tam bir başarı olmasını sağlamak için kapsamlı hizmetimizle sizi tam ve yetkin bir şekilde destekliyoruz. İlk temasınızdan son kurs gününde sertifikanızı aldığınız ana kadar size bireysel olarak danışmanlık yapıyoruz, isterseniz Alman ev sahipleriyle konaklamanızı düzenliyoruz, ayrıca dil okulu öğrencileri için sağlık sigortası ve vize gibi sigorta konularında da size yardımcı oluyoruz."
+                                : "Um sicherzustellen, dass Ihr Deutschkurs ein voller Erfolg wird, unterstützen wir Sie umfassend und kompetent mit unserem umfassenden Service. Wir beraten Sie individuell vom ersten Kontakt bis zum Tag, an dem Sie Ihr Zertifikat erhalten, organisieren auf Wunsch Ihre Unterkunft bei deutschen Gastgebern und helfen Ihnen auch bei Versicherungsfragen wie Krankenversicherung und Visum für Sprachschüler."}
+                        </p>
+                        <p class="service-description">
+                            {lang === 'tr'
+                                ? "Size yardım etmek için kapılarımız her zaman açık!"
+                                : "Unsere Türen stehen Ihnen immer offen, um Ihnen zu helfen!"}
+                        </p>
+                        <a href="#student-services" class="service-cta">
+                            <span>{lang === 'tr' ? 'Detayları Gör' : 'Details ansehen'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Accommodations -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 class="service-title">{lang === 'tr' ? "Almanca Dil Kursunuz İçin Konaklama" : "Unterkunft für Ihren Deutschkurs"}</h3>
+                        <p class="service-description">
+                            {lang === 'tr'
+                                ? "Bizimle Almanca kursunuz süresince size Alman ev sahipleriyle konaklama sunabiliriz. İsteklerinize bağlı olarak, bir aileyle veya tek bir kişiyle, paylaşımlı bir dairede birkaç ev arkadaşıyla veya kendi dairenizde yalnız kalabilirsiniz."
+                                : "Während Ihres Deutschkurses können wir Ihnen eine Unterkunft bei deutschen Gastgebern anbieten. Je nach Ihren Wünschen können Sie bei einer Familie oder einer Einzelperson, in einer Wohngemeinschaft mit mehreren Mitbewohnern oder allein in Ihrer eigenen Wohnung wohnen."}
+                        </p>
+                        <p class="service-description">
+                            {lang === 'tr'
+                                ? "Kahvaltılı veya yarım pansiyonlu bir oda kiralayabilir veya kendiniz yemek yapabilir ve mutfağı ev sahiplerinizle paylaşabilirsiniz. Size en uygun olan neyse!"
+                                : "Sie können ein Zimmer mit Frühstück oder Halbpension mieten oder selbst kochen und die Küche mit Ihren Gastgebern teilen. Was auch immer am besten zu Ihnen passt!"}
+                        </p>
+                        <p class="service-description">
+                            {lang === 'tr'
+                                ? "Tüm odalar tek kişilik odalardır ve okuldan uzak değildir, bu yüzden genellikle yürüyerek, otobüsle veya bisikletle oraya ulaşmanız 30 dakikadan fazla sürmez."
+                                : "Alle Zimmer sind Einzelzimmer und nicht weit von der Schule entfernt, sodass Sie normalerweise nicht länger als 30 Minuten zu Fuß, mit dem Bus oder mit dem Fahrrad brauchen."}
+                        </p>
+                        <a href="#accommodations" class="service-cta">
+                            <span>{lang === 'tr' ? 'Detayları Gör' : 'Details ansehen'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- German Lessons -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                    <div class="service-content">
+                        <h3 class="service-title">{lang === 'tr' ? "CampusGerman'da Almanca Dersleri" : "Deutschunterricht bei CampusGerman"}</h3>
+                        <p class="service-description">
+                            {lang === 'tr'
+                                ? "Derslerimiz net bir şekilde yapılandırılmıştır ve Avrupa Referans Çerçevesi'ne yöneliktir. Modern medya, güncel kurs materyali ve metin ve kelime çalışması, dilbilgisi, fonetik ve konuşma kombinasyonu etkili ve verimli öğrenmeyi mümkün kılar. Sınıflar küçüktür ve çeşitli ülkelerden insanlardan oluşur ve vurgu her zaman dilin pratik kullanımında, yani katılımcıların konuşma ve anlama yeteneğindedir."
+                                : "Unsere Kurse sind klar strukturiert und orientieren sich am Gemeinsamen Europäischen Referenzrahmen. Moderne Medien, aktuelle Kursmaterialien und die Kombination aus Text- und Wortschatzarbeit, Grammatik, Phonetik und Sprechen ermöglichen effektives und effizientes Lernen. Die Klassen sind klein und bestehen aus Menschen aus verschiedenen Ländern, und der Schwerpunkt liegt immer auf der praktischen Anwendung der Sprache, also auf der Fähigkeit der Teilnehmer zu sprechen und zu verstehen."}
+                        </p>
+                        <a href="#german-lessons" class="service-cta">
+                            <span>{lang === 'tr' ? 'Detayları Gör' : 'Details ansehen'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{lang === 'tr' ? "Sık Sorulan Sorular" : "Häufig gestellte Fragen"}</h2>
+                <p class="section-subtitle">{lang === 'tr' ? "Merak ettiğiniz konular hakkında bilgi alın" : "Erhalten Sie Informationen zu Themen, die Sie interessieren"}</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>{lang === 'tr' ? "Hangi kurs formatları sunulmaktadır?" : "Welche Kursformate werden angeboten?"}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>{lang === 'tr' ? "Kurslarımız size esnek bir öğrenme deneyimi sunar:" : "Unsere Kurse bieten Ihnen ein flexibles Lernerlebnis:"}</p>
+                        <p><strong>{lang === 'tr' ? "Hibrit Eğitim:" : "Hybrides Lernen:"}</strong></p>
+                        <p>{lang === 'tr' ? "Kursunuz, yüz yüze dersler ile canlı online derslerin birleşiminden oluşur. Hibrit sistem sayesinde, yüz yüze ders günlerinde dilediğiniz zaman online olarak da derse katılabilirsiniz. Sınıflarımız; eğitmenlerin, sınıf içindeki öğrencilerin ve online katılımcıların aynı anda etkileşim kurabileceği teknik donanıma sahiptir." : "Ihr Kurs besteht aus einer Kombination aus Präsenzunterricht und Live-Online-Unterricht. Dank des hybriden Systems können Sie an Präsenztagen jederzeit auch online am Unterricht teilnehmen. Unsere Klassenräume sind mit technischer Ausstattung ausgestattet, die es Lehrern, Präsenzschülern und Online-Teilnehmern ermöglicht, gleichzeitig zu interagieren."}</p>
+                        <p><strong>{lang === 'tr' ? "Canlı Online Eğitim:" : "Live-Online-Unterricht:"}</strong></p>
+                        <p>{lang === 'tr' ? "Bu formatta derslere tamamen canlı ve online olarak katılırsınız. Canlı online derslere ister evinizden, ister dışarıdayken, isterseniz de merkezlerimizden katılabilirsiniz. Düsseldorf ve Berlin'de bulunan eğitim merkezlerimizdeki öğrenme alanlarımızdan ve teknik imkânlardan (tablet ve iPad kiralama, yazıcı, fotokopi ve tarayıcı kullanımı) faydalanabilirsiniz. Ayrıca dünyanın farklı ülkelerinden gelen diğer katılımcılarla kafemizde ya da sosyal aktivitelerimiz sırasında tanışma imkânı bulursunuz." : "In diesem Format nehmen Sie vollständig live und online am Unterricht teil. Sie können an Live-Online-Kursen von zu Hause, unterwegs oder von unseren Zentren aus teilnehmen. Sie können von den Lernbereichen und technischen Einrichtungen in unseren Bildungszentren in Düsseldorf und Berlin profitieren (Tablet- und iPad-Vermietung, Drucker-, Kopier- und Scanner-Nutzung). Außerdem haben Sie die Möglichkeit, sich in unserem Café oder bei unseren sozialen Aktivitäten mit anderen Teilnehmern aus verschiedenen Ländern der Welt kennenzulernen."}</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>{lang === 'tr' ? "Kurslarda hangi içerikler işlenmektedir?" : "Welche Inhalte werden in den Kursen behandelt?"}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>{lang === 'tr' ? "Yoğun Almanca programlarımız; güncel metinlerle dinleme ve okuma anlama, kapsamlı gramer çalışmaları ve çeşitli iletişim odaklı aktiviteler içerir. Bu sayede özellikle konuşma ve yazma becerilerinizin hedefe yönelik olarak geliştirilmesi amaçlanır." : "Unsere Intensiv-Deutschprogramme umfassen Hör- und Leseverständnis mit aktuellen Texten, umfassende Grammatikstudien und verschiedene kommunikationsorientierte Aktivitäten. Dadurch sollen insbesondere Ihre Sprech- und Schreibfähigkeiten zielgerichtet entwickelt werden."}</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>{lang === 'tr' ? "Almanya'da nasıl üniversite eğitimi alabilirim?" : "Wie kann ich in Deutschland studieren?"}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>{lang === 'tr' ? "Almanya'da üniversite eğitimi alabilmek için öncelikle tanınmış bir üniversiteye giriş yeterliliğine (HZB) sahip olmanız gerekir. Diplomanızın Almanya'da tanınıp tanınmadığını anabin sistemi üzerinden kontrol etmeniz önerilir." : "Um in Deutschland zu studieren, müssen Sie zunächst über eine Hochschulzugangsberechtigung (HZB) verfügen. Es wird empfohlen, über das anabin-System zu überprüfen, ob Ihr Diplom in Deutschland anerkannt ist."}</p>
+                        <p>{lang === 'tr' ? "Ayrıca Almanca dil yeterliliğinizi telc, DSH gibi resmi sertifikalarla belgelemeniz gerekir. Campus German Üniversite Hazırlık Programı, bu sürece eksiksiz şekilde hazırlanmanız için tasarlanmıştır." : "Außerdem müssen Sie Ihre Deutschkenntnisse mit offiziellen Zertifikaten wie telc oder DSH nachweisen. Das Campus German Universitätsvorbereitungsprogramm wurde entwickelt, um Sie vollständig auf diesen Prozess vorzubereiten."}</p>
+                        <p>{lang === 'tr' ? "Doğrudan üniversiteye giriş hakkı olmayan adayların, öncelikle Studienkolleg adı verilen hazırlık eğitimini tamamlaması ve Feststellungsprüfung sınavını başarıyla geçmesi gerekmektedir. Bu sınavdan sonra, uygun bir lisans programına kayıt yaptırabilirsiniz. Akademik danışmanlık hizmetimizle bu süreçte sizi adım adım destekliyoruz." : "Bewerber ohne direkte Hochschulzugangsberechtigung müssen zunächst die sogenannte Studienkolleg-Vorbereitungsausbildung abschließen und die Feststellungsprüfung erfolgreich bestehen. Nach dieser Prüfung können Sie sich für ein geeignetes Bachelorprogramm einschreiben. Mit unserem akademischen Beratungsservice unterstützen wir Sie Schritt für Schritt in diesem Prozess."}</p>
+                        <p>{lang === 'tr' ? "Üniversite başvuruları genellikle üniversitelerin kendi sistemleri üzerinden veya merkezi başvuru platformu olan Uni-Assist aracılığıyla yapılır. AB üyesi olmayan ülkelerden gelen öğrencilerin öğrenci vizesi alması zorunludur. Ayrıca geçerli bir sağlık sigortası da gereklidir." : "Hochschulbewerbungen werden in der Regel über die eigenen Systeme der Universitäten oder über die zentrale Bewerbungsplattform Uni-Assist eingereicht. Studierende aus Nicht-EU-Ländern müssen ein Studentenvisum beantragen. Außerdem ist eine gültige Krankenversicherung erforderlich."}</p>
+                        <p>{lang === 'tr' ? "Bunlara ek olarak, eğitim ve yaşam masraflarınızı karşılayabileceğinizi kanıtlamanız gerekir. Kabul aldıktan sonra üniversite kaydınızı tamamlayarak gerekli belgeleri teslim etmeniz yeterlidir." : "Darüber hinaus müssen Sie nachweisen, dass Sie Ihre Bildungs- und Lebenskosten decken können. Nach der Zulassung müssen Sie nur noch Ihre Universitätsregistrierung abschließen und die erforderlichen Dokumente einreichen."}</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>{lang === 'tr' ? "Hangi şartlar gereklidir?" : "Welche Voraussetzungen sind erforderlich?"}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>{lang === 'tr' ? "En az 18 yaşında olmanız gerekir" : "Sie müssen mindestens 18 Jahre alt sein"}</p>
+                        <p>{lang === 'tr' ? "Almanya'da açılmış bir blokeli hesap veya resmî taahhüt belgesi sunmanız gerekmektedir" : "Sie müssen ein Sperrkonto in Deutschland oder eine offizielle Verpflichtungserklärung vorlegen"}</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>{lang === 'tr' ? "Hangi vize türleri önerilmektedir?" : "Welche Visumtypen werden empfohlen?"}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p><strong>{lang === 'tr' ? "Öğrenci Vizesi:" : "Studentenvisum:"}</strong></p>
+                        <p>{lang === 'tr' ? "Hazırlık Almanca kurslarına katılım hakkını da kapsar." : "Umfasst auch das Recht zur Teilnahme an Vorbereitungskursen für Deutsch."}</p>
+                        <p>{lang === 'tr' ? "AB vatandaşları için vize zorunluluğu bulunmamaktadır." : "Für EU-Bürger besteht keine Visumspflicht."}</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>{lang === 'tr' ? "Kurslara hangi hizmetler dahildir?" : "Welche Leistungen sind in den Kursen enthalten?"}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>{lang === 'tr' ? "Seviye tespit sınavı" : "Einstufungstest"}</p>
+                        <p>{lang === 'tr' ? "Kayıt ücreti alınmaz" : "Keine Anmeldegebühr"}</p>
+                        <p>{lang === 'tr' ? "Vize başvurusu için kurs belgesi" : "Kursbescheinigung für Visumantrag"}</p>
+                        <p>{lang === 'tr' ? "Dijital ders kitabı" : "Digitales Lehrbuch"}</p>
+                        <p>{lang === 'tr' ? "Bireysel öğrenci danışmanlığı (1 kez, yaklaşık 45 dakika)" : "Individuelle Studienberatung (1x, ca. 45 Minuten)"}</p>
+                        <p>{lang === 'tr' ? "\"Almanya'da Üniversite Eğitimi\" konulu webinarlar" : "Webinare zum Thema \"Studium in Deutschland\""}</p>
+                        <p>{lang === 'tr' ? "Campus German sertifikası" : "Campus German Zertifikat"}</p>
+                        <p>{lang === 'tr' ? "E-öğrenme platformu" : "E-Learning-Plattform"}</p>
+                        <p>{lang === 'tr' ? "Yıl boyunca düzenlenen sosyal ve kültürel aktiviteler" : "Das ganze Jahr über stattfindende soziale und kulturelle Aktivitäten"}</p>
+                        <p>{lang === 'tr' ? "Tüm merkezlerde ücretsiz Wi-Fi erişimi" : "Kostenloser Wi-Fi-Zugang in allen Zentren"}</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>{lang === 'tr' ? "Eğitmenlerimizin nitelikleri nelerdir?" : "Welche Qualifikationen haben unsere Lehrkräfte?"}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>{lang === 'tr' ? "Eğitmen kadromuz; üniversite mezunu, Yabancı Dil Olarak Almanca (DaF) ve İkinci Dil Olarak Almanca (DaZ) alanlarında uzun yıllara dayanan öğretim deneyimine sahip, alanında uzman ve motivasyonu yüksek kişilerden oluşur." : "Unser Lehrteam besteht aus hochqualifizierten, akademisch ausgebildeten Lehrkräften mit langjähriger Erfahrung in Deutsch als Fremdsprache (DaF) und Deutsch als Zweitsprache (DaZ)."}</p>
+                        <p>{lang === 'tr' ? "Ayrıca Federal Göç ve Mülteciler Dairesi (BAMF) onaylı eğitmenlerimiz bulunmaktadır. Derslerimiz düzenli olarak öğrenciler tarafından değerlendirilir." : "Zudem verfügen wir über vom Bundesamt für Migration und Flüchtlinge (BAMF) anerkannte Lehrkräfte. Die Kurse werden regelmäßig von den Teilnehmenden evaluiert."}</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>{lang === 'tr' ? "Almanca öğrenmek ne kadar sürer?" : "Wie lange dauert es, Deutsch zu lernen?"}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>{lang === 'tr' ? "Almanca öğrenme süresi hedefinize ve mevcut seviyenize bağlıdır. A1'den B2'ye kadar olan temel seviyeleri 6-8 ayda tamamlayabilirsiniz. C1 ve C2 gibi ileri seviyeler için ek 4-6 ay gerekebilir. Yoğun kurslarımızla bu süreyi kısaltabilirsiniz." : "Die Dauer des Deutschlernens hängt von Ihren Zielen und Ihrem aktuellen Sprachniveau ab. Die Grundstufen von A1 bis B2 können in etwa 6–8 Monaten abgeschlossen werden. Für fortgeschrittene Niveaus wie C1 und C2 sind zusätzlich etwa 4–6 Monate einzuplanen. Intensivkurse können die Lernzeit verkürzen."}</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>{lang === 'tr' ? "Goethe sertifikası alabilir miyim?" : "Kann ich ein Goethe-Zertifikat erwerben?"}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>{lang === 'tr' ? "Evet, CampusGerman'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz." : "Ja, bei CampusGerman bieten wir Vorbereitungskurse für Goethe-Zertifikate an – von A1 bis C2. Prüfungen können auf unserem Campus oder in nahegelegenen Prüfzentren abgelegt werden."}</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>{lang === 'tr' ? "Konaklama seçenekleri mevcut mu?" : "Gibt es Unterkunftsmöglichkeiten?"}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>{lang === 'tr' ? "Evet, Almanya'da konaklama seçenekleri sunuyoruz. Öğrenci yurtları, aile yanı konaklama ve paylaşımlı daireler mevcuttur. Konaklama hizmetimiz kurs ücretine dahil değildir ancak size en uygun seçenekleri bulmanızda yardımcı oluyoruz." : "Ja, wir unterstützen Sie bei der Organisation von Unterkunftsmöglichkeiten in Deutschland – z. B. Studentenwohnheime, Gastfamilien und Wohngemeinschaften. Die Unterkunft ist nicht im Kurspreis enthalten, wir helfen Ihnen jedoch bei der passenden Auswahl."}</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>{lang === 'tr' ? "Ödeme planları ve indirimler mevcut mu?" : "Gibt es Zahlungspläne und Rabatte?"}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>{lang === 'tr' ? "Evet, esnek ödeme planları sunuyoruz. Aylık, 3 aylık ve 6 aylık ödeme seçenekleri mevcuttur. Erken kayıt, grup kayıtları ve uzun dönem programlar için indirimler bulunmaktadır. Detaylı bilgi için bizimle iletişime geçin." : "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-cta">
+                <p>{lang === 'tr' ? "Başka sorularınız mı var?" : "Haben Sie weitere Fragen?"}</p>
+                <a href={`/${lang}/kontakt`} class="faq-contact-btn">
+                    <i class="fas fa-envelope"></i>
+                    <span>{lang === 'tr' ? "Bize Ulaşın" : "Kontaktieren Sie uns"}</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</MainLayout>
+
+<script define:vars={{ lang }}>
+    // Temiz Filtreleme ve Sayfalama Sistemi
+    (function() {
+        const coursesGrid = document.getElementById('coursesGrid');
+        const courseCards = Array.from(coursesGrid.querySelectorAll('.course-card'));
+        const itemsPerPage = 9;
+        
+        let currentFilters = {
+            level: 'all',
+            type: 'all',
+            period: 'all',
+            search: ''
+        };
+        
+        let currentPage = 1;
+        let filteredCourses = [...courseCards];
+        
+        // Filtre butonları ve menüleri
+        const filterButtons = {
+            level: document.getElementById('levelFilterBtn'),
+            type: document.getElementById('typeFilterBtn'),
+            period: document.getElementById('periodFilterBtn')
+        };
+        
+        const filterMenus = {
+            level: document.getElementById('levelFilterDropdown'),
+            type: document.getElementById('typeFilterDropdown'),
+            period: document.getElementById('periodFilterDropdown')
+        };
+        
+        // Dropdown açma/kapama
+        Object.keys(filterButtons).forEach(key => {
+            const btn = filterButtons[key];
+            const menu = filterMenus[key];
+            
+            if (btn && menu) {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    Object.values(filterMenus).forEach(m => {
+                        if (m && m !== menu) m.classList.remove('active');
+                    });
+                    menu.classList.toggle('active');
+                });
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            Object.values(filterMenus).forEach(menu => {
+                if (menu) menu.classList.remove('active');
+            });
+        });
+        
+        // Filtre seçimi
+        document.querySelectorAll('.filter-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const menu = item.closest('.filter-menu');
+                const filterType = menu.id.replace('FilterDropdown', '');
+                const value = item.getAttribute('data-value');
+                
+                menu.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                
+                currentFilters[filterType] = value;
+                
+                const btn = filterButtons[filterType];
+                if (btn) {
+                    const span = btn.querySelector('span');
+                    if (span) span.textContent = item.textContent.trim();
+                }
+                
+                menu.classList.remove('active');
+                currentPage = 1;
+                applyFilters();
+            });
+        });
+        
+        // Filtreleri temizle
+        const clearBtn = document.getElementById('clearFiltersBtn');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                currentFilters = { level: 'all', type: 'all', period: 'all', search: '' };
+                currentPage = 1;
+                
+                const searchInput = document.getElementById('courseSearchInput');
+                const searchClear = document.getElementById('searchClearBtn');
+                if (searchInput) {
+                    searchInput.value = '';
+                    if (searchClear) searchClear.style.display = 'none';
+                }
+                
+                document.querySelectorAll('.filter-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-value') === 'all') item.classList.add('active');
+                });
+                
+                Object.keys(filterButtons).forEach(key => {
+                    const btn = filterButtons[key];
+                    if (btn) {
+                        const span = btn.querySelector('span');
+                        if (span) {
+                            if (key === 'level') span.textContent = lang === 'tr' ? 'Dil Seviyesi' : 'Sprachniveau';
+                            else if (key === 'type') span.textContent = lang === 'tr' ? 'Kurs Türü' : 'Kurstyp';
+                            else if (key === 'period') span.textContent = lang === 'tr' ? 'Dönem' : 'Zeitraum';
+                        }
+                    }
+                });
+                
+                applyFilters();
+            });
+        }
+        
+        // Arama
+        const searchInput = document.getElementById('courseSearchInput');
+        const searchClear = document.getElementById('searchClearBtn');
+        
+        if (searchInput) {
+            let timeout;
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    currentFilters.search = e.target.value.toLowerCase().trim();
+                    currentPage = 1;
+                    applyFilters();
+                }, 300);
+            });
+            
+            searchInput.addEventListener('keyup', () => {
+                if (searchClear) {
+                    searchClear.style.display = searchInput.value.length > 0 ? 'flex' : 'none';
+                }
+            });
+        }
+        
+        if (searchClear) {
+            searchClear.addEventListener('click', () => {
+                if (searchInput) {
+                    searchInput.value = '';
+                    currentFilters.search = '';
+                    searchClear.style.display = 'none';
+                    currentPage = 1;
+                    applyFilters();
+                }
+            });
+        }
+        
+        // Filtreleme
+        function applyFilters() {
+            filteredCourses = courseCards.filter(card => {
+                const level = card.getAttribute('data-level');
+                const type = card.getAttribute('data-type');
+                const period = card.getAttribute('data-period');
+                const title = card.querySelector('.course-title')?.textContent.toLowerCase() || '';
+                const description = card.querySelector('.course-description')?.textContent.toLowerCase() || '';
+                
+                const levelMatch = currentFilters.level === 'all' || level.includes(currentFilters.level);
+                const typeMatch = currentFilters.type === 'all' || type === currentFilters.type;
+                const periodMatch = currentFilters.period === 'all' || period === currentFilters.period;
+                const searchMatch = !currentFilters.search || title.includes(currentFilters.search) || description.includes(currentFilters.search);
+                
+                return levelMatch && typeMatch && periodMatch && searchMatch;
+            });
+            
+            courseCards.forEach(card => card.style.display = 'none');
+            
+            const activeCount = Object.values(currentFilters).filter(v => v !== 'all' && v !== '').length;
+            if (clearBtn) clearBtn.style.display = activeCount > 0 ? 'flex' : 'none';
+            
+            updateResultsCount();
+            updatePagination();
+        }
+        
+        // Sonuç sayısı
+        function updateResultsCount() {
+            const resultsInfo = document.getElementById('resultsInfo');
+            const resultsCount = document.getElementById('resultsCount');
+            if (resultsInfo && resultsCount) {
+                resultsCount.textContent = filteredCourses.length;
+                if (filteredCourses.length === 0) {
+                    resultsInfo.innerHTML = `<i class="fas fa-search"></i> ${lang === 'tr' ? 'Sonuç bulunamadı' : 'Keine Ergebnisse gefunden'}`;
+                    resultsInfo.classList.add('no-results');
+                } else {
+                    resultsInfo.classList.remove('no-results');
+                }
+            }
+        }
+        
+        // Sayfalama
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentPageCourses = filteredCourses.slice(startIndex, endIndex);
+            
+            currentPageCourses.forEach(card => card.style.display = 'block');
+            
+            const paginationContainer = document.getElementById('paginationContainer');
+            const prevBtn = document.getElementById('prevPageBtn');
+            const nextBtn = document.getElementById('nextPageBtn');
+            const pageNumbers = document.getElementById('paginationNumbers');
+            const currentPageNum = document.getElementById('currentPageNum');
+            const totalPagesNum = document.getElementById('totalPagesNum');
+            
+            if (totalPages > 1) {
+                if (paginationContainer) paginationContainer.style.display = 'flex';
+                if (currentPageNum) currentPageNum.textContent = currentPage;
+                if (totalPagesNum) totalPagesNum.textContent = totalPages;
+                if (prevBtn) prevBtn.disabled = currentPage === 1;
+                if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+                
+                if (pageNumbers) {
+                    pageNumbers.innerHTML = '';
+                    const maxVisible = 5;
+                    let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+                    let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+                    
+                    if (endPage - startPage < maxVisible - 1) {
+                        startPage = Math.max(1, endPage - maxVisible + 1);
+                    }
+                    
+                    if (startPage > 1) {
+                        const btn = document.createElement('button');
+                        btn.className = 'page-num';
+                        btn.textContent = '1';
+                        btn.onclick = () => goToPage(1);
+                        pageNumbers.appendChild(btn);
+                        if (startPage > 2) {
+                            const ellipsis = document.createElement('span');
+                            ellipsis.className = 'page-ellipsis';
+                            ellipsis.textContent = '...';
+                            pageNumbers.appendChild(ellipsis);
+                        }
+                    }
+                    
+                    for (let i = startPage; i <= endPage; i++) {
+                        const btn = document.createElement('button');
+                        btn.className = 'page-num' + (i === currentPage ? ' active' : '');
+                        btn.textContent = i;
+                        btn.onclick = () => goToPage(i);
+                        pageNumbers.appendChild(btn);
+                    }
+                    
+                    if (endPage < totalPages) {
+                        if (endPage < totalPages - 1) {
+                            const ellipsis = document.createElement('span');
+                            ellipsis.className = 'page-ellipsis';
+                            ellipsis.textContent = '...';
+                            pageNumbers.appendChild(ellipsis);
+                        }
+                        const btn = document.createElement('button');
+                        btn.className = 'page-num';
+                        btn.textContent = totalPages;
+                        btn.onclick = () => goToPage(totalPages);
+                        pageNumbers.appendChild(btn);
+                    }
+                }
+            } else {
+                if (paginationContainer) paginationContainer.style.display = 'none';
+            }
+        }
+        
+        function goToPage(page) {
+            currentPage = page;
+            applyFilters();
+        }
+        
+        const prevPageBtn = document.getElementById('prevPageBtn');
+        const nextPageBtn = document.getElementById('nextPageBtn');
+        
+        if (prevPageBtn) {
+            prevPageBtn.addEventListener('click', () => {
+                if (currentPage > 1) goToPage(currentPage - 1);
+            });
+        }
+        
+        if (nextPageBtn) {
+            nextPageBtn.addEventListener('click', () => {
+                const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+                if (currentPage < totalPages) goToPage(currentPage + 1);
+            });
+        }
+        
+        // İlk yükleme
+        document.querySelectorAll('.filter-item[data-value="all"]').forEach(item => {
+            item.classList.add('active');
+        });
+        applyFilters();
+    })();
+</script>
+
+<style>
+    /* Temiz Filtreleme Stilleri */
+    .courses-filter-section {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .filter-search-box {
+        margin-bottom: 20px;
+    }
+    
+    .search-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    
+    .search-wrapper i.fa-search {
+        position: absolute;
+        left: 16px;
+        color: #64748B;
+        z-index: 1;
+    }
+    
+    .search-wrapper input {
+        width: 100%;
+        padding: 12px 45px 12px 45px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        background: #f8f9fa;
+    }
+    
+    .search-wrapper input:focus {
+        outline: none;
+        border-color: #059669;
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+    }
+    
+    .search-clear {
+        position: absolute;
+        right: 12px;
+        background: #e5e7eb;
+        border: none;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        z-index: 1;
+    }
+    
+    .search-clear:hover {
+        background: #dc2626;
+        color: #ffffff;
+    }
+    
+    .filter-buttons-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    
+    .filter-btn-wrapper {
+        position: relative;
+    }
+    
+    .filter-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        background: #ffffff;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #0B1220;
+    }
+    
+    .filter-btn:hover {
+        border-color: #059669;
+        background: #F0FAF8;
+    }
+    
+    .filter-btn i {
+        font-size: 12px;
+        color: #64748B;
+    }
+    
+    .filter-menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        min-width: 180px;
+        background: #ffffff;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+    }
+    
+    .filter-menu.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .filter-item {
+        display: block;
+        padding: 10px 16px;
+        color: #0B1220;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 0.9rem;
+    }
+    
+    .filter-item:last-child {
+        border-bottom: none;
+    }
+    
+    .filter-item:hover {
+        background: #F0FAF8;
+        color: #059669;
+    }
+    
+    .filter-item.active {
+        background: #059669;
+        color: #ffffff;
+        font-weight: 600;
+    }
+    
+    .clear-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 16px;
+        background: #ef4444;
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+    
+    .clear-btn:hover {
+        background: #dc2626;
+    }
+    
+    .results-count {
+        margin-top: 16px;
+        padding: 10px 16px;
+        background: #F0FAF8;
+        border-left: 3px solid #059669;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        color: #0B1220;
+        font-weight: 500;
+    }
+    
+    .results-count.no-results {
+        background: #fef2f2;
+        border-left-color: #ef4444;
+        color: #991b1b;
+    }
+    
+    .results-count #resultsCount {
+        font-weight: 700;
+        color: #059669;
+        font-size: 1rem;
+    }
+    
+    .results-count.no-results #resultsCount {
+        color: #ef4444;
+    }
+    
+    @media (max-width: 768px) {
+        .courses-filter-section {
+            padding: 20px;
+        }
+        
+        .filter-buttons-row {
+            flex-direction: column;
+        }
+        
+        .filter-btn-wrapper {
+            width: 100%;
+        }
+        
+        .filter-btn {
+            width: 100%;
+            justify-content: space-between;
+        }
+        
+        .filter-menu {
+            left: 0;
+            right: 0;
+            width: 100%;
+        }
+        
+        .clear-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+

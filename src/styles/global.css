@@ -1,0 +1,4634 @@
+/* ===== RESET & BASE STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== ELEMENTOR OVERRIDES ===== */
+/* Remove ALL Elementor spacing and padding */
+.elementor,
+.elementor-inner,
+.elementor-section,
+.elementor-container,
+.elementor-row,
+.elementor-column,
+.elementor-widget,
+.elementor-element,
+.elementor-section-wrap,
+.elementor-section-boxed > .elementor-container,
+.elementor-section-full_width > .elementor-container {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Specific Elementor container overrides */
+.elementor-element.elementor-element-f0bd606,
+.elementor-element.elementor-element-f0bd606.e-con-full,
+.elementor-element.elementor-element-f0bd606.e-con-full.e-flex,
+.elementor-element.elementor-element-f0bd606.e-con-full.e-flex.e-con,
+.elementor-element.elementor-element-f0bd606.e-con-full.e-flex.e-con.e-parent,
+.elementor-element.elementor-element-f0bd606.e-con-full.e-flex.e-con.e-parent.e-lazyloaded {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Remove top/bottom margins from all Elementor elements */
+.elementor-section,
+.elementor-section-wrap,
+.elementor-container,
+.elementor-column-wrap,
+.elementor-widget-wrap,
+.elementor-element {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Body and HTML overrides for Elementor */
+body.elementor-page .elementor,
+body.elementor-page .elementor-inner,
+body.elementor-page .elementor-section {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #0B1220;
+    background: 
+        linear-gradient(180deg, 
+            rgba(254, 251, 199, 0.5) 0%, 
+            rgba(240, 250, 248, 0.7) 15%, 
+            rgba(255, 255, 255, 0.95) 30%, 
+            rgba(240, 250, 248, 0.6) 50%, 
+            rgba(233, 233, 233, 0.5) 70%, 
+            rgba(248, 249, 250, 0.8) 85%, 
+            rgba(254, 251, 199, 0.5) 100%);
+    overflow-x: hidden;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
+}
+
+/* Elementor page body overrides */
+body.elementor-page {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Body Background Subtle Patterns */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        /* Small visible dots pattern */
+        radial-gradient(circle at 15% 15%, rgba(5, 150, 105, 0.12) 0%, transparent 8%),
+        radial-gradient(circle at 85% 25%, rgba(31, 58, 95, 0.1) 0%, transparent 7%),
+        radial-gradient(circle at 45% 35%, rgba(255, 136, 136, 0.1) 0%, transparent 6%),
+        radial-gradient(circle at 70% 45%, rgba(238, 198, 67, 0.12) 0%, transparent 8%),
+        radial-gradient(circle at 25% 55%, rgba(5, 150, 105, 0.1) 0%, transparent 7%),
+        radial-gradient(circle at 90% 65%, rgba(31, 58, 95, 0.11) 0%, transparent 8%),
+        radial-gradient(circle at 35% 75%, rgba(255, 136, 136, 0.12) 0%, transparent 7%),
+        radial-gradient(circle at 65% 85%, rgba(238, 198, 67, 0.1) 0%, transparent 6%),
+        radial-gradient(circle at 10% 90%, rgba(5, 150, 105, 0.11) 0%, transparent 8%),
+        radial-gradient(circle at 50% 95%, rgba(31, 58, 95, 0.1) 0%, transparent 7%),
+        radial-gradient(circle at 30% 10%, rgba(255, 136, 136, 0.09) 0%, transparent 6%),
+        radial-gradient(circle at 75% 15%, rgba(238, 198, 67, 0.1) 0%, transparent 7%),
+        radial-gradient(circle at 55% 50%, rgba(5, 150, 105, 0.08) 0%, transparent 6%),
+        radial-gradient(circle at 20% 70%, rgba(31, 58, 95, 0.09) 0%, transparent 7%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+body.elementor-page .elementor-page {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 5px;
+}
+
+/* ===== TOP HEADER ===== */
+.top-header {
+    display: none; /* Top header kaldırıldı */
+}
+
+.top-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23FF8888" opacity="0.08"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    opacity: 0.6;
+}
+
+.top-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Left Side - Info Strip */
+.top-header-left .info-strip {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(5, 150, 105, 0.1);
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.info-item i {
+    font-size: 14px;
+    color: #059669;
+    width: 16px;
+    text-align: center;
+}
+
+.info-item span {
+    font-weight: 500;
+    color: #0B1220;
+}
+
+.info-divider {
+    width: 1px;
+    height: 20px;
+    background: linear-gradient(to bottom, transparent, #FF8888, transparent);
+    margin: 0 8px;
+}
+
+/* Right Side - Social & Language */
+.top-header-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.social-links {
+    display: flex;
+    gap: 8px;
+}
+
+.social-link {
+    color: #0B1220;
+    text-decoration: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(5, 150, 105, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.social-link i {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* Language Selector */
+.language-selector {
+    position: relative;
+    z-index: 10001;
+}
+
+.lang-btn {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(5, 150, 105, 0.2);
+    color: #0B1220;
+    padding: 10px 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    min-width: 80px;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.1);
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.lang-flag {
+    width: 20px;
+    height: 15px;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.flag-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.lang-text {
+    font-weight: 600;
+    color: #0B1220;
+}
+
+.lang-arrow {
+    font-size: 10px;
+    color: #64748B;
+    transition: transform 0.3s ease;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.lang-dropdown {
+    position: fixed !important;
+    background: white !important;
+    border-radius: 12px !important;
+    box-shadow: 0 15px 40px rgba(5, 150, 105, 0.15) !important;
+    padding: 8px 0 !important;
+    min-width: 140px !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(-10px) !important;
+    transition: all 0.3s ease !important;
+    z-index: 2147483647 !important;
+    border: 1px solid rgba(5, 150, 105, 0.1) !important;
+    pointer-events: none !important;
+    display: none !important;
+}
+
+.lang-dropdown.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+    display: block !important;
+}
+
+/* Bu sınıf JavaScript ile ekleniyor */
+
+.lang-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: #0B1220;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 0 8px;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.lang-option .flag-img {
+    width: 18px;
+    height: 14px;
+}
+
+/* ===== MAIN HEADER ===== */
+.main-header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(5, 150, 105, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    gap: 20px;
+    position: relative;
+}
+
+/* ===== LOGO SECTION ===== */
+.logo-section {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.logo-link {
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+.logo-img {
+    max-width: 180px !important;
+    height: auto !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Elementor logo override kodları kaldırıldı - WordPress artık kullanılmıyor */
+
+.logo-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.logo-main {
+    font-size: 28px;
+    font-weight: 800;
+    color: #059669;
+    letter-spacing: -0.5px;
+}
+
+.logo-sub {
+    font-size: 18px;
+    font-weight: 600;
+    color: #F97316;
+    margin-top: -2px;
+}
+
+/* ===== MAIN NAVIGATION ===== */
+.main-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0 40px;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    gap: 5px;
+    align-items: center;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    color: #0B1220;
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.nav-link i {
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.dropdown-arrow {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* ===== DROPDOWN PANELS ===== */
+.dropdown-panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(5, 150, 105, 0.15);
+    padding: 30px;
+    min-width: 700px;
+    max-width: 1200px;
+    width: max-content;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    margin-top: 15px;
+    border: 1px solid rgba(5, 150, 105, 0.1);
+}
+
+/* Basit dropdown'lar için genişlik */
+.nav-item .dropdown-panel:not(.dropdown-panel-tabbed) {
+    min-width: 700px;
+    max-width: 900px;
+}
+
+/* Tabbed dropdown (Kurslar) - Yatay sütunlu yapı */
+.dropdown-panel-tabbed {
+    min-width: 1000px;
+    max-width: 1400px;
+    padding: 25px;
+}
+
+.dropdown-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid rgba(5, 150, 105, 0.1);
+    padding-bottom: 15px;
+}
+
+.dropdown-tab {
+    background: transparent;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748B;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.dropdown-tab:hover {
+    background: rgba(5, 150, 105, 0.05);
+    color: #059669;
+}
+
+.dropdown-tab.active {
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white;
+}
+
+.dropdown-tab i {
+    font-size: 14px;
+}
+
+.dropdown-content-tabbed {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 15px;
+    max-height: 450px;
+    overflow-y: auto;
+    padding-right: 10px;
+    width: 100%;
+}
+
+.dropdown-content-tabbed::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown-content-tabbed::-webkit-scrollbar-track {
+    background: rgba(5, 150, 105, 0.05);
+    border-radius: 10px;
+}
+
+.dropdown-content-tabbed::-webkit-scrollbar-thumb {
+    background: rgba(5, 150, 105, 0.3);
+    border-radius: 10px;
+}
+
+.dropdown-content-tabbed::-webkit-scrollbar-thumb:hover {
+    background: rgba(5, 150, 105, 0.5);
+}
+
+.tab-content {
+    display: none !important;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 12px;
+    width: 100%;
+}
+
+.tab-content.active {
+    display: grid !important;
+}
+
+.tab-courses {
+    display: contents;
+}
+
+.course-link {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(5, 150, 105, 0.03);
+    border-radius: 8px;
+    text-decoration: none;
+    color: #0B1220;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    flex-direction: column;
+    min-height: 60px;
+    width: 100%;
+}
+
+.course-link:hover {
+    background: rgba(5, 150, 105, 0.1);
+    border-color: rgba(5, 150, 105, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
+}
+
+.course-link i {
+    color: #059669;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.course-link span {
+    line-height: 1.4;
+    flex: 1;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.dropdown-content {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 15px;
+    max-height: 450px;
+    overflow-y: auto;
+    padding-right: 10px;
+    width: 100%;
+}
+
+.dropdown-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown-content::-webkit-scrollbar-track {
+    background: rgba(5, 150, 105, 0.05);
+    border-radius: 10px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+    background: rgba(5, 150, 105, 0.3);
+    border-radius: 10px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(5, 150, 105, 0.5);
+}
+
+.dropdown-section h4 {
+    color: #059669;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dropdown-section ul {
+    list-style: none;
+}
+
+.dropdown-section li {
+    margin-bottom: 8px;
+}
+
+.dropdown-section a {
+    color: #0B1220;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.dropdown-section a i {
+    color: #059669;
+    font-size: 12px;
+}
+
+.dropdown-item {
+    display: flex !important;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    color: #0B1220;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(5, 150, 105, 0.1);
+    background: rgba(5, 150, 105, 0.02);
+    width: 100%;
+}
+
+.dropdown-item:hover {
+    background: rgba(5, 150, 105, 0.08);
+    border-color: rgba(5, 150, 105, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.dropdown-item i {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.dropdown-item div h4 {
+    color: #059669;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.dropdown-item div p {
+    color: #64748B;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* ===== DROPDOWN CTA BUTTON ===== */
+.dropdown-cta {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid rgba(5, 150, 105, 0.15);
+    width: 100%;
+    clear: both;
+}
+
+/* Tabbed dropdown için CTA */
+.dropdown-panel-tabbed .dropdown-cta {
+    grid-column: 1 / -1;
+    margin-top: 25px;
+}
+
+/* Basit dropdown için CTA */
+.dropdown-panel:not(.dropdown-panel-tabbed) .dropdown-cta {
+    margin-top: 20px;
+}
+
+.dropdown-cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 16px 28px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white !important;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.3);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.dropdown-cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #F97316 0%, #1F3A5F 100%);
+    transition: left 0.3s ease;
+    z-index: 0;
+}
+
+.dropdown-cta-btn:hover::before {
+    left: 0;
+}
+
+.dropdown-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+}
+
+.dropdown-cta-btn > * {
+    position: relative;
+    z-index: 1;
+}
+
+.dropdown-cta-btn i:first-child {
+    font-size: 18px;
+}
+
+.dropdown-cta-btn i:last-child {
+    font-size: 14px;
+    margin-left: auto;
+}
+
+.dropdown-cta-btn span {
+    flex: 1;
+    text-align: center;
+}
+
+/* ===== COURSES DROPDOWN STYLES ===== */
+.courses-dropdown {
+    min-width: 1000px;
+    max-width: 1400px;
+}
+
+.courses-wrapper {
+    display: flex;
+    gap: 30px;
+}
+
+.courses-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 200px;
+    border-right: 2px solid rgba(5, 150, 105, 0.1);
+    padding-right: 20px;
+}
+
+.course-tab {
+    background: transparent;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600 !important;
+    color: #64748B;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.course-tab:hover {
+    background: rgba(5, 150, 105, 0.05);
+    color: #059669;
+}
+
+.course-tab.active {
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: #ffffff;
+    font-weight: 700 !important;
+}
+
+.courses-content {
+    flex: 1;
+}
+
+.course-tab-panel {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.course-tab-panel.active {
+    display: flex;
+}
+
+.courses-dropdown .dropdown-link,
+.courses-dropdown a.dropdown-link,
+.course-tab-panel .dropdown-link,
+.course-tab-panel a.dropdown-link,
+.dropdown-menu .dropdown-link,
+.dropdown-menu a.dropdown-link,
+a.dropdown-link {
+    color: #0B1220 !important;
+    text-decoration: none !important;
+    padding: 10px 12px !important;
+    border-radius: 8px !important;
+    display: block !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    font-family: 'Poppins', sans-serif !important;
+    line-height: 1.5 !important;
+    transition: all 0.3s ease !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}
+
+.courses-dropdown .dropdown-link:hover,
+.courses-dropdown a.dropdown-link:hover,
+.course-tab-panel .dropdown-link:hover,
+.course-tab-panel a.dropdown-link:hover,
+.dropdown-menu .dropdown-link:hover,
+.dropdown-menu a.dropdown-link:hover,
+a.dropdown-link:hover {
+    background: rgba(5, 150, 105, 0.08) !important;
+    color: #059669 !important;
+    font-weight: 700 !important;
+}
+
+/* ===== HEADER ACTIONS ===== */
+.header-actions {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* ===== CTA BUTTON - COMPLETELY REBUILT ===== */
+.cta-button {
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+    position: relative;
+    overflow: hidden;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+    box-sizing: border-box;
+    width: auto;
+    height: auto;
+    min-width: auto;
+    max-width: none;
+    min-height: auto;
+    max-height: none;
+    transform: none;
+    scale: 1;
+}
+
+.cta-button * {
+    box-sizing: border-box;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #F97316 0%, #1F3A5F 100%);
+    transition: left 0.3s ease;
+    z-index: 0;
+}
+
+.cta-button:hover::before {
+    left: 0;
+}
+
+.cta-button:hover {
+    box-shadow: 0 12px 35px rgba(5, 150, 105, 0.5);
+}
+
+.cta-button:active {
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+}
+
+.cta-button:focus {
+    outline: 2px solid rgba(5, 150, 105, 0.5);
+    outline-offset: 2px;
+}
+
+.cta-button > span {
+    position: relative;
+    z-index: 1;
+}
+
+.cta-button > i {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.cta-button:hover > i {
+    transform: translateX(3px);
+}
+
+/* Force no size changes on any state */
+.cta-button,
+.cta-button:hover,
+.cta-button:active,
+.cta-button:focus,
+.cta-button:active:hover,
+.cta-button:hover:active,
+.cta-button:focus:active {
+    transform: none !important;
+    scale: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: auto !important;
+    max-width: none !important;
+    min-height: auto !important;
+    max-height: none !important;
+    padding: 14px 28px !important;
+}
+
+/* ===== MOBILE MENU BUTTON ===== */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10001;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.hamburger-line {
+    width: 25px;
+    height: 3px;
+    background: #059669;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 4px 0;
+    pointer-events: none;
+    flex-shrink: 0;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    background: white;
+    z-index: 10000;
+    transition: left 0.3s ease;
+    overflow: hidden;
+    box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-menu.active {
+    left: 0;
+}
+
+/* Bu sınıf JavaScript ile ekleniyor */
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e9ecef;
+    background: linear-gradient(135deg, #F0FAF8 0%, #ffffff 100%);
+    color: #0B1220;
+    flex-shrink: 0;
+}
+
+.mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-logo-img {
+    max-width: 120px;
+    height: auto;
+    display: block;
+}
+
+.mobile-logo .logo-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 10px;
+}
+
+.mobile-logo .logo-text {
+    color: #0B1220;
+}
+
+.mobile-logo .logo-main {
+    font-size: 22px;
+    color: #0B1220;
+}
+
+.mobile-logo .logo-sub {
+    font-size: 16px;
+    color: #059669;
+}
+
+.mobile-menu-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.mobile-nav {
+    padding: 15px 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.mobile-nav-list {
+    list-style: none;
+    margin-bottom: 15px;
+}
+
+.mobile-nav-list li {
+    margin-bottom: 3px;
+}
+
+.mobile-nav-list a {
+    color: #0B1220;
+    text-decoration: none;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.mobile-nav-list a i {
+    width: 18px;
+    color: #059669;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.mobile-dropdown-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #0B1220;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.mobile-dropdown-btn i:first-child {
+    width: 18px;
+    color: #059669;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.mobile-dropdown-btn span {
+    flex: 1;
+    text-align: left;
+}
+
+.mobile-dropdown-btn .fa-chevron-down {
+    margin-left: auto;
+    color: #64748B;
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+.mobile-dropdown-list {
+    list-style: none;
+    padding-left: 30px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+/* Bu sınıf JavaScript ile ekleniyor */
+
+.mobile-dropdown.active .mobile-dropdown-list {
+    max-height: 1200px;
+}
+
+.mobile-dropdown-list a {
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #64748B;
+}
+
+/* ===== MOBILE SUB-DROPDOWN ===== */
+.mobile-sub-dropdown {
+    list-style: none;
+}
+
+.mobile-sub-dropdown-btn {
+    width: 100%;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: #64748B;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mobile-sub-dropdown-btn i:first-child {
+    color: #059669;
+    font-size: 14px;
+}
+
+.mobile-sub-dropdown-btn i:last-child {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.mobile-sub-dropdown.active .mobile-sub-dropdown-btn i:last-child {
+    transform: rotate(180deg);
+}
+
+.mobile-sub-dropdown-list {
+    list-style: none;
+    padding-left: 25px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.mobile-sub-dropdown.active .mobile-sub-dropdown-list {
+    max-height: 800px;
+}
+
+.mobile-sub-dropdown-list a {
+    padding: 8px 16px;
+    font-size: 13px;
+    color: #64748B;
+    display: block;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.mobile-sub-dropdown-list a:hover {
+    color: #059669;
+    padding-left: 20px;
+}
+
+.mobile-actions {
+    padding: 15px 20px;
+    border-top: 1px solid #e9ecef;
+    background: white;
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-actions-top {
+    position: relative;
+    border-top: none;
+    border-bottom: 1px solid #e9ecef;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 12px 20px;
+}
+
+.mobile-cta {
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.mobile-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mobile-contact a {
+    color: #64748B;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    transition: all 0.3s ease;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.mobile-contact a i {
+    width: 20px;
+    color: #059669;
+}
+
+/* ===== MOBILE TOP INFO (Top Header in Mobile Menu) ===== */
+.mobile-top-info {
+    padding: 12px 20px;
+    border-bottom: 1px solid #e9ecef;
+    background: #F0FAF8;
+    flex-shrink: 0;
+}
+
+.mobile-info-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.mobile-info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #0B1220;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.mobile-info-item i {
+    width: 18px;
+    color: #059669;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.mobile-info-item a {
+    color: #0B1220;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.mobile-info-item a:hover {
+    color: #059669;
+}
+
+.mobile-top-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mobile-social-links {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.mobile-social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #059669;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(5, 150, 105, 0.2);
+}
+
+.mobile-social-link:hover {
+    background: #059669;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.mobile-social-link i {
+    font-size: 14px;
+}
+
+.mobile-language-selector {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.mobile-lang-btn {
+    background: white;
+    border: 1px solid rgba(5, 150, 105, 0.2);
+    color: #0B1220;
+    padding: 8px 14px;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.mobile-lang-btn:hover {
+    background: #059669;
+    color: white;
+    border-color: #059669;
+}
+
+.mobile-lang-flag {
+    width: 20px;
+    height: 15px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.mobile-lang-text {
+    font-weight: 600;
+}
+
+.mobile-lang-arrow {
+    font-size: 10px;
+    transition: transform 0.3s ease;
+}
+
+.mobile-lang-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(5, 150, 105, 0.15);
+    padding: 8px 0;
+    min-width: 140px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    border: 1px solid rgba(5, 150, 105, 0.1);
+    pointer-events: none;
+    margin-top: 5px;
+}
+
+.mobile-lang-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+.mobile-lang-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: #0B1220;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 0 8px;
+}
+
+.mobile-lang-option:hover {
+    background: #F0FAF8;
+    color: #059669;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1200px) {
+    .nav-list {
+        gap: 0;
+    }
+    
+    .nav-link {
+        padding: 12px 14px;
+        font-size: 13px;
+    }
+    
+    .dropdown-panel {
+        min-width: 250px;
+    }
+}
+
+/* ===== DROPDOWN RESPONSIVE ===== */
+@media (max-width: 1400px) {
+    .dropdown-panel-tabbed {
+        min-width: 900px;
+        max-width: 1200px;
+    }
+    
+    .dropdown-content-tabbed {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    
+    .tab-content {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (max-width: 1200px) {
+    .dropdown-panel {
+        min-width: 500px;
+        max-width: 900px;
+    }
+    
+    .dropdown-panel-tabbed {
+        min-width: 800px;
+        max-width: 1000px;
+    }
+    
+    .dropdown-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .dropdown-content-tabbed {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .tab-content {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .main-nav {
+        display: none;
+    }
+    
+    .dropdown-panel {
+        min-width: 400px;
+        max-width: 600px;
+    }
+    
+    .dropdown-panel-tabbed {
+        min-width: 600px;
+        max-width: 800px;
+    }
+    
+    .dropdown-content-tabbed {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .tab-content {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .dropdown-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .mobile-menu-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 10001;
+        position: relative;
+    }
+    
+    .header-wrapper {
+        padding: 15px 0;
+        gap: 15px;
+    }
+    
+    .logo-section {
+        flex: 0 0 auto;
+    }
+    
+    .header-actions {
+        display: none;
+    }
+    
+    .logo-main {
+        font-size: 24px;
+    }
+    
+    .logo-sub {
+        font-size: 16px;
+    }
+}
+
+/* Tablet görünümünde (769px-1024px) top header + header altında açılan mobil menü */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .mobile-menu {
+        top: 190px; /* top header + main header toplam yüksekliği için güvenli pay */
+        height: calc(100vh - 190px);
+    }
+}
+
+@media (max-width: 768px) {
+    .top-header {
+        display: none;
+    }
+    
+    .top-header-content {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .top-header-left .info-strip {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .info-item {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+    
+    .info-item i {
+        font-size: 12px;
+    }
+    
+    .top-header-right {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .social-links {
+        margin-right: 0;
+        gap: 6px;
+    }
+    
+    .social-link {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    
+    .lang-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+        min-width: 70px;
+        gap: 6px;
+    }
+    
+    .lang-flag {
+        width: 18px;
+        height: 13px;
+    }
+    
+    .lang-text {
+        font-size: 11px;
+    }
+    
+    .main-header {
+        padding: 0;
+    }
+    
+    .header-wrapper {
+        padding: 12px 0;
+        gap: 10px;
+        position: relative;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+    
+    .mobile-menu {
+        max-width: 100%;
+    }
+    
+    .mobile-menu-btn {
+        order: 3;
+        margin-left: auto;
+    }
+    
+    .logo-section {
+        order: 1;
+        flex: 0 0 auto;
+    }
+    
+    .logo-img {
+        max-width: 140px;
+    }
+    
+    /* Elementor kodları kaldırıldı */
+    
+    .mobile-logo-img {
+        max-width: 120px;
+    }
+    
+    .footer-logo-img {
+        max-width: 160px;
+    }
+    
+    .header-actions {
+        display: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-header {
+        display: none;
+    }
+    
+    .header-wrapper {
+        padding: 10px 0;
+        gap: 8px;
+    }
+    
+    .logo-img {
+        max-width: 120px;
+    }
+    
+    /* Elementor kodları kaldırıldı */
+    
+    .mobile-logo-img {
+        max-width: 100px;
+    }
+    
+    .footer-logo-img {
+        max-width: 140px;
+    }
+    
+    .logo-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+    
+    .logo-main {
+        font-size: 22px;
+    }
+    
+    .logo-sub {
+        font-size: 14px;
+    }
+    
+    .mobile-menu-btn {
+        padding: 6px;
+    }
+    
+    .hamburger-line {
+        width: 22px;
+        height: 2.5px;
+        margin: 3px 0;
+    }
+    
+    .mobile-menu-header {
+        padding: 20px;
+    }
+    
+    .mobile-nav {
+        padding: 20px;
+    }
+    
+    .mobile-actions {
+        padding: 20px;
+    }
+    
+    .container {
+        padding: 0 12px;
+    }
+    
+    .hero-section > .container {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+    
+    .hero-content {
+        padding: 20px 0 !important;
+        gap: 30px !important;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+}
+
+/* ===== HERO SECTION ===== */
+.hero-section {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    overflow: visible;
+    background: transparent;
+}
+
+/* Background Image */
+.hero-background {
+    display: none;
+}
+
+.hero-overlay {
+    display: none;
+}
+
+/* Animated Shapes */
+.hero-shapes {
+    display: none;
+}
+
+.shape-1 {
+    width: 120px;
+    height: 120px;
+    top: 10%;
+    left: 5%;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 80px;
+    height: 80px;
+    top: 20%;
+    right: 10%;
+    animation-delay: 2s;
+}
+
+.shape-3 {
+    width: 60px;
+    height: 60px;
+    bottom: 20%;
+    left: 15%;
+    animation-delay: 4s;
+}
+
+.shape-4 {
+    width: 100px;
+    height: 100px;
+    bottom: 10%;
+    right: 5%;
+    animation-delay: 6s;
+}
+
+/* Main Content */
+.hero-content {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    padding: 50px 0;
+    margin: 0 !important;
+}
+
+/* Hero Section Container Override */
+.hero-section > .container {
+    padding-left: 135px !important;
+    padding-right: 135px !important;
+    max-width: 100% !important;
+}
+
+@media (max-width: 1024px) {
+    .hero-section > .container {
+        padding-left: 40px !important;
+        padding-right: 40px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section > .container {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+    
+    .hero-content {
+        padding: 30px 0 !important;
+        margin: 0 auto !important;
+    }
+    
+    .hero-text {
+        text-align: center;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section > .container {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+    
+    .hero-content {
+        padding: 20px 0 !important;
+    }
+}
+
+/* Left Side - Text Content */
+.hero-text {
+    color: #0B1220;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #FF8888;
+    color: #059669;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.15);
+    animation: slideInLeft 1s ease-out;
+}
+
+.badge-icon {
+    font-size: 18px;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    animation: slideInLeft 1s ease-out 0.2s both;
+}
+
+.title-main {
+    display: block;
+    color: #0B1220;
+}
+
+.title-highlight {
+    display: block;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.title-sub {
+    display: block;
+    color: #0B1220;
+}
+
+.hero-description {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #475569;
+    margin-bottom: 35px;
+    animation: slideInLeft 1s ease-out 0.4s both;
+    font-weight: 500;
+}
+
+.hero-description strong {
+    color: #059669;
+    font-weight: 700;
+}
+
+/* Feature Pills */
+.hero-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 40px;
+    animation: slideInLeft 1s ease-out 0.6s both;
+}
+
+.feature-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(5, 150, 105, 0.2);
+    color: #64748B;
+    padding: 12px 18px;
+    border-radius: 25px;
+    font-weight: 500;
+    font-size: 14px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.feature-pill i {
+    color: #059669;
+    transition: color 0.3s ease;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* CTA Section */
+.hero-cta {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 50px;
+    animation: slideInLeft 1s ease-out 0.8s both;
+}
+
+.cta-primary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white;
+    padding: 18px 32px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.cta-arrow {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.cta-secondary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #059669;
+    border: 2px solid #FF8888;
+    padding: 16px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* Trust Indicators */
+.hero-trust {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    animation: slideInLeft 1s ease-out 1s both;
+}
+
+.trust-item {
+    text-align: center;
+}
+
+.trust-number {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #059669;
+    line-height: 1;
+}
+
+.trust-label {
+    font-size: 14px;
+    color: #64748B;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.trust-divider {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, #FF8888, transparent);
+}
+
+/* Right Side - Visual Elements */
+.hero-visual {
+    position: relative;
+    animation: slideInRight 1s ease-out 0.5s both;
+}
+
+/* Main Video Card */
+.hero-video-card {
+    position: relative;
+    border-radius: 25px;
+    overflow: visible;
+    box-shadow: 0 25px 60px rgba(5, 150, 105, 0.2);
+    background: white;
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    overflow: visible;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+}
+
+/* Floating Info Cards */
+.floating-info {
+    position: absolute;
+    background: white;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 15px 40px rgba(5, 150, 105, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: float 6s ease-in-out infinite;
+    z-index: 10;
+    border: 1px solid rgba(5, 150, 105, 0.1);
+}
+
+.info-icon {
+    font-size: 24px;
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.info-title {
+    color: #0B1220;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.info-subtitle {
+    color: #64748B;
+    font-size: 12px;
+}
+
+.floating-info-1 {
+    top: 15%;
+    left: -30px;
+    animation-delay: 0s;
+}
+
+.floating-info-2 {
+    top: 50%;
+    right: -30px;
+    animation-delay: 2s;
+}
+
+.floating-info-3 {
+    bottom: 15%;
+    left: -30px;
+    animation-delay: 4s;
+}
+
+/* Animations */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+}
+
+/* Hero Section Responsive */
+@media (max-width: 1024px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+    }
+    
+    .hero-trust {
+        justify-content: center;
+    }
+    
+    .floating-info {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: auto;
+        padding: 40px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .hero-section > .container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+    
+    .hero-content {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+        text-align: center !important;
+        padding: 30px 0 !important;
+        margin: 0 auto !important;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .hero-text {
+        text-align: center !important;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    .hero-visual {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+        text-align: center;
+    }
+    
+    .hero-description {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+    
+    .hero-features {
+        justify-content: center;
+    }
+    
+    .hero-cta {
+        justify-content: center;
+    }
+    
+    .hero-trust {
+        justify-content: center;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cta-primary,
+    .cta-secondary {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+    
+    .hero-features {
+        justify-content: center;
+    }
+    
+    .hero-trust {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .trust-divider {
+        display: none;
+    }
+    
+    .image-wrapper {
+        height: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    .hero-badge {
+        font-size: 13px;
+        padding: 10px 16px;
+    }
+    
+    .image-wrapper {
+        height: 250px;
+    }
+}
+
+/* ===== COURSES SECTION ===== */
+.courses-section {
+    padding: 100px 0;
+    background: transparent;
+    position: relative;
+    overflow: visible;
+}
+
+/* Section Header */
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.section-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #0B1220;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: #64748B;
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+/* Courses Section - Açık arka plan üzerinde koyu renk */
+.courses-section .section-title {
+    color: #0B1220 !important;
+    -webkit-text-fill-color: transparent !important;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    text-shadow: none;
+}
+
+.courses-section .section-subtitle {
+    color: #1F3A5F !important;
+    font-weight: 600 !important;
+    font-size: 1.15rem !important;
+    max-width: 900px !important;
+    line-height: 1.8 !important;
+    opacity: 1 !important;
+}
+
+.courses-section .section-header .section-subtitle {
+    color: #1F3A5F !important;
+    font-weight: 600 !important;
+    font-size: 1.15rem !important;
+    line-height: 1.8 !important;
+    opacity: 1 !important;
+}
+
+/* Ana sayfa courses section için özel stil - En yüksek öncelik */
+section.homepage-courses .section-subtitle,
+section.homepage-courses .section-header .section-subtitle,
+.homepage-courses .section-header p.section-subtitle,
+.homepage-courses p.section-subtitle {
+    color: #334155 !important;
+    font-weight: 500 !important;
+    font-size: 1.15rem !important;
+    line-height: 1.8 !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+
+/* Section Description */
+.section-description {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.description-text {
+    font-size: 1.1rem;
+    color: #64748B;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 500;
+}
+
+.description-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Description Details */
+.description-details {
+    max-width: 1200px;
+    margin: 0 auto 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.detail-section {
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.detail-section h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #0B1220;
+    margin-bottom: 15px;
+}
+
+.detail-section p {
+    font-size: 1rem;
+    color: #64748B;
+    line-height: 1.7;
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+/* Discover More */
+.discover-more {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.discover-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white;
+    text-decoration: none;
+    padding: 16px 28px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.discover-btn i:last-child {
+    transition: transform 0.3s ease;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.feature-tag {
+    background: rgba(255, 136, 136, 0.08);
+    color: #059669;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid rgba(5, 150, 105, 0.15);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* Compact CTA */
+.compact-cta {
+    flex-shrink: 0;
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(255, 136, 136, 0.08);
+    border: 1px solid rgba(255, 136, 136, 0.08);
+    min-width: 280px;
+}
+
+.compact-cta h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #0B1220;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.compact-cta .cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.compact-cta .btn-outline,
+.compact-cta .btn-primary {
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.compact-cta .btn-primary {
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 5px 15px rgba(5, 150, 105, 0.2);
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.compact-cta .btn-outline {
+    background: transparent;
+    color: #059669;
+    border: 2px solid #FF8888;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* Courses Grid */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 40px;
+    margin-bottom: 80px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Course Card */
+.course-card {
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(5, 150, 105, 0.1);
+    border: 1px solid rgba(5, 150, 105, 0.1);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.course-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+/* Featured Course - En Popüler Card */
+.course-card.featured-course {
+    border: 3px solid #059669;
+    box-shadow: 0 25px 80px rgba(5, 150, 105, 0.25),
+                0 0 0 1px rgba(5, 150, 105, 0.1),
+                0 0 40px rgba(5, 150, 105, 0.15);
+    transform: scale(1.05);
+    position: relative;
+    z-index: 2;
+}
+
+.course-card.featured-course::before {
+    transform: scaleX(1);
+    height: 6px;
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+}
+
+.course-card.featured-course::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #059669, #10b981, #059669);
+    z-index: -1;
+    opacity: 0.5;
+    animation: featuredGlow 3s ease-in-out infinite;
+}
+
+@keyframes featuredGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* Course Header */
+.course-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.course-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+    box-shadow: 0 10px 30px rgba(5, 150, 105, 0.3);
+}
+
+.course-badge {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border: 2px solid white;
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+}
+
+.featured-course .course-badge {
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 6px 25px rgba(5, 150, 105, 0.5);
+    }
+}
+
+/* Course Content */
+.course-content {
+    position: relative;
+}
+
+.course-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0B1220;
+    margin-bottom: 15px;
+}
+
+.course-description {
+    font-size: 1.1rem;
+    color: #64748B;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* Course Features */
+.course-features {
+    margin-bottom: 30px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding: 12px 0;
+}
+
+.feature-item i {
+    width: 20px;
+    color: #059669;
+    font-size: 16px;
+}
+
+.feature-item span {
+    color: #0B1220;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+/* Course Price */
+.course-price {
+    background: rgba(255, 136, 136, 0.05);
+    border: 1px solid rgba(5, 150, 105, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.price-label {
+    display: block;
+    font-size: 13px;
+    color: #64748B;
+    margin-bottom: 10px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.price-amount {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #059669;
+    line-height: 1;
+    margin: 10px 0;
+}
+
+/* Price Discount Styling */
+.price-discount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 15px 0;
+}
+
+.price-old {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-decoration: line-through;
+    text-decoration-thickness: 3px;
+    text-decoration-color: #ef4444;
+}
+
+.price-arrow {
+    font-size: 1.5rem;
+    color: #059669;
+    font-weight: bold;
+}
+
+.price-discount .price-amount {
+    display: inline;
+    font-size: 2.8rem;
+    margin: 0;
+}
+
+.price-warning {
+    display: block;
+    font-size: 11px;
+    color: #ef4444;
+    margin-top: 8px;
+    font-weight: 600;
+    padding: 8px;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 8px;
+}
+
+
+/* Course Actions */
+.course-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-primary,
+.btn-secondary {
+    flex: 1;
+    padding: 16px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.9);
+    color: #059669;
+    border: 2px solid #FF8888;
+    backdrop-filter: blur(10px);
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* Bottom CTA */
+.courses-cta {
+    background: white;
+    border-radius: 20px;
+    padding: 50px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(255, 136, 136, 0.08);
+    border: 1px solid rgba(255, 136, 136, 0.08);
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cta-content h3 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #0B1220;
+    margin-bottom: 15px;
+}
+
+.cta-content p {
+    font-size: 1.1rem;
+    color: #64748B;
+    margin-bottom: 30px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-outline {
+    background: transparent;
+    color: #059669;
+    border: 2px solid #FF8888;
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* Responsive Design for Courses Section */
+@media (max-width: 1024px) {
+    .courses-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 30px;
+    }
+    
+    .section-title {
+        font-size: 3rem;
+    }
+    
+    .course-card {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .courses-section {
+        padding: 80px 0;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .description-text {
+        font-size: 1rem;
+    }
+    
+    .description-details {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        max-width: 600px;
+    }
+    
+    .course-card.featured-course {
+        transform: scale(1);
+        margin: 20px 0;
+    }
+    
+    .course-card.featured-course:hover {
+        transform: translateY(-10px) scale(1);
+    }
+    
+    .detail-section h4 {
+        font-size: 1.2rem;
+    }
+    
+    .detail-section p {
+        font-size: 0.95rem;
+    }
+    
+    .discover-btn {
+        padding: 14px 24px;
+        font-size: 15px;
+    }
+    
+    .feature-tag {
+        font-size: 13px;
+        padding: 6px 14px;
+    }
+    
+    .courses-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .course-card.featured-course {
+        transform: scale(1);
+        margin: 20px 0;
+    }
+    
+    .course-card.featured-course:hover {
+        transform: translateY(-10px) scale(1);
+    }
+    
+    .course-actions {
+        flex-direction: column;
+    }
+    
+    .courses-cta {
+        padding: 40px 30px;
+        margin: 0 3px;
+    }
+    
+    .cta-content h3 {
+        font-size: 1.8rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .description-text {
+        font-size: 0.95rem;
+    }
+    
+    .description-details {
+        gap: 20px;
+        max-width: 100%;
+        padding: 0 15px;
+    }
+    
+    .detail-section h4 {
+        font-size: 1.1rem;
+    }
+    
+    .detail-section p {
+        font-size: 0.9rem;
+    }
+    
+    .discover-btn {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+    
+    .feature-tag {
+        font-size: 12px;
+        padding: 5px 12px;
+    }
+    
+    .course-card {
+        padding: 25px;
+    }
+    
+    .course-title {
+        font-size: 1.5rem;
+    }
+    
+    .price-amount {
+        font-size: 2rem;
+    }
+    
+    .courses-cta {
+        padding: 30px 20px;
+    }
+    
+    .cta-content h3 {
+        font-size: 1.6rem;
+    }
+    
+    .cta-content p {
+        font-size: 1rem;
+    }
+}
+
+/* ===== PROGRAMS SECTION ===== */
+.programs-section {
+    padding: 100px 40px;
+    background: transparent;
+    position: relative;
+    overflow: visible;
+}
+
+/* Programs Grid */
+.programs-grid {
+    position: relative;
+    z-index: 2;
+    padding: 0 10px;
+}
+
+.program-row {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.program-row:last-child {
+    margin-bottom: 0;
+}
+
+/* Program Items */
+.program-item {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.program-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(11, 18, 32, 0.85) 0%, rgba(31, 58, 95, 0.75) 50%, rgba(11, 18, 32, 0.85) 100%);
+    transition: all 0.4s ease;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.program-overlay.featured {
+    background: linear-gradient(135deg, rgba(5, 150, 105, 0.9) 0%, rgba(31, 58, 95, 0.85) 50%, rgba(5, 150, 105, 0.9) 100%);
+}
+
+/* Programs Section - Açık arka plan üzerinde koyu subtitle */
+.programs-section .section-subtitle {
+    color: #475569 !important;
+    font-weight: 500;
+}
+
+/* Featured overlay üzerinde temaya uygun renk yazı */
+.program-item.featured .program-content {
+    color: white;
+}
+
+.program-item.featured .program-content h3 {
+    color: white;
+    font-weight: 800;
+}
+
+.program-item.featured .program-content p {
+    color: white;
+    opacity: 0.95;
+}
+
+.program-item.featured .program-content .program-icon {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.program-item.featured .program-stats .stat strong {
+    color: white;
+    font-weight: 900;
+}
+
+.program-item.featured .program-stats .stat span {
+    color: white;
+    opacity: 0.95;
+    font-weight: 600;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* Program Sizes */
+.program-small {
+    flex: 1;
+    min-height: 300px;
+}
+
+.program-medium {
+    flex: 1.5;
+    min-height: 350px;
+}
+
+.program-large {
+    flex: 2;
+    min-height: 400px;
+}
+
+/* Program Content */
+.program-content {
+    position: relative;
+    z-index: 2;
+    padding: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+}
+
+.program-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.program-content h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.3;
+    color: white;
+}
+
+.program-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    opacity: 0.95;
+    color: white;
+}
+
+/* Program Meta */
+.program-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+.program-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    opacity: 0.9;
+    color: white;
+}
+
+.program-meta i {
+    width: 16px;
+    color: white;
+}
+
+/* Program Stats (Featured) */
+.program-stats {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1;
+}
+
+.stat span {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white;
+}
+
+/* Program Link */
+.program-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    align-self: flex-start;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.program-link.featured {
+    background: rgba(31, 58, 95, 0.95);
+    color: white;
+    border-color: rgba(31, 58, 95, 0.95);
+}
+
+.program-link.featured:hover {
+    background: #059669;
+    border-color: #059669;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+.program-link i {
+    transition: transform 0.3s ease;
+}
+
+/* Bu sınıf CSS hover ile çalışıyor */
+
+/* Responsive Design for Programs Section */
+@media (max-width: 1024px) {
+    .program-row {
+        gap: 20px;
+    }
+    
+    .program-content {
+        padding: 25px;
+    }
+    
+    .program-content h3 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .programs-section {
+        padding: 80px 20px;
+    }
+    
+    .programs-grid {
+        padding: 0 8px;
+    }
+    
+    .program-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .program-item {
+        min-height: auto;
+        height: 300px;
+    }
+    
+    .program-content {
+        padding: 25px;
+    }
+    
+    .program-content h3 {
+        font-size: 1.4rem;
+    }
+    
+    .program-stats {
+        gap: 15px;
+    }
+    
+    .stat strong {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .programs-section {
+        padding: 60px 15px;
+    }
+    
+    .programs-grid {
+        padding: 0 5px;
+    }
+    
+    .program-content {
+        padding: 20px;
+    }
+    
+    .program-content h3 {
+        font-size: 1.3rem;
+    }
+    
+    .program-content p {
+        font-size: 0.9rem;
+    }
+    
+    .program-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .program-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .stat strong {
+        font-size: 1.3rem;
+    }
+}
+
+/* ===== VIDEO SECTION ===== */
+.video-section {
+    background: transparent;
+    padding: 100px 0;
+    position: relative;
+    overflow: visible;
+}
+
+.video-section .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.video-section .section-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #0B1220;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+}
+
+.video-section .section-subtitle {
+    color: #64748B;
+    font-size: 1.3rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.video-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.video-item {
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(5, 150, 105, 0.1);
+    border: 1px solid rgba(5, 150, 105, 0.1);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.video-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.video-item:hover::before {
+    transform: scaleX(1);
+}
+
+.video-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 80px rgba(5, 150, 105, 0.15);
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(5, 150, 105, 0.1);
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+
+.video-content h3 {
+    color: #0B1220;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.video-content p {
+    color: #64748B;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.video-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white;
+    text-decoration: none;
+    padding: 15px 25px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);
+}
+
+.video-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(5, 150, 105, 0.4);
+}
+
+.video-btn i:first-child {
+    font-size: 0.9rem;
+}
+
+.video-btn i:last-child {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.video-btn:hover i:last-child {
+    transform: translateX(3px);
+}
+
+/* Responsive Design for Video Section */
+@media (max-width: 1024px) {
+    .video-container {
+        gap: 30px;
+    }
+    
+    .video-item {
+        padding: 30px;
+    }
+    
+    .video-section .section-title {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .video-section {
+        padding: 80px 0;
+    }
+    
+    .video-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .video-section .section-title {
+        font-size: 2rem;
+    }
+    
+    .video-section .section-subtitle {
+        font-size: 1rem;
+    }
+    
+    .video-item {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-section {
+        padding: 60px 0;
+    }
+    
+    .video-section .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .video-item {
+        padding: 25px;
+    }
+    
+    .video-content h3 {
+        font-size: 1.3rem;
+    }
+    
+    .video-content p {
+        font-size: 0.95rem;
+    }
+    
+    .video-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ===== CTA SECTION ===== */
+.cta-section {
+    background: transparent;
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+
+.cta-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.cta-text {
+    color: #0B1220 !important;
+}
+
+.cta-text * {
+    color: #0B1220 !important;
+}
+
+.cta-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 25px;
+    text-shadow: none;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.cta-description {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    margin-bottom: 35px;
+    color: #64748B !important;
+    opacity: 1 !important;
+}
+
+.cta-features {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cta-feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.cta-feature i {
+    color: white;
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* CTA Form */
+.cta-form {
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-header h3 {
+    color: #0B1220;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.form-header p {
+    color: #64748B;
+    font-size: 1rem;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 15px 20px 15px 50px;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+    color: #0B1220;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #059669;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+}
+
+.form-group i {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #059669;
+    font-size: 1.1rem;
+    z-index: 2;
+}
+
+.form-group textarea {
+    padding-left: 50px;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-group textarea + i {
+    top: 25px;
+    transform: none;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white;
+    border: none;
+    padding: 18px 30px;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(5, 150, 105, 0.4);
+}
+
+.submit-btn i {
+    font-size: 1rem;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+.form-footer p {
+    color: #64748B;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.form-footer i {
+    color: #28a745;
+    font-size: 1rem;
+}
+
+/* Responsive Design for CTA Section */
+@media (max-width: 1024px) {
+    .cta-content {
+        gap: 60px;
+    }
+    
+    .cta-title {
+        font-size: 2.5rem;
+    }
+    
+    .cta-form {
+        padding: 35px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cta-section {
+        padding: 80px 0;
+    }
+    
+    .cta-content {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+    }
+    
+    .cta-title {
+        font-size: 2.2rem;
+    }
+    
+    .cta-description {
+        font-size: 1.1rem;
+    }
+    
+    .cta-features {
+        align-items: center;
+    }
+    
+    .cta-form {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-section {
+        padding: 60px 0;
+    }
+    
+    .cta-title {
+        font-size: 2rem;
+    }
+    
+    .cta-form {
+        padding: 25px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 12px 15px 12px 45px;
+        font-size: 0.95rem;
+    }
+    
+    .form-group i {
+        left: 15px;
+        font-size: 1rem;
+    }
+    
+    .submit-btn {
+        padding: 15px 25px;
+        font-size: 1rem;
+    }
+}
+
+/* ===== REVIEWS SECTION ===== */
+.reviews-section {
+    background: transparent;
+    padding: 80px 0;
+    position: relative;
+    overflow: visible;
+}
+
+.reviews-section .section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.reviews-section .section-title {
+    color: #0B1220;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.reviews-section .section-subtitle {
+    color: #475569;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.reviews-slider {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+.reviews-track {
+    display: flex;
+    transition: transform 0.5s ease;
+    gap: 30px;
+}
+
+.review-card {
+    min-width: 350px;
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 15px 40px rgba(5, 150, 105, 0.1);
+    border: 1px solid rgba(5, 150, 105, 0.1);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(5, 150, 105, 0.15);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.student-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #FF8888;
+}
+
+.student-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.student-details h4 {
+    color: #0B1220;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.student-details span {
+    color: #059669;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.review-rating {
+    display: flex;
+    gap: 2px;
+}
+
+.review-rating i {
+    color: #FFD700;
+    font-size: 0.9rem;
+}
+
+.review-text {
+    color: #64748B;
+    font-size: 1rem;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.reviews-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-btn {
+    background: white;
+    border: 2px solid #FF8888;
+    color: #059669;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-btn:hover {
+    background: #FF8888;
+    color: white;
+    transform: scale(1.1);
+}
+
+.nav-btn i {
+    font-size: 1rem;
+}
+
+.nav-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #e9ecef;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: #FF8888;
+    transform: scale(1.2);
+}
+
+/* Responsive Design for Reviews Section */
+@media (max-width: 768px) {
+    .reviews-section {
+        padding: 60px 0;
+    }
+    
+    .reviews-section .section-title {
+        font-size: 2rem;
+    }
+    
+    .review-card {
+        min-width: 300px;
+        padding: 25px;
+    }
+    
+    .reviews-track {
+        gap: 20px;
+    }
+    
+    .reviews-nav {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .reviews-section .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .review-card {
+        min-width: 280px;
+        padding: 20px;
+    }
+    
+    .student-avatar {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .nav-btn {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* ===== FAQ SECTION ===== */
+.faq-section {
+    background: transparent;
+    padding: 80px 0;
+    position: relative;
+}
+
+.faq-section .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.faq-section .section-title {
+    color: #0B1220;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.faq-section .section-subtitle {
+    color: #475569;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto 50px;
+}
+
+.faq-item {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.faq-item:hover {
+    border-color: #059669;
+    box-shadow: 0 5px 20px rgba(5, 150, 105, 0.1);
+}
+
+.faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 25px 30px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    color: #0B1220;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.faq-question:hover {
+    background: #F0FAF8;
+    color: #059669;
+}
+
+.faq-question i {
+    color: #059669;
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: #F0FAF8;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 200px;
+}
+
+.faq-answer p {
+    padding: 0 30px 25px;
+    margin: 0;
+    color: #64748B;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.faq-cta {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #0B1220 100%);
+    border-radius: 20px;
+    color: white;
+    margin-top: 40px;
+    border: none;
+}
+
+.faq-cta p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.faq-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    color: #1F3A5F;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.faq-contact-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.faq-contact-btn i {
+    font-size: 1rem;
+}
+
+/* Responsive Design for FAQ Section */
+@media (max-width: 768px) {
+    .faq-section {
+        padding: 60px 0;
+    }
+    
+    .faq-section .section-title {
+        font-size: 2rem;
+    }
+    
+    .faq-question {
+        padding: 20px 25px;
+        font-size: 1rem;
+    }
+    
+    .faq-answer p {
+        padding: 0 25px 20px;
+    }
+    
+    .faq-cta {
+        padding: 30px 25px;
+        margin-top: 30px;
+    }
+    
+    .faq-cta p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .faq-section .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .faq-question {
+        padding: 18px 20px;
+        font-size: 0.95rem;
+    }
+    
+    .faq-answer p {
+        padding: 0 20px 18px;
+        font-size: 0.95rem;
+    }
+    
+    .faq-cta {
+        padding: 25px 20px;
+    }
+    
+    .faq-contact-btn {
+        padding: 12px 25px;
+        font-size: 0.95rem;
+    }
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    background: linear-gradient(135deg, #1F3A5F 0%, #0B1220 100%);
+    color: white;
+    position: relative;
+    overflow: visible;
+}
+
+
+.footer-top {
+    padding: 80px 0 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Company Info Column */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.footer-logo-img {
+    max-width: 200px;
+    height: auto;
+    display: block;
+}
+
+.footer-logo .logo-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+}
+
+.footer-logo .logo-text {
+    color: white;
+}
+
+.footer-logo .logo-main {
+    font-size: 28px;
+    font-weight: 800;
+    display: block;
+}
+
+.footer-logo .logo-sub {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+}
+
+.footer-description {
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.7;
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+.footer-social {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-social .social-link {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.footer-social .social-link:hover {
+    background: #FF8888;
+    border-color: #059669;
+    transform: translateY(-3px);
+}
+
+.footer-social .social-link i {
+    font-size: 1.1rem;
+}
+
+/* Footer Columns */
+.footer-column {
+    position: relative;
+    z-index: 2;
+}
+
+.footer-column-courses .footer-title {
+    text-align: center;
+}
+
+.footer-column-courses .footer-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.footer-column-courses .footer-links-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.footer-column-courses .footer-links {
+    margin: 0;
+}
+
+.footer-title {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 30px;
+    height: 3px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 2px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+}
+
+.footer-links a i {
+    font-size: 0.9rem;
+    width: 16px;
+    text-align: center;
+    color: #059669;
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+    transform: translateX(5px);
+}
+
+.footer-links a:hover i {
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Contact Info */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.contact-item i {
+    color: #059669;
+    font-size: 1.1rem;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.contact-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-item strong {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.contact-item span {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.footer-legal {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-legal a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-legal a:hover {
+    color: white;
+}
+
+/* Responsive Design for Footer */
+@media (max-width: 1024px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px 30px;
+    }
+    
+    .footer-column:first-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-top {
+        padding: 60px 0 40px;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .footer-column-courses .footer-links-columns {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .footer-bottom-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .footer-legal {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-top {
+        padding: 50px 0 30px;
+    }
+    
+    .footer-logo .logo-main {
+        font-size: 24px;
+    }
+    
+    .footer-logo .logo-sub {
+        font-size: 16px;
+    }
+    
+    .footer-title {
+        font-size: 1.2rem;
+    }
+    
+    .footer-description {
+        font-size: 0.95rem;
+    }
+    
+    .footer-links a {
+        font-size: 0.9rem;
+    }
+    
+    .contact-item {
+        gap: 12px;
+    }
+    
+    .contact-item i {
+        font-size: 1rem;
+    }
+    
+    .contact-item strong,
+    .contact-item span {
+        font-size: 0.85rem;
+    }
+}

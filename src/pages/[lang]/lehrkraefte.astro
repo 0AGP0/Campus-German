@@ -1,0 +1,255 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/lehrkraefte.css';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'tr' } },
+        { params: { lang: 'de' } },
+    ];
+}
+
+const { lang } = Astro.params;
+---
+
+<MainLayout title="Eğitmenler - CampusGerman" lang={lang}>
+    <!-- Hero Section -->
+    <section class="instructors-hero-section">
+        <div class="container">
+            <div class="instructors-hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Uzman Eğitmenlerimiz</span>
+                </div>
+                <h1 class="hero-main-title">Almanca Öğrenme Yolculuğunuzda Yanınızdayız</h1>
+                <p class="hero-description">
+                    Deneyimli ve sertifikalı eğitmenlerimiz, Almanca öğrenme sürecinizde size rehberlik eder. 
+                    Her eğitmenimiz, öğrencilerin başarısı için kişiselleştirilmiş eğitim yaklaşımları sunar.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Yıllık Deneyim</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">Mutlu Öğrenci</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Başarı Oranı</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructors Section -->
+    <section class="instructors-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Eğitmenlerimiz</h2>
+                <p class="section-subtitle">
+                    Her biri alanında uzman, deneyimli ve öğrenci odaklı eğitmenlerimizle tanışın
+                </p>
+            </div>
+
+            <div class="instructors-grid">
+                <!-- Instructor 1 -->
+                <div class="instructor-card">
+                    <div class="instructor-image-wrapper">
+                        <div class="instructor-image">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="instructor-badge">
+                            <i class="fas fa-certificate"></i>
+                            <span>Goethe Sertifikalı</span>
+                        </div>
+                    </div>
+                    <div class="instructor-content">
+                        <div class="instructor-header">
+                            <h3 class="instructor-name">Prof. Dr. Anna Schmidt</h3>
+                            <p class="instructor-title">Baş Eğitmen - C1/C2 Uzmanı</p>
+                        </div>
+                        <div class="instructor-info">
+                            <div class="info-row">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Goethe-Institut, Almanca Eğitimi Doktorası</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-briefcase"></i>
+                                <span>15+ Yıl Deneyim</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-language"></i>
+                                <span>Almanca, Türkçe, İngilizce</span>
+                            </div>
+                        </div>
+                        <div class="instructor-description">
+                            <p>
+                                Prof. Dr. Anna Schmidt, 15 yılı aşkın deneyimiyle Almanca eğitiminde öncü bir isimdir. 
+                                Özellikle C1 ve C2 seviyelerinde uzmanlaşmış olan Anna, öğrencilerinin akademik ve 
+                                profesyonel hedeflerine ulaşmalarına yardımcı olur. İletişim odaklı öğretim yöntemiyle 
+                                öğrencilerinin konuşma becerilerini geliştirmeye odaklanır.
+                            </p>
+                        </div>
+                        <div class="instructor-specialties">
+                            <h4>Uzmanlık Alanları:</h4>
+                            <ul class="specialties-list">
+                                <li><i class="fas fa-check"></i> İleri Seviye Almanca (C1/C2)</li>
+                                <li><i class="fas fa-check"></i> Akademik Almanca</li>
+                                <li><i class="fas fa-check"></i> TestDaF Hazırlık</li>
+                                <li><i class="fas fa-check"></i> Telc C1 Hazırlık</li>
+                            </ul>
+                        </div>
+                        <div class="instructor-contact">
+                            <a href="mailto:anna@campusgerman.com" class="contact-btn">
+                                <i class="fas fa-envelope"></i>
+                                İletişime Geç
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instructor 2 -->
+                <div class="instructor-card">
+                    <div class="instructor-image-wrapper">
+                        <div class="instructor-image">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="instructor-badge">
+                            <i class="fas fa-certificate"></i>
+                            <span>DAF Sertifikalı</span>
+                        </div>
+                    </div>
+                    <div class="instructor-content">
+                        <div class="instructor-header">
+                            <h3 class="instructor-name">Michael Weber</h3>
+                            <p class="instructor-title">Kıdemli Eğitmen - B1/B2 Uzmanı</p>
+                        </div>
+                        <div class="instructor-info">
+                            <div class="info-row">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Almanya'da bir üniversite, Almanca Öğretmenliği</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-briefcase"></i>
+                                <span>12+ Yıl Deneyim</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-language"></i>
+                                <span>Almanca, İngilizce, Fransızca</span>
+                            </div>
+                        </div>
+                        <div class="instructor-description">
+                            <p>
+                                Michael Weber, orta seviye Almanca eğitiminde uzmanlaşmış deneyimli bir eğitmendir. 
+                                Öğrencilerinin günlük hayatta ve iş yaşamında Almanca kullanabilmelerini sağlamak 
+                                için pratik odaklı bir yaklaşım benimser. İnteraktif dersleri ve samimi öğretim 
+                                tarzıyla öğrencilerinin motivasyonunu yüksek tutar.
+                            </p>
+                        </div>
+                        <div class="instructor-specialties">
+                            <h4>Uzmanlık Alanları:</h4>
+                            <ul class="specialties-list">
+                                <li><i class="fas fa-check"></i> Orta Seviye Almanca (B1/B2)</li>
+                                <li><i class="fas fa-check"></i> İş Almancası</li>
+                                <li><i class="fas fa-check"></i> Konuşma Pratiği</li>
+                                <li><i class="fas fa-check"></i> Telc B2 Hazırlık</li>
+                            </ul>
+                        </div>
+                        <div class="instructor-contact">
+                            <a href="mailto:michael@campusgerman.com" class="contact-btn">
+                                <i class="fas fa-envelope"></i>
+                                İletişime Geç
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instructor 3 -->
+                <div class="instructor-card">
+                    <div class="instructor-image-wrapper">
+                        <div class="instructor-image">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="instructor-badge">
+                            <i class="fas fa-certificate"></i>
+                            <span>Goethe Sertifikalı</span>
+                        </div>
+                    </div>
+                    <div class="instructor-content">
+                        <div class="instructor-header">
+                            <h3 class="instructor-name">Sarah Müller</h3>
+                            <p class="instructor-title">Eğitmen - A1/A2 Uzmanı</p>
+                        </div>
+                        <div class="instructor-info">
+                            <div class="info-row">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Berlin Humboldt Üniversitesi, Yabancı Dil Öğretimi</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-briefcase"></i>
+                                <span>8+ Yıl Deneyim</span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-language"></i>
+                                <span>Almanca, Türkçe, İngilizce</span>
+                            </div>
+                        </div>
+                        <div class="instructor-description">
+                            <p>
+                                Sarah Müller, başlangıç seviyesindeki öğrencilerle çalışma konusunda uzmanlaşmış 
+                                enerjik ve sabırlı bir eğitmendir. Öğrencilerinin temel Almanca becerilerini 
+                                eğlenceli ve etkili bir şekilde geliştirmelerine yardımcı olur. Oyun tabanlı 
+                                öğrenme teknikleri ve kültürel içeriklerle derslerini zenginleştirir.
+                            </p>
+                        </div>
+                        <div class="instructor-specialties">
+                            <h4>Uzmanlık Alanları:</h4>
+                            <ul class="specialties-list">
+                                <li><i class="fas fa-check"></i> Başlangıç Seviyesi (A1/A2)</li>
+                                <li><i class="fas fa-check"></i> Temel Konuşma</li>
+                                <li><i class="fas fa-check"></i> Gramer Temelleri</li>
+                                <li><i class="fas fa-check"></i> Kültürel Entegrasyon</li>
+                            </ul>
+                        </div>
+                        <div class="instructor-contact">
+                            <a href="mailto:sarah@campusgerman.com" class="contact-btn">
+                                <i class="fas fa-envelope"></i>
+                                İletişime Geç
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <h2 class="cta-title">Eğitmenlerimizle Tanışın</h2>
+                <p class="cta-description">
+                    Deneyimli eğitmenlerimizle Almanca öğrenme yolculuğunuza başlayın. 
+                    Size en uygun eğitmeni bulmak için hemen iletişime geçin!
+                </p>
+                <div class="cta-actions">
+                    <a href="/buchung" class="cta-button">
+                        <span>Hemen Başvur Yap</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href={`/${lang}/kontakt`} class="cta-button-secondary">
+                        <span>İletişime Geç</span>
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>
+

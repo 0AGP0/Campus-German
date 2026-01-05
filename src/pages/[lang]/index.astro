@@ -1,0 +1,679 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'tr' } },
+        { params: { lang: 'de' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Translations
+const t = {
+    tr: {
+        title: "CampusGerman - Almanca Dil Kursu",
+        heroBadge: "Premium Almanca Eğitimi",
+        heroTitle: {
+            main: "Almanca'yı",
+            highlight: "Konuşarak",
+            sub: "Öğrenin"
+        },
+        heroDescription: "CampusGerman ile Almanca öğrenmek artık çok kolay! Konuşma odaklı eğitim, native speaker öğretmenler ve kişiselleştirilmiş programlarla hedeflerinize ulaşın.",
+        heroFeatures: ["Sınırlı Kontenjan", "Kültür Programları", "Goethe-Telc-Test Daf-FSP"],
+        heroCta1: "Ücretsiz Seviye Tespiti",
+        heroCta2: "Whatsapptan Bilgi Al<br>EN/DE/TUR/ES",
+        trustItems: [
+            { number: "2000+", label: "Mutlu Öğrenci" },
+            { number: "98%", label: "Farklı Millet" },
+            { number: "15+", label: "Ana Dilinde Eğitmen" }
+        ],
+        coursesTitle: "En Çok Tercih Edilen Kurslar",
+        coursesSubtitle: "Bremen'de 10 öğrenciden 9unun ilk tercihi Campus German oldu. Sınırlı kontenjandan yararlanmak için yerini şimdiden ayırt, Almancayı kusursuz öğren!",
+        courseBookButton: "Yer Ayırt",
+        courseDetailsButton: "Detaylar",
+    },
+    de: {
+        title: "CampusGerman - Deutschsprachkurs",
+        heroBadge: "Premium Deutschtraining",
+        heroTitle: {
+            main: "Deutsch lernen",
+            highlight: "durch Sprechen",
+            sub: ""
+        },
+        heroDescription: "Mit CampusGerman ist Deutsch lernen jetzt ganz einfach! Erreichen Sie Ihre Ziele mit konversationsorientiertem Training, muttersprachlichen Lehrern und personalisierten Programmen.",
+        heroFeatures: ["Kleine Gruppen", "Flexible Arbeitszeiten", "Goethe-Zertifikat"],
+        heroCta1: "Kostenlose Probestunde",
+        heroCta2: "Detaillierte Informationen",
+        trustItems: [
+            { number: "2000+", label: "Glücklicher Student" },
+            { number: "98%", label: "Erfolgsquote" },
+            { number: "15+", label: "Experten-Lehrer" }
+        ],
+        coursesTitle: "Bevorzugte Kurse",
+        coursesSubtitle: "Wählen Sie das Programm, das am besten zu Ihnen passt, um Deutsch zu lernen",
+        courseBookButton: "Kurs Buchen",
+        courseDetailsButton: "Details",
+    }
+};
+
+const translations = t[lang as keyof typeof t];
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        <span class="badge-icon">🎯</span>
+                        <span class="badge-text">{translations.heroBadge}</span>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="title-main">{translations.heroTitle.main}</span>
+                        <span class="title-highlight">{translations.heroTitle.highlight}</span>
+                        {translations.heroTitle.sub && <span class="title-sub">{translations.heroTitle.sub}</span>}
+                    </h1>
+                    <p class="hero-description">
+                        {translations.heroDescription}
+                    </p>
+                    <div class="hero-features">
+                        {translations.heroFeatures.map((feature, index) => (
+                            <div class="feature-pill">
+                                <i class={index === 0 ? "fas fa-users" : index === 1 ? "fas fa-clock" : "fas fa-certificate"}></i>
+                                <span>{feature}</span>
+                            </div>
+                        ))}
+                    </div>
+                    <div class="hero-cta">
+                        <a href="#demo" class="cta-primary">
+                            <i class="fas fa-play"></i>
+                            <span>{translations.heroCta1}</span>
+                            <div class="cta-arrow">→</div>
+                        </a>
+                        <a href="#info" class="cta-secondary">
+                            <i class="fas fa-info-circle"></i>
+                            <span set:html={translations.heroCta2}></span>
+                        </a>
+                    </div>
+                    <div class="hero-trust">
+                        {translations.trustItems.map((item, index) => (
+                            <>
+                                {index > 0 && <div class="trust-divider"></div>}
+                                <div class="trust-item">
+                                    <div class="trust-number">{item.number}</div>
+                                    <div class="trust-label">{item.label}</div>
+                                </div>
+                            </>
+                        ))}
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-video-card">
+                        <div class="video-wrapper">
+                            <iframe 
+                                src="https://www.youtube.com/embed/DlsmqlSNwBc?rel=0&modestbranding=1" 
+                                title="CampusGerman Tanıtım"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="floating-info floating-info-1">
+                            <div class="info-icon">📚</div>
+                            <div class="info-content">
+                                <div class="info-title">A1-C1 Seviye</div>
+                                <div class="info-subtitle">Sınav Hazırlık</div>
+                            </div>
+                        </div>
+                        <div class="floating-info floating-info-2">
+                            <div class="info-icon">🎓</div>
+                            <div class="info-content">
+                                <div class="info-title">Şehir-Uni</div>
+                                <div class="info-subtitle">Gezileri</div>
+                            </div>
+                        </div>
+                        <div class="floating-info floating-info-3">
+                            <div class="info-icon">💬</div>
+                            <div class="info-content">
+                                <div class="info-title">Konuşma</div>
+                                <div class="info-subtitle">Kulübü</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Courses Section -->
+    <section class="courses-section homepage-courses">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{translations.coursesTitle}</h2>
+                <p class="section-subtitle" style="color: #334155 !important; font-weight: 500 !important; font-size: 1.15rem !important; line-height: 1.8 !important; opacity: 1 !important;">{translations.coursesSubtitle}</p>
+                <br>
+                <p class="section-subtitle" style="color: #334155 !important; font-weight: 500 !important; font-size: 1.15rem !important; line-height: 1.8 !important; opacity: 1 !important;">Yüksek Almancanın konuşulduğu Unesco kültür şehri Bremen'de öğrencilerimiz için başarı odaklı programlarla sizlerleyiz.</p>
+            </div>
+            <div class="section-description">
+                <div class="description-details">
+                    <div class="detail-section">
+                        <h4>Neden CampusGerman?</h4>
+                        <p>Almanya'nın en güzel üniversite şehirlerinden birinde, 50,000'den fazla öğrenciye ev sahipliği yapan bu tarihi şehirde, Almanca öğrenirken aynı zamanda Alman kültürünü de keşfedebilirsiniz.</p>
+                    </div>
+                    <div class="detail-section">
+                        <h4>Eğitim Metodolojimiz</h4>
+                        <p>Konuşma odaklı eğitim yaklaşımımızla, sadece gramer kurallarını öğrenmez, aynı zamanda günlük hayatta Almanca konuşmayı da öğrenirsiniz.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="courses-grid">
+                <div class="course-card intensivkurs">
+                    <div class="course-header">
+                        <div class="course-icon"><i class="fas fa-rocket"></i></div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Haftalık Almanca Kursu</h3>
+                        <p class="course-description">Haftalık Programlar</p>
+                        <div class="course-features">
+                            <div class="feature-item"><i class="fas fa-clock"></i><span>20 saat/hafta</span></div>
+                            <div class="feature-item"><i class="fas fa-home"></i><span>Haftalık Konaklama imkanları</span></div>
+                            <div class="feature-item"><i class="fas fa-calendar-check"></i><span>Esnek Başlama Planı</span></div>
+                        </div>
+                        <div class="course-price">
+                            <span class="price-label">Hibrit/Online Katılım imkanı</span>
+                            <span class="price-amount">160€'dan başlar</span>
+                        </div>
+                        <div class="course-actions">
+                            <a href="#intensivkurs" class="btn-primary">{translations.courseBookButton}</a>
+                            <a href="#detay" class="btn-secondary">{translations.courseDetailsButton}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-card universitatkurs featured-course">
+                    <div class="course-header">
+                        <div class="course-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="course-badge">En Popüler</div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Üniversite Hazırlık Okulu</h3>
+                        <p class="course-description">Üniversite'ye şartlı kabul veya TELC, TestDaf, Goethe sınavları için en doğru program.</p>
+                        <div class="course-features">
+                            <div class="feature-item"><i class="fas fa-clock"></i><span>20 Saat/Hafta</span></div>
+                            <div class="feature-item"><i class="fas fa-passport"></i><span>Öğrenci Vizesi için Davetiye</span></div>
+                            <div class="feature-item"><i class="fas fa-comments"></i><span>Konuşma Kulübü Ücretsiz</span></div>
+                        </div>
+                        <div class="course-price">
+                            <span class="price-label">A1'den C1'e Profesyonel Hazırlık</span>
+                            <div class="price-discount">
+                                <span class="price-old">1240€</span>
+                                <span class="price-arrow">→</span>
+                                <span class="price-amount">990€</span>
+                            </div>
+                            <span class="price-period">1 Kur / 8 - 12 Hafta</span>
+                            <span class="price-warning">! Bu fırsat 31 Marta kadar kontenjanla sınırlıdır.</span>
+                        </div>
+                        <div class="course-actions">
+                            <a href="#universitatskurs" class="btn-primary">{translations.courseBookButton}</a>
+                            <a href="#detay" class="btn-secondary">{translations.courseDetailsButton}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-card berufsausbildung">
+                    <div class="course-header">
+                        <div class="course-icon"><i class="fas fa-laptop"></i></div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Online Sınava Hazırlık</h3>
+                        <p class="course-description">İstediğiniz yerde TELC, TestDaf, Goethe A1-C1, FSP sınavlarına en doğru şekilde Ana dili Almanca olan eğitmenlerle hazırlanın</p>
+                        <div class="course-features">
+                            <div class="feature-item"><i class="fas fa-users"></i><span>1000den fazla öğrenci deneyimi</span></div>
+                            <div class="feature-item"><i class="fas fa-book-open"></i><span>Çıkmış sorular odaklı çalışma</span></div>
+                            <div class="feature-item"><i class="fas fa-clipboard-check"></i><span>En az 3 örnek sınav similasyonu</span></div>
+                        </div>
+                        <div class="course-price">
+                            <span class="price-label">%100 başarı garantisi/Tekrar kur imkanı</span>
+                            <span class="price-amount">350€'dan başlar</span>
+                            <span class="price-period">40 saat / Sınav ücretleri hariçtir.</span>
+                        </div>
+                        <div class="course-actions">
+                            <a href="#berufsausbildung" class="btn-primary">{translations.courseBookButton}</a>
+                            <a href="#detay" class="btn-secondary">{translations.courseDetailsButton}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="programs-section">
+        <div class="section-header">
+            <h2 class="section-title">Programlarımız</h2>
+            <p class="section-subtitle">Almanya'da eğitim ve kariyer fırsatlarını keşfedin</p>
+        </div>
+        <div class="programs-grid">
+            <div class="program-row">
+                <div class="program-item program-small" style="background-image: url('https://images.unsplash.com/photo-1531123414780-f742a9c0b6f0?q=80&w=400&auto=format&fit=crop');">
+                    <div class="program-overlay"></div>
+                    <div class="program-content">
+                        <div class="program-icon"><i class="fas fa-language"></i></div>
+                        <h3>Almanca Dil Kursu</h3>
+                        <p>CampusGerman'da A1'den C2'ye kadar tüm seviyelerde Almanca öğrenin.</p>
+                        <div class="program-meta">
+                            <span><i class="fas fa-users"></i> Küçük Gruplar</span>
+                            <span><i class="fas fa-clock"></i> Esnek Saatler</span>
+                        </div>
+                        <a href="#dil-kursu" class="program-link">Detayları Gör<i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="program-item program-medium" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9e1?q=80&w=400&auto=format&fit=crop');">
+                    <div class="program-overlay"></div>
+                    <div class="program-content">
+                        <div class="program-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <h3>Üniversite Hazırlık</h3>
+                        <p>Studienkolleg ve üniversiteye hazırlık programları ile Almanya'da eğitim alın.</p>
+                        <div class="program-meta">
+                            <span><i class="fas fa-book"></i> Akademik Hazırlık</span>
+                            <span><i class="fas fa-university"></i> Studienkolleg</span>
+                        </div>
+                        <a href="#universite-hazirlik" class="program-link">Detayları Gör<i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="program-item program-large" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=400&auto=format&fit=crop');">
+                    <div class="program-overlay"></div>
+                    <div class="program-content">
+                        <div class="program-icon"><i class="fas fa-briefcase"></i></div>
+                        <h3>Mesleki Eğitim</h3>
+                        <p>Almanya'da mesleki eğitim programları ile kariyerinizi geliştirin ve iş bulun.</p>
+                        <div class="program-meta">
+                            <span><i class="fas fa-handshake"></i> İş Desteği</span>
+                            <span><i class="fas fa-euro-sign"></i> Ücretli Eğitim</span>
+                        </div>
+                        <a href="#mesleki-egitim" class="program-link">Detayları Gör<i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="program-row">
+                <div class="program-item program-medium" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=400&auto=format&fit=crop');">
+                    <div class="program-overlay"></div>
+                    <div class="program-content">
+                        <div class="program-icon"><i class="fas fa-sun"></i></div>
+                        <h3>Yaz Okulu</h3>
+                        <p>Yaz aylarında Almanya'da Almanca öğrenin ve kültürel deneyimler yaşayın.</p>
+                        <div class="program-meta">
+                            <span><i class="fas fa-sun"></i> Yaz Programı</span>
+                            <span><i class="fas fa-landmark"></i> Kültürel Deneyim</span>
+                        </div>
+                        <a href="#yaz-okulu" class="program-link">Detayları Gör<i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="program-item program-small" style="background-image: url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=400&auto=format&fit=crop');">
+                    <div class="program-overlay"></div>
+                    <div class="program-content">
+                        <div class="program-icon"><i class="fas fa-user-graduate"></i></div>
+                        <h3>Özel Ders</h3>
+                        <p>Kişiye özel programlarla birebir Almanca dersleri alın.</p>
+                        <div class="program-meta">
+                            <span><i class="fas fa-user"></i> Birebir</span>
+                            <span><i class="fas fa-clock"></i> Esnek Program</span>
+                        </div>
+                        <a href={`/${lang}/dienstleistungen/ozel-ders`} class="program-link">Detayları Gör<i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="program-item program-large featured">
+                    <div class="program-overlay featured"></div>
+                    <div class="program-content">
+                        <div class="program-icon"><i class="fas fa-compass"></i></div>
+                        <h3>Kendine En Uygun Programı Bul</h3>
+                        <p>Almanya'da eğitim ve kariyer fırsatlarını keşfedin. Size en uygun programı bulun.</p>
+                        <div class="program-stats">
+                            <div class="stat"><strong>15+</strong><span>Uzman Öğretmen</span></div>
+                            <div class="stat"><strong>6</strong><span>Seviye</span></div>
+                            <div class="stat"><strong>98%</strong><span>Başarı Oranı</span></div>
+                        </div>
+                        <a href="#program-bul" class="program-link featured">Programı Bul<i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Başarı Hikayelerimiz</h2>
+                <p class="section-subtitle">Öğrencilerimizin deneyimlerini dinleyin ve ilham alın</p>
+            </div>
+            <div class="video-container">
+                <div class="video-item">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/LYj1GAEYMLo" title="Öğrenci Deneyimi 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3>Maria'nın Başarı Hikayesi</h3>
+                        <p>Maria, A1 seviyesinden başlayarak sadece 8 ayda B2 seviyesine ulaştı. Şimdi Almanya'da bir üniversitede İşletme okuyor.</p>
+                        <a href="#maria-hikayesi" class="video-btn"><i class="fas fa-play"></i><span>Hikayeyi Oku</span><i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/7ZZ-Z3QacN0" title="Öğrenci Deneyimi 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-content">
+                        <h3>Ahmet'in Yolculuğu</h3>
+                        <p>Ahmet, Türkiye'den gelerek CampusGerman'da eğitim aldı. Şimdi Almanya'da bir şirkette çalışıyor.</p>
+                        <a href="#ahmet-hikayesi" class="video-btn"><i class="fas fa-play"></i><span>Hikayeyi Oku</span><i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-text">
+                    <h2 class="cta-title">Almanca Öğrenmeye Başlayın</h2>
+                    <p class="cta-description">CampusGerman'da Almanca öğrenin ve Almanya'da yeni bir gelecek kurun. Ücretsiz danışmanlık için hemen iletişime geçin!</p>
+                    <div class="cta-features">
+                        <div class="cta-feature"><i class="fas fa-check-circle"></i><span>Ücretsiz Seviye Belirleme</span></div>
+                        <div class="cta-feature"><i class="fas fa-check-circle"></i><span>Esnek Program Seçenekleri</span></div>
+                        <div class="cta-feature"><i class="fas fa-check-circle"></i><span>Native Speaker Öğretmenler</span></div>
+                    </div>
+                </div>
+                <div class="cta-form">
+                    <div class="form-header">
+                        <h3>Ücretsiz Bilgi Alın</h3>
+                        <p>Size en uygun programı bulalım</p>
+                    </div>
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Adınız Soyadınız" required>
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="E-posta Adresiniz" required>
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone" placeholder="Telefon Numaranız" required>
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="form-group">
+                            <select id="interest" name="interest" required>
+                                <option value="">İlgi Alanınız</option>
+                                <option value="a1-a2">A1-A2 Başlangıç</option>
+                                <option value="b1-b2">B1-B2 Orta Seviye</option>
+                                <option value="c1-c2">C1-C2 İleri Seviye</option>
+                                <option value="universite">Üniversite Hazırlık</option>
+                                <option value="meslek">Mesleki Eğitim</option>
+                                <option value="online">Online Kurs</option>
+                            </select>
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Mesajınız (Opsiyonel)" rows="3"></textarea>
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>Ücretsiz Bilgi Al</span>
+                        </button>
+                    </form>
+                    <div class="form-footer">
+                        <p><i class="fas fa-shield-alt"></i> Bilgileriniz güvenle korunur</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Öğrenci Yorumları</h2>
+                <p class="section-subtitle">Başarı hikayelerimizi dinleyin</p>
+            </div>
+            <div class="reviews-slider">
+                <div class="reviews-track">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="student-info">
+                                <div class="student-avatar">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face" alt="Maria Schmidt">
+                                </div>
+                                <div class="student-details">
+                                    <h4>Maria Schmidt</h4>
+                                    <span>A1 → B2 (8 ay)</span>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="review-text">"CampusGerman'da öğrendiğim Almanca ile Almanya'da bir üniversitede İşletme okuyorum. Öğretmenlerim çok sabırlıydı ve konuşma odaklı eğitim sayesinde hızlı ilerledim."</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="student-info">
+                                <div class="student-avatar">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="Ahmet Yılmaz">
+                                </div>
+                                <div class="student-details">
+                                    <h4>Ahmet Yılmaz</h4>
+                                    <span>Türkiye → Almanya</span>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="review-text">"Türkiye'den gelerek CampusGerman'da eğitim aldım. Şimdi Almanya'da bir şirkette çalışıyorum. Program çok kapsamlıydı ve iş bulmamda büyük yardımı oldu."</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="student-info">
+                                <div class="student-avatar">
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt="Lisa Müller">
+                                </div>
+                                <div class="student-details">
+                                    <h4>Lisa Müller</h4>
+                                    <span>B1 → C1 (6 ay)</span>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="review-text">"İş için Almanca öğrenmek istiyordum. CampusGerman'da aldığım eğitim sayesinde şirketimde terfi aldım. Özellikle iş Almancası konusunda çok faydalı oldu."</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="student-info">
+                                <div class="student-avatar">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" alt="Carlos Rodriguez">
+                                </div>
+                                <div class="student-details">
+                                    <h4>Carlos Rodriguez</h4>
+                                    <span>İspanya → Almanya</span>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="review-text">"İspanya'dan Almanya'ya geldim ve CampusGerman'da üniversite hazırlık kursu aldım. Şimdi Almanya'da bir üniversitede Mühendislik okuyorum. Çok teşekkürler!"</p>
+                    </div>
+                </div>
+            </div>
+            <div class="reviews-nav">
+                <button class="nav-btn prev-btn" id="prevReview"><i class="fas fa-chevron-left"></i></button>
+                <div class="nav-dots" id="reviewDots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                <button class="nav-btn next-btn" id="nextReview"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Sık Sorulan Sorular</h2>
+                <p class="section-subtitle">Merak ettiğiniz konular hakkında bilgi alın</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Hangi kurs formatları sunulmaktadır?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Kurslarımız size esnek bir öğrenme deneyimi sunar:</p>
+                        <p><strong>Hibrit Eğitim:</strong></p>
+                        <p>Kursunuz, yüz yüze dersler ile canlı online derslerin birleşiminden oluşur.</p>
+                        <p>Hibrit sistem sayesinde, yüz yüze ders günlerinde dilediğiniz zaman online olarak da derse katılabilirsiniz. Sınıflarımız; eğitmenlerin, sınıf içindeki öğrencilerin ve online katılımcıların aynı anda etkileşim kurabileceği teknik donanıma sahiptir.</p>
+                        <p><strong>Canlı Online Eğitim:</strong></p>
+                        <p>Bu formatta derslere tamamen canlı ve online olarak katılırsınız.</p>
+                        <p>Canlı online derslere ister evinizden, ister dışarıdayken, isterseniz de merkezlerimizden katılabilirsiniz. Düsseldorf ve Berlin'de bulunan eğitim merkezlerimizdeki öğrenme alanlarımızdan ve teknik imkânlardan (tablet ve iPad kiralama, yazıcı, fotokopi ve tarayıcı kullanımı) faydalanabilirsiniz. Ayrıca dünyanın farklı ülkelerinden gelen diğer katılımcılarla kafemizde ya da sosyal aktivitelerimiz sırasında tanışma imkânı bulursunuz.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Kurslarda hangi içerikler işlenmektedir?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yoğun Almanca programlarımız; güncel metinlerle dinleme ve okuma anlama, kapsamlı gramer çalışmaları ve çeşitli iletişim odaklı aktiviteler içerir. Bu sayede özellikle konuşma ve yazma becerilerinizin hedefe yönelik olarak geliştirilmesi amaçlanır.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Almanya'da nasıl üniversite eğitimi alabilirim?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Almanya'da üniversite eğitimi alabilmek için öncelikle tanınmış bir üniversiteye giriş yeterliliğine (HZB) sahip olmanız gerekir. Diplomanızın Almanya'da tanınıp tanınmadığını anabin sistemi üzerinden kontrol etmeniz önerilir.</p>
+                        <p>Ayrıca Almanca dil yeterliliğinizi telc, DSH gibi resmi sertifikalarla belgelemeniz gerekir. Campus German Üniversite Hazırlık Programı, bu sürece eksiksiz şekilde hazırlanmanız için tasarlanmıştır.</p>
+                        <p>Doğrudan üniversiteye giriş hakkı olmayan adayların, öncelikle Studienkolleg adı verilen hazırlık eğitimini tamamlaması ve Feststellungsprüfung sınavını başarıyla geçmesi gerekmektedir. Bu sınavdan sonra, uygun bir lisans programına kayıt yaptırabilirsiniz. Akademik danışmanlık hizmetimizle bu süreçte sizi adım adım destekliyoruz.</p>
+                        <p>Üniversite başvuruları genellikle üniversitelerin kendi sistemleri üzerinden veya merkezi başvuru platformu olan Uni-Assist aracılığıyla yapılır. AB üyesi olmayan ülkelerden gelen öğrencilerin öğrenci vizesi alması zorunludur. Ayrıca geçerli bir sağlık sigortası da gereklidir.</p>
+                        <p>Bunlara ek olarak, eğitim ve yaşam masraflarınızı karşılayabileceğinizi kanıtlamanız gerekir. Kabul aldıktan sonra üniversite kaydınızı tamamlayarak gerekli belgeleri teslim etmeniz yeterlidir.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Hangi şartlar gereklidir?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>En az 18 yaşında olmanız gerekir</p>
+                        <p>Almanya'da açılmış bir blokeli hesap veya resmî taahhüt belgesi sunmanız gerekmektedir</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Hangi vize türleri önerilmektedir?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p><strong>Öğrenci Vizesi:</strong></p>
+                        <p>Hazırlık Almanca kurslarına katılım hakkını da kapsar.</p>
+                        <p>AB vatandaşları için vize zorunluluğu bulunmamaktadır.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Kurslara hangi hizmetler dahildir?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Seviye tespit sınavı</p>
+                        <p>Kayıt ücreti alınmaz</p>
+                        <p>Vize başvurusu için kurs belgesi</p>
+                        <p>Dijital ders kitabı</p>
+                        <p>Bireysel öğrenci danışmanlığı (1 kez, yaklaşık 45 dakika)</p>
+                        <p>"Almanya'da Üniversite Eğitimi" konulu webinarlar</p>
+                        <p>Campus German sertifikası</p>
+                        <p>E-öğrenme platformu</p>
+                        <p>Yıl boyunca düzenlenen sosyal ve kültürel aktiviteler</p>
+                        <p>Tüm merkezlerde ücretsiz Wi-Fi erişimi</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Eğitmenlerimizin nitelikleri nelerdir?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Eğitmen kadromuz; üniversite mezunu, Yabancı Dil Olarak Almanca (DaF) ve İkinci Dil Olarak Almanca (DaZ) alanlarında uzun yıllara dayanan öğretim deneyimine sahip, alanında uzman ve motivasyonu yüksek kişilerden oluşur.</p>
+                        <p>Ayrıca Federal Göç ve Mülteciler Dairesi (BAMF) onaylı eğitmenlerimiz bulunmaktadır. Derslerimiz düzenli olarak öğrenciler tarafından değerlendirilir.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Almanca öğrenmek ne kadar sürer?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Almanca öğrenme süresi hedefinize ve mevcut seviyenize bağlıdır. A1'den B2'ye kadar olan temel seviyeleri 6-8 ayda tamamlayabilirsiniz. C1 ve C2 gibi ileri seviyeler için ek 4-6 ay gerekebilir. Yoğun kurslarımızla bu süreyi kısaltabilirsiniz.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Goethe sertifikası alabilir miyim?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Evet, CampusGerman'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Konaklama seçenekleri mevcut mu?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Evet, Almanya'da konaklama seçenekleri sunuyoruz. Öğrenci yurtları, aile yanı konaklama ve paylaşımlı daireler mevcuttur. Konaklama hizmetimiz kurs ücretine dahil değildir ancak size en uygun seçenekleri bulmanızda yardımcı oluyoruz.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Ödeme planları ve indirimler mevcut mu?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Evet, esnek ödeme planları sunuyoruz. Aylık, 3 aylık ve 6 aylık ödeme seçenekleri mevcuttur. Erken kayıt, grup kayıtları ve uzun dönem programlar için indirimler bulunmaktadır. Detaylı bilgi için bizimle iletişime geçin.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-cta">
+                <p>Başka sorularınız mı var?</p>
+                <a href={`/${lang}/kontakt`} class="faq-contact-btn">
+                    <i class="fas fa-envelope"></i>
+                    <span>Bize Ulaşın</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+</MainLayout>
+

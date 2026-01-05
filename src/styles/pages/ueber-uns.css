@@ -1,0 +1,871 @@
+﻿/* ===== HAKKIMIZDA SAYFASI CSS ===== */
+
+/* About Hero Section */
+.about-hero {
+    background: linear-gradient(135deg, #F0FAF8 0%, #ffffff 50%, #F0FAF8 100%);
+    padding: 80px 0 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="about-dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23059669" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23about-dots)"/></svg>');
+    opacity: 0.6;
+}
+
+.about-hero .hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.about-hero .hero-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.about-hero .title-main {
+    display: block;
+    color: #0B1220;
+}
+
+.about-hero .title-highlight {
+    display: block;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.about-hero .hero-description {
+    font-size: 1.3rem;
+    color: #64748B;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Responsive Design for About Hero */
+@media (max-width: 1024px) {
+    .about-hero .hero-title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-hero {
+        padding: 60px 0 40px;
+    }
+    
+    .about-hero .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .about-hero .hero-description {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-hero .hero-title {
+        font-size: 2rem;
+    }
+    
+    .about-hero .hero-description {
+        font-size: 1rem;
+    }
+}
+
+/* ===== MISSION SECTION ===== */
+.mission-section {
+    padding: 80px 0;
+    background: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.mission-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="mission-dots" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="15" cy="15" r="1" fill="%23059669" opacity="0.03"/></pattern></defs><rect width="100" height="100" fill="url(%23mission-dots)"/></svg>');
+    opacity: 0.6;
+}
+
+.mission-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.mission-text .section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #0B1220;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.mission-text .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 2px;
+}
+
+.mission-description {
+    font-size: 1.2rem;
+    color: #475569;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    font-weight: 500;
+}
+
+.mission-features {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 25px;
+    background: #F0FAF8;
+    border-radius: 16px;
+    border: 1px solid rgba(5, 150, 105, 0.1);
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(5, 150, 105, 0.15);
+    border-color: #059669;
+}
+
+.feature-item i {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.feature-item h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0B1220;
+    margin-bottom: 8px;
+}
+
+.feature-item p {
+    color: #475569;
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 500;
+}
+
+.mission-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mission-photo {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(31, 58, 95, 0.2);
+    transition: all 0.3s ease;
+}
+
+.mission-photo:hover {
+    transform: scale(1.02);
+    box-shadow: 0 25px 60px rgba(31, 58, 95, 0.3);
+}
+
+/* ===== TEAM SECTION ===== */
+.team-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #F0FAF8 0%, #ffffff 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.team-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="team-dots" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="12.5" cy="12.5" r="1" fill="%231F3A5F" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23team-dots)"/></svg>');
+    opacity: 0.6;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #0B1220;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 2px;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: #475569;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.team-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px 25px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(31, 58, 95, 0.1);
+    border: 1px solid rgba(5, 150, 105, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.team-card:hover::before {
+    transform: scaleX(1);
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(31, 58, 95, 0.2);
+}
+
+.team-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(31, 58, 95, 0.3);
+    transition: all 0.3s ease;
+}
+
+.team-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.team-card:hover .team-photo {
+    transform: scale(1.1);
+}
+
+.team-card:hover .team-avatar {
+    box-shadow: 0 15px 35px rgba(31, 58, 95, 0.4);
+}
+
+.team-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0B1220;
+    margin-bottom: 6px;
+}
+
+.team-role {
+    font-size: 0.95rem;
+    color: #059669;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.team-description {
+    color: #475569;
+    line-height: 1.5;
+    font-weight: 500;
+    margin-bottom: 15px;
+    font-size: 1.01rem;
+}
+
+.team-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.skill-tag {
+    background: rgba(5, 150, 105, 0.1);
+    color: #059669;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid rgba(5, 150, 105, 0.2);
+}
+
+/* ===== TIMELINE SECTION ===== */
+.timeline-section {
+    padding: 60px 0;
+    background: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.timeline-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="timeline-dots" width="35" height="35" patternUnits="userSpaceOnUse"><circle cx="17.5" cy="17.5" r="1" fill="%23F97316" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23timeline-dots)"/></svg>');
+    opacity: 0.6;
+}
+
+.timeline {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 35px;
+    position: relative;
+}
+
+.timeline-item:nth-child(odd) {
+    flex-direction: row;
+}
+
+.timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.timeline-marker {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    box-shadow: 0 10px 25px rgba(31, 58, 95, 0.3);
+    position: relative;
+    z-index: 3;
+    flex-shrink: 0;
+}
+
+.timeline-content {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(31, 58, 95, 0.1);
+    border: 1px solid rgba(5, 150, 105, 0.1);
+    margin: 0 30px;
+    flex: 1;
+    max-width: 550px;
+}
+
+.timeline-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0B1220;
+    margin-bottom: 10px;
+}
+
+.timeline-description {
+    color: #475569;
+    line-height: 1.5;
+    font-weight: 500;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* ===== STATS SECTION ===== */
+.stats-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.stats-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stats-dots" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="15" cy="15" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23stats-dots)"/></svg>');
+    opacity: 0.6;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.stat-item {
+    text-align: center;
+    color: white;
+}
+
+.stat-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    font-size: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #ffffff 0%, #F0FAF8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+/* ===== CTA SECTION - FORCE GRID LAYOUT ===== */
+.cta-section {
+    background: linear-gradient(135deg, #F0FAF8 0%, #ffffff 100%);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-content {
+    display: block !important;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* CTA Elements Spacing */
+.cta-section .cta-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.cta-section .cta-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 35px;
+}
+
+.cta-section .cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="cta-dots" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%23059669" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23cta-dots)"/></svg>');
+    opacity: 0.6;
+}
+
+.cta-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.cta-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #0B1220;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.cta-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 2px;
+}
+
+.cta-description {
+    font-size: 1.2rem;
+    color: #475569;
+    font-weight: 500;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-btn {
+    padding: 18px 35px;
+    border-radius: 30px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-btn.primary {
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 10px 30px rgba(31, 58, 95, 0.3);
+}
+
+.cta-btn.primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #F97316 0%, #1F3A5F 100%);
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.cta-btn.primary:hover::before {
+    left: 0;
+}
+
+.cta-btn.secondary {
+    background: white;
+    color: #059669;
+    border: 2px solid #059669;
+    box-shadow: 0 10px 30px rgba(5, 150, 105, 0.2);
+}
+
+.cta-btn.secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: #059669;
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.cta-btn.secondary:hover::before {
+    left: 0;
+}
+
+.cta-btn.secondary:hover {
+    color: white;
+}
+
+.cta-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+}
+
+.cta-btn i {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.cta-btn:hover i {
+    transform: scale(1.1);
+}
+
+/* ===== RESPONSIVE DESIGN FOR ABOUT SECTIONS ===== */
+@media (max-width: 1024px) {
+    .mission-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .mission-text .section-title,
+    .section-title,
+    .cta-title {
+        font-size: 2.2rem;
+    }
+    
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .timeline::before {
+        left: 30px;
+    }
+    
+    .timeline-item {
+        flex-direction: row !important;
+        padding-left: 60px;
+    }
+    
+    .timeline-marker {
+        position: absolute;
+        left: 0;
+    }
+    
+    .timeline-content {
+        margin: 0;
+        max-width: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .mission-section,
+    .team-section,
+    .timeline-section,
+    .stats-section,
+    .cta-section {
+        padding: 50px 0;
+    }
+    
+    .team-section {
+        padding: 50px 0;
+    }
+    
+    .section-header {
+        margin-bottom: 30px;
+    }
+    
+    .mission-text .section-title,
+    .section-title,
+    .cta-title {
+        font-size: 2rem;
+    }
+    
+    .mission-description,
+    .section-subtitle,
+    .cta-description {
+        font-size: 1.1rem;
+    }
+    
+    .mission-photo {
+        height: 300px;
+    }
+    
+    .feature-item {
+        padding: 20px;
+    }
+    
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .team-card {
+        padding: 30px 25px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cta-btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .mission-text .section-title,
+    .section-title,
+    .cta-title {
+        font-size: 1.8rem;
+    }
+    
+    .mission-description,
+    .section-subtitle,
+    .cta-description {
+        font-size: 1rem;
+    }
+    
+    .feature-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .feature-item i {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+    
+    .team-card {
+        padding: 20px 18px;
+    }
+    
+    .team-avatar {
+        width: 65px;
+        height: 65px;
+        margin-bottom: 12px;
+    }
+    
+    .team-name {
+        font-size: 1.1rem;
+    }
+    
+    .team-role {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+    
+    .team-description {
+        font-size: 0.85rem;
+        margin-bottom: 12px;
+    }
+    
+    .mission-photo {
+        height: 250px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .stat-number {
+        font-size: 2.2rem;
+    }
+    
+    .cta-btn {
+        padding: 16px 30px;
+        font-size: 0.95rem;
+    }
+}

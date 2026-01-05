@@ -1,0 +1,103 @@
+---
+title: "Deutschkurs für Medizin und Gesundheitswissenschaften"
+lang: "de"
+badge:
+  icon: "fas fa-stethoscope"
+  text: "Medizin/Gesundheit"
+description: "Spezieller Deutschkurs für Studierende und Fachkräfte aus Medizin und Gesundheitswissenschaften. Medizinische Terminologie und berufsbezogenes Deutsch."
+image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Wochenstunden"
+    description: "20-24 Unterrichtseinheiten"
+  - icon: "fas fa-calendar-alt"
+    title: "Kursdauer"
+    description: "12-24 Wochen"
+  - icon: "fas fa-users"
+    title: "Klassengröße"
+    description: "Maximal 10 Teilnehmende"
+  - icon: "fas fa-stethoscope"
+    title: "Fokus"
+    description: "Medizinisches Deutsch"
+heroButtons:
+  primary:
+    text: "Jetzt bewerben"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Programmdetails"
+    icon: "fas fa-info-circle"
+    href: "#programmdetails"
+tabs:
+  - id: "kursinformationen"
+    icon: "fas fa-info-circle"
+    title: "Kursinformationen"
+    content:
+      title: "Über den Medizin- und Gesundheitskurs"
+      paragraphs:
+        - heading: "Kursüberblick"
+          text: "Der Deutschkurs für Medizin und Gesundheitswissenschaften ist ein speziell entwickeltes Programm für Studierende und Gesundheitsfachkräfte, die Deutsch effektiv in medizinischen, akademischen und klinischen Kontexten verwenden möchten. Dieser von CampusGerman angebotene Kurs zielt darauf ab, Teilnehmenden, die ein Medizinstudium in Deutschland, eine Tätigkeit im Gesundheitswesen oder eine akademische Karriere anstreben, eine solide sprachliche Grundlage zu vermitteln. Bildungs- und Arbeitsumgebungen im Bereich Medizin und Gesundheit in Deutschland erfordern ein hohes Maß an Sprachkompetenz. Patientenkommunikation, akademische Vorlesungen, klinische Praktika und offizielle Dokumente werden größtenteils auf Deutsch durchgeführt. Dieser Kurs kombiniert allgemeine Deutschkenntnisse mit medizinischer Terminologie und beruflicher Kommunikation, sodass Studierende die Sprache als berufliches Werkzeug nutzen können. Der CampusGerman Deutschkurs für Medizin und Gesundheitswissenschaften verbindet theoretisches Wissen mit praktischer Anwendung und zielt darauf ab, dass Teilnehmende sich sowohl in akademischen als auch in professionellen Umgebungen sicher ausdrücken können."
+        - heading: "Zielgruppe und Voraussetzungen"
+          text: "Dieser Kurs eignet sich für Teilnehmende, die Deutsch im Bereich Medizin und Gesundheit benötigen. Besonders geeignet ist er für: Studierende in Medizin, Zahnmedizin, Pharmazie oder Gesundheitswissenschaften; Bewerberinnen und Bewerber, die ein Medizin- oder Gesundheitsstudium in Deutschland planen; Fachkräfte wie Ärztinnen und Ärzte, Pflegekräfte, Physiotherapeutinnen und Physiotherapeuten oder Gesundheitspersonal; sowie Lernende, die medizinische Vorlesungen, Praktika und klinische Umgebungen auf Deutsch verfolgen möchten. Für die Teilnahme wird mindestens ein allgemeines Deutschniveau von B1 empfohlen. Dieses Niveau ermöglicht ein effizienteres Erlernen medizinischer Terminologie und Patientenkommunikation. CampusGerman führt vor Kursbeginn eine Niveaubewertung durch und leitet Studierende zum passenden Programm."
+        - heading: "Kursinhalte und Lernziele"
+          text: "Der Deutschkurs für Medizin und Gesundheitswissenschaften konzentriert sich auf medizinisches Deutsch und akademischen Sprachgebrauch. Zu den Kursinhalten gehören: medizinische Terminologie und Grundkonzepte; Patient-Arzt-Kommunikation; Sprache für medizinische Berichte und Aufzeichnungen; Lesen und Analysieren akademischer Texte; sowie Ausdrücke für klinische und Gesundheitsumgebungen. Das Lernziel ist, dass Studierende Deutsch im Gesundheitsbereich korrekt, verständlich und professionell verwenden können. Nach Kursende können Teilnehmende in klinischen und akademischen Umgebungen leichter kommunizieren."
+        - heading: "Unterrichtsmethode und Lernumfeld"
+          text: "Bei CampusGerman wird dieser Kurs praxisorientiert und kommunikationsfokussiert durchgeführt. Im Unterricht werden eingesetzt: realistische Patientenszenarien; Rollenspiele; akademische und klinische Fallanalysen; sowie Hör-, Sprech- und Schreibübungen. Das Lernumfeld ist unterstützend gestaltet und fördert die aktive Teilnahme der Studierenden. Die Lehrkräfte verfügen über Erfahrung in medizinischem Deutsch und Fachwissen."
+        - heading: "Weiterentwicklung nach dem Kurs"
+          text: "Nach Abschluss des Deutschkurses für Medizin und Gesundheitswissenschaften: erweitern Studierende ihren medizinischen Wortschatz; passen sich leichter an Gesundheitsausbildungen in Deutschland an; drücken sich in klinischen und akademischen Umgebungen selbstbewusster aus; und bereiten sich auf FSP, berufliche Anerkennung oder fortgeschrittene Programme vor. CampusGerman leitet Studierende auch nach dem Kurs weiter – z. B. bei fortgeschrittenen Prüfungsvorbereitungen und karriereorientierten Programmen."
+  - id: "termine-preise"
+    icon: "fas fa-calendar-alt"
+    title: "Termine und Preise"
+    content:
+      title: "Preisinformationen"
+      pricing:
+        - name: "12 Wochen Medizin/Gesundheit"
+          duration: "12 Wochen"
+          schedule: "20-24 Unterrichtseinheiten/Woche"
+          price: "Individuelle Preisgestaltung"
+          highlighted: true
+  - id: "programmdetails"
+    icon: "fas fa-book-open"
+    title: "Programmdetails"
+    content:
+      title: "Programminhalte"
+      items:
+        - icon: "fas fa-check-circle"
+          text: "<strong>Medizinische Terminologie:</strong> Terminologie aus Medizin und Gesundheitswesen"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Patientenkommunikation:</strong> Kommunikation mit Patienten und Angehörigen"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Medizinische Berichte:</strong> Medizinische Berichte schreiben und lesen"
+        - icon: "fas fa-check-circle"
+          text: "<strong>FSP-Vorbereitung:</strong> Unterstützung bei der FSP-Prüfungsvorbereitung"
+faqs:
+  - question: "Gibt es eine FSP-Prüfungsvorbereitung?"
+    answer: "Ja, das Programm umfasst Unterstützung bei der FSP-Prüfungsvorbereitung."
+  - question: "Mit welchem Niveau sollte ich beginnen?"
+    answer: "Mindestens B2-Niveau wird empfohlen, ideal ist jedoch C1-Niveau."
+  - question: "Welche Kursformate werden angeboten?"
+    answer: "Unsere Kurse bieten flexible Lernformate: Hybridunterricht – eine Kombination aus Präsenz- und Live-Online-Unterricht, bei der Sie auch an Präsenztagen online teilnehmen können; sowie Live-Online-Unterricht, bei dem Sie vollständig live und online am Unterricht teilnehmen."
+  - question: "Welche Inhalte werden in den Kursen behandelt?"
+    answer: "Unsere Intensiv-Deutschkursprogramme umfassen Hör- und Leseverstehen mit aktuellen Texten, umfassende Grammatikarbeit sowie vielfältige kommunikationsorientierte Aktivitäten. Ziel ist insbesondere die gezielte Entwicklung Ihrer Sprech- und Schreibkompetenzen."
+  - question: "Wie kann ich in Deutschland studieren?"
+    answer: "Für ein Studium in Deutschland benötigen Sie eine anerkannte Hochschulzugangsberechtigung (HZB). Es wird empfohlen, die Anerkennung Ihres Abschlusses im Anabin-System zu prüfen. Zudem müssen Deutschkenntnisse durch offizielle Zertifikate wie telc oder DSH nachgewiesen werden. Das CampusGerman Universitätsvorbereitungsprogramm unterstützt Sie umfassend bei diesem Prozess."
+  - question: "Welche Voraussetzungen sind erforderlich?"
+    answer: "Sie müssen mindestens 18 Jahre alt sein und entweder ein in Deutschland eröffnetes Sperrkonto oder eine offizielle Verpflichtungserklärung vorlegen."
+  - question: "Welche Visatypen werden empfohlen?"
+    answer: "Studentenvisum: Dieses umfasst auch die Teilnahme an vorbereitenden Deutschkursen. Für EU-Bürgerinnen und EU-Bürger besteht keine Visumpflicht."
+  - question: "Welche Leistungen sind in den Kursen enthalten?"
+    answer: "Einstufungstest, keine Anmeldegebühr, Kursbescheinigung für den Visumsantrag, digitales Lehrbuch, individuelle Studienberatung (einmalig ca. 45 Minuten), Webinare zum Thema \"Studium in Deutschland\", CampusGerman-Zertifikat, E-Learning-Plattform, ganzjährig organisierte soziale und kulturelle Aktivitäten sowie kostenloser WLAN-Zugang an allen Standorten."
+  - question: "Welche Qualifikationen haben die Lehrkräfte?"
+    answer: "Unser Lehrteam besteht aus hochqualifizierten, akademisch ausgebildeten Lehrkräften mit langjähriger Erfahrung in Deutsch als Fremdsprache (DaF) und Deutsch als Zweitsprache (DaZ). Zudem verfügen wir über vom Bundesamt für Migration und Flüchtlinge (BAMF) anerkannte Lehrkräfte. Die Kurse werden regelmäßig von den Teilnehmenden evaluiert."
+  - question: "Wie lange dauert es, Deutsch zu lernen?"
+    answer: "Die Dauer des Deutschlernens hängt von Ihren Zielen und Ihrem aktuellen Sprachniveau ab. Die Grundstufen von A1 bis B2 können in etwa 6–8 Monaten abgeschlossen werden. Für fortgeschrittene Niveaus wie C1 und C2 sind zusätzlich etwa 4–6 Monate einzuplanen. Intensivkurse können die Lernzeit verkürzen."
+  - question: "Kann ich ein Goethe-Zertifikat erwerben?"
+    answer: "Ja, bei CampusGerman bieten wir Vorbereitungskurse für Goethe-Zertifikate an – von A1 bis C2. Prüfungen können auf unserem Campus oder in nahegelegenen Prüfzentren abgelegt werden."
+  - question: "Gibt es Unterkunftsmöglichkeiten?"
+    answer: "Ja, wir unterstützen Sie bei der Organisation von Unterkunftsmöglichkeiten in Deutschland – z. B. Studentenwohnheime, Gastfamilien und Wohngemeinschaften. Die Unterkunft ist nicht im Kurspreis enthalten, wir helfen Ihnen jedoch bei der passenden Auswahl."
+  - question: "Gibt es Zahlungspläne und Rabatte?"
+    answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
+
+hasDemandForm: true
+---
+

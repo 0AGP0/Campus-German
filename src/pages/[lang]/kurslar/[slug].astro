@@ -1,0 +1,809 @@
+---
+import { getCollection } from 'astro:content';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo } from '../../../utils/coursePricingHelper';
+
+export async function getStaticPaths() {
+  const allKurslar = await getCollection('kurslar');
+  
+  // Genel bakış sayfalarını filtrele (bunlar için özel sayfalar var)
+  const genelBakisSayfalari = ['intensiv-deutsch', 'saisonal-uebersicht', 'online-uebersicht', 'pruefungsvorbereitung-uebersicht', 'intensiv-studentenvisum'];
+  
+  return allKurslar
+    .filter(kurs => !genelBakisSayfalari.includes(kurs.slug))
+    .map(kurs => {
+      // Astro dosya adı bildungszeit.de.md ise slug bildungszeitde olur (tire YOK!)
+      // Slug'dan dil uzantısını kaldır (bildungszeitde -> bildungszeit)
+      let cleanSlug = kurs.slug;
+      
+      // Tire ile biten uzantıları kaldır (bildungszeit-de -> bildungszeit)
+      if (cleanSlug.endsWith('-de')) {
+        cleanSlug = cleanSlug.replace(/-de$/, '');
+      } else if (cleanSlug.endsWith('-tr')) {
+        cleanSlug = cleanSlug.replace(/-tr$/, '');
+      }
+      // Tire OLMADAN biten uzantıları kaldır (bildungszeitde -> bildungszeit)
+      else if (cleanSlug.endsWith('de') && cleanSlug.length > 2 && !cleanSlug.endsWith('-de')) {
+        cleanSlug = cleanSlug.replace(/de$/, '');
+      } else if (cleanSlug.endsWith('tr') && cleanSlug.length > 2 && !cleanSlug.endsWith('-tr')) {
+        cleanSlug = cleanSlug.replace(/tr$/, '');
+      }
+      
+      return {
+        params: { 
+          lang: kurs.data.lang,
+          slug: cleanSlug
+        },
+        props: { kurs },
+      };
+    });
+}
+
+const { kurs } = Astro.props;
+const { lang } = Astro.params;
+const { Content } = await kurs.render();
+
+// Kurs için fiyat ve tarih bilgilerini al
+const pricingData = getCoursePricingData(kurs.data.lang as 'tr' | 'de', kurs.slug);
+const courseInfo = extractCourseInfo(kurs.slug);
+const weeklyCategory = getWeeklyPricingCategory(courseInfo.level);
+
+// Mevcut tabs'da "tarihler-fiyatlar" veya "fiyatlar-tarihler" tab'ı var mı kontrol et
+const hasPricingTab = kurs.data.tabs?.some(tab => 
+  tab.id === 'tarihler-fiyatlar' || 
+  tab.id === 'fiyatlar-tarihler' || 
+  tab.id === 'pricing-dates' ||
+  tab.title.toLowerCase().includes('fiyat') ||
+  tab.title.toLowerCase().includes('tarih')
+) || false;
+---
+
+<!DOCTYPE html>
+<html lang={kurs.data.lang}>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{kurs.data.title} - CampusGerman</title>
+    <link rel="stylesheet" href="/kurs-detay.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/kurs-detay-override.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <Header lang={lang} />
+
+    <main class="course-detail-page">
+        <!-- Hero Section -->
+        <section class="hero-section course-hero">
+            <div class="container">
+                <div class="hero-wrapper">
+                    <div class="hero-image">
+                        <div class="image-container">
+                            <img src={kurs.data.image} alt={kurs.data.title} class="course-image">
+                            <div class="image-overlay">
+                                <div class="overlay-badge">
+                                    <i class={kurs.data.badge.icon}></i>
+                                    <span>{kurs.data.badge.text}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-content">
+                        <div class="course-badge">
+                            <i class={kurs.data.badge.icon}></i>
+                            <span>{kurs.data.badge.text}</span>
+                        </div>
+                        
+                        <h1 class="hero-title">{kurs.data.title}</h1>
+                        
+                        <p class="hero-description">
+                            {kurs.data.description}
+                        </p>
+                        
+                        <div class="course-features">
+                            {kurs.data.features.map(feature => (
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <i class={feature.icon}></i>
+                                    </div>
+                                    <div class="feature-content">
+                                        <h4>{feature.title}</h4>
+                                        <p>{feature.description}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        
+                        <div class="hero-actions">
+                            <a href={kurs.data.heroButtons.secondary.href} class="hero-secondary-button">
+                                <i class={kurs.data.heroButtons.secondary.icon}></i>
+                                <span>{kurs.data.heroButtons.secondary.text}</span>
+                            </a>
+                            <a href={kurs.data.hasDemandForm ? "#demand-form" : kurs.data.heroButtons.primary.href} class="hero-cta-button">
+                                <span>{kurs.data.heroButtons.primary.text}</span>
+                                <i class={kurs.data.heroButtons.primary.icon}></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Details Tabs Section -->
+        <section class="course-details-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>{lang === 'tr' ? 'Kurs Detayları' : 'Kursdetails'}</h2>
+                    <p>{lang === 'tr' ? `${kurs.data.title} hakkında tüm detayları keşfedin` : `Entdecken Sie alle Details zu ${kurs.data.title}`}</p>
+                </div>
+                
+                <div class="tabs-navigation">
+                    {kurs.data.tabs.map((tab, index) => (
+                        <button class={`tab-btn ${index === 0 ? 'active' : ''}`} data-tab={tab.id}>
+                            <i class={tab.icon}></i>
+                            <span>{tab.title}</span>
+                        </button>
+                    ))}
+                    {/* Eğer pricingData var ama tabs'da fiyat tab'ı yoksa, yeni tab butonu ekle */}
+                    {pricingData && !hasPricingTab && (
+                        <button class="tab-btn" data-tab="fiyatlar-tarihler">
+                            <i class="fas fa-euro-sign"></i>
+                            <span>{kurs.data.lang === 'tr' ? 'Fiyatlar ve Tarihler' : 'Preise und Termine'}</span>
+                        </button>
+                    )}
+                </div>
+
+                <div class="tab-contents">
+                    {kurs.data.tabs.map((tab, index) => {
+                        // Eğer bu tab "tarihler-fiyatlar" veya "fiyatlar-tarihler" ise ve pricingData varsa, dinamik içerik göster
+                        const isPricingTab = (tab.id === 'tarihler-fiyatlar' || tab.id === 'fiyatlar-tarihler' || tab.id === 'pricing-dates') && pricingData;
+                        
+                        return (
+                            <div class={`tab-content ${index === 0 ? 'active' : ''}`} id={tab.id}>
+                                <div class="course-card">
+                                    <div class="card-header">
+                                        <div class="card-icon">
+                                            <i class={tab.icon}></i>
+                                        </div>
+                                        <h3>{tab.title}</h3>
+                                    </div>
+                                    <div class="card-content">
+                                        {isPricingTab ? (
+                                            <!-- Dinamik Fiyat ve Tarihler İçeriği -->
+                                            <div class="dynamic-pricing-content">
+                                                <h4>{kurs.data.lang === 'tr' ? 'Fiyat Bilgileri' : 'Preisinformationen'}</h4>
+                                                
+                                                {/* Haftalık kurslar için sadece haftalık fiyatlar göster */}
+                                                {pricingData.isWeeklyOnly ? (
+                                                    <div class="pricing-block">
+                                                        <h5>{kurs.data.lang === 'tr' ? 'Haftalık Kurs Fiyatları' : 'Wöchentliche Kursgebühren'}</h5>
+                                                        <p class="pricing-description">{kurs.data.lang === 'tr' ? 'Haftalık kurslarımız için esnek ödeme seçenekleri. İstediğiniz süre boyunca devam edebilirsiniz.' : 'Flexible Zahlungsoptionen für unsere wöchentlichen Kurse. Sie können so lange fortfahren, wie Sie möchten.'}</p>
+                                                        {weeklyCategory && (
+                                                            <div class="weekly-pricing-list">
+                                                                {Object.entries(pricingData.weeklyPricing[weeklyCategory]).map(([weeks, price]) => (
+                                                                    <div class="weekly-pricing-item">
+                                                                        <span>{weeks} {kurs.data.lang === 'tr' ? 'Hafta' : 'Wochen'}</span>
+                                                                        <strong>{price}</strong>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ) : (
+                                                    <>
+                                                        {/* Tam Kurs Fiyatı - Sadece yoğun ve online kurslar için */}
+                                                        {pricingData.pricing && (
+                                                            <div class="pricing-block">
+                                                                <h5>{kurs.data.lang === 'tr' ? 'Tam Kurs Fiyatı' : 'Vollständiger Kurspreis'}</h5>
+                                                                <div class="pricing-card-modern">
+                                                                    <div class="pricing-card-header">
+                                                                        <div class="pricing-card-icon">
+                                                                            <i class="fas fa-graduation-cap"></i>
+                                                                        </div>
+                                                                        <div class="pricing-card-title">
+                                                                            <h6>{courseInfo.level?.toUpperCase()}</h6>
+                                                                            <span class="pricing-card-subtitle">{kurs.data.lang === 'tr' ? 'Tam Kurs' : 'Vollständiger Kurs'}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="pricing-card-body">
+                                                                        <div class="pricing-info-item">
+                                                                            <div class="pricing-info-icon">
+                                                                                <i class="fas fa-book-open"></i>
+                                                                            </div>
+                                                                            <div class="pricing-info-content">
+                                                                                <span class="pricing-info-label">{kurs.data.lang === 'tr' ? 'Ders Sayısı' : 'Unterrichtsstunden'}</span>
+                                                                                <span class="pricing-info-value">{pricingData.pricing.lessons}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="pricing-info-item">
+                                                                            <div class="pricing-info-icon">
+                                                                                <i class="fas fa-calendar-alt"></i>
+                                                                            </div>
+                                                                            <div class="pricing-info-content">
+                                                                                <span class="pricing-info-label">{kurs.data.lang === 'tr' ? 'Süre' : 'Dauer'}</span>
+                                                                                <span class="pricing-info-value">{pricingData.pricing.duration}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="pricing-card-footer">
+                                                                        <div class="pricing-price">
+                                                                            <span class="pricing-price-label">{kurs.data.lang === 'tr' ? 'Fiyat' : 'Preis'}</span>
+                                                                            <span class="pricing-price-value">{pricingData.pricing.fullCourse}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                        
+                                                        {/* Haftalık Fiyatlar - SADECE haftalık kurslar için (yoğun ve online kurslarda gösterilmez) */}
+                                                        {/* Yoğun ve online kurslar için haftalık fiyatlar gösterilmez */}
+                                                        
+                                                        {/* Online Kurs Notu */}
+                                                        {courseInfo.type === 'online' && (
+                                                            <div class="pricing-info-box" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);">
+                                                                <p><i class="fas fa-info-circle"></i> <strong>{pricingData.lessonInfo}</strong> - {pricingData.onlineNote}</p>
+                                                            </div>
+                                                        )}
+                                                    </>
+                                                )}
+                                                
+                                                {/* Kurs Zamanları - Tüm kurslar için */}
+                                                {pricingData.schedule && (
+                                                    <div class="pricing-block">
+                                                        <h5>{kurs.data.lang === 'tr' ? 'Kurs Zamanları' : 'Kurszeiten'}</h5>
+                                                        <p class="lesson-duration-note"><strong>{pricingData.lessonInfo}</strong></p>
+                                                        <div class="schedule-info">
+                                                            <div class="schedule-item">
+                                                                <h6><i class="fas fa-sun"></i> {kurs.data.lang === 'tr' ? 'Sabah Kursları' : 'Vormittagskurse'}</h6>
+                                                                {courseInfo.level === 'a1' || courseInfo.level === 'a2' ? (
+                                                                    <>
+                                                                        <p><strong>A1-A2:</strong> {pricingData.schedule.morning.a1a2.time}</p>
+                                                                        <p class="schedule-break">{pricingData.schedule.morning.a1a2.break}</p>
+                                                                        <p class="schedule-lessons">{pricingData.schedule.morning.a1a2.lessons}</p>
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        <p><strong>B1-C1:</strong> {pricingData.schedule.morning.b1c1.time}</p>
+                                                                        <p class="schedule-break">{pricingData.schedule.morning.b1c1.break}</p>
+                                                                        <p class="schedule-lessons">{pricingData.schedule.morning.b1c1.lessons}</p>
+                                                                    </>
+                                                                )}
+                                                            </div>
+                                                            <div class="schedule-item">
+                                                                <h6><i class="fas fa-moon"></i> {kurs.data.lang === 'tr' ? 'Öğleden Sonra Kursları' : 'Nachmittagskurse'}</h6>
+                                                                {courseInfo.level === 'a1' || courseInfo.level === 'a2' ? (
+                                                                    <>
+                                                                        <p><strong>A1-A2:</strong> {pricingData.schedule.afternoon.a1a2.time}</p>
+                                                                        <p class="schedule-break">{pricingData.schedule.afternoon.a1a2.break}</p>
+                                                                        <p class="schedule-lessons">{pricingData.schedule.afternoon.a1a2.lessons}</p>
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        <p><strong>B1-C1:</strong> {pricingData.schedule.afternoon.b1c1.time}</p>
+                                                                        <p class="schedule-break">{pricingData.schedule.afternoon.b1c1.break}</p>
+                                                                        <p class="schedule-lessons">{pricingData.schedule.afternoon.b1c1.lessons}</p>
+                                                                    </>
+                                                                )}
+                                                            </div>
+                                                            <p class="schedule-days"><i class="fas fa-calendar-week"></i> {pricingData.schedule.days}</p>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                
+                                                {/* Başlangıç Tarihleri - Yoğun, online ve sınav hazırlık kursları için */}
+                                                {pricingData.dates && (
+                                                    <div class="pricing-block">
+                                                        <h5>{kurs.data.lang === 'tr' ? 'Kurs Başlangıç Tarihleri 2026' : 'Kursstarttermine 2026'}</h5>
+                                                        <div class="dates-list">
+                                                            {(pricingData.dates.all ? pricingData.dates.all : Object.values(pricingData.dates).flat()).map(date => (
+                                                                <span class="date-badge">{date}</span>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                
+                                                {/* Tatiller - Tüm kurslar için */}
+                                                {pricingData.holidays && (
+                                                    <div class="pricing-block">
+                                                        <h5>{kurs.data.lang === 'tr' ? 'Tatiller 2026' : 'Feiertage 2026'}</h5>
+                                                        <div class="holidays-list">
+                                                            {pricingData.holidays.map(holiday => (
+                                                                <div class="holiday-item">
+                                                                    <span class="holiday-name">{holiday.name}</span>
+                                                                    <span class="holiday-date">{holiday.date}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                
+                                                {/* Vize Bilgisi - Sadece yoğun ve online kurslar için */}
+                                                {pricingData.visaInfo && !pricingData.isWeeklyOnly && (
+                                                    <div class="pricing-info-box">
+                                                        <p><i class="fas fa-info-circle"></i> {pricingData.visaInfo}</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <!-- Normal Tab İçeriği -->
+                                            <>
+                                                <h4>{tab.content.title}</h4>
+                                                
+                                                {/* Paragraf bazlı içerik - öncelikli */}
+                                                {tab.content.paragraphs && tab.content.paragraphs.length > 0 ? (
+                                                    <div class="course-content-paragraphs">
+                                                        {tab.content.paragraphs.map((para, idx) => (
+                                                            <div class="content-paragraph-block">
+                                                                {para.heading && (
+                                                                    <h5 class="paragraph-heading">{para.heading}</h5>
+                                                                )}
+                                                                <p class="paragraph-text">{para.text}</p>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                ) : (
+                                                    <>
+                                                        {/* Eski format - items ve additionalInfo (geriye dönük uyumluluk için) */}
+                                                        {tab.content.items && (
+                                                            <div class="info-list">
+                                                                {tab.content.items.map(item => (
+                                                                    <div class="info-item">
+                                                                        <i class={item.icon}></i>
+                                                                        <span set:html={item.text}></span>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                        
+                                                        {tab.content.additionalInfo && (
+                                                            <div class="additional-offers">
+                                                                <h5>{tab.content.additionalInfo.title}</h5>
+                                                                <p>{tab.content.additionalInfo.text}</p>
+                                                            </div>
+                                                        )}
+                                                    </>
+                                                )}
+
+                                                {tab.content.pricing && (
+                                                    <div class="pricing-table">
+                                                        <div class="table-header">
+                                                            <div class="header-cell">Program</div>
+                                                            <div class="header-cell">Süre</div>
+                                                            <div class="header-cell">Ders Saatleri</div>
+                                                            <div class="header-cell">Fiyat</div>
+                                                        </div>
+                                                        {tab.content.pricing.map(price => (
+                                                            <div class={`table-row ${price.highlighted ? 'highlighted' : ''}`} style={price.highlighted ? 'background-color: #e7f3ff;' : ''}>
+                                                                <div class="table-cell">{price.highlighted ? <strong>{price.name}</strong> : price.name}</div>
+                                                                <div class="table-cell">{price.highlighted ? <strong>{price.duration}</strong> : price.duration}</div>
+                                                                <div class="table-cell">{price.highlighted ? <strong>{price.schedule}</strong> : price.schedule}</div>
+                                                                <div class="table-cell">{price.highlighted ? <strong>{price.price}</strong> : price.price}</div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+
+                                                {tab.content.lessons && (
+                                                    <div class="lesson-info">
+                                                        <p class="lesson-duration"><strong>1 Ders = 45 dakika</strong></p>
+                                                        <div class="teaching-method">
+                                                            {tab.content.lessons.map(lesson => (
+                                                                <div style="margin-bottom: 20px;">
+                                                                    <h5><strong>{lesson.title}</strong></h5>
+                                                                    <p>{lesson.description}</p>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })}
+                    
+                    {/* Eğer pricingData var ama tabs'da fiyat tab'ı yoksa, yeni tab içeriği ekle */}
+                    {pricingData && !hasPricingTab && (
+                        <div class="tab-content" id="fiyatlar-tarihler">
+                                <div class="course-card">
+                                    <div class="card-header">
+                                        <div class="card-icon">
+                                            <i class="fas fa-euro-sign"></i>
+                                        </div>
+                                        <h3>{kurs.data.lang === 'tr' ? 'Fiyatlar ve Tarihler' : 'Preise und Termine'}</h3>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="dynamic-pricing-content">
+                                            <h4>{kurs.data.lang === 'tr' ? 'Fiyat Bilgileri' : 'Preisinformationen'}</h4>
+                                            
+                                            {/* Haftalık kurslar için sadece haftalık fiyatlar göster */}
+                                            {pricingData.isWeeklyOnly ? (
+                                                <div class="pricing-block">
+                                                    <h5>{kurs.data.lang === 'tr' ? 'Haftalık Kurs Fiyatları' : 'Wöchentliche Kursgebühren'}</h5>
+                                                    <p class="pricing-description">{kurs.data.lang === 'tr' ? 'Haftalık kurslarımız için esnek ödeme seçenekleri. İstediğiniz süre boyunca devam edebilirsiniz.' : 'Flexible Zahlungsoptionen für unsere wöchentlichen Kurse. Sie können so lange fortfahren, wie Sie möchten.'}</p>
+                                                    {weeklyCategory && (
+                                                        <div class="weekly-pricing-list">
+                                                            {Object.entries(pricingData.weeklyPricing[weeklyCategory]).map(([weeks, price]) => (
+                                                                <div class="weekly-pricing-item">
+                                                                    <span>{weeks} {kurs.data.lang === 'tr' ? 'Hafta' : 'Wochen'}</span>
+                                                                    <strong>{price}</strong>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    {/* Tam Kurs Fiyatı - Yoğun, online ve sınav hazırlık kursları için */}
+                                                    {pricingData.pricing && (
+                                                        <div class="pricing-block">
+                                                            <h5>{kurs.data.lang === 'tr' ? (pricingData.isExamPrep ? 'Sınav Hazırlık Kursu Fiyatı' : 'Tam Kurs Fiyatı') : (pricingData.isExamPrep ? 'Prüfungsvorbereitungskurs Preis' : 'Vollständiger Kurspreis')}</h5>
+                                                            <div class="pricing-card-modern">
+                                                                <div class="pricing-card-header">
+                                                                    <div class="pricing-card-icon">
+                                                                        <i class="fas fa-certificate"></i>
+                                                                    </div>
+                                                                    <div class="pricing-card-title">
+                                                                        <h6>{pricingData.isExamPrep ? (kurs.slug.includes('testdaf') || kurs.slug.includes('dsh') ? 'TestDaF/DSH' : (courseInfo.level ? courseInfo.level.toUpperCase() : 'Goethe/TELC')) : courseInfo.level?.toUpperCase()}</h6>
+                                                                        <span class="pricing-card-subtitle">{kurs.data.lang === 'tr' ? (pricingData.isExamPrep ? 'Sınav Hazırlık' : 'Tam Kurs') : (pricingData.isExamPrep ? 'Prüfungsvorbereitung' : 'Vollständiger Kurs')}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="pricing-card-body">
+                                                                    <div class="pricing-info-item">
+                                                                        <div class="pricing-info-icon">
+                                                                            <i class="fas fa-book-open"></i>
+                                                                        </div>
+                                                                        <div class="pricing-info-content">
+                                                                            <span class="pricing-info-label">{kurs.data.lang === 'tr' ? 'Ders Sayısı' : 'Unterrichtsstunden'}</span>
+                                                                            <span class="pricing-info-value">{pricingData.pricing.lessons}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="pricing-info-item">
+                                                                        <div class="pricing-info-icon">
+                                                                            <i class="fas fa-calendar-alt"></i>
+                                                                        </div>
+                                                                        <div class="pricing-info-content">
+                                                                            <span class="pricing-info-label">{kurs.data.lang === 'tr' ? 'Süre' : 'Dauer'}</span>
+                                                                            <span class="pricing-info-value">{pricingData.pricing.duration}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="pricing-card-footer">
+                                                                    <div class="pricing-price">
+                                                                        <span class="pricing-price-label">{kurs.data.lang === 'tr' ? 'Fiyat' : 'Preis'}</span>
+                                                                        <span class="pricing-price-value">{pricingData.pricing.fullCourse}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    
+                                                    {/* Haftalık Fiyatlar - SADECE haftalık kurslar için (yoğun ve online kurslarda gösterilmez) */}
+                                                    {/* Yoğun ve online kurslar için haftalık fiyatlar gösterilmez */}
+                                                    
+                                                    {/* Online Kurs Notu */}
+                                                    {courseInfo.type === 'online' && (
+                                                        <div class="pricing-info-box" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);">
+                                                            <p><i class="fas fa-info-circle"></i> <strong>{pricingData.lessonInfo}</strong> - {pricingData.onlineNote}</p>
+                                                        </div>
+                                                    )}
+                                                </>
+                                            )}
+                                            
+                                            {/* Kurs Zamanları - Tüm kurslar için */}
+                                            {pricingData.schedule && (
+                                                <div class="pricing-block">
+                                                    <h5>{kurs.data.lang === 'tr' ? 'Kurs Zamanları' : 'Kurszeiten'}</h5>
+                                                    <p class="lesson-duration-note"><strong>{pricingData.lessonInfo}</strong></p>
+                                                    <div class="schedule-info">
+                                                        <div class="schedule-item">
+                                                            <h6><i class="fas fa-sun"></i> {kurs.data.lang === 'tr' ? 'Sabah Kursları' : 'Vormittagskurse'}</h6>
+                                                            {courseInfo.level === 'a1' || courseInfo.level === 'a2' ? (
+                                                                <>
+                                                                    <p><strong>A1-A2:</strong> {pricingData.schedule.morning.a1a2.time}</p>
+                                                                    <p class="schedule-break">{pricingData.schedule.morning.a1a2.break}</p>
+                                                                    <p class="schedule-lessons">{pricingData.schedule.morning.a1a2.lessons}</p>
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <p><strong>B1-C1:</strong> {pricingData.schedule.morning.b1c1.time}</p>
+                                                                    <p class="schedule-break">{pricingData.schedule.morning.b1c1.break}</p>
+                                                                    <p class="schedule-lessons">{pricingData.schedule.morning.b1c1.lessons}</p>
+                                                                </>
+                                                            )}
+                                                        </div>
+                                                        <div class="schedule-item">
+                                                            <h6><i class="fas fa-moon"></i> {kurs.data.lang === 'tr' ? 'Öğleden Sonra Kursları' : 'Nachmittagskurse'}</h6>
+                                                            {courseInfo.level === 'a1' || courseInfo.level === 'a2' ? (
+                                                                <>
+                                                                    <p><strong>A1-A2:</strong> {pricingData.schedule.afternoon.a1a2.time}</p>
+                                                                    <p class="schedule-break">{pricingData.schedule.afternoon.a1a2.break}</p>
+                                                                    <p class="schedule-lessons">{pricingData.schedule.afternoon.a1a2.lessons}</p>
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <p><strong>B1-C1:</strong> {pricingData.schedule.afternoon.b1c1.time}</p>
+                                                                    <p class="schedule-break">{pricingData.schedule.afternoon.b1c1.break}</p>
+                                                                    <p class="schedule-lessons">{pricingData.schedule.afternoon.b1c1.lessons}</p>
+                                                                </>
+                                                            )}
+                                                        </div>
+                                                        <p class="schedule-days"><i class="fas fa-calendar-week"></i> {pricingData.schedule.days}</p>
+                                                    </div>
+                                                </div>
+                                            )}
+                                            
+                                            {/* Başlangıç Tarihleri - Sadece yoğun ve online kurslar için */}
+                                            {pricingData.dates && (
+                                                <div class="pricing-block">
+                                                    <h5>{kurs.data.lang === 'tr' ? 'Kurs Başlangıç Tarihleri 2026' : 'Kursstarttermine 2026'}</h5>
+                                                    <div class="dates-list">
+                                                        {(pricingData.dates.all ? pricingData.dates.all : Object.values(pricingData.dates).flat()).map(date => (
+                                                            <span class="date-badge">{date}</span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                            
+                                            {/* Tatiller - Tüm kurslar için */}
+                                            {pricingData.holidays && (
+                                                <div class="pricing-block">
+                                                    <h5>{kurs.data.lang === 'tr' ? 'Tatiller 2026' : 'Feiertage 2026'}</h5>
+                                                    <div class="holidays-list">
+                                                        {pricingData.holidays.map(holiday => (
+                                                            <div class="holiday-item">
+                                                                <span class="holiday-name">{holiday.name}</span>
+                                                                <span class="holiday-date">{holiday.date}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                            
+                                            {/* Vize Bilgisi - Sadece yoğun ve online kurslar için */}
+                                            {pricingData.visaInfo && !pricingData.isWeeklyOnly && (
+                                                <div class="pricing-info-box">
+                                                    <p><i class="fas fa-info-circle"></i> {pricingData.visaInfo}</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    )}
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ and Form Section -->
+        <section class="faq-form-section">
+            <div class="container">
+                <div class={`faq-form-layout ${kurs.data.hasDemandForm ? 'has-form' : 'no-form'}`}>
+                    {/* FAQ Section */}
+                    <section class="faq-section-inline">
+                        <div class="faq-section-header">
+                            <h2 class="faq-section-title">{lang === 'tr' ? 'Sık Sorulan Sorular' : 'Häufig gestellte Fragen'}</h2>
+                            <p class="faq-section-subtitle">{lang === 'tr' ? `${kurs.data.title} hakkında merak ettiğiniz konular` : `Fragen zu ${kurs.data.title}`}</p>
+                        </div>
+                        
+                        <div class="faq-container">
+                            {kurs.data.faqs.map(faq => (
+                                <div class="faq-item">
+                                    <button class="faq-question" onclick="toggleFAQ(this)">
+                                        <span>{faq.question}</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="faq-answer">
+                                        <p>{faq.answer}</p>
+                                    </div>
+                                </div>
+                            ))}
+                            
+                            {/* Normal CTA - hasDemandForm: false olan kurslar için */}
+                            {!kurs.data.hasDemandForm && (
+                                <div class="faq-cta">
+                                    <p>{lang === 'tr' ? 'Başka sorularınız mı var?' : 'Haben Sie weitere Fragen?'}</p>
+                                    <a href={`/${lang}/kontakt`} class="faq-contact-btn">
+                                        <i class="fas fa-envelope"></i>
+                                        <span>{lang === 'tr' ? 'Bize Ulaşın' : 'Kontaktieren Sie uns'}</span>
+                                    </a>
+                                </div>
+                            )}
+                        </div>
+                    </section>
+                    
+                    {/* Form Section - Sadece hasDemandForm: true olan kurslar için */}
+                    {kurs.data.hasDemandForm && (
+                        <section class="demand-form-section-inline" id="demand-form">
+                            <div class="demand-form-header">
+                                <div class="form-header-icon">
+                                    <i class="fas fa-clipboard-list"></i>
+                                </div>
+                                <h2 class="demand-form-title">
+                                    {kurs.data.lang === 'tr' ? 'Hemen Başvur' : 'Jetzt bewerben'}
+                                </h2>
+                                <p class="demand-form-subtitle">
+                                    {kurs.data.lang === 'tr' 
+                                        ? 'Bu kursa kayıt olmak için formu doldurun, size en kısa sürede dönüş yapalım.'
+                                        : 'Füllen Sie das Formular aus, um sich für diesen Kurs anzumelden, und wir werden uns so schnell wie möglich bei Ihnen melden.'}
+                                </p>
+                            </div>
+                            
+                            <form id="demandForm" class="demand-form">
+                                <input type="hidden" name="courseName" value={kurs.data.title} />
+                            <input type="hidden" name="courseSlug" value={kurs.slug} />
+                            <input type="hidden" name="sourcePage" value={`/${kurs.data.lang}/kurslar/${kurs.slug}`} />
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input 
+                                        type="text" 
+                                        id="demandFullname" 
+                                        name="fullname" 
+                                        required 
+                                        placeholder={kurs.data.lang === 'tr' ? 'Ad Soyad' : 'Name Nachname'}
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <input 
+                                        type="email" 
+                                        id="demandEmail" 
+                                        name="email" 
+                                        required 
+                                        placeholder={kurs.data.lang === 'tr' ? 'E-posta' : 'E-Mail'}
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input 
+                                        type="tel" 
+                                        id="demandPhone" 
+                                        name="phone" 
+                                        required 
+                                        placeholder={kurs.data.lang === 'tr' ? 'Telefon' : 'Telefon'}
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <input 
+                                        type="text" 
+                                        id="demandCity" 
+                                        name="city" 
+                                        placeholder={kurs.data.lang === 'tr' ? 'Şehir' : 'Stadt'}
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <textarea 
+                                    id="demandMessage" 
+                                    name="message" 
+                                    rows="4"
+                                    placeholder={kurs.data.lang === 'tr' 
+                                        ? 'Bu kurs hakkında eklemek istediğiniz notlar veya sorularınız...' 
+                                        : 'Zusätzliche Notizen oder Fragen zu diesem Kurs...'}
+                                ></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="kvkk-checkbox">
+                                    <input type="checkbox" id="demandKvkk" name="kvkk" required />
+                                    <label for="demandKvkk">
+                                        {kurs.data.lang === 'tr' 
+                                            ? 'Gizlilik ve cookies Politikasını kabul ediyorum.'
+                                            : 'Ich akzeptiere die Datenschutz- und Cookie-Richtlinie.'}
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="submit" class="demand-submit-btn">
+                                    <span>{kurs.data.lang === 'tr' ? 'Hemen Başvur' : 'Jetzt bewerben'}</span>
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                        </section>
+                    )}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer lang={lang} />
+
+    <script is:inline src="/script.js"></script>
+    <script is:inline src="/kurs-detay.js"></script>
+    {kurs.data.hasDemandForm && (
+        <script is:inline>
+            // Smooth scroll to demand form
+            document.addEventListener('DOMContentLoaded', function() {
+                const demandFormLinks = document.querySelectorAll('a[href="#demand-form"]');
+                demandFormLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const target = document.getElementById('demand-form');
+                        if (target) {
+                            target.scrollIntoView({ 
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
+                });
+                
+                // Demand form submission
+                const demandForm = document.getElementById('demandForm');
+                if (demandForm) {
+                    demandForm.addEventListener('submit', async function(e) {
+                        e.preventDefault();
+                        
+                        const formData = new FormData(demandForm);
+                        const data = {};
+                        for (let [key, value] of formData.entries()) {
+                            data[key] = value;
+                        }
+                        
+                        // Standardize common fields
+                        const standardizedData = {
+                            formType: 'demand',
+                            sourcePage: data.sourcePage || window.location.pathname,
+                            lang: '{lang}',
+                            // Common fields
+                            name: data.fullname || '',
+                            tel: data.phone || '',
+                            email: data.email || '',
+                            // Demand specific fields
+                            courseName: data.courseName || '',
+                            courseSlug: data.courseSlug || '',
+                            city: data.city || '',
+                            message: data.message || '',
+                            kvkk: data.kvkk || false
+                        };
+                        
+                        // Send to webhook
+                        try {
+                            const response = await fetch('https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(standardizedData)
+                            });
+                            
+                            if (response.ok) {
+                                if (window.showSuccessModal) {
+                                    window.showSuccessModal('success', window.successModalTranslations?.messageSuccess || 'Başvurunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
+                                } else {
+                                    alert('{lang}' === 'tr' 
+                                        ? 'Başvurunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.' 
+                                        : 'Ihre Bewerbung wurde erfolgreich gesendet! Wir werden uns so schnell wie möglich bei Ihnen melden.');
+                                }
+                                demandForm.reset();
+                            } else {
+                                throw new Error('Webhook request failed');
+                            }
+                        } catch (error) {
+                            console.error('Error submitting form:', error);
+                            if (window.showSuccessModal) {
+                                window.showSuccessModal('error', window.successModalTranslations?.errorMessage || 'Bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.');
+                            } else {
+                                alert('{lang}' === 'tr' 
+                                    ? 'Bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.' 
+                                    : 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns.');
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+    )}
+</body>
+</html>
+

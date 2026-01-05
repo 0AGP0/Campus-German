@@ -1,0 +1,103 @@
+---
+title: "FSP-Prüfungsvorbereitung"
+lang: "de"
+badge:
+  icon: "fas fa-stethoscope"
+  text: "FSP"
+description: "Vorbereitung auf die FSP (Feststellungsprüfung). Spezielle Prüfungsvorbereitung für den Übergang an deutsche Hochschulen nach dem Studienkolleg."
+image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Wochenstunden"
+    description: "24 Unterrichtseinheiten (UE)"
+  - icon: "fas fa-calendar-alt"
+    title: "Kursdauer"
+    description: "12 Wochen"
+  - icon: "fas fa-users"
+    title: "Klassengröße"
+    description: "Maximal 8 Personen"
+  - icon: "fas fa-stethoscope"
+    title: "Prüfung"
+    description: "FSP"
+heroButtons:
+  primary:
+    text: "Jetzt bewerben"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "FSP-Infos"
+    icon: "fas fa-info-circle"
+    href: "#fsp-info"
+tabs:
+  - id: "kursinformationen"
+    icon: "fas fa-info-circle"
+    title: "Kursinformationen"
+    content:
+      title: "Über den FSP-Vorbereitungskurs"
+      paragraphs:
+        - heading: "Kursüberblick"
+          text: "Der FSP (Feststellungsprüfung) Vorbereitungskurs ist ein intensives Programm für Studierende, die das Studienkolleg in Deutschland absolviert haben (oder kurz davor stehen) und die Feststellungsprüfung erfolgreich bestehen möchten, um anschließend an eine Hochschule zu wechseln. Der von CampusGerman angebotene Kurs zielt darauf ab, sowohl akademische Deutschkompetenzen als auch die prüfungsrelevanten fachbezogenen Inhalte systematisch zu stärken. Die Feststellungsprüfung ist ein entscheidender Schritt auf dem Weg zur Universität und prüft nicht nur Sprachkenntnisse, sondern auch akademisches Denken, Textverständnis und Ausdrucksfähigkeit. Mit prüfungsnahen Materialien und einem klaren Fokus auf das Prüfungsformat ermöglicht der Kurs eine strukturierte, bewusste und sichere Vorbereitung. Das Programm ist im Sinne eines akademischen Deutschansatzes an den CEFR-Standards ausgerichtet. Im Unterschied zu klassischen Deutschkursen stehen hier Prüfungsstrategien, Probeklausuren und akademischer Ausdruck im Mittelpunkt."
+        - heading: "Zielgruppe und Voraussetzungen"
+          text: "Dieser Kurs ist für Studierende konzipiert, die die FSP ablegen möchten. Besonders geeignet ist er für: Studierende, die das Studienkolleg abgeschlossen haben oder kurz vor dem Abschluss stehen; Bewerberinnen und Bewerber mit dem Ziel eines Bachelorstudiums in Deutschland; Personen, die Unterstützung im akademischen Deutsch für die FSP benötigen; sowie alle, die den Übergang an die Universität sicher und planbar gestalten möchten. Für eine erfolgreiche Teilnahme wird mindestens ein allgemeines Deutschniveau von B1–B2 empfohlen, da dies das Arbeiten mit akademischen Texten und prüfungsrelevanten Aufgaben erleichtert. CampusGerman führt vor Kursbeginn eine Niveau- und Bedarfsanalyse durch und berät zur passenden Vorbereitung."
+        - heading: "Kursinhalte und Lernziele"
+          text: "Der FSP-Vorbereitungskurs konzentriert sich auf die sprachlichen und akademischen Kompetenzen, die für die Prüfung erforderlich sind. Inhalte sind unter anderem: Lesen und Analysieren akademischer Texte; schriftlicher Ausdruck und akademisches Schreiben; fachspezifische Terminologie (z. B. T-Kurs, M-Kurs, W-Kurs usw.); Hörverstehen mit akademischem Schwerpunkt; sowie prüfungsnahe Trainings und Probeklausuren im Originalformat. Ziel ist es, dass Studierende ihre sprachliche und akademische Leistungsfähigkeit in der FSP klar, strukturiert und überzeugend zeigen können. Am Ende des Kurses sind Teilnehmende mit dem Prüfungsformat vertraut und gehen mit mehr Sicherheit in die Prüfung."
+        - heading: "Lehrmethode und Unterrichtsumfeld"
+          text: "Bei CampusGerman wird der FSP-Vorbereitungskurs prüfungsorientiert und praxisnah durchgeführt. Im Unterricht werden eingesetzt: originale bzw. realitätsnahe FSP-Beispiele; Probeklausuren mit Auswertung; akademische Schreib- und Sprechtrainings; sowie individuelles Feedback. Das Unterrichtsumfeld ist strukturiert und zielorientiert. Die Lehrkräfte verfügen über Erfahrung mit dem FSP-Prozess und akademischem Deutsch und begleiten die Teilnehmenden auch individuell."
+        - heading: "Fortschritt nach dem Kurs"
+          text: "Nach Abschluss des FSP-Vorbereitungskurses: gehen Studierende vorbereitet und strategisch in die Feststellungsprüfung; stärken ihre akademischen Deutschkompetenzen; bewältigen einen zentralen Schritt für den Hochschulzugang in Deutschland; und starten das Studium mit einer stabileren fachsprachlichen und akademischen Grundlage. CampusGerman unterstützt Studierende auch nach dem Kurs weiterhin – z. B. bei Hochschulbewerbung, Platzierung und akademischer Beratung."
+  - id: "termine-preise"
+    icon: "fas fa-calendar-alt"
+    title: "Termine und Preise"
+    content:
+      title: "Preisinformationen"
+      pricing:
+        - name: "12 Wochen FSP-Vorbereitung"
+          duration: "12 Wochen"
+          schedule: "24 Unterrichtseinheiten/Woche"
+          price: "Sonderkonditionen"
+          highlighted: true
+  - id: "fsp-info"
+    icon: "fas fa-stethoscope"
+    title: "FSP-Infos"
+    content:
+      title: "Über die FSP-Prüfung"
+      paragraphs:
+        - heading: "Was ist die FSP?"
+          text: "Die Feststellungsprüfung ist eine offizielle Prüfung nach dem Studienkolleg, die die Studierfähigkeit und den Hochschulzugang in Deutschland bestätigt."
+        - heading: "Prüfungsformat"
+          text: "Lesen: akademische Texte verstehen und interpretieren. Hören: Hörverstehen mit akademischen Inhalten. Schreiben: schriftlicher Ausdruck zum Fachbereich. Mündliche Prüfung: akademisches Sprechen und Präsentieren."
+        - heading: "Prüfungsgebühren"
+          text: "Ca. 150–300 € (je nach Studienkolleg und Bundesland unterschiedlich)."
+        - heading: "Zertifikat"
+          text: "Wer die FSP erfolgreich besteht, erhält die offizielle Berechtigung, sich an deutschen Hochschulen zu bewerben. Das Zertifikat ist für den Übergang an die Universität erforderlich."
+faqs:
+  - question: "Was ist die FSP-Prüfung?"
+    answer: "Die FSP (Feststellungsprüfung) ist die offizielle Abschlussprüfung nach dem Studienkolleg und Voraussetzung für den Hochschulzugang in Deutschland."
+  - question: "Mit welchem Niveau sollte ich starten?"
+    answer: "Für eine effektive Vorbereitung wird mindestens B1–B2 empfohlen. Je nach Kursrichtung und Studienziel kann ein höheres Niveau sinnvoll sein."
+  - question: "Welche Kursformate werden angeboten?"
+    answer: "Unsere Kurse bieten flexible Lernformate: Hybridunterricht – eine Kombination aus Präsenz- und Live-Online-Unterricht, bei der Sie auch an Präsenztagen online teilnehmen können; sowie Live-Online-Unterricht, bei dem Sie vollständig live und online am Unterricht teilnehmen."
+  - question: "Welche Inhalte werden in den Kursen behandelt?"
+    answer: "Unsere Intensiv-Deutschkursprogramme umfassen Hör- und Leseverstehen mit aktuellen Texten, umfassende Grammatikarbeit sowie vielfältige kommunikationsorientierte Aktivitäten. Ziel ist insbesondere die gezielte Entwicklung Ihrer Sprech- und Schreibkompetenzen."
+  - question: "Wie kann ich in Deutschland studieren?"
+    answer: "Für ein Studium in Deutschland benötigen Sie eine anerkannte Hochschulzugangsberechtigung (HZB). Es wird empfohlen, die Anerkennung Ihres Abschlusses im Anabin-System zu prüfen. Zudem müssen Deutschkenntnisse durch offizielle Zertifikate wie telc oder DSH nachgewiesen werden. Das CampusGerman Universitätsvorbereitungsprogramm unterstützt Sie umfassend bei diesem Prozess."
+  - question: "Welche Voraussetzungen sind erforderlich?"
+    answer: "Sie müssen mindestens 18 Jahre alt sein und entweder ein in Deutschland eröffnetes Sperrkonto oder eine offizielle Verpflichtungserklärung vorlegen."
+  - question: "Welche Visatypen werden empfohlen?"
+    answer: "Studentenvisum: Dieses umfasst auch die Teilnahme an vorbereitenden Deutschkursen. Für EU-Bürgerinnen und EU-Bürger besteht keine Visumpflicht."
+  - question: "Welche Leistungen sind in den Kursen enthalten?"
+    answer: "Einstufungstest, keine Anmeldegebühr, Kursbescheinigung für den Visumsantrag, digitales Lehrbuch, individuelle Studienberatung (einmalig ca. 45 Minuten), Webinare zum Thema \"Studium in Deutschland\", CampusGerman-Zertifikat, E-Learning-Plattform, ganzjährig organisierte soziale und kulturelle Aktivitäten sowie kostenloser WLAN-Zugang an allen Standorten."
+  - question: "Welche Qualifikationen haben die Lehrkräfte?"
+    answer: "Unser Lehrteam besteht aus hochqualifizierten, akademisch ausgebildeten Lehrkräften mit langjähriger Erfahrung in Deutsch als Fremdsprache (DaF) und Deutsch als Zweitsprache (DaZ). Zudem verfügen wir über vom Bundesamt für Migration und Flüchtlinge (BAMF) anerkannte Lehrkräfte. Die Kurse werden regelmäßig von den Teilnehmenden evaluiert."
+  - question: "Wie lange dauert es, Deutsch zu lernen?"
+    answer: "Die Dauer des Deutschlernens hängt von Ihren Zielen und Ihrem aktuellen Sprachniveau ab. Die Grundstufen von A1 bis B2 können in etwa 6–8 Monaten abgeschlossen werden. Für fortgeschrittene Niveaus wie C1 und C2 sind zusätzlich etwa 4–6 Monate einzuplanen. Intensivkurse können die Lernzeit verkürzen."
+  - question: "Kann ich ein Goethe-Zertifikat erwerben?"
+    answer: "Ja, bei CampusGerman bieten wir Vorbereitungskurse für Goethe-Zertifikate an – von A1 bis C2. Prüfungen können auf unserem Campus oder in nahegelegenen Prüfzentren abgelegt werden."
+  - question: "Gibt es Unterkunftsmöglichkeiten?"
+    answer: "Ja, wir unterstützen Sie bei der Organisation von Unterkunftsmöglichkeiten in Deutschland – z. B. Studentenwohnheime, Gastfamilien und Wohngemeinschaften. Die Unterkunft ist nicht im Kurspreis enthalten, wir helfen Ihnen jedoch bei der passenden Auswahl."
+  - question: "Gibt es Zahlungspläne und Rabatte?"
+    answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
+
+hasDemandForm: true
+---
+

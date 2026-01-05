@@ -1,0 +1,78 @@
+---
+title: "Wöchentlicher Deutschkurs B1–B2–C1"
+lang: "de"
+badge:
+  icon: "fas fa-calendar-week"
+  text: "Wöchentlich"
+description: "Flexibles Wochenprogramm für die Niveaus B1, B2 und C1. Lernen Sie fortgeschrittenes Deutsch in Ihrem eigenen Tempo."
+image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Wochenstunden"
+    description: "10–15 Unterrichtseinheiten"
+  - icon: "fas fa-calendar-alt"
+    title: "Programm"
+    description: "Wöchentlich"
+  - icon: "fas fa-users"
+    title: "Klassengröße"
+    description: "Maximal 12 Personen"
+  - icon: "fas fa-layer-group"
+    title: "Niveau"
+    description: "B1–C1"
+heroButtons:
+  primary:
+    text: "Jetzt bewerben"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Stundenplan"
+    icon: "fas fa-download"
+    href: "#stundenplan"
+tabs:
+  - id: "kursinformationen"
+    icon: "fas fa-info-circle"
+    title: "Kursinformationen"
+    content:
+      title: "Über den wöchentlichen Deutschkurs B1–B2–C1"
+      paragraphs:
+        - heading: "Kursüberblick"
+          text: "Der wöchentliche Deutschkurs B1–B2–C1 richtet sich an Lernende, die Deutsch auf fortgeschrittenem Niveau flexibel und individuell erlernen möchten. Das Programm wurde für Teilnehmende konzipiert, die ihr Lernen an berufliche oder akademische Verpflichtungen anpassen wollen. Mit 10–15 Unterrichtseinheiten pro Woche bietet der Kurs ein ausgewogenes Lerntempo und kann je nach Bedarf über einen beliebigen Zeitraum fortgesetzt werden."
+        - heading: "Zielgruppe und Programmstruktur"
+          text: "Der Kurs ist für alle geeignet, die Deutsch auf den Niveaus B1, B2 oder C1 erlernen oder vertiefen möchten. Das Programm wird an das aktuelle Sprachniveau der Teilnehmenden angepasst und ermöglicht einen kontinuierlichen Fortschritt von B1 bis C1. Berufstätige, Studierende, angehende Hochschulbewerberinnen und -bewerber sowie Personen mit akademischen oder beruflichen Zielen profitieren von der flexiblen Struktur. Der Unterricht kann morgens, nachmittags oder abends stattfinden."
+        - heading: "Kursinhalte und Lernziele"
+          text: "Während des Kurses entwickeln die Teilnehmenden ihre Sprachkompetenzen auf den Niveaus B1, B2 und C1. Auf B1-Niveau lernen sie, die meisten Alltagssituationen sowie berufliche Grundkommunikation sicher zu bewältigen. Auf B2-Niveau können sie komplexe Texte verstehen und sich zu konkreten und abstrakten Themen fließend äußern. Auf C1-Niveau sind die Teilnehmenden in der Lage, akademische Texte zu verfassen, an Hochschulveranstaltungen teilzunehmen und sich in professionellen Kontexten sehr präzise und sicher auszudrücken."
+        - heading: "Lehrmethode und Flexibilität"
+          text: "Der Unterricht folgt einem kommunikativen und praxisorientierten Ansatz und findet in Gruppen mit maximal 12 Teilnehmenden statt. Das Programm bietet hohe zeitliche Flexibilität und wird individuell an die Bedürfnisse der Lernenden angepasst. Die Inhalte umfassen akademische Textanalysen, Diskussionsrunden, Präsentationen, Schreibübungen sowie Aktivitäten zur Förderung des kritischen Denkens. Die Teilnehmenden entwickeln nicht nur ihre Sprachkenntnisse, sondern auch akademische und berufliche Kompetenzen."
+        - heading: "Programmvorteile und Fortschritt"
+          text: "Der größte Vorteil des wöchentlichen Programms ist seine Flexibilität und individuelle Anpassbarkeit. Die Teilnehmenden lernen in ihrem eigenen Tempo und können den Kurs an ihre beruflichen oder akademischen Anforderungen anpassen. Das Programm kann beliebig verlängert werden und ermöglicht einen nahtlosen Übergang von B1 über B2 bis C1. Nach Abschluss eines Niveaus erhalten die Teilnehmenden ein entsprechendes Kurszertifikat und können sich auf weiterführende Prüfungen wie TestDaF oder DSH vorbereiten."
+faqs:
+  - question: "Auf welchem Niveau kann ich starten?"
+    answer: "Sie können auf dem Niveau B1, B2 oder C1 beginnen. Nach einem Einstufungstest werden Sie der passenden Gruppe zugeteilt."
+  - question: "Wie lange dauert das Programm?"
+    answer: "Das Programm ist flexibel und kann so lange besucht werden, wie Sie möchten."
+  - question: "Welche Kursformate werden angeboten?"
+    answer: "Unsere Kurse bieten flexible Lernformate: Hybridunterricht – eine Kombination aus Präsenz- und Live-Online-Unterricht, bei der Sie auch an Präsenztagen online teilnehmen können; sowie Live-Online-Unterricht, bei dem Sie vollständig live und online am Unterricht teilnehmen."
+  - question: "Welche Inhalte werden in den Kursen behandelt?"
+    answer: "Unsere Intensiv-Deutschkursprogramme umfassen Hör- und Leseverstehen mit aktuellen Texten, umfassende Grammatikarbeit sowie vielfältige kommunikationsorientierte Aktivitäten. Ziel ist insbesondere die gezielte Entwicklung Ihrer Sprech- und Schreibkompetenzen."
+  - question: "Wie kann ich in Deutschland studieren?"
+    answer: "Für ein Studium in Deutschland benötigen Sie eine anerkannte Hochschulzugangsberechtigung (HZB). Es wird empfohlen, die Anerkennung Ihres Abschlusses im Anabin-System zu prüfen. Zudem müssen Deutschkenntnisse durch offizielle Zertifikate wie telc oder DSH nachgewiesen werden. Das CampusGerman Universitätsvorbereitungsprogramm unterstützt Sie umfassend bei diesem Prozess."
+  - question: "Welche Voraussetzungen sind erforderlich?"
+    answer: "Sie müssen mindestens 18 Jahre alt sein und entweder ein in Deutschland eröffnetes Sperrkonto oder eine offizielle Verpflichtungserklärung vorlegen."
+  - question: "Welche Visatypen werden empfohlen?"
+    answer: "Studentenvisum: Dieses umfasst auch die Teilnahme an vorbereitenden Deutschkursen. Für EU-Bürgerinnen und EU-Bürger besteht keine Visumpflicht."
+  - question: "Welche Leistungen sind in den Kursen enthalten?"
+    answer: "Einstufungstest, keine Anmeldegebühr, Kursbescheinigung für den Visumsantrag, digitales Lehrbuch, individuelle Studienberatung (einmalig ca. 45 Minuten), Webinare zum Thema \"Studium in Deutschland\", CampusGerman-Zertifikat, E-Learning-Plattform, ganzjährig organisierte soziale und kulturelle Aktivitäten sowie kostenloser WLAN-Zugang an allen Standorten."
+  - question: "Welche Qualifikationen haben die Lehrkräfte?"
+    answer: "Unser Lehrteam besteht aus hochqualifizierten, akademisch ausgebildeten Lehrkräften mit langjähriger Erfahrung in Deutsch als Fremdsprache (DaF) und Deutsch als Zweitsprache (DaZ). Zudem verfügen wir über vom Bundesamt für Migration und Flüchtlinge (BAMF) anerkannte Lehrkräfte. Die Kurse werden regelmäßig von den Teilnehmenden evaluiert."
+  - question: "Wie lange dauert es, Deutsch zu lernen?"
+    answer: "Die Dauer des Deutschlernens hängt von Ihren Zielen und Ihrem aktuellen Sprachniveau ab. Die Grundstufen von A1 bis B2 können in etwa 6–8 Monaten abgeschlossen werden. Für fortgeschrittene Niveaus wie C1 und C2 sind zusätzlich etwa 4–6 Monate einzuplanen. Intensivkurse können die Lernzeit verkürzen."
+  - question: "Kann ich ein Goethe-Zertifikat erwerben?"
+    answer: "Ja, bei CampusGerman bieten wir Vorbereitungskurse für Goethe-Zertifikate an – von A1 bis C2. Prüfungen können auf unserem Campus oder in nahegelegenen Prüfzentren abgelegt werden."
+  - question: "Gibt es Unterkunftsmöglichkeiten?"
+    answer: "Ja, wir unterstützen Sie bei der Organisation von Unterkunftsmöglichkeiten in Deutschland – z. B. Studentenwohnheime, Gastfamilien und Wohngemeinschaften. Die Unterkunft ist nicht im Kurspreis enthalten, wir helfen Ihnen jedoch bei der passenden Auswahl."
+  - question: "Gibt es Zahlungspläne und Rabatte?"
+    answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
+
+hasDemandForm: true
+---
+

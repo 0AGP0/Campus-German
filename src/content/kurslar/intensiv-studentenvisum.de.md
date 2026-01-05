@@ -1,0 +1,101 @@
+---
+title: "Intensiv-Deutschkurs mit Studentenvisum-Garantie"
+lang: "de"
+badge:
+  icon: "fas fa-passport"
+  text: "Visum-Garantie"
+description: "Intensiv-Deutschkurs für Studentenvisumsanträge in Deutschland. Machen Sie Ihren Visumsantrag sicher mit einem offiziellen Zulassungsdokument."
+image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Wochenstunden"
+    description: "24 Unterrichtseinheiten (UE)"
+  - icon: "fas fa-calendar-alt"
+    title: "Zeitraum"
+    description: "Ganzjährig"
+  - icon: "fas fa-users"
+    title: "Klassengröße"
+    description: "Maximal 12 Personen"
+  - icon: "fas fa-passport"
+    title: "Visum-Unterstützung"
+    description: "Offizielles Zulassungsdokument"
+heroButtons:
+  primary:
+    text: "Jetzt bewerben"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Visum-Informationen"
+    icon: "fas fa-info-circle"
+    href: "#visum-informationen"
+tabs:
+  - id: "kursinformationen"
+    icon: "fas fa-info-circle"
+    title: "Kursinformationen"
+    content:
+      title: "Über den Kurs mit Studentenvisum-Garantie"
+      paragraphs:
+        - heading: "Kursüberblick"
+          text: "Der Intensiv-Deutschkurs mit Studentenvisum ist ein speziell für Kandidaten entwickeltes Sprachprogramm, die planen, mit einem Studentenvisum in Deutschland zu studieren und die Visumanforderungen erfüllt. Dieser von CampusGerman angebotene Kurs zielt darauf ab, die Deutschkenntnisse der Studierenden in kurzer Zeit zu entwickeln und gleichzeitig die Intensivkursanforderungen zu erfüllen, die im Visumsantragsverfahren verlangt werden. Bei Studentenvisumsanträgen in Deutschland ist es von großer Bedeutung, nachzuweisen, dass man eine intensive und regelmäßige Deutschausbildung erhält. Dieser Kurs ist mit wöchentlicher Unterrichtsintensität, regelmäßiger Teilnahme und strukturiertem Lehrplan so geplant, dass er den Konsulatserwartungen entspricht. Das Programm wird gemäß den CEFR-Standards vorbereitet und kann je nach dem aktuellen Niveau der Studierenden von A1 bis zu fortgeschrittenen Niveaus angepasst werden. Der CampusGerman Intensiv-Deutschkurs mit Studentenvisum ist ein zielorientiertes und vertrauenswürdiges Bildungsmodell, das Sprachenlernen als integralen Bestandteil des Visumsprozesses betrachtet."
+        - heading: "Zielgruppe und Voraussetzungen"
+          text: "Dieser Kurs eignet sich für Kandidaten, die planen, mit einem Studentenvisum in Deutschland zu sein. Er richtet sich insbesondere an folgende Gruppen: Studierende, die in Deutschland eine Sprachausbildung erhalten möchten, Kandidaten, die einen Studentenvisumsantrag stellen werden, Personen, die auf Universitäts- oder Vorbereitungsprogramme übergehen möchten, Personen, die Deutsch in kurzer Zeit intensiv lernen möchten. Es gibt keine bestimmte Anfangsniveauvoraussetzung für die Kursteilnahme. Programme können ab A1 in verschiedenen Niveaus angeboten werden. CampusGerman bewertet das Sprachniveau der Studierenden vor dem Kurs und leitet sie zum am besten geeigneten Intensivprogramm."
+        - heading: "Kursinhalte und Lernziele"
+          text: "Der Intensiv-Deutschkurs mit Studentenvisum wird sowohl für die Sprachentwicklung als auch für die Anpassung an offizielle Prozesse geplant. Zu den Kursinhalten gehören: Allgemeines Deutsch (Lesen, Schreiben, Hören, Sprechen), Ausdrücke für den Alltag und das akademische Umfeld, Grammatik- und Wortschatzentwicklung, intensive Wiederholungs- und Übungsarbeiten. Das Lernziel ist, dass der Studierende Deutsch im täglichen und akademischen Leben auf grundlegendem Niveau verwenden und eine solide Grundlage für den Übergang zu einem höheren Niveau schaffen kann."
+        - heading: "Unterrichtsmethode und Lernumfeld"
+          text: "Bei CampusGerman wird dieser Kurs mit einer intensiven, disziplinierten und teilnahmeorientierten Unterrichtsmethode durchgeführt. Im Unterricht werden verwendet: Lebendige Sprechpraktiken, Gruppen- und Partnerarbeiten, Beispiele für den Alltag, niveaubasierte Wiederholungen. Das Lernumfeld fördert regelmäßige Teilnahme und die Teilnahmevoraussetzungen für den Visumsprozess werden sorgfältig verfolgt. Die Lehrkräfte sind erfahren im intensiven Deutschunterricht."
+        - heading: "Weiterentwicklung nach dem Kurs"
+          text: "Studierende, die den Intensiv-Deutschkurs mit Studentenvisum abschließen: Erhalten das für den Studentenvisumsprozess erforderliche Bildungsdokument, entwickeln ihre Deutschkenntnisse deutlich, können auf Universitätsvorbereitung, Studienkolleg oder Prüfungsvorbereitungsprogramme übergehen, werden besser auf das Bildungsleben in Deutschland vorbereitet. CampusGerman unterstützt die Studierenden auch nach dem Kurs weiterhin bei der Visums-, Universitäts- und fortgeschrittenen Bildungsplanung."
+  - id: "termine-preise"
+    icon: "fas fa-calendar-alt"
+    title: "Termine und Preise"
+    content:
+      title: "Paketpreise"
+      pricing:
+        - name: "24 Wochen"
+          duration: "24 Wochen"
+          schedule: "24 UE/Woche"
+          price: "Individuelle Preisgestaltung"
+          highlighted: true
+  - id: "visum-informationen"
+    icon: "fas fa-passport"
+    title: "Visum-Informationen"
+    content:
+      title: "Visumsantragsprozess"
+      items:
+        - icon: "fas fa-file-alt"
+          text: "<strong>Erforderliche Dokumente:</strong> Reisepass, Anmeldedokument, Finanznachweis"
+        - icon: "fas fa-clock"
+          text: "<strong>Antragszeitraum:</strong> Bewerbung 2-3 Monate im Voraus wird empfohlen"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Unterstützung:</strong> Visumsberatung und Dokumentenprüfung inklusive"
+faqs:
+  - question: "Ist dieser Kurs für Visumsanträge geeignet?"
+    answer: "Ja, dieser Kurs ist mit 24 Unterrichtseinheiten pro Woche für Visumsanträge geeignet. Wir bieten ein offizielles Zulassungsdokument und Visumsberatungsservice."
+  - question: "Wie lange dauert der Visumsantragsprozess?"
+    answer: "Der Visumsantragsprozess dauert in der Regel 2-3 Monate. Daher empfehlen wir, sich mindestens 3 Monate im Voraus anzumelden."
+  - question: "Welche Kursformate werden angeboten?"
+    answer: "Unsere Kurse bieten flexible Lernformate: Hybridunterricht – eine Kombination aus Präsenz- und Live-Online-Unterricht, bei der Sie auch an Präsenztagen online teilnehmen können; sowie Live-Online-Unterricht, bei dem Sie vollständig live und online am Unterricht teilnehmen."
+  - question: "Welche Inhalte werden in den Kursen behandelt?"
+    answer: "Unsere Intensiv-Deutschkursprogramme umfassen Hör- und Leseverstehen mit aktuellen Texten, umfassende Grammatikarbeit sowie vielfältige kommunikationsorientierte Aktivitäten. Ziel ist insbesondere die gezielte Entwicklung Ihrer Sprech- und Schreibkompetenzen."
+  - question: "Wie kann ich in Deutschland studieren?"
+    answer: "Für ein Studium in Deutschland benötigen Sie eine anerkannte Hochschulzugangsberechtigung (HZB). Es wird empfohlen, die Anerkennung Ihres Abschlusses im Anabin-System zu prüfen. Zudem müssen Deutschkenntnisse durch offizielle Zertifikate wie telc oder DSH nachgewiesen werden. Das CampusGerman Universitätsvorbereitungsprogramm unterstützt Sie umfassend bei diesem Prozess."
+  - question: "Welche Voraussetzungen sind erforderlich?"
+    answer: "Sie müssen mindestens 18 Jahre alt sein und entweder ein in Deutschland eröffnetes Sperrkonto oder eine offizielle Verpflichtungserklärung vorlegen."
+  - question: "Welche Visatypen werden empfohlen?"
+    answer: "Studentenvisum: Dieses umfasst auch die Teilnahme an vorbereitenden Deutschkursen. Für EU-Bürgerinnen und EU-Bürger besteht keine Visumpflicht."
+  - question: "Welche Leistungen sind in den Kursen enthalten?"
+    answer: "Einstufungstest, keine Anmeldegebühr, Kursbescheinigung für den Visumsantrag, digitales Lehrbuch, individuelle Studienberatung (einmalig ca. 45 Minuten), Webinare zum Thema \"Studium in Deutschland\", CampusGerman-Zertifikat, E-Learning-Plattform, ganzjährig organisierte soziale und kulturelle Aktivitäten sowie kostenloser WLAN-Zugang an allen Standorten."
+  - question: "Welche Qualifikationen haben die Lehrkräfte?"
+    answer: "Unser Lehrteam besteht aus hochqualifizierten, akademisch ausgebildeten Lehrkräften mit langjähriger Erfahrung in Deutsch als Fremdsprache (DaF) und Deutsch als Zweitsprache (DaZ). Zudem verfügen wir über vom Bundesamt für Migration und Flüchtlinge (BAMF) anerkannte Lehrkräfte. Die Kurse werden regelmäßig von den Teilnehmenden evaluiert."
+  - question: "Wie lange dauert es, Deutsch zu lernen?"
+    answer: "Die Dauer des Deutschlernens hängt von Ihren Zielen und Ihrem aktuellen Sprachniveau ab. Die Grundstufen von A1 bis B2 können in etwa 6–8 Monaten abgeschlossen werden. Für fortgeschrittene Niveaus wie C1 und C2 sind zusätzlich etwa 4–6 Monate einzuplanen. Intensivkurse können die Lernzeit verkürzen."
+  - question: "Kann ich ein Goethe-Zertifikat erwerben?"
+    answer: "Ja, bei CampusGerman bieten wir Vorbereitungskurse für Goethe-Zertifikate an – von A1 bis C2. Prüfungen können auf unserem Campus oder in nahegelegenen Prüfzentren abgelegt werden."
+  - question: "Gibt es Unterkunftsmöglichkeiten?"
+    answer: "Ja, wir unterstützen Sie bei der Organisation von Unterkunftsmöglichkeiten in Deutschland – z. B. Studentenwohnheime, Gastfamilien und Wohngemeinschaften. Die Unterkunft ist nicht im Kurspreis enthalten, wir helfen Ihnen jedoch bei der passenden Auswahl."
+  - question: "Gibt es Zahlungspläne und Rabatte?"
+    answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
+
+hasDemandForm: true
+---
+

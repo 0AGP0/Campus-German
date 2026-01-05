@@ -1,0 +1,404 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/dienstleistungen.css';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'tr' } },
+        { params: { lang: 'de' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Translations
+const t = {
+    tr: {
+        title: "Sunduklarımız - CampusGerman",
+        heroTitle: "CampusGerman Sunduklarımız",
+        heroDescription: "Almanca öğrenme yolculuğunuzda size sunduğumuz kapsamlı hizmetler. Üniversite yerleştirmeden vize rehberliğine, konaklamadan havaalanı karşılamaya kadar geniş bir yelpazede hizmetlerimiz bulunmaktadır.",
+        sectionTitle: "Sunduklarımız",
+        sectionSubtitle: "Her ihtiyaca uygun özel hazırlanmış hizmetler",
+    },
+    de: {
+        title: "Unsere Dienstleistungen - CampusGerman",
+        heroTitle: "CampusGerman Dienstleistungen",
+        heroDescription: "Umfassende Dienstleistungen, die wir Ihnen auf Ihrer Deutschlernreise bieten. Von Universitätsvermittlung bis hin zu Visumsberatung, von Unterkunft bis hin zu Flughafenabholung - wir bieten eine breite Palette von Dienstleistungen.",
+        sectionTitle: "Unsere Dienstleistungen",
+        sectionSubtitle: "Speziell entwickelte Dienstleistungen für jeden Bedarf",
+    }
+};
+
+const translations = t[lang as keyof typeof t];
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <!-- Hero Section -->
+    <section class="services-hero-section">
+        <div class="container">
+            <div class="services-hero-content">
+                <div class="hero-left">
+                    <h1 class="hero-title">
+                        {translations.heroTitle}
+                    </h1>
+                    
+                    <div class="hero-content">
+                        <p class="hero-description">
+                            {translations.heroDescription}
+                        </p>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <a href="#hizmet-kartlari" class="btn-primary">
+                            <i class="fas fa-arrow-down"></i>
+                            {lang === 'tr' ? 'Hizmetleri İncele' : 'Dienstleistungen ansehen'}
+                        </a>
+                        <button class="btn-secondary" id="contactBtn">
+                            <i class="fas fa-envelope"></i>
+                            {lang === 'tr' ? 'İletişime Geç' : 'Kontakt aufnehmen'}
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-right">
+                    <div class="hero-cta-card">
+                        <div class="cta-icon">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <h3 class="cta-title">{lang === 'tr' ? 'Hizmetlerimizi Keşfedin' : 'Entdecken Sie unsere Dienstleistungen'}</h3>
+                        <p class="cta-description">
+                            {lang === 'tr' 
+                                ? 'Her ihtiyaca uygun özel hazırlanmış hizmetler, deneyimli eğitmenler ve esnek program seçenekleri.'
+                                : 'Speziell entwickelte Dienstleistungen für jeden Bedarf, erfahrene Lehrkräfte und flexible Programmoptionen.'}
+                        </p>
+                        <div class="cta-stats">
+                            <div class="cta-stat">
+                                <div class="stat-number">7+</div>
+                                <div class="stat-label">{lang === 'tr' ? 'Hizmet' : 'Dienstleistung'}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">100%</div>
+                                <div class="stat-label">{lang === 'tr' ? 'Memnuniyet' : 'Zufriedenheit'}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">{lang === 'tr' ? 'Destek' : 'Unterstützung'}</div>
+                            </div>
+                        </div>
+                        <a href="#hizmet-kartlari" class="cta-button">
+                            <i class="fas fa-arrow-down"></i>
+                            {lang === 'tr' ? 'Tüm Hizmetleri Görüntüle' : 'Alle Dienstleistungen anzeigen'}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Hizmet Kartları Section -->
+    <section class="services-section" id="hizmet-kartlari">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{translations.sectionTitle}</h2>
+                <p class="section-subtitle">{translations.sectionSubtitle}</p>
+            </div>
+            
+            <div class="services-grid" id="servicesGrid">
+                <!-- Üniversite Yerleştirme -->
+                <div class="service-card" id="universite-yerlestirme">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">{lang === 'tr' ? 'Üniversite Yerleştirme Programı / Pathway' : 'Universitätsvermittlung / Pathway'}</h3>
+                            <p class="service-subtitle">{lang === 'tr' ? 'Almanya\'da üniversite' : 'Universität in Deutschland'}</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            {lang === 'tr' 
+                                ? 'Almanya\'da üniversite eğitimi için kapsamlı yerleştirme programı. Pathway programları ve üniversite başvuru desteği.'
+                                : 'Umfassendes Vermittlungsprogramm für Universitätsstudien in Deutschland. Pathway-Programme und Unterstützung bei Universitätsbewerbungen.'}
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Pathway programları' : 'Pathway-Programme'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Başvuru desteği' : 'Bewerbungsunterstützung'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Danışmanlık' : 'Beratung'}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/unsere-dienstleistungen/universite-yerlestirme`} class="service-link">
+                            <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Vize Rehberliği -->
+                <div class="service-card" id="vize-rehberligi">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-passport"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">{lang === 'tr' ? 'Vize Rehberliği' : 'Visumsberatung'}</h3>
+                            <p class="service-subtitle">{lang === 'tr' ? 'Vize başvuru desteği' : 'Visumsantragsunterstützung'}</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            {lang === 'tr' 
+                                ? 'Almanya öğrenci vizesi başvuru sürecinde profesyonel rehberlik. Başvuru formları, gerekli belgeler ve süreç takibi.'
+                                : 'Professionelle Beratung im Antragsverfahren für ein deutsches Studentenvisum. Antragsformulare, erforderliche Dokumente und Verfahrensverfolgung.'}
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Başvuru desteği' : 'Antragsunterstützung'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Belge kontrolü' : 'Dokumentenprüfung'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Süreç takibi' : 'Verfahrensverfolgung'}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/unsere-dienstleistungen/vize-rehberligi`} class="service-link">
+                            <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Konaklama -->
+                <div class="service-card" id="konaklama">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">{lang === 'tr' ? 'Bremen Konaklama ve Yurt Yerleştirmesi' : 'Unterkunft und Wohnheim in Bremen'}</h3>
+                            <p class="service-subtitle">{lang === 'tr' ? 'Güvenli konaklama' : 'Sichere Unterkunft'}</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            {lang === 'tr' 
+                                ? 'Bremen\'de öğrenci yurtları, aile yanı konaklama ve paylaşımlı daire seçenekleri. Güvenli ve merkezi konumlarda konaklama desteği.'
+                                : 'Wohnheimplätze, Gastfamilien und Wohngemeinschaften in Bremen. Unterstützung bei der Unterkunft in sicheren und zentralen Lagen.'}
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Öğrenci yurtları' : 'Wohnheime'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Aile yanı' : 'Gastfamilien'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Paylaşımlı daire' : 'Wohngemeinschaften'}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/unsere-dienstleistungen/konaklama`} class="service-link">
+                            <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Havaalanı Karşılama -->
+                <div class="service-card" id="havalimani-karsilama">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-plane-arrival"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">{lang === 'tr' ? 'Havaalanı Karşılama' : 'Flughafenabholung'}</h3>
+                            <p class="service-subtitle">{lang === 'tr' ? 'Sorunsuz varış' : 'Reibungslose Ankunft'}</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            {lang === 'tr' 
+                                ? 'Bremen havaalanından karşılama ve konaklama yerinize transfer hizmeti. İlk gününüzü sorunsuz geçirin.'
+                                : 'Abholung vom Flughafen Bremen und Transfer zu Ihrer Unterkunft. Verbringen Sie Ihren ersten Tag reibungslos.'}
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Havaalanı karşılama' : 'Flughafenabholung'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Transfer hizmeti' : 'Transferdienst'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? '7/24 destek' : '24/7 Unterstützung'}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/unsere-dienstleistungen/havalimani-karsilama`} class="service-link">
+                            <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sağlık Sigortası/Banka -->
+                <div class="service-card" id="saglik-sigorta-banka">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">{lang === 'tr' ? 'Sağlık Sigortası/Bloke ve Banka Hesabı' : 'Krankenversicherung/Blocked und Bankkonto'}</h3>
+                            <p class="service-subtitle">{lang === 'tr' ? 'Finansal işlemler' : 'Finanzielle Angelegenheiten'}</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            {lang === 'tr' 
+                                ? 'Almanya\'da sağlık sigortası, bloke hesap ve banka hesabı açma konularında rehberlik ve destek. Tüm finansal işlemleriniz için yardım.'
+                                : 'Beratung und Unterstützung bei Krankenversicherung, Sperrkonto und Bankkontoeröffnung in Deutschland. Hilfe bei allen finanziellen Angelegenheiten.'}
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Sağlık sigortası' : 'Krankenversicherung'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Bloke hesap' : 'Sperrkonto'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Banka hesabı' : 'Bankkonto'}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/unsere-dienstleistungen/saglik-sigorta-banka`} class="service-link">
+                            <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Bürokrasi Desteği -->
+                <div class="service-card" id="burokrasi-destek">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">{lang === 'tr' ? 'Almanya Bürokrasi Desteği' : 'Bürokratische Unterstützung in Deutschland'}</h3>
+                            <p class="service-subtitle">{lang === 'tr' ? 'Resmi işlemler' : 'Behördliche Angelegenheiten'}</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            {lang === 'tr' 
+                                ? 'Almanya\'daki resmi işlemleriniz için bürokrasi desteği. İkamet izni, kayıt işlemleri ve diğer resmi belgeler için yardım.'
+                                : 'Bürokratische Unterstützung für Ihre behördlichen Angelegenheiten in Deutschland. Hilfe bei Aufenthaltserlaubnis, Anmeldung und anderen offiziellen Dokumenten.'}
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'İkamet izni' : 'Aufenthaltserlaubnis'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Kayıt işlemleri' : 'Anmeldung'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Belge desteği' : 'Dokumentenunterstützung'}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/unsere-dienstleistungen/burokrasi-destek`} class="service-link">
+                            <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Ücretsiz Kaynaklar -->
+                <div class="service-card" id="ucretsiz-kaynaklar">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">{lang === 'tr' ? 'Ücretsiz Almanca Kaynaklar' : 'Kostenlose Deutschressourcen'}</h3>
+                            <p class="service-subtitle">{lang === 'tr' ? 'Öğrenme materyalleri' : 'Lernmaterialien'}</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            {lang === 'tr' 
+                                ? 'Ücretsiz Almanca öğrenme materyalleri, çalışma kılavuzları ve online kaynaklara erişim. Kendi hızınızda öğrenmek için tüm araçlar.'
+                                : 'Kostenlose Deutschlernmaterialien, Studienführer und Zugang zu Online-Ressourcen. Alle Werkzeuge zum Lernen in Ihrem eigenen Tempo.'}
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Ücretsiz materyaller' : 'Kostenlose Materialien'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Online kaynaklar' : 'Online-Ressourcen'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Çalışma kılavuzları' : 'Studienführer'}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/unsere-dienstleistungen/ucretsiz-kaynaklar`} class="service-link">
+                            <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>
+

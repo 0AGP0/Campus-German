@@ -1,0 +1,894 @@
+/* ===== BOOKING PAGE - COPIED FROM ORIGINAL ===== */
+
+/* Booking Hero Section */
+.booking-hero {
+    background: #ffffff;
+    padding: 40px 0 20px 0;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.booking-hero .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.booking-hero .hero-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #0B1220;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.booking-hero .hero-title::before {
+    content: '';
+    width: 4px;
+    height: 40px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 2px;
+}
+
+.booking-hero .title-main {
+    color: #0B1220;
+}
+
+.booking-hero .title-highlight {
+    color: #059669;
+    font-weight: 700;
+}
+
+.booking-hero .hero-description {
+    font-size: 0.95rem;
+    color: #475569;
+    margin: 8px 0 0 59px;
+    font-weight: 500;
+}
+
+/* Booking Form Section */
+.booking-form-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f8f9fa 100%);
+    min-height: 100vh;
+}
+
+.booking-form-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 25px 80px rgba(5, 150, 105, 0.1);
+    overflow: hidden;
+    border: 1px solid rgba(5, 150, 105, 0.1);
+}
+
+.booking-form-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-content {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 0;
+    min-height: 500px;
+}
+
+.form-section {
+    padding: 0;
+}
+
+.price-calculator {
+    background: #F0FAF8;
+    border-left: 1px solid #e9ecef;
+    position: sticky;
+    top: 0;
+    height: fit-content;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+/* Form Progress */
+.form-progress {
+    background: linear-gradient(135deg, #1F3A5F 0%, #0B1220 100%);
+    padding: 30px;
+    color: white;
+    position: relative;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 2px;
+    transition: width 0.6s ease;
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.step-indicators {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.step-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.step-indicator.active {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.step-indicator.completed {
+    opacity: 0.8;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.step-indicator.active .step-number {
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-color: white;
+    color: white;
+    box-shadow: 0 5px 15px rgba(5, 150, 105, 0.4);
+}
+
+.step-indicator.completed .step-number {
+    background: rgba(255, 255, 255, 0.9);
+    color: #0B1220;
+    border-color: rgba(255, 255, 255, 0.9);
+}
+
+.step-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Form Steps */
+.booking-form {
+    padding: 0;
+}
+
+.form-step {
+    padding: 50px;
+    display: none;
+    animation: fadeInUp 0.6s ease;
+}
+
+.form-step.active {
+    display: block;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.step-header h2 {
+    color: #0B1220;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.step-header p {
+    color: #475569;
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto;
+    font-weight: 500;
+}
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #0B1220;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+    background: white;
+    color: #0B1220;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #059669;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+    transform: translateY(-2px);
+}
+
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+    border-color: #dc3545;
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.field-error {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.field-error::before {
+    content: '⚠';
+    font-size: 14px;
+}
+
+/* Radio and Checkbox Groups */
+.radio-group,
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.radio-label,
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #0B1220;
+    transition: all 0.3s ease;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background: #F0FAF8;
+    min-height: 20px;
+    user-select: none;
+}
+
+.radio-label:hover,
+.checkbox-label:hover {
+    background: rgba(5, 150, 105, 0.1);
+    border-color: rgba(5, 150, 105, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
+}
+
+.radio-label:active,
+.checkbox-label:active {
+    transform: translateY(0);
+}
+
+.radio-custom,
+.checkbox-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    background: white;
+    margin-top: 1px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox-custom {
+    border-radius: 4px;
+}
+
+.radio-label input[type="radio"],
+.checkbox-label input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.radio-label:has(input[type="radio"]:checked),
+.checkbox-label:has(input[type="checkbox"]:checked) {
+    background: rgba(5, 150, 105, 0.1);
+    border-color: #059669;
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.2);
+}
+
+.radio-label input[type="radio"]:checked + .radio-custom,
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+    border-color: #059669;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    box-shadow: 0 3px 8px rgba(5, 150, 105, 0.3);
+    transform: scale(1.05);
+}
+
+.radio-label input[type="radio"]:checked + .radio-custom::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+    content: '✓';
+    color: white;
+    font-size: 12px;
+    font-weight: 900;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    line-height: 1;
+}
+
+.radio-text,
+.checkbox-text {
+    font-weight: 500;
+    line-height: 1.4;
+    margin-top: 1px;
+}
+
+/* Conditional Fields */
+.accommodation-details,
+.transfer-details {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 20px;
+    padding: 25px;
+    background: rgba(255, 136, 136, 0.02);
+    border-radius: 12px;
+    border: 1px solid rgba(5, 150, 105, 0.1);
+}
+
+/* Form Navigation */
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    border-top: 1px solid #e9ecef;
+}
+
+.btn-prev,
+.btn-next,
+.btn-submit {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-prev {
+    background: #6c757d;
+    color: white;
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+}
+
+.btn-prev:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+}
+
+.btn-next,
+.btn-submit {
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+    margin-left: auto;
+}
+
+.btn-next:hover,
+.btn-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(5, 150, 105, 0.5);
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+}
+
+.btn-submit:hover {
+    box-shadow: 0 12px 35px rgba(40, 167, 69, 0.5);
+}
+
+/* Booking Summary */
+.booking-summary {
+    background: rgba(255, 136, 136, 0.02);
+    border: 1px solid rgba(5, 150, 105, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.booking-summary h3 {
+    color: #0B1220;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.summary-sections {
+    display: grid;
+    gap: 20px;
+}
+
+.summary-section {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid rgba(5, 150, 105, 0.1);
+}
+
+.summary-section h4 {
+    color: #059669;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.summary-content {
+    color: #475569;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+/* Terms Section */
+.terms-section {
+    background: rgba(255, 241, 147, 0.1);
+    border: 1px solid rgba(255, 241, 147, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.terms-section .checkbox-group {
+    flex-direction: column;
+    gap: 20px;
+}
+
+.terms-section .checkbox-label {
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(255, 193, 7, 0.2);
+    padding: 16px 20px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.terms-section .checkbox-label:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 193, 7, 0.4);
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.1);
+}
+
+.terms-section .checkbox-label:has(input[type="checkbox"]:checked) {
+    background: rgba(255, 193, 7, 0.1);
+    border-color: #ffc107;
+    box-shadow: 0 4px 20px rgba(255, 193, 7, 0.2);
+}
+
+.terms-section .checkbox-custom {
+    border-color: #ffc107;
+    background: white;
+    box-shadow: 0 2px 6px rgba(255, 193, 7, 0.2);
+}
+
+.terms-section .checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+    background: linear-gradient(135deg, #ffc107 0%, #ffeb3b 100%);
+    border-color: #ffc107;
+    box-shadow: 0 3px 10px rgba(255, 193, 7, 0.4);
+}
+
+.terms-section .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+    color: #0B1220;
+    font-weight: 900;
+    text-shadow: none;
+    font-size: 12px;
+}
+
+.terms-section .checkbox-text {
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+.terms-section .checkbox-text strong {
+    color: #059669;
+    font-weight: 700;
+}
+
+/* Price Calculator Styles */
+.price-calculator-header {
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.price-calculator-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.price-calculator-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.price-calculator-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.price-content {
+    padding: 20px;
+    background: white;
+}
+
+.price-summary-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.price-section {
+    margin-bottom: 15px;
+}
+
+.price-section:last-child {
+    margin-bottom: 0;
+}
+
+.price-section-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #059669;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.price-section-title::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 50%;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    margin-bottom: 6px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #f1f3f4;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.price-item:hover {
+    border-color: rgba(5, 150, 105, 0.2);
+    transform: translateX(3px);
+}
+
+.price-item-label {
+    color: #495057;
+    flex: 1;
+    font-weight: 500;
+}
+
+.price-item-value {
+    color: #0B1220;
+    font-weight: 700;
+    white-space: nowrap;
+    font-size: 0.95rem;
+}
+
+.price-total-container {
+    margin-top: 20px;
+    padding: 20px 0 0 0;
+    border-top: 2px solid #e9ecef;
+}
+
+.price-total {
+    background: linear-gradient(135deg, #1F3A5F 0%, #0B1220 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.price-total::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shimmer 3s infinite;
+}
+
+.price-total-label {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    opacity: 0.9;
+}
+
+.price-total-value {
+    font-size: 2.2rem;
+    font-weight: 900;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.price-notes {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.2);
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+}
+
+.price-notes-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #856404;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.price-notes-title::before {
+    content: '⚠';
+    font-size: 1rem;
+}
+
+.price-notes-text {
+    font-size: 0.8rem;
+    color: #856404;
+    line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .booking-hero {
+        padding: 30px 0 15px 0;
+    }
+    
+    .booking-hero .hero-content {
+        padding: 0 15px;
+    }
+    
+    .booking-hero .hero-title {
+        font-size: 1.6rem;
+        gap: 12px;
+    }
+    
+    .booking-hero .hero-title::before {
+        width: 3px;
+        height: 30px;
+    }
+    
+    .booking-hero .hero-description {
+        font-size: 0.9rem;
+        margin: 6px 0 0 45px;
+    }
+    
+    .booking-form-section {
+        padding: 40px 0;
+    }
+    
+    .booking-form-container {
+        margin: 0 15px;
+        border-radius: 15px;
+    }
+    
+    .booking-content {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .price-calculator {
+        position: relative;
+        border-left: none;
+        border-top: 1px solid #e9ecef;
+        order: 2;
+    }
+    
+    .form-section {
+        order: 1;
+    }
+    
+    .form-progress {
+        padding: 20px;
+    }
+    
+    .step-indicators {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .step-number {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    .step-label {
+        font-size: 12px;
+    }
+    
+    .form-step {
+        padding: 30px 25px;
+    }
+    
+    .step-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .accommodation-details,
+    .transfer-details {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+    
+    .radio-group,
+    .checkbox-group {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .radio-label,
+    .checkbox-label {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+    
+    .form-navigation {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .btn-prev,
+    .btn-next,
+    .btn-submit {
+        width: 100%;
+        justify-content: center;
+    }
+}

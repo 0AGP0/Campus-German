@@ -1,0 +1,232 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../../layouts/MainLayout.astro';
+
+export async function getStaticPaths() {
+  const allAvantajlarimiz = await getCollection('unsere-vorteile');
+  
+  const paths = [];
+  
+  for (const avantaj of allAvantajlarimiz) {
+    // Astro removes dots from slugs, so "hibrit-egitim.tr.md" becomes "hibrit-egitimtr"
+    // We need to check if slug ends with language code (tr, de, en)
+    const slug = avantaj.slug;
+    const langCode = avantaj.data.lang;
+    
+    // Check if slug ends with the language code
+    // e.g., "hibrit-egitimtr" ends with "tr"
+    if (!slug.endsWith(langCode)) {
+      continue;
+    }
+    
+    // Remove language code from end of slug
+    // "hibrit-egitimtr" -> "hibrit-egitim"
+    const cleanSlug = slug.slice(0, -langCode.length);
+    
+    paths.push({
+      params: { 
+        lang: langCode,
+        slug: cleanSlug
+      },
+      props: { avantaj },
+    });
+  }
+  
+  return paths;
+}
+
+const { avantaj } = Astro.props;
+const { lang } = Astro.params;
+const { Content } = await avantaj.render();
+---
+
+<MainLayout title={`${avantaj.data.title} - CampusGerman`} lang={lang} includeHizmetCSS={true}>
+    <!-- Main Content -->
+    <main>
+        <!-- Article Section -->
+        <section class="article-section">
+            <div class="container">
+                <div class="article-layout">
+                    <!-- Article Content -->
+                    <article class="article-content">
+                        <div class="article-header">
+                            <h1 class="article-title">{avantaj.data.title}</h1>
+                            <div class="article-meta">
+                                <span class="article-date">
+                                    <i class="fas fa-calendar"></i>
+                                    {avantaj.data.date}
+                                </span>
+                                <span class="article-author">
+                                    <i class="fas fa-user"></i>
+                                    {avantaj.data.author}
+                                </span>
+                                <span class="article-category">
+                                    <i class="fas fa-tag"></i>
+                                    {avantaj.data.category}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="article-image">
+                            <img src={avantaj.data.image} alt={avantaj.data.title}>
+                        </div>
+
+                        <div class="article-body">
+                            <Content />
+                        </div>
+
+                        <div class="article-footer">
+                            <div class="article-tags">
+                                <span class="tag-label">{lang === 'tr' ? 'Etiketler:' : 'Tags:'}</span>
+                                <a href="#" class="tag">{lang === 'tr' ? 'Almanca' : 'Deutsch'}</a>
+                                <a href="#" class="tag">{lang === 'tr' ? 'Avantajlar' : 'Vorteile'}</a>
+                                <a href="#" class="tag">{lang === 'tr' ? 'CampusGerman' : 'CampusGerman'}</a>
+                            </div>
+                            <div class="article-share">
+                                <span class="share-label">{lang === 'tr' ? 'Paylaş:' : 'Teilen:'}</span>
+                                <a href="#" class="share-link" aria-label="Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="share-link" aria-label="Twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="share-link" aria-label="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="#" class="share-link" aria-label="WhatsApp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Sidebar -->
+                    <aside class="article-sidebar">
+                        <!-- Quick Contact Widget -->
+                        <div class="sidebar-widget">
+                            <h3 class="widget-title">
+                                <i class="fas fa-phone-alt"></i>
+                                {lang === 'tr' ? 'Hızlı İletişim' : 'Schneller Kontakt'}
+                            </h3>
+                            <div class="widget-content">
+                                <p>{lang === 'tr' ? 'Avantajlarımız hakkında daha fazla bilgi almak için bizimle iletişime geçin.' : 'Kontaktieren Sie uns für weitere Informationen zu unseren Vorteilen.'}</p>
+                                <a href={`/${lang}/kontakt`} class="widget-button">
+                                    <i class="fas fa-envelope"></i>
+                                    {lang === 'tr' ? 'İletişime Geç' : 'Kontakt aufnehmen'}
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Related Advantages Widget -->
+                        <div class="sidebar-widget">
+                            <h3 class="widget-title">
+                                <i class="fas fa-list"></i>
+                                {lang === 'tr' ? 'Diğer Avantajlarımız' : 'Weitere Vorteile'}
+                            </h3>
+                            <div class="widget-content">
+                                <ul class="related-list">
+                                    <li>
+                                        <a href={`/${lang}/unsere-vorteile/hibrit-egitim`}>
+                                            <i class="fas fa-laptop-house"></i>
+                                            {lang === 'tr' ? 'Hibrit Eğitim' : 'Hybrides Lernen'}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href={`/${lang}/unsere-vorteile/sehir-uni-gezileri`}>
+                                            <i class="fas fa-map-marked-alt"></i>
+                                            {lang === 'tr' ? 'Şehir ve Üniversite Gezileri' : 'Stadt- und Universitätstouren'}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href={`/${lang}/unsere-vorteile/konusma-kulubu`}>
+                                            <i class="fas fa-comments"></i>
+                                            {lang === 'tr' ? 'Konuşma Kulübü' : 'Sprachclub'}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href={`/${lang}/unsere-vorteile/egitim-koclugu`}>
+                                            <i class="fas fa-user-graduate"></i>
+                                            {lang === 'tr' ? 'Eğitim Koçluğu' : 'Lerncoaching'}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href={`/${lang}/unsere-vorteile/garanti`}>
+                                            <i class="fas fa-shield-alt"></i>
+                                            {lang === 'tr' ? 'Garanti' : 'Garantie'}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- CTA Widget -->
+                        <div class="sidebar-widget cta-widget">
+                            <h3 class="widget-title">
+                                <i class="fas fa-rocket"></i>
+                                {lang === 'tr' ? 'Hemen Başla' : 'Jetzt starten'}
+                            </h3>
+                            <div class="widget-content">
+                                <p>{lang === 'tr' ? 'Almanca öğrenme yolculuğunuza bugün başlayın!' : 'Starten Sie heute Ihre Deutschlernreise!'}</p>
+                                <a href={`/${lang}/buchung`} class="widget-cta-button">
+                                    <i class="fas fa-arrow-right"></i>
+                                    {lang === 'tr' ? 'Hemen Başvur Yap' : 'Jetzt bewerben'}
+                                </a>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <div class="cta-text">
+                        <h2 class="cta-title">{lang === 'tr' ? 'Avantajlarımızdan Yararlanmaya Hazır mısınız?' : 'Bereit, unsere Vorteile zu nutzen?'}</h2>
+                        <p class="cta-description">
+                            {lang === 'tr' 
+                                ? 'CampusGerman ile Almanca öğrenme yolculuğunuza başlayın. Uzman eğitmenlerimiz ve modern eğitim metodlarımızla hedeflerinize ulaşın.'
+                                : 'Starten Sie Ihre Deutschlernreise mit CampusGerman. Erreichen Sie Ihre Ziele mit unseren Expertenlehrern und modernen Unterrichtsmethoden.'}
+                        </p>
+                        <div class="cta-buttons">
+                            <a href={`/${lang}/buchung`} class="cta-primary">
+                                <i class="fas fa-arrow-right"></i>
+                                {lang === 'tr' ? 'Hemen Başvur Yap' : 'Jetzt bewerben'}
+                            </a>
+                            <a href={`/${lang}/kontakt`} class="cta-secondary">
+                                <i class="fas fa-envelope"></i>
+                                {lang === 'tr' ? 'İletişime Geç' : 'Kontakt aufnehmen'}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="cta-form">
+                        <div class="form-header">
+                            <h3>{lang === 'tr' ? 'Ücretsiz Bilgi Alın' : 'Kostenlose Informationen'}</h3>
+                            <p>{lang === 'tr' ? 'Size en uygun programı bulalım' : 'Lassen Sie uns das richtige Programm für Sie finden'}</p>
+                        </div>
+                        <form class="contact-form">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" placeholder={lang === 'tr' ? 'Adınız Soyadınız' : 'Ihr Name'} required>
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" placeholder={lang === 'tr' ? 'E-posta Adresiniz' : 'Ihre E-Mail'} required>
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" id="phone" name="phone" placeholder={lang === 'tr' ? 'Telefon Numaranız' : 'Ihre Telefonnummer'} required>
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>{lang === 'tr' ? 'Ücretsiz Bilgi Al' : 'Kostenlose Informationen anfordern'}</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</MainLayout>
+

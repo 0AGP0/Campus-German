@@ -1,0 +1,29 @@
+/* ===== KURS DETAY SAYFASI OVERRIDE ===== */
+/* Bu CSS, kurs detay sayfalarında style.css'in override'larını düzeltir */
+
+.course-detail-page .hero-section {
+    padding: 40px 0 80px 0;
+}
+
+.course-detail-page .hero-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.course-detail-page .hero-content {
+    display: flex !important;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .course-detail-page .hero-wrapper {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+    }
+}
+

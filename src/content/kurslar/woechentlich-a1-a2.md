@@ -1,0 +1,78 @@
+---
+title: "Haftalık A1-A2 Almanca Kursu"
+lang: "tr"
+badge:
+  icon: "fas fa-calendar-week"
+  text: "Haftalık"
+description: "A1 ve A2 seviyeleri için haftalık esnek program. Kendi hızınızda Almanca öğrenin."
+image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Haftalık Ders"
+    description: "10-15 Ders"
+  - icon: "fas fa-calendar-alt"
+    title: "Program"
+    description: "Haftalık"
+  - icon: "fas fa-users"
+    title: "Sınıf Mevcudu"
+    description: "Maksimum 12 Kişi"
+  - icon: "fas fa-layer-group"
+    title: "Seviye"
+    description: "A1-A2"
+heroButtons:
+  primary:
+    text: "Hemen Başvur"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Ders Programı"
+    icon: "fas fa-download"
+    href: "#ders-programi"
+tabs:
+  - id: "kurs-bilgileri"
+    icon: "fas fa-info-circle"
+    title: "Kurs Bilgileri"
+    content:
+      title: "Haftalık A1-A2 Almanca Kursu"
+      paragraphs:
+        - heading: "Kursa Genel Bakış"
+          text: "Haftalık A1-A2 Almanca Kursu, A1 ve A2 seviyelerinde Almanca öğrenmek isteyen öğrenciler için tasarlanmış, esnek program seçenekleri sunan bir programdır. Bu kurs, öğrencilerin iş veya okul programlarına uygun saatlerde, kendi hızlarında Almanca öğrenmelerini sağlamayı hedefler. Haftada 10-15 ders saati ile esnek bir öğrenme deneyimi sunan program, öğrencinin ihtiyacına göre özelleştirilebilir ve istediği süre boyunca devam edebilir."
+        - heading: "Hedef Kitle ve Program Yapısı"
+          text: "Bu kurs, A1 ve A2 seviyelerinde Almanca öğrenmek isteyen herkes için uygundur. Program, öğrencinin mevcut dil seviyesine göre özelleştirilebilir ve A1'den başlayarak A2 seviyesine kadar tüm seviyeleri kapsar. İş hayatında olan profesyoneller, öğrenciler veya kişisel gelişim amacıyla Almanca öğrenmek isteyen herkes bu kursa katılabilir. Program, öğrencinin ihtiyacına göre sabah, öğleden sonra veya akşam saatlerinde düzenlenebilir."
+        - heading: "Kurs İçeriği ve Öğrenme Hedefleri"
+          text: "Kurs süresince öğrenciler, A1 ve A2 seviyelerindeki dil becerilerini geliştirirler. Temel dilbilgisi yapıları, yaygın kullanılan kelimeler ve ifadeler öğretilir. Öğrenciler günlük hayatta en temel ihtiyaçlarını karşılayabilecek Almanca bilgisine sahip olurlar. A1 seviyesinde kendilerini tanıtabilir, basit sorular sorup cevap verebilir, günlük konuşmalarda yer alabilir ve basit metinleri okuyup yazabilir hale gelirler. A2 seviyesinde ise daha karmaşık durumlarla başa çıkabilir, kişisel bilgileri paylaşabilir, geçmiş deneyimlerini anlatabilir ve rutin konularda akıcı bir şekilde konuşabilir hale gelirler."
+        - heading: "Öğretim Metodu ve Esneklik"
+          text: "Kurs, iletişim odaklı bir yaklaşımla yürütülmektedir ve her sınıfta maksimum 12 öğrenci bulunur. Dersler, öğrencinin ihtiyacına göre özelleştirilebilir ve esnek program seçenekleri sunulur. Öğrenciler, iş veya okul programlarına uygun saatlerde derslere katılabilirler. Dersler interaktif materyaller, rol oyunları, grup çalışmaları ve pratik alıştırmalarla zenginleştirilmiştir. Öğrenciler sadece pasif dinleyici değil, aktif katılımcı olarak derslere dahil edilir."
+        - heading: "Program Avantajları ve İlerleme"
+          text: "Haftalık programın en büyük avantajı, esneklik ve özelleştirilebilirliktir. Öğrenciler, kendi hızlarında öğrenebilir ve programlarını ihtiyaçlarına göre ayarlayabilirler. İş veya okul programlarına uygun saatlerde derslere katılabilirler. Program, öğrencinin istediği süre boyunca devam edebilir ve öğrenci, seviyesine göre A1'den A2'ye kadar ilerleyebilir. Kurs sonunda, öğrenciler tamamladıkları seviye için sertifika almaya hak kazanırlar ve bir sonraki seviyeye geçiş yapabilirler."
+faqs:
+  - question: "Haftalık program ne kadar sürer?"
+    answer: "Haftalık program esnek olduğu için istediğiniz süre boyunca devam edebilirsiniz."
+  - question: "Hangi günler ders var?"
+    answer: "Ders günleri ve saatleri programınıza göre ayarlanabilir."
+  - question: "Hangi kurs formatları sunulmaktadır?"
+    answer: "Kurslarımız size esnek bir öğrenme deneyimi sunar: Hibrit Eğitim: Kursunuz, yüz yüze dersler ile canlı online derslerin birleşiminden oluşur. Hibrit sistem sayesinde, yüz yüze ders günlerinde dilediğiniz zaman online olarak da derse katılabilirsiniz. Canlı Online Eğitim: Bu formatta derslere tamamen canlı ve online olarak katılırsınız."
+  - question: "Kurslarda hangi içerikler işlenmektedir?"
+    answer: "Yoğun Almanca programlarımız; güncel metinlerle dinleme ve okuma anlama, kapsamlı gramer çalışmaları ve çeşitli iletişim odaklı aktiviteler içerir. Bu sayede özellikle konuşma ve yazma becerilerinizin hedefe yönelik olarak geliştirilmesi amaçlanır."
+  - question: "Almanya'da nasıl üniversite eğitimi alabilirim?"
+    answer: "Almanya'da üniversite eğitimi alabilmek için öncelikle tanınmış bir üniversiteye giriş yeterliliğine (HZB) sahip olmanız gerekir. Diplomanızın Almanya'da tanınıp tanınmadığını anabin sistemi üzerinden kontrol etmeniz önerilir. Ayrıca Almanca dil yeterliliğinizi telc, DSH gibi resmi sertifikalarla belgelemeniz gerekir. Campus German Üniversite Hazırlık Programı, bu sürece eksiksiz şekilde hazırlanmanız için tasarlanmıştır."
+  - question: "Hangi şartlar gereklidir?"
+    answer: "En az 18 yaşında olmanız gerekir. Almanya'da açılmış bir blokeli hesap veya resmî taahhüt belgesi sunmanız gerekmektedir."
+  - question: "Hangi vize türleri önerilmektedir?"
+    answer: "Öğrenci Vizesi: Hazırlık Almanca kurslarına katılım hakkını da kapsar. AB vatandaşları için vize zorunluluğu bulunmamaktadır."
+  - question: "Kurslara hangi hizmetler dahildir?"
+    answer: "Seviye tespit sınavı, kayıt ücreti alınmaz, vize başvurusu için kurs belgesi, dijital ders kitabı, bireysel öğrenci danışmanlığı (1 kez, yaklaşık 45 dakika), 'Almanya'da Üniversite Eğitimi' konulu webinarlar, Campus German sertifikası, e-öğrenme platformu, yıl boyunca düzenlenen sosyal ve kültürel aktiviteler, tüm merkezlerde ücretsiz Wi-Fi erişimi."
+  - question: "Eğitmenlerimizin nitelikleri nelerdir?"
+    answer: "Eğitmen kadromuz; üniversite mezunu, Yabancı Dil Olarak Almanca (DaF) ve İkinci Dil Olarak Almanca (DaZ) alanlarında uzun yıllara dayanan öğretim deneyimine sahip, alanında uzman ve motivasyonu yüksek kişilerden oluşur. Ayrıca Federal Göç ve Mülteciler Dairesi (BAMF) onaylı eğitmenlerimiz bulunmaktadır. Derslerimiz düzenli olarak öğrenciler tarafından değerlendirilir."
+  - question: "Almanca öğrenmek ne kadar sürer?"
+    answer: "Almanca öğrenme süresi hedefinize ve mevcut seviyenize bağlıdır. A1'den B2'ye kadar olan temel seviyeleri 6-8 ayda tamamlayabilirsiniz. C1 ve C2 gibi ileri seviyeler için ek 4-6 ay gerekebilir. Yoğun kurslarımızla bu süreyi kısaltabilirsiniz."
+  - question: "Goethe sertifikası alabilir miyim?"
+    answer: "Evet, CampusGerman'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz."
+  - question: "Konaklama seçenekleri mevcut mu?"
+    answer: "Evet, Almanya'da konaklama seçenekleri sunuyoruz. Öğrenci yurtları, aile yanı konaklama ve paylaşımlı daireler mevcuttur. Konaklama hizmetimiz kurs ücretine dahil değildir ancak size en uygun seçenekleri bulmanızda yardımcı oluyoruz."
+  - question: "Ödeme planları ve indirimler mevcut mu?"
+    answer: "Evet, esnek ödeme planları sunuyoruz. Aylık, 3 aylık ve 6 aylık ödeme seçenekleri mevcuttur. Erken kayıt, grup kayıtları ve uzun dönem programlar için indirimler bulunmaktadır. Detaylı bilgi için bizimle iletişime geçin."
+---
+
+<!-- İçerik buraya eklenecek -->
+

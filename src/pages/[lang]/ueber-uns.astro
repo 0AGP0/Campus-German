@@ -1,0 +1,292 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/ueber-uns.css';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'tr' } },
+        { params: { lang: 'de' } },
+    ];
+}
+
+const { lang } = Astro.params;
+---
+
+<MainLayout title="Hakkımızda - CampusGerman" lang={lang}>
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="container">
+            <div class="mission-content">
+                <div class="mission-text">
+                    <h2 class="section-title">Misyonumuz</h2>
+                    <p class="mission-description">
+                        CampusGerman  olarak, Almanca öğrenme yolculuğunuzda güvenilir partneriniz olmaktan gurur duyuyoruz. 
+                        2020 yılından bu yana, binlerce öğrencinin dil hedeflerine ulaşmasına yardımcı olan deneyimli ekibimizle, 
+                        sadece dil öğretmekle kalmıyor, aynı zamanda Almanya'da eğitim ve kariyer fırsatlarınızı açan kapıları aralıyoruz.
+                    </p>
+                    <p class="mission-description">
+                        Misyonumuz, her öğrencinin benzersiz öğrenme tarzını ve hedeflerini anlayarak, kişiselleştirilmiş eğitim 
+                        programları sunmaktır. Modern teknoloji ile geleneksel eğitim metodlarını harmanlayarak, etkili ve kalıcı 
+                        öğrenme deneyimleri yaratıyoruz. Almanca'yı sadece bir ders olarak değil, yaşamınızın bir parçası haline 
+                        getirmenizi sağlıyoruz.
+                    </p>
+                    <div class="mission-features">
+                        <div class="feature-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div>
+                                <h4>Kaliteli Eğitim</h4>
+                                <p>Ana dili Almanca olan ve Türkçe bilen uzman eğitmenlerimizle, en yüksek standartlarda eğitim sunuyoruz. 
+                                Her eğitmenimiz, Almanca öğretmenliği konusunda akademik eğitim almış ve yıllarca deneyim sahibi profesyonellerdir.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h4>Kişiye Özel Program</h4>
+                                <p>Her öğrencinin öğrenme hızı, hedefleri ve özel ihtiyaçları farklıdır. Bu nedenle, her öğrencimiz için 
+                                özel olarak tasarlanmış kurs programları hazırlıyoruz. Grup derslerinden birebir özel derslere kadar geniş yelpazede seçenekler sunuyoruz.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-certificate"></i>
+                            <div>
+                                <h4>Uluslararası Sertifikalar</h4>
+                                <p>TestDaF, Goethe Institut, telc gibi dünya çapında geçerli Almanca sertifikalarına hazırlık konusunda 
+                                uzmanız. Öğrencilerimizin %95'i hedefledikleri seviyeye ulaşarak sertifikalarını başarıyla almaktadır.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mission-image">
+                    <img src="https://avrupagoc.com/wp-content/uploads/2025/10/resim1.png" alt="Modern Eğitim Merkezi" class="mission-photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Ekibimiz</h2>
+                <p class="section-subtitle">
+                    Deneyimli ve uzman eğitmenlerimizle Almanca öğrenme yolculuğunuzda yanınızdayız. 
+                    Her biri kendi alanında uzmanlaşmış, öğrenci odaklı yaklaşımlarıyla fark yaratan profesyonellerden oluşan ekibimiz, 
+                    sadece dil öğretmekle kalmıyor, aynı zamanda Almanya'da eğitim ve kariyer hedeflerinize ulaşmanız için rehberlik ediyor.
+                </p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Eğitim Koordinatörü" class="team-photo">
+                    </div>
+                    <h3 class="team-name">Eğitim Koordinatörleri</h3>
+                    <p class="team-role">Kurs Programları</p>
+                    <p class="team-description">
+                        Kurs programlarımızı tasarlayan ve sürekli geliştiren uzman ekibimiz, her seviyeye uygun, etkili öğrenme deneyimi sunuyor. 
+                        Modern eğitim metodlarını geleneksel yaklaşımlarla harmanlayarak, öğrencilerimizin hedeflerine en kısa sürede ulaşmalarını sağlıyoruz. 
+                        Her program, öğrenci geri bildirimleri ve akademik araştırmalar doğrultusunda sürekli güncellenmektedir.
+                    </p>
+                    <div class="team-skills">
+                        <span class="skill-tag">Program Geliştirme</span>
+                        <span class="skill-tag">Eğitim Teknolojileri</span>
+                        <span class="skill-tag">Kalite Kontrol</span>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Almanca Eğitmeni" class="team-photo">
+                    </div>
+                    <h3 class="team-name">Almanca Eğitmenleri</h3>
+                    <p class="team-role">Dil Eğitimi</p>
+                    <p class="team-description">
+                        Ana dili Almanca olan ve Türkçe bilen deneyimli eğitmenlerimiz, hem gramer hem de konuşma becerilerinizi geliştiriyor. 
+                        Her eğitmenimiz, Almanca öğretmenliği konusunda akademik eğitim almış ve yıllarca deneyim sahibi profesyonellerdir. 
+                        Öğrencilerimizin kültürel farklılıkları anlayarak, hem dil hem de kültürel entegrasyon konusunda destek sağlıyoruz.
+                    </p>
+                    <div class="team-skills">
+                        <span class="skill-tag">A1-C2 Seviyeleri</span>
+                        <span class="skill-tag">Konuşma Pratiği</span>
+                        <span class="skill-tag">Sınav Hazırlık</span>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Öğrenci Danışmanı" class="team-photo">
+                    </div>
+                    <h3 class="team-name">Öğrenci Danışmanları</h3>
+                    <p class="team-role">Destek Hizmetleri</p>
+                    <p class="team-description">
+                        Kurs sürecinizde karşılaştığınız her türlü sorunda yanınızda olan danışman ekibimiz, başarılı olmanız için sürekli destek sağlıyor. 
+                        Kişisel öğrenme planları hazırlayarak, motivasyonunuzu yüksek tutuyor ve hedeflerinize odaklanmanızı sağlıyoruz. 
+                        Almanya'da eğitim ve kariyer fırsatları konusunda da rehberlik hizmeti sunuyoruz.
+                    </p>
+                    <div class="team-skills">
+                        <span class="skill-tag">Kişisel Danışmanlık</span>
+                        <span class="skill-tag">İlerleme Takibi</span>
+                        <span class="skill-tag">Motivasyon</span>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Teknoloji Uzmanı" class="team-photo">
+                    </div>
+                    <h3 class="team-name">Teknoloji Ekibi</h3>
+                    <p class="team-role">Online Platform</p>
+                    <p class="team-description">
+                        Online eğitim platformumuzu geliştiren ve sürekli iyileştiren teknoloji ekibimiz, modern araçlarla öğrenme deneyiminizi zenginleştiriyor. 
+                        Yapay zeka destekli öğrenme araçları, interaktif ders materyalleri ve kişiselleştirilmiş öğrenme yolları ile 
+                        teknolojinin gücünü eğitimle buluşturuyoruz.
+                    </p>
+                    <div class="team-skills">
+                        <span class="skill-tag">Platform Geliştirme</span>
+                        <span class="skill-tag">Teknik Destek</span>
+                        <span class="skill-tag">İnovasyon</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Yolculuğumuz</h2>
+                <p class="section-subtitle">
+                    CampusGerman 'ın kuruluşundan bugüne kadar geçen süreç, sürekli gelişim ve öğrenci odaklı yaklaşımımızın hikayesidir. 
+                    Her yıl, binlerce öğrencinin hayatına dokunarak, onların Almanya'da eğitim ve kariyer hedeflerine ulaşmalarına yardımcı oluyoruz.
+                </p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">2020 - Kuruluş</h3>
+                        <p class="timeline-description">
+                            CampusGerman , Almanca eğitiminde kalite ve güvenilirlik odaklı yaklaşımıyla kuruldu. 
+                            İlk öğrencilerimizle birlikte başarı hikayelerimizi yazmaya başladık. Kuruluş amacımız, 
+                            Türk öğrencilerin Almanya'da eğitim ve kariyer fırsatlarını değerlendirebilmesi için 
+                            gerekli dil becerilerini kazandırmaktı.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">2021 - Ekip Genişlemesi</h3>
+                        <p class="timeline-description">
+                            Deneyimli eğitmenlerimizi ekibimize kattık. Farklı seviyelerde uzmanlaşmış öğretmenlerimizle 
+                            daha kapsamlı eğitim programları sunmaya başladık. Bu yıl, öğrenci sayımızın hızla artmasıyla 
+                            birlikte, daha kişiselleştirilmiş eğitim yaklaşımları geliştirdik.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">2022 - Online Platform</h3>
+                        <p class="timeline-description">
+                            Modern online eğitim platformumuzu hayata geçirdik. Artık öğrencilerimiz hem yüz yüze hem de online olarak 
+                            eğitim alabiliyorlar. Pandemi sürecinde geliştirdiğimiz bu platform, öğrencilerimizin evden de etkili şekilde 
+                            Almanca öğrenebilmesini sağladı. Interaktif ders materyalleri ve sanal sınıf ortamları ile eğitim kalitemizi artırdık.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">2023 - Başarılar</h3>
+                        <p class="timeline-description">
+                            Öğrencilerimizin %95'i hedefledikleri seviyeye ulaştı. TestDaF, Goethe ve diğer uluslararası sınavlarda 
+                            yüksek başarı oranları elde ettik. Bu yıl, Almanya'da üniversite kabulü alan öğrenci sayımızda önemli artışlar kaydettik. 
+                            Başarı hikayelerimiz, yeni öğrencilerimiz için ilham kaynağı oldu.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">2024 - Sürekli Gelişim</h3>
+                        <p class="timeline-description">
+                            Eğitim metodlarımızı sürekli geliştiriyoruz. Yapay zeka destekli öğrenme araçları ve kişiselleştirilmiş 
+                            eğitim programları ile öncü olmaya devam ediyoruz. Bu yıl, öğrenci memnuniyet oranımızı %98'e çıkardık ve 
+                            Almanya'daki partner üniversitelerimizle işbirliğimizi güçlendirdik.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Mezun Öğrenci</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Uzman Eğitmen</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Başarı Oranı</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Yıllık Deneyim</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Almanca Öğrenme Yolculuğunuza Başlayın</h2>
+                <p class="cta-description">
+                    Uzman ekibimizle birlikte dil hedeflerinize ulaşın. Ücretsiz seviye tespit sınavımıza katılın ve size özel programımızı keşfedin. 
+                    Almanya'da eğitim ve kariyer fırsatlarınızı değerlendirmek için gerekli dil becerilerini kazanın. 
+                    Her seviyeden öğrenci için uygun kurs programlarımızla, başarıya giden yolda yanınızdayız.
+                </p>
+                <div class="cta-buttons">
+                    <a href={`/${lang}/kontakt`} class="cta-btn primary">
+                        <i class="fas fa-phone"></i>
+                        <span>Ücretsiz Danışmanlık</span>
+                    </a>
+                    <a href="/kurslar" class="cta-btn secondary">
+                        <i class="fas fa-book-open"></i>
+                        <span>Kurslarımızı İncele</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>
+

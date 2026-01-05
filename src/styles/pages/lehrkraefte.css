@@ -1,0 +1,611 @@
+﻿/* ===== INSTRUCTORS HERO SECTION ===== */
+.instructors-hero-section {
+    background: linear-gradient(135deg, #0B1220 0%, #1F3A5F 50%, #059669 100%);
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.instructors-hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="instructor-dots" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="15" cy="15" r="1.5" fill="%23FF8888" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23instructor-dots)"/></svg>');
+    opacity: 0.5;
+}
+
+.instructors-hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    color: white;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 12px 24px;
+    border-radius: 50px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hero-badge i {
+    font-size: 18px;
+    color: #FF8888;
+}
+
+.hero-badge span {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+}
+
+.hero-main-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 25px;
+    color: white;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 50px;
+    color: rgba(255, 255, 255, 1);
+    font-weight: 500;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #FF8888;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+/* ===== INSTRUCTORS SECTION ===== */
+.instructors-section {
+    padding: 100px 0;
+    background: #F0FAF8;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.section-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #0B1220;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: #475569;
+    max-width: 700px;
+    margin: 0 auto;
+    font-weight: 500;
+}
+
+.instructors-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.instructor-card {
+    background: white;
+    border-radius: 30px;
+    padding: 50px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 50px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.instructor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+    border-color: rgba(5, 150, 105, 0.2);
+}
+
+.instructor-image-wrapper {
+    position: relative;
+}
+
+.instructor-image {
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.instructor-image i {
+    font-size: 120px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.instructor-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #FF8888 0%, #FFF193 100%);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 136, 136, 0.3);
+}
+
+.instructor-badge i {
+    font-size: 16px;
+}
+
+.instructor-content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.instructor-header {
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f1f3f4;
+}
+
+.instructor-name {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0B1220;
+    margin-bottom: 8px;
+}
+
+.instructor-title {
+    font-size: 1.1rem;
+    color: #059669;
+    font-weight: 600;
+}
+
+.instructor-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1rem;
+    color: #64748B;
+}
+
+.info-row i {
+    color: #059669;
+    font-size: 18px;
+    width: 24px;
+    flex-shrink: 0;
+}
+
+.instructor-description {
+    line-height: 1.8;
+    color: #475569;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.instructor-specialties {
+    background: rgba(5, 150, 105, 0.05);
+    padding: 25px;
+    border-radius: 15px;
+    border-left: 4px solid #059669;
+}
+
+.instructor-specialties h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0B1220;
+    margin-bottom: 15px;
+}
+
+.specialties-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.specialties-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #475569;
+    font-size: 0.95rem;
+}
+
+.specialties-list li i {
+    color: #059669;
+    font-size: 14px;
+}
+
+.instructor-contact {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #f1f3f4;
+}
+
+.contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    color: white;
+    text-decoration: none;
+    padding: 16px 32px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);
+}
+
+.contact-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(5, 150, 105, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+/* ===== CTA SECTION - FORCE GRID LAYOUT ===== */
+.cta-section {
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-content {
+    display: block !important;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* CTA Elements Spacing */
+.cta-section .cta-icon {
+    font-size: 70px;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.cta-section .cta-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: white !important;
+    background: none !important;
+    -webkit-text-fill-color: white !important;
+    margin-bottom: 25px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cta-section .cta-description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 1) !important;
+    margin-bottom: 40px;
+    font-weight: 500;
+}
+
+.cta-section .cta-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="cta-dots" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="15" cy="15" r="1.5" fill="%23FF8888" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23cta-dots)"/></svg>');
+    opacity: 0.5;
+}
+
+.cta-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta-icon {
+    font-size: 70px;
+    color: #FF8888;
+    margin-bottom: 30px;
+}
+
+.cta-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 25px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cta-description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 1);
+    margin-bottom: 40px;
+    font-weight: 500;
+}
+
+.cta-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-button-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    color: #059669;
+    text-decoration: none;
+    padding: 18px 36px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+}
+
+.cta-button-secondary:hover {
+    background: #FF8888;
+    color: white;
+    border-color: #FF8888;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(255, 136, 136, 0.4);
+    text-decoration: none;
+}
+
+/* ===== CTA SECTION BUTTON - ORIGINAL CSS EXACT COPY ===== */
+.cta-section .cta-button {
+    background: linear-gradient(135deg, #FF8888 0%, #FFF193 100%);
+    color: white;
+    text-decoration: none;
+    padding: 18px 36px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(255, 136, 136, 0.3);
+    border: none;
+}
+
+.cta-section .cta-button:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 15px 35px rgba(255, 136, 136, 0.5) !important;
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.cta-section .cta-button::before {
+    display: none;
+}
+
+/* Responsive Design for Instructors */
+@media (max-width: 1200px) {
+    .instructor-card {
+        grid-template-columns: 250px 1fr;
+        gap: 40px;
+        padding: 40px;
+    }
+}
+
+@media (max-width: 992px) {
+    .instructors-hero-section {
+        padding: 80px 0;
+    }
+    
+    .hero-main-title {
+        font-size: 2.8rem;
+    }
+    
+    .hero-stats {
+        gap: 40px;
+    }
+    
+    .instructor-card {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .instructor-image {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .instructors-hero-section {
+        padding: 60px 0;
+    }
+    
+    .hero-main-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-description {
+        font-size: 1.1rem;
+    }
+    
+    .hero-stats {
+        gap: 30px;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    
+    .instructors-section {
+        padding: 60px 0;
+    }
+    
+    .section-title {
+        font-size: 2.2rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .instructor-card {
+        padding: 30px;
+    }
+    
+    .instructor-name {
+        font-size: 1.6rem;
+    }
+    
+    .cta-section {
+        padding: 60px 0;
+    }
+    
+    .cta-title {
+        font-size: 2.2rem;
+    }
+    
+    .cta-description {
+        font-size: 1.1rem;
+    }
+    
+    .cta-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cta-button,
+    .cta-button-secondary {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .instructors-hero-section {
+        padding: 40px 0;
+    }
+    
+    .hero-main-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 25px;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .instructors-section {
+        padding: 40px 0;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
+    }
+    
+    .instructor-card {
+        padding: 25px;
+    }
+    
+    .instructor-name {
+        font-size: 1.4rem;
+    }
+    
+    .instructor-title {
+        font-size: 1rem;
+    }
+    
+    .cta-section {
+        padding: 50px 0;
+    }
+    
+    .cta-icon {
+        font-size: 50px;
+    }
+    
+    .cta-title {
+        font-size: 1.8rem;
+    }
+    
+    .cta-description {
+        font-size: 1rem;
+    }
+}
+

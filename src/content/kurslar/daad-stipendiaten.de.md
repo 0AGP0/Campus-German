@@ -1,0 +1,101 @@
+---
+title: "Deutschkurse für DAAD-Stipendiaten"
+lang: "de"
+badge:
+  icon: "fas fa-graduation-cap"
+  text: "DAAD"
+description: "Spezieller Deutschkurs für DAAD-Stipendiaten. Akademisches Deutsch und Universitätsvorbereitung."
+image: "https://images.unsplash.com/photo-1523050854058-8df90110c9e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Wochenstunden"
+    description: "20–24 Unterrichtseinheiten"
+  - icon: "fas fa-calendar-alt"
+    title: "Kursdauer"
+    description: "Flexibel"
+  - icon: "fas fa-users"
+    title: "Klassengröße"
+    description: "Maximal 12 Personen"
+  - icon: "fas fa-graduation-cap"
+    title: "Zielgruppe"
+    description: "DAAD-Stipendiaten"
+heroButtons:
+  primary:
+    text: "Jetzt bewerben"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "DAAD-Informationen"
+    icon: "fas fa-info-circle"
+    href: "#daad-informationen"
+tabs:
+  - id: "kursinformationen"
+    icon: "fas fa-info-circle"
+    title: "Kursinformationen"
+    content:
+      title: "Über den Deutschkurs für DAAD-Stipendiaten"
+      paragraphs:
+        - heading: "Kursüberblick"
+          text: "Der Deutschkurs für DAAD-Stipendiaten wurde speziell für Studierende konzipiert, die mit einem Stipendium des DAAD (Deutscher Akademischer Austauschdienst) in Deutschland studieren werden. Ziel des Programms ist es, die für den akademischen Alltag und das tägliche Leben notwendigen Deutschkenntnisse gezielt aufzubauen und zu vertiefen. Der von CampusGerman angebotene Kurs unterstützt Stipendiaten dabei, sich schneller und reibungslos in das deutsche Universitätssystem zu integrieren. Deutschkenntnisse sind für DAAD-Stipendiaten nicht nur wichtig, um Lehrveranstaltungen zu verstehen, sondern auch für die akademische Kommunikation, universitäre Korrespondenz und die soziale Integration. Der Kurs verbindet allgemeine Deutschkenntnisse mit akademischer Sprache, universitärer Terminologie und formeller Kommunikation. Das Programm ist gemäß den CEFR-Standards aufgebaut und wird an das jeweilige Sprachniveau der Teilnehmenden angepasst. Der Deutschkurs für DAAD-Stipendiaten von CampusGerman ist ein zielorientiertes Sprachprogramm, das den Stipendienprozess effizienter und erfolgreicher gestaltet."
+        - heading: "Zielgruppe und Voraussetzungen"
+          text: "Dieser Kurs richtet sich an Studierende, die ein DAAD-Stipendium erhalten haben oder sich auf ein solches vorbereiten. Er ist besonders geeignet für folgende Zielgruppen: Studierende, die mit einem DAAD-Stipendium ein Bachelor-, Master- oder Promotionsstudium in Deutschland aufnehmen; Stipendiaten, die ihre akademischen Deutschkenntnisse vertiefen möchten; Bewerberinnen und Bewerber, die im universitären Umfeld auf Deutsch kommunizieren müssen; Personen, die ihre sprachliche Grundlage bereits vor der Einreise nach Deutschland stärken möchten. Für die Teilnahme ist kein festgelegtes Einstiegsniveau erforderlich, jedoch profitieren Teilnehmende ab dem Niveau A2 besonders vom Kursinhalt. CampusGerman führt vor Kursbeginn eine Einstufungs- und Bedarfsanalyse durch und ordnet die Teilnehmenden passenden Lerngruppen zu."
+        - heading: "Kursinhalte und Lernziele"
+          text: "Der Deutschkurs für DAAD-Stipendiaten fokussiert sich auf sprachliche Kompetenzen für das akademische und universitäre Umfeld. Zu den Kursinhalten gehören: akademischer Wortschatz und Redemittel; Sprache für die universitäre Kommunikation und Korrespondenz; Fähigkeiten zum Verfolgen von Vorlesungen und Seminaren; Lesen und Verstehen akademischer Texte; Präsentations- und Diskussionssprache. Das Lernziel besteht darin, Deutsch im akademischen Kontext sicher, korrekt und flüssig anwenden zu können. Nach Abschluss des Kurses sind die Teilnehmenden in der Lage, universitäre Lehrveranstaltungen besser zu verfolgen und sich in der akademischen Kommunikation selbstbewusst auszudrücken."
+        - heading: "Lehrmethode und Unterrichtsumfeld"
+          text: "Bei CampusGerman wird dieser Kurs mit einem akademisch ausgerichteten und praxisnahen Lehransatz durchgeführt. Im Unterricht kommen unter anderem folgende Methoden und Materialien zum Einsatz: Beispiele aus realen universitären Lehrveranstaltungen; akademische Texte und Fallstudien; Präsentations- und Diskussionsübungen; hör- und sprechorientierte Aktivitäten. Der Unterricht ist interaktiv gestaltet und die aktive Teilnahme der Stipendiaten wird gezielt gefördert. Die Lehrkräfte verfügen über umfassende Erfahrung im Bereich akademisches Deutsch und im deutschen Hochschulsystem."
+        - heading: "Fortschritt nach dem Kurs"
+          text: "Teilnehmende, die den Deutschkurs für DAAD-Stipendiaten erfolgreich abschließen, profitieren von folgenden Vorteilen: Vertiefung ihrer akademischen Deutschkenntnisse auf ein fortgeschrittenes Niveau; schnellere Anpassung an das Universitätsleben in Deutschland; eine solide sprachliche Grundlage zur Unterstützung des akademischen Erfolgs; Möglichkeit zum Übergang in weiterführende akademische oder prüfungsvorbereitende Programme. CampusGerman begleitet die Stipendiaten auch nach Kursende weiter und unterstützt sie bei fortgeschrittenen Deutschprogrammen sowie in akademischen Beratungsprozessen."
+  - id: "termine-preise"
+    icon: "fas fa-calendar-alt"
+    title: "Termine und Preise"
+    content:
+      title: "Preisinformationen"
+      pricing:
+        - name: "DAAD-Stipendiaten"
+          duration: "Flexibel"
+          schedule: "20–24 Unterrichtseinheiten/Woche"
+          price: "Sonderkonditionen"
+          highlighted: true
+  - id: "daad-informationen"
+    icon: "fas fa-graduation-cap"
+    title: "DAAD-Informationen"
+    content:
+      title: "Besondere Leistungen für DAAD-Stipendiaten"
+      items:
+        - icon: "fas fa-check-circle"
+          text: "<strong>Akademisches Deutsch:</strong> Sprachkompetenzen für das Universitätsstudium"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Sonderrabatt:</strong> Exklusive Preisgestaltung für DAAD-Stipendiaten"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Universitätsvorbereitung:</strong> Unterstützung bei der TestDaF-/DSH-Vorbereitung"
+faqs:
+  - question: "Wie kann ich nachweisen, dass ich DAAD-Stipendiat bin?"
+    answer: "Es genügt, Ihre DAAD-Stipendienbescheinigung bei der Anmeldung vorzulegen."
+  - question: "Wird akademisches Deutsch unterrichtet?"
+    answer: "Ja, der Kurs ist gezielt auf akademisches Deutsch und die Universitätsvorbereitung ausgerichtet."
+  - question: "Welche Kursformate werden angeboten?"
+    answer: "Unsere Kurse bieten Ihnen flexible Lernformate: Hybridunterricht: Eine Kombination aus Präsenz- und Live-Online-Unterricht. Dank des hybriden Systems können Sie an Präsenztagen auch online am Unterricht teilnehmen. Live-Online-Unterricht: In diesem Format nehmen Sie vollständig live und online am Unterricht teil."
+  - question: "Welche Inhalte werden in den Kursen behandelt?"
+    answer: "Unsere Intensiv-Deutschkursprogramme umfassen Hör- und Leseverstehen mit aktuellen Texten, umfassende Grammatikarbeit sowie vielfältige kommunikative Aktivitäten. Ziel ist insbesondere die gezielte Entwicklung Ihrer Sprech- und Schreibkompetenzen."
+  - question: "Wie kann ich in Deutschland studieren?"
+    answer: "Um in Deutschland studieren zu können, benötigen Sie zunächst eine anerkannte Hochschulzugangsberechtigung (HZB). Es wird empfohlen, die Anerkennung Ihres Abschlusses im Anabin-System zu überprüfen. Zudem müssen Sie Ihre Deutschkenntnisse durch offizielle Zertifikate wie telc oder DSH nachweisen. Das CampusGerman Universitätsvorbereitungsprogramm ist darauf ausgelegt, Sie umfassend auf diesen Prozess vorzubereiten."
+  - question: "Welche Voraussetzungen sind erforderlich?"
+    answer: "Sie müssen mindestens 18 Jahre alt sein. Zudem ist der Nachweis eines in Deutschland eröffneten Sperrkontos oder einer offiziellen Verpflichtungserklärung erforderlich."
+  - question: "Welche Visatypen werden empfohlen?"
+    answer: "Studentenvisum: Dieses umfasst auch die Teilnahme an vorbereitenden Deutschkursen. Für EU-Bürger besteht keine Visumpflicht."
+  - question: "Welche Leistungen sind in den Kursen enthalten?"
+    answer: "Einstufungstest, keine Anmeldegebühr, Kursbescheinigung für den Visumsantrag, digitales Lehrbuch, individuelle Studienberatung (einmalig, ca. 45 Minuten), Webinare zum Thema \"Studium in Deutschland\", CampusGerman-Zertifikat, E-Learning-Plattform, ganzjährig organisierte soziale und kulturelle Aktivitäten sowie kostenloser WLAN-Zugang an allen Standorten."
+  - question: "Welche Qualifikationen haben unsere Lehrkräfte?"
+    answer: "Unser Lehrteam besteht aus hochqualifizierten, universitär ausgebildeten Lehrkräften mit langjähriger Erfahrung in Deutsch als Fremdsprache (DaF) und Deutsch als Zweitsprache (DaZ). Zudem verfügen wir über vom Bundesamt für Migration und Flüchtlinge (BAMF) anerkannte Lehrkräfte. Unsere Kurse werden regelmäßig von den Teilnehmenden evaluiert."
+  - question: "Wie lange dauert es, Deutsch zu lernen?"
+    answer: "Die Dauer des Deutschlernens hängt von Ihrem Ziel und Ihrem aktuellen Sprachniveau ab. Die Grundstufen von A1 bis B2 können in etwa 6–8 Monaten abgeschlossen werden. Für fortgeschrittene Niveaus wie C1 und C2 sind zusätzlich etwa 4–6 Monate einzuplanen. Mit unseren Intensivkursen lässt sich diese Dauer verkürzen."
+  - question: "Kann ich ein Goethe-Zertifikat erwerben?"
+    answer: "Ja, bei CampusGerman bieten wir Vorbereitungskurse für Goethe-Zertifikate an. Wir bereiten auf alle Niveaustufen von A1 bis C2 vor. Die Prüfungen können auf unserem Campus oder in nahegelegenen Prüfungszentren abgelegt werden."
+  - question: "Gibt es Unterkunftsmöglichkeiten?"
+    answer: "Ja, wir unterstützen Sie bei der Organisation von Unterkunftsmöglichkeiten in Deutschland. Zur Auswahl stehen Studentenwohnheime, Gastfamilien sowie Wohngemeinschaften. Die Unterkunft ist nicht im Kurspreis enthalten, wir helfen Ihnen jedoch bei der Suche nach passenden Optionen."
+  - question: "Gibt es Zahlungspläne und Rabatte?"
+    answer: "Ja, wir bieten flexible Zahlungsmodelle an, darunter monatliche, dreimonatige und sechsmonatige Zahlungspläne. Zudem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für detaillierte Informationen kontaktieren Sie uns bitte."
+
+hasDemandForm: true
+---
+

@@ -1,0 +1,78 @@
+---
+title: "Online Intensiv-Deutschkurs A2"
+lang: "de"
+badge:
+  icon: "fas fa-laptop"
+  text: "Online A2"
+description: "Schließen Sie online das Niveau A2 ab. Verbessern Sie Ihre grundlegenden Deutschkenntnisse mit Live-Unterricht."
+image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Wochenstunden"
+    description: "20 Unterrichtseinheiten (UE)"
+  - icon: "fas fa-calendar-alt"
+    title: "Kursdauer"
+    description: "8 Wochen"
+  - icon: "fas fa-users"
+    title: "Klassengröße"
+    description: "Maximal 10 Teilnehmende"
+  - icon: "fas fa-layer-group"
+    title: "Niveau"
+    description: "A2 (Grundstufe)"
+heroButtons:
+  primary:
+    text: "Jetzt bewerben"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Stundenplan"
+    icon: "fas fa-download"
+    href: "#stundenplan"
+tabs:
+  - id: "kursinformationen"
+    icon: "fas fa-info-circle"
+    title: "Kursinformationen"
+    content:
+      title: "Online Intensiv-Deutschkurs A2"
+      paragraphs:
+        - heading: "Kursüberblick"
+          text: "Der Online Intensiv-Deutschkurs A2 ist ein umfassendes Online-Programm für Lernende, die das Niveau A1 abgeschlossen haben und ihre Grundkenntnisse systematisch ausbauen möchten. Ziel ist es, die Teilnehmenden sprachlich so zu stärken, dass sie in Alltagssituationen sicherer und flexibler reagieren können. Der Kurs umfasst 20 Unterrichtseinheiten pro Woche, dauert 8 Wochen und besteht aus insgesamt ca. 160 Unterrichtseinheiten."
+        - heading: "Vorteile des Online-Unterrichts"
+          text: "Das Online-Format bietet zeitliche und örtliche Flexibilität: Sie können von zu Hause oder von überall aus teilnehmen und erhalten hochwertige Ausbildung ohne Reiseaufwand. Alle Unterrichtseinheiten werden aufgezeichnet und stehen rund um die Uhr zur Verfügung, sodass Sie verpasste Stunden nachholen oder Inhalte wiederholen können. Digitale Materialien und interaktive Übungen unterstützen ein nachhaltiges Lernen."
+        - heading: "Zielgruppe und Voraussetzungen"
+          text: "Der Kurs richtet sich an Lernende, die das A1-Niveau erfolgreich abgeschlossen haben. Auf den Grundlagen aus A1 aufbauend bringt A2 Sie auf die nächste Stufe: Sie können sich in typischen Alltagssituationen besser ausdrücken und verstehen mehr. Der Kurs eignet sich für alle, die in Deutschland leben möchten, Deutsch im Berufsalltag auf grundlegender Ebene brauchen oder insgesamt flüssiger kommunizieren möchten. Voraussetzung ist eine stabile Internetverbindung sowie ein Computer oder Tablet."
+        - heading: "Kursinhalte und Lernziele"
+          text: "Auf dem Niveau A2 lernen Sie, in häufiger vorkommenden Situationen sicherer zu kommunizieren. Im Kurs werden erweiterte Grammatikstrukturen wie Vergangenheitsformen und Zukunftsbezüge vermittelt. In den Live-Stunden üben Sie, persönliche Informationen auszutauschen, vergangene Erfahrungen zu beschreiben, Pläne zu formulieren und über Routine-Themen flüssiger zu sprechen. Zusätzlich werden Sprachmittel für Themen wie Einkaufen, Reisen und Gesundheit gezielt trainiert."
+        - heading: "Unterrichtsmethode und technischer Support"
+          text: "Der Unterricht findet live über Zoom oder vergleichbare Plattformen statt. Jede Klasse besteht aus maximal 10 Teilnehmenden und wird von zwei Lehrkräften begleitet, um individuell auf Lernbedürfnisse einzugehen. Der Kurs ist praxisorientiert: mit realistischen Alltagsszenarien, Dialogtraining, Lese- und Schreibaufgaben sowie gezielten Übungen zur Anwendung. Unser technisches Support-Team unterstützt Sie bei Bedarf schnell und zuverlässig."
+faqs:
+  - question: "Kann ich mit A2 beginnen, ohne A1 abgeschlossen zu haben?"
+    answer: "Nein. Für den A2-Kurs sollten Sie das Niveau A1 abgeschlossen haben."
+  - question: "Sind Online-Kurse genauso effektiv wie Präsenzkurse?"
+    answer: "Ja. Durch live-interaktiven Unterricht und moderne Online-Tools bieten wir ein Lernerlebnis, das Präsenzkursen sehr nahekommt."
+  - question: "Welche Kursformate werden angeboten?"
+    answer: "Unsere Kurse bieten flexible Lernformate: Hybridunterricht – eine Kombination aus Präsenz- und Live-Online-Unterricht, bei der Sie auch an Präsenztagen online teilnehmen können; sowie Live-Online-Unterricht, bei dem Sie vollständig live und online am Unterricht teilnehmen."
+  - question: "Welche Inhalte werden in den Kursen behandelt?"
+    answer: "Unsere Intensiv-Deutschkursprogramme umfassen Hör- und Leseverstehen mit aktuellen Texten, umfassende Grammatikarbeit sowie vielfältige kommunikationsorientierte Aktivitäten. Ziel ist insbesondere die gezielte Entwicklung Ihrer Sprech- und Schreibkompetenzen."
+  - question: "Wie kann ich in Deutschland studieren?"
+    answer: "Für ein Studium in Deutschland benötigen Sie eine anerkannte Hochschulzugangsberechtigung (HZB). Es wird empfohlen, die Anerkennung Ihres Abschlusses im Anabin-System zu prüfen. Zudem müssen Deutschkenntnisse durch offizielle Zertifikate wie telc oder DSH nachgewiesen werden. Das CampusGerman Universitätsvorbereitungsprogramm unterstützt Sie umfassend bei diesem Prozess."
+  - question: "Welche Voraussetzungen sind erforderlich?"
+    answer: "Sie müssen mindestens 18 Jahre alt sein und entweder ein in Deutschland eröffnetes Sperrkonto oder eine offizielle Verpflichtungserklärung vorlegen."
+  - question: "Welche Visatypen werden empfohlen?"
+    answer: "Studentenvisum: Dieses umfasst auch die Teilnahme an vorbereitenden Deutschkursen. Für EU-Bürgerinnen und EU-Bürger besteht keine Visumpflicht."
+  - question: "Welche Leistungen sind in den Kursen enthalten?"
+    answer: "Einstufungstest, keine Anmeldegebühr, Kursbescheinigung für den Visumsantrag, digitales Lehrbuch, individuelle Studienberatung (einmalig ca. 45 Minuten), Webinare zum Thema \"Studium in Deutschland\", CampusGerman-Zertifikat, E-Learning-Plattform, ganzjährig organisierte soziale und kulturelle Aktivitäten sowie kostenloser WLAN-Zugang an allen Standorten."
+  - question: "Welche Qualifikationen haben die Lehrkräfte?"
+    answer: "Unser Lehrteam besteht aus hochqualifizierten, akademisch ausgebildeten Lehrkräften mit langjähriger Erfahrung in Deutsch als Fremdsprache (DaF) und Deutsch als Zweitsprache (DaZ). Zudem verfügen wir über vom Bundesamt für Migration und Flüchtlinge (BAMF) anerkannte Lehrkräfte. Die Kurse werden regelmäßig von den Teilnehmenden evaluiert."
+  - question: "Wie lange dauert es, Deutsch zu lernen?"
+    answer: "Die Dauer des Deutschlernens hängt von Ihren Zielen und Ihrem aktuellen Sprachniveau ab. Die Grundstufen von A1 bis B2 können in etwa 6–8 Monaten abgeschlossen werden. Für fortgeschrittene Niveaus wie C1 und C2 sind zusätzlich etwa 4–6 Monate einzuplanen. Intensivkurse können die Lernzeit verkürzen."
+  - question: "Kann ich ein Goethe-Zertifikat erwerben?"
+    answer: "Ja, bei CampusGerman bieten wir Vorbereitungskurse für Goethe-Zertifikate an – von A1 bis C2. Prüfungen können auf unserem Campus oder in nahegelegenen Prüfzentren abgelegt werden."
+  - question: "Gibt es Unterkunftsmöglichkeiten?"
+    answer: "Ja, wir unterstützen Sie bei der Organisation von Unterkunftsmöglichkeiten in Deutschland – z. B. Studentenwohnheime, Gastfamilien und Wohngemeinschaften. Die Unterkunft ist nicht im Kurspreis enthalten, wir helfen Ihnen jedoch bei der passenden Auswahl."
+  - question: "Gibt es Zahlungspläne und Rabatte?"
+    answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
+
+hasDemandForm: true
+---
+

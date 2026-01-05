@@ -1,0 +1,101 @@
+---
+title: "Deutschkurse speziell für Unternehmen"
+lang: "de"
+badge:
+  icon: "fas fa-briefcase"
+  text: "Firmenkurs"
+description: "Maßgeschneiderte Deutschkurse für Unternehmen. Business-orientierte Inhalte und flexible Programmoptionen."
+image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Flexibles Programm"
+    description: "Nach Unternehmensbedarf"
+  - icon: "fas fa-users"
+    title: "Gruppengröße"
+    description: "Exklusive Gruppen"
+  - icon: "fas fa-briefcase"
+    title: "Inhalte"
+    description: "Business-orientiert"
+  - icon: "fas fa-building"
+    title: "Zielgruppe"
+    description: "Unternehmen"
+heroButtons:
+  primary:
+    text: "Jetzt anfragen"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Firmeninformationen"
+    icon: "fas fa-info-circle"
+    href: "#firmen-info"
+tabs:
+  - id: "kursinformationen"
+    icon: "fas fa-info-circle"
+    title: "Kursinformationen"
+    content:
+      title: "Über den firmeninternen Deutschkurs"
+      paragraphs:
+        - heading: "Kursüberblick"
+          text: "Der firmeninterne Deutschkurs ist ein zielorientiertes Sprachtraining, das individuell nach den Anforderungen Ihres Unternehmens konzipiert wird. Dieses Programm, angeboten von CampusGerman, hat das Ziel, die Deutschkenntnisse Ihrer Mitarbeitenden so zu entwickeln, dass sie die täglichen Arbeitsprozesse direkt unterstützen und messbar verbessern. Die Kursinhalte werden vollständig angepasst – abhängig von Branche, Positionen, Zielmärkten und den konkreten Kommunikationssituationen innerhalb des Unternehmens. Für Firmen, die mit Deutschland zusammenarbeiten oder in deutschsprachigen Märkten aktiv sind, ist eine präzise und professionelle Kommunikation entscheidend. Deshalb geht der Kurs über allgemeines Deutsch hinaus und arbeitet mit realistischen Szenarien aus dem Arbeitsalltag: Meetings, Präsentationen, E-Mails, Kundengespräche und schriftliche Reports. Mit flexibler Terminplanung, niveaugerechten Gruppen und einem Curriculum, das auf Unternehmensziele ausgerichtet ist, bietet CampusGerman eine nachhaltige und skalierbare Lösung für die betriebliche Sprachentwicklung."
+        - heading: "Zielgruppe und Voraussetzungen"
+          text: "Dieser Kurs richtet sich an Unternehmen und Mitarbeitende, die Deutsch aktiv im Berufsalltag einsetzen müssen. Besonders geeignet ist er für: Mitarbeitende von Unternehmen, die mit Deutschland zusammenarbeiten; Teams, die in internationalen Projekten tätig sind; Führungskräfte, Vertriebs-, Marketing- oder technische Teams; sowie Fachkräfte, die Deutsch für die Unternehmenskommunikation benötigen. Für die Teilnahme wird das Einstiegsniveau je nach Unternehmensbedarf festgelegt. Programme können von A1 bis zu fortgeschrittenen Niveaus angepasst werden. CampusGerman führt vor Kursbeginn eine detaillierte Bedarfs- und Niveauanalyse für das Unternehmen und die Teilnehmenden durch und erstellt den optimalen Trainingsplan."
+        - heading: "Kursinhalte und Lernziele"
+          text: "Die Inhalte des firmeninternen Deutschkurses werden vollständig nach den Zielen des Unternehmens gestaltet. Zum Programm gehören: Business-orientierte deutsche Terminologie; Unternehmenskorrespondenz und E-Mail-Sprache; Meeting- und Präsentationstechniken; Kommunikation mit Kunden und Geschäftspartnern; sowie branchenspezifische Begriffe und Ausdrücke. Das Lernziel besteht darin, dass Mitarbeitende Deutsch im Arbeitsumfeld flüssig, korrekt und professionell anwenden können. Nach Kursende sind die Teilnehmenden selbstbewusster und effektiver in der deutschen Kommunikation."
+        - heading: "Lehrmethode und Unterrichtsumfeld"
+          text: "Bei CampusGerman wird der firmeninterne Deutschkurs mit einem praxisorientierten und unternehmensfokussierten Ansatz durchgeführt. Im Unterricht werden eingesetzt: reale Geschäftsszenarien; Fallstudien; Rollenspiele; sowie unternehmensinterne Beispieldokumente. Die Schulungen können im Präsenz-, Online- oder Hybridformat durchgeführt werden. Die Lehrkräfte verfügen über Erfahrung in Business-Deutsch und Erwachsenenbildung."
+        - heading: "Fortschritt nach dem Kurs"
+          text: "Teilnehmende, die den firmeninternen Deutschkurs abschließen: nutzen Deutsch im Berufsalltag effektiver; steigern die Qualität der Unternehmenskommunikation; übernehmen aktivere Rollen in internationalen Projekten; und können zu fortgeschrittenen berufsbezogenen Deutschprogrammen wechseln. CampusGerman unterstützt Unternehmen auch nach dem Kurs bei der Entwicklungsverfolgung und der Planung fortgeschrittener Schulungsprogramme."
+  - id: "termine-preise"
+    icon: "fas fa-calendar-alt"
+    title: "Termine und Preise"
+    content:
+      title: "Preisinformationen"
+      pricing:
+        - name: "Firmenkurs"
+          duration: "Flexibel"
+          schedule: "Nach Unternehmensbedarf"
+          price: "Individuelle Preisgestaltung"
+          highlighted: true
+  - id: "firmen-info"
+    icon: "fas fa-building"
+    title: "Firmeninformationen"
+    content:
+      title: "Firmenkurs-Eigenschaften"
+      items:
+        - icon: "fas fa-check-circle"
+          text: "<strong>Maßgeschneiderte Inhalte:</strong> Nach Unternehmensbedarf erstellt"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Flexibles Programm:</strong> An Arbeitszeiten des Unternehmens angepasst"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Business-orientiert:</strong> Deutsch für den Berufsalltag"
+faqs:
+  - question: "Wie werden Firmenkurse organisiert?"
+    answer: "Maßgeschneiderte Inhalte und Programme werden nach Unternehmensbedarf erstellt. Kontaktieren Sie uns für Details."
+  - question: "Gibt es eine Mindestteilnehmerzahl?"
+    answer: "Ja, in der Regel sind mindestens 5-6 Teilnehmende erforderlich. Kontaktieren Sie uns für Details."
+  - question: "Welche Kursformate werden angeboten?"
+    answer: "Unsere Kurse bieten flexible Lernformate: Hybridunterricht – eine Kombination aus Präsenz- und Live-Online-Unterricht, bei der Sie auch an Präsenztagen online teilnehmen können; sowie Live-Online-Unterricht, bei dem Sie vollständig live und online am Unterricht teilnehmen."
+  - question: "Welche Inhalte werden in den Kursen behandelt?"
+    answer: "Unsere Intensiv-Deutschkursprogramme umfassen Hör- und Leseverstehen mit aktuellen Texten, umfassende Grammatikarbeit sowie vielfältige kommunikationsorientierte Aktivitäten. Ziel ist insbesondere die gezielte Entwicklung Ihrer Sprech- und Schreibkompetenzen."
+  - question: "Wie kann ich in Deutschland studieren?"
+    answer: "Für ein Studium in Deutschland benötigen Sie eine anerkannte Hochschulzugangsberechtigung (HZB). Es wird empfohlen, die Anerkennung Ihres Abschlusses im Anabin-System zu prüfen. Zudem müssen Deutschkenntnisse durch offizielle Zertifikate wie telc oder DSH nachgewiesen werden. Das CampusGerman Universitätsvorbereitungsprogramm unterstützt Sie umfassend bei diesem Prozess."
+  - question: "Welche Voraussetzungen sind erforderlich?"
+    answer: "Sie müssen mindestens 18 Jahre alt sein und entweder ein in Deutschland eröffnetes Sperrkonto oder eine offizielle Verpflichtungserklärung vorlegen."
+  - question: "Welche Visatypen werden empfohlen?"
+    answer: "Studentenvisum: Dieses umfasst auch die Teilnahme an vorbereitenden Deutschkursen. Für EU-Bürgerinnen und EU-Bürger besteht keine Visumpflicht."
+  - question: "Welche Leistungen sind in den Kursen enthalten?"
+    answer: "Einstufungstest, keine Anmeldegebühr, Kursbescheinigung für den Visumsantrag, digitales Lehrbuch, individuelle Studienberatung (einmalig ca. 45 Minuten), Webinare zum Thema \"Studium in Deutschland\", CampusGerman-Zertifikat, E-Learning-Plattform, ganzjährig organisierte soziale und kulturelle Aktivitäten sowie kostenloser WLAN-Zugang an allen Standorten."
+  - question: "Welche Qualifikationen haben unsere Lehrkräfte?"
+    answer: "Unser Lehrteam besteht aus hochqualifizierten, akademisch ausgebildeten Lehrkräften mit langjähriger Erfahrung in Deutsch als Fremdsprache (DaF) und Deutsch als Zweitsprache (DaZ). Zudem verfügen wir über vom Bundesamt für Migration und Flüchtlinge (BAMF) anerkannte Lehrkräfte. Die Kurse werden regelmäßig von den Teilnehmenden evaluiert."
+  - question: "Wie lange dauert es, Deutsch zu lernen?"
+    answer: "Die Dauer des Deutschlernens hängt von Ihren Zielen und Ihrem aktuellen Sprachniveau ab. Die Grundstufen von A1 bis B2 können in etwa 6–8 Monaten abgeschlossen werden. Für fortgeschrittene Niveaus wie C1 und C2 sind zusätzlich etwa 4–6 Monate einzuplanen. Intensivkurse können die Lernzeit verkürzen."
+  - question: "Kann ich ein Goethe-Zertifikat erwerben?"
+    answer: "Ja, bei CampusGerman bieten wir Vorbereitungskurse für Goethe-Zertifikate an – von A1 bis C2. Prüfungen können auf unserem Campus oder in nahegelegenen Prüfzentren abgelegt werden."
+  - question: "Gibt es Unterkunftsmöglichkeiten?"
+    answer: "Ja, wir unterstützen Sie bei der Organisation von Unterkunftsmöglichkeiten in Deutschland – z. B. Studentenwohnheime, Gastfamilien und Wohngemeinschaften. Die Unterkunft ist nicht im Kurspreis enthalten, wir helfen Ihnen jedoch bei der passenden Auswahl."
+  - question: "Gibt es Zahlungspläne und Rabatte?"
+    answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
+
+hasDemandForm: true
+---
+

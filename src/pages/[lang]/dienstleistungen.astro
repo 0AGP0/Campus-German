@@ -1,0 +1,274 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/dienstleistungen.css';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'tr' } },
+        { params: { lang: 'de' } },
+    ];
+}
+
+const { lang } = Astro.params;
+---
+
+<MainLayout title="Hizmetler - CampusGerman" lang={lang}>
+    <!-- Hero Section -->
+    <section class="services-hero-section">
+        <div class="container">
+            <div class="services-hero-content">
+                <div class="hero-left">
+                    <h1 class="hero-title">
+                        CampusGerman Hizmetleri
+                    </h1>
+                    
+                    <div class="hero-content">
+                        <p class="hero-description">
+                            Almanca öğrenme yolculuğunuzda size en uygun hizmeti sunmak için çeşitli eğitim seçenekleri sunuyoruz. 
+                            Online kurslardan yüz yüze eğitime, özel derslerden sınav hazırlığına kadar geniş bir yelpazede hizmetlerimiz bulunmaktadır.
+                        </p>
+                        
+                        <p class="hero-description">
+                            Her hizmetimiz, deneyimli eğitmenlerimiz ve modern eğitim metodlarımızla, hedeflerinize en kısa sürede ulaşmanızı sağlamak için tasarlanmıştır.
+                        </p>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <a href="#hizmet-kartlari" class="btn-primary">
+                            <i class="fas fa-arrow-down"></i>
+                            Hizmetleri İncele
+                        </a>
+                        <button class="btn-secondary" id="contactBtn">
+                            <i class="fas fa-envelope"></i>
+                            İletişime Geç
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-right">
+                    <div class="hero-cta-card">
+                        <div class="cta-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="cta-title">Hizmetlerimizi Keşfedin</h3>
+                        <p class="cta-description">
+                            Her ihtiyaca uygun özel hazırlanmış hizmetler, 
+                            deneyimli eğitmenler ve esnek program seçenekleri.
+                        </p>
+                        <div class="cta-stats">
+                            <div class="cta-stat">
+                                <div class="stat-number">4</div>
+                                <div class="stat-label">Hizmet</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">100%</div>
+                                <div class="stat-label">Memnuniyet</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">Destek</div>
+                            </div>
+                        </div>
+                        <a href="#hizmet-kartlari" class="cta-button">
+                            <i class="fas fa-arrow-down"></i>
+                            Tüm Hizmetleri Görüntüle
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Hizmet Kartları Section -->
+    <section class="services-section" id="hizmet-kartlari">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Hizmetlerimiz</h2>
+                <p class="section-subtitle">Her ihtiyaca uygun özel hazırlanmış hizmetler</p>
+            </div>
+            
+            <div class="services-grid" id="servicesGrid">
+                <!-- Online Kurs -->
+                <div class="service-card" id="online-kurs">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">Online Kurs</h3>
+                            <p class="service-subtitle">Evden rahatça Almanca öğrenin</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            Canlı dersler, interaktif materyaller ve 7/24 destek ile online eğitim alın. 
+                            Esnek program seçenekleri ile kendi hızınızda öğrenin.
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Esnek saatler</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Canlı dersler</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Dünyanın her yerinden</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>İnteraktif platform</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href="https://campusgerman.com/dienstleistungen/online-kurs/" class="service-link">
+                            <span>Daha Fazla Bilgi</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Yüz Yüze Kurs -->
+                <div class="service-card" id="yuz-yuze">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">Yüz Yüze Kurs</h3>
+                            <p class="service-subtitle">Sınıf ortamında eğitim</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            Kampüsümüzde sınıf ortamında Almanca öğrenin. Küçük gruplar, deneyimli eğitmenler ve 
+                            samimi öğrenme ortamı ile hızlı ilerleme sağlayın.
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Sınıf ortamı</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Maks. 12 kişi</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Kampüs</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Kişisel etkileşim</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href="https://campusgerman.com/dienstleistungen/yuz-yuze/" class="service-link">
+                            <span>Daha Fazla Bilgi</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Özel Ders -->
+                <div class="service-card" id="ozel-ders">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">Özel Ders</h3>
+                            <p class="service-subtitle">Kişiye özel program</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            Kişiye özel programlarla birebir Almanca dersleri alın. Tamamen size uyarlanmış içerik, 
+                            esnek zamanlama ve hızlı ilerleme ile hedeflerinize ulaşın.
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Birebir eğitim</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Esnek program</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Kişiye özel</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Hızlı ilerleme</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href="https://campusgerman.com/dienstleistungen/ozel-ders/" class="service-link">
+                            <span>Daha Fazla Bilgi</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Test Hazırlık -->
+                <div class="service-card" id="test-hazirlik">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">Test Hazırlık</h3>
+                            <p class="service-subtitle">Sınav odaklı eğitim</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            TestDaF, Goethe, telc gibi uluslararası Almanca sınavlarına hazırlık. Sınav odaklı eğitim, 
+                            deneme sınavları ve uzman eğitmenler ile başarı garantisi.
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>TestDaF, Goethe, telc</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Sınav odaklı</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Yüksek başarı</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>%95 başarı oranı</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href="https://campusgerman.com/dienstleistungen/test-hazirlik/" class="service-link">
+                            <span>Daha Fazla Bilgi</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>
+

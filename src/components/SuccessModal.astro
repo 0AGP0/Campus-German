@@ -1,0 +1,241 @@
+---
+interface Props {
+    lang?: 'tr' | 'de';
+}
+
+const { lang = 'tr' } = Astro.props;
+
+const translations = {
+    tr: {
+        success: 'Başarılı!',
+        error: 'Hata!',
+        close: 'Kapat',
+        bookingSuccess: 'Rezervasyonunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.',
+        messageSuccess: 'Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.',
+        errorMessage: 'Bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.',
+        rateLimitError: 'Çok fazla istek gönderdiniz. Lütfen bir dakika bekleyin.',
+        emailError: 'Lütfen geçerli bir e-posta adresi girin.',
+        phoneError: 'Lütfen geçerli bir telefon numarası girin.'
+    },
+    de: {
+        success: 'Erfolgreich!',
+        error: 'Fehler!',
+        close: 'Schließen',
+        bookingSuccess: 'Ihre Reservierung wurde erfolgreich gesendet! Wir werden uns so schnell wie möglich bei Ihnen melden.',
+        messageSuccess: 'Ihre Nachricht wurde erfolgreich gesendet! Wir werden uns so schnell wie möglich bei Ihnen melden.',
+        errorMessage: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns.',
+        rateLimitError: 'Zu viele Anfragen. Bitte warten Sie eine Minute.',
+        emailError: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
+        phoneError: 'Bitte geben Sie eine gültige Telefonnummer ein.'
+    }
+};
+
+const t = translations[lang] || translations.tr;
+---
+
+<div id="success-modal" class="success-modal" style="display: none;">
+    <div class="success-modal-overlay"></div>
+    <div class="success-modal-content">
+        <div class="success-modal-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h3 class="success-modal-title" id="success-modal-title"></h3>
+        <p class="success-modal-message" id="success-modal-message"></p>
+        <button class="success-modal-button" id="success-modal-close">
+            {t.close}
+        </button>
+    </div>
+</div>
+
+<style>
+    .success-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .success-modal-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+    }
+
+    .success-modal-content {
+        position: relative;
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 40px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: slideUp 0.3s ease;
+        z-index: 10001;
+    }
+
+    .success-modal-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    }
+
+    .success-modal-icon i {
+        font-size: 48px;
+        color: #ffffff;
+    }
+
+    .success-modal-icon.error {
+        background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+    }
+
+    .success-modal-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #0B1220;
+        margin: 0 0 12px;
+    }
+
+    .success-modal-message {
+        font-size: 16px;
+        color: #475569;
+        line-height: 1.6;
+        margin: 0 0 30px;
+    }
+
+    .success-modal-button {
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        color: #ffffff;
+        border: none;
+        padding: 14px 32px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .success-modal-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3);
+    }
+
+    .success-modal-button:active {
+        transform: translateY(0);
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(30px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .success-modal-content {
+            padding: 30px 20px;
+        }
+
+        .success-modal-icon {
+            width: 60px;
+            height: 60px;
+        }
+
+        .success-modal-icon i {
+            font-size: 36px;
+        }
+
+        .success-modal-title {
+            font-size: 20px;
+        }
+
+        .success-modal-message {
+            font-size: 14px;
+        }
+    }
+</style>
+
+<script define:vars={{ translations: t }}>
+    // Global function to show success modal
+    window.showSuccessModal = function(type, message, customTitle = null) {
+        const modal = document.getElementById('success-modal');
+        const title = document.getElementById('success-modal-title');
+        const messageEl = document.getElementById('success-modal-message');
+        const icon = modal.querySelector('.success-modal-icon');
+        const closeBtn = document.getElementById('success-modal-close');
+        
+        if (!modal || !title || !messageEl) return;
+        
+        // Set type (success or error)
+        if (type === 'error') {
+            icon.classList.add('error');
+            icon.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+            title.textContent = customTitle || (window.successModalTranslations?.error || 'Hata!');
+        } else {
+            icon.classList.remove('error');
+            icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            title.textContent = customTitle || (window.successModalTranslations?.success || 'Başarılı!');
+        }
+        
+        messageEl.textContent = message;
+        modal.style.display = 'flex';
+        
+        // Close on button click
+        if (closeBtn) {
+            closeBtn.onclick = function() {
+                modal.style.display = 'none';
+            };
+        }
+        
+        // Close on overlay click
+        const overlay = modal.querySelector('.success-modal-overlay');
+        if (overlay) {
+            overlay.onclick = function() {
+                modal.style.display = 'none';
+            };
+        }
+        
+        // Close on ESC key
+        const handleEsc = function(e) {
+            if (e.key === 'Escape') {
+                modal.style.display = 'none';
+                document.removeEventListener('keydown', handleEsc);
+            }
+        };
+        document.addEventListener('keydown', handleEsc);
+    };
+    
+    // Store translations globally
+    window.successModalTranslations = translations;
+</script>
+

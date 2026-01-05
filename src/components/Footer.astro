@@ -1,0 +1,309 @@
+---
+// Footer Component - Yeni navbar yapısına göre güncellendi
+const { lang = 'tr' } = Astro.props;
+
+const currentYear = new Date().getFullYear();
+
+// Çeviriler
+const t = {
+    tr: {
+        quickLinks: "Hızlı Linkler",
+        courses: "Kurslar",
+        about: "Hakkımızda",
+        advantages: "Avantajlarımız",
+        services: "Sunduklarımız",
+        contact: "İletişim",
+        home: "Ana Sayfa",
+        successStories: "Başarı Hikayeleri",
+        contactInfo: "İletişim Bilgileri",
+        address: "Adres",
+        phone: "Telefon",
+        email: "E-posta",
+        workingHours: "Çalışma Saatleri",
+        hours: "Pzt-Cmt: 09:00-21:00",
+        allRightsReserved: "Tüm hakları saklıdır.",
+        privacyPolicy: "Gizlilik Politikası",
+        termsOfUse: "Kullanım Koşulları",
+        cookiePolicy: "Çerez Politikası",
+        description: "Almanya'da Almanca öğrenmek için premium eğitim hizmetleri. Konuşma odaklı eğitim ve kişiselleştirilmiş programlarla hedeflerinize ulaşın.",
+        // Kurs kategorileri
+        intensive: "Yoğun Akademik",
+        seasonal: "Dönemsel",
+        online: "Online",
+        examPrep: "Sınav Hazırlık",
+        corporate: "Firma/Sponsorlu",
+        // Kurslar
+        intensiveOverview: "Yoğun Almanca Kursları Genel Bakış",
+        universityPrep: "Üniversite Hazırlık Yılı Programı",
+        intensiveA1: "Yoğun Almanca A1 Kursu",
+        intensiveA2: "Yoğun Almanca A2 Kursu",
+        intensiveB1: "Yoğun Almanca B1 Kursu",
+        intensiveB2: "Yoğun Almanca B2 Kursu",
+        intensiveC1: "Yoğun Almanca C1 Kursu",
+        seasonalOverview: "Dönemsel Almanca Kursları Genel Bakış",
+        highSchoolSummer: "Liseliler için Yaz Okulu Programı",
+        universitySummer: "Üniversiteler için Yaz Okulu Programı",
+        weeklyA1A2: "Haftalık A1-A2 Almanca Kursu",
+        weeklyB1C1: "Haftalık B1-B2-C1 Almanca Kursu",
+        eveningSemiIntensive: "Akşam Yarı Yoğun Almanca Kursları",
+        onlineOverview: "Online Almanca Kursları Genel Bakış",
+        onlineA1: "Online Yoğun Almanca A1 Kursu",
+        onlineA2: "Online Yoğun Almanca A2 Kursu",
+        onlineB1: "Online Yoğun Almanca B1 Kursu",
+        onlineB2: "Online Yoğun Almanca B2 Kursu",
+        onlineC1: "Online Yoğun Almanca C1 Kursu",
+        onlineExamPrep: "Online Goethe/TELC Sınav Hazırlık Kursu",
+        examOverview: "Almanca Sınav Hazırlık Kursları Genel Bakış",
+        goetheTelcA1: "Goethe/TELC A1 Hazırlık Kursu",
+        goetheTelcA2: "Goethe/TELC A2 Hazırlık Kursu",
+        goetheTelcB1: "Goethe/TELC B1 Hazırlık Kursu",
+        goetheTelcB2: "Goethe/TELC B2 Hazırlık Kursu",
+        goetheTelcC1: "Goethe/TELC C1 Hazırlık Kursu",
+        testdafDsh: "TestDaF/DSH Hazırlık Kursu",
+        corporatePrivate: "Firmalara özel Almanca Kursu",
+        bildungszeit: "Bildungszeit Kapsamında Almanca Kursu",
+        daad: "DAAD Bursiyerleri İçin Almanca Kursu",
+        erasmusTeachers: "Erasmus+ Öğretmenlere Almanca Kursu",
+        erasmusStudents: "Erasmus Öğrencilerine Özel Kurslar",
+        career: "Meslek ve Kariyer için Almanca Kursları",
+        careerPathway: "Kariyere Giriş Programı / Career Pathway",
+        medical: "Tıp ve Sağlık Bilimleri için Almanca Kursu",
+        fsp: "FSP Sınav Hazırlık Eğitim",
+        engineering: "Mühendislik ve Teknik Bilimler için Almanca Kursu",
+        economy: "Ekonomi ve Yönetim Bilimleri için Almanca Kursu",
+        // Hakkımızda
+        mission: "Misyonumuz",
+        qualityStandards: "Kalite Standartlarımız",
+        partners: "Partnerlerlik Politikamız",
+        teachers: "Eğitmenlerimiz",
+        media: "Medya'da Biz",
+        // Avantajlarımız
+        hybridEducation: "Hibrit Eğitim Modeli",
+        cityTours: "Şehir ve Üniversite Gezileri",
+        speakingClub: "Ücretsiz Almanca Konuşma Kulübü",
+        coaching: "Ücretsiz Almanca Eğitim Koçluğu/Etüdü",
+        guarantee: "Para iade veya Kurs tekrar Garantisi",
+        // Sunduklarımız
+        universityPlacement: "Üniversite Yerleştirme Programı / Pathway",
+        visaGuidance: "Vize Rehberliği",
+        accommodation: "Bremen Konaklama ve Yurt Yerleştirmesi",
+        airportPickup: "Havaalanı Karşılama",
+        insuranceBank: "Sağlık Sigortası/Bloke ve Banka Hesabı",
+        bureaucracy: "Almanya Bürokrasi Desteği",
+        freeResources: "Ücretsiz Almanca Kaynaklar",
+    },
+    de: {
+        quickLinks: "Schnelllinks",
+        courses: "Kurse",
+        about: "Über uns",
+        advantages: "Unsere Vorteile",
+        services: "Unsere Dienstleistungen",
+        contact: "Kontakt",
+        home: "Startseite",
+        successStories: "Erfolgsgeschichten",
+        contactInfo: "Kontaktinformationen",
+        address: "Adresse",
+        phone: "Telefon",
+        email: "E-Mail",
+        workingHours: "Öffnungszeiten",
+        hours: "Mo-Sa: 09:00-21:00",
+        allRightsReserved: "Alle Rechte vorbehalten.",
+        privacyPolicy: "Datenschutzerklärung",
+        termsOfUse: "Nutzungsbedingungen",
+        cookiePolicy: "Cookie-Richtlinie",
+        description: "Premium-Bildungsdienstleistungen für Deutschlernen in Deutschland. Erreichen Sie Ihre Ziele mit gesprächsorientiertem Unterricht und personalisierten Programmen.",
+        // Kurs kategorileri
+        intensive: "Intensiv",
+        seasonal: "Saisonal",
+        online: "Online",
+        examPrep: "Prüfung",
+        corporate: "Firma",
+        // Kurslar
+        intensiveOverview: "Übersicht Intensivkurse",
+        universityPrep: "Studienvorbereitungsjahr",
+        intensiveA1: "Intensiv Deutsch A1",
+        intensiveA2: "Intensiv Deutsch A2",
+        intensiveB1: "Intensiv Deutsch B1",
+        intensiveB2: "Intensiv Deutsch B2",
+        intensiveC1: "Intensiv Deutsch C1",
+        seasonalOverview: "Übersicht Saisonale Kurse",
+        highSchoolSummer: "Sommerschule für Gymnasiasten",
+        universitySummer: "Sommerschule für Universitäten",
+        weeklyA1A2: "Wöchentlicher A1-A2 Kurs",
+        weeklyB1C1: "Wöchentlicher B1-B2-C1 Kurs",
+        eveningSemiIntensive: "Abend-Halbintensivkurse",
+        onlineOverview: "Übersicht Online-Kurse",
+        onlineA1: "Online Intensiv A1",
+        onlineA2: "Online Intensiv A2",
+        onlineB1: "Online Intensiv B1",
+        onlineB2: "Online Intensiv B2",
+        onlineC1: "Online Intensiv C1",
+        onlineExamPrep: "Online Goethe/TELC Vorbereitung",
+        examOverview: "Übersicht Prüfungsvorbereitung",
+        goetheTelcA1: "Goethe/TELC A1 Vorbereitung",
+        goetheTelcA2: "Goethe/TELC A2 Vorbereitung",
+        goetheTelcB1: "Goethe/TELC B1 Vorbereitung",
+        goetheTelcB2: "Goethe/TELC B2 Vorbereitung",
+        goetheTelcC1: "Goethe/TELC C1 Vorbereitung",
+        testdafDsh: "TestDaF/DSH Vorbereitung",
+        corporatePrivate: "Firmenkurs",
+        bildungszeit: "Bildungszeit Deutsch",
+        daad: "Für DAAD-Stipendiaten",
+        erasmusTeachers: "Für Erasmus+ Lehrer",
+        erasmusStudents: "Für Erasmus-Studenten",
+        career: "Beruf und Karriere",
+        careerPathway: "Career Pathway Programm",
+        medical: "Medizin und Gesundheit",
+        fsp: "FSP Prüfungsvorbereitung",
+        engineering: "Ingenieurwesen und Technik",
+        economy: "Wirtschaft und Management",
+        // Hakkımızda
+        mission: "Unsere Mission",
+        qualityStandards: "Qualitätsstandards",
+        partners: "Partnerschaftspolitik",
+        teachers: "Unsere Lehrkräfte",
+        media: "Wir in den Medien",
+        // Avantajlarımız
+        hybridEducation: "Hybrides Lernmodell",
+        cityTours: "Stadt- und Universitätstouren",
+        speakingClub: "Kostenloser Sprachclub",
+        coaching: "Kostenloser Lerncoach",
+        guarantee: "Geld-zurück-Garantie",
+        // Sunduklarımız
+        universityPlacement: "Universitätsvermittlung / Pathway",
+        visaGuidance: "Visumsberatung",
+        accommodation: "Unterkunft und Wohnheim",
+        airportPickup: "Flughafenabholung",
+        insuranceBank: "Krankenversicherung und Bank",
+        bureaucracy: "Bürokratische Unterstützung",
+        freeResources: "Kostenlose Deutschressourcen",
+    }
+};
+
+const currentLang = t[lang as keyof typeof t] || t.tr;
+---
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <!-- Footer Top -->
+        <div class="footer-top">
+            <div class="footer-grid">
+                <!-- Company Info -->
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <img src="http://campusgerman.com/wp-content/uploads/2025/11/German_3-1.png" alt="CampusGerman Logo" class="footer-logo-img">
+                    </div>
+                    <p class="footer-description">
+                        {currentLang.description}
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="footer-column">
+                    <h3 class="footer-title">{currentLang.quickLinks}</h3>
+                    <ul class="footer-links">
+                        <li><a href={`/${lang}/`}>{currentLang.home}</a></li>
+                        <li><a href={`/${lang}/kurslar`}>{currentLang.courses}</a></li>
+                        <li><a href={`/${lang}/ueber-uns`}>{currentLang.about}</a></li>
+                        <li><a href={`/${lang}/unsere-vorteile`}>{currentLang.advantages}</a></li>
+                        <li><a href={`/${lang}/unsere-dienstleistungen`}>{currentLang.services}</a></li>
+                        <li><a href={`/${lang}/erfolgsgeschichten`}>{currentLang.successStories}</a></li>
+                        <li><a href={`/${lang}/kontakt`}>{currentLang.contact}</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Courses - Sadece Ana Kategoriler -->
+                <div class="footer-column">
+                    <h3 class="footer-title">{currentLang.courses}</h3>
+                    <ul class="footer-links">
+                        <li><a href={`/${lang}/kurslar/intensiv-deutsch`}>{currentLang.intensiveOverview}</a></li>
+                        <li><a href={`/${lang}/kurslar/saisonal-uebersicht`}>{currentLang.seasonalOverview}</a></li>
+                        <li><a href={`/${lang}/kurslar/online-uebersicht`}>{currentLang.onlineOverview}</a></li>
+                        <li><a href={`/${lang}/kurslar/pruefungsvorbereitung-uebersicht`}>{currentLang.examOverview}</a></li>
+                        <li><a href={`/${lang}/kurslar`}>{lang === 'tr' ? 'Tüm Kurslar' : 'Alle Kurse'}</a></li>
+                    </ul>
+                </div>
+                
+                <!-- About & Services -->
+                <div class="footer-column">
+                    <h3 class="footer-title">{currentLang.about}</h3>
+                    <ul class="footer-links">
+                        <li><a href={`/${lang}/ueber-uns`}>{currentLang.about}</a></li>
+                        <li><a href={`/${lang}/unsere-vorteile`}>{currentLang.advantages}</a></li>
+                        <li><a href={`/${lang}/unsere-dienstleistungen`}>{currentLang.services}</a></li>
+                        <li><a href={`/${lang}/lehrkraefte`}>{currentLang.teachers}</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="footer-column">
+                    <h3 class="footer-title">{currentLang.contactInfo}</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>{currentLang.address}</strong>
+                                <span>{lang === 'tr' ? 'Almanya' : 'Deutschland'}</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>{currentLang.phone}</strong>
+                                <span>+90 (212) 123 45 67</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>{currentLang.email}</strong>
+                                <span>info@campusgerman.com</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>{currentLang.workingHours}</strong>
+                                <span>{currentLang.hours}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <div class="copyright">
+                    <p>&copy; {currentYear} CampusGerman. {currentLang.allRightsReserved}</p>
+                </div>
+                <div class="footer-legal">
+                    <a href="#gizlilik">{currentLang.privacyPolicy}</a>
+                    <a href="#kullanim-kosullari">{currentLang.termsOfUse}</a>
+                    <a href="#cerez-politikasi">{currentLang.cookiePolicy}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+

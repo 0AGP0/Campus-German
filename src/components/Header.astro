@@ -1,0 +1,461 @@
+---
+// Header Component - Yeni Yapı
+const { lang = 'tr' } = Astro.props;
+
+// Mevcut path'i al ve dil değiştir
+const currentPath = Astro.url.pathname;
+const pathWithoutLang = currentPath.replace(/^\/(tr|de)/, '') || '/';
+
+// Dil değiştirme linkleri
+const switchLangUrl = (newLang: string) => {
+  return `/${newLang}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
+};
+
+// Çeviriler
+const t = {
+    tr: {
+        courses: "Kurslar",
+        about: "Hakkımızda",
+        advantages: "Avantajlarımız",
+        services: "Sunduklarımız",
+        winners: "Kazananlar",
+        contact: "İletişim",
+        register: "Kursa Kayıt OL",
+    },
+    de: {
+        courses: "Deutschkurse",
+        about: "Über uns",
+        advantages: "Unsere Vorteile",
+        services: "Unsere Dienstleistungen",
+        winners: "Erfolgsgeschichten",
+        contact: "Kontakt",
+        register: "Jetzt anmelden",
+    }
+};
+
+const currentLang = t[lang as keyof typeof t] || t.tr;
+---
+
+<!-- Main Header -->
+<header class="main-header">
+    <div class="container">
+        <div class="header-wrapper">
+            <!-- Logo Section -->
+            <div class="logo-section">
+                <a href={`/${lang}/`} class="logo-link">
+                    <img src="http://campusgerman.com/wp-content/uploads/2025/11/German_logo-1-1.png" alt="CampusGerman Logo" class="logo-img">
+                </a>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <!-- 1. Almanca Kursları - Tabbed Dropdown -->
+                    <li class="nav-item">
+                        <a href={`/${lang}/kurslar`} class="nav-link">
+                            <span>{currentLang.courses}</span>
+                            <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        </a>
+                        <div class="dropdown-menu courses-dropdown">
+                            <div class="courses-wrapper">
+                                <div class="courses-sidebar">
+                                    <button class="course-tab active" data-tab="yogun">{lang === 'tr' ? 'Yoğun Akademik' : 'Intensiv'}</button>
+                                    <button class="course-tab" data-tab="donemsel">{lang === 'tr' ? 'Dönemsel' : 'Saisonal'}</button>
+                                    <button class="course-tab" data-tab="online">Online</button>
+                                    <button class="course-tab" data-tab="sinav">{lang === 'tr' ? 'Sınav Hazırlık' : 'Prüfung'}</button>
+                                    <button class="course-tab" data-tab="firma">{lang === 'tr' ? 'Firma/Sponsorlu' : 'Firma'}</button>
+                                </div>
+                                <div class="courses-content">
+                                <div class="course-tab-panel active" data-panel="yogun">
+                                    <a href={`/${lang}/kurslar/intensiv-deutsch`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca Kursları Genel Bakış' : 'Übersicht Intensivkurse'}</a>
+                                    <a href={`/${lang}/kurslar/universitaetsvorbereitung`} class="dropdown-link">{lang === 'tr' ? 'Üniversite Hazırlık Programı' : 'Universitätsvorbereitungsprogramm'}</a>
+                                    <a href={`/${lang}/kurslar/intensiv-a1`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca A1 Kursu' : 'Intensiv Deutsch A1'}</a>
+                                    <a href={`/${lang}/kurslar/intensiv-a2`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca A2 Kursu' : 'Intensiv Deutsch A2'}</a>
+                                    <a href={`/${lang}/kurslar/intensiv-b1`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca B1 Kursu' : 'Intensiv Deutsch B1'}</a>
+                                    <a href={`/${lang}/kurslar/intensiv-b2`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca B2 Kursu' : 'Intensiv Deutsch B2'}</a>
+                                    <a href={`/${lang}/kurslar/intensiv-c1`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca C1 Kursu' : 'Intensiv Deutsch C1'}</a>
+                                </div>
+                                <div class="course-tab-panel" data-panel="donemsel">
+                                    <a href={`/${lang}/kurslar/saisonal-uebersicht`} class="dropdown-link">{lang === 'tr' ? 'Dönemsel Almanca Kursları Genel Bakış' : 'Übersicht Saisonale Kurse'}</a>
+                                    <a href={`/${lang}/kurslar/gymnasium-sommerschule`} class="dropdown-link">{lang === 'tr' ? 'Liseliler için Yaz Okulu Programı' : 'Sommerschule für Gymnasiasten'}</a>
+                                    <a href={`/${lang}/kurslar/universitaet-sommerschule`} class="dropdown-link">{lang === 'tr' ? 'Üniversiteler için Yaz Okulu Programı' : 'Sommerschule für Universitäten'}</a>
+                                    <a href={`/${lang}/kurslar/woechentlich-a1-a2`} class="dropdown-link">{lang === 'tr' ? 'Haftalık A1-A2 Almanca Kursu' : 'Wöchentlicher A1-A2 Kurs'}</a>
+                                    <a href={`/${lang}/kurslar/woechentlich-b1-c1`} class="dropdown-link">{lang === 'tr' ? 'Haftalık B1-B2-C1 Almanca Kursu' : 'Wöchentlicher B1-B2-C1 Kurs'}</a>
+                                    <a href={`/${lang}/kurslar/abend-halbintensiv`} class="dropdown-link">{lang === 'tr' ? 'Akşam Yarı Yoğun Almanca Kursları' : 'Abend-Halbintensivkurse'}</a>
+                                </div>
+                                <div class="course-tab-panel" data-panel="online">
+                                    <a href={`/${lang}/kurslar/online-uebersicht`} class="dropdown-link">{lang === 'tr' ? 'Online Almanca Kursları Genel Bakış' : 'Übersicht Online-Kurse'}</a>
+                                    <a href={`/${lang}/kurslar/online-intensiv-a1`} class="dropdown-link">{lang === 'tr' ? 'Online Yoğun Almanca A1 Kursu' : 'Online Intensiv A1'}</a>
+                                    <a href={`/${lang}/kurslar/online-intensiv-a2`} class="dropdown-link">{lang === 'tr' ? 'Online Yoğun Almanca A2 Kursu' : 'Online Intensiv A2'}</a>
+                                    <a href={`/${lang}/kurslar/online-intensiv-b1`} class="dropdown-link">{lang === 'tr' ? 'Online Yoğun Almanca B1 Kursu' : 'Online Intensiv B1'}</a>
+                                    <a href={`/${lang}/kurslar/online-intensiv-b2`} class="dropdown-link">{lang === 'tr' ? 'Online Yoğun Almanca B2 Kursu' : 'Online Intensiv B2'}</a>
+                                    <a href={`/${lang}/kurslar/online-intensiv-c1`} class="dropdown-link">{lang === 'tr' ? 'Online Yoğun Almanca C1 Kursu' : 'Online Intensiv C1'}</a>
+                                    <a href={`/${lang}/kurslar/online-pruefungsvorbereitung`} class="dropdown-link">{lang === 'tr' ? 'Online Goethe/TELC Sınav Hazırlık Kursu' : 'Online Goethe/TELC Vorbereitung'}</a>
+                                </div>
+                                <div class="course-tab-panel" data-panel="sinav">
+                                    <a href={`/${lang}/kurslar/pruefungsvorbereitung-uebersicht`} class="dropdown-link">{lang === 'tr' ? 'Almanca Sınav Hazırlık Kursları Genel Bakış' : 'Übersicht Prüfungsvorbereitung'}</a>
+                                    <a href={`/${lang}/kurslar/goethe-telc-a1`} class="dropdown-link">{lang === 'tr' ? 'Goethe/TELC A1 Hazırlık Kursu' : 'Goethe/TELC A1 Vorbereitung'}</a>
+                                    <a href={`/${lang}/kurslar/goethe-telc-a2`} class="dropdown-link">{lang === 'tr' ? 'Goethe/TELC A2 Hazırlık Kursu' : 'Goethe/TELC A2 Vorbereitung'}</a>
+                                    <a href={`/${lang}/kurslar/goethe-telc-b1`} class="dropdown-link">{lang === 'tr' ? 'Goethe/TELC B1 Hazırlık Kursu' : 'Goethe/TELC B1 Vorbereitung'}</a>
+                                    <a href={`/${lang}/kurslar/goethe-telc-b2`} class="dropdown-link">{lang === 'tr' ? 'Goethe/TELC B2 Hazırlık Kursu' : 'Goethe/TELC B2 Vorbereitung'}</a>
+                                    <a href={`/${lang}/kurslar/goethe-telc-c1`} class="dropdown-link">{lang === 'tr' ? 'Goethe/TELC C1 Hazırlık Kursu' : 'Goethe/TELC C1 Vorbereitung'}</a>
+                                    <a href={`/${lang}/kurslar/testdaf-dsh`} class="dropdown-link">{lang === 'tr' ? 'TestDaF/DSH Hazırlık Kursu' : 'TestDaF/DSH Vorbereitung'}</a>
+                                </div>
+                                <div class="course-tab-panel" data-panel="firma">
+                                    <a href={`/${lang}/kurslar/firmenkurs`} class="dropdown-link">{lang === 'tr' ? 'Firmalara özel Almanca Kursu' : 'Firmenkurs'}</a>
+                                    <a href={`/${lang}/kurslar/bildungszeit`} class="dropdown-link">{lang === 'tr' ? 'Bildungszeit Kapsamında Almanca Kursu' : 'Bildungszeit Deutsch'}</a>
+                                    <a href={`/${lang}/kurslar/daad-stipendiaten`} class="dropdown-link">{lang === 'tr' ? 'DAAD Bursiyerleri İçin Almanca Kursu' : 'Für DAAD-Stipendiaten'}</a>
+                                    <a href={`/${lang}/kurslar/erasmus-lehrer`} class="dropdown-link">{lang === 'tr' ? 'Erasmus+ Öğretmenlere Almanca Kursu' : 'Für Erasmus+ Lehrer'}</a>
+                                    <a href={`/${lang}/kurslar/erasmus-studenten`} class="dropdown-link">{lang === 'tr' ? 'Erasmus Öğrencilerine Özel Kurslar' : 'Für Erasmus-Studenten'}</a>
+                                    <a href={`/${lang}/kurslar/beruf-karriere`} class="dropdown-link">{lang === 'tr' ? 'Meslek ve Kariyer için Almanca Kursları' : 'Beruf und Karriere'}</a>
+                                    <a href={`/${lang}/kurslar/career-pathway`} class="dropdown-link">{lang === 'tr' ? 'Kariyere Giriş Programı / Career Pathway' : 'Career Pathway Programm'}</a>
+                                    <a href={`/${lang}/kurslar/medizin-gesundheit`} class="dropdown-link">{lang === 'tr' ? 'Tıp ve Sağlık Bilimleri için Almanca Kursu' : 'Medizin und Gesundheit'}</a>
+                                    <a href={`/${lang}/kurslar/fsp-vorbereitung`} class="dropdown-link">{lang === 'tr' ? 'FSP Sınav Hazırlık Eğitim' : 'FSP Prüfungsvorbereitung'}</a>
+                                    <a href={`/${lang}/kurslar/ingenieurwesen-technik`} class="dropdown-link">{lang === 'tr' ? 'Mühendislik ve Teknik Bilimler için Almanca Kursu' : 'Ingenieurwesen und Technik'}</a>
+                                    <a href={`/${lang}/kurslar/wirtschaft-management`} class="dropdown-link">{lang === 'tr' ? 'Ekonomi ve Yönetim Bilimleri için Almanca Kursu' : 'Wirtschaft und Management'}</a>
+                                </div>
+                            </div>
+                            <div class="dropdown-cta">
+                                <a href={`/${lang}/buchung`} class="dropdown-cta-btn">{lang === 'tr' ? 'Kurs Yeri Ayırt' : 'Kursplatz reservieren'}</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- 2. Hakkımızda - Minimal Dropdown -->
+                    <li class="nav-item">
+                        <a href={`/${lang}/ueber-uns`} class="nav-link">
+                            <span>{currentLang.about}</span>
+                            <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href={`/${lang}/ueber-uns/unsere-mission`} class="dropdown-link">{lang === 'tr' ? 'Misyonumuz' : 'Unsere Mission'}</a>
+                            <a href={`/${lang}/ueber-uns/qualitaetsstandards`} class="dropdown-link">{lang === 'tr' ? 'Kalite Standartlarımız' : 'Qualitätsstandards'}</a>
+                            <a href={`/${lang}/ueber-uns/partnerschaftspolitik`} class="dropdown-link">{lang === 'tr' ? 'Partnerlerlik Politikamız' : 'Partnerschaftspolitik'}</a>
+                            <a href={`/${lang}/lehrkraefte`} class="dropdown-link">{lang === 'tr' ? 'Eğitmenlerimiz' : 'Unsere Lehrkräfte'}</a>
+                            <a href={`/${lang}/ueber-uns/wir-in-den-medien`} class="dropdown-link">{lang === 'tr' ? 'Medya\'da Biz' : 'Wir in den Medien'}</a>
+                            <div class="dropdown-cta">
+                                <a href={`/${lang}/partner-egitmen-basvuru`} class="dropdown-cta-btn">{lang === 'tr' ? 'Partner veya Eğitmen Ol' : 'Partner oder Lehrkraft werden'}</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- 3. Avantajlarımız - Minimal Dropdown -->
+                    <li class="nav-item">
+                        <a href={`/${lang}/unsere-vorteile`} class="nav-link">
+                            <span>{currentLang.advantages}</span>
+                            <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href={`/${lang}/unsere-vorteile/hybrides-lernmodell`} class="dropdown-link">{lang === 'tr' ? 'Hibrit Eğitim Modeli' : 'Hybrides Lernmodell'}</a>
+                            <a href={`/${lang}/unsere-vorteile/stadt-und-universitaetstouren`} class="dropdown-link">{lang === 'tr' ? 'Şehir ve Üniversite Gezileri' : 'Stadt- und Universitätstouren'}</a>
+                            <a href={`/${lang}/unsere-vorteile/sprachclub`} class="dropdown-link">{lang === 'tr' ? 'Ücretsiz Almanca Konuşma Kulübü' : 'Kostenloser Sprachclub'}</a>
+                            <a href={`/${lang}/unsere-vorteile/lerncoaching`} class="dropdown-link">{lang === 'tr' ? 'Ücretsiz Almanca Eğitim Koçluğu/Etüdü' : 'Kostenloser Lerncoach'}</a>
+                            <a href={`/${lang}/unsere-vorteile/geld-zurueck-garantie`} class="dropdown-link">{lang === 'tr' ? 'Para iade veya Kurs tekrar Garantisi' : 'Geld-zurück-Garantie'}</a>
+                            <div class="dropdown-cta">
+                                <a href={`/${lang}/ucretsiz-deneme`} class="dropdown-cta-btn">{lang === 'tr' ? 'Ücretsiz Deneme Dersi Al' : 'Kostenlose Probestunde'}</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- 4. Sunduklarımız - Minimal Dropdown -->
+                    <li class="nav-item">
+                        <a href={`/${lang}/unsere-dienstleistungen`} class="nav-link">
+                            <span>{currentLang.services}</span>
+                            <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href={`/${lang}/unsere-dienstleistungen/universitaetsvermittlung`} class="dropdown-link">{lang === 'tr' ? 'Üniversite Yerleştirme Programı / Pathway' : 'Universitätsvermittlung / Pathway'}</a>
+                            <a href={`/${lang}/unsere-dienstleistungen/visumsberatung`} class="dropdown-link">{lang === 'tr' ? 'Vize Rehberliği' : 'Visumsberatung'}</a>
+                            <a href={`/${lang}/unsere-dienstleistungen/unterkunft`} class="dropdown-link">{lang === 'tr' ? 'Bremen Konaklama ve Yurt Yerleştirmesi' : 'Unterkunft und Wohnheim'}</a>
+                            <a href={`/${lang}/unsere-dienstleistungen/flughafenabholung`} class="dropdown-link">{lang === 'tr' ? 'Havaalanı Karşılama' : 'Flughafenabholung'}</a>
+                            <a href={`/${lang}/unsere-dienstleistungen/krankenversicherung-und-bank`} class="dropdown-link">{lang === 'tr' ? 'Sağlık Sigortası/Bloke ve Banka Hesabı' : 'Krankenversicherung und Bank'}</a>
+                            <a href={`/${lang}/unsere-dienstleistungen/buerokratische-unterstuetzung`} class="dropdown-link">{lang === 'tr' ? 'Almanya Bürokrasi Desteği' : 'Bürokratische Unterstützung'}</a>
+                            <a href={`/${lang}/unsere-dienstleistungen/kostenlose-ressourcen`} class="dropdown-link">{lang === 'tr' ? 'Ücretsiz Almanca Kaynaklar' : 'Kostenlose Deutschressourcen'}</a>
+                            <div class="dropdown-cta">
+                                <a href={`/${lang}/ucretsiz-danisma`} class="dropdown-cta-btn">{lang === 'tr' ? 'Ücretsiz Danışma Randevusu Al' : 'Kostenlose Beratung buchen'}</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- 5. Kazananlar - Direct Link -->
+                    <li class="nav-item">
+                        <a href={`/${lang}/erfolgsgeschichten`} class="nav-link">
+                            <span>{currentLang.winners}</span>
+                        </a>
+                    </li>
+
+                    <!-- 6. İletişim - Direct Link -->
+                    <li class="nav-item">
+                        <a href={`/${lang}/kontakt`} class="nav-link">
+                            <span>{currentLang.contact}</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Header Actions -->
+            <div class="header-actions">
+                <div class="language-selector">
+                    <button class="lang-btn" id="langBtn">
+                        <div class="lang-flag">
+                            <img src={lang === 'tr' ? 'https://flagcdn.com/tr.svg' : 'https://flagcdn.com/de.svg'} alt={lang === 'tr' ? 'Türkçe' : 'Deutsch'} class="flag-img">
+                        </div>
+                        <span class="lang-text">{lang === 'tr' ? 'TR' : 'DE'}</span>
+                        <i class="fas fa-chevron-down lang-arrow"></i>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <a href={switchLangUrl('tr')} class="lang-option">
+                            <img src="https://flagcdn.com/tr.svg" alt="Türkçe" class="flag-img">
+                            <span>Türkçe</span>
+                        </a>
+                        <a href={switchLangUrl('de')} class="lang-option">
+                            <img src="https://flagcdn.com/de.svg" alt="Deutsch" class="flag-img">
+                            <span>Deutsch</span>
+                        </a>
+                    </div>
+                </div>
+                <a href={`/${lang}/buchung`} class="cta-button">
+                    <span>{currentLang.register}</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+        <div class="mobile-logo">
+            <img src="http://campusgerman.com/wp-content/uploads/2025/11/German_logo-1-1.png" alt="CampusGerman Logo" class="mobile-logo-img">
+        </div>
+        <button class="mobile-menu-close" id="mobileMenuClose">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    
+    <!-- Mobile CTA Button -->
+    <div class="mobile-actions mobile-actions-top">
+        <a href={`/${lang}/buchung`} class="mobile-cta">
+            <i class="fas fa-arrow-right"></i>
+            {currentLang.register}
+        </a>
+    </div>
+    
+    <nav class="mobile-nav">
+        <ul class="mobile-nav-list">
+            <!-- Mobile Kurslar -->
+            <li class="mobile-dropdown">
+                <button class="mobile-dropdown-btn">
+                    <i class="fas fa-book-open"></i>
+                    <span>{currentLang.courses}</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <ul class="mobile-dropdown-list">
+                    <li class="mobile-sub-dropdown">
+                        <button class="mobile-sub-dropdown-btn">
+                            <i class="fas fa-fire"></i>
+                            <span>{lang === 'tr' ? 'Yoğun Akademik' : 'Intensiv Akademisch'}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul class="mobile-sub-dropdown-list">
+                            <li><a href={`/${lang}/kurslar/intensiv-deutsch`}>{lang === 'tr' ? 'Genel Bakış' : 'Übersicht'}</a></li>
+                            <li><a href={`/${lang}/kurslar/universitaetsvorbereitung`}>{lang === 'tr' ? 'Üniversite Hazırlık Programı' : 'Universitätsvorbereitungsprogramm'}</a></li>
+                            <li><a href={`/${lang}/kurslar/intensiv-studentenvisum`}>{lang === 'tr' ? 'Öğrenci Vizesi Garantili' : 'Mit Visumsgarantie'}</a></li>
+                            <li><a href={`/${lang}/kurslar/intensiv-a1`}>A1</a></li>
+                            <li><a href={`/${lang}/kurslar/intensiv-a2`}>A2</a></li>
+                            <li><a href={`/${lang}/kurslar/intensiv-b1`}>B1</a></li>
+                            <li><a href={`/${lang}/kurslar/intensiv-b2`}>B2</a></li>
+                            <li><a href={`/${lang}/kurslar/intensiv-c1`}>C1</a></li>
+                        </ul>
+                    </li>
+                    <li class="mobile-sub-dropdown">
+                        <button class="mobile-sub-dropdown-btn">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>{lang === 'tr' ? 'Dönemsel' : 'Saisonal'}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul class="mobile-sub-dropdown-list">
+                            <li><a href={`/${lang}/kurslar/saisonal-uebersicht`}>{lang === 'tr' ? 'Genel Bakış' : 'Übersicht'}</a></li>
+                            <li><a href={`/${lang}/kurslar/gymnasium-sommerschule`}>{lang === 'tr' ? 'Liseliler Yaz Okulu' : 'Sommerschule Gymnasium'}</a></li>
+                            <li><a href={`/${lang}/kurslar/universitaet-sommerschule`}>{lang === 'tr' ? 'Üniversite Yaz Okulu' : 'Sommerschule Uni'}</a></li>
+                            <li><a href={`/${lang}/kurslar/woechentlich-a1-a2`}>{lang === 'tr' ? 'Haftalık A1-A2' : 'Wöchentlich A1-A2'}</a></li>
+                            <li><a href={`/${lang}/kurslar/woechentlich-b1-c1`}>{lang === 'tr' ? 'Haftalık B1-C1' : 'Wöchentlich B1-C1'}</a></li>
+                            <li><a href={`/${lang}/kurslar/abend-halbintensiv`}>{lang === 'tr' ? 'Akşam Yarı Yoğun' : 'Abend Halbintensiv'}</a></li>
+                        </ul>
+                    </li>
+                    <li class="mobile-sub-dropdown">
+                        <button class="mobile-sub-dropdown-btn">
+                            <i class="fas fa-laptop"></i>
+                            <span>Online</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul class="mobile-sub-dropdown-list">
+                            <li><a href={`/${lang}/kurslar/online-uebersicht`}>{lang === 'tr' ? 'Genel Bakış' : 'Übersicht'}</a></li>
+                            <li><a href={`/${lang}/kurslar/online-intensiv-a1`}>Online A1</a></li>
+                            <li><a href={`/${lang}/kurslar/online-intensiv-a2`}>Online A2</a></li>
+                            <li><a href={`/${lang}/kurslar/online-intensiv-b1`}>Online B1</a></li>
+                            <li><a href={`/${lang}/kurslar/online-intensiv-b2`}>Online B2</a></li>
+                            <li><a href={`/${lang}/kurslar/online-intensiv-c1`}>Online C1</a></li>
+                            <li><a href={`/${lang}/kurslar/online-pruefungsvorbereitung`}>{lang === 'tr' ? 'Online Sınav Hazırlık' : 'Online Prüfungsvorbereitung'}</a></li>
+                        </ul>
+                    </li>
+                    <li class="mobile-sub-dropdown">
+                        <button class="mobile-sub-dropdown-btn">
+                            <i class="fas fa-certificate"></i>
+                            <span>{lang === 'tr' ? 'Sınav Hazırlık' : 'Prüfungsvorbereitung'}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul class="mobile-sub-dropdown-list">
+                            <li><a href={`/${lang}/kurslar/pruefungsvorbereitung-uebersicht`}>{lang === 'tr' ? 'Genel Bakış' : 'Übersicht'}</a></li>
+                            <li><a href={`/${lang}/kurslar/goethe-telc-a1`}>Goethe/TELC A1</a></li>
+                            <li><a href={`/${lang}/kurslar/goethe-telc-a2`}>Goethe/TELC A2</a></li>
+                            <li><a href={`/${lang}/kurslar/goethe-telc-b1`}>Goethe/TELC B1</a></li>
+                            <li><a href={`/${lang}/kurslar/goethe-telc-b2`}>Goethe/TELC B2</a></li>
+                            <li><a href={`/${lang}/kurslar/goethe-telc-c1`}>Goethe/TELC C1</a></li>
+                            <li><a href={`/${lang}/kurslar/testdaf-dsh`}>TestDaF/DSH</a></li>
+                        </ul>
+                    </li>
+                    <li class="mobile-sub-dropdown">
+                        <button class="mobile-sub-dropdown-btn">
+                            <i class="fas fa-building"></i>
+                            <span>{lang === 'tr' ? 'Firma/Sponsorlu' : 'Firma/Gesponsert'}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul class="mobile-sub-dropdown-list">
+                            <li><a href={`/${lang}/kurslar/firmenkurs`}>{lang === 'tr' ? 'Firmalara Özel' : 'Firmenkurs'}</a></li>
+                            <li><a href={`/${lang}/kurslar/bildungszeit`}>Bildungszeit</a></li>
+                            <li><a href={`/${lang}/kurslar/daad-stipendiaten`}>DAAD</a></li>
+                            <li><a href={`/${lang}/kurslar/erasmus-lehrer`}>Erasmus+ {lang === 'tr' ? 'Öğretmen' : 'Lehrer'}</a></li>
+                            <li><a href={`/${lang}/kurslar/erasmus-studenten`}>Erasmus {lang === 'tr' ? 'Öğrenci' : 'Student'}</a></li>
+                            <li><a href={`/${lang}/kurslar/beruf-karriere`}>{lang === 'tr' ? 'Meslek ve Kariyer' : 'Beruf und Karriere'}</a></li>
+                            <li><a href={`/${lang}/kurslar/career-pathway`}>Career Pathway</a></li>
+                            <li><a href={`/${lang}/kurslar/medizin-gesundheit`}>{lang === 'tr' ? 'Tıp ve Sağlık' : 'Medizin und Gesundheit'}</a></li>
+                            <li><a href={`/${lang}/kurslar/fsp-vorbereitung`}>FSP</a></li>
+                            <li><a href={`/${lang}/kurslar/ingenieurwesen-technik`}>{lang === 'tr' ? 'Mühendislik' : 'Ingenieurwesen'}</a></li>
+                            <li><a href={`/${lang}/kurslar/wirtschaft-management`}>{lang === 'tr' ? 'Ekonomi ve Yönetim' : 'Wirtschaft'}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            
+            <!-- Mobile Hakkımızda -->
+            <li class="mobile-dropdown">
+                <button class="mobile-dropdown-btn">
+                    <i class="fas fa-info-circle"></i>
+                    <span>{currentLang.about}</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <ul class="mobile-dropdown-list">
+                    <li><a href={`/${lang}/ueber-uns/unsere-mission`}>{lang === 'tr' ? 'Misyonumuz' : 'Unsere Mission'}</a></li>
+                    <li><a href={`/${lang}/ueber-uns/qualitaetsstandards`}>{lang === 'tr' ? 'Kalite Standartları' : 'Qualitätsstandards'}</a></li>
+                    <li><a href={`/${lang}/ueber-uns/partnerschaftspolitik`}>{lang === 'tr' ? 'Partnerlerimiz' : 'Partner'}</a></li>
+                    <li><a href={`/${lang}/lehrkraefte`}>{lang === 'tr' ? 'Eğitmenlerimiz' : 'Lehrkräfte'}</a></li>
+                    <li><a href={`/${lang}/ueber-uns/wir-in-den-medien`}>{lang === 'tr' ? 'Medya\'da Biz' : 'In den Medien'}</a></li>
+                </ul>
+            </li>
+            
+            <!-- Mobile Avantajlarımız -->
+            <li class="mobile-dropdown">
+                <button class="mobile-dropdown-btn">
+                    <i class="fas fa-gem"></i>
+                    <span>{currentLang.advantages}</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <ul class="mobile-dropdown-list">
+                    <li><a href={`/${lang}/unsere-vorteile/hybrides-lernmodell`}>{lang === 'tr' ? 'Hibrit Eğitim' : 'Hybrides Lernen'}</a></li>
+                    <li><a href={`/${lang}/unsere-vorteile/stadt-und-universitaetstouren`}>{lang === 'tr' ? 'Şehir ve Uni Gezileri' : 'Stadt- und Unitoruren'}</a></li>
+                    <li><a href={`/${lang}/unsere-vorteile/sprachclub`}>{lang === 'tr' ? 'Konuşma Kulübü' : 'Sprachclub'}</a></li>
+                    <li><a href={`/${lang}/unsere-vorteile/lerncoaching`}>{lang === 'tr' ? 'Eğitim Koçluğu' : 'Lerncoaching'}</a></li>
+                    <li><a href={`/${lang}/unsere-vorteile/geld-zurueck-garantie`}>{lang === 'tr' ? 'Para İade Garantisi' : 'Geld-zurück-Garantie'}</a></li>
+                </ul>
+            </li>
+            
+            <!-- Mobile Sunduklarımız -->
+            <li class="mobile-dropdown">
+                <button class="mobile-dropdown-btn">
+                    <i class="fas fa-hands-helping"></i>
+                    <span>{currentLang.services}</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <ul class="mobile-dropdown-list">
+                    <li><a href={`/${lang}/unsere-dienstleistungen/universitaetsvermittlung`}>{lang === 'tr' ? 'Üniversite Yerleştirme' : 'Universitätsvermittlung'}</a></li>
+                    <li><a href={`/${lang}/unsere-dienstleistungen/visumsberatung`}>{lang === 'tr' ? 'Vize Rehberliği' : 'Visumsberatung'}</a></li>
+                    <li><a href={`/${lang}/unsere-dienstleistungen/unterkunft`}>{lang === 'tr' ? 'Konaklama' : 'Unterkunft'}</a></li>
+                    <li><a href={`/${lang}/unsere-dienstleistungen/flughafenabholung`}>{lang === 'tr' ? 'Havaalanı Karşılama' : 'Flughafenabholung'}</a></li>
+                    <li><a href={`/${lang}/unsere-dienstleistungen/krankenversicherung-und-bank`}>{lang === 'tr' ? 'Sağlık Sigortası' : 'Krankenversicherung'}</a></li>
+                    <li><a href={`/${lang}/unsere-dienstleistungen/buerokratische-unterstuetzung`}>{lang === 'tr' ? 'Bürokrasi Desteği' : 'Bürokratische Hilfe'}</a></li>
+                    <li><a href={`/${lang}/unsere-dienstleistungen/kostenlose-ressourcen`}>{lang === 'tr' ? 'Ücretsiz Kaynaklar' : 'Kostenlose Ressourcen'}</a></li>
+                </ul>
+            </li>
+            
+            <li><a href={`/${lang}/erfolgsgeschichten`}><i class="fas fa-trophy"></i><span>{currentLang.winners}</span></a></li>
+            <li><a href={`/${lang}/kontakt`}><i class="fas fa-envelope"></i><span>{currentLang.contact}</span></a></li>
+        </ul>
+    </nav>
+    
+    <!-- Mobile Language Selector -->
+    <div class="mobile-language-selector">
+        <button class="mobile-lang-btn" id="mobileLangBtn">
+            <div class="mobile-lang-flag">
+                <img src={lang === 'tr' ? 'https://flagcdn.com/tr.svg' : 'https://flagcdn.com/de.svg'} alt={lang === 'tr' ? 'Türkçe' : 'Deutsch'} class="flag-img">
+            </div>
+            <span class="mobile-lang-text">{lang === 'tr' ? 'TR' : 'DE'}</span>
+            <i class="fas fa-chevron-down mobile-lang-arrow"></i>
+        </button>
+        <div class="mobile-lang-dropdown" id="mobileLangDropdown">
+            <a href={switchLangUrl('tr')} class="mobile-lang-option">
+                <img src="https://flagcdn.com/tr.svg" alt="Türkçe" class="flag-img">
+                <span>Türkçe</span>
+            </a>
+            <a href={switchLangUrl('de')} class="mobile-lang-option">
+                <img src="https://flagcdn.com/de.svg" alt="Deutsch" class="flag-img">
+                <span>Deutsch</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style is:global>
+    /* Güçlü dropdown-link font stilleri - En yüksek öncelik */
+    .courses-dropdown a.dropdown-link,
+    .courses-dropdown .dropdown-link,
+    .course-tab-panel a.dropdown-link,
+    .course-tab-panel .dropdown-link,
+    .courses-wrapper a.dropdown-link,
+    .courses-wrapper .dropdown-link,
+    .courses-content a.dropdown-link,
+    .courses-content .dropdown-link {
+        font-weight: 700 !important;
+        font-family: 'Poppins', sans-serif !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+        text-rendering: optimizeLegibility !important;
+    }
+    
+    /* Logo görünürlüğü */
+    .logo-img {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        max-width: 180px !important;
+        height: auto !important;
+    }
+    
+    .logo-section {
+        display: flex !important;
+        align-items: center !important;
+    }
+    
+    .logo-link {
+        display: flex !important;
+        align-items: center !important;
+    }
+</style>

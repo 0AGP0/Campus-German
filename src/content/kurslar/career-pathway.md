@@ -1,0 +1,108 @@
+---
+title: "Kariyere Giriş Programı / Career Pathway"
+lang: "tr"
+badge:
+  icon: "fas fa-rocket"
+  text: "Career Pathway"
+description: "Almanya'da kariyer yapmak isteyenler için kapsamlı program. Almanca, iş başvuruları ve kariyer danışmanlığı."
+image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Haftalık Ders"
+    description: "24 Ders (UE)"
+  - icon: "fas fa-calendar-alt"
+    title: "Program Süresi"
+    description: "12-24 Hafta"
+  - icon: "fas fa-users"
+    title: "Sınıf Mevcudu"
+    description: "Maksimum 10 Kişi"
+  - icon: "fas fa-rocket"
+    title: "Hedef"
+    description: "Kariyer"
+heroButtons:
+  primary:
+    text: "Hemen Başvur"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Program Detayları"
+    icon: "fas fa-info-circle"
+    href: "#program-detaylari"
+tabs:
+  - id: "kurs-bilgileri"
+    icon: "fas fa-info-circle"
+    title: "Kurs Bilgileri"
+    content:
+      title: "Career Pathway Programı Hakkında"
+      paragraphs:
+        - heading: "Kursa Genel Bakış"
+          text: "Kariyere Giriş Programı (Career Pathway), Almanya'da eğitimden iş hayatına geçişi hedefleyen öğrenciler ve yeni mezunlar için tasarlanmış kapsamlı ve bütüncül bir programdır. CampusGerman tarafından sunulan bu özel program, yalnızca Almanca dil eğitimi sunmakla kalmaz; aynı zamanda katılımcıların Almanya'daki iş piyasasına uyum sağlaması için gerekli olan akademik, mesleki ve kültürel becerileri de kazandırmayı amaçlar. Almanya'da kariyer yapmayı hedefleyen bireyler için dil yeterliliği kadar, iş kültürünü tanımak, doğru başvuru süreçlerini bilmek ve profesyonel iletişim kurabilmek de büyük önem taşır. Career Pathway Programı, bu ihtiyaçları tek bir çatı altında birleştirerek katılımcılara net bir yol haritası sunar. Program, CEFR standartlarına uygun Almanca eğitimi ile kariyer odaklı modülleri entegre eder. CampusGerman Kariyere Giriş Programı, Almanya'da kariyer hedefi olan katılımcılar için dil + kariyer + uyum ekseninde yapılandırılmış güçlü bir başlangıç noktasıdır."
+        - heading: "Hedef Kitle ve Ön Koşullar"
+          text: "Bu program, Almanya'da kariyer hedefleyen ve profesyonel hayata sağlam adımlarla başlamak isteyen bireyler için uygundur. Özellikle aşağıdaki gruplara hitap eder: Almanya'da çalışmayı planlayan öğrenciler ve yeni mezunlar Üniversite eğitimini Almanya'da tamamlamış veya tamamlamak üzere olanlar Almanca'yı iş hayatında etkin kullanmak isteyen adaylar Kariyer planlamasını Almanya merkezli yapmak isteyenler Programa katılım için en az B1 seviyesinde Almanca bilgisi önerilir. Bu seviye, mesleki iletişim ve iş dünyasına yönelik içeriklerden maksimum verim alınmasını sağlar. CampusGerman, program öncesinde seviye ve kariyer hedefi analizi yaparak katılımcıları doğru şekilde yönlendirir."
+        - heading: "Kurs İçeriği ve Öğrenme Hedefleri"
+          text: "Kariyere Giriş Programı, Almanca dil eğitimi ile kariyer odaklı içerikleri bir araya getirir. Program kapsamında: Mesleki ve iş Almancası CV ve motivasyon mektubu hazırlama Almanya'da iş başvuru süreçleri İş görüşmesi ve mülakat dili İş yeri kültürü ve profesyonel iletişim yer alır. Öğrenme hedefi, katılımcının Almanca'yı iş hayatında akıcı ve profesyonel şekilde kullanabilmesi ve Almanya'daki kariyer sürecine hazır hâle gelmesidir."
+        - heading: "Öğretim Metodu ve Sınıf Ortamı"
+          text: "CampusGerman'da Career Pathway Programı, uygulamaya dayalı ve rehberlik odaklı bir yöntemle yürütülür. Derslerde: Gerçek iş ilanları üzerinden çalışmalar Mülakat simülasyonları Vaka analizleri Bireysel geri bildirim ve koçluk kullanılır. Sınıf ortamı etkileşimlidir ve katılımcıların aktif katılımı teşvik edilir. Eğitmenler, Almanya iş piyasası ve mesleki Almanca konusunda deneyimlidir."
+        - heading: "Kurs Sonrası İlerleme"
+          text: "Kariyere Giriş Programı'nı tamamlayan katılımcılar: Almanya'da iş başvurularına hazır hâle gelir Almanca mülakat ve iş görüşmelerinde kendini güvenle ifade eder Profesyonel hayata daha hızlı adapte olur İleri seviye mesleki veya akademik programlara geçiş yapabilir CampusGerman, program sonrası da katılımcılara kariyer danışmanlığı ve ileri seviye eğitim seçenekleri konusunda destek sunar."
+  - id: "tarihler-fiyatlar"
+    icon: "fas fa-calendar-alt"
+    title: "Tarihler ve Fiyatlar"
+    content:
+      title: "Fiyat Bilgileri"
+      pricing:
+        - name: "12 Hafta Career Pathway"
+          duration: "12 Hafta"
+          schedule: "24 Ders/Hafta"
+          price: "Özel Fiyatlandırma"
+        - name: "24 Hafta Career Pathway"
+          duration: "24 Hafta"
+          schedule: "24 Ders/Hafta"
+          price: "Özel Fiyatlandırma"
+          highlighted: true
+  - id: "program-detaylari"
+    icon: "fas fa-book-open"
+    title: "Program Detayları"
+    content:
+      title: "Program İçeriği"
+      items:
+        - icon: "fas fa-check-circle"
+          text: "<strong>Almanca Eğitimi:</strong> İş odaklı Almanca"
+        - icon: "fas fa-check-circle"
+          text: "<strong>CV Hazırlama:</strong> Alman standartlarına uygun CV"
+        - icon: "fas fa-check-circle"
+          text: "<strong>İş Başvuruları:</strong> Başvuru süreçleri ve belgeler"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Kariyer Danışmanlığı:</strong> Kariyer planlama ve rehberlik"
+faqs:
+  - question: "Program sadece Almanca mı içeriyor?"
+    answer: "Hayır, program Almanca eğitimi, iş başvuruları, CV hazırlama ve kariyer danışmanlığı içerir."
+  - question: "İş bulma garantisi var mı?"
+    answer: "İş bulma garantisi yoktur, ancak iş başvuruları ve kariyer danışmanlığı ile desteklenirsiniz."
+  - question: "Hangi kurs formatları sunulmaktadır?"
+    answer: "Kurslarımız size esnek bir öğrenme deneyimi sunar: Hibrit Eğitim: Kursunuz, yüz yüze dersler ile canlı online derslerin birleşiminden oluşur. Hibrit sistem sayesinde, yüz yüze ders günlerinde dilediğiniz zaman online olarak da derse katılabilirsiniz. Canlı Online Eğitim: Bu formatta derslere tamamen canlı ve online olarak katılırsınız."
+  - question: "Kurslarda hangi içerikler işlenmektedir?"
+    answer: "Yoğun Almanca programlarımız; güncel metinlerle dinleme ve okuma anlama, kapsamlı gramer çalışmaları ve çeşitli iletişim odaklı aktiviteler içerir. Bu sayede özellikle konuşma ve yazma becerilerinizin hedefe yönelik olarak geliştirilmesi amaçlanır."
+  - question: "Almanya'da nasıl üniversite eğitimi alabilirim?"
+    answer: "Almanya'da üniversite eğitimi alabilmek için öncelikle tanınmış bir üniversiteye giriş yeterliliğine (HZB) sahip olmanız gerekir. Diplomanızın Almanya'da tanınıp tanınmadığını anabin sistemi üzerinden kontrol etmeniz önerilir. Ayrıca Almanca dil yeterliliğinizi telc, DSH gibi resmi sertifikalarla belgelemeniz gerekir. Campus German Üniversite Hazırlık Programı, bu sürece eksiksiz şekilde hazırlanmanız için tasarlanmıştır."
+  - question: "Hangi şartlar gereklidir?"
+    answer: "En az 18 yaşında olmanız gerekir. Almanya'da açılmış bir blokeli hesap veya resmî taahhüt belgesi sunmanız gerekmektedir."
+  - question: "Hangi vize türleri önerilmektedir?"
+    answer: "Öğrenci Vizesi: Hazırlık Almanca kurslarına katılım hakkını da kapsar. AB vatandaşları için vize zorunluluğu bulunmamaktadır."
+  - question: "Kurslara hangi hizmetler dahildir?"
+    answer: "Seviye tespit sınavı, kayıt ücreti alınmaz, vize başvurusu için kurs belgesi, dijital ders kitabı, bireysel öğrenci danışmanlığı (1 kez, yaklaşık 45 dakika), 'Almanya'da Üniversite Eğitimi' konulu webinarlar, Campus German sertifikası, e-öğrenme platformu, yıl boyunca düzenlenen sosyal ve kültürel aktiviteler, tüm merkezlerde ücretsiz Wi-Fi erişimi."
+  - question: "Eğitmenlerimizin nitelikleri nelerdir?"
+    answer: "Eğitmen kadromuz; üniversite mezunu, Yabancı Dil Olarak Almanca (DaF) ve İkinci Dil Olarak Almanca (DaZ) alanlarında uzun yıllara dayanan öğretim deneyimine sahip, alanında uzman ve motivasyonu yüksek kişilerden oluşur. Ayrıca Federal Göç ve Mülteciler Dairesi (BAMF) onaylı eğitmenlerimiz bulunmaktadır. Derslerimiz düzenli olarak öğrenciler tarafından değerlendirilir."
+  - question: "Almanca öğrenmek ne kadar sürer?"
+    answer: "Almanca öğrenme süresi hedefinize ve mevcut seviyenize bağlıdır. A1'den B2'ye kadar olan temel seviyeleri 6-8 ayda tamamlayabilirsiniz. C1 ve C2 gibi ileri seviyeler için ek 4-6 ay gerekebilir. Yoğun kurslarımızla bu süreyi kısaltabilirsiniz."
+  - question: "Goethe sertifikası alabilir miyim?"
+    answer: "Evet, CampusGerman'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz."
+  - question: "Konaklama seçenekleri mevcut mu?"
+    answer: "Evet, Almanya'da konaklama seçenekleri sunuyoruz. Öğrenci yurtları, aile yanı konaklama ve paylaşımlı daireler mevcuttur. Konaklama hizmetimiz kurs ücretine dahil değildir ancak size en uygun seçenekleri bulmanızda yardımcı oluyoruz."
+  - question: "Ödeme planları ve indirimler mevcut mu?"
+    answer: "Evet, esnek ödeme planları sunuyoruz. Aylık, 3 aylık ve 6 aylık ödeme seçenekleri mevcuttur. Erken kayıt, grup kayıtları ve uzun dönem programlar için indirimler bulunmaktadır. Detaylı bilgi için bizimle iletişime geçin."
+hasDemandForm: true
+---
+
+<!-- İçerik buraya eklenecek -->
+

@@ -1,0 +1,78 @@
+---
+title: "Goethe/TELC C1 Hazırlık Kursu"
+lang: "tr"
+badge:
+  icon: "fas fa-certificate"
+  text: "C1 Sınav"
+description: "Goethe ve TELC C1 sınavlarına hazırlık. Üniversite seviyesi sınav hazırlığı ve başarı garantisi."
+image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Haftalık Ders"
+    description: "24 Ders (UE)"
+  - icon: "fas fa-calendar-alt"
+    title: "Kurs Süresi"
+    description: "10 Hafta"
+  - icon: "fas fa-users"
+    title: "Sınıf Mevcudu"
+    description: "Maksimum 8 Kişi"
+  - icon: "fas fa-certificate"
+    title: "Sınav"
+    description: "Goethe/TELC C1"
+heroButtons:
+  primary:
+    text: "Hemen Başvur"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Sınav Bilgileri"
+    icon: "fas fa-info-circle"
+    href: "#sinav-bilgisi"
+tabs:
+  - id: "kurs-bilgileri"
+    icon: "fas fa-info-circle"
+    title: "Kurs Bilgileri"
+    content:
+      title: "Goethe/TELC C1 Hazırlık Kursu"
+      paragraphs:
+        - heading: "Kursa Genel Bakış"
+          text: "Goethe/TELC C1 Hazırlık Kursu, Goethe C1 ve TELC C1 Hochschule sınavlarına hazırlanmak isteyen öğrenciler için tasarlanmış, üniversite seviyesi sınav odaklı kapsamlı bir programdır. Bu kurs, öğrencilerin C1 sınav formatına özel hazırlık yapmalarını, akademik yazma becerilerini geliştirmelerini ve başarılı olmalarını sağlamayı hedefler. Haftada 24 ders saati ile yoğun bir hazırlık deneyimi sunan program, 10 hafta sürmektedir ve yaklaşık 240 ders saatinden oluşmaktadır."
+        - heading: "Hedef Sınavlar ve Ön Koşullar"
+          text: "Bu kurs, Goethe C1 ve TELC C1 Hochschule sınavlarına hazırlık yapmaktadır. C1 seviyesini tamamlamış öğrenciler için uygundur. Goethe C1 sınavı, dünya çapında tanınan bir Almanca dil sertifikasıdır ve ileri seviye Almanca bilgisini belgeler. TELC C1 Hochschule sınavı ise özellikle üniversite eğitimi için tasarlanmış bir sınavdır ve Alman üniversiteleri tarafından kabul edilir. Her iki sınav da C1 seviyesindeki dil becerilerini ölçer ve üniversite eğitimi için yeterli kabul edilir."
+        - heading: "Kurs İçeriği ve Hazırlık Yöntemleri"
+          text: "Kurs süresince öğrenciler, C1 sınav formatına özel hazırlık yaparlar. Sınavın dört bölümü (okuma, dinleme, yazma, konuşma) detaylı bir şekilde çalışılır ve sınav teknikleri öğretilir. Akademik yazma, metin analizi, araştırma yazma teknikleri ve profesyonel sunum becerileri öğretilir. Deneme sınavları, çıkmış sorular ve sınav simülasyonları ile öğrenciler gerçek sınav ortamına hazırlanırlar. Kurs sonunda öğrenciler, C1 sınavında başarılı olmak için gerekli tüm bilgi ve becerilere sahip olurlar."
+        - heading: "Öğretim Metodu ve Sınıf Ortamı"
+          text: "Kurs, deneyimli öğretmenler tarafından yürütülmektedir ve her sınıfta maksimum 8 öğrenci bulunur. Bu küçük sınıf mevcudu, öğrencilerin bireysel ihtiyaçlarına odaklanmayı sağlar. Dersler, sınav formatına özel alıştırmalar, akademik yazma çalışmaları, deneme sınavları, geri bildirim seansları ve bireysel danışmanlık ile zenginleştirilmiştir. Öğrenciler sadece dilbilgisi öğrenmekle kalmaz, aynı zamanda akademik ve profesyonel becerilerini de geliştirirler."
+        - heading: "Başarı Garantisi ve Destek Hizmetleri"
+          text: "%95 başarı oranı ile başarı garantisi sunuyoruz. Başarısız olursanız, kurs tekrarı imkanı vardır. Ayrıca, sınav başvuru süreçleri konusunda da destek sağlıyoruz. Öğrencilerimiz, sınav tarihleri, başvuru süreçleri ve sınav ücretleri konusunda bilgilendirilirler. Kurs sonunda, öğrenciler C1 seviye sertifikası almak için gerekli tüm hazırlığı tamamlamış olurlar ve Alman üniversitelerine başvuru yapabilirler."
+faqs:
+  - question: "C1 sınavı üniversite için yeterli mi?"
+    answer: "Evet, C1 sınavı çoğu Alman üniversitesi için yeterlidir."
+  - question: "C1 seviyesini tamamlamadan sınav hazırlığına başlayabilir miyim?"
+    answer: "Hayır, C1 sınav hazırlığı için C1 seviyesini tamamlamış olmanız gerekir."
+  - question: "Hangi kurs formatları sunulmaktadır?"
+    answer: "Kurslarımız size esnek bir öğrenme deneyimi sunar: Hibrit Eğitim: Kursunuz, yüz yüze dersler ile canlı online derslerin birleşiminden oluşur. Hibrit sistem sayesinde, yüz yüze ders günlerinde dilediğiniz zaman online olarak da derse katılabilirsiniz. Canlı Online Eğitim: Bu formatta derslere tamamen canlı ve online olarak katılırsınız."
+  - question: "Kurslarda hangi içerikler işlenmektedir?"
+    answer: "Yoğun Almanca programlarımız; güncel metinlerle dinleme ve okuma anlama, kapsamlı gramer çalışmaları ve çeşitli iletişim odaklı aktiviteler içerir. Bu sayede özellikle konuşma ve yazma becerilerinizin hedefe yönelik olarak geliştirilmesi amaçlanır."
+  - question: "Almanya'da nasıl üniversite eğitimi alabilirim?"
+    answer: "Almanya'da üniversite eğitimi alabilmek için öncelikle tanınmış bir üniversiteye giriş yeterliliğine (HZB) sahip olmanız gerekir. Diplomanızın Almanya'da tanınıp tanınmadığını anabin sistemi üzerinden kontrol etmeniz önerilir. Ayrıca Almanca dil yeterliliğinizi telc, DSH gibi resmi sertifikalarla belgelemeniz gerekir. Campus German Üniversite Hazırlık Programı, bu sürece eksiksiz şekilde hazırlanmanız için tasarlanmıştır."
+  - question: "Hangi şartlar gereklidir?"
+    answer: "En az 18 yaşında olmanız gerekir. Almanya'da açılmış bir blokeli hesap veya resmî taahhüt belgesi sunmanız gerekmektedir."
+  - question: "Hangi vize türleri önerilmektedir?"
+    answer: "Öğrenci Vizesi: Hazırlık Almanca kurslarına katılım hakkını da kapsar. AB vatandaşları için vize zorunluluğu bulunmamaktadır."
+  - question: "Kurslara hangi hizmetler dahildir?"
+    answer: "Seviye tespit sınavı, kayıt ücreti alınmaz, vize başvurusu için kurs belgesi, dijital ders kitabı, bireysel öğrenci danışmanlığı (1 kez, yaklaşık 45 dakika), 'Almanya'da Üniversite Eğitimi' konulu webinarlar, Campus German sertifikası, e-öğrenme platformu, yıl boyunca düzenlenen sosyal ve kültürel aktiviteler, tüm merkezlerde ücretsiz Wi-Fi erişimi."
+  - question: "Eğitmenlerimizin nitelikleri nelerdir?"
+    answer: "Eğitmen kadromuz; üniversite mezunu, Yabancı Dil Olarak Almanca (DaF) ve İkinci Dil Olarak Almanca (DaZ) alanlarında uzun yıllara dayanan öğretim deneyimine sahip, alanında uzman ve motivasyonu yüksek kişilerden oluşur. Ayrıca Federal Göç ve Mülteciler Dairesi (BAMF) onaylı eğitmenlerimiz bulunmaktadır. Derslerimiz düzenli olarak öğrenciler tarafından değerlendirilir."
+  - question: "Almanca öğrenmek ne kadar sürer?"
+    answer: "Almanca öğrenme süresi hedefinize ve mevcut seviyenize bağlıdır. A1'den B2'ye kadar olan temel seviyeleri 6-8 ayda tamamlayabilirsiniz. C1 ve C2 gibi ileri seviyeler için ek 4-6 ay gerekebilir. Yoğun kurslarımızla bu süreyi kısaltabilirsiniz."
+  - question: "Goethe sertifikası alabilir miyim?"
+    answer: "Evet, CampusGerman'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz."
+  - question: "Konaklama seçenekleri mevcut mu?"
+    answer: "Evet, Almanya'da konaklama seçenekleri sunuyoruz. Öğrenci yurtları, aile yanı konaklama ve paylaşımlı daireler mevcuttur. Konaklama hizmetimiz kurs ücretine dahil değildir ancak size en uygun seçenekleri bulmanızda yardımcı oluyoruz."
+  - question: "Ödeme planları ve indirimler mevcut mu?"
+    answer: "Evet, esnek ödeme planları sunuyoruz. Aylık, 3 aylık ve 6 aylık ödeme seçenekleri mevcuttur. Erken kayıt, grup kayıtları ve uzun dönem programlar için indirimler bulunmaktadır. Detaylı bilgi için bizimle iletişime geçin."
+---
+
+<!-- İçerik buraya eklenecek -->
+

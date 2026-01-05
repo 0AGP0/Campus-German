@@ -1,0 +1,91 @@
+---
+title: "Dönemsel Almanca Kursları Genel Bakış"
+lang: "tr"
+badge:
+  icon: "fas fa-calendar-alt"
+  text: "Dönemsel"
+description: "Yaz okulu, haftalık ve akşam kursları ile esnek öğrenme seçenekleri. Dönemsel programlarla Almanca öğrenin."
+image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Esnek Program"
+    description: "Yaz/Haftalık/Akşam"
+  - icon: "fas fa-calendar-alt"
+    title: "Dönem"
+    description: "Sezonsal"
+  - icon: "fas fa-users"
+    title: "Sınıf Mevcudu"
+    description: "Maksimum 12 Kişi"
+  - icon: "fas fa-sun"
+    title: "Program Türü"
+    description: "Dönemsel"
+heroButtons:
+  primary:
+    text: "Hemen Başvur"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Programları İncele"
+    icon: "fas fa-list"
+    href: "#programlar"
+tabs:
+  - id: "kurs-bilgileri"
+    icon: "fas fa-info-circle"
+    title: "Kurs Bilgileri"
+    content:
+      title: "Dönemsel Kurslar Hakkında"
+      items:
+        - icon: "fas fa-calendar-alt"
+          text: "<strong>Program Türleri:</strong> Yaz okulu, haftalık, akşam kursları"
+        - icon: "fas fa-clock"
+          text: "<strong>Esneklik:</strong> Farklı yoğunluk seçenekleri"
+        - icon: "fas fa-users"
+          text: "<strong>Sınıf Mevcudu:</strong> Maks. 12 öğrenci"
+        - icon: "fas fa-certificate"
+          text: "<strong>Sertifika:</strong> Kurs bitiminde katılım sertifikası"
+      additionalInfo:
+        title: "Program Seçenekleri"
+        text: "Yaz okulu programları, haftalık kurslar ve akşam yarı yoğun kurslar ile ihtiyacınıza uygun programı seçebilirsiniz."
+  - id: "programlar"
+    icon: "fas fa-list"
+    title: "Programlar"
+    content:
+      title: "Dönemsel Program Seçenekleri"
+      items:
+        - icon: "fas fa-sun"
+          text: "<strong>Yaz Okulu:</strong> Liseliler ve üniversiteliler için özel programlar"
+        - icon: "fas fa-calendar-week"
+          text: "<strong>Haftalık Kurslar:</strong> A1-A2 ve B1-C1 seviyeleri"
+        - icon: "fas fa-moon"
+          text: "<strong>Akşam Kursları:</strong> Yarı yoğun akşam programları"
+faqs:
+  - question: "Yaz okulu programları ne zaman başlar?"
+    answer: "Yaz okulu programları genellikle Haziran, Temmuz ve Ağustos aylarında başlar."
+  - question: "Haftalık kurslar hangi seviyeler için mevcut?"
+    answer: "Haftalık kurslar A1-A2 ve B1-C1 seviyeleri için mevcuttur."
+  - question: "Hangi kurs formatları sunulmaktadır?"
+    answer: "Kurslarımız size esnek bir öğrenme deneyimi sunar: Hibrit Eğitim: Kursunuz, yüz yüze dersler ile canlı online derslerin birleşiminden oluşur. Hibrit sistem sayesinde, yüz yüze ders günlerinde dilediğiniz zaman online olarak da derse katılabilirsiniz. Canlı Online Eğitim: Bu formatta derslere tamamen canlı ve online olarak katılırsınız."
+  - question: "Kurslarda hangi içerikler işlenmektedir?"
+    answer: "Yoğun Almanca programlarımız; güncel metinlerle dinleme ve okuma anlama, kapsamlı gramer çalışmaları ve çeşitli iletişim odaklı aktiviteler içerir. Bu sayede özellikle konuşma ve yazma becerilerinizin hedefe yönelik olarak geliştirilmesi amaçlanır."
+  - question: "Almanya'da nasıl üniversite eğitimi alabilirim?"
+    answer: "Almanya'da üniversite eğitimi alabilmek için öncelikle tanınmış bir üniversiteye giriş yeterliliğine (HZB) sahip olmanız gerekir. Diplomanızın Almanya'da tanınıp tanınmadığını anabin sistemi üzerinden kontrol etmeniz önerilir. Ayrıca Almanca dil yeterliliğinizi telc, DSH gibi resmi sertifikalarla belgelemeniz gerekir. Campus German Üniversite Hazırlık Programı, bu sürece eksiksiz şekilde hazırlanmanız için tasarlanmıştır."
+  - question: "Hangi şartlar gereklidir?"
+    answer: "En az 18 yaşında olmanız gerekir. Almanya'da açılmış bir blokeli hesap veya resmî taahhüt belgesi sunmanız gerekmektedir."
+  - question: "Hangi vize türleri önerilmektedir?"
+    answer: "Öğrenci Vizesi: Hazırlık Almanca kurslarına katılım hakkını da kapsar. AB vatandaşları için vize zorunluluğu bulunmamaktadır."
+  - question: "Kurslara hangi hizmetler dahildir?"
+    answer: "Seviye tespit sınavı, kayıt ücreti alınmaz, vize başvurusu için kurs belgesi, dijital ders kitabı, bireysel öğrenci danışmanlığı (1 kez, yaklaşık 45 dakika), 'Almanya'da Üniversite Eğitimi' konulu webinarlar, Campus German sertifikası, e-öğrenme platformu, yıl boyunca düzenlenen sosyal ve kültürel aktiviteler, tüm merkezlerde ücretsiz Wi-Fi erişimi."
+  - question: "Eğitmenlerimizin nitelikleri nelerdir?"
+    answer: "Eğitmen kadromuz; üniversite mezunu, Yabancı Dil Olarak Almanca (DaF) ve İkinci Dil Olarak Almanca (DaZ) alanlarında uzun yıllara dayanan öğretim deneyimine sahip, alanında uzman ve motivasyonu yüksek kişilerden oluşur. Ayrıca Federal Göç ve Mülteciler Dairesi (BAMF) onaylı eğitmenlerimiz bulunmaktadır. Derslerimiz düzenli olarak öğrenciler tarafından değerlendirilir."
+  - question: "Almanca öğrenmek ne kadar sürer?"
+    answer: "Almanca öğrenme süresi hedefinize ve mevcut seviyenize bağlıdır. A1'den B2'ye kadar olan temel seviyeleri 6-8 ayda tamamlayabilirsiniz. C1 ve C2 gibi ileri seviyeler için ek 4-6 ay gerekebilir. Yoğun kurslarımızla bu süreyi kısaltabilirsiniz."
+  - question: "Goethe sertifikası alabilir miyim?"
+    answer: "Evet, CampusGerman'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz."
+  - question: "Konaklama seçenekleri mevcut mu?"
+    answer: "Evet, Almanya'da konaklama seçenekleri sunuyoruz. Öğrenci yurtları, aile yanı konaklama ve paylaşımlı daireler mevcuttur. Konaklama hizmetimiz kurs ücretine dahil değildir ancak size en uygun seçenekleri bulmanızda yardımcı oluyoruz."
+  - question: "Ödeme planları ve indirimler mevcut mu?"
+    answer: "Evet, esnek ödeme planları sunuyoruz. Aylık, 3 aylık ve 6 aylık ödeme seçenekleri mevcuttur. Erken kayıt, grup kayıtları ve uzun dönem programlar için indirimler bulunmaktadır. Detaylı bilgi için bizimle iletişime geçin."
+---
+
+<!-- İçerik buraya eklenecek -->
+

@@ -1,0 +1,320 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/dienstleistungen.css';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'tr' } },
+        { params: { lang: 'de' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Translations
+const t = {
+    tr: {
+        title: "Avantajlarımız - CampusGerman",
+        heroTitle: "CampusGerman Avantajları",
+        heroDescription: "Almanca öğrenme yolculuğunuzda size sunduğumuz özel avantajlar ve hizmetler. Hibrit eğitim modelinden ücretsiz konuşma kulübüne, şehir gezilerinden eğitim koçluğuna kadar geniş bir yelpazede hizmetlerimiz bulunmaktadır.",
+        sectionTitle: "Avantajlarımız",
+        sectionSubtitle: "Her ihtiyaca uygun özel hazırlanmış avantajlar",
+    },
+    de: {
+        title: "Unsere Vorteile - CampusGerman",
+        heroTitle: "CampusGerman Vorteile",
+        heroDescription: "Besondere Vorteile und Dienstleistungen, die wir Ihnen auf Ihrer Deutschlernreise bieten. Von hybriden Lernmodellen bis hin zu kostenlosen Sprachclubs, von Stadttouren bis hin zu Lerncoaching - wir bieten eine breite Palette von Dienstleistungen.",
+        sectionTitle: "Unsere Vorteile",
+        sectionSubtitle: "Speziell entwickelte Vorteile für jeden Bedarf",
+    }
+};
+
+const translations = t[lang as keyof typeof t];
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <!-- Hero Section -->
+    <section class="services-hero-section">
+        <div class="container">
+            <div class="services-hero-content">
+                <div class="hero-left">
+                    <h1 class="hero-title">
+                        {translations.heroTitle}
+                    </h1>
+                    
+                    <div class="hero-content">
+                        <p class="hero-description">
+                            {translations.heroDescription}
+                        </p>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <a href="#avantaj-kartlari" class="btn-primary">
+                            <i class="fas fa-arrow-down"></i>
+                            {lang === 'tr' ? 'Avantajları İncele' : 'Vorteile ansehen'}
+                        </a>
+                        <button class="btn-secondary" id="contactBtn">
+                            <i class="fas fa-envelope"></i>
+                            {lang === 'tr' ? 'İletişime Geç' : 'Kontakt aufnehmen'}
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-right">
+                    <div class="hero-cta-card">
+                        <div class="cta-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="cta-title">{lang === 'tr' ? 'Avantajlarımızı Keşfedin' : 'Entdecken Sie unsere Vorteile'}</h3>
+                        <p class="cta-description">
+                            {lang === 'tr' 
+                                ? 'Her ihtiyaca uygun özel hazırlanmış avantajlar, deneyimli eğitmenler ve esnek program seçenekleri.'
+                                : 'Speziell entwickelte Vorteile für jeden Bedarf, erfahrene Lehrkräfte und flexible Programmoptionen.'}
+                        </p>
+                        <div class="cta-stats">
+                            <div class="cta-stat">
+                                <div class="stat-number">5+</div>
+                                <div class="stat-label">{lang === 'tr' ? 'Avantaj' : 'Vorteile'}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">100%</div>
+                                <div class="stat-label">{lang === 'tr' ? 'Memnuniyet' : 'Zufriedenheit'}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">{lang === 'tr' ? 'Destek' : 'Unterstützung'}</div>
+                            </div>
+                        </div>
+                        <a href="#avantaj-kartlari" class="cta-button">
+                            <i class="fas fa-arrow-down"></i>
+                            {lang === 'tr' ? 'Tüm Avantajları Görüntüle' : 'Alle Vorteile anzeigen'}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Avantaj Kartları Section -->
+    <section class="services-section" id="avantaj-kartlari">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{translations.sectionTitle}</h2>
+                <p class="section-subtitle">{translations.sectionSubtitle}</p>
+            </div>
+            
+            <div class="services-grid" id="servicesGrid">
+                <!-- Hibrit Eğitim -->
+                <div class="service-card" id="hibrit-egitim">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-laptop-house"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">{lang === 'tr' ? 'Hibrit Eğitim Modeli' : 'Hybrides Lernmodell'}</h3>
+                            <p class="service-subtitle">{lang === 'tr' ? 'Online ve yüz yüze eğitim' : 'Online und Präsenzunterricht'}</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            {lang === 'tr' 
+                                ? 'Online ve yüz yüze eğitimi birleştiren hibrit model ile esnek öğrenme imkanı. İstediğiniz zaman online, istediğiniz zaman kampüste.'
+                                : 'Flexibles Lernen mit einem hybriden Modell, das Online- und Präsenzunterricht kombiniert. Online wann Sie möchten, auf dem Campus wann Sie möchten.'}
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Esnek program' : 'Flexibles Programm'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Online ve yüz yüze' : 'Online und Präsenz'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Aynı kalite' : 'Gleiche Qualität'}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/unsere-vorteile/hibrit-egitim`} class="service-link">
+                            <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Şehir ve Üniversite Gezileri -->
+                <div class="service-card" id="sehir-uni-gezileri">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-map-marked-alt"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">{lang === 'tr' ? 'Şehir ve Üniversite Gezileri' : 'Stadt- und Universitätstouren'}</h3>
+                            <p class="service-subtitle">{lang === 'tr' ? 'Kültürel deneyimler' : 'Kulturelle Erfahrungen'}</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            {lang === 'tr' 
+                                ? 'Bremen şehrini ve üniversiteleri keşfedin. Kültürel geziler, müze ziyaretleri ve sosyal aktiviteler ile Almanca öğrenirken kültürü de yaşayın.'
+                                : 'Entdecken Sie die Stadt Bremen und ihre Universitäten. Kulturelle Touren, Museumsbesuche und soziale Aktivitäten - lernen Sie Deutsch und erleben Sie die Kultur.'}
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Şehir turları' : 'Stadtführungen'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Üniversite ziyaretleri' : 'Universitätsbesuche'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Kültürel aktiviteler' : 'Kulturelle Aktivitäten'}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/unsere-vorteile/sehir-uni-gezileri`} class="service-link">
+                            <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Konuşma Kulübü -->
+                <div class="service-card" id="konusma-kulubu">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">{lang === 'tr' ? 'Ücretsiz Almanca Konuşma Kulübü' : 'Kostenloser Deutsch-Sprachclub'}</h3>
+                            <p class="service-subtitle">{lang === 'tr' ? 'Pratik yapma imkanı' : 'Übungsmöglichkeit'}</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            {lang === 'tr' 
+                                ? 'Ücretsiz konuşma kulübümüz ile Almanca pratik yapın. Native speaker öğretmenler eşliğinde günlük konuşma pratiği yapabilirsiniz.'
+                                : 'Üben Sie Deutsch in unserem kostenlosen Sprachclub. Tägliche Gesprächspraxis mit muttersprachlichen Lehrern.'}
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Ücretsiz' : 'Kostenlos'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Native speaker' : 'Muttersprachler'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Günlük pratik' : 'Tägliche Übung'}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/unsere-vorteile/konusma-kulubu`} class="service-link">
+                            <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Eğitim Koçluğu -->
+                <div class="service-card" id="egitim-koclugu">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">{lang === 'tr' ? 'Ücretsiz Almanca Eğitim Koçluğu/Etüdü' : 'Kostenloses Lerncoaching/Studium'}</h3>
+                            <p class="service-subtitle">{lang === 'tr' ? 'Bireysel destek' : 'Individuelle Unterstützung'}</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            {lang === 'tr' 
+                                ? 'Ücretsiz eğitim koçluğu ve etüt desteği ile öğrenme sürecinizi hızlandırın. Bireysel danışmanlık ve ödev desteği.'
+                                : 'Beschleunigen Sie Ihren Lernprozess mit kostenlosem Lerncoaching und Studienunterstützung. Individuelle Beratung und Hausaufgabenhilfe.'}
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Ücretsiz' : 'Kostenlos'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Bireysel destek' : 'Individuelle Unterstützung'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Ödev desteği' : 'Hausaufgabenhilfe'}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/unsere-vorteile/egitim-koclugu`} class="service-link">
+                            <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Garanti -->
+                <div class="service-card" id="garanti">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">{lang === 'tr' ? 'Para İade veya Kurs Tekrar Garantisi' : 'Geld-zurück- oder Kurswiederholungsgarantie'}</h3>
+                            <p class="service-subtitle">{lang === 'tr' ? 'Güvenli öğrenme' : 'Sicheres Lernen'}</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            {lang === 'tr' 
+                                ? 'Memnun kalmazsanız para iadesi veya kurs tekrar garantisi. Başarı odaklı eğitim anlayışımızın bir göstergesi.'
+                                : 'Geld-zurück-Garantie oder Kurswiederholung, wenn Sie nicht zufrieden sind. Ein Zeichen unseres erfolgsorientierten Bildungsansatzes.'}
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Para iadesi' : 'Geld-zurück'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Kurs tekrarı' : 'Kurswiederholung'}</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{lang === 'tr' ? 'Başarı garantisi' : 'Erfolgsgarantie'}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/unsere-vorteile/garanti`} class="service-link">
+                            <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>
+

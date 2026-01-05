@@ -1,0 +1,103 @@
+---
+title: "Deutschkurse für Beruf und Karriere"
+lang: "de"
+badge:
+  icon: "fas fa-briefcase"
+  text: "Beruf/Karriere"
+description: "Berufs- und karriereorientierter Deutschkurs. Professionelle Deutschkenntnisse für den Arbeitsalltag."
+image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Wochenstunden"
+    description: "20–24 Unterrichtseinheiten"
+  - icon: "fas fa-calendar-alt"
+    title: "Kursdauer"
+    description: "8–12 Wochen"
+  - icon: "fas fa-users"
+    title: "Klassengröße"
+    description: "Maximal 12 Teilnehmende"
+  - icon: "fas fa-briefcase"
+    title: "Fokus"
+    description: "Berufsdeutsch"
+heroButtons:
+  primary:
+    text: "Jetzt bewerben"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Programmdetails"
+    icon: "fas fa-info-circle"
+    href: "#programmdetails"
+tabs:
+  - id: "kursinformationen"
+    icon: "fas fa-info-circle"
+    title: "Kursinformationen"
+    content:
+      title: "Über den Kurs Beruf und Karriere"
+      paragraphs:
+        - heading: "Allgemeiner Überblick"
+          text: "Der Deutschkurs für Beruf und Karriere wurde speziell für Lernende und Berufstätige entwickelt, die Deutsch im Berufsleben und in professionellen Kontexten effektiv einsetzen möchten. Dieses von CampusGerman angebotene Programm verbindet allgemeine Deutschkenntnisse mit beruflicher Kommunikation, geschäftlicher Korrespondenz und karriereorientiertem Sprachgebrauch. Ziel ist es, den Teilnehmenden eine solide sprachliche Grundlage für ihre beruflichen und karrierebezogenen Ziele in Deutschland zu vermitteln. Für den beruflichen Erfolg in Deutschland sind nicht nur fachliche Kompetenzen, sondern auch präzise und professionelle Deutschkenntnisse entscheidend. Der Kurs vermittelt den richtigen Sprachgebrauch in Meetings, beim Schreiben von E-Mails, bei Präsentationen sowie in Bewerbungsgesprächen. Das Programm ist CEFR-konform aufgebaut und wird inhaltlich an das jeweilige Sprachniveau der Teilnehmenden angepasst. Der Deutschkurs für Beruf und Karriere von CampusGerman versteht Sprache nicht nur als Lernziel, sondern als aktiven Bestandteil der beruflichen Entwicklung."
+        - heading: "Zielgruppe und Voraussetzungen"
+          text: "Dieser Kurs richtet sich an eine breite Zielgruppe, die Deutsch gezielt für berufliche und karrierebezogene Zwecke einsetzen möchte. Besonders geeignet ist er für Studierende mit dem Ziel, in Deutschland zu arbeiten, für Absolvent:innen, die ihre berufliche Laufbahn in Deutschland planen, für Berufstätige, die in einem deutschsprachigen Arbeitsumfeld kommunizieren müssen, sowie für Bewerber:innen, die Deutsch in Bewerbungsprozessen sicher einsetzen möchten. Für die Teilnahme wird mindestens ein allgemeines Deutschniveau auf A2- oder B1-Niveau empfohlen. Dieses Niveau ermöglicht einen schnelleren Einstieg in berufsbezogene Sprachstrukturen. Vor Kursbeginn führt CampusGerman eine Einstufung durch und empfiehlt das passende Kursformat."
+        - heading: "Kursinhalte und Lernziele"
+          text: "Der Deutschkurs für Beruf und Karriere konzentriert sich auf sprachliche Strukturen und Fachterminologie, die im Berufsalltag häufig verwendet werden. Zu den Kursinhalten gehören berufsbezogene Ausdrucksweisen im Deutschen, professionelle E-Mail- und Geschäftskorrespondenz, die Erstellung von Lebensläufen und Motivationsschreiben, Sprache für Meetings und Präsentationen sowie gezielte Sprechpraxis für Bewerbungsgespräche. Ziel ist es, dass die Teilnehmenden Deutsch in professionellen Situationen flüssig, klar und korrekt anwenden können. Nach Abschluss des Kurses treten sie im beruflichen Umfeld deutlich selbstsicherer auf."
+        - heading: "Unterrichtsmethode und Lernumfeld"
+          text: "Der Kurs wird bei CampusGerman praxisorientiert und kommunikationsfokussiert durchgeführt. Im Unterricht kommen reale Berufsszenarien, Rollenspiele und Fallstudien, Gruppendiskussionen sowie schreib- und sprechorientierte Übungen zum Einsatz. Das Lernumfeld ist interaktiv gestaltet und fördert die aktive Teilnahme aller Kursteilnehmenden. Die Lehrkräfte verfügen über fundierte Erfahrung im Bereich Berufsdeutsch und Geschäftssprache."
+        - heading: "Weiterentwicklung nach dem Kurs"
+          text: "Teilnehmende des Deutschkurses für Beruf und Karriere verbessern ihre berufliche Kommunikationsfähigkeit auf Deutsch, sind besser auf Karrierechancen in Deutschland vorbereitet, treten in Bewerbungsprozessen und Vorstellungsgesprächen souveräner auf und können anschließend an weiterführenden berufsbezogenen oder prüfungsvorbereitenden Kursen teilnehmen. CampusGerman begleitet die Teilnehmenden auch nach Kursende mit weiterführenden Karriere- und Sprachprogrammen."
+  - id: "termine-preise"
+    icon: "fas fa-calendar-alt"
+    title: "Termine und Preise"
+    content:
+      title: "Preisübersicht"
+      pricing:
+        - name: "8 Wochen Beruf & Karriere"
+          duration: "8 Wochen"
+          schedule: "20–24 UE pro Woche"
+          price: "Individuelle Preisgestaltung"
+          highlighted: true
+  - id: "programmdetails"
+    icon: "fas fa-book-open"
+    title: "Programmdetails"
+    content:
+      title: "Programminhalte"
+      items:
+        - icon: "fas fa-check-circle"
+          text: "<strong>Berufsdeutsch:</strong> Professionelle deutsche Geschäftssprache"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Geschäftskorrespondenz:</strong> E-Mails und formelle Schreiben"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Präsentationstechniken:</strong> Präsentationen und Meetings"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Bewerbungsgespräche:</strong> Bewerbungen und Vorstellungsgespräche"
+faqs:
+  - question: "Mit welchem Niveau sollte ich beginnen?"
+    answer: "Mindestens B1 wird empfohlen, ideal ist jedoch ein B2-Niveau."
+  - question: "Gibt es Vorbereitung auf Bewerbungsgespräche?"
+    answer: "Ja, der Kurs beinhaltet gezielte Vorbereitung auf Bewerbungsgespräche, Lebenslauf-Erstellung und Bewerbungsprozesse."
+  - question: "Welche Kursformate werden angeboten?"
+    answer: "Unsere Kurse bieten flexible Lernformate: Hybridunterricht – eine Kombination aus Präsenz- und Live-Online-Unterricht, bei der Sie auch an Präsenztagen online teilnehmen können; sowie Live-Online-Unterricht, bei dem Sie vollständig live und online am Unterricht teilnehmen."
+  - question: "Welche Inhalte werden in den Kursen behandelt?"
+    answer: "Unsere Intensiv-Deutschkursprogramme umfassen Hör- und Leseverstehen mit aktuellen Texten, umfassende Grammatikarbeit sowie vielfältige kommunikationsorientierte Aktivitäten. Ziel ist insbesondere die gezielte Entwicklung Ihrer Sprech- und Schreibkompetenzen."
+  - question: "Wie kann ich in Deutschland studieren?"
+    answer: "Für ein Studium in Deutschland benötigen Sie eine anerkannte Hochschulzugangsberechtigung (HZB). Es wird empfohlen, die Anerkennung Ihres Abschlusses im Anabin-System zu prüfen. Zudem müssen Deutschkenntnisse durch offizielle Zertifikate wie telc oder DSH nachgewiesen werden. Das CampusGerman Universitätsvorbereitungsprogramm unterstützt Sie umfassend bei diesem Prozess."
+  - question: "Welche Voraussetzungen sind erforderlich?"
+    answer: "Sie müssen mindestens 18 Jahre alt sein und entweder ein in Deutschland eröffnetes Sperrkonto oder eine offizielle Verpflichtungserklärung vorlegen."
+  - question: "Welche Visatypen werden empfohlen?"
+    answer: "Studentenvisum: Dieses umfasst auch die Teilnahme an vorbereitenden Deutschkursen. Für EU-Bürgerinnen und EU-Bürger besteht keine Visumpflicht."
+  - question: "Welche Leistungen sind in den Kursen enthalten?"
+    answer: "Einstufungstest, keine Anmeldegebühr, Kursbescheinigung für den Visumsantrag, digitales Lehrbuch, individuelle Studienberatung (einmalig ca. 45 Minuten), Webinare zum Thema \"Studium in Deutschland\", CampusGerman-Zertifikat, E-Learning-Plattform, ganzjährig organisierte soziale und kulturelle Aktivitäten sowie kostenloser WLAN-Zugang an allen Standorten."
+  - question: "Welche Qualifikationen haben die Lehrkräfte?"
+    answer: "Unser Lehrteam besteht aus hochqualifizierten, akademisch ausgebildeten Lehrkräften mit langjähriger Erfahrung in Deutsch als Fremdsprache (DaF) und Deutsch als Zweitsprache (DaZ). Zudem verfügen wir über vom Bundesamt für Migration und Flüchtlinge (BAMF) anerkannte Lehrkräfte. Die Kurse werden regelmäßig von den Teilnehmenden evaluiert."
+  - question: "Wie lange dauert es, Deutsch zu lernen?"
+    answer: "Die Dauer des Deutschlernens hängt von Ihren Zielen und Ihrem aktuellen Sprachniveau ab. Die Grundstufen von A1 bis B2 können in etwa 6–8 Monaten abgeschlossen werden. Für fortgeschrittene Niveaus wie C1 und C2 sind zusätzlich etwa 4–6 Monate einzuplanen. Intensivkurse können die Lernzeit verkürzen."
+  - question: "Kann ich ein Goethe-Zertifikat erwerben?"
+    answer: "Ja, bei CampusGerman bieten wir Vorbereitungskurse für Goethe-Zertifikate an – von A1 bis C2. Prüfungen können auf unserem Campus oder in nahegelegenen Prüfzentren abgelegt werden."
+  - question: "Gibt es Unterkunftsmöglichkeiten?"
+    answer: "Ja, wir unterstützen Sie bei der Organisation von Unterkunftsmöglichkeiten in Deutschland – z. B. Studentenwohnheime, Gastfamilien und Wohngemeinschaften. Die Unterkunft ist nicht im Kurspreis enthalten, wir helfen Ihnen jedoch bei der passenden Auswahl."
+  - question: "Gibt es Zahlungspläne und Rabatte?"
+    answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
+
+hasDemandForm: true
+---
+

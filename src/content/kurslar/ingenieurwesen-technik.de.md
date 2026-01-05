@@ -1,0 +1,103 @@
+---
+title: "Deutschkurs für Ingenieurwesen und Technische Wissenschaften"
+lang: "de"
+badge:
+  icon: "fas fa-cogs"
+  text: "Ingenieurwesen"
+description: "Spezieller Deutschkurs für Studierende und Fachkräfte aus Ingenieurwesen und technischen Wissenschaften. Technische Fachbegriffe und berufsbezogenes Deutsch."
+image: "https://images.unsplash.com/photo-1504307651254-35680f086213?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Wochenstunden"
+    description: "20–24 Unterrichtseinheiten"
+  - icon: "fas fa-calendar-alt"
+    title: "Kursdauer"
+    description: "12–24 Wochen"
+  - icon: "fas fa-users"
+    title: "Klassengröße"
+    description: "Maximal 10 Teilnehmende"
+  - icon: "fas fa-cogs"
+    title: "Fokus"
+    description: "Technisches Deutsch"
+heroButtons:
+  primary:
+    text: "Jetzt bewerben"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Programmdetails"
+    icon: "fas fa-info-circle"
+    href: "#programmdetails"
+tabs:
+  - id: "kursinformationen"
+    icon: "fas fa-info-circle"
+    title: "Kursinformationen"
+    content:
+      title: "Über den Ingenieur- und Technik-Kurs"
+      paragraphs:
+        - heading: "Allgemeiner Überblick"
+          text: "Der Deutschkurs für Ingenieurwesen und Technische Wissenschaften ist ein speziell entwickeltes Programm für Studierende und Fachkräfte, die Deutsch in technischen und akademischen Kontexten sicher und effektiv anwenden möchten. Dieser von CampusGerman angebotene Kurs verbindet Fachterminologie aus dem Ingenieurwesen mit akademischer Sprache sowie Kompetenzen für technische Kommunikation und unterstützt Teilnehmende gezielt bei ihren Bildungs- und Karrierezielen in Deutschland. Deutschland zählt weltweit zu den führenden Ländern in Ingenieurwesen und technischen Disziplinen. Um Vorlesungen zu verfolgen, technische Dokumente zu verstehen und im beruflichen Umfeld professionell zu kommunizieren, sind gute Deutschkenntnisse entscheidend. Der Kurs ergänzt allgemeine Sprachkompetenzen durch technische Inhalte und zielt darauf ab, Deutsch als berufliches Werkzeug zu nutzen. Durch die Kombination aus Theorie und Praxis ermöglicht der CampusGerman Kurs, technisches Deutsch nicht nur zu lernen, sondern aktiv und souverän anzuwenden."
+        - heading: "Zielgruppe und Voraussetzungen"
+          text: "Dieser Kurs eignet sich für alle, die in technischen und ingenieurwissenschaftlichen Bereichen Deutsch benötigen. Besonders passend ist er für Studierende an ingenieurwissenschaftlichen Fakultäten, Bewerber:innen, die ein Studium an technischen Hochschulen in Deutschland planen, Fachkräfte wie Ingenieur:innen, Techniker:innen oder technische Spezialist:innen sowie für Lernende, die technische Texte und Lehrinhalte auf Deutsch verstehen möchten. Für eine effektive Teilnahme wird mindestens ein allgemeines Deutschniveau auf A2- oder B1-Niveau empfohlen. Dieses Niveau erleichtert das Lernen technischer Fachbegriffe und akademischer Inhalte. Vor Kursbeginn führt CampusGerman eine Einstufung durch und leitet die Teilnehmenden in das passende Programm."
+        - heading: "Kursinhalte und Lernziele"
+          text: "Der Deutschkurs für Ingenieurwesen und Technische Wissenschaften fokussiert sprachliche Strukturen und Terminologie, die in technischen Bereichen häufig verwendet werden. Inhalte sind unter anderem: technische und ingenieurwissenschaftliche Fachbegriffe, Lesen und Verstehen akademischer sowie technischer Texte, Schreiben von Anleitungen, Berichten und technischen Dokumenten, Interpretation von Grafiken, Diagrammen und technischen Zeichnungen sowie Fähigkeiten für technische Erklärungen und Präsentationen. Ziel ist es, Deutsch im Ingenieurkontext präzise, klar und professionell zu nutzen. Nach Kursabschluss können Teilnehmende technische Lehrinhalte und Dokumente deutlich leichter verstehen und sich in akademischen Umfeldern sicher ausdrücken."
+        - heading: "Unterrichtsmethode und Lernumfeld"
+          text: "Bei CampusGerman wird dieser Kurs praxisnah und fachorientiert durchgeführt. Im Unterricht werden reale technische Texte und Beispiele, Fallanalysen, Präsentations- und Erklärübungen, Gruppendiskussionen sowie anwendungsbezogene Aufgaben eingesetzt. Das Lernumfeld ist interaktiv gestaltet und fördert die aktive Teilnahme. Die Lehrkräfte verfügen über Erfahrung in technischem Deutsch und akademischer Sprache und unterstützen die Teilnehmenden individuell."
+        - heading: "Weiterentwicklung nach dem Kurs"
+          text: "Nach Abschluss des Deutschkurses für Ingenieurwesen und Technische Wissenschaften erweitern Teilnehmende ihren technischen Wortschatz, finden sich leichter in ingenieurwissenschaftlichen Studienprogrammen in Deutschland zurecht, können Deutsch in technischen Meetings und Präsentationen anwenden und verfolgen ihre akademischen sowie beruflichen Ziele mit mehr Sicherheit. CampusGerman unterstützt auch nach Kursende durch Empfehlungen zu weiterführenden Deutschprogrammen, Prüfungsvorbereitung oder karriereorientierten Trainings."
+  - id: "termine-preise"
+    icon: "fas fa-calendar-alt"
+    title: "Termine und Preise"
+    content:
+      title: "Preisübersicht"
+      pricing:
+        - name: "12 Wochen Ingenieurwesen/Technik"
+          duration: "12 Wochen"
+          schedule: "20–24 UE pro Woche"
+          price: "Individuelle Preisgestaltung"
+          highlighted: true
+  - id: "programmdetails"
+    icon: "fas fa-book-open"
+    title: "Programmdetails"
+    content:
+      title: "Programminhalte"
+      items:
+        - icon: "fas fa-check-circle"
+          text: "<strong>Technische Fachbegriffe:</strong> Terminologie aus Ingenieurwesen und Technik"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Technische Berichte:</strong> Berichte im Ingenieurkontext lesen und schreiben"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Projektpräsentationen:</strong> Technische Präsentationsmethoden"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Berufsalltag:</strong> Berufsdeutsch für den technischen Sektor"
+faqs:
+  - question: "Für welche Ingenieurbereiche ist der Kurs geeignet?"
+    answer: "Der Kurs ist für alle Ingenieurdisziplinen geeignet, z. B. Maschinenbau, Elektrotechnik, Bauingenieurwesen, Wirtschaftsingenieurwesen usw."
+  - question: "Mit welchem Niveau sollte ich beginnen?"
+    answer: "Mindestens B2 wird empfohlen, ideal ist jedoch ein C1-Niveau."
+  - question: "Welche Kursformate werden angeboten?"
+    answer: "Unsere Kurse bieten flexible Lernformate: Hybridunterricht – eine Kombination aus Präsenz- und Live-Online-Unterricht, bei der Sie auch an Präsenztagen online teilnehmen können; sowie Live-Online-Unterricht, bei dem Sie vollständig live und online am Unterricht teilnehmen."
+  - question: "Welche Inhalte werden in den Kursen behandelt?"
+    answer: "Unsere Intensiv-Deutschkursprogramme umfassen Hör- und Leseverstehen mit aktuellen Texten, umfassende Grammatikarbeit sowie vielfältige kommunikationsorientierte Aktivitäten. Ziel ist insbesondere die gezielte Entwicklung Ihrer Sprech- und Schreibkompetenzen."
+  - question: "Wie kann ich in Deutschland studieren?"
+    answer: "Für ein Studium in Deutschland benötigen Sie eine anerkannte Hochschulzugangsberechtigung (HZB). Es wird empfohlen, die Anerkennung Ihres Abschlusses im Anabin-System zu prüfen. Zudem müssen Deutschkenntnisse durch offizielle Zertifikate wie telc oder DSH nachgewiesen werden. Das CampusGerman Universitätsvorbereitungsprogramm unterstützt Sie umfassend bei diesem Prozess."
+  - question: "Welche Voraussetzungen sind erforderlich?"
+    answer: "Sie müssen mindestens 18 Jahre alt sein und entweder ein in Deutschland eröffnetes Sperrkonto oder eine offizielle Verpflichtungserklärung vorlegen."
+  - question: "Welche Visatypen werden empfohlen?"
+    answer: "Studentenvisum: Dieses umfasst auch die Teilnahme an vorbereitenden Deutschkursen. Für EU-Bürgerinnen und EU-Bürger besteht keine Visumpflicht."
+  - question: "Welche Leistungen sind in den Kursen enthalten?"
+    answer: "Einstufungstest, keine Anmeldegebühr, Kursbescheinigung für den Visumsantrag, digitales Lehrbuch, individuelle Studienberatung (einmalig ca. 45 Minuten), Webinare zum Thema \"Studium in Deutschland\", CampusGerman-Zertifikat, E-Learning-Plattform, ganzjährig organisierte soziale und kulturelle Aktivitäten sowie kostenloser WLAN-Zugang an allen Standorten."
+  - question: "Welche Qualifikationen haben die Lehrkräfte?"
+    answer: "Unser Lehrteam besteht aus hochqualifizierten, akademisch ausgebildeten Lehrkräften mit langjähriger Erfahrung in Deutsch als Fremdsprache (DaF) und Deutsch als Zweitsprache (DaZ). Zudem verfügen wir über vom Bundesamt für Migration und Flüchtlinge (BAMF) anerkannte Lehrkräfte. Die Kurse werden regelmäßig von den Teilnehmenden evaluiert."
+  - question: "Wie lange dauert es, Deutsch zu lernen?"
+    answer: "Die Dauer des Deutschlernens hängt von Ihren Zielen und Ihrem aktuellen Sprachniveau ab. Die Grundstufen von A1 bis B2 können in etwa 6–8 Monaten abgeschlossen werden. Für fortgeschrittene Niveaus wie C1 und C2 sind zusätzlich etwa 4–6 Monate einzuplanen. Intensivkurse können die Lernzeit verkürzen."
+  - question: "Kann ich ein Goethe-Zertifikat erwerben?"
+    answer: "Ja, bei CampusGerman bieten wir Vorbereitungskurse für Goethe-Zertifikate an – von A1 bis C2. Prüfungen können auf unserem Campus oder in nahegelegenen Prüfzentren abgelegt werden."
+  - question: "Gibt es Unterkunftsmöglichkeiten?"
+    answer: "Ja, wir unterstützen Sie bei der Organisation von Unterkunftsmöglichkeiten in Deutschland – z. B. Studentenwohnheime, Gastfamilien und Wohngemeinschaften. Die Unterkunft ist nicht im Kurspreis enthalten, wir helfen Ihnen jedoch bei der passenden Auswahl."
+  - question: "Gibt es Zahlungspläne und Rabatte?"
+    answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
+
+hasDemandForm: true
+---
+
