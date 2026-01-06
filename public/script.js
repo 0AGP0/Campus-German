@@ -2,117 +2,184 @@
 
     document.addEventListener('DOMContentLoaded', function() {
     
-        // ===== MOBILE MENU FUNCTIONALITY =====
+        // ===== MOBILE MENU - YENİ TEMİZ TASARIM =====
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileMenuClose = document.getElementById('mobileMenuClose');
-        const mobileDropdowns = document.querySelectorAll('.mobile-dropdown');
         
-        // Mobile menu toggle
+        // Mobile menu aç/kapa
         if (mobileMenuBtn && mobileMenu) {
             mobileMenuBtn.addEventListener('click', function() {
                 mobileMenu.classList.add('active');
                 document.body.style.overflow = 'hidden';
-                
-                // Animate hamburger to X
-                const lines = this.querySelectorAll('.hamburger-line');
-                lines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                lines[1].style.opacity = '0';
-                lines[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
             });
         }
         
-        // Mobile menu close
         if (mobileMenuClose && mobileMenu) {
             mobileMenuClose.addEventListener('click', function() {
                 mobileMenu.classList.remove('active');
                 document.body.style.overflow = 'auto';
-                
-                // Reset hamburger animation
-                const lines = mobileMenuBtn.querySelectorAll('.hamburger-line');
-                lines[0].style.transform = 'none';
-                lines[1].style.opacity = '1';
-                lines[2].style.transform = 'none';
             });
         }
         
-        // Close mobile menu when clicking outside
-        if (mobileMenu) {
-            mobileMenu.addEventListener('click', function(e) {
-                if (e.target === mobileMenu) {
-                    mobileMenu.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                    
-                    // Reset hamburger animation
-                    const lines = mobileMenuBtn.querySelectorAll('.hamburger-line');
-                    lines[0].style.transform = 'none';
-                    lines[1].style.opacity = '1';
-                    lines[2].style.transform = 'none';
+        // Mobile menu toggle butonları
+        document.querySelectorAll('.mobile-menu-toggle').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('data-target');
+                const submenu = document.getElementById(targetId);
+                if (submenu) {
+                    const isOpen = submenu.classList.contains('open');
+                    // Diğer submenu'leri kapat
+                    document.querySelectorAll('.mobile-submenu').forEach(sm => {
+                        if (sm.id !== targetId) {
+                            sm.classList.remove('open');
+                            const otherBtn = document.querySelector(`[data-target="${sm.id}"]`);
+                            if (otherBtn) {
+                                const otherArrow = otherBtn.querySelector('.fa-chevron-down');
+                                if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                            }
+                        }
+                    });
+                    // Bu submenu'yu toggle et
+                    if (isOpen) {
+                        submenu.classList.remove('open');
+                    } else {
+                        submenu.classList.add('open');
+                    }
+                    // Arrow animasyonu
+                    const arrow = this.querySelector('.fa-chevron-down');
+                    if (arrow) {
+                        arrow.style.transform = submenu.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+                    }
                 }
             });
-        }
-        
-        // Mobile dropdown functionality
-        mobileDropdowns.forEach(dropdown => {
-            const toggle = dropdown.querySelector('.mobile-dropdown-btn');
-            if (toggle) {
-                toggle.addEventListener('click', function() {
-                    dropdown.classList.toggle('active');
-                    
-                    // Animate arrow
-                    const arrow = this.querySelector('.fa-chevron-down');
-                    if (dropdown.classList.contains('active')) {
-                        arrow.style.transform = 'rotate(180deg)';
-                    } else {
-                        arrow.style.transform = 'rotate(0deg)';
-                    }
-                });
-            }
         });
         
-        // Mobile sub-dropdown functionality
-        const mobileSubDropdowns = document.querySelectorAll('.mobile-sub-dropdown');
-        mobileSubDropdowns.forEach(subDropdown => {
-            const toggle = subDropdown.querySelector('.mobile-sub-dropdown-btn');
-            if (toggle) {
-                toggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    subDropdown.classList.toggle('active');
-                    
-                    // Animate arrow
+        // Mobile submenu toggle butonları
+        document.querySelectorAll('.mobile-submenu-toggle').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const targetId = this.getAttribute('data-target');
+                const submenuList = document.getElementById(targetId);
+                if (submenuList) {
+                    submenuList.classList.toggle('open');
                     const arrow = this.querySelector('.fa-chevron-down');
-                    if (subDropdown.classList.contains('active')) {
-                        arrow.style.transform = 'rotate(180deg)';
-                    } else {
-                        arrow.style.transform = 'rotate(0deg)';
+                    if (arrow) {
+                        arrow.style.transform = submenuList.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
                     }
-                });
-            }
+                }
+            });
         });
         
-        // ===== MOBILE LANGUAGE SELECTOR FUNCTIONALITY =====
+        // Mobile language toggle - yukarı/aşağı otomatik konum
         const mobileLangBtn = document.getElementById('mobileLangBtn');
         const mobileLangDropdown = document.getElementById('mobileLangDropdown');
         
         if (mobileLangBtn && mobileLangDropdown) {
+            // Store original parent
+            const originalParent = mobileLangDropdown.parentElement;
+            
             mobileLangBtn.addEventListener('click', function(e) {
+                e.preventDefault();
                 e.stopPropagation();
-                mobileLangDropdown.classList.toggle('show');
                 
-                const arrow = this.querySelector('.mobile-lang-arrow');
-                if (mobileLangDropdown.classList.contains('show')) {
-                    arrow.style.transform = 'rotate(180deg)';
+                const isShowing = mobileLangDropdown.classList.contains('show');
+                
+                if (!isShowing) {
+                    // Move to body for positioning
+                    if (mobileLangDropdown.parentElement !== document.body) {
+                        document.body.appendChild(mobileLangDropdown);
+                    }
+                    
+                    // Get button position
+                    const btnRect = mobileLangBtn.getBoundingClientRect();
+
+                    // Make visible temporarily to measure exact size
+                    mobileLangDropdown.style.visibility = 'hidden';
+                    mobileLangDropdown.style.opacity = '0';
+                    mobileLangDropdown.classList.add('show');
+                    const menuRect = mobileLangDropdown.getBoundingClientRect();
+
+                    const margin = 8;
+                    let openAbove = false;
+
+                    // Decide open direction
+                    if (btnRect.bottom + margin + menuRect.height > window.innerHeight) {
+                        openAbove = true;
+                    }
+
+                    // Calculate position centered on button
+                    let left = btnRect.left + (btnRect.width / 2) - (menuRect.width / 2);
+                    left = Math.max(10, Math.min(left, window.innerWidth - menuRect.width - 10));
+                    let top = openAbove
+                        ? Math.max(10, btnRect.top - menuRect.height - margin)
+                        : btnRect.bottom + margin;
+                    
+                    // Set position
+                    mobileLangDropdown.style.position = 'fixed';
+                    mobileLangDropdown.style.left = left + 'px';
+                    mobileLangDropdown.style.top = top + 'px';
+                    mobileLangDropdown.style.zIndex = '10003';
+                    mobileLangDropdown.style.transform = openAbove ? 'translateY(-4px)' : 'translateY(4px)';
+
+                    // Show dropdown finally
+                    requestAnimationFrame(() => {
+                        mobileLangDropdown.style.visibility = 'visible';
+                        mobileLangDropdown.style.opacity = '1';
+                    });
+                    
+                    // Rotate chevron
+                    const chevron = mobileLangBtn.querySelector('.fa-chevron-down');
+                    if (chevron) {
+                        chevron.style.transform = openAbove ? 'rotate(180deg)' : 'rotate(180deg)';
+                    }
                 } else {
-                    arrow.style.transform = 'rotate(0deg)';
+                    // Hide dropdown
+                    mobileLangDropdown.classList.remove('show');
+                    
+                    // Move back to original position
+                    if (originalParent && !originalParent.contains(mobileLangDropdown)) {
+                        originalParent.appendChild(mobileLangDropdown);
+                    }
+                    mobileLangDropdown.style.position = '';
+                    mobileLangDropdown.style.left = '';
+                    mobileLangDropdown.style.top = '';
+                    mobileLangDropdown.style.zIndex = '';
+                    mobileLangDropdown.style.transform = '';
+                    mobileLangDropdown.style.visibility = '';
+                    mobileLangDropdown.style.opacity = '';
+                    
+                    // Reset chevron
+                    const chevron = mobileLangBtn.querySelector('.fa-chevron-down');
+                    if (chevron) {
+                        chevron.style.transform = 'rotate(0deg)';
+                    }
                 }
             });
             
-            // Hide mobile language dropdown when clicking outside
+            // Close dropdown when clicking outside
             document.addEventListener('click', function(e) {
-                if (!mobileLangBtn.contains(e.target) && !mobileLangDropdown.contains(e.target)) {
-                    mobileLangDropdown.classList.remove('show');
-                    const arrow = mobileLangBtn.querySelector('.mobile-lang-arrow');
-                    if (arrow) arrow.style.transform = 'rotate(0deg)';
+                if (mobileLangDropdown.classList.contains('show')) {
+                    if (!mobileLangBtn.contains(e.target) && !mobileLangDropdown.contains(e.target)) {
+                        mobileLangDropdown.classList.remove('show');
+                        
+                        // Move back to original position
+                        if (originalParent && !originalParent.contains(mobileLangDropdown)) {
+                            originalParent.appendChild(mobileLangDropdown);
+                        }
+                        mobileLangDropdown.style.position = '';
+                        mobileLangDropdown.style.left = '';
+                        mobileLangDropdown.style.top = '';
+                        mobileLangDropdown.style.zIndex = '';
+                        
+                        // Reset chevron
+                        const chevron = mobileLangBtn.querySelector('.fa-chevron-down');
+                        if (chevron) {
+                            chevron.style.transform = 'rotate(0deg)';
+                        }
+                    }
                 }
             });
         }

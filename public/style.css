@@ -832,7 +832,8 @@ img[src*="german_logo"] {
     background: white;
     z-index: 10000;
     transition: left 0.3s ease;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
@@ -997,6 +998,181 @@ img[src*="german_logo"] {
     padding: 10px 16px;
     font-size: 14px;
     color: #64748B;
+}
+
+/* ===== YENİ MOBİL MENÜ STİLLERİ ===== */
+.mobile-menu-toggle {
+    width: 100% !important;
+    background: none !important;
+    border: none !important;
+    padding: 16px 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    color: #0B1220 !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+    text-align: left !important;
+    transition: all 0.2s ease !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.mobile-menu-toggle:hover {
+    background: rgba(5, 150, 105, 0.08) !important;
+    color: #059669 !important;
+}
+
+.mobile-menu-toggle i:first-child {
+    width: 18px !important;
+    color: #059669 !important;
+    font-size: 16px !important;
+    flex-shrink: 0 !important;
+}
+
+.mobile-menu-toggle span {
+    flex: 1 !important;
+    text-align: left !important;
+}
+
+.mobile-menu-toggle .fa-chevron-down {
+    margin-left: auto !important;
+    color: #64748B !important;
+    font-size: 14px !important;
+    transition: transform 0.3s ease !important;
+    flex-shrink: 0 !important;
+}
+
+.mobile-submenu {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: rgba(240, 250, 248, 0.4) !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    transition: max-height 0.4s ease !important;
+}
+
+.mobile-submenu.open {
+    max-height: 10000px !important;
+    padding: 8px 0 !important;
+    overflow: visible !important;
+}
+
+.mobile-submenu li {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.mobile-submenu-item {
+    border-bottom: 1px solid rgba(229, 231, 235, 0.3) !important;
+}
+
+.mobile-submenu-toggle {
+    width: 100% !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 14px 20px 14px 50px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    color: #0B1220 !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    cursor: pointer !important;
+    text-align: left !important;
+    transition: all 0.2s ease !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.mobile-submenu-toggle:hover {
+    background: rgba(5, 150, 105, 0.08) !important;
+    color: #059669 !important;
+}
+
+.mobile-submenu-toggle i:first-child {
+    color: #059669 !important;
+    font-size: 16px !important;
+    width: 20px !important;
+    flex-shrink: 0 !important;
+}
+
+.mobile-submenu-toggle span {
+    flex: 1 !important;
+    text-align: left !important;
+}
+
+.mobile-submenu-toggle .fa-chevron-down {
+    font-size: 12px !important;
+    color: #64748B !important;
+    transition: transform 0.3s ease !important;
+    flex-shrink: 0 !important;
+}
+
+.mobile-submenu-list {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-left: 50px !important;
+    background: rgba(240, 250, 248, 0.5) !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    transition: max-height 0.4s ease !important;
+}
+
+.mobile-submenu-list.open {
+    max-height: 10000px !important;
+    padding-top: 8px !important;
+    padding-bottom: 12px !important;
+    overflow: visible !important;
+}
+
+.mobile-submenu-list li {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.mobile-submenu-list a {
+    display: block !important;
+    padding: 10px 16px 10px 12px !important;
+    color: #475569 !important;
+    text-decoration: none !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1.6 !important;
+    transition: all 0.2s ease !important;
+    border-left: 2px solid transparent !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.mobile-submenu-list a:hover {
+    color: #059669 !important;
+    padding-left: 16px !important;
+    border-left-color: #059669 !important;
+    background: rgba(5, 150, 105, 0.08) !important;
+}
+
+.mobile-cta-wrapper {
+    padding: 12px 20px !important;
+    border-bottom: 1px solid #e9ecef !important;
+    flex-shrink: 0 !important;
+}
+
+.mobile-cta-btn {
+    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%) !important;
+    color: white !important;
+    text-decoration: none !important;
+    padding: 14px 20px !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3) !important;
 }
 
 .mobile-actions {
@@ -1221,6 +1397,109 @@ img[src*="german_logo"] {
 .mobile-lang-option:hover {
     background: #F0FAF8;
     color: #059669;
+}
+
+/* ===== MOBİL DİL DROPDOWN - TEMİZ TASARIM ===== */
+.mobile-lang-wrapper {
+    padding: 15px 20px;
+    border-top: 1px solid #e9ecef;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    background: white;
+    z-index: 10002;
+}
+
+.mobile-lang-toggle {
+    background: white;
+    border: 1px solid rgba(5, 150, 105, 0.2);
+    color: #0B1220;
+    padding: 8px 14px;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.mobile-lang-toggle:hover {
+    background: #059669;
+    color: white;
+    border-color: #059669;
+}
+
+.mobile-lang-toggle .mobile-lang-flag {
+    width: 20px;
+    height: 15px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.mobile-lang-toggle span {
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.mobile-lang-toggle .fa-chevron-down {
+    font-size: 10px;
+    transition: transform 0.3s ease;
+    margin-left: 4px;
+    flex-shrink: 0;
+}
+
+.mobile-lang-menu {
+    position: fixed;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(5, 150, 105, 0.15);
+    padding: 8px 0;
+    min-width: 140px;
+    opacity: 0;
+    visibility: hidden;
+    transform: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+    z-index: 10003;
+    border: 1px solid rgba(5, 150, 105, 0.1);
+}
+
+.mobile-lang-menu.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.mobile-lang-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: #0B1220;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.mobile-lang-option:hover {
+    background: #F0FAF8;
+    color: #059669;
+}
+
+.mobile-lang-option .mobile-lang-flag {
+    width: 20px;
+    height: 15px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.mobile-lang-option span {
+    font-weight: 500;
 }
 
 /* ===== RESPONSIVE DESIGN ===== */

@@ -43,7 +43,7 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
             <!-- Logo Section -->
             <div class="logo-section">
                 <a href={`/${lang}/`} class="logo-link">
-                    <img src="http://campusgerman.com/wp-content/uploads/2025/11/German_logo-1-1.png" alt="CampusGerman Logo" class="logo-img">
+                    <img src="/German_logo.webp" alt="CampusGerman Logo" class="logo-img">
                 </a>
             </div>
 
@@ -69,22 +69,27 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
                                 <div class="course-tab-panel active" data-panel="yogun">
                                     <a href={`/${lang}/kurslar/intensiv-deutsch`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca Kursları Genel Bakış' : 'Übersicht Intensivkurse'}</a>
                                     <a href={`/${lang}/kurslar/universitaetsvorbereitung`} class="dropdown-link">{lang === 'tr' ? 'Üniversite Hazırlık Programı' : 'Universitätsvorbereitungsprogramm'}</a>
+                                    <a href={`/${lang}/kurslar/intensiv-studentenvisum`} class="dropdown-link">{lang === 'tr' ? 'Öğrenci Vizesi Garantili Yoğun Almanca Kursu' : 'Intensiv Deutsch mit Studentenvisum-Garantie'}</a>
                                     <a href={`/${lang}/kurslar/intensiv-a1`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca A1 Kursu' : 'Intensiv Deutsch A1'}</a>
                                     <a href={`/${lang}/kurslar/intensiv-a2`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca A2 Kursu' : 'Intensiv Deutsch A2'}</a>
                                     <a href={`/${lang}/kurslar/intensiv-b1`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca B1 Kursu' : 'Intensiv Deutsch B1'}</a>
                                     <a href={`/${lang}/kurslar/intensiv-b2`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca B2 Kursu' : 'Intensiv Deutsch B2'}</a>
                                     <a href={`/${lang}/kurslar/intensiv-c1`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca C1 Kursu' : 'Intensiv Deutsch C1'}</a>
+                                    <a href={`/${lang}/kurslar/studienkolleg`} class="dropdown-link">{lang === 'tr' ? 'Studienkolleg Hazırlık' : 'Studienkolleg Vorbereitung'}</a>
                                 </div>
                                 <div class="course-tab-panel" data-panel="donemsel">
                                     <a href={`/${lang}/kurslar/saisonal-uebersicht`} class="dropdown-link">{lang === 'tr' ? 'Dönemsel Almanca Kursları Genel Bakış' : 'Übersicht Saisonale Kurse'}</a>
                                     <a href={`/${lang}/kurslar/gymnasium-sommerschule`} class="dropdown-link">{lang === 'tr' ? 'Liseliler için Yaz Okulu Programı' : 'Sommerschule für Gymnasiasten'}</a>
                                     <a href={`/${lang}/kurslar/universitaet-sommerschule`} class="dropdown-link">{lang === 'tr' ? 'Üniversiteler için Yaz Okulu Programı' : 'Sommerschule für Universitäten'}</a>
+                                    <a href={`/${lang}/kurslar/yaz-okulu`} class="dropdown-link">{lang === 'tr' ? 'Yaz Okulu' : 'Sommerschule'}</a>
                                     <a href={`/${lang}/kurslar/woechentlich-a1-a2`} class="dropdown-link">{lang === 'tr' ? 'Haftalık A1-A2 Almanca Kursu' : 'Wöchentlicher A1-A2 Kurs'}</a>
                                     <a href={`/${lang}/kurslar/woechentlich-b1-c1`} class="dropdown-link">{lang === 'tr' ? 'Haftalık B1-B2-C1 Almanca Kursu' : 'Wöchentlicher B1-B2-C1 Kurs'}</a>
                                     <a href={`/${lang}/kurslar/abend-halbintensiv`} class="dropdown-link">{lang === 'tr' ? 'Akşam Yarı Yoğun Almanca Kursları' : 'Abend-Halbintensivkurse'}</a>
+                                    <a href={`/${lang}/kurslar/standart-aksam`} class="dropdown-link">{lang === 'tr' ? 'Standart Akşam Kursu' : 'Standard Abendkurs'}</a>
                                 </div>
                                 <div class="course-tab-panel" data-panel="online">
                                     <a href={`/${lang}/kurslar/online-uebersicht`} class="dropdown-link">{lang === 'tr' ? 'Online Almanca Kursları Genel Bakış' : 'Übersicht Online-Kurse'}</a>
+                                    <a href={`/${lang}/kurslar/online-almanca`} class="dropdown-link">{lang === 'tr' ? 'Online Almanca' : 'Online Deutsch'}</a>
                                     <a href={`/${lang}/kurslar/online-intensiv-a1`} class="dropdown-link">{lang === 'tr' ? 'Online Yoğun Almanca A1 Kursu' : 'Online Intensiv A1'}</a>
                                     <a href={`/${lang}/kurslar/online-intensiv-a2`} class="dropdown-link">{lang === 'tr' ? 'Online Yoğun Almanca A2 Kursu' : 'Online Intensiv A2'}</a>
                                     <a href={`/${lang}/kurslar/online-intensiv-b1`} class="dropdown-link">{lang === 'tr' ? 'Online Yoğun Almanca B1 Kursu' : 'Online Intensiv B1'}</a>
@@ -100,6 +105,8 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
                                     <a href={`/${lang}/kurslar/goethe-telc-b2`} class="dropdown-link">{lang === 'tr' ? 'Goethe/TELC B2 Hazırlık Kursu' : 'Goethe/TELC B2 Vorbereitung'}</a>
                                     <a href={`/${lang}/kurslar/goethe-telc-c1`} class="dropdown-link">{lang === 'tr' ? 'Goethe/TELC C1 Hazırlık Kursu' : 'Goethe/TELC C1 Vorbereitung'}</a>
                                     <a href={`/${lang}/kurslar/testdaf-dsh`} class="dropdown-link">{lang === 'tr' ? 'TestDaF/DSH Hazırlık Kursu' : 'TestDaF/DSH Vorbereitung'}</a>
+                                    <a href={`/${lang}/kurslar/testdaf-hazirlik`} class="dropdown-link">{lang === 'tr' ? 'TestDaF Hazırlık' : 'TestDaF Vorbereitung'}</a>
+                                    <a href={`/${lang}/kurslar/telc-hazirlik`} class="dropdown-link">{lang === 'tr' ? 'TELC Hazırlık' : 'TELC Vorbereitung'}</a>
                                 </div>
                                 <div class="course-tab-panel" data-panel="firma">
                                     <a href={`/${lang}/kurslar/firmenkurs`} class="dropdown-link">{lang === 'tr' ? 'Firmalara özel Almanca Kursu' : 'Firmenkurs'}</a>
@@ -108,8 +115,10 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
                                     <a href={`/${lang}/kurslar/erasmus-lehrer`} class="dropdown-link">{lang === 'tr' ? 'Erasmus+ Öğretmenlere Almanca Kursu' : 'Für Erasmus+ Lehrer'}</a>
                                     <a href={`/${lang}/kurslar/erasmus-studenten`} class="dropdown-link">{lang === 'tr' ? 'Erasmus Öğrencilerine Özel Kurslar' : 'Für Erasmus-Studenten'}</a>
                                     <a href={`/${lang}/kurslar/beruf-karriere`} class="dropdown-link">{lang === 'tr' ? 'Meslek ve Kariyer için Almanca Kursları' : 'Beruf und Karriere'}</a>
+                                    <a href={`/${lang}/kurslar/is-almancasi`} class="dropdown-link">{lang === 'tr' ? 'İş Almancası (Wirtschaftsdeutsch)' : 'Wirtschaftsdeutsch'}</a>
                                     <a href={`/${lang}/kurslar/career-pathway`} class="dropdown-link">{lang === 'tr' ? 'Kariyere Giriş Programı / Career Pathway' : 'Career Pathway Programm'}</a>
                                     <a href={`/${lang}/kurslar/medizin-gesundheit`} class="dropdown-link">{lang === 'tr' ? 'Tıp ve Sağlık Bilimleri için Almanca Kursu' : 'Medizin und Gesundheit'}</a>
+                                    <a href={`/${lang}/kurslar/doktor-almancasi`} class="dropdown-link">{lang === 'tr' ? 'Doktor Almancası (Fachsprachprüfung)' : 'Fachsprachprüfung für Ärzte'}</a>
                                     <a href={`/${lang}/kurslar/fsp-vorbereitung`} class="dropdown-link">{lang === 'tr' ? 'FSP Sınav Hazırlık Eğitim' : 'FSP Prüfungsvorbereitung'}</a>
                                     <a href={`/${lang}/kurslar/ingenieurwesen-technik`} class="dropdown-link">{lang === 'tr' ? 'Mühendislik ve Teknik Bilimler için Almanca Kursu' : 'Ingenieurwesen und Technik'}</a>
                                     <a href={`/${lang}/kurslar/wirtschaft-management`} class="dropdown-link">{lang === 'tr' ? 'Ekonomi ve Yönetim Bilimleri için Almanca Kursu' : 'Wirtschaft und Management'}</a>
@@ -230,20 +239,17 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
     </div>
 </header>
 
-<!-- Mobile Menu -->
+<!-- Mobile Menu - YENİ TEMİZ TASARIM -->
 <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
-        <div class="mobile-logo">
-            <img src="http://campusgerman.com/wp-content/uploads/2025/11/German_logo-1-1.png" alt="CampusGerman Logo" class="mobile-logo-img">
-        </div>
+        <img src="/German_logo.webp" alt="CampusGerman Logo" class="mobile-logo-img">
         <button class="mobile-menu-close" id="mobileMenuClose">
             <i class="fas fa-times"></i>
         </button>
     </div>
     
-    <!-- Mobile CTA Button -->
-    <div class="mobile-actions mobile-actions-top">
-        <a href={`/${lang}/buchung`} class="mobile-cta">
+    <div class="mobile-cta-wrapper">
+        <a href={`/${lang}/buchung`} class="mobile-cta-btn">
             <i class="fas fa-arrow-right"></i>
             {currentLang.register}
         </a>
@@ -251,109 +257,117 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
     
     <nav class="mobile-nav">
         <ul class="mobile-nav-list">
-            <!-- Mobile Kurslar -->
-            <li class="mobile-dropdown">
-                <button class="mobile-dropdown-btn">
+            <!-- Kurslar -->
+            <li class="mobile-menu-item">
+                <button class="mobile-menu-toggle" data-target="courses">
                     <i class="fas fa-book-open"></i>
                     <span>{currentLang.courses}</span>
                     <i class="fas fa-chevron-down"></i>
                 </button>
-                <ul class="mobile-dropdown-list">
-                    <li class="mobile-sub-dropdown">
-                        <button class="mobile-sub-dropdown-btn">
+                <ul class="mobile-submenu" id="courses">
+                    <li class="mobile-submenu-item">
+                        <button class="mobile-submenu-toggle" data-target="intensiv">
                             <i class="fas fa-fire"></i>
                             <span>{lang === 'tr' ? 'Yoğun Akademik' : 'Intensiv Akademisch'}</span>
                             <i class="fas fa-chevron-down"></i>
                         </button>
-                        <ul class="mobile-sub-dropdown-list">
-                            <li><a href={`/${lang}/kurslar/intensiv-deutsch`}>{lang === 'tr' ? 'Genel Bakış' : 'Übersicht'}</a></li>
+                        <ul class="mobile-submenu-list" id="intensiv">
+                            <li><a href={`/${lang}/kurslar/intensiv-deutsch`}>{lang === 'tr' ? 'Yoğun Almanca Kursları Genel Bakış' : 'Übersicht Intensivkurse'}</a></li>
                             <li><a href={`/${lang}/kurslar/universitaetsvorbereitung`}>{lang === 'tr' ? 'Üniversite Hazırlık Programı' : 'Universitätsvorbereitungsprogramm'}</a></li>
-                            <li><a href={`/${lang}/kurslar/intensiv-studentenvisum`}>{lang === 'tr' ? 'Öğrenci Vizesi Garantili' : 'Mit Visumsgarantie'}</a></li>
-                            <li><a href={`/${lang}/kurslar/intensiv-a1`}>A1</a></li>
-                            <li><a href={`/${lang}/kurslar/intensiv-a2`}>A2</a></li>
-                            <li><a href={`/${lang}/kurslar/intensiv-b1`}>B1</a></li>
-                            <li><a href={`/${lang}/kurslar/intensiv-b2`}>B2</a></li>
-                            <li><a href={`/${lang}/kurslar/intensiv-c1`}>C1</a></li>
+                            <li><a href={`/${lang}/kurslar/intensiv-studentenvisum`}>{lang === 'tr' ? 'Öğrenci Vizesi Garantili Yoğun Almanca Kursu' : 'Intensiv Deutsch mit Studentenvisum-Garantie'}</a></li>
+                            <li><a href={`/${lang}/kurslar/intensiv-a1`}>{lang === 'tr' ? 'Yoğun Almanca A1 Kursu' : 'Intensiv Deutsch A1'}</a></li>
+                            <li><a href={`/${lang}/kurslar/intensiv-a2`}>{lang === 'tr' ? 'Yoğun Almanca A2 Kursu' : 'Intensiv Deutsch A2'}</a></li>
+                            <li><a href={`/${lang}/kurslar/intensiv-b1`}>{lang === 'tr' ? 'Yoğun Almanca B1 Kursu' : 'Intensiv Deutsch B1'}</a></li>
+                            <li><a href={`/${lang}/kurslar/intensiv-b2`}>{lang === 'tr' ? 'Yoğun Almanca B2 Kursu' : 'Intensiv Deutsch B2'}</a></li>
+                            <li><a href={`/${lang}/kurslar/intensiv-c1`}>{lang === 'tr' ? 'Yoğun Almanca C1 Kursu' : 'Intensiv Deutsch C1'}</a></li>
+                            <li><a href={`/${lang}/kurslar/studienkolleg`}>{lang === 'tr' ? 'Studienkolleg Hazırlık' : 'Studienkolleg Vorbereitung'}</a></li>
                         </ul>
                     </li>
-                    <li class="mobile-sub-dropdown">
-                        <button class="mobile-sub-dropdown-btn">
+                    <li class="mobile-submenu-item">
+                        <button class="mobile-submenu-toggle" data-target="saisonal">
                             <i class="fas fa-calendar-alt"></i>
                             <span>{lang === 'tr' ? 'Dönemsel' : 'Saisonal'}</span>
                             <i class="fas fa-chevron-down"></i>
                         </button>
-                        <ul class="mobile-sub-dropdown-list">
-                            <li><a href={`/${lang}/kurslar/saisonal-uebersicht`}>{lang === 'tr' ? 'Genel Bakış' : 'Übersicht'}</a></li>
-                            <li><a href={`/${lang}/kurslar/gymnasium-sommerschule`}>{lang === 'tr' ? 'Liseliler Yaz Okulu' : 'Sommerschule Gymnasium'}</a></li>
-                            <li><a href={`/${lang}/kurslar/universitaet-sommerschule`}>{lang === 'tr' ? 'Üniversite Yaz Okulu' : 'Sommerschule Uni'}</a></li>
-                            <li><a href={`/${lang}/kurslar/woechentlich-a1-a2`}>{lang === 'tr' ? 'Haftalık A1-A2' : 'Wöchentlich A1-A2'}</a></li>
-                            <li><a href={`/${lang}/kurslar/woechentlich-b1-c1`}>{lang === 'tr' ? 'Haftalık B1-C1' : 'Wöchentlich B1-C1'}</a></li>
-                            <li><a href={`/${lang}/kurslar/abend-halbintensiv`}>{lang === 'tr' ? 'Akşam Yarı Yoğun' : 'Abend Halbintensiv'}</a></li>
+                        <ul class="mobile-submenu-list" id="saisonal">
+                            <li><a href={`/${lang}/kurslar/saisonal-uebersicht`}>{lang === 'tr' ? 'Dönemsel Almanca Kursları Genel Bakış' : 'Übersicht Saisonale Kurse'}</a></li>
+                            <li><a href={`/${lang}/kurslar/gymnasium-sommerschule`}>{lang === 'tr' ? 'Liseliler için Yaz Okulu Programı' : 'Sommerschule für Gymnasiasten'}</a></li>
+                            <li><a href={`/${lang}/kurslar/universitaet-sommerschule`}>{lang === 'tr' ? 'Üniversiteler için Yaz Okulu Programı' : 'Sommerschule für Universitäten'}</a></li>
+                            <li><a href={`/${lang}/kurslar/yaz-okulu`}>{lang === 'tr' ? 'Yaz Okulu' : 'Sommerschule'}</a></li>
+                            <li><a href={`/${lang}/kurslar/woechentlich-a1-a2`}>{lang === 'tr' ? 'Haftalık A1-A2 Almanca Kursu' : 'Wöchentlicher A1-A2 Kurs'}</a></li>
+                            <li><a href={`/${lang}/kurslar/woechentlich-b1-c1`}>{lang === 'tr' ? 'Haftalık B1-B2-C1 Almanca Kursu' : 'Wöchentlicher B1-B2-C1 Kurs'}</a></li>
+                            <li><a href={`/${lang}/kurslar/abend-halbintensiv`}>{lang === 'tr' ? 'Akşam Yarı Yoğun Almanca Kursları' : 'Abend-Halbintensivkurse'}</a></li>
+                            <li><a href={`/${lang}/kurslar/standart-aksam`}>{lang === 'tr' ? 'Standart Akşam Kursu' : 'Standard Abendkurs'}</a></li>
                         </ul>
                     </li>
-                    <li class="mobile-sub-dropdown">
-                        <button class="mobile-sub-dropdown-btn">
+                    <li class="mobile-submenu-item">
+                        <button class="mobile-submenu-toggle" data-target="online">
                             <i class="fas fa-laptop"></i>
                             <span>Online</span>
                             <i class="fas fa-chevron-down"></i>
                         </button>
-                        <ul class="mobile-sub-dropdown-list">
-                            <li><a href={`/${lang}/kurslar/online-uebersicht`}>{lang === 'tr' ? 'Genel Bakış' : 'Übersicht'}</a></li>
-                            <li><a href={`/${lang}/kurslar/online-intensiv-a1`}>Online A1</a></li>
-                            <li><a href={`/${lang}/kurslar/online-intensiv-a2`}>Online A2</a></li>
-                            <li><a href={`/${lang}/kurslar/online-intensiv-b1`}>Online B1</a></li>
-                            <li><a href={`/${lang}/kurslar/online-intensiv-b2`}>Online B2</a></li>
-                            <li><a href={`/${lang}/kurslar/online-intensiv-c1`}>Online C1</a></li>
-                            <li><a href={`/${lang}/kurslar/online-pruefungsvorbereitung`}>{lang === 'tr' ? 'Online Sınav Hazırlık' : 'Online Prüfungsvorbereitung'}</a></li>
+                        <ul class="mobile-submenu-list" id="online">
+                            <li><a href={`/${lang}/kurslar/online-uebersicht`}>{lang === 'tr' ? 'Online Almanca Kursları Genel Bakış' : 'Übersicht Online-Kurse'}</a></li>
+                            <li><a href={`/${lang}/kurslar/online-almanca`}>{lang === 'tr' ? 'Online Almanca' : 'Online Deutsch'}</a></li>
+                            <li><a href={`/${lang}/kurslar/online-intensiv-a1`}>{lang === 'tr' ? 'Online Yoğun Almanca A1 Kursu' : 'Online Intensiv A1'}</a></li>
+                            <li><a href={`/${lang}/kurslar/online-intensiv-a2`}>{lang === 'tr' ? 'Online Yoğun Almanca A2 Kursu' : 'Online Intensiv A2'}</a></li>
+                            <li><a href={`/${lang}/kurslar/online-intensiv-b1`}>{lang === 'tr' ? 'Online Yoğun Almanca B1 Kursu' : 'Online Intensiv B1'}</a></li>
+                            <li><a href={`/${lang}/kurslar/online-intensiv-b2`}>{lang === 'tr' ? 'Online Yoğun Almanca B2 Kursu' : 'Online Intensiv B2'}</a></li>
+                            <li><a href={`/${lang}/kurslar/online-intensiv-c1`}>{lang === 'tr' ? 'Online Yoğun Almanca C1 Kursu' : 'Online Intensiv C1'}</a></li>
+                            <li><a href={`/${lang}/kurslar/online-pruefungsvorbereitung`}>{lang === 'tr' ? 'Online Goethe/TELC Sınav Hazırlık Kursu' : 'Online Goethe/TELC Vorbereitung'}</a></li>
                         </ul>
                     </li>
-                    <li class="mobile-sub-dropdown">
-                        <button class="mobile-sub-dropdown-btn">
+                    <li class="mobile-submenu-item">
+                        <button class="mobile-submenu-toggle" data-target="pruefung">
                             <i class="fas fa-certificate"></i>
                             <span>{lang === 'tr' ? 'Sınav Hazırlık' : 'Prüfungsvorbereitung'}</span>
                             <i class="fas fa-chevron-down"></i>
                         </button>
-                        <ul class="mobile-sub-dropdown-list">
-                            <li><a href={`/${lang}/kurslar/pruefungsvorbereitung-uebersicht`}>{lang === 'tr' ? 'Genel Bakış' : 'Übersicht'}</a></li>
-                            <li><a href={`/${lang}/kurslar/goethe-telc-a1`}>Goethe/TELC A1</a></li>
-                            <li><a href={`/${lang}/kurslar/goethe-telc-a2`}>Goethe/TELC A2</a></li>
-                            <li><a href={`/${lang}/kurslar/goethe-telc-b1`}>Goethe/TELC B1</a></li>
-                            <li><a href={`/${lang}/kurslar/goethe-telc-b2`}>Goethe/TELC B2</a></li>
-                            <li><a href={`/${lang}/kurslar/goethe-telc-c1`}>Goethe/TELC C1</a></li>
-                            <li><a href={`/${lang}/kurslar/testdaf-dsh`}>TestDaF/DSH</a></li>
+                        <ul class="mobile-submenu-list" id="pruefung">
+                            <li><a href={`/${lang}/kurslar/pruefungsvorbereitung-uebersicht`}>{lang === 'tr' ? 'Almanca Sınav Hazırlık Kursları Genel Bakış' : 'Übersicht Prüfungsvorbereitung'}</a></li>
+                            <li><a href={`/${lang}/kurslar/goethe-telc-a1`}>{lang === 'tr' ? 'Goethe/TELC A1 Hazırlık Kursu' : 'Goethe/TELC A1 Vorbereitung'}</a></li>
+                            <li><a href={`/${lang}/kurslar/goethe-telc-a2`}>{lang === 'tr' ? 'Goethe/TELC A2 Hazırlık Kursu' : 'Goethe/TELC A2 Vorbereitung'}</a></li>
+                            <li><a href={`/${lang}/kurslar/goethe-telc-b1`}>{lang === 'tr' ? 'Goethe/TELC B1 Hazırlık Kursu' : 'Goethe/TELC B1 Vorbereitung'}</a></li>
+                            <li><a href={`/${lang}/kurslar/goethe-telc-b2`}>{lang === 'tr' ? 'Goethe/TELC B2 Hazırlık Kursu' : 'Goethe/TELC B2 Vorbereitung'}</a></li>
+                            <li><a href={`/${lang}/kurslar/goethe-telc-c1`}>{lang === 'tr' ? 'Goethe/TELC C1 Hazırlık Kursu' : 'Goethe/TELC C1 Vorbereitung'}</a></li>
+                            <li><a href={`/${lang}/kurslar/testdaf-dsh`}>{lang === 'tr' ? 'TestDaF/DSH Hazırlık Kursu' : 'TestDaF/DSH Vorbereitung'}</a></li>
+                            <li><a href={`/${lang}/kurslar/testdaf-hazirlik`}>{lang === 'tr' ? 'TestDaF Hazırlık' : 'TestDaF Vorbereitung'}</a></li>
+                            <li><a href={`/${lang}/kurslar/telc-hazirlik`}>{lang === 'tr' ? 'TELC Hazırlık' : 'TELC Vorbereitung'}</a></li>
                         </ul>
                     </li>
-                    <li class="mobile-sub-dropdown">
-                        <button class="mobile-sub-dropdown-btn">
+                    <li class="mobile-submenu-item">
+                        <button class="mobile-submenu-toggle" data-target="firma">
                             <i class="fas fa-building"></i>
                             <span>{lang === 'tr' ? 'Firma/Sponsorlu' : 'Firma/Gesponsert'}</span>
                             <i class="fas fa-chevron-down"></i>
                         </button>
-                        <ul class="mobile-sub-dropdown-list">
-                            <li><a href={`/${lang}/kurslar/firmenkurs`}>{lang === 'tr' ? 'Firmalara Özel' : 'Firmenkurs'}</a></li>
-                            <li><a href={`/${lang}/kurslar/bildungszeit`}>Bildungszeit</a></li>
-                            <li><a href={`/${lang}/kurslar/daad-stipendiaten`}>DAAD</a></li>
-                            <li><a href={`/${lang}/kurslar/erasmus-lehrer`}>Erasmus+ {lang === 'tr' ? 'Öğretmen' : 'Lehrer'}</a></li>
-                            <li><a href={`/${lang}/kurslar/erasmus-studenten`}>Erasmus {lang === 'tr' ? 'Öğrenci' : 'Student'}</a></li>
-                            <li><a href={`/${lang}/kurslar/beruf-karriere`}>{lang === 'tr' ? 'Meslek ve Kariyer' : 'Beruf und Karriere'}</a></li>
-                            <li><a href={`/${lang}/kurslar/career-pathway`}>Career Pathway</a></li>
-                            <li><a href={`/${lang}/kurslar/medizin-gesundheit`}>{lang === 'tr' ? 'Tıp ve Sağlık' : 'Medizin und Gesundheit'}</a></li>
-                            <li><a href={`/${lang}/kurslar/fsp-vorbereitung`}>FSP</a></li>
-                            <li><a href={`/${lang}/kurslar/ingenieurwesen-technik`}>{lang === 'tr' ? 'Mühendislik' : 'Ingenieurwesen'}</a></li>
-                            <li><a href={`/${lang}/kurslar/wirtschaft-management`}>{lang === 'tr' ? 'Ekonomi ve Yönetim' : 'Wirtschaft'}</a></li>
+                        <ul class="mobile-submenu-list" id="firma">
+                            <li><a href={`/${lang}/kurslar/firmenkurs`}>{lang === 'tr' ? 'Firmalara özel Almanca Kursu' : 'Firmenkurs'}</a></li>
+                            <li><a href={`/${lang}/kurslar/bildungszeit`}>{lang === 'tr' ? 'Bildungszeit Kapsamında Almanca Kursu' : 'Bildungszeit Deutsch'}</a></li>
+                            <li><a href={`/${lang}/kurslar/daad-stipendiaten`}>{lang === 'tr' ? 'DAAD Bursiyerleri İçin Almanca Kursu' : 'Für DAAD-Stipendiaten'}</a></li>
+                            <li><a href={`/${lang}/kurslar/erasmus-lehrer`}>{lang === 'tr' ? 'Erasmus+ Öğretmenlere Almanca Kursu' : 'Für Erasmus+ Lehrer'}</a></li>
+                            <li><a href={`/${lang}/kurslar/erasmus-studenten`}>{lang === 'tr' ? 'Erasmus Öğrencilerine Özel Kurslar' : 'Für Erasmus-Studenten'}</a></li>
+                            <li><a href={`/${lang}/kurslar/beruf-karriere`}>{lang === 'tr' ? 'Meslek ve Kariyer için Almanca Kursları' : 'Beruf und Karriere'}</a></li>
+                            <li><a href={`/${lang}/kurslar/is-almancasi`}>{lang === 'tr' ? 'İş Almancası (Wirtschaftsdeutsch)' : 'Wirtschaftsdeutsch'}</a></li>
+                            <li><a href={`/${lang}/kurslar/career-pathway`}>{lang === 'tr' ? 'Kariyere Giriş Programı / Career Pathway' : 'Career Pathway Programm'}</a></li>
+                            <li><a href={`/${lang}/kurslar/medizin-gesundheit`}>{lang === 'tr' ? 'Tıp ve Sağlık Bilimleri için Almanca Kursu' : 'Medizin und Gesundheit'}</a></li>
+                            <li><a href={`/${lang}/kurslar/doktor-almancasi`}>{lang === 'tr' ? 'Doktor Almancası (Fachsprachprüfung)' : 'Fachsprachprüfung für Ärzte'}</a></li>
+                            <li><a href={`/${lang}/kurslar/fsp-vorbereitung`}>{lang === 'tr' ? 'FSP Sınav Hazırlık Eğitim' : 'FSP Prüfungsvorbereitung'}</a></li>
+                            <li><a href={`/${lang}/kurslar/ingenieurwesen-technik`}>{lang === 'tr' ? 'Mühendislik ve Teknik Bilimler için Almanca Kursu' : 'Ingenieurwesen und Technik'}</a></li>
+                            <li><a href={`/${lang}/kurslar/wirtschaft-management`}>{lang === 'tr' ? 'Ekonomi ve Yönetim Bilimleri için Almanca Kursu' : 'Wirtschaft und Management'}</a></li>
                         </ul>
                     </li>
                 </ul>
             </li>
             
-            <!-- Mobile Hakkımızda -->
-            <li class="mobile-dropdown">
-                <button class="mobile-dropdown-btn">
+            <!-- Hakkımızda -->
+            <li class="mobile-menu-item">
+                <button class="mobile-menu-toggle" data-target="about">
                     <i class="fas fa-info-circle"></i>
                     <span>{currentLang.about}</span>
                     <i class="fas fa-chevron-down"></i>
                 </button>
-                <ul class="mobile-dropdown-list">
+                <ul class="mobile-submenu" id="about">
                     <li><a href={`/${lang}/ueber-uns/unsere-mission`}>{lang === 'tr' ? 'Misyonumuz' : 'Unsere Mission'}</a></li>
                     <li><a href={`/${lang}/ueber-uns/qualitaetsstandards`}>{lang === 'tr' ? 'Kalite Standartları' : 'Qualitätsstandards'}</a></li>
                     <li><a href={`/${lang}/ueber-uns/partnerschaftspolitik`}>{lang === 'tr' ? 'Partnerlerimiz' : 'Partner'}</a></li>
@@ -362,14 +376,14 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
                 </ul>
             </li>
             
-            <!-- Mobile Avantajlarımız -->
-            <li class="mobile-dropdown">
-                <button class="mobile-dropdown-btn">
+            <!-- Avantajlarımız -->
+            <li class="mobile-menu-item">
+                <button class="mobile-menu-toggle" data-target="advantages">
                     <i class="fas fa-gem"></i>
                     <span>{currentLang.advantages}</span>
                     <i class="fas fa-chevron-down"></i>
                 </button>
-                <ul class="mobile-dropdown-list">
+                <ul class="mobile-submenu" id="advantages">
                     <li><a href={`/${lang}/unsere-vorteile/hybrides-lernmodell`}>{lang === 'tr' ? 'Hibrit Eğitim' : 'Hybrides Lernen'}</a></li>
                     <li><a href={`/${lang}/unsere-vorteile/stadt-und-universitaetstouren`}>{lang === 'tr' ? 'Şehir ve Uni Gezileri' : 'Stadt- und Unitoruren'}</a></li>
                     <li><a href={`/${lang}/unsere-vorteile/sprachclub`}>{lang === 'tr' ? 'Konuşma Kulübü' : 'Sprachclub'}</a></li>
@@ -378,14 +392,14 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
                 </ul>
             </li>
             
-            <!-- Mobile Sunduklarımız -->
-            <li class="mobile-dropdown">
-                <button class="mobile-dropdown-btn">
+            <!-- Sunduklarımız -->
+            <li class="mobile-menu-item">
+                <button class="mobile-menu-toggle" data-target="services">
                     <i class="fas fa-hands-helping"></i>
                     <span>{currentLang.services}</span>
                     <i class="fas fa-chevron-down"></i>
                 </button>
-                <ul class="mobile-dropdown-list">
+                <ul class="mobile-submenu" id="services">
                     <li><a href={`/${lang}/unsere-dienstleistungen/universitaetsvermittlung`}>{lang === 'tr' ? 'Üniversite Yerleştirme' : 'Universitätsvermittlung'}</a></li>
                     <li><a href={`/${lang}/unsere-dienstleistungen/visumsberatung`}>{lang === 'tr' ? 'Vize Rehberliği' : 'Visumsberatung'}</a></li>
                     <li><a href={`/${lang}/unsere-dienstleistungen/unterkunft`}>{lang === 'tr' ? 'Konaklama' : 'Unterkunft'}</a></li>
@@ -396,27 +410,35 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
                 </ul>
             </li>
             
-            <li><a href={`/${lang}/erfolgsgeschichten`}><i class="fas fa-trophy"></i><span>{currentLang.winners}</span></a></li>
-            <li><a href={`/${lang}/kontakt`}><i class="fas fa-envelope"></i><span>{currentLang.contact}</span></a></li>
+            <li class="mobile-menu-item">
+                <a href={`/${lang}/erfolgsgeschichten`} class="mobile-menu-link">
+                    <i class="fas fa-trophy"></i>
+                    <span>{currentLang.winners}</span>
+                </a>
+            </li>
+            
+            <li class="mobile-menu-item">
+                <a href={`/${lang}/kontakt`} class="mobile-menu-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>{currentLang.contact}</span>
+                </a>
+            </li>
         </ul>
     </nav>
     
-    <!-- Mobile Language Selector -->
-    <div class="mobile-language-selector">
-        <button class="mobile-lang-btn" id="mobileLangBtn">
-            <div class="mobile-lang-flag">
-                <img src={lang === 'tr' ? 'https://flagcdn.com/tr.svg' : 'https://flagcdn.com/de.svg'} alt={lang === 'tr' ? 'Türkçe' : 'Deutsch'} class="flag-img">
-            </div>
-            <span class="mobile-lang-text">{lang === 'tr' ? 'TR' : 'DE'}</span>
-            <i class="fas fa-chevron-down mobile-lang-arrow"></i>
+    <div class="mobile-lang-wrapper">
+        <button class="mobile-lang-toggle" id="mobileLangBtn">
+            <img src={lang === 'tr' ? 'https://flagcdn.com/tr.svg' : 'https://flagcdn.com/de.svg'} alt={lang === 'tr' ? 'Türkçe' : 'Deutsch'} class="mobile-lang-flag">
+            <span>{lang === 'tr' ? 'TR' : 'DE'}</span>
+            <i class="fas fa-chevron-down"></i>
         </button>
-        <div class="mobile-lang-dropdown" id="mobileLangDropdown">
+        <div class="mobile-lang-menu" id="mobileLangDropdown">
             <a href={switchLangUrl('tr')} class="mobile-lang-option">
-                <img src="https://flagcdn.com/tr.svg" alt="Türkçe" class="flag-img">
+                <img src="https://flagcdn.com/tr.svg" alt="Türkçe" class="mobile-lang-flag">
                 <span>Türkçe</span>
             </a>
             <a href={switchLangUrl('de')} class="mobile-lang-option">
-                <img src="https://flagcdn.com/de.svg" alt="Deutsch" class="flag-img">
+                <img src="https://flagcdn.com/de.svg" alt="Deutsch" class="mobile-lang-flag">
                 <span>Deutsch</span>
             </a>
         </div>
@@ -458,4 +480,5 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
         display: flex !important;
         align-items: center !important;
     }
+    
 </style>

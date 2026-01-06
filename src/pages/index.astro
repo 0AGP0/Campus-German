@@ -2,15 +2,28 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=/de/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CampusGerman - Deutschsprachkurs</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: white;
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
     <script>
-        window.location.href = '/de/';
+        // Immediate redirect - no delay
+        if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+            window.location.replace('/de/');
+        }
     </script>
 </head>
 <body>
-    <p>Weiterleitung zur deutschen Version... / Almanca versiyona yönlendiriliyorsunuz...</p>
-    <p>Falls Sie nicht automatisch weitergeleitet werden, <a href="/de/">klicken Sie hier</a>.</p>
+    <script>
+        // Fallback redirect
+        window.location.replace('/de/');
+    </script>
 </body>
 </html>

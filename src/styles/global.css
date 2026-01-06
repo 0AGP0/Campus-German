@@ -54,6 +54,9 @@ body.elementor-page .elementor-section {
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
 }
 
 body {
@@ -73,6 +76,8 @@ body {
     margin: 0 !important;
     padding: 0 !important;
     position: relative;
+    max-width: 100%;
+    width: 100%;
 }
 
 /* Elementor page body overrides */
@@ -1025,22 +1030,23 @@ a.dropdown-link:hover {
     padding: 14px 28px !important;
 }
 
-/* ===== MOBILE MENU BUTTON ===== */
+/* ===== MOBILE MENU - YENİ TEMİZ TASARIM ===== */
+
+/* ===== MOBILE MENU - YENİ TEMİZ TASARIM ===== */
+
+/* Hamburger Button */
 .mobile-menu-btn {
     display: none;
     background: none;
     border: none;
     cursor: pointer;
     padding: 8px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    position: relative;
-    z-index: 10001;
+    width: 40px;
+    height: 40px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    z-index: 10001;
 }
 
 .hamburger-line {
@@ -1051,13 +1057,9 @@ a.dropdown-link:hover {
     transition: all 0.3s ease;
     display: block;
     margin: 4px 0;
-    pointer-events: none;
-    flex-shrink: 0;
 }
 
-/* Bu sınıf CSS hover ile çalışıyor */
-
-/* ===== MOBILE MENU ===== */
+/* Mobile Menu */
 .mobile-menu {
     position: fixed;
     top: 0;
@@ -1068,17 +1070,15 @@ a.dropdown-link:hover {
     background: white;
     z-index: 10000;
     transition: left 0.3s ease;
-    overflow: hidden;
-    box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
+    box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .mobile-menu.active {
     left: 0;
 }
-
-/* Bu sınıf JavaScript ile ekleniyor */
 
 .mobile-menu-header {
     display: flex;
@@ -1087,235 +1087,41 @@ a.dropdown-link:hover {
     padding: 15px 20px;
     border-bottom: 1px solid #e9ecef;
     background: linear-gradient(135deg, #F0FAF8 0%, #ffffff 100%);
-    color: #0B1220;
     flex-shrink: 0;
-}
-
-.mobile-logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
 }
 
 .mobile-logo-img {
     max-width: 120px;
     height: auto;
-    display: block;
-}
-
-.mobile-logo .logo-icon {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
-    border-radius: 10px;
-}
-
-.mobile-logo .logo-text {
-    color: #0B1220;
-}
-
-.mobile-logo .logo-main {
-    font-size: 22px;
-    color: #0B1220;
-}
-
-.mobile-logo .logo-sub {
-    font-size: 16px;
-    color: #059669;
 }
 
 .mobile-menu-close {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(5, 150, 105, 0.1);
     border: none;
-    color: white;
+    color: #0B1220;
     width: 36px;
     height: 36px;
     border-radius: 50%;
     cursor: pointer;
     font-size: 18px;
-    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-/* Bu sınıf CSS hover ile çalışıyor */
-
-.mobile-nav {
-    padding: 15px 20px;
-    flex: 1;
-    overflow-y: auto;
-}
-
-.mobile-nav-list {
-    list-style: none;
-    margin-bottom: 15px;
-}
-
-.mobile-nav-list li {
-    margin-bottom: 3px;
-}
-
-.mobile-nav-list a {
-    color: #0B1220;
-    text-decoration: none;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    font-size: 15px;
-}
-
-/* Bu sınıf CSS hover ile çalışıyor */
-
-.mobile-nav-list a i {
-    width: 18px;
-    color: #059669;
-    font-size: 16px;
-    flex-shrink: 0;
-}
-
-.mobile-dropdown-btn {
-    width: 100%;
-    background: none;
-    border: none;
-    color: #0B1220;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    cursor: pointer;
-    font-size: 15px;
-}
-
-/* Bu sınıf CSS hover ile çalışıyor */
-
-.mobile-dropdown-btn i:first-child {
-    width: 18px;
-    color: #059669;
-    font-size: 16px;
-    flex-shrink: 0;
-}
-
-.mobile-dropdown-btn span {
-    flex: 1;
-    text-align: left;
-}
-
-.mobile-dropdown-btn .fa-chevron-down {
-    margin-left: auto;
-    color: #64748B;
-    font-size: 14px;
-    transition: transform 0.3s ease;
-}
-
-.mobile-dropdown-list {
-    list-style: none;
-    padding-left: 30px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-/* Bu sınıf JavaScript ile ekleniyor */
-
-.mobile-dropdown.active .mobile-dropdown-list {
-    max-height: 1200px;
-}
-
-.mobile-dropdown-list a {
-    padding: 10px 16px;
-    font-size: 14px;
-    color: #64748B;
-}
-
-/* ===== MOBILE SUB-DROPDOWN ===== */
-.mobile-sub-dropdown {
-    list-style: none;
-}
-
-.mobile-sub-dropdown-btn {
-    width: 100%;
-    padding: 12px 16px;
-    background: transparent;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    color: #64748B;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.mobile-sub-dropdown-btn i:first-child {
+.mobile-menu-close:hover {
+    background: rgba(5, 150, 105, 0.2);
     color: #059669;
-    font-size: 14px;
 }
 
-.mobile-sub-dropdown-btn i:last-child {
-    font-size: 12px;
-    transition: transform 0.3s ease;
-}
-
-.mobile-sub-dropdown.active .mobile-sub-dropdown-btn i:last-child {
-    transform: rotate(180deg);
-}
-
-.mobile-sub-dropdown-list {
-    list-style: none;
-    padding-left: 25px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-.mobile-sub-dropdown.active .mobile-sub-dropdown-list {
-    max-height: 800px;
-}
-
-.mobile-sub-dropdown-list a {
-    padding: 8px 16px;
-    font-size: 13px;
-    color: #64748B;
-    display: block;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.mobile-sub-dropdown-list a:hover {
-    color: #059669;
-    padding-left: 20px;
-}
-
-.mobile-actions {
-    padding: 15px 20px;
-    border-top: 1px solid #e9ecef;
-    background: white;
-    flex-shrink: 0;
-    position: sticky;
-    bottom: 0;
-    z-index: 10;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.mobile-actions-top {
-    position: relative;
-    border-top: none;
-    border-bottom: 1px solid #e9ecef;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+.mobile-cta-wrapper {
     padding: 12px 20px;
+    border-bottom: 1px solid #e9ecef;
+    flex-shrink: 0;
 }
 
-.mobile-cta {
+.mobile-cta-btn {
     background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
     color: white;
     text-decoration: none;
@@ -1331,115 +1137,228 @@ a.dropdown-link:hover {
     box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
 }
 
-/* Bu sınıf CSS hover ile çalışıyor */
-
-.mobile-contact {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.mobile-nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 0;
 }
 
-.mobile-contact a {
-    color: #64748B;
-    text-decoration: none;
+.mobile-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-menu-item {
+    border-bottom: 1px solid rgba(229, 231, 235, 0.3);
+    position: relative;
+}
+
+.mobile-menu-link {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 0;
-    transition: all 0.3s ease;
+    padding: 16px 20px;
+    color: #0B1220;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.2s ease;
 }
 
-/* Bu sınıf CSS hover ile çalışıyor */
-
-.mobile-contact a i {
-    width: 20px;
+.mobile-menu-link:hover {
+    background: rgba(5, 150, 105, 0.08);
     color: #059669;
 }
 
-/* ===== MOBILE TOP INFO (Top Header in Mobile Menu) ===== */
-.mobile-top-info {
-    padding: 12px 20px;
-    border-bottom: 1px solid #e9ecef;
-    background: #F0FAF8;
-    flex-shrink: 0;
-}
-
-.mobile-info-strip {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 12px;
-}
-
-.mobile-info-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #0B1220;
-    font-size: 13px;
-    font-weight: 500;
-}
-
-.mobile-info-item i {
+.mobile-menu-link i {
     width: 18px;
     color: #059669;
-    font-size: 14px;
+    font-size: 16px;
+}
+
+.mobile-menu-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #0B1220;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.mobile-menu-toggle:hover {
+    background: rgba(5, 150, 105, 0.08);
+    color: #059669;
+}
+
+.mobile-menu-toggle i:first-child {
+    width: 18px;
+    color: #059669;
+    font-size: 16px;
     flex-shrink: 0;
 }
 
-.mobile-info-item a {
-    color: #0B1220;
-    text-decoration: none;
-    transition: color 0.3s ease;
+.mobile-menu-toggle span {
+    flex: 1;
+    text-align: left;
 }
 
-.mobile-info-item a:hover {
-    color: #059669;
+.mobile-menu-toggle .fa-chevron-down {
+    margin-left: auto;
+    color: #64748B;
+    font-size: 14px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
 }
 
-.mobile-top-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.mobile-submenu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: rgba(240, 250, 248, 0.4);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
 }
 
-.mobile-social-links {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
+.mobile-submenu.open {
+    max-height: 10000px;
+    padding: 8px 0;
+    overflow: visible;
 }
 
-.mobile-social-link {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: white;
+.mobile-submenu li {
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-submenu-item {
+    border-bottom: 1px solid rgba(229, 231, 235, 0.3);
+}
+
+.mobile-submenu-toggle {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 14px 20px 14px 50px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: #0B1220;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.mobile-submenu-toggle:hover {
+    background: rgba(5, 150, 105, 0.08);
     color: #059669;
+}
+
+.mobile-submenu-toggle i:first-child {
+    color: #059669;
+    font-size: 16px;
+    width: 20px;
+    flex-shrink: 0;
+}
+
+.mobile-submenu-toggle span {
+    flex: 1;
+    text-align: left;
+}
+
+.mobile-submenu-toggle .fa-chevron-down {
+    font-size: 12px;
+    color: #64748B;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.mobile-submenu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    padding-left: 50px;
+    background: rgba(240, 250, 248, 0.5);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+
+.mobile-submenu-list.open {
+    max-height: 10000px;
+    padding-top: 8px;
+    padding-bottom: 12px;
+    overflow: visible;
+}
+
+.mobile-submenu-list li {
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-submenu-list a {
+    display: block;
+    padding: 10px 16px 10px 12px;
+    color: #475569;
     text-decoration: none;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(5, 150, 105, 0.2);
-}
-
-.mobile-social-link:hover {
-    background: #059669;
-    color: white;
-    transform: translateY(-2px);
-}
-
-.mobile-social-link i {
     font-size: 14px;
+    font-weight: 500;
+    line-height: 1.6;
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+    font-family: 'Poppins', sans-serif;
 }
 
-.mobile-language-selector {
-    position: relative;
+.mobile-submenu-list a:hover {
+    color: #059669;
+    padding-left: 16px;
+    border-left-color: #059669;
+    background: rgba(5, 150, 105, 0.08);
+}
+
+.mobile-submenu > li > a {
+    display: block;
+    padding: 12px 20px 12px 50px;
+    color: #64748B;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+}
+
+.mobile-submenu > li > a:hover {
+    color: #059669;
+    padding-left: 54px;
+    border-left-color: #059669;
+    background: rgba(5, 150, 105, 0.08);
+}
+
+.mobile-lang-wrapper {
+    padding: 15px 20px;
+    border-top: 1px solid #e9ecef;
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
-.mobile-lang-btn {
+.mobile-lang-toggle {
     background: white;
     border: 1px solid rgba(5, 150, 105, 0.2);
     color: #0B1220;
@@ -1454,7 +1373,7 @@ a.dropdown-link:hover {
     transition: all 0.3s ease;
 }
 
-.mobile-lang-btn:hover {
+.mobile-lang-toggle:hover {
     background: #059669;
     color: white;
     border-color: #059669;
@@ -1464,19 +1383,9 @@ a.dropdown-link:hover {
     width: 20px;
     height: 15px;
     border-radius: 3px;
-    overflow: hidden;
 }
 
-.mobile-lang-text {
-    font-weight: 600;
-}
-
-.mobile-lang-arrow {
-    font-size: 10px;
-    transition: transform 0.3s ease;
-}
-
-.mobile-lang-dropdown {
+.mobile-lang-menu {
     position: absolute;
     top: 100%;
     left: 50%;
@@ -1488,7 +1397,6 @@ a.dropdown-link:hover {
     min-width: 140px;
     opacity: 0;
     visibility: hidden;
-    transform: translateX(-50%) translateY(-10px);
     transition: all 0.3s ease;
     z-index: 1000;
     border: 1px solid rgba(5, 150, 105, 0.1);
@@ -1496,10 +1404,9 @@ a.dropdown-link:hover {
     margin-top: 5px;
 }
 
-.mobile-lang-dropdown.show {
+.mobile-lang-menu.show {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
     pointer-events: auto;
 }
 
@@ -1643,6 +1550,17 @@ a.dropdown-link:hover {
 }
 
 @media (max-width: 768px) {
+    /* Prevent horizontal scrolling */
+    html, body {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+        width: 100% !important;
+    }
+    
+    * {
+        max-width: 100%;
+    }
+    
     .top-header {
         display: none;
     }
@@ -1702,30 +1620,48 @@ a.dropdown-link:hover {
     
     .main-header {
         padding: 0;
+        max-width: 100%;
+        overflow-x: hidden;
     }
     
     .header-wrapper {
         padding: 12px 0;
         gap: 10px;
         position: relative;
+        max-width: 100%;
+        overflow-x: hidden;
     }
     
     .container {
         padding: 0 15px;
+        max-width: 100%;
+        overflow-x: hidden;
     }
     
     .mobile-menu {
         max-width: 100%;
+        width: 100%;
+        top: 0;
     }
     
     .mobile-menu-btn {
         order: 3;
         margin-left: auto;
+        display: flex !important;
+    }
+    
+    .mobile-submenu.open {
+        max-height: 10000px !important;
+    }
+    
+    .mobile-submenu-list.open {
+        max-height: 10000px !important;
     }
     
     .logo-section {
         order: 1;
         flex: 0 0 auto;
+        max-width: 100%;
     }
     
     .logo-img {
@@ -1744,6 +1680,20 @@ a.dropdown-link:hover {
     
     .header-actions {
         display: none !important;
+    }
+    
+    /* Fix dropdowns on mobile */
+    .dropdown-panel-tabbed,
+    .courses-dropdown {
+        min-width: auto !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+    
+    /* Ensure mobile menu header is consistent */
+    .mobile-menu-header {
+        background: linear-gradient(135deg, #F0FAF8 0%, #ffffff 100%);
+        color: #0B1220;
     }
 }
 
@@ -1800,7 +1750,7 @@ a.dropdown-link:hover {
     }
     
     .mobile-nav {
-        padding: 20px;
+        padding: 0;
     }
     
     .mobile-actions {
