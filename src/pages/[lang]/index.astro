@@ -234,7 +234,7 @@ const t = {
         weeklyCourseFeature3: "Flexibler Startplan",
         weeklyCoursePriceLabel: "Hybrid/Online-Teilnahme möglich",
         weeklyCoursePrice: "ab 160€",
-        universityPrepTitle: "Universitätsvorbereitungsschule",
+        universityPrepTitle: "Universitäts Vorbereitungsschule",
         universityPrepDesc: "Das richtige Programm für bedingte Zulassung zur Universität oder für TELC-, TestDaF- und Goethe-Prüfungen.",
         universityPrepFeature1: "20 Stunden/Woche",
         universityPrepFeature2: "Einladung für Studentenvisum",
@@ -510,8 +510,8 @@ const translations = t[lang as keyof typeof t];
                             <span class="price-amount">{translations.weeklyCoursePrice}</span>
                         </div>
                         <div class="course-actions">
-                            <a href="#intensivkurs" class="btn-primary">{translations.courseBookButton}</a>
-                            <a href="#detay" class="btn-secondary">{translations.courseDetailsButton}</a>
+                            <a href={`/${lang}/buchung`} class="btn-primary">{translations.courseBookButton}</a>
+                            <a href={`/${lang}/kurslar/intensiv-deutsch`} class="btn-secondary">{translations.courseDetailsButton}</a>
                         </div>
                     </div>
                 </div>
@@ -539,8 +539,8 @@ const translations = t[lang as keyof typeof t];
                             <span class="price-warning">{translations.universityPrepPriceWarning}</span>
                         </div>
                         <div class="course-actions">
-                            <a href="#universitatskurs" class="btn-primary">{translations.courseBookButton}</a>
-                            <a href="#detay" class="btn-secondary">{translations.courseDetailsButton}</a>
+                            <a href={`/${lang}/buchung`} class="btn-primary">{translations.courseBookButton}</a>
+                            <a href={`/${lang}/kurslar/intensiv-deutsch`} class="btn-secondary">{translations.courseDetailsButton}</a>
                         </div>
                     </div>
                 </div>
@@ -562,8 +562,8 @@ const translations = t[lang as keyof typeof t];
                             <span class="price-period">{translations.examPrepPricePeriod}</span>
                         </div>
                         <div class="course-actions">
-                            <a href="#berufsausbildung" class="btn-primary">{translations.courseBookButton}</a>
-                            <a href="#detay" class="btn-secondary">{translations.courseDetailsButton}</a>
+                            <a href={`/${lang}/buchung`} class="btn-primary">{translations.courseBookButton}</a>
+                            <a href={`/${lang}/kurslar/online-uebersicht`} class="btn-secondary">{translations.courseDetailsButton}</a>
                         </div>
                     </div>
                 </div>
@@ -589,7 +589,7 @@ const translations = t[lang as keyof typeof t];
                             <span><i class="fas fa-check-circle"></i> {translations.service1Meta1}</span>
                             <span><i class="fas fa-handshake"></i> {translations.service1Meta2}</span>
                         </div>
-                        <a href={`/${lang}/unsere-dienstleistungen/universite-yerlestirme`} class="program-link">{translations.service1Link}<i class="fas fa-arrow-right"></i></a>
+                        <a href={`/${lang}/unsere-dienstleistungen/universitaetsvermittlung`} class="program-link">{translations.service1Link}<i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="program-item program-medium" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=400&auto=format&fit=crop');">
@@ -602,7 +602,7 @@ const translations = t[lang as keyof typeof t];
                             <span><i class="fas fa-file-alt"></i> {translations.service2Meta1}</span>
                             <span><i class="fas fa-check-circle"></i> {translations.service2Meta2}</span>
                         </div>
-                        <a href={`/${lang}/unsere-dienstleistungen/vize-rehberligi`} class="program-link">{translations.service2Link}<i class="fas fa-arrow-right"></i></a>
+                        <a href={`/${lang}/unsere-dienstleistungen/visumsberatung`} class="program-link">{translations.service2Link}<i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="program-item program-large" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=400&auto=format&fit=crop');">
@@ -615,7 +615,7 @@ const translations = t[lang as keyof typeof t];
                             <span><i class="fas fa-building"></i> {translations.service3Meta1}</span>
                             <span><i class="fas fa-users"></i> {translations.service3Meta2}</span>
                         </div>
-                        <a href={`/${lang}/unsere-dienstleistungen/konaklama`} class="program-link">{translations.service3Link}<i class="fas fa-arrow-right"></i></a>
+                        <a href={`/${lang}/unsere-dienstleistungen/unterkunft`} class="program-link">{translations.service3Link}<i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -630,7 +630,7 @@ const translations = t[lang as keyof typeof t];
                             <span><i class="fas fa-plane"></i> {translations.service4Meta1}</span>
                             <span><i class="fas fa-car"></i> {translations.service4Meta2}</span>
                         </div>
-                        <a href={`/${lang}/unsere-dienstleistungen/havalimani-karsilama`} class="program-link">{translations.service4Link}<i class="fas fa-arrow-right"></i></a>
+                        <a href={`/${lang}/unsere-dienstleistungen/flughafenabholung`} class="program-link">{translations.service4Link}<i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="program-item program-large featured">
