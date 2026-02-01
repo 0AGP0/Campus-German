@@ -1,17 +1,19 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
+import AkademikAlmancaSarmal from '../../../components/AkademikAlmancaSarmal.astro';
 import '../../../styles/pages/kurslar.css';
 import { coursePricing } from '../../../data/coursePricing';
+import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getFormattedStartDates } from '../../../utils/coursePricingHelper';
 
 export async function getStaticPaths() {
     return [
         { params: { lang: 'tr' } },
-        { params: { lang: 'de' } },
     ];
 }
 
 const { lang } = Astro.params;
+const startDates = getFormattedStartDates(lang as 'tr' | 'de' | 'en');
 
 // Slug'dan dil uzantısını temizle
 function cleanSlug(slug: string): string {
@@ -42,7 +44,8 @@ const sinavKurslar = allKurslar.filter(kurs => {
          cleanedSlug.startsWith('online-pruefungsvorbereitung') ||
          cleanedSlug.startsWith('fsp-') ||
          cleanedSlug.startsWith('sinav-')) &&
-        cleanedSlug !== 'pruefungsvorbereitung-uebersicht';
+        cleanedSlug !== 'pruefungsvorbereitung-uebersicht' &&
+        cleanedSlug !== 'sinav-hazirlik-genel-bakis';
 });
 
 const t = {
@@ -64,6 +67,8 @@ const t = {
         allCoursesButton: "Tüm Kursları Görüntüle",
         sectionTitle: "Sınav Hazırlık Kurslarımız",
         sectionSubtitle: "Sınav odaklı eğitim ve başarı garantisi",
+        courseCardStartingPrices: "başlayan fiyatlarla",
+        courseCardContactUs: "İletişim",
     },
     de: {
         title: "Übersicht Prüfungsvorbereitung - CampusGerman",
@@ -71,7 +76,7 @@ const t = {
         heroDescription1: "Vorbereitung auf Goethe, TELC, TestDaF und DSH Prüfungen. Prüfungsorientierte Ausbildung und Erfolgsgarantie.",
         heroDescription2: "Erfolgreich sein mit prüfungsspezifischer Vorbereitung, Probeprüfungen und Prüfungstechniken.",
         buttonText1: "Kurse entdecken",
-        buttonText2: "Kontakt aufnehmen",
+        buttonText2: "Kontakt",
         ctaCardTitle: "Entdecken Sie unsere Prüfungsvorbereitungskurse",
         ctaCardDescription: "Vorbereitung auf Goethe, TELC, TestDaF und DSH Prüfungen.",
         stat1Number: "7+",
@@ -83,6 +88,8 @@ const t = {
         allCoursesButton: "Alle Kurse anzeigen",
         sectionTitle: "Unsere Prüfungsvorbereitungskurse",
         sectionSubtitle: "Prüfungsorientierte Ausbildung und Erfolgsgarantie",
+        courseCardStartingPrices: "ab",
+        courseCardContactUs: "Kontakt",
     }
 };
 
@@ -154,118 +161,8 @@ const translations = t[lang as keyof typeof t];
         </div>
     </section>
     
-    <!-- CampusGerman Hakkında Section -->
-    <section class="campusgerman-about-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">{lang === 'tr' ? "CampusGerman'da Almanca Öğrenin" : "Lernen Sie Deutsch bei CampusGerman"}</h2>
-                <p class="section-subtitle">{lang === 'tr' ? "Almanya'da, dünya standartlarında dil eğitimi" : "Weltklasse-Sprachausbildung in Deutschland"}</p>
-            </div>
-            
-            <div class="content-layout">
-                <div class="content-left">
-                    <div class="content-text">
-                        <p class="content-paragraph">
-                            {lang === 'tr' 
-                                ? "Eğer zaten biraz Almanca bilginiz varsa, CampusGerman'da kursunuza herhangi bir Pazartesi günü başlayabilirsiniz. Önceden hiç öğrenme olmadan, kursunuza sabit bir tarihte başlarsınız."
-                                : "Wenn Sie bereits etwas Deutsch können, können Sie Ihren Kurs bei CampusGerman jeden Montag beginnen. Ohne Vorkenntnisse beginnen Sie an einem festen Datum."}
-                        </p>
-                        
-                        <p class="content-paragraph">
-                            {lang === 'tr'
-                                ? "Maksimum 12 kişilik küçük, çok uluslu bir grupta, genel Almanca bilginizi kolayca geliştirebilir, çeşitli dil sınavlarına hazırlanabilir ve bu süreçte dünyanın her yerinden yeni arkadaşlar bulabilirsiniz."
-                                : "In einer kleinen, multinationalen Gruppe von maximal 12 Personen können Sie Ihre allgemeinen Deutschkenntnisse leicht verbessern, sich auf verschiedene Sprachprüfungen vorbereiten und dabei neue Freunde aus aller Welt finden."}
-                        </p>
-                        
-                        <p class="content-paragraph">
-                            {lang === 'tr'
-                                ? "Her sınıfın, her biri öğrencilerinin bireysel dil gelişimine tamamen bağlı iki öğretmeni vardır."
-                                : "Jede Klasse hat zwei Lehrer, die sich jeweils voll und ganz der individuellen Sprachentwicklung ihrer Schüler widmen."}
-                        </p>
-                        
-                        <p class="content-paragraph">
-                            {lang === 'tr'
-                                ? "Almanca derslerine katılmaya ek olarak, öğleden sonra ödev yapmak, daha fazla alıştırma yapmak veya bir sınav için özel olarak çalışmak üzere öğrenme destek grubumuza katılmakta özgürsünüz."
-                                : "Zusätzlich zur Teilnahme am Deutschunterricht können Sie sich unserer Lerngruppe am Nachmittag anschließen, um Hausaufgaben zu machen, weitere Übungen zu machen oder sich speziell auf eine Prüfung vorzubereiten."}
-                        </p>
-                        
-                        <p class="content-paragraph">
-                            {lang === 'tr'
-                                ? "Ve biliyoruz ki: çok çalışan herkesin biraz dinlenmeye ihtiyacı var! Bu yüzden tüm kurslarımız kültürel ve sosyal programımızı içerir. Şehir turları, spor etkinlikleri, müze ziyaretleri, bar geceleri, yaratıcı öğleden sonralar, tüm zevklere hitap ediyoruz. Yeni arkadaşlarınızla etkinliklerimiz için buluşun ve o sabah sınıfta öğrendiklerinizi pratik yapın."
-                                : "Und wir wissen: Wer viel arbeitet, braucht auch etwas Entspannung! Deshalb beinhalten alle unsere Kurse unser kulturelles und soziales Programm. Stadtführungen, Sportveranstaltungen, Museumsbesuche, Barbesuche, kreative Nachmittage - wir bieten für jeden Geschmack etwas. Treffen Sie sich mit Ihren neuen Freunden bei unseren Veranstaltungen und üben Sie, was Sie morgens im Unterricht gelernt haben."}
-                        </p>
-                        
-                        <div class="highlight-box">
-                            <p class="highlight-text">
-                                <strong>{lang === 'tr' ? "Unutmayın:" : "Denken Sie daran:"}</strong> {lang === 'tr'
-                                    ? "Kültürel ve sosyal programımız, öğleden sonraki öğrenme desteğimiz ve tüm öğretim materyalleri (kitaplar ve fotokopiler) kurs ücretine dahildir!"
-                                    : "Unser kulturelles und soziales Programm, unsere Lernunterstützung am Nachmittag und alle Unterrichtsmaterialien (Bücher und Kopien) sind im Kurspreis enthalten!"}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="content-right">
-                    <div class="content-highlights">
-                        <div class="highlight-section">
-                            <div class="highlight-icon">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <h3>CampusGerman</h3>
-                            <p>{lang === 'tr' ? "25+ yıllık deneyim ile Almanya'da Almanca öğrenmenin en iyi adresi" : "Die beste Adresse zum Deutschlernen in Deutschland mit über 25 Jahren Erfahrung"}</p>
-                        </div>
-                        
-                        <div class="highlight-section">
-                            <div class="highlight-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <h3>{lang === 'tr' ? "Küçük Gruplar" : "Kleine Gruppen"}</h3>
-                            <p>{lang === 'tr' ? "Maksimum 12 kişilik sınıflarda kişiselleştirilmiş öğrenme deneyimi" : "Personalisierte Lernerfahrung in Klassen mit maximal 12 Personen"}</p>
-                        </div>
-                        
-                        <div class="highlight-section">
-                            <div class="highlight-icon">
-                                <i class="fas fa-chalkboard-teacher"></i>
-                            </div>
-                            <h3>{lang === 'tr' ? "İki Öğretmen Sistemi" : "Zwei-Lehrer-System"}</h3>
-                            <p>{lang === 'tr' ? "Her sınıfta iki öğretmen ile bireysel dil gelişimi odaklı eğitim" : "Bildung mit Fokus auf individuelle Sprachentwicklung mit zwei Lehrern in jeder Klasse"}</p>
-                        </div>
-                        
-                        <div class="highlight-section">
-                            <div class="highlight-icon">
-                                <i class="fas fa-calendar-alt"></i>
-                            </div>
-                            <h3>{lang === 'tr' ? "Esnek Başlangıç" : "Flexibler Start"}</h3>
-                            <p>{lang === 'tr' ? "Herhangi bir Pazartesi günü kursa başlayabilme imkanı" : "Möglichkeit, jeden Montag mit dem Kurs zu beginnen"}</p>
-                        </div>
-                        
-                        <div class="highlight-section">
-                            <div class="highlight-icon">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <h3>{lang === 'tr' ? "%98 Başarı Oranı" : "98% Erfolgsquote"}</h3>
-                            <p>{lang === 'tr' ? "Kanıtlanmış başarı ile hedeflerinize ulaşın" : "Erreichen Sie Ihre Ziele mit nachgewiesenem Erfolg"}</p>
-                        </div>
-                        
-                        <div class="highlight-section">
-                            <div class="highlight-icon">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <h3>{lang === 'tr' ? "Kültürel Program" : "Kulturprogramm"}</h3>
-                            <p>{lang === 'tr' ? "Şehir turları, spor etkinlikleri ve sosyal aktiviteler dahil" : "Stadtführungen, Sportveranstaltungen und soziale Aktivitäten inklusive"}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-section">
-                        <a href={`/${lang}/kontakt`} class="contact-link">
-                            <i class="fas fa-envelope"></i>
-                            <span>{lang === 'tr' ? "Hemen İletişime Geçin" : "Jetzt Kontakt aufnehmen"}</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Campus German Akademik Almanca Sarmalı -->
+    <AkademikAlmancaSarmal lang={lang} />
     
     <!-- Kurs Kartları Section -->
     <section class="courses-section" id="kurs-kartlari">
@@ -276,7 +173,19 @@ const translations = t[lang as keyof typeof t];
             </div>
             
             <div class="courses-grid">
-                {sinavKurslar.map(kurs => (
+                {sinavKurslar.map(kurs => {
+                    const pricingData = getCoursePricingData(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
+                    let priceText = translations.courseCardContactUs;
+                    if (pricingData?.pricing?.fullCourse) {
+                        priceText = `${pricingData.pricing.fullCourse} ${translations.courseCardStartingPrices}`;
+                    } else if (pricingData?.isWeeklyOnly && pricingData?.weeklyPricing) {
+                        const courseInfo = extractCourseInfo(kurs.slug);
+                        const weeklyCat = getWeeklyPricingCategory(courseInfo.level);
+                        const weeklyPrices = weeklyCat ? pricingData.weeklyPricing[weeklyCat] : null;
+                        const firstPrice = weeklyPrices?.['2'] || (weeklyPrices && Object.values(weeklyPrices)[0]);
+                        if (firstPrice) priceText = `${firstPrice} ${translations.courseCardStartingPrices}`;
+                    }
+                    return (
                     <div class="course-card">
                         <div class="course-image">
                             <img src={kurs.data.image} alt={kurs.data.title}>
@@ -294,13 +203,15 @@ const translations = t[lang as keyof typeof t];
                             <p class="course-description">
                                 {kurs.data.description}
                             </p>
+                            <p class="course-card-price">{priceText}</p>
                             <a href={`/${lang}/kurslar/${cleanSlug(kurs.slug)}`} class="course-btn">
-                                <span>{lang === 'tr' ? 'Detayları Gör' : 'Details ansehen'}</span>
+                                <span>{lang === 'tr' ? 'Detay' : 'Details'}</span>
                                 <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     </section>
@@ -323,7 +234,7 @@ const translations = t[lang as keyof typeof t];
                                 <tr>
                                     <th>{lang === 'tr' ? 'Sınav Tipi' : 'Prüfungstyp'}</th>
                                     <th>{lang === 'tr' ? 'Seviye' : 'Niveau'}</th>
-                                    <th>{lang === 'tr' ? 'Ders Sayısı' : 'Unterrichtsstunden'}</th>
+                                    <th>{lang === 'tr' ? 'Ders' : 'UStd'}</th>
                                     <th>{lang === 'tr' ? 'Süre' : 'Dauer'}</th>
                                     <th>{lang === 'tr' ? 'Fiyat' : 'Preis'}</th>
                                 </tr>
@@ -414,74 +325,74 @@ const translations = t[lang as keyof typeof t];
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_1[0]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_2[0]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_1[0]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_2[0]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_1[0]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_2[0]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_1[0]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_2[0]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_1[0]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_2[0]}</td>
+                                    <td>{startDates.a1.a1_1[0]}</td>
+                                    <td>{startDates.a1.a1_2[0]}</td>
+                                    <td>{startDates.a2.a2_1[0]}</td>
+                                    <td>{startDates.a2.a2_2[0]}</td>
+                                    <td>{startDates.b1.b1_1[0]}</td>
+                                    <td>{startDates.b1.b1_2[0]}</td>
+                                    <td>{startDates.b2.b2_1[0]}</td>
+                                    <td>{startDates.b2.b2_2[0]}</td>
+                                    <td>{startDates.c1.c1_1[0]}</td>
+                                    <td>{startDates.c1.c1_2[0]}</td>
                                 </tr>
                                 <tr>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_1[1]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_2[1]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_1[1]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_2[1]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_1[1]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_2[1]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_1[1]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_2[1]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_1[1]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_2[1]}</td>
+                                    <td>{startDates.a1.a1_1[1]}</td>
+                                    <td>{startDates.a1.a1_2[1]}</td>
+                                    <td>{startDates.a2.a2_1[1]}</td>
+                                    <td>{startDates.a2.a2_2[1]}</td>
+                                    <td>{startDates.b1.b1_1[1]}</td>
+                                    <td>{startDates.b1.b1_2[1]}</td>
+                                    <td>{startDates.b2.b2_1[1]}</td>
+                                    <td>{startDates.b2.b2_2[1]}</td>
+                                    <td>{startDates.c1.c1_1[1]}</td>
+                                    <td>{startDates.c1.c1_2[1]}</td>
                                 </tr>
                                 <tr>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_1[2]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_2[2]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_1[2]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_2[2]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_1[2]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_2[2]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_1[2]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_2[2]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_1[2]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_2[2]}</td>
+                                    <td>{startDates.a1.a1_1[2]}</td>
+                                    <td>{startDates.a1.a1_2[2]}</td>
+                                    <td>{startDates.a2.a2_1[2]}</td>
+                                    <td>{startDates.a2.a2_2[2]}</td>
+                                    <td>{startDates.b1.b1_1[2]}</td>
+                                    <td>{startDates.b1.b1_2[2]}</td>
+                                    <td>{startDates.b2.b2_1[2]}</td>
+                                    <td>{startDates.b2.b2_2[2]}</td>
+                                    <td>{startDates.c1.c1_1[2]}</td>
+                                    <td>{startDates.c1.c1_2[2]}</td>
                                 </tr>
                                 <tr>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_1[3]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_2[3]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_1[3]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_2[3]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_1[3]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_2[3]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_1[3]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_2[3]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_1[3]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_2[3]}</td>
+                                    <td>{startDates.a1.a1_1[3]}</td>
+                                    <td>{startDates.a1.a1_2[3]}</td>
+                                    <td>{startDates.a2.a2_1[3]}</td>
+                                    <td>{startDates.a2.a2_2[3]}</td>
+                                    <td>{startDates.b1.b1_1[3]}</td>
+                                    <td>{startDates.b1.b1_2[3]}</td>
+                                    <td>{startDates.b2.b2_1[3]}</td>
+                                    <td>{startDates.b2.b2_2[3]}</td>
+                                    <td>{startDates.c1.c1_1[3]}</td>
+                                    <td>{startDates.c1.c1_2[3]}</td>
                                 </tr>
                                 <tr>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_1[4]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a1.a1_2[4]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_1[4]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.a2.a2_2[4]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_1[4]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b1.b1_2[4]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_1[4]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.b2.b2_2[4]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_1[4]}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].startDates.c1.c1_2[4]}</td>
+                                    <td>{startDates.a1.a1_1[4]}</td>
+                                    <td>{startDates.a1.a1_2[4]}</td>
+                                    <td>{startDates.a2.a2_1[4]}</td>
+                                    <td>{startDates.a2.a2_2[4]}</td>
+                                    <td>{startDates.b1.b1_1[4]}</td>
+                                    <td>{startDates.b1.b1_2[4]}</td>
+                                    <td>{startDates.b2.b2_1[4]}</td>
+                                    <td>{startDates.b2.b2_2[4]}</td>
+                                    <td>{startDates.c1.c1_1[4]}</td>
+                                    <td>{startDates.c1.c1_2[4]}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="course-dates-info">
-                        <p><strong>{lang === 'tr' ? 'A1-8 W-160LH' : 'A1-8 W-160LH'}</strong></p>
-                        <p><strong>{lang === 'tr' ? 'A2-8 W-160LH' : 'A2-8 W-160LH'}</strong></p>
-                        <p><strong>{lang === 'tr' ? 'B1-8 W-200LH' : 'B1-8 W-200LH'}</strong></p>
-                        <p><strong>{lang === 'tr' ? 'B2-8W-200LH' : 'B2-8W-200LH'}</strong></p>
-                        <p><strong>{lang === 'tr' ? 'C1-8W-200LH' : 'C1-8W-200LH'}</strong></p>
+<p><strong>{lang === 'tr' ? 'A1 · 8 hft · 20+4 ders' : lang === 'de' ? 'A1 · 8 Wo. · 20+4 UStd' : 'A1 · 8 weeks · 20+ 4 lessons'}</strong></p>
+                                        <p><strong>{lang === 'tr' ? 'A2 · 8 hft · 20+4 ders' : lang === 'de' ? 'A2 · 8 Wo. · 20+4 UStd' : 'A2 · 8 weeks · 20+ 4 lessons'}</strong></p>
+                                        <p><strong>{lang === 'tr' ? 'B1 · 8 hft · 25+4 ders' : lang === 'de' ? 'B1 · 8 Wo. · 25+4 UStd' : 'B1 · 8 weeks · 25+ 4 lessons'}</strong></p>
+                                        <p><strong>{lang === 'tr' ? 'B2 · 8 hft · 25+4 ders' : lang === 'de' ? 'B2 · 8 Wo. · 25+4 UStd' : 'B2 · 8 weeks · 25+ 4 lessons'}</strong></p>
+                                        <p><strong>{lang === 'tr' ? 'C1 · 8 hft · 25+4 ders' : lang === 'de' ? 'C1 · 8 Wo. · 25+4 UStd' : 'C1 · 8 weeks · 25+ 4 lessons'}</strong></p>
                     </div>
                 </div>
                 
@@ -564,35 +475,35 @@ const translations = t[lang as keyof typeof t];
                             <div class="level-content">
                                 <h4>C1</h4>
                                 <p>{lang === 'tr' ? "Etkili Operasyonel Yeterlilik" : "Effective Operational Proficiency"}</p>
-                                <span class="level-duration">12+ {lang === 'tr' ? "hafta" : "Wochen"}</span>
+                                <span class="level-duration">12+ {lang === 'tr' ? "hft" : "Wo."}</span>
                             </div>
                         </div>
                         <div class="level-b2">
                             <div class="level-content">
                                 <h4>B2</h4>
                                 <p>Vantage</p>
-                                <span class="level-duration">12 {lang === 'tr' ? "hafta" : "Wochen"}</span>
+                                <span class="level-duration">12 {lang === 'tr' ? "hft" : "Wo."}</span>
                             </div>
                         </div>
                         <div class="level-b1">
                             <div class="level-content">
                                 <h4>B1</h4>
                                 <p>Threshold</p>
-                                <span class="level-duration">8 {lang === 'tr' ? "hafta" : "Wochen"}</span>
+                                <span class="level-duration">8 {lang === 'tr' ? "hft" : "Wo."}</span>
                             </div>
                         </div>
                         <div class="level-a2">
                             <div class="level-content">
                                 <h4>A2</h4>
                                 <p>Waystage</p>
-                                <span class="level-duration">8 {lang === 'tr' ? "hafta" : "Wochen"}</span>
+                                <span class="level-duration">8 {lang === 'tr' ? "hft" : "Wo."}</span>
                             </div>
                         </div>
                         <div class="level-a1">
                             <div class="level-content">
                                 <h4>A1</h4>
                                 <p>Breakthrough</p>
-                                <span class="level-duration">8 {lang === 'tr' ? "hafta" : "Wochen"}</span>
+                                <span class="level-duration">8 {lang === 'tr' ? "hft" : "Wo."}</span>
                             </div>
                         </div>
                     </div>
@@ -638,7 +549,7 @@ const translations = t[lang as keyof typeof t];
                                 : "Ein Universitätsstudium in Deutschland zu absolvieren ist ein mehrstufiger Prozess, der eine sorgfältige Planung und professionelle Unterstützung erfordert. Unser Universitätsvermittlungsprogramm / Pathway zielt darauf ab, Studierenden eine sichere, fundierte und umfassende Platzierung an deutschen Universitäten zu ermöglichen."}
                         </p>
                         <a href={`/${lang}/unsere-dienstleistungen/universite-yerlestirme`} class="service-cta">
-                            <span>{lang === 'tr' ? "Detayları Gör" : "Details ansehen"}</span>
+                            <span>{lang === 'tr' ? "Detay" : "Details"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -657,7 +568,7 @@ const translations = t[lang as keyof typeof t];
                                 : "Einer der kritischsten Schritte für Studierende, die in Deutschland studieren möchten, ist der Prozess des Studentenvisums. Unvollständige oder fehlerhafte Anträge können zu Verzögerungen oder sogar Ablehnungen führen. Unsere Visumsberatung zielt darauf ab, Studierende professionell vom Beginn des Antragsverfahrens bis zu dessen Abschluss zu begleiten."}
                         </p>
                         <a href={`/${lang}/unsere-dienstleistungen/vize-rehberligi`} class="service-cta">
-                            <span>{lang === 'tr' ? "Detayları Gör" : "Details ansehen"}</span>
+                            <span>{lang === 'tr' ? "Detay" : "Details"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -676,7 +587,7 @@ const translations = t[lang as keyof typeof t];
                                 : "Eine der wichtigsten Fragen beim Beginn des Studiums in Deutschland ist die Suche nach einer sicheren und geeigneten Unterkunft. Besonders für Studierende aus dem Ausland kann der Prozess der Unterkunftssuche komplex und stressig sein. Unser Service für Unterkunft und Wohnheim in Bremen zielt darauf ab, Studierenden diesen Prozess reibungslos und sicher zu ermöglichen."}
                         </p>
                         <a href={`/${lang}/unsere-dienstleistungen/konaklama`} class="service-cta">
-                            <span>{lang === 'tr' ? "Detayları Gör" : "Details ansehen"}</span>
+                            <span>{lang === 'tr' ? "Detay" : "Details"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -695,7 +606,7 @@ const translations = t[lang as keyof typeof t];
                                 : "Der Beginn eines Studiums im Ausland kann für Studierende, die zum ersten Mal nach Deutschland kommen, sowohl aufregend als auch herausfordernd sein. Nach einer langen Reise kann der Transport- und Ansiedlungsprozess in einer unbekannten Stadt stressig sein. Unser Flughafenabholservice zielt darauf ab, dass Studierende ihre ersten Tage in Deutschland sicher, komfortabel und reibungslos verbringen."}
                         </p>
                         <a href={`/${lang}/unsere-dienstleistungen/havalimani-karsilama`} class="service-cta">
-                            <span>{lang === 'tr' ? "Detayları Gör" : "Details ansehen"}</span>
+                            <span>{lang === 'tr' ? "Detay" : "Details"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -780,7 +691,7 @@ const translations = t[lang as keyof typeof t];
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>{lang === 'tr' ? "Seviye tespit sınavı, kayıt ücreti alınmaz, vize başvurusu için kurs belgesi, dijital ders kitabı, bireysel öğrenci danışmanlığı (1 kez, yaklaşık 45 dakika), 'Almanya'da Üniversite Eğitimi' konulu webinarlar, Campus German sertifikası, e-öğrenme platformu, yıl boyunca düzenlenen sosyal ve kültürel aktiviteler, tüm merkezlerde ücretsiz Wi-Fi erişimi." : "Einstufungstest, keine Anmeldegebühr, Kursbescheinigung für Visumantrag, digitales Lehrbuch, individuelle Studienberatung (1x, ca. 45 Minuten), Webinare zum Thema 'Studium in Deutschland', Campus German Zertifikat, E-Learning-Plattform, das ganze Jahr über stattfindende soziale und kulturelle Aktivitäten, kostenloser Wi-Fi-Zugang in allen Zentren."}</p>
+                        <p>{lang === 'tr' ? "Seviye tespit sınavı, kayıt ücreti alınmaz, vize başvurusu için kurs belgesi, dijital ders kitabı, bireysel öğrenci danışmanlığı (1 kez, yaklaşık 45 dk), 'Almanya'da Üniversite Eğitimi' konulu webinarlar, Campus German sertifikası, e-öğrenme platformu, yıl boyunca düzenlenen sosyal ve kültürel aktiviteler, tüm merkezlerde ücretsiz Wi-Fi erişimi." : "Einstufungstest, keine Anmeldegebühr, Kursbescheinigung für Visumantrag, digitales Lehrbuch, individuelle Studienberatung (1x, ca. 45 Min), Webinare zum Thema 'Studium in Deutschland', Campus German Zertifikat, E-Learning-Plattform, das ganze Jahr über stattfindende soziale und kulturelle Aktivitäten, kostenloser Wi-Fi-Zugang in allen Zentren."}</p>
                     </div>
                 </div>
                 

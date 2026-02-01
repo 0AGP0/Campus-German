@@ -1,32 +1,31 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
+import { cleanSlug, getServicesPath, isValidLang } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
   const allSunduklarimiz = await getCollection('unsere-dienstleistungen');
   
   const paths = [];
   
-  for (const hizmet of allSunduklarimiz) {
-    // Astro removes dots from slugs, so "universite-yerlestirme.tr.md" becomes "universite-yerlestirmetr"
-    // We need to check if slug ends with language code (tr, de, en)
-    const slug = hizmet.slug;
-    const langCode = hizmet.data.lang;
+  // Sadece Almanca sayfalar için
+  const almancaHizmetler = allSunduklarimiz.filter(hizmet => hizmet.data.lang === 'de');
+  
+  for (const hizmet of almancaHizmetler) {
+    const langCode = 'de';
     
-    // Check if slug ends with the language code
-    // e.g., "universite-yerlestirmetr" ends with "tr"
-    if (!slug.endsWith(langCode)) {
-      continue;
+    // Use customSlug if available, otherwise use default slug cleaning
+    let finalSlug;
+    if (hizmet.data.customSlug) {
+      finalSlug = hizmet.data.customSlug;
+    } else {
+      finalSlug = cleanSlug(hizmet.slug);
     }
-    
-    // Remove language code from end of slug
-    // "universite-yerlestirmetr" -> "universite-yerlestirme"
-    const cleanSlug = slug.slice(0, -langCode.length);
     
     paths.push({
       params: { 
         lang: langCode,
-        slug: cleanSlug
+        slug: finalSlug
       },
       props: { hizmet },
     });
@@ -38,6 +37,14 @@ export async function getStaticPaths() {
 const { hizmet } = Astro.props;
 const { Content } = await hizmet.render();
 const { lang } = Astro.params;
+
+// Lang tip kontrolü
+if (!isValidLang(lang)) {
+    throw new Error(`Invalid language: ${lang}`);
+}
+
+// Path helper'ları
+const servicesPath = getServicesPath(lang);
 ---
 
 <MainLayout title={`${hizmet.data.title} - CampusGerman`} lang={lang} includeHizmetCSS={true}>
@@ -106,13 +113,13 @@ const { lang } = Astro.params;
                         <div class="sidebar-widget">
                             <h3 class="widget-title">
                                 <i class="fas fa-phone-alt"></i>
-                                {lang === 'tr' ? 'Hızlı İletişim' : 'Schneller Kontakt'}
+                                {lang === 'tr' ? 'Hızlı İletişim' : lang === 'de' ? 'Schneller Kontakt' : 'Quick Contact'}
                             </h3>
                             <div class="widget-content">
                                 <p>{lang === 'tr' ? 'Hizmetlerimiz hakkında daha fazla bilgi almak için bizimle iletişime geçin.' : 'Kontaktieren Sie uns für weitere Informationen zu unseren Dienstleistungen.'}</p>
                                 <a href={`/${lang}/kontakt`} class="widget-button">
                                     <i class="fas fa-envelope"></i>
-                                    {lang === 'tr' ? 'İletişime Geç' : 'Kontakt aufnehmen'}
+                                    {lang === 'tr' ? 'İletişime Geç' : lang === 'de' ? 'Kontakt aufnehmen' : 'Contact Us'}
                                 </a>
                             </div>
                         </div>
@@ -121,12 +128,12 @@ const { lang } = Astro.params;
                         <div class="sidebar-widget">
                             <h3 class="widget-title">
                                 <i class="fas fa-list"></i>
-                                {lang === 'tr' ? 'Diğer Hizmetlerimiz' : 'Weitere Dienstleistungen'}
+                                {lang === 'tr' ? 'Diğer Hizmetlerimiz' : lang === 'de' ? 'Weitere Dienstleistungen' : 'Other Services'}
                             </h3>
                             <div class="widget-content">
                                 <ul class="related-list">
                                     <li>
-                                        <a href={`/${lang}/unsere-dienstleistungen/universite-yerlestirme`}>
+                                        <a href={`/${lang}/${servicesPath}/universite-yerlestirme`}>
                                             <i class="fas fa-university"></i>
                                             {lang === 'tr' ? 'Üniversite Yerleştirme' : 'Universitätsvermittlung'}
                                         </a>
@@ -175,7 +182,7 @@ const { lang } = Astro.params;
                         <div class="sidebar-widget cta-widget">
                             <h3 class="widget-title">
                                 <i class="fas fa-rocket"></i>
-                                {lang === 'tr' ? 'Hemen Başla' : 'Jetzt starten'}
+                                {lang === 'tr' ? 'Hemen Başla' : lang === 'de' ? 'Jetzt starten' : 'Get Started'}
                             </h3>
                             <div class="widget-content">
                                 <p>{lang === 'tr' ? 'Almanca öğrenme yolculuğunuza bugün başlayın!' : 'Starten Sie heute Ihre Deutschlernreise!'}</p>
@@ -214,25 +221,25 @@ const { lang } = Astro.params;
                     </div>
                     <div class="cta-form">
                         <div class="form-header">
-                            <h3>{lang === 'tr' ? 'Ücretsiz Bilgi Alın' : 'Kostenlose Informationen'}</h3>
-                            <p>{lang === 'tr' ? 'Size en uygun programı bulalım' : 'Lassen Sie uns das richtige Programm für Sie finden'}</p>
+                            <h3>{lang === 'tr' ? 'Ücretsiz Bilgi Alın' : lang === 'de' ? 'Kostenlose Informationen' : 'Get Free Information'}</h3>
+                            <p>{lang === 'tr' ? 'Size en uygun programı bulalım' : lang === 'de' ? 'Lassen Sie uns das richtige Programm für Sie finden' : 'Let us find the right program for you'}</p>
                         </div>
                         <form class="contact-form">
                             <div class="form-group">
-                                <input type="text" id="name" name="name" placeholder={lang === 'tr' ? 'Adınız Soyadınız' : 'Ihr Name'} required>
+                                <input type="text" id="name" name="name" placeholder={lang === 'tr' ? 'Adınız Soyadınız' : lang === 'de' ? 'Ihr Name' : 'Your Name'} required>
                                 <i class="fas fa-user"></i>
                             </div>
                             <div class="form-group">
-                                <input type="email" id="email" name="email" placeholder={lang === 'tr' ? 'E-posta Adresiniz' : 'Ihre E-Mail'} required>
+                                <input type="email" id="email" name="email" placeholder={lang === 'tr' ? 'E-posta Adresiniz' : lang === 'de' ? 'Ihre E-Mail' : 'Your Email'} required>
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div class="form-group">
-                                <input type="tel" id="phone" name="phone" placeholder={lang === 'tr' ? 'Telefon Numaranız' : 'Ihre Telefonnummer'} required>
+                                <input type="tel" id="phone" name="phone" placeholder={lang === 'tr' ? 'Telefon Numaranız' : lang === 'de' ? 'Ihre Telefonnummer' : 'Your Phone Number'} required>
                                 <i class="fas fa-phone"></i>
                             </div>
                             <button type="submit" class="submit-btn">
                                 <i class="fas fa-paper-plane"></i>
-                                <span>{lang === 'tr' ? 'Ücretsiz Bilgi Al' : 'Kostenlose Informationen anfordern'}</span>
+                                <span>{lang === 'tr' ? 'Ücretsiz Bilgi Al' : lang === 'de' ? 'Kostenlose Informationen anfordern' : 'Get Free Info'}</span>
                             </button>
                         </form>
                     </div>

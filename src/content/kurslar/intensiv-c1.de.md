@@ -1,6 +1,7 @@
 ---
 title: "Intensiv-Deutschkurs C1"
 lang: "de"
+customSlug: "intensiv-c1"
 badge:
   icon: "fas fa-fire"
   text: "C1-Niveau"
@@ -85,6 +86,5 @@ faqs:
   - question: "Gibt es Zahlungspläne und Rabatte?"
     answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
 
-hasDemandForm: true
 ---
 

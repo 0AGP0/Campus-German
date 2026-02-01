@@ -1,0 +1,308 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/dienstleistungen.css';
+import { getAdvantagesPath, isValidLang } from '../../utils/pathHelpers';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'es' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Lang tip kontrolü
+if (!isValidLang(lang)) {
+    throw new Error(`Invalid language: ${lang}`);
+}
+
+// Path helper'ları
+const advantagesPath = getAdvantagesPath(lang);
+
+// Translations
+const t = {
+    es: {
+        title: "Nuestras Ventajas - CampusGerman",
+        heroTitle: "Ventajas de CampusGerman",
+        heroDescription: "Ventajas especiales y servicios que le ofrecemos en su viaje de aprendizaje de alemán. Desde modelos de aprendizaje híbrido hasta clubes de conversación gratuitos, desde tours de ciudad hasta coaching de aprendizaje: ofrecemos una amplia gama de servicios.",
+        sectionTitle: "Nuestras Ventajas",
+        sectionSubtitle: "Ventajas especialmente diseñadas para cada necesidad",
+    }
+};
+
+const translations = t[lang as keyof typeof t];
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <!-- Hero Section -->
+    <section class="services-hero-section">
+        <div class="container">
+            <div class="services-hero-content">
+                <div class="hero-left">
+                    <h1 class="hero-title">
+                        {translations.heroTitle}
+                    </h1>
+                    
+                    <div class="hero-content">
+                        <p class="hero-description">
+                            {translations.heroDescription}
+                        </p>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <a href="#ventajas-cartas" class="btn-primary">
+                            <i class="fas fa-arrow-down"></i>
+                            Explorar Ventajas
+                        </a>
+                        <button class="btn-secondary" id="contactBtn">
+                            <i class="fas fa-envelope"></i>
+                            Contáctenos
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-right">
+                    <div class="hero-cta-card">
+                        <div class="cta-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="cta-title">Descubra Nuestras Ventajas</h3>
+                        <p class="cta-description">
+                            Ventajas especialmente diseñadas para cada necesidad, instructores experimentados y opciones de programa flexibles.
+                        </p>
+                        <div class="cta-stats">
+                            <div class="cta-stat">
+                                <div class="stat-number">5+</div>
+                                <div class="stat-label">Ventajas</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">100%</div>
+                                <div class="stat-label">Satisfacción</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">Soporte</div>
+                            </div>
+                        </div>
+                        <a href="#ventajas-cartas" class="cta-button">
+                            <i class="fas fa-arrow-down"></i>
+                            Ver Todas las Ventajas
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Ventajas Cartas Section -->
+    <section class="services-section" id="ventajas-cartas">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{translations.sectionTitle}</h2>
+                <p class="section-subtitle">{translations.sectionSubtitle}</p>
+            </div>
+            
+            <div class="services-grid" id="servicesGrid">
+                <!-- Aprendizaje Híbrido -->
+                <div class="service-card" id="aprendizaje-hibrido">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-laptop-house"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">Modelo de Aprendizaje Híbrido</h3>
+                            <p class="service-subtitle">Educación online y presencial</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            Oportunidad de aprendizaje flexible con modelo híbrido que combina educación online y presencial. Online cuando lo desee, en el campus cuando lo desee.
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Programa flexible</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Online y presencial</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Misma calidad</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/${advantagesPath}/aprendizaje-hibrido`} class="service-link">
+                            <span>Más Información</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tours de Ciudad y Universidad -->
+                <div class="service-card" id="tours-ciudad-universidad">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-map-marked-alt"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">Tours de Ciudad y Universidad</h3>
+                            <p class="service-subtitle">Experiencias culturales</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            Descubra la ciudad de Bremen y las universidades. Tours culturales, visitas a museos y actividades sociales: aprenda alemán mientras experimenta la cultura.
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Tours de ciudad</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Visitas a universidades</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Actividades culturales</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/${advantagesPath}/tours-ciudad-universidad`} class="service-link">
+                            <span>Más Información</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Club de Conversación -->
+                <div class="service-card" id="club-conversacion">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">Club de Conversación de Alemán Gratuito</h3>
+                            <p class="service-subtitle">Oportunidad de práctica</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            Practique alemán con nuestro club de conversación gratuito. Puede hacer práctica de conversación diaria con profesores hablantes nativos.
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Gratuito</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Hablantes nativos</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Práctica diaria</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/${advantagesPath}/club-conversacion`} class="service-link">
+                            <span>Más Información</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Coaching de Aprendizaje -->
+                <div class="service-card" id="coaching-aprendizaje">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">Coaching de Aprendizaje de Alemán Gratuito/Tutoría</h3>
+                            <p class="service-subtitle">Apoyo individual</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            Acelere su proceso de aprendizaje con coaching educativo gratuito y apoyo de tutoría. Consultoría individual y apoyo en tareas.
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Gratuito</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Apoyo individual</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Apoyo en tareas</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/${advantagesPath}/coaching-aprendizaje`} class="service-link">
+                            <span>Más Información</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Garantía -->
+                <div class="service-card" id="garantia-reembolso">
+                    <div class="service-header">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                        </div>
+                        <div class="service-header-text">
+                            <h3 class="service-title">Garantía de Reembolso o Repetición de Curso</h3>
+                            <p class="service-subtitle">Aprendizaje seguro</p>
+                        </div>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-description">
+                            Garantía de reembolso o repetición de curso si no está satisfecho. Una muestra de nuestro enfoque educativo orientado al éxito.
+                        </p>
+                        <ul class="service-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Reembolso</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Repetición de curso</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Garantía de éxito</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service-footer">
+                        <a href={`/${lang}/${advantagesPath}/garantia-reembolso`} class="service-link">
+                            <span>Más Información</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>

@@ -1,0 +1,258 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/dienstleistungen.css';
+import { getServicesPath, isValidLang } from '../../utils/pathHelpers';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'en' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Lang tip kontrolü
+if (!isValidLang(lang)) {
+    throw new Error(`Invalid language: ${lang}`);
+}
+
+// Path helper'ları
+const servicesPath = getServicesPath(lang);
+
+// Slug mapping: card.slug -> actual URL slug per language
+const slugs: Record<string, Record<string, string>> = {
+    universityPlacement: {
+        es: 'colocacion-universitaria',
+        en: 'university-placement',
+        de: 'universitaetsvermittlung',
+        tr: 'universite-yerlestirme'
+    },
+    visaGuidance: {
+        es: 'orientacion-visa',
+        en: 'visa-guidance',
+        de: 'visumsberatung',
+        tr: 'vize-rehberligi'
+    },
+    accommodation: {
+        es: 'alojamiento',
+        en: 'accommodation',
+        de: 'unterkunft',
+        tr: 'konaklama'
+    },
+    airportPickup: {
+        es: 'recogida-aeropuerto',
+        en: 'airport-pickup',
+        de: 'flughafenabholung',
+        tr: 'havalimani-karsilama'
+    },
+    insuranceBank: {
+        es: 'seguro-banco',
+        en: 'insurance-and-bank',
+        de: 'krankenversicherung-und-bank',
+        tr: 'sigorta-banka'
+    },
+    bureaucracy: {
+        es: 'apoyo-burocratico',
+        en: 'bureaucratic-support',
+        de: 'buerokratische-unterstuetzung',
+        tr: 'burokrasi-destegi'
+    },
+    freeResources: {
+        es: 'recursos-gratuitos',
+        en: 'free-resources',
+        de: 'kostenlose-ressourcen',
+        tr: 'ucretsiz-kaynaklar'
+    }
+};
+
+// Translations
+const t = {
+    en: {
+        title: "Our Services - CampusGerman",
+        heroTitle: "CampusGerman Services",
+        heroDescription: "Comprehensive services we offer you on your German learning journey. From university placement to visa guidance, from accommodation to airport pickup - we offer a wide range of services.",
+        sectionTitle: "Our Services",
+        sectionSubtitle: "Specially designed services for every need",
+        exploreButton: "Explore Services",
+        contactButton: "Get in Touch",
+        ctaTitle: "Discover Our Services",
+        ctaDescription: "Specially designed services for every need, experienced instructors and flexible program options.",
+        ctaStats: {
+            services: "Services",
+            satisfaction: "Satisfaction",
+            support: "Support"
+        },
+        viewAllButton: "View All Services",
+        learnMoreButton: "Learn More",
+        cards: [
+            {
+                id: "university-placement",
+                title: "University Placement Program / Pathway",
+                subtitle: "University in Germany",
+                description: "Comprehensive placement program for university education in Germany. Pathway programs and university application support.",
+                features: ["Pathway programs", "Application support", "Counseling"],
+                slug: "universityPlacement"
+            },
+            {
+                id: "visa-guidance",
+                title: "Visa Guidance",
+                subtitle: "Visa application support",
+                description: "Professional guidance in the German student visa application process. Application forms, required documents and process tracking.",
+                features: ["Application support", "Document review", "Process tracking"],
+                slug: "visaGuidance"
+            },
+            {
+                id: "accommodation",
+                title: "Bremen Accommodation and Dormitory Placement",
+                subtitle: "Secure accommodation",
+                description: "Student dormitories, host family accommodation and shared apartment options in Bremen. Accommodation support in safe and central locations.",
+                features: ["Student dormitories", "Host families", "Shared apartments"],
+                slug: "accommodation"
+            },
+            {
+                id: "airport-pickup",
+                title: "Airport Pickup",
+                subtitle: "Smooth arrival",
+                description: "Pickup from Bremen airport and transfer to your accommodation. Spend your first day smoothly.",
+                features: ["Airport pickup", "Transfer service", "24/7 support"],
+                slug: "airportPickup"
+            },
+            {
+                id: "insurance-bank",
+                title: "Health Insurance/Blocked Account and Bank Account",
+                subtitle: "Financial matters",
+                description: "Guidance and support on health insurance, blocked account and opening a bank account in Germany. Help with all your financial transactions.",
+                features: ["Health insurance", "Blocked account", "Bank account"],
+                slug: "insuranceBank"
+            },
+            {
+                id: "bureaucracy",
+                title: "Germany Bureaucracy Support",
+                subtitle: "Official procedures",
+                description: "Bureaucracy support for your official procedures in Germany. Help with residence permits, registration procedures and other official documents.",
+                features: ["Residence permit", "Registration procedures", "Document support"],
+                slug: "bureaucracy"
+            },
+            {
+                id: "free-resources",
+                title: "Free German Resources",
+                subtitle: "Learning materials",
+                description: "Free German learning materials, study guides and access to online resources. All tools to learn at your own pace.",
+                features: ["Free materials", "Online resources", "Study guides"],
+                slug: "freeResources"
+            }
+        ]
+    }
+};
+
+const translations = t[lang as keyof typeof t];
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <!-- Hero Section -->
+    <section class="services-hero-section">
+        <div class="container">
+            <div class="services-hero-content">
+                <div class="hero-left">
+                    <h1 class="hero-title">
+                        {translations.heroTitle}
+                    </h1>
+                    
+                    <div class="hero-content">
+                        <p class="hero-description">
+                            {translations.heroDescription}
+                        </p>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <a href="#hizmet-kartlari" class="btn-primary">
+                            <i class="fas fa-arrow-down"></i>
+                            {translations.exploreButton}
+                        </a>
+                        <button class="btn-secondary" id="contactBtn">
+                            <i class="fas fa-envelope"></i>
+                            {translations.contactButton}
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-right">
+                    <div class="hero-cta-card">
+                        <div class="cta-icon">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <h3 class="cta-title">{translations.ctaTitle}</h3>
+                        <p class="cta-description">
+                            {translations.ctaDescription}
+                        </p>
+                        <div class="cta-stats">
+                            <div class="cta-stat">
+                                <div class="stat-number">7+</div>
+                                <div class="stat-label">{translations.ctaStats.services}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">100%</div>
+                                <div class="stat-label">{translations.ctaStats.satisfaction}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">{translations.ctaStats.support}</div>
+                            </div>
+                        </div>
+                        <a href="#hizmet-kartlari" class="cta-button">
+                            <i class="fas fa-arrow-down"></i>
+                            {translations.viewAllButton}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Hizmet Kartları Section -->
+    <section class="services-section" id="hizmet-kartlari">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{translations.sectionTitle}</h2>
+                <p class="section-subtitle">{translations.sectionSubtitle}</p>
+            </div>
+            
+            <div class="services-grid" id="servicesGrid">
+                {translations.cards.map((card) => (
+                    <div class="service-card" id={card.id}>
+                        <div class="service-header">
+                            <div class="service-icon-wrapper">
+                                <div class="service-icon">
+                                    <i class={`fas fa-${card.id === 'university-placement' ? 'university' : card.id === 'visa-guidance' ? 'passport' : card.id === 'accommodation' ? 'home' : card.id === 'airport-pickup' ? 'plane-arrival' : card.id === 'insurance-bank' ? 'credit-card' : card.id === 'bureaucracy' ? 'file-alt' : 'book-open'}`}></i>
+                                </div>
+                            </div>
+                            <div class="service-header-text">
+                                <h3 class="service-title">{card.title}</h3>
+                                <p class="service-subtitle">{card.subtitle}</p>
+                            </div>
+                        </div>
+                        <div class="service-body">
+                            <p class="service-description">
+                                {card.description}
+                            </p>
+                            <ul class="service-features">
+                                {card.features.map((feature) => (
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>{feature}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div class="service-footer">
+                            <a href={`/${lang}/${servicesPath}/${slugs[card.slug][lang]}`} class="service-link">
+                                <span>{translations.learnMoreButton}</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+</MainLayout>

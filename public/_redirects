@@ -1,0 +1,7 @@
+# Yanlış Türkçe Hakkımızda path'i doğru path'e 301 yönlendir (Google index düzeltmesi)
+/tr/ueber-uns      /tr/hakkimizda      301!
+/tr/ueber-uns/     /tr/hakkimizda/     301!
+/tr/ueber-uns/*    /tr/hakkimizda/:splat   301!
+
+# www -> non-www (isteğe bağlı; host'ta da yapılabilir)
+# https://www.campusgerman.com/*  https://campusgerman.com/:splat  301!

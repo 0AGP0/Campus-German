@@ -1,6 +1,7 @@
 ---
 title: "Havaalanı Karşılama"
 lang: "tr"
+customSlug: "havalimani-karsilama"
 description: "Bremen havaalanından karşılama ve konaklama yerinize transfer hizmeti. İlk gününüzü sorunsuz geçirin."
 image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15 Ocak 2024"

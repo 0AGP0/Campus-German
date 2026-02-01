@@ -1,7 +1,8 @@
 ---
-title: "Vize Rehberliği"
+title: "Vize Bilgilendirmesi ve Kurs Belgeleri"
 lang: "tr"
-description: "Almanya öğrenci vizesi başvuru sürecinde profesyonel rehberlik. Başvuru formları, gerekli belgeler ve süreç takibi."
+customSlug: "vize-rehberligi"
+description: "Vize süreci hakkında bilgilendirme ve vize başvurusu için kurs belgeleri. Campus German bir dil okuludur ve vize danışmanlığı sunmaz."
 image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15 Ocak 2024"
 author: "CampusGerman Ekibi"
@@ -9,98 +10,81 @@ category: "Sunduklarımız"
 icon: "fas fa-passport"
 ---
 
-Almanya'da eğitim almak isteyen öğrenciler için en kritik adımlardan biri öğrenci vizesi sürecidir. Eksik veya hatalı yapılan başvurular, sürecin uzamasına hatta retle sonuçlanmasına neden olabilir. CampusGerman olarak sunduğumuz Vize Rehberliği, başvurunun en başından sonuçlanmasına kadar öğrencileri profesyonel şekilde yönlendirmeyi amaçlar.
+Campus German bir dil okuludur. **Vize danışmanlığı sunmuyoruz** ve vize sürecine dahil olmuyoruz. Ancak kurs kaydınız için gerekli kurs belgelerini ve sertifikaları hazırlıyoruz.
 
-## Almanya Öğrenci Vizesi Süreci
+## Ne Sunuyoruz: Kurs Belgeleri
 
-Almanya öğrenci vizesi süreci; belge hazırlığı, randevu alma, başvuru ve değerlendirme aşamalarından oluşur. CampusGerman, bu süreci öğrenciler için anlaşılır ve yönetilebilir hale getirir.
+Bir dil okulu olarak size aşağıdaki belgeleri sunuyoruz:
 
-Vize süreci boyunca öğrenciler:
+### Kurs Kayıt Belgesi (Anmelde-/Teilnahmebestätigung)
 
-- Hangi vize türüne başvuracaklarını netleştirir
-- Gerekli belgeleri doğru şekilde hazırlar
-- Başvuru takvimini kaçırmadan ilerler
+- Belirli bir kurs seviyesine kaydınızı onaylar
+- Kurs seviyesi, başlangıç tarihi ve ilgili kurs bilgilerini içerir
+- Almanca olarak düzenlenir
+- Ödeme hesaba geçtikten sonra 1 hafta içinde hazırlanır
 
-Bu yapı, sürecin stresini önemli ölçüde azaltır.
+### Vize Davet Mektubu (Opsiyonel)
 
-## Gerekli Belgeler Listesi
+- Öğrenci/acentanın talebi doğrultusunda ve ilgili ürün kapsamında düzenlenir
+- Ek ücret: +50 €
+- **Önemli:** Bu mektup bir "garanti" değildir; kurs kaydınıza ilişkin destekleyici bir belgedir.
 
-Vize başvurularında talep edilen belgeler öğrencinin durumuna göre değişiklik gösterebilir. Genel olarak gereken belgeler şunlardır:
+## Ne Sunmuyoruz
 
-- Kabul belgesi veya kurs kayıt belgesi
-- Pasaport ve biyometrik fotoğraf
-- Bloke hesap veya finansal teminat belgeleri
-- Sağlık sigortası
-- Dil yeterlilik belgeleri
-- Başvuru formları
+Campus German aşağıdaki hizmetleri **sunmaz**:
 
-CampusGerman, her öğrencinin durumuna özel belge kontrolü yaparak eksik veya hatalı evrak riskini en aza indirir.
+- ❌ Vize danışmanlığı
+- ❌ Vize dosyası hazırlama
+- ❌ Randevu/başvuru süreci yönetimi
+- ❌ Resmî kurumlar nezdinde temsil
+- ❌ Vize sürecine müdahil olma
+- ❌ Vize garantisi
 
-## Başvuru Formları ve Doldurma Rehberi
+**Neden?** Campus German bir dil okuludur. Dil eğitimi sunuyoruz ve kurs belgeleri hazırlıyoruz. Vize kararları resmî makamlar tarafından verilir.
 
-Vize başvuru formlarının doğru ve eksiksiz doldurulması büyük önem taşır. Yanlış veya tutarsız bilgiler, sürecin uzamasına neden olabilir. Bu aşamada öğrencilerimize:
+## Bremen Ausländerbehörde Bilgilendirmesi
 
-- Formların nasıl doldurulacağı
-- Hangi bilgilerin nasıl yazılması gerektiği
-- Dikkat edilmesi gereken noktalar
+Kurs kayıt belgesi düzenlendikten sonra, gerekli görülen durumlarda Campus German, Bremen Yabancılar Dairesi'ne kurs kaydınız hakkında bilgilendirme yapabilir.
 
-adım adım anlatılır. Gerektiğinde birebir destek sağlanır.
+**Anlaşılması gereken:**
+- Bu **vize danışmanlığı değildir**
+- Bu **vize takibi/temsil hizmeti değildir**
+- Sadece kurs kaydınızın **bildirimidir**
 
-## Süreç Takibi ve Danışmanlık
+Bu ayrım, hem hukuki netlik hem de doğru beklenti yönetimi için önemlidir.
 
-Vize başvurusu yapıldıktan sonra süreç bitmez. CampusGerman, başvurunun ardından da öğrencilerini yalnız bırakmaz. Süreç boyunca:
+## Belge Düzenleme: Sadece Tam Ödeme Yapılan Kurslar
 
-- Randevu tarihleri takip edilir
-- Konsolosluk talepleri değerlendirilir
-- Gerekli ek belgeler konusunda yönlendirme yapılır
+Campus German belgeleri yalnızca tam ödeme yapılan kurs seviyeleri için düzenler:
 
-Bu sayede öğrenciler, süreci bilinçli şekilde takip eder.
+- Belgeler yalnızca tam ödeme yapılan kurslar için düzenlenir
+- Diğer kurslar için "ön kayıt belgesi" düzenlenmez
+- Birden fazla kursu birlikte satın aldıysanız, belgeler yalnızca tam ödemesi yapılan kurslar için düzenlenir
 
-## Vize Türleri
+## Belge Düzenleme: Zaman Çerçevesi
 
-CampusGerman danışmanlığı kapsamında öğrenciler, kendilerine en uygun vize türü konusunda bilgilendirilir. Başlıca vize türleri:
+- **Ödeme yöntemi:** IBAN (banka havalesi)
+- **Belge hazırlama:** Ödeme hesaba geçtikten sonra 1 hafta içinde
+- **Belge dili:** Almanca
+- **İletim:** İlgili belgelerle birlikte e-posta ile
 
-- Öğrenci Vizesi
-- Dil Kursu Vizesi
-- Üniversiteye Hazırlık Amaçlı Vize
+## Sıkça Sorulan Sorular
 
-Her vize türü farklı şartlar içerdiği için, doğru seçim sürecin sağlıklı ilerlemesi açısından kritik öneme sahiptir.
+**Campus German vize danışmanlığı sunuyor mu?**  
+Hayır. Campus German bir dil okuludur. Dil eğitimi sunuyoruz ve kurs belgeleri hazırlıyoruz. Vize danışmanlığı sunmuyoruz.
 
-## Sık Karşılaşılan Sorunlar ve Çözümleri
+**Campus German vize başvurumda bana yardımcı olabilir mi?**  
+Size gerekli kurs belgelerini sağlıyoruz. Vize başvurusu kendinizin sorumluluğundadır.
 
-Vize sürecinde en sık karşılaşılan sorunlar şunlardır:
+**Kurs kayıt belgesi ile vize davet mektubu arasındaki fark nedir?**  
+Kurs kayıt belgesi kurs kaydınızı onaylar. Vize davet mektubu (opsiyonel, +50€) vize başvurunuz için ek bir destekleyici belgedir.
 
-- Eksik veya yanlış belge sunulması
-- Finansal yeterlilikle ilgili sorunlar
-- Yanlış vize türüne başvuru
-- Randevu tarihinin kaçırılması
+**Campus German vize onayı garantisi verebilir mi?**  
+Hayır. Campus German vize garantisi vermez. Vize kararları resmî makamlar tarafından verilir.
 
-CampusGerman, bu sorunları baştan önlemeyi hedefleyen bir danışmanlık sunar ve öğrencileri olası risklere karşı bilgilendirir.
+## Sonuç: Net Sınırlar, Net Hizmetler
 
-## Başvuru Zamanlaması
+Campus German bir dil okuludur. Yüksek kaliteli Almanca eğitimi sunuyoruz ve kurs kaydınız için gerekli belgeleri hazırlıyoruz. Vize danışmanlığı sunmuyoruz ve vize sürecine dahil olmuyoruz.
 
-Vize başvurularında doğru zamanlama büyük önem taşır. Başvuruların geç yapılması, eğitim başlangıç tarihinin kaçırılmasına yol açabilir. CampusGerman, öğrenciler için:
-
-- Başvuru takvimini planlar
-- Kritik tarihleri hatırlatır
-- Sürecin zamanında tamamlanmasını sağlar
-
-Bu sayede öğrenciler, eğitimlerine sorunsuz şekilde başlayabilir.
-
-## Öğrencilere Sağladığı Avantajlar
-
-Vize rehberliği hizmeti sayesinde öğrenciler:
-
-- Daha güvenli başvuru yapar
-- Süreç boyunca profesyonel destek alır
-- Stres ve belirsizlikten uzak ilerler
-- Hata riskini en aza indirir
-
-Bu destek, özellikle ilk kez vize başvurusu yapan öğrenciler için büyük bir avantaj sağlar.
-
-## Sonuç: Vize Sürecinde Yanınızdayız
-
-CampusGerman Vize Rehberliği, Almanya'da eğitim hedefleyen öğrenciler için güvenilir bir yol arkadaşıdır. Doğru bilgilendirme, eksiksiz belge hazırlığı ve sürekli danışmanlık sayesinde vize süreci daha hızlı ve sorunsuz ilerler.
-
-Almanya öğrenci vizesi sürecinizi güvenle yönetmek istiyorsanız, CampusGerman'ın profesyonel vize rehberliğiyle yanınızdayız.
+Kurslarımız veya kurs belgelerimiz hakkında sorularınız varsa, size yardımcı olmaktan memnuniyet duyarız. Vize süreci hakkında sorularınız için lütfen ilgili makamlara veya uzman bir vize danışmanına başvurun.
 

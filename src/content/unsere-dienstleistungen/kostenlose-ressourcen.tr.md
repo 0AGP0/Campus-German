@@ -1,6 +1,7 @@
 ---
 title: "Ücretsiz Almanca Kaynaklar"
 lang: "tr"
+customSlug: "ucretsiz-kaynaklar"
 description: "Ücretsiz Almanca öğrenme materyalleri, çalışma kılavuzları ve online kaynaklara erişim. Kendi hızınızda öğrenmek için tüm araçlar."
 image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15 Ocak 2024"

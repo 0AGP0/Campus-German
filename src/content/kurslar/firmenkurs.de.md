@@ -1,6 +1,7 @@
 ---
 title: "Deutschkurse speziell für Unternehmen"
 lang: "de"
+customSlug: "firmenkurs"
 badge:
   icon: "fas fa-briefcase"
   text: "Firmenkurs"

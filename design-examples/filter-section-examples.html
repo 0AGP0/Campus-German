@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Filtre bölümü örnekleri – Seç</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #0cc0df;
+      --primary-light: rgba(12, 192, 223, 0.15);
+      --secondary: #2c363f;
+      --text: #1a1a1a;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --white: #fff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f3f4f6;
+      color: var(--text);
+      padding: 24px 16px 48px;
+      margin: 0;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+    p.subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      font-size: 0.95rem;
+    }
+    .example-block {
+      max-width: 900px;
+      margin: 0 auto 56px;
+    }
+    .example-label {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--primary);
+      display: inline-block;
+    }
+    .example-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .demo-wrap {
+      background: var(--white);
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    /* —— Örnek A: Minimal çizgi —— */
+    .filter-a {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 20px;
+    }
+    .filter-a .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px 24px;
+    }
+    .filter-a .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+    .filter-a .search-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .filter-a input[type="text"] {
+      width: 100%;
+      height: 44px;
+      padding: 0 40px 0 40px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+    .filter-a input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .filter-a select {
+      height: 44px;
+      padding: 0 36px 0 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      background: var(--white);
+      min-width: 140px;
+    }
+    .filter-a .link-cta {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .filter-a .link-cta:hover { text-decoration: underline; }
+    .filter-a .count {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .filter-a .count strong { color: var(--primary); }
+
+    /* —— Örnek B: Chip / pill filtre —— */
+    .filter-b {
+      background: linear-gradient(180deg, rgba(12,192,223,0.06) 0%, #fff 100%);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(12,192,223,0.2);
+    }
+    .filter-b .search-row {
+      margin-bottom: 20px;
+    }
+    .filter-b .search-wrap {
+      position: relative;
+      max-width: 320px;
+    }
+    .filter-b .search-wrap i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+    }
+    .filter-b input[type="text"] {
+      width: 100%;
+      height: 48px;
+      padding: 0 16px 0 44px;
+      border: 2px solid rgba(12,192,223,0.3);
+      border-radius: 9999px;
+      font-size: 1rem;
+    }
+    .filter-b input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .filter-b .chip-row {
+      margin-bottom: 16px;
+    }
+    .filter-b .chip-row:last-of-type { margin-bottom: 0; }
+    .filter-b .chip-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .filter-b .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .filter-b .chip {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid var(--border);
+      background: var(--white);
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    .filter-b .chip:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .filter-b .chip.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--white);
+    }
+    .filter-b .footer-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .filter-b .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), #0aa5c0);
+      color: var(--white);
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .filter-b .count { font-size: 0.9rem; color: var(--text-muted); }
+    .filter-b .count strong { color: var(--primary); }
+
+    /* —— Örnek C: Koyu kart —— */
+    .filter-c {
+      background: var(--secondary);
+      border-radius: 20px;
+      padding: 28px;
+      color: var(--white);
+    }
+    .filter-c .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 20px 24px;
+    }
+    .filter-c .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 220px;
+    }
+    .filter-c .search-wrap i {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255,255,255,0.6);
+    }
+    .filter-c input[type="text"] {
+      width: 100%;
+      height: 50px;
+      padding: 0 18px 0 48px;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+      font-size: 1rem;
+    }
+    .filter-c input::placeholder { color: rgba(255,255,255,0.5); }
+    .filter-c input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: rgba(255,255,255,0.15);
+    }
+    .filter-c .group {
+      flex: 0 1 160px;
+    }
+    .filter-c .group-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 8px;
+    }
+    .filter-c .trigger {
+      width: 100%;
+      height: 50px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .filter-c .trigger:hover {
+      background: rgba(255,255,255,0.18);
+      border-color: rgba(255,255,255,0.4);
+    }
+    .filter-c .footer {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .filter-c .count { font-size: 0.9rem; color: rgba(255,255,255,0.85); }
+    .filter-c .count strong { color: var(--primary); }
+    .filter-c .btn-cta {
+      padding: 14px 26px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), #0aa5c0);
+      color: var(--white);
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    /* —— Örnek D: Sol sidebar (dar kolon) —— */
+    .filter-d-layout {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .filter-d-sidebar {
+      width: 260px;
+      flex-shrink: 0;
+      background: var(--white);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .filter-d .search-wrap {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .filter-d .search-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+    .filter-d input[type="text"] {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px 0 40px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+    }
+    .filter-d input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .filter-d .group {
+      margin-bottom: 18px;
+    }
+    .filter-d .group-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .filter-d .trigger {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #f9fafb;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .filter-d .trigger:hover {
+      border-color: var(--primary);
+      background: var(--white);
+    }
+    .filter-d .trigger i { font-size: 0.65rem; color: var(--text-muted); }
+    .filter-d .clear-btn {
+      margin-top: 16px;
+      padding: 8px 0;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .filter-d .clear-btn:hover { color: #dc2626; }
+    .filter-d .count {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .filter-d .count strong { color: var(--primary); }
+    .filter-d .btn-cta {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), #0aa5c0);
+      color: var(--white);
+      font-weight: 700;
+      text-decoration: none;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+    .filter-d-placeholder {
+      flex: 1;
+      min-height: 200px;
+      background: #f9fafb;
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Filtre bölümü örnekleri</h1>
+  <p class="subtitle">Beğendiğin numarayı söyle, projeye onu uygulayalım (A, B, C veya D).</p>
+
+  <!-- Örnek A -->
+  <div class="example-block">
+    <span class="example-label">Örnek A: Minimal çizgi</span>
+    <p class="example-desc">Kutu yok, sadece ince ayırıcı. Arama + 3 dropdown tek satırda. “Kursları Gör” metin link. Sade ve az dikkat çeker.</p>
+    <div class="demo-wrap">
+      <div class="filter-a">
+        <div class="row">
+          <div class="search-wrap">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Kurs ara..." />
+          </div>
+          <select><option>Tüm Seviyeler</option><option>A1</option><option>A2</option></select>
+          <select><option>Tüm Türler</option><option>Yüz Yüze</option><option>Online</option></select>
+          <select><option>Tüm Dönemler</option><option>Yaz</option><option>Yıl Boyu</option></select>
+          <span class="count"><strong>12</strong> kurs bulundu</span>
+          <a href="#" class="link-cta">Kursları Gör →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Örnek B -->
+  <div class="example-block">
+    <span class="example-label">Örnek B: Chip / pill filtre</span>
+    <p class="example-desc">Dropdown yok; tüm seçenekler yan yana pill. Seçili olan dolu renk. Tek tıkla filtre, görsel ve oyunlu.</p>
+    <div class="demo-wrap">
+      <div class="filter-b">
+        <div class="search-row">
+          <div class="search-wrap">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Kurs ara..." />
+          </div>
+        </div>
+        <div class="chip-row">
+          <div class="chip-label">Seviye</div>
+          <div class="chips">
+            <span class="chip active">Tümü</span>
+            <span class="chip">A1</span>
+            <span class="chip">A2</span>
+            <span class="chip">B1</span>
+            <span class="chip">B2</span>
+            <span class="chip">C1</span>
+            <span class="chip">C2</span>
+          </div>
+        </div>
+        <div class="chip-row">
+          <div class="chip-label">Tür</div>
+          <div class="chips">
+            <span class="chip active">Tümü</span>
+            <span class="chip">Yüz Yüze</span>
+            <span class="chip">Online</span>
+          </div>
+        </div>
+        <div class="chip-row">
+          <div class="chip-label">Dönem</div>
+          <div class="chips">
+            <span class="chip active">Tümü</span>
+            <span class="chip">Yaz</span>
+            <span class="chip">Yıl Boyu</span>
+          </div>
+        </div>
+        <div class="footer-row">
+          <span class="count"><strong>12</strong> kurs bulundu</span>
+          <a href="#" class="btn-cta"><i class="fas fa-arrow-right"></i> Kursları Gör</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Örnek C -->
+  <div class="example-block">
+    <span class="example-label">Örnek C: Koyu kart</span>
+    <p class="example-desc">Koyu arka plan (#2c363f), beyaz metin. Pill arama, dropdown’lar açık renk. Vurgulu ve modern.</p>
+    <div class="demo-wrap">
+      <div class="filter-c">
+        <div class="row">
+          <div class="search-wrap">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Kurs ara..." />
+          </div>
+          <div class="group">
+            <div class="group-label">Seviye</div>
+            <button type="button" class="trigger">Tüm Seviyeler <i class="fas fa-chevron-down"></i></button>
+          </div>
+          <div class="group">
+            <div class="group-label">Tür</div>
+            <button type="button" class="trigger">Tüm Türler <i class="fas fa-chevron-down"></i></button>
+          </div>
+          <div class="group">
+            <div class="group-label">Dönem</div>
+            <button type="button" class="trigger">Tüm Dönemler <i class="fas fa-chevron-down"></i></button>
+          </div>
+          <div class="footer">
+            <span class="count"><strong>12</strong> kurs bulundu</span>
+            <a href="#" class="btn-cta">Kursları Gör</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Örnek D -->
+  <div class="example-block">
+    <span class="example-label">Örnek D: Sol sidebar</span>
+    <p class="example-desc">Filtre solda dar kolon; kartlar sağda. Klasik e-ticaret/liste hissi. “Kursları Gör” altta tam genişlik buton.</p>
+    <div class="demo-wrap">
+      <div class="filter-d-layout">
+        <aside class="filter-d-sidebar filter-d">
+          <div class="search-wrap">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Kurs ara..." />
+          </div>
+          <div class="group">
+            <div class="group-label">Dil Seviyesi</div>
+            <button type="button" class="trigger">Tüm Seviyeler <i class="fas fa-chevron-down"></i></button>
+          </div>
+          <div class="group">
+            <div class="group-label">Kurs Türü</div>
+            <button type="button" class="trigger">Tüm Türler <i class="fas fa-chevron-down"></i></button>
+          </div>
+          <div class="group">
+            <div class="group-label">Dönem</div>
+            <button type="button" class="trigger">Tüm Dönemler <i class="fas fa-chevron-down"></i></button>
+          </div>
+          <button type="button" class="clear-btn">Temizle</button>
+          <p class="count"><strong>12</strong> kurs bulundu</p>
+          <a href="#" class="btn-cta">Kursları Gör</a>
+        </aside>
+        <div class="filter-d-placeholder">Kartlar buraya (sağda)</div>
+      </div>
+    </div>
+  </div>
+
+  <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">A, B, C veya D — hangisini istiyorsan söyle.</p>
+</body>
+</html>

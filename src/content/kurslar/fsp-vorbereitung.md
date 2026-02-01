@@ -1,6 +1,7 @@
 ---
 title: "FSP Sınav Hazırlık Eğitim"
 lang: "tr"
+customSlug: "fsp-hazirlik"
 badge:
   icon: "fas fa-stethoscope"
   text: "FSP"

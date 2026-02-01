@@ -1,6 +1,7 @@
 ---
 title: "Flughafenabholung"
 lang: "de"
+customSlug: "flughafenabholung"
 description: "Abholung vom Flughafen Bremen und Transfer zu Ihrer Unterkunft. Starten Sie Ihren ersten Tag in Deutschland stressfrei."
 image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15. Januar 2024"

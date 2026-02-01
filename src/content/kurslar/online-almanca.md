@@ -1,6 +1,7 @@
 ---
 title: "Canlı Online Almanca"
 lang: "tr"
+customSlug: "online-almanca"
 badge:
   icon: "fas fa-laptop"
   text: "Canlı & İnteraktif"

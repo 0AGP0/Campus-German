@@ -1,6 +1,7 @@
 ---
 title: "Karriere-Einstiegsprogramm / Career Pathway"
 lang: "de"
+customSlug: "karrierepfad"
 badge:
   icon: "fas fa-rocket"
   text: "Career Pathway"
@@ -103,6 +104,8 @@ faqs:
     answer: "Ja, wir bieten flexible Zahlungsmodelle an. Es stehen monatliche, dreimonatige und sechsmonatige Zahlungspläne zur Verfügung. Für Frühbuchungen, Gruppenanmeldungen und langfristige Programme sind Rabatte möglich. Kontaktieren Sie uns für weitere Informationen."
 hasDemandForm: true
 ---
+
+
 
 
 

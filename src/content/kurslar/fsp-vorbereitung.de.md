@@ -1,6 +1,7 @@
 ---
 title: "FSP-Prüfungsvorbereitung"
 lang: "de"
+customSlug: "fsp-vorbereitung"
 badge:
   icon: "fas fa-stethoscope"
   text: "FSP"

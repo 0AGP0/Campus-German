@@ -1,6 +1,7 @@
 ---
 title: "Doktor Almancası (Fachsprachprüfung)"
 lang: "tr"
+customSlug: "doktor-almancasi"
 badge:
   icon: "fas fa-user-md"
   text: "Tıp Uzmanları İçin"

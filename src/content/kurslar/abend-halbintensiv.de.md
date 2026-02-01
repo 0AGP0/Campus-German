@@ -1,6 +1,7 @@
 ---
 title: "Abendlicher Halbintensiv-Deutschkurs"
 lang: "de"
+customSlug: "abend-halbintensiv"
 badge:
   icon: "fas fa-moon"
   text: "Abendkurs"

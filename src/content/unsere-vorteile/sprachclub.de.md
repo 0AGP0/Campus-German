@@ -1,6 +1,7 @@
 ---
 title: "Kostenloser Deutsch-Konversationsclub"
 lang: "de"
+customSlug: "sprachclub"
 description: "Üben Sie Deutsch in unserem kostenlosen Konversationsclub – begleitet von Native Speakern und erfahrenen Lehrkräften."
 image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15. Januar 2024"
@@ -32,18 +33,32 @@ Der kostenlose Deutsch-Konversationsclub wird den CampusGerman-Teilnehmenden reg
 
 statt. Alle Teilnehmenden werden aktiv in die Gespräche eingebunden und nehmen nicht nur eine passive Zuhörerrolle ein.
 
-## Wie oft findet der Konversationsclub statt?
+## Wann findet der Konversationsclub statt?
 
-Der Konversationsclub wird in regelmäßigen Abständen organisiert. Die Termine werden periodisch geplant und rechtzeitig bekannt gegeben, sodass sie gut mit den bestehenden Kursplänen vereinbar sind. Dadurch können Teilnehmende ihre Sprechpraxis erweitern, ohne ihren regulären Lernrhythmus zu beeinträchtigen.
+Der Konversationsclub findet regelmäßig statt:
 
-## Rolle der Native Speaker und Lehrkräfte
+- **Tage:** Dienstag und Donnerstag
+- **Uhrzeit:** 18:00 – 20:00 Uhr
+- **Format:** Moderiertes, strukturiertes Sprechpraxis-Format
 
-Die Sitzungen des Konversationsclubs werden von erfahrenen Native Speakern oder Lehrkräften mit sehr hohem Deutschniveau geleitet. Ihre Aufgaben umfassen:
+Die Termine sind fest geplant und werden rechtzeitig bekannt gegeben, sodass sie gut mit den bestehenden Kursplänen vereinbar sind.
 
-- Moderation der Gespräche  
-- Vermittlung korrekter Aussprache und Ausdrucksweisen  
-- Motivation und Ermutigung der Teilnehmenden  
-- gezieltes Feedback zur Sprachverwendung  
+## Rolle der Moderatoren
+
+Die Sitzungen des Konversationsclubs werden von erfahrenen Moderatoren geleitet, die fließend Deutsch sprechen. Der Konversationsclub ist **nicht** ein "freies Gespräch", sondern wird strukturiert und moderiert durchgeführt.
+
+**Aufgaben der Moderatoren:**
+- Moderation der Gespräche und Sicherstellung, dass alle Teilnehmenden sprechen
+- Aufrechterhaltung einer lebendigen Atmosphäre
+- Verhindern, dass das Gespräch vom Thema abweicht
+- Reduzierung der Angst vor Fehlern bei den Teilnehmenden
+- Vermittlung korrekter Aussprache und Ausdrucksweisen
+- Motivation und Ermutigung der Teilnehmenden
+- Gezieltes Feedback zur Sprachverwendung
+
+**Format:**
+- Sprechpraxis wird durch Spiele und kleine Aufgaben verstärkt
+- Teilnehmende werden durch "kurze Sprechaufgaben" zum Sprechen ermutigt (mehr Routine als Freiwilligkeit)
 
 Dank dieser professionellen Begleitung lernen die Teilnehmenden, Deutsch authentisch und korrekt anzuwenden.
 
@@ -61,12 +76,18 @@ Die Themenauswahl erfolgt flexibel und orientiert sich am Sprachniveau sowie an 
 
 ## Teilnahmebedingungen
 
-Der kostenlose Deutsch-Konversationsclub ist ein exklusiver Vorteil für CampusGerman-Teilnehmende. Voraussetzungen für die Teilnahme sind:
+Der kostenlose Deutsch-Konversationsclub ist ein exklusiver Vorteil für CampusGerman-Teilnehmende.
 
-- aktive Einschreibung bei CampusGerman  
-- Teilnahme zu den angekündigten Terminen  
+### Lebenslange Teilnahmeberechtigung
 
-Für dieses Angebot fallen keine zusätzlichen Kosten an.
+- **Mindestens 3 Kurse gekauft:** Studierende, die mindestens 3 Kurse bei Campus German gekauft haben, erhalten eine **lebenslange Teilnahmeberechtigung** am Konversationsclub.
+
+**Ziel dieser Regelung:**
+- Studierenden nicht das Gefühl zu geben, dass die Beziehung nach Kursende endet
+- Studierenden zu ermöglichen, den Sprachkontakt langfristig aufrechtzuerhalten
+- Die Campus German Community lebendig zu halten
+
+**Wichtig:** Der Konversationsclub ist nicht "sınav odaklı" (prüfungsorientiert), sondern fokussiert sich auf "sosyal Almanca" (soziales Deutsch), um die Anpassung an das tägliche Leben in Deutschland zu beschleunigen.
 
 ## Möglichkeiten zur aktiven Praxis
 

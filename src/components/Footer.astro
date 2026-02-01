@@ -1,5 +1,7 @@
 ---
 // Footer Component - Yeni navbar yapısına göre güncellendi
+import '../styles/footer.css';
+
 const { lang = 'tr' } = Astro.props;
 
 const currentYear = new Date().getFullYear();
@@ -177,10 +179,220 @@ const t = {
         insuranceBank: "Krankenversicherung und Bank",
         bureaucracy: "Bürokratische Unterstützung",
         freeResources: "Kostenlose Deutschressourcen",
+    },
+    en: {
+        quickLinks: "Quick Links",
+        courses: "Courses",
+        about: "About Us",
+        advantages: "Our Advantages",
+        services: "Our Services",
+        contact: "Contact",
+        home: "Home",
+        successStories: "Success Stories",
+        contactInfo: "Contact Information",
+        address: "Address",
+        phone: "Phone",
+        email: "Email",
+        workingHours: "Working Hours",
+        hours: "Mon-Sat: 09:00-21:00",
+        allRightsReserved: "All rights reserved.",
+        privacyPolicy: "Privacy Policy",
+        termsOfUse: "Terms of Use",
+        cookiePolicy: "Cookie Policy",
+        description: "Premium educational services for learning German in Germany. Achieve your goals with conversation-focused teaching and personalized programs.",
+        // Kurs kategorileri
+        intensive: "Intensive Academic",
+        seasonal: "Seasonal",
+        online: "Online",
+        examPrep: "Exam Preparation",
+        corporate: "Corporate/Sponsored",
+        // Kurslar
+        intensiveOverview: "Intensive German Courses Overview",
+        universityPrep: "University Preparation Year Program",
+        intensiveA1: "Intensive German A1 Course",
+        intensiveA2: "Intensive German A2 Course",
+        intensiveB1: "Intensive German B1 Course",
+        intensiveB2: "Intensive German B2 Course",
+        intensiveC1: "Intensive German C1 Course",
+        seasonalOverview: "Seasonal German Courses Overview",
+        highSchoolSummer: "Summer School Program for High School Students",
+        universitySummer: "Summer School Program for Universities",
+        weeklyA1A2: "Weekly A1-A2 German Course",
+        weeklyB1C1: "Weekly B1-B2-C1 German Course",
+        eveningSemiIntensive: "Evening Semi-Intensive German Courses",
+        onlineOverview: "Online German Courses Overview",
+        onlineA1: "Online Intensive German A1 Course",
+        onlineA2: "Online Intensive German A2 Course",
+        onlineB1: "Online Intensive German B1 Course",
+        onlineB2: "Online Intensive German B2 Course",
+        onlineC1: "Online Intensive German C1 Course",
+        onlineExamPrep: "Online Goethe/TELC Exam Preparation Course",
+        examOverview: "German Exam Preparation Courses Overview",
+        goetheTelcA1: "Goethe/TELC A1 Preparation Course",
+        goetheTelcA2: "Goethe/TELC A2 Preparation Course",
+        goetheTelcB1: "Goethe/TELC B1 Preparation Course",
+        goetheTelcB2: "Goethe/TELC B2 Preparation Course",
+        goetheTelcC1: "Goethe/TELC C1 Preparation Course",
+        testdafDsh: "TestDaF/DSH Preparation Course",
+        corporatePrivate: "Corporate German Course",
+        bildungszeit: "German Course under Bildungszeit",
+        daad: "German Course for DAAD Scholarship Holders",
+        erasmusTeachers: "German Course for Erasmus+ Teachers",
+        erasmusStudents: "Special Courses for Erasmus Students",
+        career: "German Courses for Career and Profession",
+        careerPathway: "Career Pathway Program",
+        medical: "German Course for Medicine and Health Sciences",
+        fsp: "FSP Exam Preparation Training",
+        engineering: "German Course for Engineering and Technical Sciences",
+        economy: "German Course for Economics and Management Sciences",
+        // Hakkımızda
+        mission: "Our Mission",
+        qualityStandards: "Quality Standards",
+        partners: "Partnership Policy",
+        teachers: "Our Teachers",
+        media: "We in the Media",
+        // Avantajlarımız
+        hybridEducation: "Hybrid Learning Model",
+        cityTours: "City and University Tours",
+        speakingClub: "Free German Speaking Club",
+        coaching: "Free German Learning Coaching/Study Support",
+        guarantee: "Money-Back or Course Repeat Guarantee",
+        // Sunduklarımız
+        universityPlacement: "University Placement Program / Pathway",
+        visaGuidance: "Visa Guidance",
+        accommodation: "Bremen Accommodation and Dormitory Placement",
+        airportPickup: "Airport Pickup",
+        insuranceBank: "Health Insurance/Blocked Account and Bank Account",
+        bureaucracy: "German Bureaucracy Support",
+        freeResources: "Free German Resources",
+    },
+    es: {
+        quickLinks: "Enlaces Rápidos",
+        courses: "Cursos",
+        about: "Sobre Nosotros",
+        advantages: "Nuestras Ventajas",
+        services: "Nuestros Servicios",
+        contact: "Contacto",
+        home: "Inicio",
+        successStories: "Historias de Éxito",
+        contactInfo: "Información de Contacto",
+        address: "Dirección",
+        phone: "Teléfono",
+        email: "Correo Electrónico",
+        workingHours: "Horario de Atención",
+        hours: "Lun-Sáb: 09:00-21:00",
+        allRightsReserved: "Todos los derechos reservados.",
+        privacyPolicy: "Política de Privacidad",
+        termsOfUse: "Términos de Uso",
+        cookiePolicy: "Política de Cookies",
+        description: "Servicios educativos premium para aprender alemán en Alemania. Alcanza tus objetivos con enseñanza centrada en la conversación y programas personalizados.",
+        // Kurs kategorileri
+        intensive: "Intensivo Académico",
+        seasonal: "Estacional",
+        online: "Online",
+        examPrep: "Preparación de Exámenes",
+        corporate: "Empresarial/Patrocinado",
+        // Kurslar
+        intensiveOverview: "Resumen de Cursos Intensivos de Alemán",
+        universityPrep: "Programa de Año de Preparación Universitaria",
+        intensiveA1: "Curso Intensivo de Alemán A1",
+        intensiveA2: "Curso Intensivo de Alemán A2",
+        intensiveB1: "Curso Intensivo de Alemán B1",
+        intensiveB2: "Curso Intensivo de Alemán B2",
+        intensiveC1: "Curso Intensivo de Alemán C1",
+        seasonalOverview: "Resumen de Cursos Estacionales de Alemán",
+        highSchoolSummer: "Programa de Escuela de Verano para Estudiantes de Secundaria",
+        universitySummer: "Programa de Escuela de Verano para Universidades",
+        weeklyA1A2: "Curso Semanal de Alemán A1-A2",
+        weeklyB1C1: "Curso Semanal de Alemán B1-B2-C1",
+        eveningSemiIntensive: "Cursos Semi-Intensivos de Alemán Nocturnos",
+        onlineOverview: "Resumen de Cursos Online de Alemán",
+        onlineA1: "Curso Intensivo Online de Alemán A1",
+        onlineA2: "Curso Intensivo Online de Alemán A2",
+        onlineB1: "Curso Intensivo Online de Alemán B1",
+        onlineB2: "Curso Intensivo Online de Alemán B2",
+        onlineC1: "Curso Intensivo Online de Alemán C1",
+        onlineExamPrep: "Curso de Preparación de Exámenes Goethe/TELC Online",
+        examOverview: "Resumen de Cursos de Preparación de Exámenes de Alemán",
+        goetheTelcA1: "Curso de Preparación Goethe/TELC A1",
+        goetheTelcA2: "Curso de Preparación Goethe/TELC A2",
+        goetheTelcB1: "Curso de Preparación Goethe/TELC B1",
+        goetheTelcB2: "Curso de Preparación Goethe/TELC B2",
+        goetheTelcC1: "Curso de Preparación Goethe/TELC C1",
+        testdafDsh: "Curso de Preparación TestDaF/DSH",
+        corporatePrivate: "Curso de Alemán para Empresas",
+        bildungszeit: "Curso de Alemán dentro de Bildungszeit",
+        daad: "Curso de Alemán para Becarios DAAD",
+        erasmusTeachers: "Curso de Alemán para Profesores Erasmus+",
+        erasmusStudents: "Cursos Especiales para Estudiantes Erasmus",
+        career: "Cursos de Alemán para Carrera y Profesión",
+        careerPathway: "Programa de Trayectoria Profesional",
+        medical: "Curso de Alemán para Medicina y Ciencias de la Salud",
+        fsp: "Entrenamiento de Preparación de Examen FSP",
+        engineering: "Curso de Alemán para Ingeniería y Ciencias Técnicas",
+        economy: "Curso de Alemán para Economía y Ciencias de Gestión",
+        // Hakkımızda
+        mission: "Nuestra Misión",
+        qualityStandards: "Estándares de Calidad",
+        partners: "Política de Asociación",
+        teachers: "Nuestros Profesores",
+        media: "Nosotros en los Medios",
+        // Avantajlarımız
+        hybridEducation: "Modelo de Aprendizaje Híbrido",
+        cityTours: "Tours por la Ciudad y la Universidad",
+        speakingClub: "Club de Conversación Gratuito de Alemán",
+        coaching: "Coaching/Tutoría Gratuita de Alemán",
+        guarantee: "Garantía de Reembolso o Repetición del Curso",
+        // Sunduklarımız
+        universityPlacement: "Programa de Colocación Universitaria / Pathway",
+        visaGuidance: "Orientación de Visa",
+        accommodation: "Alojamiento en Bremen y Colocación en Residencia",
+        airportPickup: "Recogida en el Aeropuerto",
+        insuranceBank: "Seguro de Salud/Cuenta Bloqueada y Cuenta Bancaria",
+        bureaucracy: "Apoyo Burocrático en Alemania",
+        freeResources: "Recursos Gratuitos de Alemán",
     }
 };
 
 const currentLang = t[lang as keyof typeof t] || t.tr;
+
+// Section mapping for URLs
+const sectionMapping = {
+    tr: {
+        about: 'hakkimizda',
+        advantages: 'avantajlarimiz',
+        services: 'sunduklarimiz',
+        courses: 'kurslar',
+        contact: 'iletisim',
+        winners: 'basari-hikayeleri'
+    },
+    de: {
+        about: 'ueber-uns',
+        advantages: 'unsere-vorteile',
+        services: 'unsere-dienstleistungen',
+        courses: 'kurse',
+        contact: 'kontakt',
+        winners: 'erfolgsgeschichten'
+    },
+    en: {
+        about: 'about-us',
+        advantages: 'our-advantages',
+        services: 'our-services',
+        courses: 'courses',
+        contact: 'contact',
+        winners: 'success-stories'
+    },
+    es: {
+        about: 'sobre-nosotros',
+        advantages: 'nuestras-ventajas',
+        services: 'nuestros-servicios',
+        courses: 'cursos',
+        contact: 'contacto',
+        winners: 'historias-exito'
+    }
+};
+
+const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionMapping.tr;
 ---
 
 <!-- Footer -->
@@ -192,7 +404,7 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
                 <!-- Company Info -->
                 <div class="footer-column">
                     <div class="footer-logo">
-                        <img src="/German_logo.webp" alt="CampusGerman Logo" class="footer-logo-img">
+                        <img src="/Campusgerman_footer.png" alt="Campus German" class="footer-logo-img">
                     </div>
                     <p class="footer-description">
                         {currentLang.description}
@@ -221,12 +433,12 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
                     <h3 class="footer-title">{currentLang.quickLinks}</h3>
                     <ul class="footer-links">
                         <li><a href={`/${lang}/`}>{currentLang.home}</a></li>
-                        <li><a href={`/${lang}/kurslar`}>{currentLang.courses}</a></li>
-                        <li><a href={`/${lang}/ueber-uns`}>{currentLang.about}</a></li>
-                        <li><a href={`/${lang}/unsere-vorteile`}>{currentLang.advantages}</a></li>
-                        <li><a href={`/${lang}/unsere-dienstleistungen`}>{currentLang.services}</a></li>
-                        <li><a href={`/${lang}/erfolgsgeschichten`}>{currentLang.successStories}</a></li>
-                        <li><a href={`/${lang}/kontakt`}>{currentLang.contact}</a></li>
+                        <li><a href={`/${lang}/${sections.courses}`}>{currentLang.courses}</a></li>
+                        <li><a href={`/${lang}/${sections.about}`}>{currentLang.about}</a></li>
+                        <li><a href={`/${lang}/${sections.advantages}`}>{currentLang.advantages}</a></li>
+                        <li><a href={`/${lang}/${sections.services}`}>{currentLang.services}</a></li>
+                        <li><a href={`/${lang}/${sections.winners}`}>{currentLang.successStories}</a></li>
+                        <li><a href={`/${lang}/${sections.contact}`}>{currentLang.contact}</a></li>
                     </ul>
                 </div>
                 
@@ -234,11 +446,11 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
                 <div class="footer-column">
                     <h3 class="footer-title">{currentLang.courses}</h3>
                     <ul class="footer-links">
-                        <li><a href={`/${lang}/kurslar/intensiv-deutsch`}>{currentLang.intensiveOverview}</a></li>
-                        <li><a href={`/${lang}/kurslar/saisonal-uebersicht`}>{currentLang.seasonalOverview}</a></li>
-                        <li><a href={`/${lang}/kurslar/online-uebersicht`}>{currentLang.onlineOverview}</a></li>
-                        <li><a href={`/${lang}/kurslar/pruefungsvorbereitung-uebersicht`}>{currentLang.examOverview}</a></li>
-                        <li><a href={`/${lang}/kurslar`}>{lang === 'tr' ? 'Tüm Kurslar' : 'Alle Kurse'}</a></li>
+                        <li><a href={`/${lang}/${sections.courses}/intensiv-deutsch`}>{currentLang.intensiveOverview}</a></li>
+                        <li><a href={`/${lang}/${sections.courses}/saisonal-uebersicht`}>{currentLang.seasonalOverview}</a></li>
+                        <li><a href={`/${lang}/${sections.courses}/online-uebersicht`}>{currentLang.onlineOverview}</a></li>
+                        <li><a href={`/${lang}/${sections.courses}/pruefungsvorbereitung-uebersicht`}>{currentLang.examOverview}</a></li>
+                        <li><a href={`/${lang}/${sections.courses}`}>{lang === 'tr' ? 'Tüm Kurslar' : lang === 'de' ? 'Alle Kurse' : 'All Courses'}</a></li>
                     </ul>
                 </div>
                 
@@ -246,10 +458,10 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
                 <div class="footer-column">
                     <h3 class="footer-title">{currentLang.about}</h3>
                     <ul class="footer-links">
-                        <li><a href={`/${lang}/ueber-uns`}>{currentLang.about}</a></li>
-                        <li><a href={`/${lang}/unsere-vorteile`}>{currentLang.advantages}</a></li>
-                        <li><a href={`/${lang}/unsere-dienstleistungen`}>{currentLang.services}</a></li>
-                        <li><a href={`/${lang}/lehrkraefte`}>{currentLang.teachers}</a></li>
+                        <li><a href={`/${lang}/${sections.about}`}>{currentLang.about}</a></li>
+                        <li><a href={`/${lang}/${sections.advantages}`}>{currentLang.advantages}</a></li>
+                        <li><a href={`/${lang}/${sections.services}`}>{currentLang.services}</a></li>
+                        <li><a href={`/${lang}/${lang === 'tr' ? 'egitmenlerimiz' : lang === 'de' ? 'lehrkraefte' : 'our-teachers'}`}>{currentLang.teachers}</a></li>
                     </ul>
                 </div>
                 
@@ -261,14 +473,14 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
                             <i class="fas fa-map-marker-alt"></i>
                             <div>
                                 <strong>{currentLang.address}</strong>
-                                <span>{lang === 'tr' ? 'Almanya' : 'Deutschland'}</span>
+                                <span>Bürgermeister Smidt Straße 80, 28195 Bremen</span>
                             </div>
                         </div>
                         <div class="contact-item">
                             <i class="fas fa-phone"></i>
                             <div>
                                 <strong>{currentLang.phone}</strong>
-                                <span>+90 (212) 123 45 67</span>
+                                <span>+49 163 6927842</span>
                             </div>
                         </div>
                         <div class="contact-item">

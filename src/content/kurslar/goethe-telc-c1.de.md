@@ -1,6 +1,7 @@
 ---
 title: "Goethe/TELC C1 Prüfungsvorbereitungskurs"
 lang: "de"
+customSlug: "goethe-telc-c1"
 badge:
   icon: "fas fa-certificate"
   text: "C1 Prüfung"
@@ -43,8 +44,8 @@ tabs:
           text: "Im Kurs wird gezielt nach dem C1-Prüfungsformat gearbeitet. Alle vier Prüfungsteile (Lesen, Hören, Schreiben, Sprechen) werden intensiv trainiert und mit fortgeschrittenen Prüfungstechniken ergänzt. Schwerpunkte sind akademisches Schreiben, Text- und Argumentationsanalyse, wissenschaftliche Schreibtechniken sowie professionelle Präsentations- und Diskussionsfähigkeiten. Probeklausuren, prüfungsnahe Aufgaben und Simulationen bereiten umfassend auf die reale Prüfungssituation vor. Am Ende des Kurses verfügen die Teilnehmenden über alle notwendigen Fähigkeiten, um die C1-Prüfung erfolgreich abzulegen."
         - heading: "Lehrmethode und Unterrichtsumfeld"
           text: "Der Unterricht wird von erfahrenen Lehrkräften durchgeführt. Mit maximal 8 Teilnehmenden pro Gruppe ist eine sehr individuelle Betreuung gewährleistet. Der Kurs kombiniert prüfungsspezifische Übungen, akademische Schreibworkshops, Probeklausuren, regelmäßige Feedback-Sitzungen und individuelle Beratung. So entwickeln die Teilnehmenden sowohl sprachliche Sicherheit als auch akademische und professionelle Kompetenz."
-        - heading: "Erfolgsgarantie und Unterstützungsleistungen"
-          text: "Wir bieten eine Erfolgsquote von bis zu 95 %. Sollte die Prüfung beim ersten Versuch nicht bestanden werden, besteht die Möglichkeit einer Kurswiederholung. Darüber hinaus unterstützen wir bei der Prüfungsanmeldung und informieren über Prüfungstermine, Anmeldeverfahren und Prüfungsgebühren. Nach Kursabschluss sind die Teilnehmenden optimal auf das C1-Zertifikat vorbereitet und können sich an deutschen Universitäten bewerben."
+        - heading: "Unterstützungsleistungen"
+          text: "Wir unterstützen Sie bei der Prüfungsanmeldung und informieren über Prüfungstermine, Anmeldeverfahren und Prüfungsgebühren. Nach Kursabschluss sind die Teilnehmenden optimal auf das C1-Zertifikat vorbereitet und können sich an deutschen Universitäten bewerben. Sollte die Prüfung beim ersten Versuch nicht bestanden werden, besteht die Möglichkeit einer Kurswiederholung. **Wichtig:** Campus German gibt keine Prüfungserfolgsgarantie. Prüfungsergebnisse hängen von verschiedenen Faktoren ab und werden von den offiziellen Prüfungsstellen bestimmt."
   - id: "pruefungs-info"
     icon: "fas fa-certificate"
     title: "Prüfungsinformationen"
@@ -89,8 +90,9 @@ faqs:
   - question: "Gibt es Zahlungspläne und Rabatte?"
     answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
 
-hasDemandForm: true
 ---
+
+
 
 
 

@@ -1,6 +1,7 @@
 ---
 title: "Tıp ve Sağlık Bilimleri için Almanca Kursu"
 lang: "tr"
+customSlug: "saglik-tip"
 badge:
   icon: "fas fa-stethoscope"
   text: "Tıp/Sağlık"

@@ -1,10 +1,11 @@
 ---
 title: "Goethe/TELC C1 Hazırlık Kursu"
 lang: "tr"
+customSlug: "goethe-telc-c1"
 badge:
   icon: "fas fa-certificate"
   text: "C1 Sınav"
-description: "Goethe ve TELC C1 sınavlarına hazırlık. Üniversite seviyesi sınav hazırlığı ve başarı garantisi."
+description: "Goethe ve TELC C1 sınavlarına hazırlık. Üniversite seviyesi sınav hazırlığı ve kapsamlı hazırlık."
 image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
 features:
   - icon: "fas fa-clock"
@@ -43,8 +44,8 @@ tabs:
           text: "Kurs süresince öğrenciler, C1 sınav formatına özel hazırlık yaparlar. Sınavın dört bölümü (okuma, dinleme, yazma, konuşma) detaylı bir şekilde çalışılır ve sınav teknikleri öğretilir. Akademik yazma, metin analizi, araştırma yazma teknikleri ve profesyonel sunum becerileri öğretilir. Deneme sınavları, çıkmış sorular ve sınav simülasyonları ile öğrenciler gerçek sınav ortamına hazırlanırlar. Kurs sonunda öğrenciler, C1 sınavında başarılı olmak için gerekli tüm bilgi ve becerilere sahip olurlar."
         - heading: "Öğretim Metodu ve Sınıf Ortamı"
           text: "Kurs, deneyimli öğretmenler tarafından yürütülmektedir ve her sınıfta maksimum 8 öğrenci bulunur. Bu küçük sınıf mevcudu, öğrencilerin bireysel ihtiyaçlarına odaklanmayı sağlar. Dersler, sınav formatına özel alıştırmalar, akademik yazma çalışmaları, deneme sınavları, geri bildirim seansları ve bireysel danışmanlık ile zenginleştirilmiştir. Öğrenciler sadece dilbilgisi öğrenmekle kalmaz, aynı zamanda akademik ve profesyonel becerilerini de geliştirirler."
-        - heading: "Başarı Garantisi ve Destek Hizmetleri"
-          text: "%95 başarı oranı ile başarı garantisi sunuyoruz. Başarısız olursanız, kurs tekrarı imkanı vardır. Ayrıca, sınav başvuru süreçleri konusunda da destek sağlıyoruz. Öğrencilerimiz, sınav tarihleri, başvuru süreçleri ve sınav ücretleri konusunda bilgilendirilirler. Kurs sonunda, öğrenciler C1 seviye sertifikası almak için gerekli tüm hazırlığı tamamlamış olurlar ve Alman üniversitelerine başvuru yapabilirler."
+        - heading: "Destek Hizmetleri"
+          text: "Sınav başvuru süreçleri konusunda destek sağlıyoruz. Öğrencilerimiz, sınav tarihleri, başvuru süreçleri ve sınav ücretleri konusunda bilgilendirilirler. Kurs sonunda, öğrenciler C1 seviye sertifikası almak için gerekli tüm hazırlığı tamamlamış olurlar ve Alman üniversitelerine başvuru yapabilirler. Başarısız olursanız, kurs tekrarı imkanı vardır. **Önemli:** Campus German sınav başarı garantisi vermez. Sınav sonuçları çeşitli faktörlere bağlıdır ve resmî sınav kurumları tarafından belirlenir."
 faqs:
   - question: "C1 sınavı üniversite için yeterli mi?"
     answer: "Evet, C1 sınavı çoğu Alman üniversitesi için yeterlidir."

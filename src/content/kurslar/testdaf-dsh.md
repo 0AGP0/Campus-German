@@ -1,6 +1,7 @@
 ---
 title: "TestDaF/DSH Hazırlık Kursu"
 lang: "tr"
+customSlug: "testdaf-dsh"
 badge:
   icon: "fas fa-university"
   text: "Üniversite Sınavı"
@@ -43,8 +44,8 @@ tabs:
           text: "Kurs süresince öğrenciler, TestDaF ve DSH sınav formatına özel hazırlık yaparlar. Sınavın dört bölümü (okuma, dinleme, yazma, konuşma) detaylı bir şekilde çalışılır ve sınav teknikleri öğretilir. Akademik yazma, metin analizi, araştırma yazma teknikleri ve profesyonel sunum becerileri öğretilir. Deneme sınavları, çıkmış sorular ve sınav simülasyonları ile öğrenciler gerçek sınav ortamına hazırlanırlar. Kurs sonunda öğrenciler, TestDaF veya DSH sınavında başarılı olmak için gerekli tüm bilgi ve becerilere sahip olurlar."
         - heading: "Öğretim Metodu ve Sınıf Ortamı"
           text: "Kurs, deneyimli öğretmenler tarafından yürütülmektedir ve her sınıfta maksimum 6 öğrenci bulunur. Bu çok küçük sınıf mevcudu, öğrencilerin bireysel ihtiyaçlarına maksimum odaklanmayı sağlar. Dersler, sınav formatına özel alıştırmalar, akademik yazma çalışmaları, deneme sınavları, geri bildirim seansları ve bireysel danışmanlık ile zenginleştirilmiştir. Öğrenciler sadece dilbilgisi öğrenmekle kalmaz, aynı zamanda akademik ve profesyonel becerilerini de geliştirirler."
-        - heading: "Başarı Garantisi ve Destek Hizmetleri"
-          text: "%95 başarı oranı ile başarı garantisi sunuyoruz. Başarısız olursanız, kurs tekrarı imkanı vardır. Ayrıca, sınav başvuru süreçleri ve üniversite başvuru danışmanlığı konusunda da destek sağlıyoruz. Öğrencilerimiz, sınav tarihleri, başvuru süreçleri, sınav ücretleri ve üniversite başvuru süreçleri konusunda bilgilendirilirler. Kurs sonunda, öğrenciler TestDaF veya DSH sınavında başarılı olmak için gerekli tüm hazırlığı tamamlamış olurlar ve Alman üniversitelerine başvuru yapabilirler."
+        - heading: "Destek Hizmetleri"
+          text: "Sınav başvuru süreçleri konusunda destek sağlıyoruz. Öğrencilerimiz, sınav tarihleri, başvuru süreçleri ve sınav ücretleri konusunda bilgilendirilirler. Kurs sonunda, öğrenciler TestDaF veya DSH sınavı için gerekli tüm hazırlığı tamamlamış olurlar. Başarısız olursanız, kurs tekrarı imkanı vardır. **Önemli:** Campus German sınav başarı garantisi vermez ve üniversite başvuru danışmanlığı sunmaz. Sınav sonuçları ve üniversite kabul kararları çeşitli faktörlere bağlıdır ve resmî sınav kurumları ve üniversiteler tarafından belirlenir."
   - id: "sinav-bilgisi"
     icon: "fas fa-university"
     title: "Sınav Bilgileri"

@@ -4,7 +4,8 @@ const kurslarCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    lang: z.enum(['tr', 'de', 'en']),
+    lang: z.enum(['tr', 'de', 'en', 'es']),
+    customSlug: z.string().optional(),
     badge: z.object({
       icon: z.string(),
       text: z.string(),
@@ -71,7 +72,8 @@ const unsereVorteileCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    lang: z.enum(['tr', 'de', 'en']),
+    lang: z.enum(['tr', 'de', 'en', 'es']),
+    customSlug: z.string().optional(),
     description: z.string(),
     image: z.string(),
     date: z.string(),
@@ -85,7 +87,8 @@ const unsereDienstleistungenCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    lang: z.enum(['tr', 'de', 'en']),
+    lang: z.enum(['tr', 'de', 'en', 'es']),
+    customSlug: z.string().optional(),
     description: z.string(),
     image: z.string(),
     date: z.string(),
@@ -95,9 +98,29 @@ const unsereDienstleistungenCollection = defineCollection({
   }),
 });
 
+const ueberUnsCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    lang: z.enum(['tr', 'de', 'en', 'es']),
+    customSlug: z.string().optional(),
+    description: z.string(),
+    image: z.string().optional(),
+    icon: z.string(),
+    heroTitle: z.string().optional(),
+    heroDescription: z.string().optional(),
+    features: z.array(z.object({
+      icon: z.string(),
+      title: z.string(),
+      description: z.string(),
+    })).optional(),
+  }),
+});
+
 export const collections = {
   'kurslar': kurslarCollection,
   'unsere-vorteile': unsereVorteileCollection,
   'unsere-dienstleistungen': unsereDienstleistungenCollection,
+  'ueber-uns': ueberUnsCollection,
 };
 

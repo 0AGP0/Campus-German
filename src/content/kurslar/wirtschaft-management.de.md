@@ -1,6 +1,7 @@
 ---
 title: "Deutschkurs für Wirtschafts- und Managementwissenschaften"
 lang: "de"
+customSlug: "wirtschaft-management"
 badge:
   icon: "fas fa-chart-line"
   text: "Wirtschaft/Management"

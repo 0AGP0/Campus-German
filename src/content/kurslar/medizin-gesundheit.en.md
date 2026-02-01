@@ -1,0 +1,105 @@
+---
+title: "German Course for Medicine and Health Sciences"
+lang: "en"
+customSlug: "health-medicine"
+badge:
+  icon: "fas fa-stethoscope"
+  text: "Medicine/Health"
+description: "Special German course for medicine and health sciences students and professionals. Medical terms and professional German."
+image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Weekly Lessons"
+    description: "20-24 Lessons"
+  - icon: "fas fa-calendar-alt"
+    title: "Course Duration"
+    description: "12-24 Weeks"
+  - icon: "fas fa-users"
+    title: "Class Size"
+    description: "Maximum 10 People"
+  - icon: "fas fa-stethoscope"
+    title: "Focus"
+    description: "Medical German"
+heroButtons:
+  primary:
+    text: "Apply Now"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Program Details"
+    icon: "fas fa-info-circle"
+    href: "#program-details"
+tabs:
+  - id: "course-info"
+    icon: "fas fa-info-circle"
+    title: "Course Information"
+    content:
+      title: "About Medicine and Health Course"
+      paragraphs:
+        - heading: "Course Overview"
+          text: "The German Course for Medicine and Health Sciences is a program specially prepared for students and health professionals who want to use German effectively in medical, academic, and clinical contexts. This course offered by CampusGerman aims to provide participants planning medical education, working in the health field, or aiming for an academic career in Germany with a strong language infrastructure. Education and work environments in the medicine and health field in Germany require a high level of language proficiency. Patient communication, academic courses, clinical practices, and official documents are largely conducted in German. This course enables students to use the language as a professional tool by combining general German knowledge with medical terminology and professional communication. The CampusGerman German Course for Medicine and Health Sciences aims for participants to express themselves confidently in both academic and professional environments by combining theoretical knowledge with practical use."
+        - heading: "Target Audience and Prerequisites"
+          text: "This course is suitable for participants who need German in the medicine and health field. It is an ideal program especially for the following groups: Medicine, dentistry, pharmacy, or health sciences students Candidates planning to receive education in medicine or health field in Germany Professionals working as doctors, nurses, physiotherapists, or health personnel Those who want to follow medical courses, internships, and clinical environments in German At least B1 level general German knowledge is recommended for course participation. This level ensures more efficient learning of medical terms and patient communication. CampusGerman directs students to the right program by conducting level assessment before the course."
+        - heading: "Course Content and Learning Goals"
+          text: "The German Course for Medicine and Health Sciences focuses on medical German and academic language use. The course content includes: Medical terminology and basic concepts Patient–doctor communication Medical report and record language Reading and analyzing academic texts Expressions used in clinical and health environments The learning goal is for the student to be able to use German correctly, understandably, and professionally in the health field. At the end of the course, participants can communicate more comfortably in clinical and academic environments."
+        - heading: "Teaching Method and Classroom Environment"
+          text: "This course at CampusGerman is conducted with a practice-based and communication-focused method. In classes: Real patient scenarios Role-playing Academic and clinical case analyses Listening, speaking, and writing exercises are used. The classroom environment is supportive and active participation of students is encouraged. Instructors are experienced in medical German and have field knowledge."
+        - heading: "Post-Course Progress"
+          text: "Students who complete the German Course for Medicine and Health Sciences: Develop medical German vocabulary More easily adapt to health education in Germany Express themselves more comfortably in clinical and academic environments Prepare for FSP, professional equivalency, or advanced programs CampusGerman continues to guide students on advanced exam preparations and career-focused programs after the course."
+  - id: "dates-prices"
+    icon: "fas fa-calendar-alt"
+    title: "Dates and Prices"
+    content:
+      title: "Price Information"
+      pricing:
+        - name: "12 Weeks Medicine/Health"
+          duration: "12 Weeks"
+          schedule: "20-24 Lessons/Week"
+          price: "Special Pricing"
+          highlighted: true
+  - id: "program-details"
+    icon: "fas fa-book-open"
+    title: "Program Details"
+    content:
+      title: "Program Content"
+      items:
+        - icon: "fas fa-check-circle"
+          text: "<strong>Medical Terms:</strong> Medicine and health field terms"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Patient Communication:</strong> Patient and patient relative communication"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Medical Reports:</strong> Writing and reading medical reports"
+        - icon: "fas fa-check-circle"
+          text: "<strong>FSP Preparation:</strong> FSP exam preparation support"
+faqs:
+  - question: "Is there FSP exam preparation?"
+    answer: "Yes, the program includes FSP exam preparation support."
+  - question: "What level should I start from?"
+    answer: "At least B2 level is recommended, but C1 level is the ideal level."
+  - question: "What course formats are offered?"
+    answer: "Our courses offer you a flexible learning experience: Hybrid Education: Your course consists of a combination of face-to-face classes and live online classes. Thanks to the hybrid system, you can also attend classes online whenever you want on face-to-face class days. Live Online Education: In this format, you attend classes completely live and online."
+  - question: "What content is covered in the courses?"
+    answer: "Our Intensive German programs include listening and reading comprehension with current texts, comprehensive grammar studies, and various communication-focused activities. This aims to develop your speaking and writing skills in a goal-oriented manner."
+  - question: "How can I get university education in Germany?"
+    answer: "To receive university education in Germany, you must first have recognized university entrance qualification (HZB). It is recommended to check whether your diploma is recognized in Germany through the anabin system. You also need to document your German language proficiency with official certificates such as telc, DSH. The Campus German University Preparation Program is designed for you to prepare for this process completely."
+  - question: "What requirements are necessary?"
+    answer: "You must be at least 18 years old. You must submit a blocked account opened in Germany or an official commitment letter."
+  - question: "What types of visas are recommended?"
+    answer: "Student Visa: Also covers the right to participate in preparatory German courses. There is no visa requirement for EU citizens."
+  - question: "What services are included in the courses?"
+    answer: "Placement test, no registration fee, course certificate for visa application, digital textbook, individual student counseling (1 time, approximately 45 minutes), webinars on 'University Education in Germany', Campus German certificate, e-learning platform, social and cultural activities organized throughout the year, free Wi-Fi access at all centers."
+  - question: "What are the qualifications of our instructors?"
+    answer: "Our teaching staff consists of university graduates with many years of teaching experience in German as a Foreign Language (DaF) and German as a Second Language (DaZ), experts in their field, and highly motivated people. We also have Federal Office for Migration and Refugees (BAMF) approved instructors. Our lessons are regularly evaluated by students."
+  - question: "How long does it take to learn German?"
+    answer: "German learning time depends on your goal and current level. You can complete the basic levels from A1 to B2 in 6-8 months. Advanced levels such as C1 and C2 may require an additional 4-6 months. You can shorten this time with our intensive courses."
+  - question: "Can I get a Goethe certificate?"
+    answer: "Yes, we offer Goethe certificate preparation courses at CampusGerman. We provide exam preparation at all levels from A1 to C2. You can take certificate exams at our campus or be directed to nearby test centers."
+  - question: "Are accommodation options available?"
+    answer: "Yes, we offer accommodation options in Germany. Student dormitories, homestay accommodation, and shared apartments are available. Our accommodation service is not included in the course fee, but we help you find the most suitable options."
+  - question: "Are payment plans and discounts available?"
+    answer: "Yes, we offer flexible payment plans. Monthly, 3-month, and 6-month payment options are available. There are discounts for early registration, group registrations, and long-term programs. Contact us for detailed information."
+hasDemandForm: true
+---
+
+<!-- Content will be added here -->
+

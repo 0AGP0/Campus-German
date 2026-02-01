@@ -1,6 +1,7 @@
 ---
 title: "Deutschkurs für Ingenieurwesen und Technische Wissenschaften"
 lang: "de"
+customSlug: "ingenieurwesen-technik"
 badge:
   icon: "fas fa-cogs"
   text: "Ingenieurwesen"

@@ -1,14 +1,46 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/index.css';
+import { getCollection } from 'astro:content';
+import { isOverviewPage, getSectionPath, cleanSlug } from '../../utils/pathHelpers';
+import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo } from '../../utils/coursePricingHelper';
+import { getNavbarCourseSlugs, navbarCourseSlugsByLang } from '../../data/navbarCourseSlugs';
 
 export async function getStaticPaths() {
     return [
         { params: { lang: 'tr' } },
         { params: { lang: 'de' } },
+        { params: { lang: 'en' } },
+        { params: { lang: 'es' } },
     ];
 }
 
 const { lang } = Astro.params;
+
+// Kurslar sayfası path (dil bazlı)
+const courseBase = getSectionPath(lang);
+const courseBasePath = `/${lang}/${courseBase}`;
+// Form/başvuru sayfası path (hero ve CTA butonları için)
+const bookingSlug = lang === 'tr' || lang === 'de' ? 'buchung' : lang === 'en' ? 'booking' : 'reservar';
+const bookingPath = `/${lang}/${bookingSlug}`;
+
+// Kursları çek (ana sayfa filtre bölümü) – sadece navbar'da olan kurslar, navbar sırasına göre
+const allKurslar = await getCollection('kurslar');
+const kurslarByLang = allKurslar.filter(kurs => kurs.data.lang === lang);
+const allowedSlugs = getNavbarCourseSlugs(lang);
+const orderList = navbarCourseSlugsByLang[lang] ?? navbarCourseSlugsByLang.de;
+const filtered = kurslarByLang.filter(kurs => {
+  if (isOverviewPage(kurs.slug)) return false;
+  const urlSlug = kurs.data.customSlug || cleanSlug(kurs.slug);
+  return allowedSlugs.has(urlSlug);
+});
+const anaKurslar = [...filtered].sort((a, b) => {
+  const slugA = a.data.customSlug || cleanSlug(a.slug);
+  const slugB = b.data.customSlug || cleanSlug(b.slug);
+  const idxA = orderList.indexOf(slugA);
+  const idxB = orderList.indexOf(slugB);
+  return (idxA === -1 ? 9999 : idxA) - (idxB === -1 ? 9999 : idxB);
+});
 
 // Translations
 const t = {
@@ -22,17 +54,61 @@ const t = {
         },
         heroDescription: "CampusGerman ile Almanca öğrenmek artık çok kolay! Konuşma odaklı eğitim, native speaker öğretmenler ve kişiselleştirilmiş programlarla hedeflerinize ulaşın.",
         heroFeatures: ["Sınırlı Kontenjan", "Kültür Programları", "Goethe-Telc-Test Daf-FSP"],
-        heroCta1: "Ücretsiz Seviye Tespiti",
+        heroCta1: "Hemen Başvur",
         heroCta2: "Whatsapptan Bilgi Al<br>EN/DE/TUR/ES",
         trustItems: [
             { number: "2000+", label: "Mutlu Öğrenci" },
             { number: "98%", label: "Farklı Millet" },
             { number: "15+", label: "Ana Dilinde Eğitmen" }
         ],
+        logoSliderTitle: "Partner Üniversitelerimiz",
+        whyChooseTitle: "Neden Campus German?",
+        whyChooseSubtitle: "Kaliteli eğitim, güvenilir sonuçlar ve sizin için tasarlanmış programlar.",
+        whyChooseCards: [
+            { title: "Güvenilir Eğitim", desc: "Kaliteli Almanca eğitimi, akredite programlar ve deneyimli öğretmenlerle güvenilir sonuçlar." },
+            { title: "Bremen'de Öğrenin", desc: "UNESCO kültür şehri Bremen'de, öğrenci dostu ortamda Hochdeutsch ile öğrenin." },
+            { title: "Kişiselleştirilmiş Program", desc: "İhtiyacınıza göre program seçin, 24/7 danışmanlık ve esnek başlama tarihleri." },
+            { title: "Uluslararası Aile", desc: "Farklı ülkelerden öğrencilerin oluşturduğu güvenli, çeşitli ve destekleyici topluluk." },
+            { title: "Garantili İlerleme", desc: "Net sonuçlar: Sınav hazırlığı ve üniversite yolunda ilerlemeniz şeffaf ve güvence altında." },
+            { title: "Yeni Kapılar", desc: "Almanca, Almanya ve AB'de eğitim ve kariyer kapılarını sizin için açar." }
+        ],
+        courseFilterTitle: "Kursunuzu Bulun",
+        courseFilterSubtitle: "İhtiyacınıza uygun programı seçin, detaylar için kurslar sayfamıza gidin.",
+        courseFilterAll: "Tüm Kurslar",
+        courseFilterIntensiv: "Yoğun Almanca",
+        courseFilterOnline: "Online Kurslar",
+        courseFilterSeasonal: "Dönemsel / Haftalık",
+        courseFilterExam: "Sınav Hazırlığı",
+        courseFilterCta: "Kursları Gör",
+        courseFilterCountLabel: "kurs",
+        courseFilterSearchPlaceholder: "Kurs ara...",
+        courseFilterLevelLabel: "Dil Seviyesi",
+        courseFilterTypeLabel: "Kurs Türü",
+        courseFilterPeriodLabel: "Dönem",
+        courseFilterAllLevels: "Tüm Seviyeler",
+        courseFilterAllTypes: "Tüm Kurslar",
+        courseFilterAllPeriods: "Tüm Dönemler",
+        courseFilterInPerson: "Yüz Yüze",
+        courseFilterTypeOnline: "Online",
+        courseFilterSummer: "Yaz Dönemi",
+        courseFilterYearRound: "Yıl Boyu",
+        courseFilterClear: "Temizle",
+        courseFilterResultsFound: "kurs bulundu",
+        courseFilterNoResults: "Sonuç bulunamadı",
+        courseFilterPage: "Sayfa",
+        courseFilterPrev: "Önceki",
+        courseFilterNext: "Sonraki",
+        courseCardStartingPrices: "başlayan fiyatlarla",
+        courseCardContactUs: "İletişime geç",
+        courseCardLessons: "20+4 ders",
         coursesTitle: "En Çok Tercih Edilen Kurslar",
         coursesSubtitle: "Bremen'de 10 öğrenciden 9unun ilk tercihi Campus German oldu. Sınırlı kontenjandan yararlanmak için yerini şimdiden ayırt, Almancayı kusursuz öğren!",
         courseBookButton: "Yer Ayırt",
         courseDetailsButton: "Detaylar",
+        countdownDiscountTitle: "%10 İndirim",
+        countdownDiscountDesc: "Kuponu rezervasyon formunda girin",
+        countdownGrabCta: "İndirimi Kap",
+        countdownEndsIn: "Bitiş",
         // Hero video section
         videoTitle: "CampusGerman Tanıtım",
         floatingInfo1Title: "A1-C1 Seviye",
@@ -43,10 +119,26 @@ const t = {
         floatingInfo3Subtitle: "Kulübü",
         // Courses section
         bremenDescription: "Yüksek Almancanın konuşulduğu Unesco kültür şehri Bremen'de öğrencilerimiz için başarı odaklı programlarla sizlerleyiz.",
+        bremenMiniTitle: "Neden Bremen?",
+        bremenMiniDesc: "Öğrenci dostu şehir, sosyal yaşam, Hochdeutsch avantajı ve deneyim odaklı öğrenme için ideal bir ortam.",
+        marketRealitiesTitle: "Piyasa Gerçekleri & Çözümler",
+        marketRealitiesDesc: "Memnuniyetsizlik ve kur tekrarı döngüsünü eğitmen standardı, müfredat tutarlılığı, konuşma odaklı yapı ve hibrit süreklilik ile kırıyoruz.",
         whyCampusGerman: "Neden CampusGerman?",
         whyCampusGermanText: "Almanya'nın en güzel üniversite şehirlerinden birinde, 50,000'den fazla öğrenciye ev sahipliği yapan bu tarihi şehirde, Almanca öğrenirken aynı zamanda Alman kültürünü de keşfedebilirsiniz.",
         methodologyTitle: "Eğitim Metodolojimiz",
         methodologyText: "Konuşma odaklı eğitim yaklaşımımızla, sadece gramer kurallarını öğrenmez, aynı zamanda günlük hayatta Almanca konuşmayı da öğrenirsiniz.",
+        // Why Bremen comparison
+        whyBremenTitle: "Neden Bremen'de Okunmalı?",
+        whyBremenSubtitle: "Almanca Telaffuz ve Akıcılıkta En İyi",
+        whyBremenLabelBremen: "Bremen",
+        whyBremenLabelOthers: "Diğer Şehirler / Eyaletler",
+        whyBremenItems: [
+            { topic: "Almanca Telaffuz ve Akıcılıkta En İyi", othersTopic: "Fazla Aksanlı Karmaşık Almanca Yapısı ve Zorluk", bremen: "Bremen yüksek Almanca konuşulan bölgede yer almakta olup Almancayı öğrenmek açısından en kolay şehirdir.", others: "Almanca dışında yerelde hakim olan Dialekt (Bayerisch, Kölnisch) Almanca yapısını zorlaştırmaktadır." },
+            { topic: "Üniversite Şehri ve 0 Dille %100 Önkabul İmkanı", othersTopic: "Üniversiteye Zor Giriş ve Yabancı Kontenjanı", bremen: "Bremen Üni ve HS Bremen Lisans ve Master bölümleri için şartlı kabul sunmakta ve uluslararası öğrenci dostudur.", others: "Diğer eyaletlerde üniversite dil hazırlık için şartlı kabul öngörmez ve düşük yabancı öğrenci kontenjanı vardır." },
+            { topic: "2 Yıllık Oturum ve Öğrenci Dostu Yabancılar Dairesi", othersTopic: "Geçici İkamet Kağıdı ve Tekrar Bloke Hesap Sorunu", bremen: "Bremen yabancılar dairesi dil hazırlık öğrencilerine 2 yıla ve üniversite öğrencilerine 3 yıl oturum direkt vermektedir.", others: "Diğer eyaletler öğrencilere direkt oturum vermeyip vizenin sonuna kadar bekletip tekrar bloke hesap istemektedir." },
+            { topic: "Güçlü Markaları, İş Piyasası ve Werder Bremen", othersTopic: "Görece Düşük İş Piyasası, Yüksek Yaşam Maliyeti", bremen: "Bremen şehri meşhur Werder Bremen takımı ve tanınmış Becks birası, Jacobs kahvesi ve Airbus, Mercedes fabrikası ile bölgede çeşitli iş fırsatları sunmaktadır.", others: "Büyük şehirlerde yüksek kira fiyatları ve yoğunlaşmış yabancı nüfusu ile iş imkanları oldukça rekabetçi olup, stress seviyesi yüksek ve fırsatlar açısından düşüktür." },
+            { topic: "Kültür ve Entelektüel Şehir ve Ucuz Uçuşlar", othersTopic: "Sanayi ve Göçmen Yoğun, Beton Şehirler", bremen: "Bremen şehri orta çağ mimarisiyle, mızıkacıları ve müzik şölenleri ile tanınmaktadır. Şehir merkezine tramvayla 15dk olan havaalanı pek çok Avrupa içi ucuz uçuş imkanı sağlar. Bremen şehri yüksek yeşil oranı ve bisiklet yolları ile Almanya'da öncüdür.", others: "Aşırı sanayileşme, yoğun göç ve plansız yapılaşma yaşam kalitesini ve entegrasyonu zorlaştırmaktadır." }
+        ],
         // Course cards
         weeklyCourseTitle: "Haftalık Almanca Kursu",
         weeklyCourseDesc: "Haftalık Programlar",
@@ -68,7 +160,7 @@ const t = {
         examPrepFeature1: "1000den fazla öğrenci deneyimi",
         examPrepFeature2: "Çıkmış sorular odaklı çalışma",
         examPrepFeature3: "En az 3 örnek sınav similasyonu",
-        examPrepPriceLabel: "%100 başarı garantisi/Tekrar kur imkanı",
+        examPrepPriceLabel: "Kapsamlı hazırlık/Tekrar kur imkanı",
         examPrepPrice: "350€'dan başlar",
         examPrepPricePeriod: "40 saat / Sınav ücretleri hariçtir.",
         popularBadge: "En Popüler",
@@ -184,6 +276,8 @@ const t = {
         faq7Answer2: "Ayrıca Federal Göç ve Mülteciler Dairesi (BAMF) onaylı eğitmenlerimiz bulunmaktadır. Derslerimiz düzenli olarak öğrenciler tarafından değerlendirilir.",
         faq8Question: "Almanca öğrenmek ne kadar sürer?",
         faq8Answer: "Almanca öğrenme süresi hedefinize ve mevcut seviyenize bağlıdır. A1'den B2'ye kadar olan temel seviyeleri 6-8 ayda tamamlayabilirsiniz. C1 ve C2 gibi ileri seviyeler için ek 4-6 ay gerekebilir. Yoğun kurslarımızla bu süreyi kısaltabilirsiniz.",
+        faq11Question: "Ödeme planları ve indirimler mevcut mu?",
+        faq11Answer: "Evet, esnek ödeme planları sunuyoruz. Aylık, 3 aylık ve 6 aylık ödeme seçenekleri mevcuttur. Erken kayıt, grup kayıtları ve uzun dönem programlar için indirimler bulunmaktadır. Detaylı bilgi için bizimle iletişime geçin.",
         faq9Question: "Goethe sertifikası alabilir miyim?",
         faq9Answer: "Evet, CampusGerman'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz.",
         faq10Question: "Konaklama seçenekleri mevcut mu?",
@@ -191,140 +285,449 @@ const t = {
         faq11Question: "Ödeme planları ve indirimler mevcut mu?",
         faq11Answer: "Evet, esnek ödeme planları sunuyoruz. Aylık, 3 aylık ve 6 aylık ödeme seçenekleri mevcuttur. Erken kayıt, grup kayıtları ve uzun dönem programlar için indirimler bulunmaktadır. Detaylı bilgi için bizimle iletişime geçin.",
     },
+    en: {
+        title: "CampusGerman - German Language Course",
+        heroBadge: "Premium German Education",
+        heroTitle: {
+            main: "Learn German",
+            highlight: "by Speaking",
+            sub: ""
+        },
+        heroDescription: "Learning German is easy with CampusGerman! Reach your goals with conversation-focused education, native speaker teachers, and personalized programs.",
+        heroFeatures: ["Limited Quota", "Cultural Programs", "Goethe-Telc-TestDaF-FSP"],
+        heroCta1: "Apply Now",
+        heroCta2: "Get Info via WhatsApp<br>EN/DE/TUR/ES",
+        trustItems: [
+            { number: "2000+", label: "Happy Students" },
+            { number: "98%", label: "Different Nations" },
+            { number: "15+", label: "Native Teachers" }
+        ],
+        logoSliderTitle: "Our Partner Universities",
+        whyChooseTitle: "Why Campus German?",
+        whyChooseSubtitle: "Quality education, reliable results and programmes designed for you.",
+        whyChooseCards: [
+            { title: "Trusted Education", desc: "Quality German education, accredited programmes and experienced teachers for reliable results." },
+            { title: "Learn in Bremen", desc: "Study in UNESCO city Bremen, in a student-friendly environment with Hochdeutsch." },
+            { title: "Personalised Programme", desc: "Choose a programme to suit your needs, with 24/7 support and flexible start dates." },
+            { title: "International Community", desc: "A safe, diverse and supportive community of students from around the world." },
+            { title: "Guaranteed Progress", desc: "Clear results: Your progress towards exams and university is transparent and guaranteed." },
+            { title: "Open Doors", desc: "German opens doors to study and career opportunities in Germany and the EU." }
+        ],
+        courseFilterTitle: "Find Your Course",
+        courseFilterSubtitle: "Choose the programme that suits you and visit our courses page for details.",
+        courseFilterAll: "All Courses",
+        courseFilterIntensiv: "Intensive German",
+        courseFilterOnline: "Online Courses",
+        courseFilterSeasonal: "Seasonal / Weekly",
+        courseFilterExam: "Exam Preparation",
+        courseFilterCta: "View Courses",
+        courseFilterCountLabel: "courses",
+        courseFilterSearchPlaceholder: "Search courses...",
+        courseFilterLevelLabel: "Level",
+        courseFilterTypeLabel: "Course Type",
+        courseFilterPeriodLabel: "Period",
+        courseFilterAllLevels: "All Levels",
+        courseFilterAllTypes: "All Courses",
+        courseFilterAllPeriods: "All Periods",
+        courseFilterInPerson: "In Person",
+        courseFilterTypeOnline: "Online",
+        courseFilterSummer: "Summer",
+        courseFilterYearRound: "Year Round",
+        courseFilterClear: "Clear",
+        courseFilterResultsFound: "courses found",
+        courseFilterNoResults: "No results found",
+        courseFilterPage: "Page",
+        courseFilterPrev: "Previous",
+        courseFilterNext: "Next",
+        courseCardStartingPrices: "starting at",
+        courseCardContactUs: "Contact us",
+        courseCardLessons: "20+4 lessons",
+        coursesTitle: "Most Popular Courses",
+        coursesSubtitle: "9 out of 10 students in Bremen chose Campus German as their first choice. Reserve your spot now to learn German perfectly from limited quota!",
+        courseBookButton: "Reserve Spot",
+        courseDetailsButton: "Details",
+        countdownDiscountTitle: "10% Off",
+        countdownDiscountDesc: "Enter coupon on booking form",
+        countdownGrabCta: "Grab Discount",
+        countdownEndsIn: "Ends in",
+        videoTitle: "CampusGerman Introduction",
+        floatingInfo1Title: "A1-C1 Levels",
+        floatingInfo1Subtitle: "Exam Prep",
+        floatingInfo2Title: "City-Uni",
+        floatingInfo2Subtitle: "Tours",
+        floatingInfo3Title: "Speaking",
+        floatingInfo3Subtitle: "Club",
+        bremenDescription: "We are with you in Bremen, a UNESCO cultural city where High German is spoken, with success-oriented programs for our students.",
+        bremenMiniTitle: "Why Bremen?",
+        bremenMiniDesc: "Student-friendly city, social life, Hochdeutsch advantage, and an ideal environment for experience-oriented learning.",
+        marketRealitiesTitle: "Market Realities & Solutions",
+        marketRealitiesDesc: "We break the cycle of dissatisfaction and course repetition with teacher standards, curriculum consistency, speaking-oriented structure, and hybrid continuity.",
+        whyCampusGerman: "Why CampusGerman?",
+        whyCampusGermanText: "In one of Germany's most beautiful university cities, this historic city that hosts more than 50,000 students, you can not only learn German but also discover German culture.",
+        methodologyTitle: "Our Teaching Methodology",
+        methodologyText: "With our conversation-focused teaching approach, you not only learn grammar rules, but also learn to speak German in everyday life.",
+        // Why Bremen comparison
+        whyBremenTitle: "Why Study German in Bremen?",
+        whyBremenSubtitle: "Best for German Pronunciation and Fluency",
+        whyBremenLabelBremen: "Bremen",
+        whyBremenLabelOthers: "Other Cities / States",
+        whyBremenItems: [
+            { topic: "Best for German Pronunciation and Fluency", bremen: "Bremen is located in a High German-speaking region and is one of the easiest cities to learn German.", others: "Local dialects (Bavarian, Cologne German) dominant in other regions make standard German harder to acquire." },
+            { topic: "University City and 100% Conditional Admission with 0 Language", bremen: "University of Bremen and HS Bremen offer conditional admission for Bachelor and Master programmes and are international-student friendly.", others: "Other states often do not offer conditional admission for language preparation and have lower quotas for international students." },
+            { topic: "2-Year Residence Permit and Student-Friendly Foreigners Office", bremen: "Bremen's foreigners office grants language-prep students 2 years and university students 3 years of residence directly.", others: "Other states often delay residence until the end of the visa and require a new blocked account." },
+            { topic: "Strong Brands, Job Market and Werder Bremen", bremen: "Bremen is home to Werder Bremen, Becks beer, Jacobs coffee, and Airbus and Mercedes factories, offering diverse job opportunities in the region.", others: "In larger cities, high rents and concentrated foreign populations make the job market highly competitive with higher stress and fewer opportunities." },
+            { topic: "Culture, Green City and Cheap Flights", bremen: "Bremen is known for its medieval architecture, Town Musicians and music festivals. The airport is 15 minutes by tram to the centre and offers many cheap intra-European flights. Bremen leads in green space and cycle paths in Germany.", others: "Over-industrialisation, heavy migration and unplanned development reduce quality of life and make integration harder." }
+        ],
+        // Course cards
+        weeklyCourseTitle: "Weekly German Course",
+        weeklyCourseDesc: "Weekly Programs",
+        weeklyCourseFeature1: "20 hours/week",
+        weeklyCourseFeature2: "Weekly accommodation options",
+        weeklyCourseFeature3: "Flexible start plan",
+        weeklyCoursePriceLabel: "Hybrid/Online participation possible",
+        weeklyCoursePrice: "starts from 160€",
+        universityPrepTitle: "University Preparation School",
+        universityPrepDesc: "The right program for conditional university admission or for TELC, TestDaF, and Goethe exams.",
+        universityPrepFeature1: "20 Hours/Week",
+        universityPrepFeature2: "Invitation for student visa",
+        universityPrepFeature3: "Speaking club free",
+        universityPrepPriceLabel: "Professional preparation from A1 to C1",
+        universityPrepPricePeriod: "1 Course / 8 - 12 Weeks",
+        universityPrepPriceWarning: "! This offer is limited by quota until March 31st.",
+        examPrepTitle: "Online Exam Preparation",
+        examPrepDesc: "Prepare for TELC, TestDaF, Goethe A1-C1, FSP exams optimally with native-speaking teachers wherever you want.",
+        examPrepFeature1: "Experience with over 1000 students",
+        examPrepFeature2: "Focus on past exam questions",
+        examPrepFeature3: "At least 3 sample exam simulations",
+        examPrepPriceLabel: "Comprehensive preparation/Repeat course possible",
+        examPrepPrice: "starts from 350€",
+        examPrepPricePeriod: "40 hours / Exam fees not included.",
+        popularBadge: "Most Popular",
+        freeTrialTitle: "Try a Free Trial Lesson!",
+        freeTrialDesc: "Experience our quality before starting the course. Join our conversation club for free!",
+        freeTrialButton: "Book Free Trial",
+        advantagesTitle: "Our Advantages",
+        advantagesSubtitle: "Why should you choose CampusGerman?",
+        advantage1Title: "Hybrid Learning Model",
+        advantage1Desc: "Flexible learning with combined online and face-to-face education",
+        advantage1Link: "Learn More",
+        advantage2Title: "City and University Tours",
+        advantage2Desc: "Explore Bremen and its universities. Cultural tours",
+        advantage2Link: "Learn More",
+        advantage3Title: "Free Speaking Club",
+        advantage3Desc: "Practice German with native speaker teachers",
+        advantage3Link: "Learn More",
+        advantage4Title: "Free Learning Coaching",
+        advantage4Desc: "Accelerate your learning with tutoring support",
+        advantage4Link: "Learn More",
+        servicesTitle: "Our Services",
+        servicesSubtitle: "Everything you need for your education in Germany",
+        service1Title: "University Placement",
+        service1Desc: "Comprehensive placement program for university education in Germany",
+        service1Meta1: "University Application",
+        service1Meta2: "Student Visa",
+        service1Link: "View Details",
+        service2Title: "Visa Guidance",
+        service2Desc: "Information and support for visa applications",
+        service2Meta1: "Document Preparation",
+        service2Meta2: "Guidance",
+        service2Link: "View Details",
+        service3Title: "Accommodation",
+        service3Desc: "Temporary accommodation support in Bremen",
+        service3Meta1: "Student Dormitories",
+        service3Meta2: "Shared Apartments",
+        service3Link: "View Details",
+        service4Title: "Airport Pickup",
+        service4Desc: "Pickup and transfer from Bremen airport",
+        service4Meta1: "Airport Pickup",
+        service4Meta2: "Transfer Service",
+        service4Link: "View Details",
+        discoverMoreTitle: "Discover More Programs",
+        discoverMoreDesc: "Explore education and career opportunities in Germany. Review all our services and find the most suitable program for you.",
+        discoverMoreStat1: "7+ Services",
+        discoverMoreStat2: "100% Satisfaction",
+        discoverMoreStat3: "24/7 Support",
+        discoverMoreLink: "View All Services",
+        successStoriesTitle: "Our Success Stories",
+        successStoriesSubtitle: "Listen to our students' experiences and get inspired",
+        video1Title: "Maria's Success Story",
+        video1Desc: "Maria reached B2 level in just 8 months starting from A1 level. She now studies Business Administration at a university in Germany.",
+        video1Link: "Read Story",
+        video2Title: "Ahmet's Journey",
+        video2Desc: "Ahmet came from Turkey and studied at CampusGerman. He now works at a company in Germany.",
+        video2Link: "Read Story",
+        video1Alt: "Student Experience 1",
+        video2Alt: "Student Experience 2",
+        ctaTitle: "Start Learning German",
+        ctaDescription: "Learn German at CampusGerman and build a new future in Germany. Contact us now for free consultation!",
+        ctaFeature1: "Free Placement Test",
+        ctaFeature2: "Flexible Program Options",
+        ctaFeature3: "Native Speaker Teachers",
+        ctaFormTitle: "Get Free Information",
+        ctaFormSubtitle: "Let us find the most suitable program for you",
+        formNamePlaceholder: "Your Name",
+        formEmailPlaceholder: "Your Email",
+        formPhonePlaceholder: "Your Phone Number",
+        formInterestPlaceholder: "Your Interest",
+        formInterestOption1: "A1-A2 Beginner",
+        formInterestOption2: "B1-B2 Intermediate",
+        formInterestOption3: "C1-C2 Advanced",
+        formInterestOption4: "University Preparation",
+        formInterestOption5: "Professional Training",
+        formInterestOption6: "Online Course",
+        formMessagePlaceholder: "Your Message (Optional)",
+        formSubmit: "Get Free Info",
+        formFooter: "Your information is securely protected",
+        reviewsTitle: "Student Reviews",
+        reviewsSubtitle: "Listen to our success stories",
+        review1Text: "\"With the German I learned at CampusGerman, I study Business Administration at a university in Germany. My teachers were very patient and I progressed quickly thanks to the conversation-focused education.\"",
+        review2Text: "\"I came from Turkey and studied at CampusGerman. I now work at a company in Germany. The program was very comprehensive and greatly helped me find a job.\"",
+        review3Text: "\"I wanted to learn German for work. Thanks to the education I received at CampusGerman, I got promoted at my company. It was especially useful for business German.\"",
+        review4Text: "\"I came from Spain to Germany and took the university preparation course at CampusGerman. I now study Engineering at a university in Germany. Thank you so much!\"",
+        faqTitle: "Frequently Asked Questions",
+        faqSubtitle: "Get information about topics you're curious about",
+        faqCtaText: "Have other questions?",
+        faqCtaButton: "Contact Us",
+        faq1Question: "What course formats are offered?",
+        faq1Answer1: "Our courses offer you a flexible learning experience:",
+        faq1Answer2: "<strong>Hybrid Education:</strong>",
+        faq1Answer3: "Your course consists of a combination of face-to-face classes and live online classes.",
+        faq1Answer4: "Thanks to the hybrid system, you can also attend classes online whenever you want on face-to-face class days. Our classrooms have technical equipment that allows instructors, in-class students, and online participants to interact simultaneously.",
+        faq1Answer5: "<strong>Live Online Education:</strong>",
+        faq1Answer6: "In this format, you attend classes completely live and online.",
+        faq1Answer7: "You can attend live online classes from your home, while out, or from our centers. You can benefit from the learning areas and technical facilities (tablet and iPad rental, printer, copier and scanner use) at our education centers in Düsseldorf and Berlin. You also have the opportunity to meet other participants from different countries around the world in our cafe or during social activities.",
+        faq2Question: "What content is covered in the courses?",
+        faq2Answer: "Our Intensive German programs include listening and reading comprehension with current texts, comprehensive grammar studies, and various communication-focused activities. This aims to develop your speaking and writing skills in a goal-oriented manner.",
+        faq3Question: "How can I get university education in Germany?",
+        faq3Answer1: "To receive university education in Germany, you must first have recognized university entrance qualification (HZB). It is recommended to check whether your diploma is recognized in Germany through the anabin system.",
+        faq3Answer2: "You also need to document your German language proficiency with official certificates such as telc, DSH. The Campus German University Preparation Program is designed for you to prepare for this process completely.",
+        faq3Answer3: "Candidates who do not have direct university admission rights must first complete preparatory education called Studienkolleg and successfully pass the Feststellungsprüfung exam. After this exam, you can register for a suitable undergraduate program. We support you step by step in this process with our academic counseling service.",
+        faq3Answer4: "University applications are generally made through universities' own systems or through the central application platform Uni-Assist. Students from non-EU countries are required to obtain a student visa. Valid health insurance is also required.",
+        faq3Answer5: "In addition, you need to prove that you can cover your education and living expenses. After receiving acceptance, it is sufficient to complete your university registration and submit the necessary documents.",
+        faq4Question: "What requirements are necessary?",
+        faq4Answer1: "You must be at least 18 years old",
+        faq4Answer2: "You must submit a blocked account opened in Germany or an official commitment letter",
+        faq5Question: "What types of visas are recommended?",
+        faq5Answer1: "<strong>Student Visa:</strong>",
+        faq5Answer2: "Also covers the right to participate in preparatory German courses.",
+        faq5Answer3: "There is no visa requirement for EU citizens.",
+        faq6Question: "What services are included in the courses?",
+        faq6Answer1: "Placement test",
+        faq6Answer2: "No registration fee",
+        faq6Answer3: "Course certificate for visa application",
+        faq6Answer4: "Digital textbook",
+        faq6Answer5: "Individual student counseling (1 time, approximately 45 minutes)",
+        faq6Answer6: "Webinars on 'University Education in Germany'",
+        faq6Answer7: "Campus German certificate",
+        faq6Answer8: "E-learning platform",
+        faq6Answer9: "Social and cultural activities organized throughout the year",
+        faq6Answer10: "Free Wi-Fi access at all centers",
+        faq7Question: "What are the qualifications of our instructors?",
+        faq7Answer1: "Our teaching staff consists of university graduates with many years of teaching experience in German as a Foreign Language (DaF) and German as a Second Language (DaZ), experts in their field, and highly motivated people.",
+        faq7Answer2: "We also have Federal Office for Migration and Refugees (BAMF) approved instructors. Our lessons are regularly evaluated by students.",
+        faq8Question: "How long does it take to learn German?",
+        faq8Answer: "German learning time depends on your goal and current level. You can complete the basic levels from A1 to B2 in 6-8 months. Advanced levels such as C1 and C2 may require an additional 4-6 months. You can shorten this time with our intensive courses.",
+        faq9Question: "Can I get a Goethe certificate?",
+        faq9Answer: "Yes, we offer Goethe certificate preparation courses at CampusGerman. We provide exam preparation at all levels from A1 to C2. You can take certificate exams at our campus or be directed to nearby test centers.",
+        faq10Question: "Are accommodation options available?",
+        faq10Answer: "Yes, we offer accommodation options in Germany. Student dormitories, homestay accommodation, and shared apartments are available. Our accommodation service is not included in the course fee, but we help you find the most suitable options.",
+        faq11Question: "Are payment plans and discounts available?",
+        faq11Answer: "Yes, we offer flexible payment plans. Monthly, 3-month, and 6-month payment options are available. There are discounts for early registration, group registrations, and long-term programs. Contact us for detailed information.",
+    },
     de: {
-        title: "CampusGerman - Deutschsprachkurs",
-        heroBadge: "Premium Deutschtraining",
+        title: "CampusGerman - Deutschkurs",
+        heroBadge: "Premium Deutsch",
         heroTitle: {
             main: "Deutsch lernen",
             highlight: "durch Sprechen",
             sub: ""
         },
-        heroDescription: "Mit CampusGerman ist Deutsch lernen jetzt ganz einfach! Erreichen Sie Ihre Ziele mit konversationsorientiertem Training, muttersprachlichen Lehrern und personalisierten Programmen.",
-        heroFeatures: ["Kleine Gruppen", "Flexible Arbeitszeiten", "Goethe-Zertifikat"],
-        heroCta1: "Kostenlose Probestunde",
-        heroCta2: "Detaillierte Informationen",
+        heroDescription: "Mit CampusGerman Deutsch lernen – konversationsorientiert, muttersprachliche Lehrer, passende Programme.",
+        heroFeatures: ["Kleine Gruppen", "Flexibel", "Goethe-Zertifikat"],
+        heroCta1: "Jetzt bewerben",
+        heroCta2: "Infos",
         trustItems: [
-            { number: "2000+", label: "Glücklicher Student" },
+            { number: "2000+", label: "Studenten" },
             { number: "98%", label: "Erfolgsquote" },
-            { number: "15+", label: "Experten-Lehrer" }
+            { number: "15+", label: "Lehrkräfte" }
         ],
+        logoSliderTitle: "Partneruniversitäten",
+        whyChooseTitle: "Warum Campus German?",
+        whyChooseSubtitle: "Qualität, verlässliche Ergebnisse, Programme für Sie.",
+        whyChooseCards: [
+            { title: "Vertrauenswürdig", desc: "Qualitätsunterricht, akkreditierte Programme, erfahrene Lehrkräfte." },
+            { title: "Lernen in Bremen", desc: "UNESCO-Kulturstadt, studentenfreundlich, Hochdeutsch." },
+            { title: "Individuell", desc: "Programm nach Bedarf, 24/7-Beratung, flexible Starttermine." },
+            { title: "International", desc: "Sichere, vielfältige Gemeinschaft aus aller Welt." },
+            { title: "Garantierter Fortschritt", desc: "Transparenter Fortschritt zu Prüfung und Uni." },
+            { title: "Neue Türen", desc: "Deutsch öffnet Türen zu Studium und Karriere in Deutschland und EU." }
+        ],
+        courseFilterTitle: "Ihren Kurs finden",
+        courseFilterSubtitle: "Passendes Programm wählen, Kursseite für Details.",
+        courseFilterAll: "Alle Kurse",
+        courseFilterIntensiv: "Intensiv",
+        courseFilterOnline: "Online",
+        courseFilterSeasonal: "Saisonal / Wöchentl.",
+        courseFilterExam: "Prüfungsvorbereit.",
+        courseFilterCta: "Kurse ansehen",
+        courseFilterCountLabel: "Kurse",
+        courseFilterSearchPlaceholder: "Kurs suchen...",
+        courseFilterLevelLabel: "Niveau",
+        courseFilterTypeLabel: "Kurstyp",
+        courseFilterPeriodLabel: "Zeitraum",
+        courseFilterAllLevels: "Alle Niveaus",
+        courseFilterAllTypes: "Alle Kurse",
+        courseFilterAllPeriods: "Alle Zeiträume",
+        courseFilterInPerson: "Präsenz",
+        courseFilterTypeOnline: "Online",
+        courseFilterSummer: "Sommer",
+        courseFilterYearRound: "Ganzjährig",
+        courseFilterClear: "Zurücksetzen",
+        courseFilterResultsFound: "Kurse gefunden",
+        courseFilterNoResults: "Keine Ergebnisse",
+        courseFilterPage: "Seite",
+        courseFilterPrev: "Zurück",
+        courseFilterNext: "Weiter",
+        courseCardStartingPrices: "ab",
+        courseCardContactUs: "Kontakt",
+        courseCardLessons: "20+4 UE",
         coursesTitle: "Bevorzugte Kurse",
-        coursesSubtitle: "Wählen Sie das Programm, das am besten zu Ihnen passt, um Deutsch zu lernen",
+        coursesSubtitle: "Passendes Programm wählen, Deutsch lernen.",
         courseBookButton: "Kurs Buchen",
         courseDetailsButton: "Details",
+        countdownDiscountTitle: "10 % Rabatt",
+        countdownDiscountDesc: "Gutschein im Buchungsformular eingeben",
+        countdownGrabCta: "Rabatt sichern",
+        countdownEndsIn: "Endet in",
         // Hero video section
         videoTitle: "CampusGerman Vorstellung",
-        floatingInfo1Title: "A1-C1 Niveau",
-        floatingInfo1Subtitle: "Prüfungsvorbereitung",
+        floatingInfo1Title: "A1-C1",
+        floatingInfo1Subtitle: "Prüfungsvorbereit.",
         floatingInfo2Title: "Stadt-Uni",
         floatingInfo2Subtitle: "Touren",
         floatingInfo3Title: "Sprach",
         floatingInfo3Subtitle: "Club",
         // Courses section
-        bremenDescription: "In Bremen, der UNESCO-Kulturstadt, wo Hochdeutsch gesprochen wird, sind wir mit erfolgsorientierten Programmen für unsere Studierenden da.",
+        bremenDescription: "In Bremen, UNESCO-Kulturstadt mit Hochdeutsch, sind wir mit erfolgsorientierten Programmen für Sie da.",
+        bremenMiniTitle: "Warum Bremen?",
+        bremenMiniDesc: "Studierendenfreundlich, Hochdeutsch, ideale Lernumgebung.",
+        marketRealitiesTitle: "Markt & Lösungen",
+        marketRealitiesDesc: "Wir durchbrechen den Zyklus von Unzufriedenheit und Kurswiederholung durch Lehrerstandard, Lehrplankonsistenz, sprechorientierte Struktur und hybride Kontinuität.",
         whyCampusGerman: "Warum CampusGerman?",
-        whyCampusGermanText: "In einer der schönsten Universitätsstädte Deutschlands, dieser historischen Stadt, die mehr als 50.000 Studierende beherbergt, können Sie nicht nur Deutsch lernen, sondern auch die deutsche Kultur entdecken.",
-        methodologyTitle: "Unsere Unterrichtsmethodik",
-        methodologyText: "Mit unserem konversationsorientierten Ansatz lernen Sie nicht nur Grammatikregeln, sondern auch, im Alltag Deutsch zu sprechen.",
+        whyCampusGermanText: "In einer der schönsten Uni-Städte Deutschlands, mit über 50.000 Studierenden, Deutsch lernen und deutsche Kultur entdecken.",
+        methodologyTitle: "Unser Unterricht",
+        methodologyText: "Konversationsorientiert: Grammatik und Alltagsdeutsch.",
+        // Why Bremen comparison
+        whyBremenTitle: "Warum in Bremen studieren?",
+        whyBremenSubtitle: "Beste Aussprache & Flüssigkeit",
+        whyBremenLabelBremen: "Bremen",
+        whyBremenLabelOthers: "Andere Städte/Länder",
+        whyBremenItems: [
+            { topic: "Deutsche Aussprache und Flüssigkeit am besten", bremen: "Bremen liegt in einer Hochdeutsch-sprechenden Region und ist eine der einfachsten Städte zum Deutschlernen.", others: "Lokale Dialekte (Bayerisch, Kölsch) in anderen Regionen erschweren das Standarddeutsche." },
+            { topic: "Universitätsstadt und 100% Vorab-Zulassung ohne Sprache", bremen: "Uni Bremen und HS Bremen bieten bedingte Zulassung für Bachelor und Master und sind international studierendenfreundlich.", others: "Andere Bundesländer bieten oft keine bedingte Zulassung für Sprachvorbereitung und haben geringere Kontingente." },
+            { topic: "2 Jahre Aufenthalt und studierendenfreundliches Ausländeramt", bremen: "Das Bremer Ausländeramt erteilt Sprachvorbereitenden 2 Jahre und Studierenden 3 Jahre Aufenthalt direkt.", others: "Andere Bundesländer verzögern oft den Aufenthalt bis zum Visumsende und verlangen erneut ein Sperrkonto." },
+            { topic: "Starke Marken, Arbeitsmarkt und Werder Bremen", bremen: "Bremen hat Werder Bremen, Becks, Jacobs, Airbus und Mercedes und bietet vielfältige Jobmöglichkeiten in der Region.", others: "In Großstädten machen hohe Mieten und viele Zugewanderte den Arbeitsmarkt sehr wettbewerbsintensiv." },
+            { topic: "Kultur, Grünstadt und günstige Flüge", bremen: "Bremen ist bekannt für mittelalterliche Architektur, Stadtmusikanten und Festivals. Der Flughafen ist 15 Min. mit der Bahn zum Zentrum und bietet viele günstige Europa-Flüge. Bremen führt bei Grünflächen und Radwegen.", others: "Überindustrialisierung, starke Zuwanderung und ungeplante Bebauung mindern Lebensqualität und Integration." }
+        ],
         // Course cards
         weeklyCourseTitle: "Wöchentlicher Deutschkurs",
         weeklyCourseDesc: "Wöchentliche Programme",
-        weeklyCourseFeature1: "20 Stunden/Woche",
-        weeklyCourseFeature2: "Wöchentliche Unterkunftsmöglichkeiten",
-        weeklyCourseFeature3: "Flexibler Startplan",
-        weeklyCoursePriceLabel: "Hybrid/Online-Teilnahme möglich",
+        weeklyCourseFeature1: "20 Std./Woche",
+        weeklyCourseFeature2: "Unterkunft wöchentlich",
+        weeklyCourseFeature3: "Flexibler Start",
+        weeklyCoursePriceLabel: "Hybrid/Online möglich",
         weeklyCoursePrice: "ab 160€",
-        universityPrepTitle: "Universitäts Vorbereitungsschule",
-        universityPrepDesc: "Das richtige Programm für bedingte Zulassung zur Universität oder für TELC-, TestDaF- und Goethe-Prüfungen.",
-        universityPrepFeature1: "20 Stunden/Woche",
-        universityPrepFeature2: "Einladung für Studentenvisum",
+        universityPrepTitle: "Uni-Vorbereitung",
+        universityPrepDesc: "Für bedingte Zulassung oder TELC-, TestDaF-, Goethe-Prüfungen.",
+        universityPrepFeature1: "20 Std./Woche",
+        universityPrepFeature2: "Einladung Studentenvisum",
         universityPrepFeature3: "Sprachclub kostenlos",
-        universityPrepPriceLabel: "Professionelle Vorbereitung von A1 bis C1",
-        universityPrepPricePeriod: "1 Kurs / 8 - 12 Wochen",
-        universityPrepPriceWarning: "! Dieses Angebot ist bis zum 31. März platzbeschränkt.",
+        universityPrepPriceLabel: "A1 bis C1 Vorbereitung",
+        universityPrepPricePeriod: "1 Kurs / 8–12 Wochen",
+        universityPrepPriceWarning: "! Angebot bis 31. März platzbeschränkt.",
         examPrepTitle: "Online-Prüfungsvorbereitung",
-        examPrepDesc: "Bereiten Sie sich mit muttersprachlichen Lehrern optimal auf TELC-, TestDaF-, Goethe A1-C1- und FSP-Prüfungen vor, wo immer Sie möchten.",
-        examPrepFeature1: "Erfahrung mit über 1000 Studierenden",
-        examPrepFeature2: "Fokus auf frühere Prüfungsfragen",
-        examPrepFeature3: "Mindestens 3 Beispielprüfungssimulationen",
-        examPrepPriceLabel: "100% Erfolgsgarantie/Wiederholungskurs möglich",
+        examPrepDesc: "Optimal vorbereiten mit muttersprachlichen Lehrern: TELC, TestDaF, Goethe A1–C1, FSP.",
+        examPrepFeature1: "Über 1000 Studierende",
+        examPrepFeature2: "Frühere Prüfungsfragen",
+        examPrepFeature3: "Mind. 3 Probeprüfungen",
+        examPrepPriceLabel: "Umfassende Vorbereitung / Wiederholung",
         examPrepPrice: "ab 350€",
-        examPrepPricePeriod: "40 Stunden / Prüfungsgebühren nicht enthalten.",
-        popularBadge: "Am Beliebtesten",
+        examPrepPricePeriod: "40 Std. / Gebühren extra.",
+        popularBadge: "Beliebt",
         // Programs section
         programsTitle: "Unsere Programme",
-        programsSubtitle: "Entdecken Sie Bildungs- und Karrieremöglichkeiten in Deutschland",
-        service1Title: "Universitätsvermittlung",
-        service1Desc: "Umfassendes Vermittlungsprogramm für Universitätsstudien in Deutschland. Pathway-Programme und Unterstützung bei Universitätsbewerbungen.",
-        service1Meta1: "Pathway-Programme",
-        service1Meta2: "Bewerbungsunterstützung",
-        service1Link: "Details ansehen",
+        programsSubtitle: "Bildung & Karriere in Deutschland",
+        service1Title: "Uni-Vermittlung",
+        service1Desc: "Vermittlung für Universitätsstudien. Pathway & Bewerbungshilfe.",
+        service1Meta1: "Pathway",
+        service1Meta2: "Bewerbung",
+        service1Link: "Details",
         service2Title: "Visumsberatung",
-        service2Desc: "Professionelle Beratung im Antragsverfahren für ein deutsches Studentenvisum. Antragsformulare, erforderliche Dokumente und Verfahrensverfolgung.",
-        service2Meta1: "Antragsunterstützung",
-        service2Meta2: "Dokumentenprüfung",
-        service2Link: "Details ansehen",
+        service2Desc: "Beratung Studentenvisum. Formulare, Dokumente, Ablauf.",
+        service2Meta1: "Antrag",
+        service2Meta2: "Dokumente",
+        service2Link: "Details",
         service3Title: "Unterkunft Bremen",
-        service3Desc: "Wohnheimplätze, Gastfamilien und Wohngemeinschaften in Bremen. Unterstützung bei der Unterkunft in sicheren und zentralen Lagen.",
+        service3Desc: "Wohnheime, Gastfamilien, WGs. Sichere, zentrale Lagen.",
         service3Meta1: "Wohnheime",
         service3Meta2: "Gastfamilien",
-        service3Link: "Details ansehen",
+        service3Link: "Details",
         service4Title: "Flughafenabholung",
-        service4Desc: "Abholung vom Flughafen Bremen und Transfer zu Ihrer Unterkunft. Verbringen Sie Ihren ersten Tag reibungslos.",
-        service4Meta1: "Flughafenabholung",
-        service4Meta2: "Transferdienst",
-        service4Link: "Details ansehen",
-        discoverMoreTitle: "Weitere Programme entdecken",
-        discoverMoreDesc: "Entdecken Sie Bildungs- und Karrieremöglichkeiten in Deutschland. Erkunden Sie alle unsere Dienstleistungen und finden Sie das passende Programm für Sie.",
-        discoverMoreStat1: "7+ Dienstleistungen",
+        service4Desc: "Abholung Bremen, Transfer zur Unterkunft. Erster Tag reibungslos.",
+        service4Meta1: "Abholung",
+        service4Meta2: "Transfer",
+        service4Link: "Details",
+        discoverMoreTitle: "Weitere Programme",
+        discoverMoreDesc: "Bildung & Karriere in Deutschland. Alle Dienstleistungen.",
+        discoverMoreStat1: "7+ Services",
         discoverMoreStat2: "100% Zufriedenheit",
-        discoverMoreStat3: "24/7 Unterstützung",
-        discoverMoreLink: "Alle Dienstleistungen ansehen",
+        discoverMoreStat3: "24/7 Support",
+        discoverMoreLink: "Alle ansehen",
         // Video section
-        successStoriesTitle: "Unsere Erfolgsgeschichten",
-        successStoriesSubtitle: "Hören Sie die Erfahrungen unserer Studierenden und lassen Sie sich inspirieren",
-        video1Title: "Marias Erfolgsgeschichte",
-        video1Desc: "Maria erreichte von Niveau A1 ausgehend in nur 8 Monaten Niveau B2. Jetzt studiert sie Betriebswirtschaft an einer Universität in Deutschland.",
+        successStoriesTitle: "Erfolgsgeschichten",
+        successStoriesSubtitle: "Erfahrungen unserer Studierenden – Inspiration",
+        video1Title: "Marias Erfolg",
+        video1Desc: "Maria: A1 → B2 in 8 Monaten. Studiert jetzt BWL in Deutschland.",
         video1Link: "Geschichte lesen",
         video2Title: "Ahmets Reise",
-        video2Desc: "Ahmet kam aus der Türkei und nahm an CampusGerman teil. Jetzt arbeitet er in einem Unternehmen in Deutschland.",
+        video2Desc: "Ahmet aus der Türkei, CampusGerman. Arbeitet jetzt in Deutschland.",
         video2Link: "Geschichte lesen",
         video1Alt: "Studentenerfahrung 1",
         video2Alt: "Studentenerfahrung 2",
         // CTA section
-        ctaTitle: "Beginnen Sie Deutsch zu lernen",
-        ctaDescription: "Lernen Sie Deutsch bei CampusGerman und bauen Sie eine neue Zukunft in Deutschland auf. Kontaktieren Sie uns jetzt für eine kostenlose Beratung!",
+        ctaTitle: "Deutsch lernen",
+        ctaDescription: "Deutsch bei CampusGerman – neue Zukunft in Deutschland. Jetzt kostenlose Beratung!",
         ctaFeature1: "Kostenlose Niveaubestimmung",
-        ctaFeature2: "Flexible Programmoptionen",
-        ctaFeature3: "Muttersprachliche Lehrer",
-        ctaFormTitle: "Kostenlose Informationen erhalten",
-        ctaFormSubtitle: "Lassen Sie uns das passende Programm für Sie finden",
-        formNamePlaceholder: "Ihr Vor- und Nachname",
-        formEmailPlaceholder: "Ihre E-Mail-Adresse",
-        formPhonePlaceholder: "Ihre Telefonnummer",
-        formInterestPlaceholder: "Ihr Interessensgebiet",
+        ctaFeature2: "Flexible Programme",
+        ctaFeature3: "Muttersprachler",
+        ctaFormTitle: "Kostenlose Infos",
+        ctaFormSubtitle: "Passendes Programm für Sie finden",
+        formNamePlaceholder: "Name",
+        formEmailPlaceholder: "E-Mail",
+        formPhonePlaceholder: "Telefon",
+        formInterestPlaceholder: "Interesse",
         formInterestOption1: "A1-A2 Anfänger",
         formInterestOption2: "B1-B2 Mittelstufe",
         formInterestOption3: "C1-C2 Fortgeschritten",
-        formInterestOption4: "Universitätsvorbereitung",
+        formInterestOption4: "Uni-Vorbereitung",
         formInterestOption5: "Berufsausbildung",
         formInterestOption6: "Online-Kurs",
-        formMessagePlaceholder: "Ihre Nachricht (Optional)",
-        formSubmit: "Kostenlose Informationen erhalten",
-        formFooter: "Ihre Daten werden sicher geschützt",
+        formMessagePlaceholder: "Nachricht (optional)",
+        formSubmit: "Infos anfordern",
+        formFooter: "Daten sicher geschützt",
         // Reviews section
-        reviewsTitle: "Studentenbewertungen",
-        reviewsSubtitle: "Hören Sie unsere Erfolgsgeschichten",
+        reviewsTitle: "Bewertungen",
+        reviewsSubtitle: "Erfolgsgeschichten",
         review1Text: "\"Mit dem Deutsch, das ich bei CampusGerman gelernt habe, studiere ich jetzt Betriebswirtschaft an einer Universität in Deutschland. Meine Lehrer waren sehr geduldig und dank des konversationsorientierten Unterrichts habe ich mich schnell verbessert.\"",
         review2Text: "\"Ich kam aus der Türkei und nahm an CampusGerman teil. Jetzt arbeite ich in einem Unternehmen in Deutschland. Das Programm war sehr umfassend und half mir sehr, einen Job zu finden.\"",
         review3Text: "\"Ich wollte Deutsch für die Arbeit lernen. Dank der Ausbildung, die ich bei CampusGerman erhalten habe, wurde ich in meinem Unternehmen befördert. Besonders das Geschäftsdeutsch war sehr nützlich.\"",
         review4Text: "\"Ich kam aus Spanien nach Deutschland und nahm an einem Universitätsvorbereitungskurs bei CampusGerman teil. Jetzt studiere ich Ingenieurwesen an einer Universität in Deutschland. Vielen Dank!\"",
         // FAQ section
-        faqTitle: "Häufig gestellte Fragen",
-        faqSubtitle: "Erhalten Sie Informationen zu Themen, die Sie interessieren",
-        faqCtaText: "Haben Sie weitere Fragen?",
-        faqCtaButton: "Kontaktieren Sie uns",
-        faq1Question: "Welche Kursformate werden angeboten?",
+        faqTitle: "Häufige Fragen",
+        faqSubtitle: "Infos zu Themen, die Sie interessieren",
+        faqCtaText: "Weitere Fragen?",
+        faqCtaButton: "Kontakt",
+        faq1Question: "Welche Kursformate?",
         faq1Answer1: "Unsere Kurse bieten Ihnen ein flexibles Lernerlebnis:",
         faq1Answer2: "<strong>Hybrides Lernen:</strong>",
         faq1Answer3: "Ihr Kurs besteht aus einer Kombination aus Präsenzunterricht und Live-Online-Unterricht.",
@@ -369,6 +772,255 @@ const t = {
         faq10Answer: "Ja, wir bieten Unterkunftsmöglichkeiten in Deutschland an. Es gibt Studentenwohnheime, Gastfamilien und Wohngemeinschaften. Unser Unterkunftsservice ist nicht im Kursgeld enthalten, aber wir helfen Ihnen, die beste Option für Sie zu finden.",
         faq11Question: "Gibt es Zahlungspläne und Rabatte?",
         faq11Answer: "Ja, wir bieten flexible Zahlungspläne an. Es gibt monatliche, 3-monatige und 6-monatige Zahlungsoptionen. Es gibt Rabatte für frühe Anmeldungen, Gruppenanmeldungen und Langzeitprogramme. Kontaktieren Sie uns für weitere Informationen.",
+    },
+    es: {
+        title: "CampusGerman - Curso de Alemán",
+        heroBadge: "Educación Premium en Alemán",
+        heroTitle: {
+            main: "Aprende Alemán",
+            highlight: "Hablando",
+            sub: ""
+        },
+        heroDescription: "¡Aprender alemán es fácil con CampusGerman! Alcanza tus objetivos con educación centrada en la conversación, profesores nativos y programas personalizados.",
+        heroFeatures: ["Cupo Limitado", "Programas Culturales", "Goethe-Telc-TestDaF-FSP"],
+        heroCta1: "Aplicar ahora",
+        heroCta2: "Obtén Información por WhatsApp<br>EN/DE/TUR/ES",
+        trustItems: [
+            { number: "2000+", label: "Estudiantes Felices" },
+            { number: "98%", label: "Diferentes Naciones" },
+            { number: "15+", label: "Profesores Nativos" }
+        ],
+        logoSliderTitle: "Nuestras universidades colaboradoras",
+        whyChooseTitle: "¿Por qué Campus German?",
+        whyChooseSubtitle: "Educación de calidad, resultados fiables y programas diseñados para ti.",
+        whyChooseCards: [
+            { title: "Educación de confianza", desc: "Educación alemana de calidad, programas acreditados y profesores con experiencia." },
+            { title: "Aprende en Bremen", desc: "Estudia en la ciudad cultural UNESCO Bremen, en un entorno estudiantil con Hochdeutsch." },
+            { title: "Programa personalizado", desc: "Elige un programa según tus necesidades, con asesoramiento 24/7 y fechas de inicio flexibles." },
+            { title: "Comunidad internacional", desc: "Una comunidad segura, diversa y de apoyo de estudiantes de todo el mundo." },
+            { title: "Progreso garantizado", desc: "Resultados claros: tu progreso hacia exámenes y universidad es transparente y garantizado." },
+            { title: "Puertas abiertas", desc: "El alemán abre puertas a estudios y oportunidades laborales en Alemania y la UE." }
+        ],
+        courseFilterTitle: "Encuentra tu curso",
+        courseFilterSubtitle: "Elige el programa que te convenga y visita nuestra página de cursos para más información.",
+        courseFilterAll: "Todos los cursos",
+        courseFilterIntensiv: "Alemán intensivo",
+        courseFilterOnline: "Cursos en línea",
+        courseFilterSeasonal: "Estacional / Semanal",
+        courseFilterExam: "Preparación de exámenes",
+        courseFilterCta: "Ver cursos",
+        courseFilterCountLabel: "cursos",
+        courseFilterSearchPlaceholder: "Buscar curso...",
+        courseFilterLevelLabel: "Nivel",
+        courseFilterTypeLabel: "Tipo de curso",
+        courseFilterPeriodLabel: "Período",
+        courseFilterAllLevels: "Todos los niveles",
+        courseFilterAllTypes: "Todos los cursos",
+        courseFilterAllPeriods: "Todos los períodos",
+        courseFilterInPerson: "Presencial",
+        courseFilterTypeOnline: "En línea",
+        courseFilterSummer: "Verano",
+        courseFilterYearRound: "Todo el año",
+        courseFilterClear: "Limpiar",
+        courseFilterResultsFound: "cursos encontrados",
+        courseFilterNoResults: "No se encontraron resultados",
+        courseFilterPage: "Página",
+        courseFilterPrev: "Anterior",
+        courseFilterNext: "Siguiente",
+        courseCardStartingPrices: "a partir de",
+        courseCardContactUs: "Contáctenos",
+        courseCardLessons: "20+4 clases",
+        coursesTitle: "Cursos Más Populares",
+        coursesSubtitle: "9 de cada 10 estudiantes en Bremen eligieron Campus German como su primera opción. ¡Reserva tu lugar ahora para aprender alemán perfectamente del cupo limitado!",
+        courseBookButton: "Reservar Lugar",
+        courseDetailsButton: "Detalles",
+        countdownDiscountTitle: "10% de descuento",
+        countdownDiscountDesc: "Introduce el cupón en el formulario de reserva",
+        countdownGrabCta: "Obtener descuento",
+        countdownEndsIn: "Termina en",
+        videoTitle: "Introducción CampusGerman",
+        floatingInfo1Title: "Niveles A1-C1",
+        floatingInfo1Subtitle: "Preparación de Exámenes",
+        floatingInfo2Title: "Ciudad-Uni",
+        floatingInfo2Subtitle: "Tours",
+        floatingInfo3Title: "Conversación",
+        floatingInfo3Subtitle: "Club",
+        bremenDescription: "Estamos contigo en Bremen, una ciudad cultural de la UNESCO donde se habla alemán estándar, con programas orientados al éxito para nuestros estudiantes.",
+        bremenMiniTitle: "¿Por qué Bremen?",
+        bremenMiniDesc: "Ciudad amigable para estudiantes, vida social, ventaja del alemán estándar y un ambiente ideal para el aprendizaje orientado a la experiencia.",
+        marketRealitiesTitle: "Realidades del Mercado y Soluciones",
+        marketRealitiesDesc: "Rompemos el ciclo de insatisfacción y repetición de cursos con estándares de profesores, consistencia del currículo, estructura orientada al habla y continuidad híbrida.",
+        whyCampusGerman: "¿Por qué CampusGerman?",
+        whyCampusGermanText: "En una de las ciudades universitarias más bellas de Alemania, esta ciudad histórica que alberga a más de 50,000 estudiantes, puedes no solo aprender alemán sino también descubrir la cultura alemana.",
+        methodologyTitle: "Nuestra Metodología de Enseñanza",
+        methodologyText: "Con nuestro enfoque de enseñanza centrado en la conversación, no solo aprendes reglas gramaticales, sino que también aprendes a hablar alemán en la vida cotidiana.",
+        // Why Bremen comparison
+        whyBremenTitle: "¿Por qué estudiar alemán en Bremen?",
+        whyBremenSubtitle: "Mejor pronunciación y fluidez en alemán",
+        whyBremenLabelBremen: "Bremen",
+        whyBremenLabelOthers: "Otras ciudades / Estados",
+        whyBremenItems: [
+            { topic: "Mejor pronunciación y fluidez en alemán", bremen: "Bremen está en una región de alto alemán y es una de las ciudades más fáciles para aprender alemán.", others: "Los dialectos locales (bávaro, colonés) en otras regiones dificultan el alemán estándar." },
+            { topic: "Ciudad universitaria y admisión condicional 100% sin idioma", bremen: "La Universidad de Bremen y la HS Bremen ofrecen admisión condicional para grado y máster y son amigables con estudiantes internacionales.", others: "Otros estados a menudo no ofrecen admisión condicional para preparación de idiomas y tienen cupos más bajos." },
+            { topic: "Permiso de residencia de 2 años y oficina de extranjería amigable", bremen: "La oficina de extranjería de Bremen concede 2 años a estudiantes de idiomas y 3 años a universitarios directamente.", others: "Otros estados suelen retrasar la residencia hasta el fin del visado y exigen de nuevo cuenta bloqueada." },
+            { topic: "Marcas fuertes, mercado laboral y Werder Bremen", bremen: "Bremen acoge a Werder Bremen, Becks, Jacobs, Airbus y Mercedes y ofrece diversas oportunidades laborales en la región.", others: "En grandes ciudades, alquileres altos y población extranjera concentrada hacen el mercado muy competitivo." },
+            { topic: "Cultura, ciudad verde y vuelos baratos", bremen: "Bremen es conocida por su arquitectura medieval, los músicos y festivales. El aeropuerto está a 15 min en tranvía del centro y ofrece vuelos baratos por Europa. Bremen destaca en zonas verdes y carriles bici.", others: "Sobreindustrialización, migración intensa y desarrollo no planificado reducen calidad de vida e integración." }
+        ],
+        // Course cards
+        weeklyCourseTitle: "Curso Semanal de Alemán",
+        weeklyCourseDesc: "Programas Semanales",
+        weeklyCourseFeature1: "20 horas/semana",
+        weeklyCourseFeature2: "Opciones de alojamiento semanal",
+        weeklyCourseFeature3: "Plan de inicio flexible",
+        weeklyCoursePriceLabel: "Participación híbrida/online posible",
+        weeklyCoursePrice: "desde 160€",
+        universityPrepTitle: "Escuela de Preparación Universitaria",
+        universityPrepDesc: "El programa adecuado para admisión condicional a la universidad o para exámenes TELC, TestDaF y Goethe.",
+        universityPrepFeature1: "20 Horas/Semana",
+        universityPrepFeature2: "Invitación para visa de estudiante",
+        universityPrepFeature3: "Club de conversación gratis",
+        universityPrepPriceLabel: "Preparación profesional de A1 a C1",
+        universityPrepPricePeriod: "1 Curso / 8 - 12 Semanas",
+        universityPrepPriceWarning: "! Esta oferta está limitada por cupo hasta el 31 de marzo.",
+        examPrepTitle: "Preparación de Exámenes Online",
+        examPrepDesc: "Prepárate para exámenes TELC, TestDaF, Goethe A1-C1, FSP de manera óptima con profesores nativos donde quieras.",
+        examPrepFeature1: "Experiencia con más de 1000 estudiantes",
+        examPrepFeature2: "Enfoque en preguntas de exámenes anteriores",
+        examPrepFeature3: "Al menos 3 simulaciones de exámenes de muestra",
+        examPrepPriceLabel: "Preparación integral/Curso de repetición posible",
+        examPrepPrice: "desde 350€",
+        examPrepPricePeriod: "40 horas / Las tasas de examen no están incluidas.",
+        popularBadge: "Más Popular",
+        freeTrialTitle: "¡Prueba una Clase Gratuita!",
+        freeTrialDesc: "Experimenta nuestra calidad antes de comenzar el curso. ¡Únete a nuestro club de conversación gratis!",
+        freeTrialButton: "Reservar Clase Gratuita",
+        advantagesTitle: "Nuestras Ventajas",
+        advantagesSubtitle: "¿Por qué deberías elegir CampusGerman?",
+        advantage1Title: "Modelo de Aprendizaje Híbrido",
+        advantage1Desc: "Aprendizaje flexible con educación combinada online y presencial",
+        advantage1Link: "Saber Más",
+        advantage2Title: "Tours por la Ciudad y la Universidad",
+        advantage2Desc: "Explora Bremen y sus universidades. Tours culturales",
+        advantage2Link: "Saber Más",
+        advantage3Title: "Club de Conversación Gratuito",
+        advantage3Desc: "Practica alemán con profesores nativos",
+        advantage3Link: "Saber Más",
+        advantage4Title: "Coaching de Aprendizaje Gratuito",
+        advantage4Desc: "Acelera tu aprendizaje con apoyo de tutoría",
+        advantage4Link: "Saber Más",
+        servicesTitle: "Nuestros Servicios",
+        servicesSubtitle: "Todo lo que necesitas para tu educación en Alemania",
+        service1Title: "Colocación Universitaria",
+        service1Desc: "Programa integral de colocación para educación universitaria en Alemania",
+        service1Meta1: "Solicitud Universitaria",
+        service1Meta2: "Visa de Estudiante",
+        service1Link: "Ver Detalles",
+        service2Title: "Orientación de Visa",
+        service2Desc: "Información y apoyo para solicitudes de visa",
+        service2Meta1: "Preparación de Documentos",
+        service2Meta2: "Orientación",
+        service2Link: "Ver Detalles",
+        service3Title: "Alojamiento",
+        service3Desc: "Apoyo de alojamiento temporal en Bremen",
+        service3Meta1: "Residencias Estudiantiles",
+        service3Meta2: "Apartamentos Compartidos",
+        service3Link: "Ver Detalles",
+        service4Title: "Recogida en el Aeropuerto",
+        service4Desc: "Recogida y traslado desde el aeropuerto de Bremen",
+        service4Meta1: "Recogida en el Aeropuerto",
+        service4Meta2: "Servicio de Traslado",
+        service4Link: "Ver Detalles",
+        discoverMoreTitle: "Descubre Más Programas",
+        discoverMoreDesc: "Explora oportunidades educativas y profesionales en Alemania. Revisa todos nuestros servicios y encuentra el programa más adecuado para ti.",
+        discoverMoreStat1: "7+ Servicios",
+        discoverMoreStat2: "100% Satisfacción",
+        discoverMoreStat3: "Soporte 24/7",
+        discoverMoreLink: "Ver Todos los Servicios",
+        successStoriesTitle: "Nuestras Historias de Éxito",
+        successStoriesSubtitle: "Escucha las experiencias de nuestros estudiantes e inspírate",
+        video1Title: "Historia de Éxito de María",
+        video1Desc: "María alcanzó el nivel B2 en solo 8 meses comenzando desde el nivel A1. Ahora estudia Administración de Empresas en una universidad en Alemania.",
+        video1Link: "Leer Historia",
+        video2Title: "El Viaje de Ahmet",
+        video2Desc: "Ahmet vino de Turquía y estudió en CampusGerman. Ahora trabaja en una empresa en Alemania.",
+        video2Link: "Leer Historia",
+        video1Alt: "Experiencia Estudiantil 1",
+        video2Alt: "Experiencia Estudiantil 2",
+        ctaTitle: "Comienza a Aprender Alemán",
+        ctaDescription: "Aprende alemán en CampusGerman y construye un nuevo futuro en Alemania. ¡Contáctanos ahora para una consulta gratuita!",
+        ctaFeature1: "Prueba de Nivel Gratuita",
+        ctaFeature2: "Opciones de Programa Flexibles",
+        ctaFeature3: "Profesores Nativos",
+        ctaFormTitle: "Obtén Información Gratuita",
+        ctaFormSubtitle: "Déjanos encontrar el programa más adecuado para ti",
+        formNamePlaceholder: "Tu Nombre",
+        formEmailPlaceholder: "Tu Correo Electrónico",
+        formPhonePlaceholder: "Tu Número de Teléfono",
+        formInterestPlaceholder: "Tu Interés",
+        formInterestOption1: "A1-A2 Principiante",
+        formInterestOption2: "B1-B2 Intermedio",
+        formInterestOption3: "C1-C2 Avanzado",
+        formInterestOption4: "Preparación Universitaria",
+        formInterestOption5: "Entrenamiento Profesional",
+        formInterestOption6: "Curso Online",
+        formMessagePlaceholder: "Tu Mensaje (Opcional)",
+        formSubmit: "Obtener Información Gratuita",
+        formFooter: "Tu información está protegida de forma segura",
+        reviewsTitle: "Reseñas de Estudiantes",
+        reviewsSubtitle: "Escucha nuestras historias de éxito",
+        review1Text: "\"Con el alemán que aprendí en CampusGerman, estudio Administración de Empresas en una universidad en Alemania. Mis profesores fueron muy pacientes y progresé rápidamente gracias a la educación centrada en la conversación.\"",
+        review2Text: "\"Vine de Turquía y estudié en CampusGerman. Ahora trabajo en una empresa en Alemania. El programa fue muy completo y me ayudó mucho a encontrar trabajo.\"",
+        review3Text: "\"Quería aprender alemán para el trabajo. Gracias a la educación que recibí en CampusGerman, obtuve un ascenso en mi empresa. Fue especialmente útil para el alemán empresarial.\"",
+        review4Text: "\"Vine de España a Alemania y tomé el curso de preparación universitaria en CampusGerman. Ahora estudio Ingeniería en una universidad en Alemania. ¡Muchas gracias!\"",
+        faqTitle: "Preguntas Frecuentes",
+        faqSubtitle: "Obtén información sobre temas que te interesan",
+        faqCtaText: "¿Tienes otras preguntas?",
+        faqCtaButton: "Contáctanos",
+        faq1Question: "¿Qué formatos de curso se ofrecen?",
+        faq1Answer1: "Nuestros cursos te ofrecen una experiencia de aprendizaje flexible:",
+        faq1Answer2: "<strong>Educación Híbrida:</strong>",
+        faq1Answer3: "Tu curso consiste en una combinación de clases presenciales y clases online en vivo.",
+        faq1Answer4: "Gracias al sistema híbrido, también puedes asistir a clases online cuando quieras en los días de clases presenciales. Nuestras aulas tienen equipamiento técnico que permite a los instructores, estudiantes en clase y participantes online interactuar simultáneamente.",
+        faq1Answer5: "<strong>Educación Online en Vivo:</strong>",
+        faq1Answer6: "En este formato, asistes a clases completamente en vivo y online.",
+        faq1Answer7: "Puedes asistir a clases online en vivo desde tu hogar, mientras estás fuera, o desde nuestros centros. Puedes beneficiarte de las áreas de aprendizaje y las instalaciones técnicas (alquiler de tabletas e iPad, uso de impresora, copiadora y escáner) en nuestros centros educativos en Düsseldorf y Berlín. También tienes la oportunidad de conocer a otros participantes de diferentes países del mundo en nuestro café o durante las actividades sociales.",
+        faq2Question: "¿Qué contenido se cubre en los cursos?",
+        faq2Answer: "Nuestros programas intensivos de alemán incluyen comprensión auditiva y lectora con textos actuales, estudios gramaticales integrales y diversas actividades centradas en la comunicación. Esto tiene como objetivo desarrollar tus habilidades de habla y escritura de manera orientada a objetivos.",
+        faq3Question: "¿Cómo puedo obtener educación universitaria en Alemania?",
+        faq3Answer1: "Para recibir educación universitaria en Alemania, primero debes tener una calificación de ingreso universitario reconocida (HZB). Se recomienda verificar si tu diploma está reconocido en Alemania a través del sistema anabin.",
+        faq3Answer2: "También necesitas documentar tu competencia en alemán con certificados oficiales como telc, DSH. El Programa de Preparación Universitaria Campus German está diseñado para prepararte completamente para este proceso.",
+        faq3Answer3: "Los candidatos que no tienen derechos de admisión universitaria directa deben primero completar la educación preparatoria llamada Studienkolleg y aprobar exitosamente el examen Feststellungsprüfung. Después de este examen, puedes registrarte en un programa de licenciatura adecuado. Te apoyamos paso a paso en este proceso con nuestro servicio de asesoramiento académico.",
+        faq3Answer4: "Las solicitudes universitarias generalmente se realizan a través de los propios sistemas de las universidades o a través de la plataforma de solicitud central Uni-Assist. Los estudiantes de países no pertenecientes a la UE deben obtener una visa de estudiante. También se requiere un seguro de salud válido.",
+        faq3Answer5: "Además, necesitas demostrar que puedes cubrir tus gastos de educación y vida. Después de recibir la aceptación, es suficiente completar tu registro universitario y enviar los documentos necesarios.",
+        faq4Question: "¿Qué requisitos son necesarios?",
+        faq4Answer1: "Debes tener al menos 18 años",
+        faq4Answer2: "Debes presentar una cuenta bloqueada abierta en Alemania o una carta de compromiso oficial",
+        faq5Question: "¿Qué tipos de visa se recomiendan?",
+        faq5Answer1: "<strong>Visa de Estudiante:</strong>",
+        faq5Answer2: "También cubre el derecho a participar en cursos preparatorios de alemán.",
+        faq5Answer3: "No hay requisito de visa para ciudadanos de la UE.",
+        faq6Question: "¿Qué servicios están incluidos en los cursos?",
+        faq6Answer1: "Prueba de nivel",
+        faq6Answer2: "Sin tarifa de registro",
+        faq6Answer3: "Certificado del curso para solicitud de visa",
+        faq6Answer4: "Libro de texto digital",
+        faq6Answer5: "Asesoramiento estudiantil individual (1 vez, aproximadamente 45 minutos)",
+        faq6Answer6: "Webinarios sobre 'Educación Universitaria en Alemania'",
+        faq6Answer7: "Certificado Campus German",
+        faq6Answer8: "Plataforma de e-learning",
+        faq6Answer9: "Actividades sociales y culturales organizadas durante todo el año",
+        faq6Answer10: "Acceso Wi-Fi gratuito en todos los centros",
+        faq7Question: "¿Cuáles son las calificaciones de nuestros instructores?",
+        faq7Answer1: "Nuestro personal docente consiste en graduados universitarios con muchos años de experiencia docente en Alemán como Lengua Extranjera (DaF) y Alemán como Segunda Lengua (DaZ), expertos en su campo y personas altamente motivadas.",
+        faq7Answer2: "También tenemos instructores aprobados por la Oficina Federal de Migración y Refugiados (BAMF). Nuestras lecciones son evaluadas regularmente por los estudiantes.",
+        faq8Question: "¿Cuánto tiempo se tarda en aprender alemán?",
+        faq8Answer: "El tiempo de aprendizaje del alemán depende de tu objetivo y nivel actual. Puedes completar los niveles básicos de A1 a B2 en 6-8 meses. Los niveles avanzados como C1 y C2 pueden requerir 4-6 meses adicionales. Puedes acortar este tiempo con nuestros cursos intensivos.",
+        faq9Question: "¿Puedo obtener un certificado Goethe?",
+        faq9Answer: "Sí, ofrecemos cursos de preparación para certificados Goethe en CampusGerman. Proporcionamos preparación para exámenes en todos los niveles de A1 a C2. Puedes tomar los exámenes de certificación en nuestro campus o ser dirigido a centros de prueba cercanos.",
+        faq10Question: "¿Hay opciones de alojamiento disponibles?",
+        faq10Answer: "Sí, ofrecemos opciones de alojamiento en Alemania. Hay residencias estudiantiles, alojamiento en familias de acogida y apartamentos compartidos. Nuestro servicio de alojamiento no está incluido en la tarifa del curso, pero te ayudamos a encontrar las opciones más adecuadas.",
+        faq11Question: "¿Hay planes de pago y descuentos disponibles?",
+        faq11Answer: "Sí, ofrecemos planes de pago flexibles. Hay opciones de pago mensuales, de 3 meses y de 6 meses. Hay descuentos para registro temprano, registros grupales y programas a largo plazo. Contáctanos para obtener información detallada.",
     }
 };
 
@@ -411,12 +1063,12 @@ const translations = t[lang as keyof typeof t];
                         ))}
                     </div>
                     <div class="hero-cta">
-                        <a href="#demo" class="cta-primary">
+                        <a href={bookingPath} class="cta-primary">
                             <i class="fas fa-play"></i>
                             <span>{translations.heroCta1}</span>
                             <div class="cta-arrow">→</div>
                         </a>
-                        <a href="#info" class="cta-secondary">
+                        <a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="cta-secondary">
                             <i class="fas fa-info-circle"></i>
                             <span set:html={translations.heroCta2}></span>
                         </a>
@@ -470,181 +1122,346 @@ const translations = t[lang as keyof typeof t];
             </div>
         </div>
     </section>
-    
-    <!-- Courses Section -->
-    <section class="courses-section homepage-courses">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">{translations.coursesTitle}</h2>
-                <p class="section-subtitle" style="color: #334155 !important; font-weight: 500 !important; font-size: 1.15rem !important; line-height: 1.8 !important; opacity: 1 !important;">{translations.coursesSubtitle}</p>
-                <br>
-                <p class="section-subtitle" style="color: #334155 !important; font-weight: 500 !important; font-size: 1.15rem !important; line-height: 1.8 !important; opacity: 1 !important;">{translations.bremenDescription}</p>
-            </div>
-            <div class="section-description">
-                <div class="description-details">
-                    <div class="detail-section">
-                        <h4>{translations.whyCampusGerman}</h4>
-                        <p>{translations.whyCampusGermanText}</p>
+
+    <!-- Logo Slider Section (University Partners) -->
+    <section class="logo-slider-section" aria-label={translations.logoSliderTitle}>
+        <div class="logo-slider-wrap">
+            <h2 class="logo-slider-heading">{translations.logoSliderTitle}</h2>
+            <div class="logo-slider-mask">
+                <div class="logo-slider-track">
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Universit%C3%A4t_Bremen.svg" alt="Universität Bremen" width="180" height="56" loading="lazy" />
                     </div>
-                    <div class="detail-section">
-                        <h4>{translations.methodologyTitle}</h4>
-                        <p>{translations.methodologyText}</p>
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/UHH_Universit%C3%A4t_Hamburg_Logo.svg" alt="Universität Hamburg" width="160" height="56" loading="lazy" />
                     </div>
-                </div>
-            </div>
-            <div class="courses-grid">
-                <div class="course-card intensivkurs">
-                    <div class="course-header">
-                        <div class="course-icon"><i class="fas fa-rocket"></i></div>
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/de/thumb/c/c4/Leibniz-Universit%C3%A4t_Hannover.svg/1280px-Leibniz-Universit%C3%A4t_Hannover.svg.png" alt="Leibniz Universität Hannover" width="180" height="56" loading="lazy" />
                     </div>
-                    <div class="course-content">
-                        <h3 class="course-title">{translations.weeklyCourseTitle}</h3>
-                        <p class="course-description">{translations.weeklyCourseDesc}</p>
-                        <div class="course-features">
-                            <div class="feature-item"><i class="fas fa-clock"></i><span>{translations.weeklyCourseFeature1}</span></div>
-                            <div class="feature-item"><i class="fas fa-home"></i><span>{translations.weeklyCourseFeature2}</span></div>
-                            <div class="feature-item"><i class="fas fa-calendar-check"></i><span>{translations.weeklyCourseFeature3}</span></div>
-                        </div>
-                        <div class="course-price">
-                            <span class="price-label">{translations.weeklyCoursePriceLabel}</span>
-                            <span class="price-amount">{translations.weeklyCoursePrice}</span>
-                        </div>
-                        <div class="course-actions">
-                            <a href={`/${lang}/buchung`} class="btn-primary">{translations.courseBookButton}</a>
-                            <a href={`/${lang}/kurslar/intensiv-deutsch`} class="btn-secondary">{translations.courseDetailsButton}</a>
-                        </div>
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Uni_G%C3%B6ttingen_Siegel.svg" alt="Universität Göttingen" width="56" height="56" loading="lazy" />
                     </div>
-                </div>
-                <div class="course-card universitatkurs featured-course">
-                    <div class="course-header">
-                        <div class="course-icon"><i class="fas fa-graduation-cap"></i></div>
-                        <div class="course-badge">{translations.popularBadge}</div>
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/TU-Berlin-Logo.svg" alt="Technische Universität Berlin" width="160" height="56" loading="lazy" />
                     </div>
-                    <div class="course-content">
-                        <h3 class="course-title">{translations.universityPrepTitle}</h3>
-                        <p class="course-description">{translations.universityPrepDesc}</p>
-                        <div class="course-features">
-                            <div class="feature-item"><i class="fas fa-clock"></i><span>{translations.universityPrepFeature1}</span></div>
-                            <div class="feature-item"><i class="fas fa-passport"></i><span>{translations.universityPrepFeature2}</span></div>
-                            <div class="feature-item"><i class="fas fa-comments"></i><span>{translations.universityPrepFeature3}</span></div>
-                        </div>
-                        <div class="course-price">
-                            <span class="price-label">{translations.universityPrepPriceLabel}</span>
-                            <div class="price-discount">
-                                <span class="price-old">1240€</span>
-                                <span class="price-arrow">→</span>
-                                <span class="price-amount">990€</span>
-                            </div>
-                            <span class="price-period">{translations.universityPrepPricePeriod}</span>
-                            <span class="price-warning">{translations.universityPrepPriceWarning}</span>
-                        </div>
-                        <div class="course-actions">
-                            <a href={`/${lang}/buchung`} class="btn-primary">{translations.courseBookButton}</a>
-                            <a href={`/${lang}/kurslar/intensiv-deutsch`} class="btn-secondary">{translations.courseDetailsButton}</a>
-                        </div>
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Universitaet_zu_Koeln_Logo.jpg/1280px-Universitaet_zu_Koeln_Logo.jpg" alt="Universität zu Köln" width="180" height="56" loading="lazy" />
                     </div>
-                </div>
-                <div class="course-card berufsausbildung">
-                    <div class="course-header">
-                        <div class="course-icon"><i class="fas fa-laptop"></i></div>
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/LMU_Muenchen_Logo.svg/1280px-LMU_Muenchen_Logo.svg.png" alt="LMU München" width="160" height="56" loading="lazy" />
                     </div>
-                    <div class="course-content">
-                        <h3 class="course-title">{translations.examPrepTitle}</h3>
-                        <p class="course-description">{translations.examPrepDesc}</p>
-                        <div class="course-features">
-                            <div class="feature-item"><i class="fas fa-users"></i><span>{translations.examPrepFeature1}</span></div>
-                            <div class="feature-item"><i class="fas fa-book-open"></i><span>{translations.examPrepFeature2}</span></div>
-                            <div class="feature-item"><i class="fas fa-clipboard-check"></i><span>{translations.examPrepFeature3}</span></div>
-                        </div>
-                        <div class="course-price">
-                            <span class="price-label">{translations.examPrepPriceLabel}</span>
-                            <span class="price-amount">{translations.examPrepPrice}</span>
-                            <span class="price-period">{translations.examPrepPricePeriod}</span>
-                        </div>
-                        <div class="course-actions">
-                            <a href={`/${lang}/buchung`} class="btn-primary">{translations.courseBookButton}</a>
-                            <a href={`/${lang}/kurslar/online-uebersicht`} class="btn-secondary">{translations.courseDetailsButton}</a>
-                        </div>
+                    <div class="logo-slider-item">
+                        <img src="https://res.cloudinary.com/dekm6b2ek/image/upload/v1618157344/Johann_Wolfgang_Goethe_%C3%9Cniversitesi_Frankfurt_unioku.svg" alt="Goethe-Universität Frankfurt" width="160" height="56" loading="lazy" />
+                    </div>
+                    <!-- Duplicate set for infinite loop -->
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Universit%C3%A4t_Bremen.svg" alt="Universität Bremen" width="180" height="56" loading="lazy" />
+                    </div>
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/UHH_Universit%C3%A4t_Hamburg_Logo.svg" alt="Universität Hamburg" width="160" height="56" loading="lazy" />
+                    </div>
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/de/thumb/c/c4/Leibniz-Universit%C3%A4t_Hannover.svg/1280px-Leibniz-Universit%C3%A4t_Hannover.svg.png" alt="Leibniz Universität Hannover" width="180" height="56" loading="lazy" />
+                    </div>
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Uni_G%C3%B6ttingen_Siegel.svg" alt="Universität Göttingen" width="56" height="56" loading="lazy" />
+                    </div>
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/TU-Berlin-Logo.svg" alt="Technische Universität Berlin" width="160" height="56" loading="lazy" />
+                    </div>
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Universitaet_zu_Koeln_Logo.jpg/1280px-Universitaet_zu_Koeln_Logo.jpg" alt="Universität zu Köln" width="180" height="56" loading="lazy" />
+                    </div>
+                    <div class="logo-slider-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/LMU_Muenchen_Logo.svg/1280px-LMU_Muenchen_Logo.svg.png" alt="LMU München" width="160" height="56" loading="lazy" />
+                    </div>
+                    <div class="logo-slider-item">
+                        <img src="https://res.cloudinary.com/dekm6b2ek/image/upload/v1618157344/Johann_Wolfgang_Goethe_%C3%9Cniversitesi_Frankfurt_unioku.svg" alt="Goethe-Universität Frankfurt" width="160" height="56" loading="lazy" />
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Programs Section -->
-    <section class="programs-section">
-        <div class="section-header">
-            <h2 class="section-title">{translations.programsTitle}</h2>
-            <p class="section-subtitle">{translations.programsSubtitle}</p>
+    <!-- Why Campus German Section -->
+    <section class="why-campusgerman-section" aria-labelledby="why-campusgerman-heading">
+        <div class="why-campusgerman-wrap">
+            <div class="section-header">
+                <h2 id="why-campusgerman-heading" class="section-title">{translations.whyChooseTitle}</h2>
+                <p class="section-subtitle">{translations.whyChooseSubtitle}</p>
+            </div>
+            <div class="why-campusgerman-grid">
+                {translations.whyChooseCards.map((card) => (
+                    <div class="why-campusgerman-card">
+                        <div class="why-campusgerman-card-icon">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                        </div>
+                        <div class="why-campusgerman-card-content">
+                            <h3 class="why-campusgerman-card-title">{card.title}</h3>
+                            <p class="why-campusgerman-card-desc">{card.desc}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
-        <div class="programs-grid">
-            <div class="program-row">
-                <div class="program-item program-small" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9e1?q=80&w=400&auto=format&fit=crop');">
-                    <div class="program-overlay"></div>
-                    <div class="program-content">
-                        <div class="program-icon"><i class="fas fa-university"></i></div>
-                        <h3>{translations.service1Title}</h3>
-                        <p>{translations.service1Desc}</p>
-                        <div class="program-meta">
-                            <span><i class="fas fa-check-circle"></i> {translations.service1Meta1}</span>
-                            <span><i class="fas fa-handshake"></i> {translations.service1Meta2}</span>
+    </section>
+
+    <!-- Kurslar: üstte yatay filtre çubuğu, altta tam genişlik grid + sayfalama -->
+    <section class="index-courses-section" id="index-courses" aria-labelledby="course-filter-heading">
+        <div class="container">
+            <div class="section-header">
+                <h2 id="course-filter-heading" class="section-title">{translations.courseFilterTitle}</h2>
+                <p class="section-subtitle">{translations.courseFilterSubtitle}</p>
+            </div>
+            <div class="index-courses-layout">
+                <aside class="index-courses-sidebar">
+                    <!-- İndirim geri sayım – mobilde filtreden önce, masaüstünde filtrenin altında -->
+                    <div class="countdown-discount-banner" id="countdownDiscountBanner" data-end="2026-02-15T23:59:59">
+                        <div class="countdown-discount-inner">
+                            <div class="countdown-discount-content">
+                                <span class="countdown-discount-badge">{translations.countdownDiscountTitle}</span>
+                                <p class="countdown-discount-desc">{translations.countdownDiscountDesc}</p>
+                                <div class="countdown-coupon-code">
+                                    <span class="countdown-coupon-label">{lang === 'tr' ? 'Kupon' : lang === 'de' ? 'Gutschein' : lang === 'es' ? 'Cupón' : 'Coupon'}:</span>
+                                    <code class="countdown-coupon-value">CAMPUS10</code>
+                                </div>
+                                <p class="countdown-discount-hint">{lang === 'tr' ? 'Rezervasyon formunda bu kodu girin.' : lang === 'de' ? 'Code im Buchungsformular eingeben.' : lang === 'es' ? 'Introduce el código en el formulario.' : 'Enter this code on the booking form.'}</p>
+                            </div>
+                            <div class="countdown-discount-timer-block">
+                                <span class="countdown-ends-label">{translations.countdownEndsIn}</span>
+                                <div class="countdown-timer" id="countdownTimer" aria-live="polite">
+                                    <span class="countdown-part"><span id="countdownDays">0</span> <span class="countdown-unit">{lang === 'tr' ? 'gün' : lang === 'de' ? 'Tage' : lang === 'es' ? 'días' : 'days'}</span></span>
+                                    <span class="countdown-sep">:</span>
+                                    <span class="countdown-part"><span id="countdownHours">00</span> <span class="countdown-unit">{lang === 'tr' ? 'sa' : lang === 'de' ? 'Std' : lang === 'es' ? 'h' : 'hrs'}</span></span>
+                                    <span class="countdown-sep">:</span>
+                                    <span class="countdown-part"><span id="countdownMins">00</span> <span class="countdown-unit">{lang === 'tr' ? 'dk' : lang === 'de' ? 'Min' : lang === 'es' ? 'min' : 'min'}</span></span>
+                                    <span class="countdown-sep">:</span>
+                                    <span class="countdown-part"><span id="countdownSecs">00</span> <span class="countdown-unit">{lang === 'tr' ? 'sn' : lang === 'de' ? 'Sek' : lang === 'es' ? 's' : 'sec'}</span></span>
+                                </div>
+                            </div>
+                            <a href={`${bookingPath}?coupon=CAMPUS10`} class="countdown-discount-cta">
+                                <i class="fas fa-tag"></i>
+                                {translations.countdownGrabCta}
+                            </a>
                         </div>
-                        <a href={`/${lang}/unsere-dienstleistungen/universitaetsvermittlung`} class="program-link">{translations.service1Link}<i class="fas fa-arrow-right"></i></a>
                     </div>
-                </div>
-                <div class="program-item program-medium" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=400&auto=format&fit=crop');">
-                    <div class="program-overlay"></div>
-                    <div class="program-content">
-                        <div class="program-icon"><i class="fas fa-passport"></i></div>
-                        <h3>{translations.service2Title}</h3>
-                        <p>{translations.service2Desc}</p>
-                        <div class="program-meta">
-                            <span><i class="fas fa-file-alt"></i> {translations.service2Meta1}</span>
-                            <span><i class="fas fa-check-circle"></i> {translations.service2Meta2}</span>
+                    <div class="courses-filter-panel">
+                        <div class="filter-panel-search">
+                            <label class="visually-hidden" for="indexCourseSearchInput">{translations.courseFilterSearchPlaceholder}</label>
+                            <span class="filter-panel-icon" aria-hidden="true"><i class="fas fa-search"></i></span>
+                            <input type="text" id="indexCourseSearchInput" placeholder={translations.courseFilterSearchPlaceholder} />
+                            <button type="button" class="filter-panel-clear" id="indexSearchClearBtn" style="display: none;" aria-label="Temizle"><i class="fas fa-times"></i></button>
                         </div>
-                        <a href={`/${lang}/unsere-dienstleistungen/visumsberatung`} class="program-link">{translations.service2Link}<i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div class="program-item program-large" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=400&auto=format&fit=crop');">
-                    <div class="program-overlay"></div>
-                    <div class="program-content">
-                        <div class="program-icon"><i class="fas fa-home"></i></div>
-                        <h3>{translations.service3Title}</h3>
-                        <p>{translations.service3Desc}</p>
-                        <div class="program-meta">
-                            <span><i class="fas fa-building"></i> {translations.service3Meta1}</span>
-                            <span><i class="fas fa-users"></i> {translations.service3Meta2}</span>
+                        <div class="filter-panel-group">
+                            <span class="filter-panel-label">{translations.courseFilterLevelLabel}</span>
+                            <div class="filter-btn-wrapper">
+                                <button type="button" class="filter-panel-trigger" id="indexLevelFilterBtn">
+                                    <span class="filter-panel-trigger-text">{translations.courseFilterAllLevels}</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="filter-menu" id="indexLevelFilterDropdown">
+                                    <a href="#" class="filter-item active" data-value="all">{translations.courseFilterAllLevels}</a>
+                                    <a href="#" class="filter-item" data-value="a1">A1</a>
+                                    <a href="#" class="filter-item" data-value="a2">A2</a>
+                                    <a href="#" class="filter-item" data-value="b1">B1</a>
+                                    <a href="#" class="filter-item" data-value="b2">B2</a>
+                                    <a href="#" class="filter-item" data-value="c1">C1</a>
+                                    <a href="#" class="filter-item" data-value="c2">C2</a>
+                                </div>
+                            </div>
                         </div>
-                        <a href={`/${lang}/unsere-dienstleistungen/unterkunft`} class="program-link">{translations.service3Link}<i class="fas fa-arrow-right"></i></a>
+                        <div class="filter-panel-group">
+                            <span class="filter-panel-label">{translations.courseFilterTypeLabel}</span>
+                            <div class="filter-btn-wrapper">
+                                <button type="button" class="filter-panel-trigger" id="indexTypeFilterBtn">
+                                    <span class="filter-panel-trigger-text">{translations.courseFilterAllTypes}</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="filter-menu" id="indexTypeFilterDropdown">
+                                    <a href="#" class="filter-item active" data-value="all">{translations.courseFilterAllTypes}</a>
+                                    <a href="#" class="filter-item" data-value="yuz-yuze">{translations.courseFilterInPerson}</a>
+                                    <a href="#" class="filter-item" data-value="online">{translations.courseFilterTypeOnline}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-panel-group">
+                            <span class="filter-panel-label">{translations.courseFilterPeriodLabel}</span>
+                            <div class="filter-btn-wrapper">
+                                <button type="button" class="filter-panel-trigger" id="indexPeriodFilterBtn">
+                                    <span class="filter-panel-trigger-text">{translations.courseFilterAllPeriods}</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="filter-menu" id="indexPeriodFilterDropdown">
+                                    <a href="#" class="filter-item active" data-value="all">{translations.courseFilterAllPeriods}</a>
+                                    <a href="#" class="filter-item" data-value="yaz-donemi">{translations.courseFilterSummer}</a>
+                                    <a href="#" class="filter-item" data-value="yil-boyu">{translations.courseFilterYearRound}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="filter-panel-clear-all" id="indexClearFiltersBtn" style="display: none;">
+                            <i class="fas fa-times"></i>
+                            {translations.courseFilterClear}
+                        </button>
+                        <p class="filter-panel-results" id="indexResultsInfo" data-results-label={translations.courseFilterResultsFound}>
+                            <strong id="indexResultsCount">{anaKurslar.length}</strong> {translations.courseFilterResultsFound}
+                        </p>
+                        <a href={courseBasePath} class="index-courses-cta">{translations.courseFilterCta}</a>
                     </div>
+                </aside>
+                <div class="index-courses-main">
+                    <div class="courses-grid" id="indexCoursesGrid">
+                        {anaKurslar.map((kurs) => {
+                            let courseType = 'yuz-yuze';
+                            let courseLevel = 'all';
+                            let coursePeriod = 'yil-boyu';
+                            const cleanedSlug = cleanSlug(kurs.slug);
+                            if (cleanedSlug.startsWith('online-')) courseType = 'online';
+                            if (cleanedSlug.includes('-a1') || cleanedSlug.includes('a1-')) courseLevel = 'a1';
+                            else if (cleanedSlug.includes('-a2') || cleanedSlug.includes('a2-')) courseLevel = 'a2';
+                            else if (cleanedSlug.includes('-b1') || cleanedSlug.includes('b1-')) courseLevel = 'b1';
+                            else if (cleanedSlug.includes('-b2') || cleanedSlug.includes('b2-')) courseLevel = 'b2';
+                            else if (cleanedSlug.includes('-c1') || cleanedSlug.includes('c1-')) courseLevel = 'c1';
+                            if (cleanedSlug.includes('yaz-okulu')) coursePeriod = 'yaz-donemi';
+                            const slug = kurs.data.customSlug || cleanedSlug;
+                            const href = `/${lang}/${courseBase}/${slug}`;
+                            const levelLabel = courseLevel === 'all' ? '' : courseLevel.toUpperCase();
+                            const typeLabel = courseType === 'online' ? translations.courseFilterTypeOnline : translations.courseFilterInPerson;
+                            const periodLabel = coursePeriod === 'yaz-donemi' ? translations.courseFilterSummer : translations.courseFilterYearRound;
+                            const features = (kurs.data.features || []).slice(0, 2);
+                            const pricingData = getCoursePricingData(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
+                            let priceText = translations.courseCardContactUs;
+                            if (pricingData?.pricing?.fullCourse) {
+                                priceText = `${pricingData.pricing.fullCourse} ${translations.courseCardStartingPrices}`;
+                            } else if (pricingData?.isWeeklyOnly && pricingData?.weeklyPricing) {
+                                const courseInfo = extractCourseInfo(kurs.slug);
+                                const weeklyCat = getWeeklyPricingCategory(courseInfo.level);
+                                const weeklyPrices = weeklyCat ? pricingData.weeklyPricing[weeklyCat] : null;
+                                const firstPrice = weeklyPrices?.['2'] || (weeklyPrices && Object.values(weeklyPrices)[0]);
+                                if (firstPrice) priceText = `${firstPrice} ${translations.courseCardStartingPrices}`;
+                            }
+                            return (
+                                <article class="course-card" data-level={`all ${courseLevel}`} data-type={courseType} data-period={coursePeriod}>
+                                    <a href={href} class="course-card-link">
+                                        <div class="course-card-media">
+                                            <img src={kurs.data.image} alt={kurs.data.title} loading="lazy" />
+                                        </div>
+                                        <div class="course-card-body">
+                                            <div class="course-card-tags">
+                                                {levelLabel ? <span class="course-card-badge">{levelLabel}</span> : ''}
+                                                <span class="course-card-period">{periodLabel}</span>
+                                            </div>
+                                            <h3 class="course-title">{kurs.data.title}</h3>
+                                            <p class="course-description">{kurs.data.description}</p>
+                                            <span class="course-card-lessons">{translations.courseCardLessons}</span>
+                                            <span class="course-card-meta">{typeLabel}</span>
+                                            {features.length > 0 ? (
+                                                <ul class="course-card-features" aria-hidden="true">
+                                                    {features.map((f) => <li key={f.title}>{f.title}</li>)}
+                                                </ul>
+                                            ) : null}
+                                            <p class="course-card-price">{priceText}</p>
+                                            <div class="course-card-footer">
+                                                <span class="course-card-cta-text">{translations.courseDetailsButton}</span>
+                                                <span class="course-card-arrow"><i class="fas fa-arrow-right"></i></span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </article>
+                            );
+                        })}
+                    </div>
+                    <nav class="index-courses-pagination" id="indexPagination" aria-label="Sayfalama">
+                        <button type="button" class="index-page-btn prev" id="indexPrevPage" aria-label={translations.courseFilterPrev} disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <span class="index-page-info">
+                            {translations.courseFilterPage} <span id="indexCurrentPage">1</span> / <span id="indexTotalPages">1</span>
+                        </span>
+                        <button type="button" class="index-page-btn next" id="indexNextPage" aria-label={translations.courseFilterNext}>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </nav>
                 </div>
             </div>
-            <div class="program-row">
-                <div class="program-item program-medium" style="background-image: url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=400&auto=format&fit=crop');">
-                    <div class="program-overlay"></div>
-                    <div class="program-content">
-                        <div class="program-icon"><i class="fas fa-plane-arrival"></i></div>
-                        <h3>{translations.service4Title}</h3>
-                        <p>{translations.service4Desc}</p>
-                        <div class="program-meta">
-                            <span><i class="fas fa-plane"></i> {translations.service4Meta1}</span>
-                            <span><i class="fas fa-car"></i> {translations.service4Meta2}</span>
+        </div>
+    </section>
+
+    <!-- Why Bremen Comparison Section (VS Split Screen) -->
+    <section class="why-bremen-section" aria-labelledby="why-bremen-heading">
+        <div class="why-bremen-wrap">
+            <div class="section-header">
+                <h2 id="why-bremen-heading" class="why-bremen-title">{translations.whyBremenTitle}</h2>
+                <p class="why-bremen-subtitle">{translations.whyBremenSubtitle}</p>
+            </div>
+            <div class="why-bremen-split">
+                <div class="why-bremen-head why-bremen-head-bremen">
+                    <span class="why-bremen-side-head-icon"><i class="fas fa-check-circle" aria-hidden="true"></i></span>
+                    <span>{translations.whyBremenLabelBremen}</span>
+                </div>
+                <div class="why-bremen-divider-wrap" aria-hidden="true">
+                    <span class="why-bremen-vs">VS</span>
+                    <div class="why-bremen-divider"></div>
+                </div>
+                <div class="why-bremen-head why-bremen-head-others">
+                    <span class="why-bremen-side-head-icon"><i class="fas fa-city" aria-hidden="true"></i></span>
+                    <span>{translations.whyBremenLabelOthers}</span>
+                </div>
+                {translations.whyBremenItems.map((item, i) => (
+                    <div class="why-bremen-row" style="display: contents;">
+                        <div class="why-bremen-cell why-bremen-cell-bremen" data-index={i}>
+                            <span class="why-bremen-block-num" aria-hidden="true">{i + 1}</span>
+                            <div class="why-bremen-block-inner">
+                                <h3 class="why-bremen-block-topic">{item.topic}</h3>
+                                <p class="why-bremen-block-text">{item.bremen}</p>
+                            </div>
                         </div>
-                        <a href={`/${lang}/unsere-dienstleistungen/flughafenabholung`} class="program-link">{translations.service4Link}<i class="fas fa-arrow-right"></i></a>
+                        <div class="why-bremen-divider-cell" aria-hidden="true"></div>
+                        <div class="why-bremen-cell why-bremen-cell-others" data-index={i}>
+                            <span class="why-bremen-block-num" aria-hidden="true">{i + 1}</span>
+                            <div class="why-bremen-block-inner">
+                                <h3 class="why-bremen-block-topic">{(item as any).othersTopic ?? item.topic}</h3>
+                                <p class="why-bremen-block-text">{item.others}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            <!-- Mobile: önce Bremen sütunu, sonra Diğer şehirler sütunu -->
+            <div class="why-bremen-mobile-columns" aria-hidden="false">
+                <div class="why-bremen-mobile-col why-bremen-mobile-col-bremen">
+                    <div class="why-bremen-mobile-col-head">
+                        <span class="why-bremen-side-head-icon"><i class="fas fa-check-circle" aria-hidden="true"></i></span>
+                        <span>{translations.whyBremenLabelBremen}</span>
+                    </div>
+                    <div class="why-bremen-mobile-list">
+                        {translations.whyBremenItems.map((item, i) => (
+                            <article class="why-bremen-mobile-card">
+                                <div class="why-bremen-mobile-card-num" aria-hidden="true">{i + 1}</div>
+                                <div class="why-bremen-mobile-card-body">
+                                    <h3 class="why-bremen-mobile-topic">{item.topic}</h3>
+                                    <p class="why-bremen-mobile-text">{item.bremen}</p>
+                                </div>
+                            </article>
+                        ))}
                     </div>
                 </div>
-                <div class="program-item program-large featured">
-                    <div class="program-overlay featured"></div>
-                    <div class="program-content">
-                        <div class="program-icon"><i class="fas fa-compass"></i></div>
-                        <h3>{translations.discoverMoreTitle}</h3>
-                        <p>{translations.discoverMoreDesc}</p>
-                        <div class="program-stats">
-                            <div class="stat"><strong>7+</strong><span>{translations.discoverMoreStat1}</span></div>
-                            <div class="stat"><strong>100%</strong><span>{translations.discoverMoreStat2}</span></div>
-                            <div class="stat"><strong>24/7</strong><span>{translations.discoverMoreStat3}</span></div>
-                        </div>
-                        <a href={`/${lang}/unsere-dienstleistungen`} class="program-link featured">{translations.discoverMoreLink}<i class="fas fa-arrow-right"></i></a>
+
+                <div class="why-bremen-mobile-col why-bremen-mobile-col-others">
+                    <div class="why-bremen-mobile-col-head">
+                        <span class="why-bremen-side-head-icon"><i class="fas fa-city" aria-hidden="true"></i></span>
+                        <span>{translations.whyBremenLabelOthers}</span>
+                    </div>
+                    <div class="why-bremen-mobile-list">
+                        {translations.whyBremenItems.map((item, i) => (
+                            <article class="why-bremen-mobile-card">
+                                <div class="why-bremen-mobile-card-num" aria-hidden="true">{i + 1}</div>
+                                <div class="why-bremen-mobile-card-body">
+                                    <h3 class="why-bremen-mobile-topic">{(item as any).othersTopic ?? item.topic}</h3>
+                                    <p class="why-bremen-mobile-text">{item.others}</p>
+                                </div>
+                            </article>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -658,27 +1475,53 @@ const translations = t[lang as keyof typeof t];
                 <h2 class="section-title">{translations.successStoriesTitle}</h2>
                 <p class="section-subtitle">{translations.successStoriesSubtitle}</p>
             </div>
-            <div class="video-container">
-                <div class="video-item">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/LYj1GAEYMLo" title={translations.video1Alt} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div class="video-content">
-                        <h3>{translations.video1Title}</h3>
-                        <p>{translations.video1Desc}</p>
-                        <a href="#maria-hikayesi" class="video-btn"><i class="fas fa-play"></i><span>{translations.video1Link}</span><i class="fas fa-arrow-right"></i></a>
+            <div class="videos-carousel-wrapper">
+                <button class="video-carousel-btn prev-btn" id="videoCarouselPrev" aria-label="Previous">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="videos-carousel-container">
+                    <div class="videos-carousel-track" id="videoCarouselTrack">
+                        <div class="vertical-video-card">
+                            <div class="vertical-video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/LYj1GAEYMLo" title={translations.video1Alt} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div class="vertical-video-info">
+                                <h4>{translations.video1Title}</h4>
+                                <p>{translations.video1Desc}</p>
+                            </div>
+                        </div>
+                        <div class="vertical-video-card">
+                            <div class="vertical-video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/7ZZ-Z3QacN0" title={translations.video2Alt} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div class="vertical-video-info">
+                                <h4>{translations.video2Title}</h4>
+                                <p>{translations.video2Desc}</p>
+                            </div>
+                        </div>
+                        <div class="vertical-video-card">
+                            <div class="vertical-video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/LYj1GAEYMLo" title={translations.video1Alt} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div class="vertical-video-info">
+                                <h4>{translations.video1Title}</h4>
+                                <p>{translations.video1Desc}</p>
+                            </div>
+                        </div>
+                        <div class="vertical-video-card">
+                            <div class="vertical-video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/7ZZ-Z3QacN0" title={translations.video2Alt} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div class="vertical-video-info">
+                                <h4>{translations.video2Title}</h4>
+                                <p>{translations.video2Desc}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="video-item">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/7ZZ-Z3QacN0" title={translations.video2Alt} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div class="video-content">
-                        <h3>{translations.video2Title}</h3>
-                        <p>{translations.video2Desc}</p>
-                        <a href="#ahmet-hikayesi" class="video-btn"><i class="fas fa-play"></i><span>{translations.video2Link}</span><i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
+                <button class="video-carousel-btn next-btn" id="videoCarouselNext" aria-label="Next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -686,151 +1529,178 @@ const translations = t[lang as keyof typeof t];
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="container">
-            <div class="cta-content">
-                <div class="cta-text">
-                    <h2 class="cta-title">{translations.ctaTitle}</h2>
-                    <p class="cta-description">{translations.ctaDescription}</p>
-                    <div class="cta-features">
-                        <div class="cta-feature"><i class="fas fa-check-circle"></i><span>{translations.ctaFeature1}</span></div>
-                        <div class="cta-feature"><i class="fas fa-check-circle"></i><span>{translations.ctaFeature2}</span></div>
-                        <div class="cta-feature"><i class="fas fa-check-circle"></i><span>{translations.ctaFeature3}</span></div>
+            <div class="cta-wrapper">
+                <!-- Left Side: Content & Reviews -->
+                <div class="cta-left">
+                    <div class="cta-content-block">
+                        <h2 class="cta-title">{translations.ctaTitle}</h2>
+                        <p class="cta-description">{translations.ctaDescription}</p>
+                        <ul class="cta-features-list">
+                            <li class="cta-feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>{translations.ctaFeature1}</span>
+                            </li>
+                            <li class="cta-feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>{translations.ctaFeature2}</span>
+                            </li>
+                            <li class="cta-feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>{translations.ctaFeature3}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Student Reviews -->
+                    <div class="student-reviews">
+                        <h3 class="reviews-title">{translations.reviewsTitle}</h3>
+                        <div class="reviews-slider">
+                            <div class="reviews-container" id="reviewsSlider">
+                                <div class="review-card">
+                                    <div class="review-top">
+                                        <div class="reviewer-info">
+                                            <div class="reviewer-avatar">
+                                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=45&h=45&fit=crop&crop=face" alt="Maria Schmidt">
+                                            </div>
+                                            <div class="reviewer-details">
+                                                <h4>Maria Schmidt</h4>
+                                                <p>A1 → B2 (8 {lang === 'tr' ? 'ay' : 'Monate'})</p>
+                                            </div>
+                                        </div>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p class="review-text">{lang === 'tr' ? "\"CampusGerman'da öğrendiğim Almanca ile Almanya'da bir üniversitede İşletme okuyorum. Öğretmenlerim çok sabırlıydı ve konuşma odaklı eğitim sayesinde hızlı ilerledim.\"" : translations.review1Text}</p>
+                                </div>
+                                <div class="review-card">
+                                    <div class="review-top">
+                                        <div class="reviewer-info">
+                                            <div class="reviewer-avatar">
+                                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=45&h=45&fit=crop&crop=face" alt="Ahmet Yılmaz">
+                                            </div>
+                                            <div class="reviewer-details">
+                                                <h4>Ahmet Yılmaz</h4>
+                                                <p>{lang === 'tr' ? 'Türkiye → Almanya' : 'Türkei → Deutschland'}</p>
+                                            </div>
+                                        </div>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p class="review-text">{lang === 'tr' ? "\"Türkiye'den gelerek CampusGerman'da eğitim aldım. Şimdi Almanya'da bir şirkette çalışıyorum. Program çok kapsamlıydı ve iş bulmamda büyük yardımı oldu.\"" : translations.review2Text}</p>
+                                </div>
+                                <div class="review-card">
+                                    <div class="review-top">
+                                        <div class="reviewer-info">
+                                            <div class="reviewer-avatar">
+                                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=45&h=45&fit=crop&crop=face" alt="Lisa Müller">
+                                            </div>
+                                            <div class="reviewer-details">
+                                                <h4>Lisa Müller</h4>
+                                                <p>B1 → C1 (6 {lang === 'tr' ? 'ay' : 'Monate'})</p>
+                                            </div>
+                                        </div>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p class="review-text">{lang === 'tr' ? "\"İş için Almanca öğrenmek istiyordum. CampusGerman'da aldığım eğitim sayesinde şirketimde terfi aldım. Özellikle iş Almancası konusunda çok faydalı oldu.\"" : translations.review3Text}</p>
+                                </div>
+                                <div class="review-card">
+                                    <div class="review-top">
+                                        <div class="reviewer-info">
+                                            <div class="reviewer-avatar">
+                                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=45&h=45&fit=crop&crop=face" alt="Carlos Rodriguez">
+                                            </div>
+                                            <div class="reviewer-details">
+                                                <h4>Carlos Rodriguez</h4>
+                                                <p>{lang === 'tr' ? 'İspanya → Almanya' : 'Spanien → Deutschland'}</p>
+                                            </div>
+                                        </div>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p class="review-text">{lang === 'tr' ? "\"İspanya'dan Almanya'ya geldim ve CampusGerman'da üniversite hazırlık kursu aldım. Şimdi Almanya'da bir üniversitede Mühendislik okuyorum. Çok teşekkürler!\"" : translations.review4Text}</p>
+                                </div>
+                            </div>
+                            <div class="slider-controls">
+                                <button class="slider-btn prev" id="reviewsPrev">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <div class="slider-indicators" id="reviewsIndicators"></div>
+                                <button class="slider-btn next" id="reviewsNext">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="cta-form">
-                    <div class="form-header">
-                        <h3>{translations.ctaFormTitle}</h3>
-                        <p>{translations.ctaFormSubtitle}</p>
-                    </div>
-                    <form class="contact-form">
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder={translations.formNamePlaceholder} required>
-                            <i class="fas fa-user"></i>
+                
+                <!-- Right Side: Form -->
+                <div class="cta-right">
+                    <div class="cta-form-container">
+                        <div class="form-title-block">
+                            <h3>{translations.ctaFormTitle}</h3>
+                            <p>{translations.ctaFormSubtitle}</p>
                         </div>
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder={translations.formEmailPlaceholder} required>
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" id="phone" name="phone" placeholder={translations.formPhonePlaceholder} required>
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="form-group">
-                            <select id="interest" name="interest" required>
-                                <option value="">{translations.formInterestPlaceholder}</option>
-                                <option value="a1-a2">{translations.formInterestOption1}</option>
-                                <option value="b1-b2">{translations.formInterestOption2}</option>
-                                <option value="c1-c2">{translations.formInterestOption3}</option>
-                                <option value="universite">{translations.formInterestOption4}</option>
-                                <option value="meslek">{translations.formInterestOption5}</option>
-                                <option value="online">{translations.formInterestOption6}</option>
-                            </select>
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" name="message" placeholder={translations.formMessagePlaceholder} rows="3"></textarea>
-                            <i class="fas fa-comment"></i>
-                        </div>
-                        <button type="submit" class="submit-btn">
-                            <i class="fas fa-paper-plane"></i>
-                            <span>{translations.formSubmit}</span>
-                        </button>
-                    </form>
-                    <div class="form-footer">
-                        <p><i class="fas fa-shield-alt"></i> {translations.formFooter}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Reviews Section -->
-    <section class="reviews-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">{translations.reviewsTitle}</h2>
-                <p class="section-subtitle">{translations.reviewsSubtitle}</p>
-            </div>
-            <div class="reviews-slider">
-                <div class="reviews-track">
-                    <div class="review-card">
-                        <div class="review-header">
-                            <div class="student-info">
-                                <div class="student-avatar">
-                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face" alt="Maria Schmidt">
-                                </div>
-                                <div class="student-details">
-                                    <h4>Maria Schmidt</h4>
-                                    <span>A1 → B2 (8 ay)</span>
-                                </div>
+                        <form class="cta-contact-form">
+                            <div class="form-field">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="name" name="name" placeholder={translations.formNamePlaceholder} required>
                             </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <div class="form-field">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" name="email" placeholder={translations.formEmailPlaceholder} required>
                             </div>
+                            <div class="form-field">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="phone" name="phone" placeholder={translations.formPhonePlaceholder} required>
+                            </div>
+                            <div class="form-field">
+                                <i class="fas fa-graduation-cap"></i>
+                                <select id="interest" name="interest" required>
+                                    <option value="">{translations.formInterestPlaceholder}</option>
+                                    <option value="a1-a2">{translations.formInterestOption1}</option>
+                                    <option value="b1-b2">{translations.formInterestOption2}</option>
+                                    <option value="c1-c2">{translations.formInterestOption3}</option>
+                                    <option value="universite">{translations.formInterestOption4}</option>
+                                    <option value="meslek">{translations.formInterestOption5}</option>
+                                    <option value="online">{translations.formInterestOption6}</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <i class="fas fa-comment"></i>
+                                <textarea id="message" name="message" placeholder={translations.formMessagePlaceholder} rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="form-submit-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>{translations.formSubmit}</span>
+                            </button>
+                        </form>
+                        <div class="form-security-note">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>{translations.formFooter}</span>
                         </div>
-                        <p class="review-text">{lang === 'tr' ? "\"CampusGerman'da öğrendiğim Almanca ile Almanya'da bir üniversitede İşletme okuyorum. Öğretmenlerim çok sabırlıydı ve konuşma odaklı eğitim sayesinde hızlı ilerledim.\"" : translations.review1Text}</p>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <div class="student-info">
-                                <div class="student-avatar">
-                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="Ahmet Yılmaz">
-                                </div>
-                                <div class="student-details">
-                                    <h4>Ahmet Yılmaz</h4>
-                                    <span>{lang === 'tr' ? 'Türkiye → Almanya' : 'Türkei → Deutschland'}</span>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        <p class="review-text">{lang === 'tr' ? "\"Türkiye'den gelerek CampusGerman'da eğitim aldım. Şimdi Almanya'da bir şirkette çalışıyorum. Program çok kapsamlıydı ve iş bulmamda büyük yardımı oldu.\"" : translations.review2Text}</p>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <div class="student-info">
-                                <div class="student-avatar">
-                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt="Lisa Müller">
-                                </div>
-                                <div class="student-details">
-                                    <h4>Lisa Müller</h4>
-                                    <span>B1 → C1 (6 {lang === 'tr' ? 'ay' : 'Monate'})</span>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        <p class="review-text">{lang === 'tr' ? "\"İş için Almanca öğrenmek istiyordum. CampusGerman'da aldığım eğitim sayesinde şirketimde terfi aldım. Özellikle iş Almancası konusunda çok faydalı oldu.\"" : translations.review3Text}</p>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <div class="student-info">
-                                <div class="student-avatar">
-                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" alt="Carlos Rodriguez">
-                                </div>
-                                <div class="student-details">
-                                    <h4>Carlos Rodriguez</h4>
-                                    <span>{lang === 'tr' ? 'İspanya → Almanya' : 'Spanien → Deutschland'}</span>
-                                </div>
-                            </div>
-                            <div class="review-rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        <p class="review-text">{lang === 'tr' ? "\"İspanya'dan Almanya'ya geldim ve CampusGerman'da üniversite hazırlık kursu aldım. Şimdi Almanya'da bir üniversitede Mühendislik okuyorum. Çok teşekkürler!\"" : translations.review4Text}</p>
                     </div>
                 </div>
-            </div>
-            <div class="reviews-nav">
-                <button class="nav-btn prev-btn" id="prevReview"><i class="fas fa-chevron-left"></i></button>
-                <div class="nav-dots" id="reviewDots">
-                    <span class="dot active"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-                <button class="nav-btn next-btn" id="nextReview"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
     </section>
@@ -978,3 +1848,429 @@ const translations = t[lang as keyof typeof t];
 
 </MainLayout>
 
+<script>
+    // Wait for DOM to be ready
+    document.addEventListener('DOMContentLoaded', function() {
+
+    // Countdown discount banner
+    (function() {
+        const banner = document.getElementById('countdownDiscountBanner');
+        const timerEl = document.getElementById('countdownTimer');
+        const endAttr = banner?.getAttribute('data-end');
+        if (!banner || !timerEl || !endAttr) return;
+        const endDate = new Date(endAttr);
+        function pad(n) { return String(Math.max(0, Math.floor(n))).padStart(2, '0'); }
+        function tick() {
+            const now = new Date();
+            const diff = endDate.getTime() - now.getTime();
+            if (diff <= 0) {
+                const days = document.getElementById('countdownDays');
+                const hours = document.getElementById('countdownHours');
+                const mins = document.getElementById('countdownMins');
+                const secs = document.getElementById('countdownSecs');
+                if (days) days.textContent = '0';
+                if (hours) hours.textContent = '00';
+                if (mins) mins.textContent = '00';
+                if (secs) secs.textContent = '00';
+                return;
+            }
+            const days = document.getElementById('countdownDays');
+            const hours = document.getElementById('countdownHours');
+            const mins = document.getElementById('countdownMins');
+            const secs = document.getElementById('countdownSecs');
+            const d = diff / (24 * 60 * 60 * 1000);
+            const h = (d % 1) * 24;
+            const m = (h % 1) * 60;
+            const s = (m % 1) * 60;
+            if (days) days.textContent = Math.floor(d);
+            if (hours) hours.textContent = pad(h);
+            if (mins) mins.textContent = pad(m);
+            if (secs) secs.textContent = pad(s);
+        }
+        tick();
+        setInterval(tick, 1000);
+    })();
+
+    // Index kurs: sol filtre, sağda sayfa başı 6 kurs + sayfalama
+    (function() {
+        const ITEMS_PER_PAGE = 6;
+        const grid = document.getElementById('indexCoursesGrid');
+        const filterButtons = { level: document.getElementById('indexLevelFilterBtn'), type: document.getElementById('indexTypeFilterBtn'), period: document.getElementById('indexPeriodFilterBtn') };
+        const filterMenus = { level: document.getElementById('indexLevelFilterDropdown'), type: document.getElementById('indexTypeFilterDropdown'), period: document.getElementById('indexPeriodFilterDropdown') };
+        const clearBtn = document.getElementById('indexClearFiltersBtn');
+        const resultsInfo = document.getElementById('indexResultsInfo');
+        const prevBtn = document.getElementById('indexPrevPage');
+        const nextBtn = document.getElementById('indexNextPage');
+        const currentPageEl = document.getElementById('indexCurrentPage');
+        const totalPagesEl = document.getElementById('indexTotalPages');
+        if (!grid) return;
+        const courseCards = Array.from(grid.querySelectorAll('.course-card'));
+        let currentFilters = { level: 'all', type: 'all', period: 'all', search: '' };
+        let currentPage = 1;
+        let filteredCards = [];
+        Object.keys(filterButtons).forEach(key => {
+            const btn = filterButtons[key], menu = filterMenus[key];
+            if (btn && menu) btn.addEventListener('click', (e) => { e.stopPropagation(); e.preventDefault(); Object.values(filterMenus).forEach(m => { if (m && m !== menu) m.classList.remove('active'); }); menu.classList.toggle('active'); });
+        });
+        document.addEventListener('click', () => Object.values(filterMenus).forEach(m => { if (m) m.classList.remove('active'); }));
+        document.querySelectorAll('.index-courses-section .filter-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const menu = this.closest('.filter-menu');
+                if (!menu) return;
+                let filterType = ''; if (menu.id === 'indexLevelFilterDropdown') filterType = 'level'; else if (menu.id === 'indexTypeFilterDropdown') filterType = 'type'; else if (menu.id === 'indexPeriodFilterDropdown') filterType = 'period';
+                const value = this.getAttribute('data-value');
+                menu.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active')); this.classList.add('active');
+                currentFilters[filterType] = value;
+                const btn = filterButtons[filterType]; if (btn) { const s = btn.querySelector('span'); if (s) s.textContent = this.textContent.trim(); }
+                menu.classList.remove('active'); currentPage = 1; applyFilters();
+            });
+        });
+        if (clearBtn) clearBtn.addEventListener('click', () => {
+            currentFilters = { level: 'all', type: 'all', period: 'all', search: '' };
+            currentPage = 1;
+            const searchInput = document.getElementById('indexCourseSearchInput'), searchClear = document.getElementById('indexSearchClearBtn');
+            if (searchInput) { searchInput.value = ''; if (searchClear) searchClear.style.display = 'none'; }
+            document.querySelectorAll('.index-courses-section .filter-item').forEach(item => { item.classList.remove('active'); if (item.getAttribute('data-value') === 'all') item.classList.add('active'); });
+            ['level','type','period'].forEach(key => { const m = filterMenus[key], btn = filterButtons[key]; if (m && btn) { const allItem = m.querySelector('.filter-item[data-value="all"]'); if (allItem && btn.querySelector('span')) btn.querySelector('span').textContent = allItem.textContent.trim(); } });
+            applyFilters();
+        });
+        const searchInput = document.getElementById('indexCourseSearchInput'), searchClear = document.getElementById('indexSearchClearBtn');
+        if (searchInput) { let t; searchInput.addEventListener('input', (e) => { clearTimeout(t); t = setTimeout(() => { currentFilters.search = e.target.value.toLowerCase().trim(); currentPage = 1; applyFilters(); }, 300); }); searchInput.addEventListener('keyup', () => { if (searchClear) searchClear.style.display = searchInput.value.length > 0 ? 'flex' : 'none'; }); }
+        if (searchClear) searchClear.addEventListener('click', () => { if (searchInput) { searchInput.value = ''; currentFilters.search = ''; searchClear.style.display = 'none'; currentPage = 1; applyFilters(); } });
+        if (prevBtn) prevBtn.addEventListener('click', () => { if (currentPage > 1) { currentPage--; updatePagination(); } });
+        if (nextBtn) nextBtn.addEventListener('click', () => { if (currentPage < Math.ceil(filteredCards.length / ITEMS_PER_PAGE)) { currentPage++; updatePagination(); } });
+        function applyFilters() {
+            filteredCards = courseCards.filter(card => {
+                const level = card.getAttribute('data-level') || '', type = card.getAttribute('data-type') || '', period = card.getAttribute('data-period') || '';
+                const title = (card.querySelector('.course-title')?.textContent || '').toLowerCase(), desc = (card.querySelector('.course-description')?.textContent || '').toLowerCase();
+                const levelMatch = currentFilters.level === 'all' || level.includes(currentFilters.level);
+                const typeMatch = currentFilters.type === 'all' || type === currentFilters.type;
+                const periodMatch = currentFilters.period === 'all' || period === currentFilters.period;
+                const searchMatch = !currentFilters.search || title.includes(currentFilters.search) || desc.includes(currentFilters.search);
+                return levelMatch && typeMatch && periodMatch && searchMatch;
+            });
+            if (clearBtn) clearBtn.style.display = (currentFilters.level !== 'all' || currentFilters.type !== 'all' || currentFilters.period !== 'all' || currentFilters.search) ? 'flex' : 'none';
+            const label = resultsInfo?.getAttribute('data-results-label') || 'kurs bulundu';
+            const noResultsText = document.documentElement.lang === 'tr' ? 'Sonuç bulunamadı' : document.documentElement.lang === 'de' ? 'Keine Ergebnisse gefunden' : document.documentElement.lang === 'en' ? 'No results found' : 'No se encontraron resultados';
+            if (resultsInfo) { if (filteredCards.length === 0) { resultsInfo.classList.add('no-results'); resultsInfo.innerHTML = '<i class="fas fa-search"></i> ' + noResultsText; } else { resultsInfo.classList.remove('no-results'); resultsInfo.innerHTML = '<span id="indexResultsCount">' + filteredCards.length + '</span> ' + label; } }
+            updatePagination();
+        }
+        function updatePagination() {
+            const totalPages = Math.max(1, Math.ceil(filteredCards.length / ITEMS_PER_PAGE));
+            currentPage = Math.min(currentPage, totalPages);
+            const start = (currentPage - 1) * ITEMS_PER_PAGE;
+            const end = start + ITEMS_PER_PAGE;
+            courseCards.forEach((c, i) => {
+                const idx = filteredCards.indexOf(c);
+                if (idx === -1) { c.style.display = 'none'; return; }
+                c.style.display = (idx >= start && idx < end) ? '' : 'none';
+            });
+            if (currentPageEl) currentPageEl.textContent = currentPage;
+            if (totalPagesEl) totalPagesEl.textContent = totalPages;
+            if (prevBtn) prevBtn.disabled = currentPage <= 1;
+            if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+        }
+        applyFilters();
+    })();
+    
+    // Student Reviews Slider
+    (function() {
+        const slider = document.getElementById('reviewsSlider');
+        const prevBtn = document.getElementById('reviewsPrev');
+        const nextBtn = document.getElementById('reviewsNext');
+        const indicators = document.getElementById('reviewsIndicators');
+        
+        if (!slider || !prevBtn || !nextBtn || !indicators) return;
+        
+        const cards = slider.querySelectorAll('.review-card');
+        let currentIndex = 0;
+        
+        // Create indicators
+        function createIndicators() {
+            indicators.innerHTML = '';
+            for (let i = 0; i < cards.length; i++) {
+                const dot = document.createElement('button');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(i));
+                indicators.appendChild(dot);
+            }
+        }
+        
+        // Update indicators
+        function updateIndicators() {
+            const dots = indicators.querySelectorAll('button');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+        
+        // Go to slide
+        function goToSlide(index) {
+            const maxIndex = cards.length - 1;
+            currentIndex = Math.max(0, Math.min(index, maxIndex));
+            
+            const cardWidth = cards[0].offsetWidth + 15;
+            slider.scrollTo({
+                left: currentIndex * cardWidth,
+                behavior: 'smooth'
+            });
+            
+            updateIndicators();
+            updateButtons();
+        }
+        
+        // Update buttons
+        function updateButtons() {
+            const maxIndex = cards.length - 1;
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex >= maxIndex;
+        }
+        
+        // Next slide
+        function nextSlide() {
+            if (currentIndex < cards.length - 1) {
+                goToSlide(currentIndex + 1);
+            }
+        }
+        
+        // Previous slide
+        function prevSlide() {
+            if (currentIndex > 0) {
+                goToSlide(currentIndex - 1);
+            }
+        }
+        
+        // Handle scroll
+        function handleScroll() {
+            const cardWidth = cards[0].offsetWidth + 15;
+            const scrollPosition = slider.scrollLeft;
+            const newIndex = Math.round(scrollPosition / cardWidth);
+            
+            if (newIndex !== currentIndex && newIndex >= 0 && newIndex < cards.length) {
+                currentIndex = newIndex;
+                updateIndicators();
+                updateButtons();
+            }
+        }
+        
+        // Event listeners
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        slider.addEventListener('scroll', handleScroll);
+        
+        // Auto-play
+        let autoPlayInterval;
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(() => {
+                if (currentIndex < cards.length - 1) {
+                    nextSlide();
+                } else {
+                    goToSlide(0);
+                }
+            }, 5000);
+        }
+        
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+        
+        // Pause on hover
+        const reviewsSection = slider.closest('.student-reviews');
+        if (reviewsSection) {
+            reviewsSection.addEventListener('mouseenter', stopAutoPlay);
+            reviewsSection.addEventListener('mouseleave', startAutoPlay);
+        }
+        
+        // Handle resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                currentIndex = 0;
+                goToSlide(0);
+            }, 250);
+        });
+        
+        // Initialize
+        createIndicators();
+        updateButtons();
+        startAutoPlay();
+    })();
+    
+    // Video Carousel
+    (function() {
+        const track = document.getElementById('videoCarouselTrack');
+        const prevBtn = document.getElementById('videoCarouselPrev');
+        const nextBtn = document.getElementById('videoCarouselNext');
+        
+        if (!track || !prevBtn || !nextBtn) return;
+        
+        const cards = track.querySelectorAll('.vertical-video-card');
+        let currentIndex = 0;
+        
+        // Calculate cards per view based on screen size
+        function getCardsPerView() {
+            if (window.innerWidth >= 1024) return 3;
+            if (window.innerWidth >= 768) return 2;
+            return 1;
+        }
+        
+        // Go to slide
+        function goToSlide(index) {
+            const cardsPerView = getCardsPerView();
+            const maxIndex = Math.max(0, cards.length - cardsPerView);
+            currentIndex = Math.max(0, Math.min(index, maxIndex));
+            
+            const cardWidth = cards[0].offsetWidth + 20; // card width + gap
+            const scrollPosition = currentIndex * cardWidth;
+            
+            track.style.transform = `translateX(-${scrollPosition}px)`;
+            updateButtons();
+        }
+        
+        // Update buttons
+        function updateButtons() {
+            const cardsPerView = getCardsPerView();
+            const maxIndex = Math.max(0, cards.length - cardsPerView);
+            
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex >= maxIndex;
+        }
+        
+        // Next slide
+        function nextSlide() {
+            const cardsPerView = getCardsPerView();
+            const maxIndex = Math.max(0, cards.length - cardsPerView);
+            if (currentIndex < maxIndex) {
+                goToSlide(currentIndex + 1);
+            }
+        }
+        
+        // Previous slide
+        function prevSlide() {
+            if (currentIndex > 0) {
+                goToSlide(currentIndex - 1);
+            }
+        }
+        
+        // Handle resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                currentIndex = 0;
+                goToSlide(0);
+            }, 250);
+        });
+        
+        // Event listeners
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        
+        // Initialize
+        updateButtons();
+    })();
+    
+    // ===== CTA CONTACT FORM HANDLER =====
+    const ctaContactForm = document.querySelector('.cta-contact-form');
+    if (ctaContactForm) {
+        ctaContactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            console.log('CTA form submitted');
+            
+            const submitButton = ctaContactForm.querySelector('.form-submit-btn');
+            const originalContent = submitButton ? submitButton.innerHTML : '';
+            
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Gönderiliyor...</span>';
+            }
+            
+            const formData = new FormData(ctaContactForm);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            console.log('Form data:', data);
+            
+            // Basic validation
+            if (!data.email || !data.name || !data.phone) {
+                if (window.showSuccessModal) {
+                    window.showSuccessModal('error', 'Lütfen tüm gerekli alanları doldurun.');
+                } else {
+                    alert('Lütfen tüm gerekli alanları doldurun.');
+                }
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalContent;
+                }
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                if (window.showSuccessModal) {
+                    window.showSuccessModal('error', 'Lütfen geçerli bir e-posta adresi girin.');
+                } else {
+                    alert('Lütfen geçerli bir e-posta adresi girin.');
+                }
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalContent;
+                }
+                return;
+            }
+            
+            // Send to webhook
+            try {
+                const response = await fetch('https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        formType: 'cta-contact',
+                        sourcePage: window.location.pathname,
+                        lang: '{lang}',
+                        name: data.name,
+                        email: data.email,
+                        phone: data.phone,
+                        interest: data.interest,
+                        message: data.message || ''
+                    })
+                });
+                
+                if (response.ok) {
+                    if (window.showSuccessModal) {
+                        window.showSuccessModal('success', 'Formunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
+                    } else {
+                        alert('Formunuz başarıyla gönderildi!');
+                    }
+                    ctaContactForm.reset();
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                if (window.showSuccessModal) {
+                    window.showSuccessModal('error', 'Bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.');
+                } else {
+                    alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                }
+            } finally {
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalContent;
+                }
+            }
+        });
+        console.log('CTA contact form handler initialized');
+    } else {
+        console.warn('CTA contact form not found');
+    }
+    
+    }); // End DOMContentLoaded
+</script>

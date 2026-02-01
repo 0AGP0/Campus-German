@@ -1,0 +1,105 @@
+---
+title: "FSP Exam Preparation Course"
+lang: "en"
+customSlug: "fsp-preparation"
+badge:
+  icon: "fas fa-stethoscope"
+  text: "FSP"
+description: "Preparation for FSP (Fachsprachprüfung) exam. Special exam preparation for medicine and health sciences."
+image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Weekly Lessons"
+    description: "24 Lessons (UE)"
+  - icon: "fas fa-calendar-alt"
+    title: "Course Duration"
+    description: "12 Weeks"
+  - icon: "fas fa-users"
+    title: "Class Size"
+    description: "Maximum 8 People"
+  - icon: "fas fa-stethoscope"
+    title: "Exam"
+    description: "FSP"
+heroButtons:
+  primary:
+    text: "Apply Now"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "FSP Information"
+    icon: "fas fa-info-circle"
+    href: "#fsp-info"
+tabs:
+  - id: "course-info"
+    icon: "fas fa-info-circle"
+    title: "Course Information"
+    content:
+      title: "About FSP Preparation Course"
+      paragraphs:
+        - heading: "Course Overview"
+          text: "The FSP (Feststellungsprüfung) Preparation Course is an intensive program specially prepared for students who complete the Studienkolleg process in Germany and aim to successfully pass the FSP exam required for transition to university education. This course offered by CampusGerman aims to systematically develop both students' academic German skills and field-focused knowledge they will need in the exam. The FSP exam is a critical stage in the transition to universities in Germany and measures not only language knowledge but also academic thinking, text comprehension, and expression ability. This course, with its content exactly compatible with the exam format, ensures that students enter the exam process consciously and prepared. The program is structured with an academic German approach in accordance with CEFR standards. Unlike classic German courses, the CampusGerman FSP Preparation Course progresses focusing on exam strategy, mock exams, and academic expression."
+        - heading: "Target Audience and Prerequisites"
+          text: "This course is designed for students planning to take the FSP exam. It is particularly suitable for the following groups: Students who have completed or are about to complete Studienkolleg education Candidates aiming for undergraduate education in Germany Those who need support in academic German for the FSP exam Students who want to complete the transition to university safely At least B1–B2 level general German knowledge is recommended for course participation. This level ensures more efficient study of academic texts and exam content. CampusGerman guides students correctly by conducting level and needs analysis before the course."
+        - heading: "Course Content and Learning Goals"
+          text: "The FSP Preparation Course focuses on academic language and skills required by the exam. The course content includes: Reading and analyzing academic German texts Written expression and academic text writing Field-based terminology (T-Kurs, M-Kurs, W-Kurs, etc.) Listening and comprehension exercises Trial studies suitable for exam format The learning goal is for the student to be able to clearly demonstrate their linguistic and academic competence in the FSP exam. At the end of the course, students become familiar with the exam format and confident."
+        - heading: "Teaching Method and Classroom Environment"
+          text: "The FSP Preparation Course at CampusGerman is conducted with an exam-focused and applied method. In classes: Real FSP examples Mock exams and analyses Academic writing and speaking exercises Individual feedback are used. The classroom environment is disciplined and goal-oriented. Instructors are experienced in the FSP process and academic German and support students individually."
+        - heading: "Post-Course Progress"
+          text: "Students who complete the FSP Preparation Course: Enter the FSP exam consciously and prepared Strengthen their academic German skills Complete an important step for transition to universities in Germany Start undergraduate education with a stronger foundation CampusGerman continues to support students in university placement and academic counseling processes after the course."
+  - id: "dates-prices"
+    icon: "fas fa-calendar-alt"
+    title: "Dates and Prices"
+    content:
+      title: "Price Information"
+      pricing:
+        - name: "12 Weeks FSP Preparation"
+          duration: "12 Weeks"
+          schedule: "24 Lessons/Week"
+          price: "Special Pricing"
+          highlighted: true
+  - id: "fsp-info"
+    icon: "fas fa-stethoscope"
+    title: "FSP Information"
+    content:
+      title: "About FSP Exam"
+      paragraphs:
+        - heading: "What is FSP?"
+          text: "Feststellungsprüfung is an official exam that measures students' suitability for university education in Germany after Studienkolleg."
+        - heading: "Exam Format"
+          text: "Reading: Understanding and interpreting academic texts. Listening: Academic content listening tasks. Writing: Written expression related to the field. Oral Exam: Academic speaking and presentation."
+        - heading: "Exam Fees"
+          text: "Approximately 150–300 € (may vary depending on Studienkolleg and state)"
+        - heading: "Certificate"
+          text: "Students who successfully pass the FSP exam gain the right to apply to universities in Germany. The certificate is official and mandatory for transition to university."
+faqs:
+  - question: "What is the FSP exam?"
+    answer: "FSP (Fachsprachprüfung) is the special language exam required for medicine and health sciences education in Germany."
+  - question: "What level should I start from?"
+    answer: "At least C1 level is recommended for FSP preparation."
+  - question: "What course formats are offered?"
+    answer: "Our courses offer you a flexible learning experience: Hybrid Education: Your course consists of a combination of face-to-face classes and live online classes. Thanks to the hybrid system, you can also attend classes online whenever you want on face-to-face class days. Live Online Education: In this format, you attend classes completely live and online."
+  - question: "What content is covered in the courses?"
+    answer: "Our Intensive German programs include listening and reading comprehension with current texts, comprehensive grammar studies, and various communication-focused activities. This aims to develop your speaking and writing skills in a goal-oriented manner."
+  - question: "How can I get university education in Germany?"
+    answer: "To receive university education in Germany, you must first have recognized university entrance qualification (HZB). It is recommended to check whether your diploma is recognized in Germany through the anabin system. You also need to document your German language proficiency with official certificates such as telc, DSH. The Campus German University Preparation Program is designed for you to prepare for this process completely."
+  - question: "What requirements are necessary?"
+    answer: "You must be at least 18 years old. You must submit a blocked account opened in Germany or an official commitment letter."
+  - question: "What types of visas are recommended?"
+    answer: "Student Visa: Also covers the right to participate in preparatory German courses. There is no visa requirement for EU citizens."
+  - question: "What services are included in the courses?"
+    answer: "Placement test, no registration fee, course certificate for visa application, digital textbook, individual student counseling (1 time, approximately 45 minutes), webinars on 'University Education in Germany', Campus German certificate, e-learning platform, social and cultural activities organized throughout the year, free Wi-Fi access at all centers."
+  - question: "What are the qualifications of our instructors?"
+    answer: "Our teaching staff consists of university graduates with many years of teaching experience in German as a Foreign Language (DaF) and German as a Second Language (DaZ), experts in their field, and highly motivated people. We also have Federal Office for Migration and Refugees (BAMF) approved instructors. Our lessons are regularly evaluated by students."
+  - question: "How long does it take to learn German?"
+    answer: "German learning time depends on your goal and current level. You can complete the basic levels from A1 to B2 in 6-8 months. Advanced levels such as C1 and C2 may require an additional 4-6 months. You can shorten this time with our intensive courses."
+  - question: "Can I get a Goethe certificate?"
+    answer: "Yes, we offer Goethe certificate preparation courses at CampusGerman. We provide exam preparation at all levels from A1 to C2. You can take certificate exams at our campus or be directed to nearby test centers."
+  - question: "Are accommodation options available?"
+    answer: "Yes, we offer accommodation options in Germany. Student dormitories, homestay accommodation, and shared apartments are available. Our accommodation service is not included in the course fee, but we help you find the most suitable options."
+  - question: "Are payment plans and discounts available?"
+    answer: "Yes, we offer flexible payment plans. Monthly, 3-month, and 6-month payment options are available. There are discounts for early registration, group registrations, and long-term programs. Contact us for detailed information."
+hasDemandForm: true
+---
+
+<!-- Content will be added here -->
+

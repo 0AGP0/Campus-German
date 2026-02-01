@@ -1,0 +1,7 @@
+{
+  "redirects": [
+    { "source": "/tr/ueber-uns", "destination": "/tr/hakkimizda", "permanent": true },
+    { "source": "/tr/ueber-uns/", "destination": "/tr/hakkimizda/", "permanent": true },
+    { "source": "/tr/ueber-uns/:path*", "destination": "/tr/hakkimizda/:path*", "permanent": true }
+  ]
+}

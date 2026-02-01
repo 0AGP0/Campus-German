@@ -1,6 +1,7 @@
 ---
 title: "İş Almancası (Wirtschaftsdeutsch)"
 lang: "tr"
+customSlug: "is-almancasi"
 badge:
   icon: "fas fa-briefcase"
   text: "Profesyonel İletişim"

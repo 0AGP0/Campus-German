@@ -1,0 +1,1189 @@
+/* ===== MISSION PAGE - COMPLETE REDESIGN ===== */
+/* Minimal side padding, modern section-based design */
+
+/* Prevent horizontal overflow on all sections - only for overflow protection */
+.mission-hero,
+.mission-core-values,
+.mission-why-exist,
+.mission-approach,
+.mission-stats,
+.mission-principles,
+.mission-cta {
+    overflow-x: hidden;
+}
+
+/* Mission statement should NOT have overflow-x hidden as it breaks sticky */
+.mission-statement {
+    /* overflow-x: hidden removed to allow sticky sidebar to work */
+}
+
+/* Container - Minimal Padding */
+.mission-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    position: relative !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+}
+
+/* ===== 1. HERO SECTION ===== */
+.mission-hero {
+    background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-secondary) 100%);
+    padding: 60px 0 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mission-hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -5%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(5, 150, 105, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.mission-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 50px;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+.mission-back-btn:hover {
+    opacity: 1;
+    transform: translateX(-5px);
+}
+
+.mission-hero-content {
+    text-align: center;
+    color: white;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.mission-hero-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 35px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.mission-hero-icon i {
+    font-size: 2rem;
+    color: white;
+}
+
+.mission-hero-title {
+    font-size: 4rem;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 25px;
+    line-height: 1.1;
+}
+
+.mission-hero-desc {
+    font-size: 1.35rem;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.8;
+    font-weight: 500;
+}
+
+/* ===== 2. MISSION STATEMENT SECTION ===== */
+.mission-statement {
+    padding: 100px 0;
+    background: white;
+    position: relative;
+    overflow: visible !important;
+    min-height: auto !important;
+    height: auto !important;
+}
+
+.mission-statement-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 40px;
+    align-items: start;
+    position: relative;
+    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+}
+
+.mission-statement-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.mission-statement-card {
+    background: linear-gradient(135deg, var(--color-primary-bg) 0%, #ffffff 100%);
+    padding: 50px 40px;
+    border-radius: 24px;
+    border-left: 6px solid var(--color-primary);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--color-text-secondary);
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* Sticky sidebar definition moved to end of file after all media queries */
+
+/* Hide scrollbar for sidebar */
+.mission-sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+.mission-sidebar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    /* Position sticky will be applied at the end of file with !important to override all media queries */
+}
+
+.mission-sidebar-section {
+    background: white;
+    padding: 30px 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 2px solid var(--color-primary-bg);
+}
+
+.mission-sidebar-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #E5E7EB;
+}
+
+.mission-sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mission-sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 12px 15px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.mission-sidebar-link:hover {
+    background: var(--color-primary-bg);
+    color: var(--color-primary);
+    transform: translateX(5px);
+}
+
+.mission-sidebar-link i {
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    transition: all 0.3s ease;
+}
+
+.mission-sidebar-link:hover i {
+    transform: translateX(3px);
+}
+
+.mission-sidebar-cta {
+    background: var(--gradient-primary);
+    padding: 35px 25px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(5, 150, 105, 0.3);
+    color: white;
+}
+
+.mission-sidebar-cta .mission-sidebar-title {
+    color: white;
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.mission-sidebar-cta-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.mission-sidebar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: white;
+    color: var(--color-primary);
+    padding: 14px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.mission-sidebar-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.mission-sidebar-btn i {
+    font-size: 1rem;
+}
+
+.mission-statement-image {
+    width: 100%;
+    margin: 0 0 40px 0;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+}
+
+.mission-statement-image img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    display: block;
+}
+
+.mission-statement-card p {
+    font-size: 1.2rem;
+    line-height: 2;
+    color: var(--color-text-primary);
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+
+.mission-statement-card p:first-child {
+    font-size: 1.4rem;
+    line-height: 2.2;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.mission-statement-card h2 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--color-text-primary);
+    margin: 50px 0 30px;
+    padding: 30px 25px;
+    background: white;
+    border-radius: 20px;
+    border-left: 6px solid var(--color-primary);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.mission-statement-card h2:first-child {
+    margin-top: 0;
+}
+
+.mission-statement-card h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 40px 0 20px;
+    padding: 20px 0;
+    border-bottom: 3px solid var(--color-primary);
+    display: inline-block;
+    padding-right: 25px;
+}
+
+.mission-statement-card ul,
+.mission-statement-card ol {
+    margin: 30px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.mission-statement-card li {
+    padding: 15px 0;
+    padding-left: 30px;
+    position: relative;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+}
+
+.mission-statement-card li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.mission-statement-card strong {
+    color: var(--color-text-primary);
+    font-weight: 700;
+}
+
+/* Prevent overflow in markdown content */
+.mission-statement-card table {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.mission-statement-card table th,
+.mission-statement-card table td {
+    padding: 10px;
+    word-break: break-word;
+}
+
+.mission-statement-card pre {
+    max-width: 100%;
+    overflow-x: auto;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.mission-statement-card code {
+    max-width: 100%;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.mission-statement-card a {
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.mission-statement-card img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin: 40px 0;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    display: block;
+}
+
+/* ===== 3. CORE VALUES SECTION ===== */
+.mission-core-values {
+    padding: 100px 0;
+    background: #F9FAFB;
+    margin-top: 0;
+}
+
+.mission-core-values .mission-container {
+    padding: 0 40px;
+    max-width: 1600px;
+}
+
+.mission-section-title {
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: 70px;
+    position: relative;
+}
+
+.mission-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 5px;
+    background: var(--gradient-primary);
+    border-radius: 3px;
+}
+
+.mission-values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.mission-value-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    border: 2px solid transparent;
+}
+
+.mission-value-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(5, 150, 105, 0.2);
+    border-color: var(--color-primary);
+}
+
+.mission-value-icon {
+    width: 90px;
+    height: 90px;
+    background: var(--gradient-primary);
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    box-shadow: 0 15px 35px rgba(5, 150, 105, 0.3);
+}
+
+.mission-value-icon i {
+    font-size: 2.2rem;
+    color: white;
+}
+
+.mission-value-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 15px;
+}
+
+.mission-value-desc {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+/* ===== 4. WHY WE EXIST SECTION ===== */
+.mission-why-exist {
+    padding: 100px 0;
+    background: white;
+    margin-top: 0;
+}
+
+.mission-why-exist .mission-container {
+    padding: 0 40px;
+    max-width: 1600px;
+}
+
+.mission-why-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.mission-why-timeline {
+    margin-top: 60px;
+}
+
+.mission-timeline-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 40px;
+    margin-bottom: 50px;
+    align-items: start;
+}
+
+.mission-timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.mission-timeline-number {
+    width: 80px;
+    height: 80px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 900;
+    color: white;
+    box-shadow: 0 15px 35px rgba(5, 150, 105, 0.3);
+    flex-shrink: 0;
+}
+
+.mission-timeline-content h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 12px;
+}
+
+.mission-timeline-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+/* ===== 5. OUR APPROACH SECTION ===== */
+.mission-approach {
+    padding: 100px 0;
+    background: #F9FAFB;
+    margin-top: 0;
+}
+
+.mission-approach .mission-container {
+    padding: 0 40px;
+    max-width: 1600px;
+}
+
+.mission-approach-list {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.mission-approach-item {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 50px;
+    align-items: center;
+    padding: 50px 40px;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+}
+
+.mission-approach-item:hover {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+    transform: translateX(5px);
+}
+
+.mission-approach-right {
+    grid-template-columns: 200px 1fr;
+}
+
+.mission-approach-right .mission-approach-text {
+    order: 2;
+}
+
+.mission-approach-right .mission-approach-visual {
+    order: 1;
+}
+
+.mission-approach-text h3 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 20px;
+}
+
+.mission-approach-text p {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+.mission-approach-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mission-approach-icon {
+    width: 150px;
+    height: 150px;
+    background: var(--gradient-primary);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 35px rgba(5, 150, 105, 0.3);
+}
+
+.mission-approach-icon i {
+    font-size: 3.5rem;
+    color: white;
+}
+
+/* ===== 6. IMPACT/STATS SECTION ===== */
+.mission-stats {
+    padding: 100px 0;
+    background: var(--gradient-primary);
+    position: relative;
+    overflow: hidden;
+    margin-top: 0;
+}
+
+.mission-stats .mission-container {
+    padding: 0 40px;
+    max-width: 1600px;
+}
+
+.mission-stats::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stats-pattern" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="2" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23stats-pattern)"/></svg>');
+    opacity: 0.4;
+}
+
+.mission-stats-title {
+    color: white;
+    position: relative;
+    z-index: 2;
+}
+
+.mission-stats-title::after {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.mission-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+.mission-stat-card {
+    text-align: center;
+    color: white;
+    padding: 50px 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.4s ease;
+}
+
+.mission-stat-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.mission-stat-number {
+    font-size: 4.5rem;
+    font-weight: 900;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #ffffff 0%, var(--color-primary-bg) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.mission-stat-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    opacity: 0.95;
+}
+
+/* ===== 7. PRINCIPLES SECTION ===== */
+.mission-principles {
+    padding: 100px 0;
+    background: white;
+    margin-top: 0;
+}
+
+.mission-principles .mission-container {
+    padding: 0 40px;
+    max-width: 1600px;
+}
+
+.mission-principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.mission-principle-card {
+    background: #F9FAFB;
+    padding: 40px 30px;
+    border-radius: 24px;
+    border: 2px solid #E5E7EB;
+    transition: all 0.4s ease;
+}
+
+.mission-principle-card:hover {
+    background: white;
+    border-color: var(--color-primary);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(5, 150, 105, 0.15);
+}
+
+.mission-principle-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--gradient-primary);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 25px rgba(5, 150, 105, 0.25);
+}
+
+.mission-principle-icon i {
+    font-size: 1.8rem;
+    color: white;
+}
+
+.mission-principle-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 15px;
+}
+
+.mission-principle-card p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+/* ===== 8. CTA SECTION ===== */
+.mission-cta {
+    padding: 100px 0;
+    background: #F9FAFB;
+}
+
+.mission-cta-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.mission-cta-desc {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 50px;
+    font-weight: 500;
+}
+
+.mission-cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mission-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 35px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.mission-btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 10px 30px rgba(5, 150, 105, 0.3);
+}
+
+.mission-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(5, 150, 105, 0.4);
+}
+
+.mission-btn-secondary {
+    background: white;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.mission-btn-secondary:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: translateY(-3px);
+}
+
+.mission-btn i {
+    font-size: 1.1rem;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+    .mission-statement-wrapper {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .mission-sidebar {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+    }
+
+    .mission-approach-item {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .mission-approach-right {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-approach-right .mission-approach-text {
+        order: 1;
+    }
+
+    .mission-approach-right .mission-approach-visual {
+        order: 2;
+    }
+
+    .mission-approach-visual {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .mission-container {
+        padding: 0 24px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Prevent horizontal overflow but allow content to fit */
+    .mission-statement-wrapper,
+    .mission-statement-main {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .mission-statement-card {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 30px 20px;
+    }
+    
+    /* Ensure images don't overflow */
+    .mission-statement-image,
+    .mission-statement-image img,
+    .mission-statement-card img {
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Fix table and long text overflow */
+    .mission-statement-card table {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto;
+        display: block;
+        font-size: 0.9rem;
+    }
+    
+    .mission-statement-card pre,
+    .mission-statement-card code {
+        max-width: 100%;
+        overflow-x: auto;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
+    
+    /* Long URLs and text */
+    .mission-statement-card p,
+    .mission-statement-card li,
+    .mission-statement-card a {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .mission-hero {
+        padding: 50px 0 60px;
+    }
+
+    .mission-hero-title {
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+
+    .mission-hero-desc {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    .mission-hero-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .mission-hero-icon i {
+        font-size: 1.7rem;
+    }
+
+    .mission-statement,
+    .mission-core-values,
+    .mission-why-exist,
+    .mission-approach,
+    .mission-stats,
+    .mission-principles,
+    .mission-cta {
+        padding: 70px 0;
+    }
+
+    .mission-statement-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-section-title {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
+        line-height: 1.2;
+    }
+
+    .mission-statement-card {
+        padding: 30px 20px;
+    }
+
+    .mission-statement-card p {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+    
+    .mission-statement-card p:first-child {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    .mission-statement-card h2 {
+        font-size: 1.8rem;
+        padding: 20px 16px;
+        margin: 30px 0 20px;
+    }
+    
+    .mission-statement-card h3 {
+        font-size: 1.4rem;
+        margin: 30px 0 15px;
+    }
+    
+    .mission-statement-card li {
+        font-size: 1rem;
+        padding: 12px 0;
+        padding-left: 25px;
+    }
+
+    .mission-values-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-timeline-item {
+        grid-template-columns: 60px 1fr;
+        gap: 25px;
+    }
+
+    .mission-timeline-number {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    .mission-approach-item {
+        padding: 30px 20px;
+    }
+    
+    .mission-approach-text h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+    
+    .mission-approach-text p {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    .mission-approach-icon {
+        width: 120px;
+        height: 120px;
+    }
+
+    .mission-approach-icon i {
+        font-size: 2.8rem;
+    }
+
+    .mission-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .mission-stat-number {
+        font-size: 3.5rem;
+    }
+
+    .mission-principles-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-cta-title {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+    
+    .mission-cta-desc {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .mission-cta-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .mission-btn {
+        width: 100%;
+        max-width: 100%;
+        justify-content: center;
+        padding: 16px 24px;
+        font-size: 1rem;
+    }
+    
+    .mission-value-title {
+        font-size: 1.3rem;
+    }
+    
+    .mission-value-desc {
+        font-size: 0.95rem;
+    }
+    
+    .mission-timeline-content h3 {
+        font-size: 1.4rem;
+    }
+    
+    .mission-timeline-content p {
+        font-size: 1rem;
+    }
+    
+    .mission-principle-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .mission-principle-card p {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .mission-container {
+        padding: 0 16px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .mission-statement-card {
+        padding: 25px 16px;
+    }
+    
+    .mission-sidebar-section,
+    .mission-value-card,
+    .mission-approach-item,
+    .mission-stat-card,
+    .mission-principle-card {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .mission-hero-title {
+        font-size: 2.2rem;
+    }
+
+    .mission-section-title {
+        font-size: 2rem;
+    }
+
+    .mission-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-stat-number {
+        font-size: 3rem;
+    }
+
+    .mission-cta-title {
+        font-size: 2rem;
+    }
+}
+
+/* ===== MISSION SIDEBAR - BASE STYLES ONLY ===== */
+/* JavaScript handles sticky positioning - CSS only provides base styles */
+.mission-sidebar {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 30px !important;
+    align-self: flex-start !important;
+    z-index: 10;
+}
+
+/* Ensure ALL parent containers don't block sticky - CRITICAL */
+/* Target ALL possible parent containers in the DOM hierarchy */
+html,
+body,
+body > main,
+body > main > section.mission-statement,
+body > main > section.mission-statement > .mission-container,
+body > main > section.mission-statement > .mission-container > .mission-statement-wrapper,
+main,
+main > section.mission-statement,
+main > section.mission-statement > .mission-container,
+main > section.mission-statement > .mission-container > .mission-statement-wrapper,
+.mission-statement,
+.mission-statement .mission-container,
+.mission-statement .mission-container .mission-statement-wrapper,
+.mission-statement-wrapper,
+section.mission-statement,
+section.mission-statement > .mission-container,
+section.mission-statement > .mission-container > .mission-statement-wrapper,
+section.mission-statement .mission-statement-wrapper {
+    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    position: relative !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+}

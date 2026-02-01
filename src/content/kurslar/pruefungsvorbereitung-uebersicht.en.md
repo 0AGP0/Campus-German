@@ -1,0 +1,92 @@
+---
+title: "German Exam Preparation Courses Overview"
+lang: "en"
+customSlug: "exam-preparation-overview"
+badge:
+  icon: "fas fa-certificate"
+  text: "Exam Preparation"
+description: "Preparation for Goethe, TELC, TestDaF and DSH exams. Exam-focused training and comprehensive preparation."
+image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-certificate"
+    title: "Exam Types"
+    description: "Goethe/TELC/TestDaF/DSH"
+  - icon: "fas fa-clock"
+    title: "Weekly Lessons"
+    description: "20-24 Lessons"
+  - icon: "fas fa-users"
+    title: "Class Size"
+    description: "Maximum 8 People"
+  - icon: "fas fa-trophy"
+    title: "Success Rate"
+    description: "95%+"
+heroButtons:
+  primary:
+    text: "Apply Now"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Browse Exams"
+    icon: "fas fa-list"
+    href: "#sinavlar"
+tabs:
+  - id: "kurs-bilgileri"
+    icon: "fas fa-info-circle"
+    title: "Course Information"
+    content:
+      title: "About Exam Preparation Courses"
+      items:
+        - icon: "fas fa-certificate"
+          text: "<strong>Exam Types:</strong> Goethe, TELC, TestDaF, DSH"
+        - icon: "fas fa-clock"
+          text: "<strong>Weekly Lessons:</strong> 20-24 Lesson Hours"
+        - icon: "fas fa-users"
+          text: "<strong>Class Size:</strong> Max. 8 students"
+        - icon: "fas fa-trophy"
+          text: "<strong>Success Rate:</strong> 95%+"
+      additionalInfo:
+        title: "Exam Preparation Advantages"
+        text: "Succeed with exam format-specific preparation, practice tests, past questions and exam techniques."
+  - id: "sinavlar"
+    icon: "fas fa-list"
+    title: "Exams"
+    content:
+      title: "Exams Prepared For"
+      items:
+        - icon: "fas fa-certificate"
+          text: "<strong>Goethe/TELC:</strong> All levels from A1 to C1"
+        - icon: "fas fa-certificate"
+          text: "<strong>TestDaF:</strong> University entrance exam"
+        - icon: "fas fa-certificate"
+          text: "<strong>DSH:</strong> University language exam"
+faqs:
+  - question: "Which exams are prepared for?"
+    answer: "Preparation is provided for Goethe, TELC, TestDaF and DSH exams."
+  - question: "Is there a success guarantee?"
+    answer: "No, Campus German does not provide an exam success guarantee. Exam results depend on various factors and are determined by official examination institutions. However, we offer comprehensive preparation and exam registration support."
+  - question: "What course formats are offered?"
+    answer: "Our courses offer you a flexible learning experience: Hybrid Education: Your course consists of a combination of face-to-face lessons and live online lessons. Thanks to the hybrid system, you can also join the lesson online whenever you want on face-to-face lesson days. Live Online Education: In this format, you attend lessons completely live and online."
+  - question: "What content is covered in the courses?"
+    answer: "Our Intensive German programs include listening and reading comprehension with current texts, comprehensive grammar studies and various communication-focused activities. In this way, it is aimed to develop your speaking and writing skills in a goal-oriented manner."
+  - question: "How can I study at a university in Germany?"
+    answer: "To be able to study at a university in Germany, you must first have a recognized university entrance qualification (HZB). It is recommended that you check whether your diploma is recognized in Germany via the anabin system. You also need to document your German language proficiency with official certificates such as telc, DSH. The Campus German University Preparation Program is designed to prepare you completely for this process."
+  - question: "What requirements are necessary?"
+    answer: "You must be at least 18 years old. You must provide a blocked account opened in Germany or an official commitment letter."
+  - question: "What types of visas are recommended?"
+    answer: "Student Visa: Also covers the right to attend preparatory German courses. There is no visa requirement for EU citizens."
+  - question: "What services are included in the courses?"
+    answer: "Level assessment test, no registration fee, course certificate for visa application, digital textbook, individual student counseling (1 time, approximately 45 minutes), webinars on 'University Education in Germany', Campus German certificate, e-learning platform, social and cultural activities organized throughout the year, free Wi-Fi access at all centers."
+  - question: "What are the qualifications of our instructors?"
+    answer: "Our teaching staff consists of university graduates, experts in their field with many years of teaching experience in German as a Foreign Language (DaF) and German as a Second Language (DaZ), and highly motivated individuals. We also have instructors approved by the Federal Office for Migration and Refugees (BAMF). Our lessons are regularly evaluated by students."
+  - question: "How long does it take to learn German?"
+    answer: "German learning time depends on your goal and current level. You can complete the basic levels from A1 to B2 in 6-8 months. Advanced levels such as C1 and C2 may require an additional 4-6 months. You can shorten this time with our intensive courses."
+  - question: "Can I get a Goethe certificate?"
+    answer: "Yes, we offer Goethe certificate preparation courses at CampusGerman. We provide exam preparation at all levels from A1 to C2. You can take certificate exams on our campus or be directed to nearby test centers."
+  - question: "Are accommodation options available?"
+    answer: "Yes, we offer accommodation options in Germany. Student dormitories, homestay accommodation and shared apartments are available. Our accommodation service is not included in the course fee, but we help you find the most suitable options."
+  - question: "Are payment plans and discounts available?"
+    answer: "Yes, we offer flexible payment plans. Monthly, 3-month and 6-month payment options are available. There are discounts for early registration, group registrations and long-term programs. Contact us for detailed information."
+---
+
+<!-- Content to be added here -->
+

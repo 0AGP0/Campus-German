@@ -1,0 +1,335 @@
+/* ===== FOOTER ===== */
+/* Footer component stilleri - Header gibi ayrı dosyada */
+
+.footer {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+    color: white;
+    position: relative;
+    overflow: visible;
+}
+
+
+.footer-top {
+    padding: 80px 0 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Company Info Column */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.footer-logo-img {
+    max-width: 200px;
+    height: auto;
+    display: block;
+}
+
+.footer-logo .logo-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+}
+
+.footer-logo .logo-text {
+    color: white;
+}
+
+.footer-logo .logo-main {
+    font-size: 28px;
+    font-weight: 800;
+    display: block;
+}
+
+.footer-logo .logo-sub {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+}
+
+.footer-description {
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.7;
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+.footer-social {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-social .social-link {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.footer-social .social-link:hover {
+    background: #FF8888;
+    border-color: var(--color-primary);
+    transform: translateY(-3px);
+}
+
+.footer-social .social-link i {
+    font-size: 1.1rem;
+}
+
+/* Footer Columns */
+.footer-column {
+    position: relative;
+    z-index: 2;
+}
+
+.footer-column-courses .footer-title {
+    text-align: center;
+}
+
+.footer-column-courses .footer-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.footer-column-courses .footer-links-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.footer-column-courses .footer-links {
+    margin: 0;
+}
+
+.footer-title {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 30px;
+    height: 3px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+}
+
+.footer-links a i {
+    font-size: 0.9rem;
+    width: 16px;
+    text-align: center;
+    color: var(--color-primary);
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+    transform: translateX(5px);
+}
+
+.footer-links a:hover i {
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Contact Info */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.contact-item i {
+    color: var(--color-primary);
+    font-size: 1.1rem;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.contact-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-item strong {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.contact-item span {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.footer-legal {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-legal a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-legal a:hover {
+    color: white;
+}
+
+/* Responsive Design for Footer */
+@media (max-width: 1024px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px 30px;
+    }
+    
+    .footer-column:first-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-top {
+        padding: 60px 0 40px;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .footer-column-courses .footer-links-columns {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .footer-bottom-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .footer-legal {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-top {
+        padding: 50px 0 30px;
+    }
+    
+    .footer-logo .logo-main {
+        font-size: 24px;
+    }
+    
+    .footer-logo .logo-sub {
+        font-size: 16px;
+    }
+    
+    .footer-title {
+        font-size: 1.2rem;
+    }
+    
+    .footer-description {
+        font-size: 0.95rem;
+    }
+    
+    .footer-links a {
+        font-size: 0.9rem;
+    }
+    
+    .contact-item {
+        gap: 12px;
+    }
+    
+    .contact-item i {
+        font-size: 1rem;
+    }
+    
+    .contact-item strong,
+    .contact-item span {
+        font-size: 0.85rem;
+    }
+}

@@ -1,6 +1,7 @@
 ---
 title: "Bildungszeit Kapsamında Almanca Kursu"
 lang: "tr"
+customSlug: "bildungszeit"
 badge:
   icon: "fas fa-gavel"
   text: "Bildungszeit"

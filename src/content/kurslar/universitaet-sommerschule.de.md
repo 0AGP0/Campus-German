@@ -1,6 +1,7 @@
 ---
 title: "Sommerprogramm für Universitätsstudierende"
 lang: "de"
+customSlug: "universitaet-sommerschule"
 badge:
   icon: "fas fa-sun"
   text: "Sommerschule"

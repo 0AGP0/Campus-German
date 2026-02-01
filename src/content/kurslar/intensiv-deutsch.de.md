@@ -1,6 +1,7 @@
 ---
 title: "Intensiv-Deutsch"
 lang: "de"
+customSlug: "intensiv-deutsch"
 badge:
   icon: "fas fa-fire"
   text: "Intensiv-Deutsch"
@@ -119,6 +120,5 @@ faqs:
   - question: "Gibt es Unterkunftsmöglichkeiten?"
     answer: "Ja, wir unterstützen Sie bei der Organisation von Unterkunftsmöglichkeiten in Deutschland – z. B. Studentenwohnheime, Gastfamilien und Wohngemeinschaften. Die Unterkunft ist nicht im Kurspreis enthalten, wir helfen Ihnen jedoch bei der passenden Auswahl."
 
-hasDemandForm: true
 ---
 

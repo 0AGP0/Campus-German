@@ -1,6 +1,7 @@
 ---
 title: "Online Yoğun Almanca A1 Kursu"
 lang: "tr"
+customSlug: "online-yogun-a1"
 badge:
   icon: "fas fa-laptop"
   text: "Online A1"

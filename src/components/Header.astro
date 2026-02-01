@@ -1,45 +1,614 @@
 ---
-// Header Component - Yeni Yapı
+// Header Component - Orijinal Yapı
+import '../styles/header.css';
+
 const { lang = 'tr' } = Astro.props;
 
-// Mevcut path'i al ve dil değiştir
-const currentPath = Astro.url.pathname;
-const pathWithoutLang = currentPath.replace(/^\/(tr|de)/, '') || '/';
-
-// Dil değiştirme linkleri
-const switchLangUrl = (newLang: string) => {
-  return `/${newLang}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
-};
-
-// Çeviriler
-const t = {
+// Translations
+const navTranslations = {
     tr: {
-        courses: "Kurslar",
-        about: "Hakkımızda",
-        advantages: "Avantajlarımız",
-        services: "Sunduklarımız",
-        winners: "Kazananlar",
-        contact: "İletişim",
-        register: "Kursa Kayıt OL",
+        home: 'Ana Sayfa',
+        courses: 'Kurslar',
+        about: 'Hakkımızda',
+        advantages: 'Avantajlarımız',
+        services: 'Sunduklarımız',
+        winners: 'Kazananlar',
+        contact: 'İletişim',
+        cta: 'Hemen Başvur',
+        // Top Header
+        getQuote: 'Fiyat Teklifi Al',
+        contactUs: 'İletişim',
+        brochure: 'Broşür',
+        pricesDates: 'Fiyatlar ve Tarihler',
+        register: 'Hemen Başvur',
+        phone: '+49 163 6927842',
+        // Tab labels
+        tabIntensive: 'Yoğun Akademik',
+        tabSeasonal: 'Dönemsel',
+        tabOnline: 'Online',
+        tabExam: 'Sınav Hazırlık',
+        tabCorporate: 'Firma/Sponsorlu',
+        // Course links - Intensive
+        intensivOverview: 'Yoğun Almanca Kursları Genel Bakış',
+        intensivA1: 'Yoğun Almanca A1 Kursu',
+        intensivA2: 'Yoğun Almanca A2 Kursu',
+        intensivB1: 'Yoğun Almanca B1 Kursu',
+        intensivB2: 'Yoğun Almanca B2 Kursu',
+        intensivC1: 'Yoğun Almanca C1 Kursu',
+        studienkolleg: 'Studienkolleg Hazırlık',
+        // Course links - Seasonal
+        seasonalOverview: 'Dönemsel Almanca Kursları Genel Bakış',
+        gymnasiumSummer: 'Liseliler için Yaz Okulu Programı',
+        universitySummer: 'Üniversiteler için Yaz Okulu Programı',
+        summerSchool: 'Yaz Okulu',
+        weeklyA1A2: 'Haftalık A1-A2 Almanca Kursu',
+        weeklyB1C1: 'Haftalık B1-B2-C1 Almanca Kursu',
+        eveningSemi: 'Akşam Yarı Yoğun Almanca Kursları',
+        standardEvening: 'Standart Akşam Kursu',
+        // Course links - Online
+        onlineOverview: 'Online Almanca Kursları Genel Bakış',
+        onlineGerman: 'Online Almanca',
+        onlineA1: 'Online Yoğun Almanca A1 Kursu',
+        onlineA2: 'Online Yoğun Almanca A2 Kursu',
+        onlineB1: 'Online Yoğun Almanca B1 Kursu',
+        onlineB2: 'Online Yoğun Almanca B2 Kursu',
+        onlineC1: 'Online Yoğun Almanca C1 Kursu',
+        onlineExam: 'Online Goethe/TELC Sınav Hazırlık Kursu',
+        // Course links - Exam
+        examOverview: 'Almanca Sınav Hazırlık Kursları Genel Bakış',
+        goetheA1: 'Goethe/TELC A1 Hazırlık Kursu',
+        goetheA2: 'Goethe/TELC A2 Hazırlık Kursu',
+        goetheB1: 'Goethe/TELC B1 Hazırlık Kursu',
+        goetheB2: 'Goethe/TELC B2 Hazırlık Kursu',
+        goetheC1: 'Goethe/TELC C1 Hazırlık Kursu',
+        testdafDsh: 'TestDaF/DSH Hazırlık Kursu',
+        testdafPrep: 'TestDaF Hazırlık',
+        telcPrep: 'TELC Hazırlık',
+        // Course links - Corporate
+        corporate: 'Firmalara özel Almanca Kursu',
+        bildungszeit: 'Bildungszeit Kapsamında Almanca Kursu',
+        daad: 'DAAD Bursiyerleri İçin Almanca Kursu',
+        erasmusTeacher: 'Erasmus+ Öğretmenlere Almanca Kursu',
+        erasmusStudent: 'Erasmus Öğrencilerine Özel Kurslar',
+        careerGerman: 'Meslek ve Kariyer için Almanca Kursları',
+        businessGerman: 'İş Almancası (Wirtschaftsdeutsch)',
+        careerPathway: 'Kariyere Giriş Programı / Career Pathway',
+        medical: 'Tıp ve Sağlık Bilimleri için Almanca Kursu',
+        doctorGerman: 'Doktor Almancası (Fachsprachprüfung)',
+        fspPrep: 'FSP Sınav Hazırlık Eğitim',
+        engineering: 'Mühendislik ve Teknik Bilimler için Almanca Kursu',
+        economics: 'Ekonomi ve Yönetim Bilimleri için Almanca Kursu',
+        bookCourse: 'Kurs Yeri Ayırt',
+        // About dropdown
+        mission: 'Misyonumuz',
+        quality: 'Kalite Standartlarımız',
+        whyBremen: 'Neden Bremen?',
+        marketRealities: 'Piyasa Gerçekleri ve Campus German Farkı',
+        levelPolicy: 'Seviye İlerleme Politikası',
+        partnership: 'Partnerlerlik Politikamız',
+        whatWeDont: 'Neleri Yapmıyoruz',
+        teachers: 'Eğitmenlerimiz',
+        media: 'Medya\'da Biz',
+        aboutCta: 'Partner veya Eğitmen Ol',
+        // Advantages dropdown
+        hybrid: 'Hibrit Eğitim Modeli',
+        cityTours: 'Şehir ve Üniversite Gezileri',
+        speakingClub: 'Ücretsiz Almanca Konuşma Kulübü',
+        coaching: 'Ücretsiz Almanca Eğitim Koçluğu/Etüdü',
+        guarantee: 'Para iade veya Kurs tekrar Garantisi',
+        advantagesCta: 'Ücretsiz Deneme Dersi Al',
+        // Services dropdown
+        universityPlacement: 'Üniversite Yerleştirme Programı / Pathway',
+        visaGuidance: 'Vize Rehberliği',
+        accommodation: 'Bremen Konaklama ve Yurt Yerleştirmesi',
+        airportPickup: 'Havaalanı Karşılama',
+        insuranceBank: 'Sağlık Sigortası/Bloke ve Banka Hesabı',
+        bureaucracy: 'Almanya Bürokrasi Desteği',
+        freeResources: 'Ücretsiz Almanca Kaynaklar',
+        servicesCta: 'Ücretsiz Danışma Randevusu Al'
     },
     de: {
-        courses: "Deutschkurse",
-        about: "Über uns",
-        advantages: "Unsere Vorteile",
-        services: "Unsere Dienstleistungen",
-        winners: "Erfolgsgeschichten",
-        contact: "Kontakt",
-        register: "Jetzt anmelden",
+        home: 'Startseite',
+        courses: 'Kurse',
+        about: 'Über uns',
+        advantages: 'Unsere Vorteile',
+        services: 'Dienstleistungen',
+        winners: 'Erfolgsgeschichten',
+        contact: 'Kontakt',
+        cta: 'Jetzt bewerben',
+        // Top Header
+        getQuote: 'Angebot',
+        contactUs: 'Kontakt',
+        brochure: 'Broschüre',
+        pricesDates: 'Preise & Termine',
+        register: 'Jetzt bewerben',
+        phone: '+49 163 6927842',
+        tabIntensive: 'Intensiv',
+        tabSeasonal: 'Saisonal',
+        tabOnline: 'Online',
+        tabExam: 'Prüfungsvorbereit.',
+        tabCorporate: 'Firmen/Gefördert',
+        // Course links - Intensive
+        intensivOverview: 'Intensivkurse Übersicht',
+        intensivA1: 'Intensiv A1',
+        intensivA2: 'Intensiv A2',
+        intensivB1: 'Intensiv B1',
+        intensivB2: 'Intensiv B2',
+        intensivC1: 'Intensiv C1',
+        studienkolleg: 'Studienkolleg',
+        // Course links - Seasonal
+        seasonalOverview: 'Saisonkurse Übersicht',
+        gymnasiumSummer: 'Sommerschule Gymnasiasten',
+        universitySummer: 'Sommerschule Universitäten',
+        summerSchool: 'Sommerschule',
+        weeklyA1A2: 'Wöchentl. A1-A2',
+        weeklyB1C1: 'Wöchentl. B1-C1',
+        eveningSemi: 'Abend-Halbintensiv',
+        standardEvening: 'Abendkurs',
+        // Course links - Online
+        onlineOverview: 'Online-Kurse Übersicht',
+        onlineGerman: 'Online-Deutsch',
+        onlineA1: 'Online Intensiv A1',
+        onlineA2: 'Online Intensiv A2',
+        onlineB1: 'Online Intensiv B1',
+        onlineB2: 'Online Intensiv B2',
+        onlineC1: 'Online Intensiv C1',
+        onlineExam: 'Online Goethe/TELC Vorbereitung',
+        // Course links - Exam
+        examOverview: 'Prüfungsvorbereitung Übersicht',
+        goetheA1: 'Goethe/TELC A1',
+        goetheA2: 'Goethe/TELC A2',
+        goetheB1: 'Goethe/TELC B1',
+        goetheB2: 'Goethe/TELC B2',
+        goetheC1: 'Goethe/TELC C1',
+        testdafDsh: 'TestDaF/DSH',
+        testdafPrep: 'TestDaF-Vorbereitung',
+        telcPrep: 'TELC-Vorbereitung',
+        // Course links - Corporate
+        corporate: 'Firmenkurs',
+        bildungszeit: 'Bildungszeit-Kurs',
+        daad: 'DAAD-Stipendiaten',
+        erasmusTeacher: 'Erasmus+ Lehrkräfte',
+        erasmusStudent: 'Erasmus-Studierende',
+        careerGerman: 'Beruf & Karriere',
+        businessGerman: 'Wirtschaftsdeutsch',
+        careerPathway: 'Career Pathway',
+        medical: 'Medizin & Gesundheit',
+        doctorGerman: 'Medizinisches Deutsch',
+        fspPrep: 'FSP-Vorbereitung',
+        engineering: 'Ingenieurwesen & Technik',
+        economics: 'Wirtschaft & Management',
+        bookCourse: 'Kurs Buchen',
+        mission: 'Unsere Mission',
+        quality: 'Qualitätsstandards',
+        whyBremen: 'Warum Bremen?',
+        marketRealities: 'Markt & CG-Unterschied',
+        levelPolicy: 'Niveau-Politik',
+        partnership: 'Partnerschaft',
+        whatWeDont: 'Was wir nicht tun',
+        teachers: 'Lehrkräfte',
+        media: 'In den Medien',
+        aboutCta: 'Partner/Lehrkraft werden',
+        hybrid: 'Hybrides Lernmodell',
+        cityTours: 'Stadt- & Uni-Führungen',
+        speakingClub: 'Sprachclub',
+        coaching: 'Lerncoaching/Nachhilfe',
+        guarantee: 'Geld-zurück-Garantie',
+        advantagesCta: 'Probestunde',
+        universityPlacement: 'Uni-Vermittlung / Pathway',
+        visaGuidance: 'Visumsberatung',
+        accommodation: 'Unterkunft Bremen',
+        airportPickup: 'Flughafenabholung',
+        insuranceBank: 'Versicherung & Bank',
+        bureaucracy: 'Bürokratie-Support',
+        freeResources: 'Deutsch-Ressourcen',
+        servicesCta: 'Beratungstermin'
+    },
+    en: {
+        home: 'Home',
+        courses: 'Courses',
+        about: 'About Us',
+        advantages: 'Our Advantages',
+        services: 'Our Services',
+        winners: 'Success Stories',
+        contact: 'Contact',
+        cta: 'Apply Now',
+        // Top Header
+        getQuote: 'Get a Quote',
+        contactUs: 'Contact',
+        brochure: 'Brochure',
+        pricesDates: 'Prices & Dates',
+        register: 'Apply Now',
+        phone: '+49 163 6927842',
+        tabIntensive: 'Intensive Academic',
+        tabSeasonal: 'Seasonal',
+        tabOnline: 'Online',
+        tabExam: 'Exam Preparation',
+        tabCorporate: 'Corporate/Sponsored',
+        // Course links - Intensive
+        intensivOverview: 'Intensive German Courses Overview',
+        intensivA1: 'Intensive German A1 Course',
+        intensivA2: 'Intensive German A2 Course',
+        intensivB1: 'Intensive German B1 Course',
+        intensivB2: 'Intensive German B2 Course',
+        intensivC1: 'Intensive German C1 Course',
+        studienkolleg: 'Studienkolleg Preparation',
+        // Course links - Seasonal
+        seasonalOverview: 'Seasonal German Courses Overview',
+        gymnasiumSummer: 'Summer School Program for High School Students',
+        universitySummer: 'Summer School Program for Universities',
+        summerSchool: 'Summer School',
+        weeklyA1A2: 'Weekly A1-A2 German Course',
+        weeklyB1C1: 'Weekly B1-B2-C1 German Course',
+        eveningSemi: 'Evening Semi-Intensive German Courses',
+        standardEvening: 'Standard Evening Course',
+        // Course links - Online
+        onlineOverview: 'Online German Courses Overview',
+        onlineGerman: 'Online German',
+        onlineA1: 'Online Intensive German A1 Course',
+        onlineA2: 'Online Intensive German A2 Course',
+        onlineB1: 'Online Intensive German B1 Course',
+        onlineB2: 'Online Intensive German B2 Course',
+        onlineC1: 'Online Intensive German C1 Course',
+        onlineExam: 'Online Goethe/TELC Exam Preparation Course',
+        // Course links - Exam
+        examOverview: 'German Exam Preparation Courses Overview',
+        goetheA1: 'Goethe/TELC A1 Preparation Course',
+        goetheA2: 'Goethe/TELC A2 Preparation Course',
+        goetheB1: 'Goethe/TELC B1 Preparation Course',
+        goetheB2: 'Goethe/TELC B2 Preparation Course',
+        goetheC1: 'Goethe/TELC C1 Preparation Course',
+        testdafDsh: 'TestDaF/DSH Preparation Course',
+        testdafPrep: 'TestDaF Preparation',
+        telcPrep: 'TELC Certificate Preparation',
+        // Course links - Corporate
+        corporate: 'Corporate German Course',
+        bildungszeit: 'German Course within Bildungszeit',
+        daad: 'German Course for DAAD Scholarship Recipients',
+        erasmusTeacher: 'German Course for Erasmus+ Teachers',
+        erasmusStudent: 'Special Courses for Erasmus Students',
+        careerGerman: 'German Courses for Profession and Career',
+        businessGerman: 'Business German (Wirtschaftsdeutsch)',
+        careerPathway: 'Career Entry Program / Career Pathway',
+        medical: 'German Course for Medicine and Health Sciences',
+        doctorGerman: 'Medical German (Fachsprachprüfung)',
+        fspPrep: 'FSP Exam Preparation Training',
+        engineering: 'German Course for Engineering and Technology',
+        economics: 'German Course for Economics and Management Sciences',
+        bookCourse: 'Book Course',
+        // About dropdown
+        mission: 'Our Mission',
+        quality: 'Quality Standards',
+        whyBremen: 'Why Bremen?',
+        marketRealities: 'Market Realities and Campus German Difference',
+        levelPolicy: 'Level Progression Policy',
+        partnership: 'Partnership Policy',
+        whatWeDont: 'What We Don\'t Do',
+        teachers: 'Our Teachers',
+        media: 'We in the Media',
+        aboutCta: 'Become a Partner or Teacher',
+        // Advantages dropdown
+        hybrid: 'Hybrid Learning Model',
+        cityTours: 'City and University Tours',
+        speakingClub: 'Free German Conversation Club',
+        coaching: 'Free German Learning Coaching/Tutoring',
+        guarantee: 'Money-Back or Course Repetition Guarantee',
+        advantagesCta: 'Get Free Trial Lesson',
+        // Services dropdown
+        universityPlacement: 'University Placement Program / Pathway',
+        visaGuidance: 'Visa Guidance',
+        accommodation: 'Bremen Accommodation and Dormitory Placement',
+        airportPickup: 'Airport Pickup',
+        insuranceBank: 'Health Insurance/Blocked Account and Bank Account',
+        bureaucracy: 'Germany Bureaucracy Support',
+        freeResources: 'Free German Resources',
+        servicesCta: 'Schedule Free Consultation'
+    },
+    es: {
+        home: 'Inicio',
+        courses: 'Cursos',
+        about: 'Sobre Nosotros',
+        advantages: 'Nuestras Ventajas',
+        services: 'Nuestros Servicios',
+        winners: 'Historias de Éxito',
+        contact: 'Contacto',
+        cta: 'Aplicar ahora',
+        // Top Header
+        getQuote: 'Solicitar Cotización',
+        contactUs: 'Contacto',
+        brochure: 'Folleto',
+        pricesDates: 'Precios y Fechas',
+        register: 'Aplicar ahora',
+        phone: '+49 163 6927842',
+        tabIntensive: 'Intensivo Académico',
+        tabSeasonal: 'Estacional',
+        tabOnline: 'Online',
+        tabExam: 'Preparación de Exámenes',
+        tabCorporate: 'Empresarial/Patrocinado',
+        // Course links - Intensive
+        intensivOverview: 'Resumen de Cursos Intensivos de Alemán',
+        intensivA1: 'Curso Intensivo de Alemán A1',
+        intensivA2: 'Curso Intensivo de Alemán A2',
+        intensivB1: 'Curso Intensivo de Alemán B1',
+        intensivB2: 'Curso Intensivo de Alemán B2',
+        intensivC1: 'Curso Intensivo de Alemán C1',
+        studienkolleg: 'Preparación Studienkolleg',
+        // Course links - Seasonal
+        seasonalOverview: 'Resumen de Cursos Estacionales de Alemán',
+        gymnasiumSummer: 'Programa de Escuela de Verano para Estudiantes de Secundaria',
+        universitySummer: 'Programa de Escuela de Verano para Universidades',
+        summerSchool: 'Escuela de Verano',
+        weeklyA1A2: 'Curso Semanal de Alemán A1-A2',
+        weeklyB1C1: 'Curso Semanal de Alemán B1-B2-C1',
+        eveningSemi: 'Cursos Semi-Intensivos de Alemán Nocturnos',
+        standardEvening: 'Curso Nocturno Estándar',
+        // Course links - Online
+        onlineOverview: 'Resumen de Cursos Online de Alemán',
+        onlineGerman: 'Alemán Online',
+        onlineA1: 'Curso Intensivo Online de Alemán A1',
+        onlineA2: 'Curso Intensivo Online de Alemán A2',
+        onlineB1: 'Curso Intensivo Online de Alemán B1',
+        onlineB2: 'Curso Intensivo Online de Alemán B2',
+        onlineC1: 'Curso Intensivo Online de Alemán C1',
+        onlineExam: 'Curso de Preparación de Exámenes Goethe/TELC Online',
+        // Course links - Exam
+        examOverview: 'Resumen de Cursos de Preparación de Exámenes de Alemán',
+        goetheA1: 'Curso de Preparación Goethe/TELC A1',
+        goetheA2: 'Curso de Preparación Goethe/TELC A2',
+        goetheB1: 'Curso de Preparación Goethe/TELC B1',
+        goetheB2: 'Curso de Preparación Goethe/TELC B2',
+        goetheC1: 'Curso de Preparación Goethe/TELC C1',
+        testdafDsh: 'Curso de Preparación TestDaF/DSH',
+        testdafPrep: 'Preparación TestDaF',
+        telcPrep: 'Preparación de Certificado TELC',
+        // Course links - Corporate
+        corporate: 'Curso de Alemán para Empresas',
+        bildungszeit: 'Curso de Alemán dentro de Bildungszeit',
+        daad: 'Curso de Alemán para Becarios DAAD',
+        erasmusTeacher: 'Curso de Alemán para Profesores Erasmus+',
+        erasmusStudent: 'Cursos Especiales para Estudiantes Erasmus',
+        careerGerman: 'Cursos de Alemán para Profesión y Carrera',
+        businessGerman: 'Alemán Empresarial (Wirtschaftsdeutsch)',
+        careerPathway: 'Programa de Inicio de Carrera / Career Pathway',
+        medical: 'Curso de Alemán para Medicina y Ciencias de la Salud',
+        doctorGerman: 'Alemán Médico (Fachsprachprüfung)',
+        fspPrep: 'Entrenamiento de Preparación de Examen FSP',
+        engineering: 'Curso de Alemán para Ingeniería y Tecnología',
+        economics: 'Curso de Alemán para Economía y Ciencias de Gestión',
+        bookCourse: 'Reservar Curso',
+        // About dropdown
+        mission: 'Nuestra Misión',
+        quality: 'Estándares de Calidad',
+        whyBremen: '¿Por qué Bremen?',
+        marketRealities: 'Realidades del Mercado y la Diferencia de Campus German',
+        levelPolicy: 'Política de Progresión de Nivel',
+        partnership: 'Política de Asociación',
+        whatWeDont: 'Lo que No Hacemos',
+        teachers: 'Nuestros Profesores',
+        media: 'Nosotros en los Medios',
+        aboutCta: 'Convertirse en Socio o Profesor',
+        // Advantages dropdown
+        hybrid: 'Modelo de Aprendizaje Híbrido',
+        cityTours: 'Tours por la Ciudad y la Universidad',
+        speakingClub: 'Club de Conversación Gratuito de Alemán',
+        coaching: 'Coaching/Tutoría Gratuita de Alemán',
+        guarantee: 'Garantía de Reembolso o Repetición del Curso',
+        advantagesCta: 'Obtener Clase de Prueba Gratuita',
+        // Services dropdown
+        universityPlacement: 'Programa de Colocación Universitaria / Pathway',
+        visaGuidance: 'Orientación de Visa',
+        accommodation: 'Alojamiento en Bremen y Colocación en Residencia',
+        airportPickup: 'Recogida en el Aeropuerto',
+        insuranceBank: 'Seguro de Salud/Cuenta Bloqueada y Cuenta Bancaria',
+        bureaucracy: 'Apoyo Burocrático en Alemania',
+        freeResources: 'Recursos Gratuitos de Alemán',
+        servicesCta: 'Programar Consulta Gratuita'
     }
 };
 
-const currentLang = t[lang as keyof typeof t] || t.tr;
+// Slug mapping for language-specific URLs
+const slugMapping = {
+    // Ueber-uns pages
+    mission: { tr: 'misyonumuz', de: 'unsere-mission', en: 'our-mission', es: 'nuestra-mision' },
+    quality: { tr: 'kalite-standartlari', de: 'qualitaetsstandards', en: 'quality-standards', es: 'estandares-calidad' },
+    whyBremen: { tr: 'neden-bremen', de: 'warum-bremen', en: 'why-bremen', es: 'por-que-bremen' },
+    marketRealities: { tr: 'piyasa-gercekleri', de: 'marktrealitaeten', en: 'market-realities', es: 'realidades-mercado' },
+    levelPolicy: { tr: 'seviye-ilerleme-politikasi', de: 'stufenpolitik', en: 'level-progression-policy', es: 'politica-progresion-nivel' },
+    partnership: { tr: 'partnerlik-politikasi', de: 'partnerschaftspolitik', en: 'partnership-policy', es: 'politica-asociacion' },
+    whatWeDont: { tr: 'neleri-yapmiyoruz', de: 'was-wir-nicht-tun', en: 'what-we-dont-do', es: 'lo-que-no-hacemos' },
+    teachers: { tr: 'egitmenlerimiz', de: 'unsere-lehrer', en: 'our-teachers', es: 'nuestros-profesores' },
+    media: { tr: 'medyada-biz', de: 'wir-in-den-medien', en: 'we-in-media', es: 'nosotros-en-medios' },
+    
+    // Unsere-vorteile pages
+    hybrid: { tr: 'hibrit-egitim', de: 'hybrides-lernmodell', en: 'hybrid-learning', es: 'aprendizaje-hibrido' },
+    cityTours: { tr: 'sehir-gezileri', de: 'stadttouren', en: 'city-tours', es: 'tours-ciudad-universidad' },
+    speakingClub: { tr: 'konusma-kulubu', de: 'sprachclub', en: 'speaking-club', es: 'club-conversacion' },
+    coaching: { tr: 'egitim-koclugu', de: 'lerncoaching', en: 'learning-coaching', es: 'coaching-aprendizaje' },
+    guarantee: { tr: 'para-iade-garantisi', de: 'geld-zurueck-garantie', en: 'money-back-guarantee', es: 'garantia-reembolso' },
+    
+    // Unsere-dienstleistungen pages
+    universityPlacement: { tr: 'universite-yerlestirme', de: 'universitaetsvermittlung', en: 'university-placement', es: 'colocacion-universitaria' },
+    visaGuidance: { tr: 'vize-rehberligi', de: 'visumsberatung', en: 'visa-guidance', es: 'orientacion-visa' },
+    accommodation: { tr: 'konaklama', de: 'unterkunft', en: 'accommodation', es: 'alojamiento' },
+    airportPickup: { tr: 'havalimani-karsilama', de: 'flughafenabholung', en: 'airport-pickup', es: 'recogida-aeropuerto' },
+    insuranceBank: { tr: 'sigorta-banka', de: 'krankenversicherung-und-bank', en: 'insurance-and-bank', es: 'seguro-banco' },
+    bureaucracy: { tr: 'burokrasi-destegi', de: 'buerokratische-unterstuetzung', en: 'bureaucratic-support', es: 'apoyo-burocratico' },
+    freeResources: { tr: 'ucretsiz-kaynaklar', de: 'kostenlose-ressourcen', en: 'free-resources', es: 'recursos-gratuitos' },
+    
+    // Kurslar pages (language-specific slugs)
+    erasmusStudent: { tr: 'erasmus-ogrencileri', de: 'erasmus-studenten', en: 'erasmus-students', es: 'estudiantes-erasmus' }
+};
+
+// Course slug mapping (language-specific)
+const courseSlugs = {
+    intensivOverview: { tr: 'yogun-deutsch', de: 'intensiv-deutsch', en: 'intensive-german', es: 'aleman-intensivo' },
+    intensivA1: { tr: 'yogun-a1', de: 'intensiv-a1', en: 'intensive-a1', es: 'intensivo-a1' },
+    intensivA2: { tr: 'yogun-a2', de: 'intensiv-a2', en: 'intensive-a2', es: 'intensivo-a2' },
+    intensivB1: { tr: 'yogun-b1', de: 'intensiv-b1', en: 'intensive-b1', es: 'intensivo-b1' },
+    intensivB2: { tr: 'yogun-b2', de: 'intensiv-b2', en: 'intensive-b2', es: 'intensivo-b2' },
+    intensivC1: { tr: 'yogun-c1', de: 'intensiv-c1', en: 'intensive-c1', es: 'intensivo-c1' },
+    studienkolleg: { tr: 'studienkolleg-hazirlik', de: 'studienkolleg', en: 'studienkolleg-prep', es: 'preparacion-studienkolleg' },
+    seasonalOverview: { tr: 'donemsel-kurslar-genel-bakis', de: 'saisonal-uebersicht', en: 'seasonal-overview', es: 'resumen-estacional' },
+    gymnasiumSummer: { tr: 'lise-yaz-okulu', de: 'gymnasium-sommerschule', en: 'highschool-summer-school', es: 'escuela-verano-secundaria' },
+    universitySummer: { tr: 'universite-yaz-okulu', de: 'universitaet-sommerschule', en: 'university-summer-school', es: 'escuela-verano-universidad' },
+    summerSchool: { tr: 'yaz-okulu', de: 'sommerschule', en: 'summer-school', es: 'escuela-verano' },
+    weeklyA1A2: { tr: 'haftalik-a1-a2', de: 'woechentlich-a1-a2', en: 'weekly-a1-a2', es: 'semanal-a1-a2' },
+    weeklyB1C1: { tr: 'haftalik-b1-c1', de: 'woechentlich-b1-c1', en: 'weekly-b1-c1', es: 'semanal-b1-c1' },
+    eveningSemi: { tr: 'aksam-yari-yogun', de: 'abend-halbintensiv', en: 'evening-semi-intensive', es: 'nocturno-semi-intensivo' },
+    standardEvening: { tr: 'standart-aksam', de: 'standard-abend', en: 'standard-evening', es: 'nocturno-estandar' },
+    onlineOverview: { tr: 'online-kurslar-genel-bakis', de: 'online-uebersicht', en: 'online-overview', es: 'resumen-online' },
+    onlineGerman: { tr: 'online-almanca', de: 'online-deutsch', en: 'online-german', es: 'aleman-online' },
+    onlineA1: { tr: 'online-yogun-a1', de: 'online-intensiv-a1', en: 'online-intensive-a1', es: 'intensivo-online-a1' },
+    onlineA2: { tr: 'online-yogun-a2', de: 'online-intensiv-a2', en: 'online-intensive-a2', es: 'intensivo-online-a2' },
+    onlineB1: { tr: 'online-yogun-b1', de: 'online-intensiv-b1', en: 'online-intensive-b1', es: 'intensivo-online-b1' },
+    onlineB2: { tr: 'online-yogun-b2', de: 'online-intensiv-b2', en: 'online-intensive-b2', es: 'intensivo-online-b2' },
+    onlineC1: { tr: 'online-yogun-c1', de: 'online-intensiv-c1', en: 'online-intensive-c1', es: 'intensivo-online-c1' },
+    onlineExam: { tr: 'online-sinav-hazirlik', de: 'online-pruefungsvorbereitung', en: 'online-exam-preparation', es: 'preparacion-examenes-online' },
+    examOverview: { tr: 'sinav-hazirlik-genel-bakis', de: 'pruefungsvorbereitung-uebersicht', en: 'exam-preparation-overview', es: 'resumen-preparacion-examenes' },
+    goetheA1: { tr: 'goethe-telc-a1', de: 'goethe-telc-a1', en: 'goethe-telc-a1', es: 'goethe-telc-a1' },
+    goetheA2: { tr: 'goethe-telc-a2', de: 'goethe-telc-a2', en: 'goethe-telc-a2', es: 'goethe-telc-a2' },
+    goetheB1: { tr: 'goethe-telc-b1', de: 'goethe-telc-b1', en: 'goethe-telc-b1', es: 'goethe-telc-b1' },
+    goetheB2: { tr: 'goethe-telc-b2', de: 'goethe-telc-b2', en: 'goethe-telc-b2', es: 'goethe-telc-b2' },
+    goetheC1: { tr: 'goethe-telc-c1', de: 'goethe-telc-c1', en: 'goethe-telc-c1', es: 'goethe-telc-c1' },
+    testdafDsh: { tr: 'testdaf-dsh', de: 'testdaf-dsh', en: 'testdaf-dsh', es: 'testdaf-dsh' },
+    testdafPrep: { tr: 'testdaf-hazirlik', de: 'testdaf-vorbereitung', en: 'testdaf-preparation', es: 'preparacion-testdaf' },
+    telcPrep: { tr: 'telc-hazirlik', de: 'telc-vorbereitung', en: 'telc-preparation', es: 'preparacion-telc' },
+    corporate: { tr: 'kurumsal-kurs', de: 'firmenkurs', en: 'corporate-course', es: 'curso-empresarial' },
+    bildungszeit: { tr: 'bildungszeit', de: 'bildungszeit', en: 'bildungszeit', es: 'bildungszeit' },
+    daad: { tr: 'daad-bursiyerleri', de: 'daad-stipendiaten', en: 'daad-scholars', es: 'becarios-daad' },
+    erasmusTeacher: { tr: 'erasmus-ogretmenler', de: 'erasmus-lehrer', en: 'erasmus-teachers', es: 'profesores-erasmus' },
+    careerGerman: { tr: 'meslek-kariyer', de: 'beruf-karriere', en: 'career-courses', es: 'cursos-carrera' },
+    businessGerman: { tr: 'is-almancasi', de: 'wirtschaftsdeutsch', en: 'business-german', es: 'aleman-empresarial' },
+    careerPathway: { tr: 'kariyer-yolu', de: 'karrierepfad', en: 'career-pathway', es: 'trayectoria-carrera' },
+    medical: { tr: 'saglik-tip', de: 'medizin-gesundheit', en: 'health-medicine', es: 'medicina-salud' },
+    doctorGerman: { tr: 'doktor-almancasi', de: 'medizin-deutsch', en: 'medical-german', es: 'aleman-medico' },
+    fspPrep: { tr: 'fsp-hazirlik', de: 'fsp-vorbereitung', en: 'fsp-preparation', es: 'preparacion-fsp' },
+    engineering: { tr: 'muhendislik-teknik', de: 'ingenieurwesen-technik', en: 'engineering-technology', es: 'ingenieria-tecnologia' },
+    economics: { tr: 'is-yonetim', de: 'wirtschaft-management', en: 'business-management', es: 'economia-gestion' },
+};
+
+// Section URL mapping for localized section names
+const sectionMapping = {
+    tr: {
+        about: 'hakkimizda',
+        advantages: 'avantajlarimiz',
+        services: 'sunduklarimiz',
+        courses: 'kurslar',
+        contact: 'iletisim',
+        winners: 'basari-hikayeleri',
+        booking: 'buchung',
+        pricesDates: 'fiyatlar-tarihler'
+    },
+    de: {
+        about: 'ueber-uns',
+        advantages: 'unsere-vorteile',
+        services: 'unsere-dienstleistungen',
+        courses: 'kurse',
+        contact: 'kontakt',
+        winners: 'erfolgsgeschichten',
+        booking: 'buchung',
+        pricesDates: 'fiyatlar-tarihler'
+    },
+    en: {
+        about: 'about-us',
+        advantages: 'our-advantages',
+        services: 'our-services',
+        courses: 'courses',
+        contact: 'contact',
+        winners: 'success-stories',
+        booking: 'booking',
+        pricesDates: 'fiyatlar-tarihler'
+    },
+    es: {
+        about: 'sobre-nosotros',
+        advantages: 'nuestras-ventajas',
+        services: 'nuestros-servicios',
+        courses: 'cursos',
+        contact: 'contacto',
+        winners: 'historias-exito',
+        booking: 'reservar',
+        pricesDates: 'fiyatlar-tarihler'
+    }
+};
+
+const t = navTranslations[lang as keyof typeof navTranslations];
+const slugs = slugMapping;
+const sections = sectionMapping[lang as keyof typeof sectionMapping];
 ---
 
-<!-- Main Header -->
 <header class="main-header">
-    <div class="container">
-        <div class="header-wrapper">
+    <!-- Top Header Bar -->
+    <div class="top-header">
+        <div class="top-header-container">
+            <!-- Sol: Telefon -->
+            <div class="top-header-left">
+                <a href="tel:+491636927842" class="top-header-phone">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>{t.phone}</span>
+                </a>
+            </div>
+            
+            <!-- Orta: Linkler -->
+            <div class="top-header-center">
+                <a href={`/${lang}/${sections.booking}`} class="top-header-link">
+                    <i class="fas fa-file-alt"></i>
+                    <span>{t.getQuote}</span>
+                </a>
+                <span class="top-header-divider"></span>
+                <a href={`/${lang}/${sections.contact}`} class="top-header-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>{t.contactUs}</span>
+                </a>
+                <span class="top-header-divider"></span>
+                <a href="/Campus_German_Brosur.pdf" target="_blank" class="top-header-link">
+                    <i class="fas fa-download"></i>
+                    <span>{t.brochure}</span>
+                </a>
+                <span class="top-header-divider"></span>
+                <a href={`/${lang}/${sections.pricesDates}`} class="top-header-link">
+                    <i class="fas fa-euro-sign"></i>
+                    <span>{t.pricesDates}</span>
+                </a>
+            </div>
+            
+            <!-- Sağ: Kayıt + Dil -->
+            <div class="top-header-right">
+                <a href={`/${lang}/${sections.booking}`} class="top-header-register">
+                    <i class="fas fa-user-plus"></i>
+                    <span>{t.register}</span>
+                    <i class="fas fa-arrow-right register-arrow"></i>
+                </a>
+                <div class="top-header-lang">
+                    <button type="button" class="top-lang-btn" id="topLangBtn" aria-expanded="false" aria-haspopup="true">
+                        <img src={lang === 'tr' ? 'https://flagcdn.com/tr.svg' : lang === 'de' ? 'https://flagcdn.com/de.svg' : lang === 'es' ? 'https://flagcdn.com/es.svg' : 'https://flagcdn.com/gb.svg'} alt={lang === 'tr' ? 'Türkçe' : lang === 'de' ? 'Deutsch' : lang === 'es' ? 'Español' : 'English'} class="lang-flag">
+                        <span class="lang-code">{lang.toUpperCase()}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="top-lang-dropdown" id="topLangDropdown">
+                        <a href="/tr/" class="top-lang-option">
+                            <img src="https://flagcdn.com/tr.svg" alt="Türkçe" class="flag-img">
+                            <span>Türkçe</span>
+                        </a>
+                        <a href="/de/" class="top-lang-option">
+                            <img src="https://flagcdn.com/de.svg" alt="Deutsch" class="flag-img">
+                            <span>Deutsch</span>
+                        </a>
+                        <a href="/en/" class="top-lang-option">
+                            <img src="https://flagcdn.com/gb.svg" alt="English" class="flag-img">
+                            <span>English</span>
+                        </a>
+                        <a href="/es/" class="top-lang-option">
+                            <img src="https://flagcdn.com/es.svg" alt="Español" class="flag-img">
+                            <span>Español</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-wrapper">
+        <div class="container">
             <!-- Logo Section -->
             <div class="logo-section">
                 <a href={`/${lang}/`} class="logo-link">
@@ -50,435 +619,512 @@ const currentLang = t[lang as keyof typeof t] || t.tr;
             <!-- Navigation Menu -->
             <nav class="main-nav">
                 <ul class="nav-list">
-                    <!-- 1. Almanca Kursları - Tabbed Dropdown -->
+                    <!-- 1. Kurslar - Tabbed Dropdown -->
                     <li class="nav-item">
-                        <a href={`/${lang}/kurslar`} class="nav-link">
-                            <span>{currentLang.courses}</span>
+                        <a href={`/${lang}/${sections.courses}`} class="nav-link">
+                            <span>{t.courses}</span>
                             <i class="fas fa-chevron-down dropdown-arrow"></i>
                         </a>
                         <div class="dropdown-menu courses-dropdown">
                             <div class="courses-wrapper">
                                 <div class="courses-sidebar">
-                                    <button class="course-tab active" data-tab="yogun">{lang === 'tr' ? 'Yoğun Akademik' : 'Intensiv'}</button>
-                                    <button class="course-tab" data-tab="donemsel">{lang === 'tr' ? 'Dönemsel' : 'Saisonal'}</button>
-                                    <button class="course-tab" data-tab="online">Online</button>
-                                    <button class="course-tab" data-tab="sinav">{lang === 'tr' ? 'Sınav Hazırlık' : 'Prüfung'}</button>
-                                    <button class="course-tab" data-tab="firma">{lang === 'tr' ? 'Firma/Sponsorlu' : 'Firma'}</button>
+                                    <button class="course-tab active" data-tab="yogun">{t.tabIntensive}</button>
+                                    <button class="course-tab" data-tab="donemsel">{t.tabSeasonal}</button>
+                                    <button class="course-tab" data-tab="online">{t.tabOnline}</button>
+                                    <button class="course-tab" data-tab="sinav">{t.tabExam}</button>
+                                    <button class="course-tab" data-tab="firma">{t.tabCorporate}</button>
                                 </div>
                                 <div class="courses-content">
-                                <div class="course-tab-panel active" data-panel="yogun">
-                                    <a href={`/${lang}/kurslar/intensiv-deutsch`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca Kursları Genel Bakış' : 'Übersicht Intensivkurse'}</a>
-                                    <a href={`/${lang}/kurslar/universitaetsvorbereitung`} class="dropdown-link">{lang === 'tr' ? 'Üniversite Hazırlık Programı' : 'Universitätsvorbereitungsprogramm'}</a>
-                                    <a href={`/${lang}/kurslar/intensiv-studentenvisum`} class="dropdown-link">{lang === 'tr' ? 'Öğrenci Vizesi Garantili Yoğun Almanca Kursu' : 'Intensiv Deutsch mit Studentenvisum-Garantie'}</a>
-                                    <a href={`/${lang}/kurslar/intensiv-a1`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca A1 Kursu' : 'Intensiv Deutsch A1'}</a>
-                                    <a href={`/${lang}/kurslar/intensiv-a2`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca A2 Kursu' : 'Intensiv Deutsch A2'}</a>
-                                    <a href={`/${lang}/kurslar/intensiv-b1`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca B1 Kursu' : 'Intensiv Deutsch B1'}</a>
-                                    <a href={`/${lang}/kurslar/intensiv-b2`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca B2 Kursu' : 'Intensiv Deutsch B2'}</a>
-                                    <a href={`/${lang}/kurslar/intensiv-c1`} class="dropdown-link">{lang === 'tr' ? 'Yoğun Almanca C1 Kursu' : 'Intensiv Deutsch C1'}</a>
-                                    <a href={`/${lang}/kurslar/studienkolleg`} class="dropdown-link">{lang === 'tr' ? 'Studienkolleg Hazırlık' : 'Studienkolleg Vorbereitung'}</a>
-                                </div>
-                                <div class="course-tab-panel" data-panel="donemsel">
-                                    <a href={`/${lang}/kurslar/saisonal-uebersicht`} class="dropdown-link">{lang === 'tr' ? 'Dönemsel Almanca Kursları Genel Bakış' : 'Übersicht Saisonale Kurse'}</a>
-                                    <a href={`/${lang}/kurslar/gymnasium-sommerschule`} class="dropdown-link">{lang === 'tr' ? 'Liseliler için Yaz Okulu Programı' : 'Sommerschule für Gymnasiasten'}</a>
-                                    <a href={`/${lang}/kurslar/universitaet-sommerschule`} class="dropdown-link">{lang === 'tr' ? 'Üniversiteler için Yaz Okulu Programı' : 'Sommerschule für Universitäten'}</a>
-                                    <a href={`/${lang}/kurslar/yaz-okulu`} class="dropdown-link">{lang === 'tr' ? 'Yaz Okulu' : 'Sommerschule'}</a>
-                                    <a href={`/${lang}/kurslar/woechentlich-a1-a2`} class="dropdown-link">{lang === 'tr' ? 'Haftalık A1-A2 Almanca Kursu' : 'Wöchentlicher A1-A2 Kurs'}</a>
-                                    <a href={`/${lang}/kurslar/woechentlich-b1-c1`} class="dropdown-link">{lang === 'tr' ? 'Haftalık B1-B2-C1 Almanca Kursu' : 'Wöchentlicher B1-B2-C1 Kurs'}</a>
-                                    <a href={`/${lang}/kurslar/abend-halbintensiv`} class="dropdown-link">{lang === 'tr' ? 'Akşam Yarı Yoğun Almanca Kursları' : 'Abend-Halbintensivkurse'}</a>
-                                    <a href={`/${lang}/kurslar/standart-aksam`} class="dropdown-link">{lang === 'tr' ? 'Standart Akşam Kursu' : 'Standard Abendkurs'}</a>
-                                </div>
-                                <div class="course-tab-panel" data-panel="online">
-                                    <a href={`/${lang}/kurslar/online-uebersicht`} class="dropdown-link">{lang === 'tr' ? 'Online Almanca Kursları Genel Bakış' : 'Übersicht Online-Kurse'}</a>
-                                    <a href={`/${lang}/kurslar/online-almanca`} class="dropdown-link">{lang === 'tr' ? 'Online Almanca' : 'Online Deutsch'}</a>
-                                    <a href={`/${lang}/kurslar/online-intensiv-a1`} class="dropdown-link">{lang === 'tr' ? 'Online Yoğun Almanca A1 Kursu' : 'Online Intensiv A1'}</a>
-                                    <a href={`/${lang}/kurslar/online-intensiv-a2`} class="dropdown-link">{lang === 'tr' ? 'Online Yoğun Almanca A2 Kursu' : 'Online Intensiv A2'}</a>
-                                    <a href={`/${lang}/kurslar/online-intensiv-b1`} class="dropdown-link">{lang === 'tr' ? 'Online Yoğun Almanca B1 Kursu' : 'Online Intensiv B1'}</a>
-                                    <a href={`/${lang}/kurslar/online-intensiv-b2`} class="dropdown-link">{lang === 'tr' ? 'Online Yoğun Almanca B2 Kursu' : 'Online Intensiv B2'}</a>
-                                    <a href={`/${lang}/kurslar/online-intensiv-c1`} class="dropdown-link">{lang === 'tr' ? 'Online Yoğun Almanca C1 Kursu' : 'Online Intensiv C1'}</a>
-                                    <a href={`/${lang}/kurslar/online-pruefungsvorbereitung`} class="dropdown-link">{lang === 'tr' ? 'Online Goethe/TELC Sınav Hazırlık Kursu' : 'Online Goethe/TELC Vorbereitung'}</a>
-                                </div>
-                                <div class="course-tab-panel" data-panel="sinav">
-                                    <a href={`/${lang}/kurslar/pruefungsvorbereitung-uebersicht`} class="dropdown-link">{lang === 'tr' ? 'Almanca Sınav Hazırlık Kursları Genel Bakış' : 'Übersicht Prüfungsvorbereitung'}</a>
-                                    <a href={`/${lang}/kurslar/goethe-telc-a1`} class="dropdown-link">{lang === 'tr' ? 'Goethe/TELC A1 Hazırlık Kursu' : 'Goethe/TELC A1 Vorbereitung'}</a>
-                                    <a href={`/${lang}/kurslar/goethe-telc-a2`} class="dropdown-link">{lang === 'tr' ? 'Goethe/TELC A2 Hazırlık Kursu' : 'Goethe/TELC A2 Vorbereitung'}</a>
-                                    <a href={`/${lang}/kurslar/goethe-telc-b1`} class="dropdown-link">{lang === 'tr' ? 'Goethe/TELC B1 Hazırlık Kursu' : 'Goethe/TELC B1 Vorbereitung'}</a>
-                                    <a href={`/${lang}/kurslar/goethe-telc-b2`} class="dropdown-link">{lang === 'tr' ? 'Goethe/TELC B2 Hazırlık Kursu' : 'Goethe/TELC B2 Vorbereitung'}</a>
-                                    <a href={`/${lang}/kurslar/goethe-telc-c1`} class="dropdown-link">{lang === 'tr' ? 'Goethe/TELC C1 Hazırlık Kursu' : 'Goethe/TELC C1 Vorbereitung'}</a>
-                                    <a href={`/${lang}/kurslar/testdaf-dsh`} class="dropdown-link">{lang === 'tr' ? 'TestDaF/DSH Hazırlık Kursu' : 'TestDaF/DSH Vorbereitung'}</a>
-                                    <a href={`/${lang}/kurslar/testdaf-hazirlik`} class="dropdown-link">{lang === 'tr' ? 'TestDaF Hazırlık' : 'TestDaF Vorbereitung'}</a>
-                                    <a href={`/${lang}/kurslar/telc-hazirlik`} class="dropdown-link">{lang === 'tr' ? 'TELC Hazırlık' : 'TELC Vorbereitung'}</a>
-                                </div>
-                                <div class="course-tab-panel" data-panel="firma">
-                                    <a href={`/${lang}/kurslar/firmenkurs`} class="dropdown-link">{lang === 'tr' ? 'Firmalara özel Almanca Kursu' : 'Firmenkurs'}</a>
-                                    <a href={`/${lang}/kurslar/bildungszeit`} class="dropdown-link">{lang === 'tr' ? 'Bildungszeit Kapsamında Almanca Kursu' : 'Bildungszeit Deutsch'}</a>
-                                    <a href={`/${lang}/kurslar/daad-stipendiaten`} class="dropdown-link">{lang === 'tr' ? 'DAAD Bursiyerleri İçin Almanca Kursu' : 'Für DAAD-Stipendiaten'}</a>
-                                    <a href={`/${lang}/kurslar/erasmus-lehrer`} class="dropdown-link">{lang === 'tr' ? 'Erasmus+ Öğretmenlere Almanca Kursu' : 'Für Erasmus+ Lehrer'}</a>
-                                    <a href={`/${lang}/kurslar/erasmus-studenten`} class="dropdown-link">{lang === 'tr' ? 'Erasmus Öğrencilerine Özel Kurslar' : 'Für Erasmus-Studenten'}</a>
-                                    <a href={`/${lang}/kurslar/beruf-karriere`} class="dropdown-link">{lang === 'tr' ? 'Meslek ve Kariyer için Almanca Kursları' : 'Beruf und Karriere'}</a>
-                                    <a href={`/${lang}/kurslar/is-almancasi`} class="dropdown-link">{lang === 'tr' ? 'İş Almancası (Wirtschaftsdeutsch)' : 'Wirtschaftsdeutsch'}</a>
-                                    <a href={`/${lang}/kurslar/career-pathway`} class="dropdown-link">{lang === 'tr' ? 'Kariyere Giriş Programı / Career Pathway' : 'Career Pathway Programm'}</a>
-                                    <a href={`/${lang}/kurslar/medizin-gesundheit`} class="dropdown-link">{lang === 'tr' ? 'Tıp ve Sağlık Bilimleri için Almanca Kursu' : 'Medizin und Gesundheit'}</a>
-                                    <a href={`/${lang}/kurslar/doktor-almancasi`} class="dropdown-link">{lang === 'tr' ? 'Doktor Almancası (Fachsprachprüfung)' : 'Fachsprachprüfung für Ärzte'}</a>
-                                    <a href={`/${lang}/kurslar/fsp-vorbereitung`} class="dropdown-link">{lang === 'tr' ? 'FSP Sınav Hazırlık Eğitim' : 'FSP Prüfungsvorbereitung'}</a>
-                                    <a href={`/${lang}/kurslar/ingenieurwesen-technik`} class="dropdown-link">{lang === 'tr' ? 'Mühendislik ve Teknik Bilimler için Almanca Kursu' : 'Ingenieurwesen und Technik'}</a>
-                                    <a href={`/${lang}/kurslar/wirtschaft-management`} class="dropdown-link">{lang === 'tr' ? 'Ekonomi ve Yönetim Bilimleri için Almanca Kursu' : 'Wirtschaft und Management'}</a>
+                                    <!-- Yoğun Akademik Tab -->
+                                    <div class="course-tab-panel active" data-panel="yogun">
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivOverview[lang]}`} class="dropdown-link">{t.intensivOverview}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivA1[lang]}`} class="dropdown-link">{t.intensivA1}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivA2[lang]}`} class="dropdown-link">{t.intensivA2}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivB1[lang]}`} class="dropdown-link">{t.intensivB1}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivB2[lang]}`} class="dropdown-link">{t.intensivB2}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivC1[lang]}`} class="dropdown-link">{t.intensivC1}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.studienkolleg[lang]}`} class="dropdown-link">{t.studienkolleg}</a>
+                                    </div>
+                                    <!-- Dönemsel Tab -->
+                                    <div class="course-tab-panel" data-panel="donemsel">
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.seasonalOverview[lang]}`} class="dropdown-link">{t.seasonalOverview}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.gymnasiumSummer[lang]}`} class="dropdown-link">{t.gymnasiumSummer}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.universitySummer[lang]}`} class="dropdown-link">{t.universitySummer}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.summerSchool[lang]}`} class="dropdown-link">{t.summerSchool}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.weeklyA1A2[lang]}`} class="dropdown-link">{t.weeklyA1A2}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.weeklyB1C1[lang]}`} class="dropdown-link">{t.weeklyB1C1}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.standardEvening[lang]}`} class="dropdown-link">{t.standardEvening}</a>
+                                    </div>
+                                    <!-- Online Tab -->
+                                    <div class="course-tab-panel" data-panel="online">
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineOverview[lang]}`} class="dropdown-link">{t.onlineOverview}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineGerman[lang]}`} class="dropdown-link">{t.onlineGerman}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineA1[lang]}`} class="dropdown-link">{t.onlineA1}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineA2[lang]}`} class="dropdown-link">{t.onlineA2}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineB1[lang]}`} class="dropdown-link">{t.onlineB1}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineB2[lang]}`} class="dropdown-link">{t.onlineB2}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineC1[lang]}`} class="dropdown-link">{t.onlineC1}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineExam[lang]}`} class="dropdown-link">{t.onlineExam}</a>
+                                    </div>
+                                    <!-- Sınav Hazırlık Tab -->
+                                    <div class="course-tab-panel" data-panel="sinav">
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.examOverview[lang]}`} class="dropdown-link">{t.examOverview}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.goetheA1[lang]}`} class="dropdown-link">{t.goetheA1}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.goetheA2[lang]}`} class="dropdown-link">{t.goetheA2}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.goetheB1[lang]}`} class="dropdown-link">{t.goetheB1}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.goetheB2[lang]}`} class="dropdown-link">{t.goetheB2}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.goetheC1[lang]}`} class="dropdown-link">{t.goetheC1}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.testdafDsh[lang]}`} class="dropdown-link">{t.testdafDsh}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.testdafPrep[lang]}`} class="dropdown-link">{t.testdafPrep}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.telcPrep[lang]}`} class="dropdown-link">{t.telcPrep}</a>
+                                    </div>
+                                    <!-- Firma/Sponsorlu Tab -->
+                                    <div class="course-tab-panel" data-panel="firma">
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.corporate[lang]}`} class="dropdown-link">{t.corporate}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.bildungszeit[lang]}`} class="dropdown-link">{t.bildungszeit}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.daad[lang]}`} class="dropdown-link">{t.daad}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.erasmusTeacher[lang]}`} class="dropdown-link">{t.erasmusTeacher}</a>
+                                        <a href={`/${lang}/${sections.courses}/${slugs.erasmusStudent[lang]}`} class="dropdown-link">{t.erasmusStudent}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.careerGerman[lang]}`} class="dropdown-link">{t.careerGerman}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.businessGerman[lang]}`} class="dropdown-link">{t.businessGerman}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.careerPathway[lang]}`} class="dropdown-link">{t.careerPathway}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.medical[lang]}`} class="dropdown-link">{t.medical}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.doctorGerman[lang]}`} class="dropdown-link">{t.doctorGerman}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.fspPrep[lang]}`} class="dropdown-link">{t.fspPrep}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.engineering[lang]}`} class="dropdown-link">{t.engineering}</a>
+                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.economics[lang]}`} class="dropdown-link">{t.economics}</a>
+                                    </div>
                                 </div>
                             </div>
                             <div class="dropdown-cta">
-                                <a href={`/${lang}/buchung`} class="dropdown-cta-btn">{lang === 'tr' ? 'Kurs Yeri Ayırt' : 'Kursplatz reservieren'}</a>
+                                <a href={`/${lang}/${sections.booking}`} class="dropdown-cta-btn">{t.bookCourse}</a>
                             </div>
                         </div>
                     </li>
 
                     <!-- 2. Hakkımızda - Minimal Dropdown -->
                     <li class="nav-item">
-                        <a href={`/${lang}/ueber-uns`} class="nav-link">
-                            <span>{currentLang.about}</span>
+                        <a href={`/${lang}/${sections.about}`} class="nav-link">
+                            <span>{t.about}</span>
                             <i class="fas fa-chevron-down dropdown-arrow"></i>
                         </a>
                         <div class="dropdown-menu">
-                            <a href={`/${lang}/ueber-uns/unsere-mission`} class="dropdown-link">{lang === 'tr' ? 'Misyonumuz' : 'Unsere Mission'}</a>
-                            <a href={`/${lang}/ueber-uns/qualitaetsstandards`} class="dropdown-link">{lang === 'tr' ? 'Kalite Standartlarımız' : 'Qualitätsstandards'}</a>
-                            <a href={`/${lang}/ueber-uns/partnerschaftspolitik`} class="dropdown-link">{lang === 'tr' ? 'Partnerlerlik Politikamız' : 'Partnerschaftspolitik'}</a>
-                            <a href={`/${lang}/lehrkraefte`} class="dropdown-link">{lang === 'tr' ? 'Eğitmenlerimiz' : 'Unsere Lehrkräfte'}</a>
-                            <a href={`/${lang}/ueber-uns/wir-in-den-medien`} class="dropdown-link">{lang === 'tr' ? 'Medya\'da Biz' : 'Wir in den Medien'}</a>
+                            <a href={`/${lang}/${sections.about}/${slugs.mission[lang]}`} class="dropdown-link">{t.mission}</a>
+                            <a href={`/${lang}/${sections.about}/${slugs.quality[lang]}`} class="dropdown-link">{t.quality}</a>
+                            <a href={`/${lang}/${sections.about}/${slugs.whyBremen[lang]}`} class="dropdown-link">{t.whyBremen}</a>
+                            <a href={`/${lang}/${sections.about}/${slugs.marketRealities[lang]}`} class="dropdown-link">{t.marketRealities}</a>
+                            <a href={`/${lang}/${sections.about}/${slugs.levelPolicy[lang]}`} class="dropdown-link">{t.levelPolicy}</a>
+                            <a href={`/${lang}/${sections.about}/${slugs.partnership[lang]}`} class="dropdown-link">{t.partnership}</a>
+                            <a href={`/${lang}/${sections.about}/${slugs.whatWeDont[lang]}`} class="dropdown-link">{t.whatWeDont}</a>
+                            <a href={`/${lang}/lehrkraefte`} class="dropdown-link">{t.teachers}</a>
+                            <a href={`/${lang}/${sections.about}/${slugs.media[lang]}`} class="dropdown-link">{t.media}</a>
                             <div class="dropdown-cta">
-                                <a href={`/${lang}/partner-egitmen-basvuru`} class="dropdown-cta-btn">{lang === 'tr' ? 'Partner veya Eğitmen Ol' : 'Partner oder Lehrkraft werden'}</a>
+                                <a href={`/${lang}/partner-egitmen-basvuru`} class="dropdown-cta-btn">{t.aboutCta}</a>
                             </div>
                         </div>
                     </li>
 
                     <!-- 3. Avantajlarımız - Minimal Dropdown -->
                     <li class="nav-item">
-                        <a href={`/${lang}/unsere-vorteile`} class="nav-link">
-                            <span>{currentLang.advantages}</span>
+                        <a href={`/${lang}/${sections.advantages}`} class="nav-link">
+                            <span>{t.advantages}</span>
                             <i class="fas fa-chevron-down dropdown-arrow"></i>
                         </a>
                         <div class="dropdown-menu">
-                            <a href={`/${lang}/unsere-vorteile/hybrides-lernmodell`} class="dropdown-link">{lang === 'tr' ? 'Hibrit Eğitim Modeli' : 'Hybrides Lernmodell'}</a>
-                            <a href={`/${lang}/unsere-vorteile/stadt-und-universitaetstouren`} class="dropdown-link">{lang === 'tr' ? 'Şehir ve Üniversite Gezileri' : 'Stadt- und Universitätstouren'}</a>
-                            <a href={`/${lang}/unsere-vorteile/sprachclub`} class="dropdown-link">{lang === 'tr' ? 'Ücretsiz Almanca Konuşma Kulübü' : 'Kostenloser Sprachclub'}</a>
-                            <a href={`/${lang}/unsere-vorteile/lerncoaching`} class="dropdown-link">{lang === 'tr' ? 'Ücretsiz Almanca Eğitim Koçluğu/Etüdü' : 'Kostenloser Lerncoach'}</a>
-                            <a href={`/${lang}/unsere-vorteile/geld-zurueck-garantie`} class="dropdown-link">{lang === 'tr' ? 'Para iade veya Kurs tekrar Garantisi' : 'Geld-zurück-Garantie'}</a>
+                            <a href={`/${lang}/${sections.advantages}/${slugs.hybrid[lang]}`} class="dropdown-link">{t.hybrid}</a>
+                            <a href={`/${lang}/${sections.advantages}/${slugs.cityTours[lang]}`} class="dropdown-link">{t.cityTours}</a>
+                            <a href={`/${lang}/${sections.advantages}/${slugs.speakingClub[lang]}`} class="dropdown-link">{t.speakingClub}</a>
+                            <a href={`/${lang}/${sections.advantages}/${slugs.coaching[lang]}`} class="dropdown-link">{t.coaching}</a>
+                            <a href={`/${lang}/${sections.advantages}/${slugs.guarantee[lang]}`} class="dropdown-link">{t.guarantee}</a>
                             <div class="dropdown-cta">
-                                <a href={`/${lang}/ucretsiz-deneme`} class="dropdown-cta-btn">{lang === 'tr' ? 'Ücretsiz Deneme Dersi Al' : 'Kostenlose Probestunde'}</a>
+                                <a href={`/${lang}/ucretsiz-deneme`} class="dropdown-cta-btn">{t.advantagesCta}</a>
                             </div>
                         </div>
                     </li>
 
                     <!-- 4. Sunduklarımız - Minimal Dropdown -->
                     <li class="nav-item">
-                        <a href={`/${lang}/unsere-dienstleistungen`} class="nav-link">
-                            <span>{currentLang.services}</span>
+                        <a href={`/${lang}/${sections.services}`} class="nav-link">
+                            <span>{t.services}</span>
                             <i class="fas fa-chevron-down dropdown-arrow"></i>
                         </a>
                         <div class="dropdown-menu">
-                            <a href={`/${lang}/unsere-dienstleistungen/universitaetsvermittlung`} class="dropdown-link">{lang === 'tr' ? 'Üniversite Yerleştirme Programı / Pathway' : 'Universitätsvermittlung / Pathway'}</a>
-                            <a href={`/${lang}/unsere-dienstleistungen/visumsberatung`} class="dropdown-link">{lang === 'tr' ? 'Vize Rehberliği' : 'Visumsberatung'}</a>
-                            <a href={`/${lang}/unsere-dienstleistungen/unterkunft`} class="dropdown-link">{lang === 'tr' ? 'Bremen Konaklama ve Yurt Yerleştirmesi' : 'Unterkunft und Wohnheim'}</a>
-                            <a href={`/${lang}/unsere-dienstleistungen/flughafenabholung`} class="dropdown-link">{lang === 'tr' ? 'Havaalanı Karşılama' : 'Flughafenabholung'}</a>
-                            <a href={`/${lang}/unsere-dienstleistungen/krankenversicherung-und-bank`} class="dropdown-link">{lang === 'tr' ? 'Sağlık Sigortası/Bloke ve Banka Hesabı' : 'Krankenversicherung und Bank'}</a>
-                            <a href={`/${lang}/unsere-dienstleistungen/buerokratische-unterstuetzung`} class="dropdown-link">{lang === 'tr' ? 'Almanya Bürokrasi Desteği' : 'Bürokratische Unterstützung'}</a>
-                            <a href={`/${lang}/unsere-dienstleistungen/kostenlose-ressourcen`} class="dropdown-link">{lang === 'tr' ? 'Ücretsiz Almanca Kaynaklar' : 'Kostenlose Deutschressourcen'}</a>
+                            <a href={`/${lang}/${sections.services}/${slugs.universityPlacement[lang]}`} class="dropdown-link">{t.universityPlacement}</a>
+                            <a href={`/${lang}/${sections.services}/${slugs.visaGuidance[lang]}`} class="dropdown-link">{t.visaGuidance}</a>
+                            <a href={`/${lang}/${sections.services}/${slugs.accommodation[lang]}`} class="dropdown-link">{t.accommodation}</a>
+                            <a href={`/${lang}/${sections.services}/${slugs.airportPickup[lang]}`} class="dropdown-link">{t.airportPickup}</a>
+                            <a href={`/${lang}/${sections.services}/${slugs.insuranceBank[lang]}`} class="dropdown-link">{t.insuranceBank}</a>
+                            <a href={`/${lang}/${sections.services}/${slugs.bureaucracy[lang]}`} class="dropdown-link">{t.bureaucracy}</a>
+                            <a href={`/${lang}/${sections.services}/${slugs.freeResources[lang]}`} class="dropdown-link">{t.freeResources}</a>
                             <div class="dropdown-cta">
-                                <a href={`/${lang}/ucretsiz-danisma`} class="dropdown-cta-btn">{lang === 'tr' ? 'Ücretsiz Danışma Randevusu Al' : 'Kostenlose Beratung buchen'}</a>
+                                <a href={`/${lang}/${sections.contact}`} class="dropdown-cta-btn">{t.servicesCta}</a>
                             </div>
                         </div>
                     </li>
 
                     <!-- 5. Kazananlar - Direct Link -->
                     <li class="nav-item">
-                        <a href={`/${lang}/erfolgsgeschichten`} class="nav-link">
-                            <span>{currentLang.winners}</span>
+                        <a href={`/${lang}/${sections.winners}`} class="nav-link">
+                            <span>{t.winners}</span>
                         </a>
                     </li>
 
                     <!-- 6. İletişim - Direct Link -->
                     <li class="nav-item">
-                        <a href={`/${lang}/kontakt`} class="nav-link">
-                            <span>{currentLang.contact}</span>
+                        <a href={`/${lang}/${sections.contact}`} class="nav-link">
+                            <span>{t.contact}</span>
                         </a>
                     </li>
                 </ul>
             </nav>
 
-            <!-- Header Actions -->
-            <div class="header-actions">
-                <div class="language-selector">
-                    <button class="lang-btn" id="langBtn">
-                        <div class="lang-flag">
-                            <img src={lang === 'tr' ? 'https://flagcdn.com/tr.svg' : 'https://flagcdn.com/de.svg'} alt={lang === 'tr' ? 'Türkçe' : 'Deutsch'} class="flag-img">
-                        </div>
-                        <span class="lang-text">{lang === 'tr' ? 'TR' : 'DE'}</span>
-                        <i class="fas fa-chevron-down lang-arrow"></i>
-                    </button>
-                    <div class="lang-dropdown" id="langDropdown">
-                        <a href={switchLangUrl('tr')} class="lang-option">
-                            <img src="https://flagcdn.com/tr.svg" alt="Türkçe" class="flag-img">
-                            <span>Türkçe</span>
-                        </a>
-                        <a href={switchLangUrl('de')} class="lang-option">
-                            <img src="https://flagcdn.com/de.svg" alt="Deutsch" class="flag-img">
-                            <span>Deutsch</span>
-                        </a>
-                    </div>
-                </div>
-                <a href={`/${lang}/buchung`} class="cta-button">
-                    <span>{currentLang.register}</span>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-
             <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span class="hamburger-line" style="display: block !important; width: 24px !important; height: 2.5px !important; background: #0B1220 !important; border-radius: 2px !important;"></span>
+                <span class="hamburger-line" style="display: block !important; width: 24px !important; height: 2.5px !important; background: #0B1220 !important; border-radius: 2px !important;"></span>
+                <span class="hamburger-line" style="display: block !important; width: 24px !important; height: 2.5px !important; background: #0B1220 !important; border-radius: 2px !important;"></span>
             </button>
         </div>
     </div>
-</header>
 
-<!-- Mobile Menu - YENİ TEMİZ TASARIM -->
-<div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-header">
-        <img src="/German_logo.webp" alt="CampusGerman Logo" class="mobile-logo-img">
-        <button class="mobile-menu-close" id="mobileMenuClose">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-    
-    <div class="mobile-cta-wrapper">
-        <a href={`/${lang}/buchung`} class="mobile-cta-btn">
-            <i class="fas fa-arrow-right"></i>
-            {currentLang.register}
-        </a>
-    </div>
-    
-    <nav class="mobile-nav">
-        <ul class="mobile-nav-list">
-            <!-- Kurslar -->
-            <li class="mobile-menu-item">
-                <button class="mobile-menu-toggle" data-target="courses">
-                    <i class="fas fa-book-open"></i>
-                    <span>{currentLang.courses}</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <ul class="mobile-submenu" id="courses">
-                    <li class="mobile-submenu-item">
-                        <button class="mobile-submenu-toggle" data-target="intensiv">
-                            <i class="fas fa-fire"></i>
-                            <span>{lang === 'tr' ? 'Yoğun Akademik' : 'Intensiv Akademisch'}</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <ul class="mobile-submenu-list" id="intensiv">
-                            <li><a href={`/${lang}/kurslar/intensiv-deutsch`}>{lang === 'tr' ? 'Yoğun Almanca Kursları Genel Bakış' : 'Übersicht Intensivkurse'}</a></li>
-                            <li><a href={`/${lang}/kurslar/universitaetsvorbereitung`}>{lang === 'tr' ? 'Üniversite Hazırlık Programı' : 'Universitätsvorbereitungsprogramm'}</a></li>
-                            <li><a href={`/${lang}/kurslar/intensiv-studentenvisum`}>{lang === 'tr' ? 'Öğrenci Vizesi Garantili Yoğun Almanca Kursu' : 'Intensiv Deutsch mit Studentenvisum-Garantie'}</a></li>
-                            <li><a href={`/${lang}/kurslar/intensiv-a1`}>{lang === 'tr' ? 'Yoğun Almanca A1 Kursu' : 'Intensiv Deutsch A1'}</a></li>
-                            <li><a href={`/${lang}/kurslar/intensiv-a2`}>{lang === 'tr' ? 'Yoğun Almanca A2 Kursu' : 'Intensiv Deutsch A2'}</a></li>
-                            <li><a href={`/${lang}/kurslar/intensiv-b1`}>{lang === 'tr' ? 'Yoğun Almanca B1 Kursu' : 'Intensiv Deutsch B1'}</a></li>
-                            <li><a href={`/${lang}/kurslar/intensiv-b2`}>{lang === 'tr' ? 'Yoğun Almanca B2 Kursu' : 'Intensiv Deutsch B2'}</a></li>
-                            <li><a href={`/${lang}/kurslar/intensiv-c1`}>{lang === 'tr' ? 'Yoğun Almanca C1 Kursu' : 'Intensiv Deutsch C1'}</a></li>
-                            <li><a href={`/${lang}/kurslar/studienkolleg`}>{lang === 'tr' ? 'Studienkolleg Hazırlık' : 'Studienkolleg Vorbereitung'}</a></li>
-                        </ul>
-                    </li>
-                    <li class="mobile-submenu-item">
-                        <button class="mobile-submenu-toggle" data-target="saisonal">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>{lang === 'tr' ? 'Dönemsel' : 'Saisonal'}</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <ul class="mobile-submenu-list" id="saisonal">
-                            <li><a href={`/${lang}/kurslar/saisonal-uebersicht`}>{lang === 'tr' ? 'Dönemsel Almanca Kursları Genel Bakış' : 'Übersicht Saisonale Kurse'}</a></li>
-                            <li><a href={`/${lang}/kurslar/gymnasium-sommerschule`}>{lang === 'tr' ? 'Liseliler için Yaz Okulu Programı' : 'Sommerschule für Gymnasiasten'}</a></li>
-                            <li><a href={`/${lang}/kurslar/universitaet-sommerschule`}>{lang === 'tr' ? 'Üniversiteler için Yaz Okulu Programı' : 'Sommerschule für Universitäten'}</a></li>
-                            <li><a href={`/${lang}/kurslar/yaz-okulu`}>{lang === 'tr' ? 'Yaz Okulu' : 'Sommerschule'}</a></li>
-                            <li><a href={`/${lang}/kurslar/woechentlich-a1-a2`}>{lang === 'tr' ? 'Haftalık A1-A2 Almanca Kursu' : 'Wöchentlicher A1-A2 Kurs'}</a></li>
-                            <li><a href={`/${lang}/kurslar/woechentlich-b1-c1`}>{lang === 'tr' ? 'Haftalık B1-B2-C1 Almanca Kursu' : 'Wöchentlicher B1-B2-C1 Kurs'}</a></li>
-                            <li><a href={`/${lang}/kurslar/abend-halbintensiv`}>{lang === 'tr' ? 'Akşam Yarı Yoğun Almanca Kursları' : 'Abend-Halbintensivkurse'}</a></li>
-                            <li><a href={`/${lang}/kurslar/standart-aksam`}>{lang === 'tr' ? 'Standart Akşam Kursu' : 'Standard Abendkurs'}</a></li>
-                        </ul>
-                    </li>
-                    <li class="mobile-submenu-item">
-                        <button class="mobile-submenu-toggle" data-target="online">
-                            <i class="fas fa-laptop"></i>
-                            <span>Online</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <ul class="mobile-submenu-list" id="online">
-                            <li><a href={`/${lang}/kurslar/online-uebersicht`}>{lang === 'tr' ? 'Online Almanca Kursları Genel Bakış' : 'Übersicht Online-Kurse'}</a></li>
-                            <li><a href={`/${lang}/kurslar/online-almanca`}>{lang === 'tr' ? 'Online Almanca' : 'Online Deutsch'}</a></li>
-                            <li><a href={`/${lang}/kurslar/online-intensiv-a1`}>{lang === 'tr' ? 'Online Yoğun Almanca A1 Kursu' : 'Online Intensiv A1'}</a></li>
-                            <li><a href={`/${lang}/kurslar/online-intensiv-a2`}>{lang === 'tr' ? 'Online Yoğun Almanca A2 Kursu' : 'Online Intensiv A2'}</a></li>
-                            <li><a href={`/${lang}/kurslar/online-intensiv-b1`}>{lang === 'tr' ? 'Online Yoğun Almanca B1 Kursu' : 'Online Intensiv B1'}</a></li>
-                            <li><a href={`/${lang}/kurslar/online-intensiv-b2`}>{lang === 'tr' ? 'Online Yoğun Almanca B2 Kursu' : 'Online Intensiv B2'}</a></li>
-                            <li><a href={`/${lang}/kurslar/online-intensiv-c1`}>{lang === 'tr' ? 'Online Yoğun Almanca C1 Kursu' : 'Online Intensiv C1'}</a></li>
-                            <li><a href={`/${lang}/kurslar/online-pruefungsvorbereitung`}>{lang === 'tr' ? 'Online Goethe/TELC Sınav Hazırlık Kursu' : 'Online Goethe/TELC Vorbereitung'}</a></li>
-                        </ul>
-                    </li>
-                    <li class="mobile-submenu-item">
-                        <button class="mobile-submenu-toggle" data-target="pruefung">
-                            <i class="fas fa-certificate"></i>
-                            <span>{lang === 'tr' ? 'Sınav Hazırlık' : 'Prüfungsvorbereitung'}</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <ul class="mobile-submenu-list" id="pruefung">
-                            <li><a href={`/${lang}/kurslar/pruefungsvorbereitung-uebersicht`}>{lang === 'tr' ? 'Almanca Sınav Hazırlık Kursları Genel Bakış' : 'Übersicht Prüfungsvorbereitung'}</a></li>
-                            <li><a href={`/${lang}/kurslar/goethe-telc-a1`}>{lang === 'tr' ? 'Goethe/TELC A1 Hazırlık Kursu' : 'Goethe/TELC A1 Vorbereitung'}</a></li>
-                            <li><a href={`/${lang}/kurslar/goethe-telc-a2`}>{lang === 'tr' ? 'Goethe/TELC A2 Hazırlık Kursu' : 'Goethe/TELC A2 Vorbereitung'}</a></li>
-                            <li><a href={`/${lang}/kurslar/goethe-telc-b1`}>{lang === 'tr' ? 'Goethe/TELC B1 Hazırlık Kursu' : 'Goethe/TELC B1 Vorbereitung'}</a></li>
-                            <li><a href={`/${lang}/kurslar/goethe-telc-b2`}>{lang === 'tr' ? 'Goethe/TELC B2 Hazırlık Kursu' : 'Goethe/TELC B2 Vorbereitung'}</a></li>
-                            <li><a href={`/${lang}/kurslar/goethe-telc-c1`}>{lang === 'tr' ? 'Goethe/TELC C1 Hazırlık Kursu' : 'Goethe/TELC C1 Vorbereitung'}</a></li>
-                            <li><a href={`/${lang}/kurslar/testdaf-dsh`}>{lang === 'tr' ? 'TestDaF/DSH Hazırlık Kursu' : 'TestDaF/DSH Vorbereitung'}</a></li>
-                            <li><a href={`/${lang}/kurslar/testdaf-hazirlik`}>{lang === 'tr' ? 'TestDaF Hazırlık' : 'TestDaF Vorbereitung'}</a></li>
-                            <li><a href={`/${lang}/kurslar/telc-hazirlik`}>{lang === 'tr' ? 'TELC Hazırlık' : 'TELC Vorbereitung'}</a></li>
-                        </ul>
-                    </li>
-                    <li class="mobile-submenu-item">
-                        <button class="mobile-submenu-toggle" data-target="firma">
-                            <i class="fas fa-building"></i>
-                            <span>{lang === 'tr' ? 'Firma/Sponsorlu' : 'Firma/Gesponsert'}</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <ul class="mobile-submenu-list" id="firma">
-                            <li><a href={`/${lang}/kurslar/firmenkurs`}>{lang === 'tr' ? 'Firmalara özel Almanca Kursu' : 'Firmenkurs'}</a></li>
-                            <li><a href={`/${lang}/kurslar/bildungszeit`}>{lang === 'tr' ? 'Bildungszeit Kapsamında Almanca Kursu' : 'Bildungszeit Deutsch'}</a></li>
-                            <li><a href={`/${lang}/kurslar/daad-stipendiaten`}>{lang === 'tr' ? 'DAAD Bursiyerleri İçin Almanca Kursu' : 'Für DAAD-Stipendiaten'}</a></li>
-                            <li><a href={`/${lang}/kurslar/erasmus-lehrer`}>{lang === 'tr' ? 'Erasmus+ Öğretmenlere Almanca Kursu' : 'Für Erasmus+ Lehrer'}</a></li>
-                            <li><a href={`/${lang}/kurslar/erasmus-studenten`}>{lang === 'tr' ? 'Erasmus Öğrencilerine Özel Kurslar' : 'Für Erasmus-Studenten'}</a></li>
-                            <li><a href={`/${lang}/kurslar/beruf-karriere`}>{lang === 'tr' ? 'Meslek ve Kariyer için Almanca Kursları' : 'Beruf und Karriere'}</a></li>
-                            <li><a href={`/${lang}/kurslar/is-almancasi`}>{lang === 'tr' ? 'İş Almancası (Wirtschaftsdeutsch)' : 'Wirtschaftsdeutsch'}</a></li>
-                            <li><a href={`/${lang}/kurslar/career-pathway`}>{lang === 'tr' ? 'Kariyere Giriş Programı / Career Pathway' : 'Career Pathway Programm'}</a></li>
-                            <li><a href={`/${lang}/kurslar/medizin-gesundheit`}>{lang === 'tr' ? 'Tıp ve Sağlık Bilimleri için Almanca Kursu' : 'Medizin und Gesundheit'}</a></li>
-                            <li><a href={`/${lang}/kurslar/doktor-almancasi`}>{lang === 'tr' ? 'Doktor Almancası (Fachsprachprüfung)' : 'Fachsprachprüfung für Ärzte'}</a></li>
-                            <li><a href={`/${lang}/kurslar/fsp-vorbereitung`}>{lang === 'tr' ? 'FSP Sınav Hazırlık Eğitim' : 'FSP Prüfungsvorbereitung'}</a></li>
-                            <li><a href={`/${lang}/kurslar/ingenieurwesen-technik`}>{lang === 'tr' ? 'Mühendislik ve Teknik Bilimler için Almanca Kursu' : 'Ingenieurwesen und Technik'}</a></li>
-                            <li><a href={`/${lang}/kurslar/wirtschaft-management`}>{lang === 'tr' ? 'Ekonomi ve Yönetim Bilimleri için Almanca Kursu' : 'Wirtschaft und Management'}</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            
-            <!-- Hakkımızda -->
-            <li class="mobile-menu-item">
-                <button class="mobile-menu-toggle" data-target="about">
-                    <i class="fas fa-info-circle"></i>
-                    <span>{currentLang.about}</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <ul class="mobile-submenu" id="about">
-                    <li><a href={`/${lang}/ueber-uns/unsere-mission`}>{lang === 'tr' ? 'Misyonumuz' : 'Unsere Mission'}</a></li>
-                    <li><a href={`/${lang}/ueber-uns/qualitaetsstandards`}>{lang === 'tr' ? 'Kalite Standartları' : 'Qualitätsstandards'}</a></li>
-                    <li><a href={`/${lang}/ueber-uns/partnerschaftspolitik`}>{lang === 'tr' ? 'Partnerlerimiz' : 'Partner'}</a></li>
-                    <li><a href={`/${lang}/lehrkraefte`}>{lang === 'tr' ? 'Eğitmenlerimiz' : 'Lehrkräfte'}</a></li>
-                    <li><a href={`/${lang}/ueber-uns/wir-in-den-medien`}>{lang === 'tr' ? 'Medya\'da Biz' : 'In den Medien'}</a></li>
-                </ul>
-            </li>
-            
-            <!-- Avantajlarımız -->
-            <li class="mobile-menu-item">
-                <button class="mobile-menu-toggle" data-target="advantages">
-                    <i class="fas fa-gem"></i>
-                    <span>{currentLang.advantages}</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <ul class="mobile-submenu" id="advantages">
-                    <li><a href={`/${lang}/unsere-vorteile/hybrides-lernmodell`}>{lang === 'tr' ? 'Hibrit Eğitim' : 'Hybrides Lernen'}</a></li>
-                    <li><a href={`/${lang}/unsere-vorteile/stadt-und-universitaetstouren`}>{lang === 'tr' ? 'Şehir ve Uni Gezileri' : 'Stadt- und Unitoruren'}</a></li>
-                    <li><a href={`/${lang}/unsere-vorteile/sprachclub`}>{lang === 'tr' ? 'Konuşma Kulübü' : 'Sprachclub'}</a></li>
-                    <li><a href={`/${lang}/unsere-vorteile/lerncoaching`}>{lang === 'tr' ? 'Eğitim Koçluğu' : 'Lerncoaching'}</a></li>
-                    <li><a href={`/${lang}/unsere-vorteile/geld-zurueck-garantie`}>{lang === 'tr' ? 'Para İade Garantisi' : 'Geld-zurück-Garantie'}</a></li>
-                </ul>
-            </li>
-            
-            <!-- Sunduklarımız -->
-            <li class="mobile-menu-item">
-                <button class="mobile-menu-toggle" data-target="services">
-                    <i class="fas fa-hands-helping"></i>
-                    <span>{currentLang.services}</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <ul class="mobile-submenu" id="services">
-                    <li><a href={`/${lang}/unsere-dienstleistungen/universitaetsvermittlung`}>{lang === 'tr' ? 'Üniversite Yerleştirme' : 'Universitätsvermittlung'}</a></li>
-                    <li><a href={`/${lang}/unsere-dienstleistungen/visumsberatung`}>{lang === 'tr' ? 'Vize Rehberliği' : 'Visumsberatung'}</a></li>
-                    <li><a href={`/${lang}/unsere-dienstleistungen/unterkunft`}>{lang === 'tr' ? 'Konaklama' : 'Unterkunft'}</a></li>
-                    <li><a href={`/${lang}/unsere-dienstleistungen/flughafenabholung`}>{lang === 'tr' ? 'Havaalanı Karşılama' : 'Flughafenabholung'}</a></li>
-                    <li><a href={`/${lang}/unsere-dienstleistungen/krankenversicherung-und-bank`}>{lang === 'tr' ? 'Sağlık Sigortası' : 'Krankenversicherung'}</a></li>
-                    <li><a href={`/${lang}/unsere-dienstleistungen/buerokratische-unterstuetzung`}>{lang === 'tr' ? 'Bürokrasi Desteği' : 'Bürokratische Hilfe'}</a></li>
-                    <li><a href={`/${lang}/unsere-dienstleistungen/kostenlose-ressourcen`}>{lang === 'tr' ? 'Ücretsiz Kaynaklar' : 'Kostenlose Ressourcen'}</a></li>
-                </ul>
-            </li>
-            
-            <li class="mobile-menu-item">
-                <a href={`/${lang}/erfolgsgeschichten`} class="mobile-menu-link">
-                    <i class="fas fa-trophy"></i>
-                    <span>{currentLang.winners}</span>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <div class="mobile-logo">
+                <a href={`/${lang}/`} class="mobile-logo-link">
+                    <img src="/German_logo.webp" alt="CampusGerman Logo" class="mobile-logo-img">
                 </a>
-            </li>
-            
-            <li class="mobile-menu-item">
-                <a href={`/${lang}/kontakt`} class="mobile-menu-link">
-                    <i class="fas fa-envelope"></i>
-                    <span>{currentLang.contact}</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    
-    <div class="mobile-lang-wrapper">
-        <button class="mobile-lang-toggle" id="mobileLangBtn">
-            <img src={lang === 'tr' ? 'https://flagcdn.com/tr.svg' : 'https://flagcdn.com/de.svg'} alt={lang === 'tr' ? 'Türkçe' : 'Deutsch'} class="mobile-lang-flag">
-            <span>{lang === 'tr' ? 'TR' : 'DE'}</span>
-            <i class="fas fa-chevron-down"></i>
-        </button>
-        <div class="mobile-lang-menu" id="mobileLangDropdown">
-            <a href={switchLangUrl('tr')} class="mobile-lang-option">
-                <img src="https://flagcdn.com/tr.svg" alt="Türkçe" class="mobile-lang-flag">
-                <span>Türkçe</span>
-            </a>
-            <a href={switchLangUrl('de')} class="mobile-lang-option">
-                <img src="https://flagcdn.com/de.svg" alt="Deutsch" class="mobile-lang-flag">
-                <span>Deutsch</span>
+            </div>
+            <button class="mobile-menu-close" id="mobileMenuClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <nav class="mobile-nav">
+            <ul class="mobile-nav-list">
+                <li class="mobile-menu-item">
+                    <a href={`/${lang}/`} class="mobile-menu-link">{t.home}</a>
+                </li>
+                
+                <!-- Courses Mobile Dropdown -->
+                <li class="mobile-menu-item mobile-menu-item-dropdown">
+                    <div class="mobile-menu-header-item">
+                        <a href={`/${lang}/${sections.courses}`} class="mobile-menu-link-with-dropdown">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>{t.courses}</span>
+                        </a>
+                        <button class="mobile-menu-toggle-arrow" data-target="mobileCoursesSubmenu" aria-expanded="false" aria-label="Toggle courses menu">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <ul class="mobile-submenu" id="mobileCoursesSubmenu">
+                        <!-- Yoğun Akademik Kurslar -->
+                        <li class="mobile-submenu-item mobile-submenu-category">
+                            <span class="mobile-submenu-category-title">{t.tabIntensive}</span>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivOverview[lang]}`} class="mobile-submenu-link">{t.intensivOverview}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivA1[lang]}`} class="mobile-submenu-link">{t.intensivA1}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivA2[lang]}`} class="mobile-submenu-link">{t.intensivA2}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivB1[lang]}`} class="mobile-submenu-link">{t.intensivB1}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivB2[lang]}`} class="mobile-submenu-link">{t.intensivB2}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivC1[lang]}`} class="mobile-submenu-link">{t.intensivC1}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.studienkolleg[lang]}`} class="mobile-submenu-link">{t.studienkolleg}</a>
+                        </li>
+                        
+                        <!-- Dönemsel Kurslar -->
+                        <li class="mobile-submenu-item mobile-submenu-category">
+                            <span class="mobile-submenu-category-title">{t.tabSeasonal}</span>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.seasonalOverview[lang]}`} class="mobile-submenu-link">{t.seasonalOverview}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.gymnasiumSummer[lang]}`} class="mobile-submenu-link">{t.gymnasiumSummer}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.universitySummer[lang]}`} class="mobile-submenu-link">{t.universitySummer}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.summerSchool[lang]}`} class="mobile-submenu-link">{t.summerSchool}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.weeklyA1A2[lang]}`} class="mobile-submenu-link">{t.weeklyA1A2}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.weeklyB1C1[lang]}`} class="mobile-submenu-link">{t.weeklyB1C1}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.standardEvening[lang]}`} class="mobile-submenu-link">{t.standardEvening}</a>
+                        </li>
+                        
+                        <!-- Online Kurslar -->
+                        <li class="mobile-submenu-item mobile-submenu-category">
+                            <span class="mobile-submenu-category-title">{t.tabOnline}</span>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineOverview[lang]}`} class="mobile-submenu-link">{t.onlineOverview}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineGerman[lang]}`} class="mobile-submenu-link">{t.onlineGerman}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineA1[lang]}`} class="mobile-submenu-link">{t.onlineA1}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineA2[lang]}`} class="mobile-submenu-link">{t.onlineA2}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineB1[lang]}`} class="mobile-submenu-link">{t.onlineB1}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineB2[lang]}`} class="mobile-submenu-link">{t.onlineB2}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineC1[lang]}`} class="mobile-submenu-link">{t.onlineC1}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineExam[lang]}`} class="mobile-submenu-link">{t.onlineExam}</a>
+                        </li>
+                        
+                        <!-- Sınav Hazırlık -->
+                        <li class="mobile-submenu-item mobile-submenu-category">
+                            <span class="mobile-submenu-category-title">{t.tabExam}</span>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.examOverview[lang]}`} class="mobile-submenu-link">{t.examOverview}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.goetheA1[lang]}`} class="mobile-submenu-link">{t.goetheA1}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.goetheA2[lang]}`} class="mobile-submenu-link">{t.goetheA2}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.goetheB1[lang]}`} class="mobile-submenu-link">{t.goetheB1}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.goetheB2[lang]}`} class="mobile-submenu-link">{t.goetheB2}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.goetheC1[lang]}`} class="mobile-submenu-link">{t.goetheC1}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.testdafDsh[lang]}`} class="mobile-submenu-link">{t.testdafDsh}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.testdafPrep[lang]}`} class="mobile-submenu-link">{t.testdafPrep}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.telcPrep[lang]}`} class="mobile-submenu-link">{t.telcPrep}</a>
+                        </li>
+                        
+                        <!-- Firma/Sponsorlu Kurslar -->
+                        <li class="mobile-submenu-item mobile-submenu-category">
+                            <span class="mobile-submenu-category-title">{t.tabCorporate}</span>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.corporate[lang]}`} class="mobile-submenu-link">{t.corporate}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.bildungszeit[lang]}`} class="mobile-submenu-link">{t.bildungszeit}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.daad[lang]}`} class="mobile-submenu-link">{t.daad}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.erasmusTeacher[lang]}`} class="mobile-submenu-link">{t.erasmusTeacher}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${slugs.erasmusStudent[lang]}`} class="mobile-submenu-link">{t.erasmusStudent}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.careerGerman[lang]}`} class="mobile-submenu-link">{t.careerGerman}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.businessGerman[lang]}`} class="mobile-submenu-link">{t.businessGerman}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.careerPathway[lang]}`} class="mobile-submenu-link">{t.careerPathway}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.medical[lang]}`} class="mobile-submenu-link">{t.medical}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.doctorGerman[lang]}`} class="mobile-submenu-link">{t.doctorGerman}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.fspPrep[lang]}`} class="mobile-submenu-link">{t.fspPrep}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.engineering[lang]}`} class="mobile-submenu-link">{t.engineering}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.courses}/${courseSlugs.economics[lang]}`} class="mobile-submenu-link">{t.economics}</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="mobile-menu-item mobile-menu-item-dropdown">
+                    <div class="mobile-menu-header-item">
+                        <a href={`/${lang}/${sections.about}`} class="mobile-menu-link-with-dropdown">
+                            <i class="fas fa-info-circle"></i>
+                            <span>{t.about}</span>
+                        </a>
+                        <button class="mobile-menu-toggle-arrow" data-target="mobileAboutSubmenu" aria-expanded="false" aria-label="Toggle about menu">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <ul class="mobile-submenu" id="mobileAboutSubmenu">
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.about}/${slugs.mission[lang]}`} class="mobile-submenu-link">{t.mission}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.about}/${slugs.quality[lang]}`} class="mobile-submenu-link">{t.quality}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.about}/${slugs.whyBremen[lang]}`} class="mobile-submenu-link">{t.whyBremen}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.about}/${slugs.marketRealities[lang]}`} class="mobile-submenu-link">{t.marketRealities}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.about}/${slugs.levelPolicy[lang]}`} class="mobile-submenu-link">{t.levelPolicy}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.about}/${slugs.partnership[lang]}`} class="mobile-submenu-link">{t.partnership}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.about}/${slugs.whatWeDont[lang]}`} class="mobile-submenu-link">{t.whatWeDont}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/lehrkraefte`} class="mobile-submenu-link">{t.teachers}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.about}/${slugs.media[lang]}`} class="mobile-submenu-link">{t.media}</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="mobile-menu-item mobile-menu-item-dropdown">
+                    <div class="mobile-menu-header-item">
+                        <a href={`/${lang}/${sections.advantages}`} class="mobile-menu-link-with-dropdown">
+                            <i class="fas fa-star"></i>
+                            <span>{t.advantages}</span>
+                        </a>
+                        <button class="mobile-menu-toggle-arrow" data-target="mobileAdvantagesSubmenu" aria-expanded="false" aria-label="Toggle advantages menu">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <ul class="mobile-submenu" id="mobileAdvantagesSubmenu">
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.advantages}/${slugs.hybrid[lang]}`} class="mobile-submenu-link">{t.hybrid}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.advantages}/${slugs.cityTours[lang]}`} class="mobile-submenu-link">{t.cityTours}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.advantages}/${slugs.speakingClub[lang]}`} class="mobile-submenu-link">{t.speakingClub}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.advantages}/${slugs.coaching[lang]}`} class="mobile-submenu-link">{t.coaching}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.advantages}/${slugs.guarantee[lang]}`} class="mobile-submenu-link">{t.guarantee}</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="mobile-menu-item mobile-menu-item-dropdown">
+                    <div class="mobile-menu-header-item">
+                        <a href={`/${lang}/${sections.services}`} class="mobile-menu-link-with-dropdown">
+                            <i class="fas fa-hands-helping"></i>
+                            <span>{t.services}</span>
+                        </a>
+                        <button class="mobile-menu-toggle-arrow" data-target="mobileServicesSubmenu" aria-expanded="false" aria-label="Toggle services menu">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <ul class="mobile-submenu" id="mobileServicesSubmenu">
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.services}/${slugs.universityPlacement[lang]}`} class="mobile-submenu-link">{t.universityPlacement}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.services}/${slugs.visaGuidance[lang]}`} class="mobile-submenu-link">{t.visaGuidance}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.services}/${slugs.accommodation[lang]}`} class="mobile-submenu-link">{t.accommodation}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.services}/${slugs.airportPickup[lang]}`} class="mobile-submenu-link">{t.airportPickup}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.services}/${slugs.insuranceBank[lang]}`} class="mobile-submenu-link">{t.insuranceBank}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.services}/${slugs.bureaucracy[lang]}`} class="mobile-submenu-link">{t.bureaucracy}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.services}/${slugs.freeResources[lang]}`} class="mobile-submenu-link">{t.freeResources}</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="mobile-menu-item">
+                    <a href={`/${lang}/${sections.winners}`} class="mobile-menu-link">{t.winners}</a>
+                </li>
+                
+                <li class="mobile-menu-item">
+                    <a href={`/${lang}/${sections.contact}`} class="mobile-menu-link">{t.contact}</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="mobile-menu-lang">
+            <div class="mobile-menu-lang-dropdown-wrapper">
+                <button type="button" class="mobile-menu-lang-btn" id="mobileLangBtn" aria-expanded="false" aria-haspopup="true">
+                    <img src={lang === 'tr' ? 'https://flagcdn.com/tr.svg' : lang === 'de' ? 'https://flagcdn.com/de.svg' : lang === 'es' ? 'https://flagcdn.com/es.svg' : 'https://flagcdn.com/gb.svg'} alt={lang === 'tr' ? 'Türkçe' : lang === 'de' ? 'Deutsch' : lang === 'es' ? 'Español' : 'English'} class="lang-flag">
+                    <span class="mobile-menu-lang-name">{lang === 'tr' ? 'Türkçe' : lang === 'de' ? 'Deutsch' : lang === 'en' ? 'English' : 'Español'}</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="top-lang-dropdown mobile-menu-lang-dropdown" id="mobileLangDropdown">
+                    <a href="/tr/" class="top-lang-option">
+                        <img src="https://flagcdn.com/tr.svg" alt="Türkçe" class="flag-img">
+                        <span>Türkçe</span>
+                    </a>
+                    <a href="/de/" class="top-lang-option">
+                        <img src="https://flagcdn.com/de.svg" alt="Deutsch" class="flag-img">
+                        <span>Deutsch</span>
+                    </a>
+                    <a href="/en/" class="top-lang-option">
+                        <img src="https://flagcdn.com/gb.svg" alt="English" class="flag-img">
+                        <span>English</span>
+                    </a>
+                    <a href="/es/" class="top-lang-option">
+                        <img src="https://flagcdn.com/es.svg" alt="Español" class="flag-img">
+                        <span>Español</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-actions">
+            <a href={`/${lang}/${sections.booking}`} class="mobile-cta">
+                <i class="fas fa-arrow-right"></i>
+                <span>{t.cta}</span>
             </a>
         </div>
     </div>
-</div>
-
-<style is:global>
-    /* Güçlü dropdown-link font stilleri - En yüksek öncelik */
-    .courses-dropdown a.dropdown-link,
-    .courses-dropdown .dropdown-link,
-    .course-tab-panel a.dropdown-link,
-    .course-tab-panel .dropdown-link,
-    .courses-wrapper a.dropdown-link,
-    .courses-wrapper .dropdown-link,
-    .courses-content a.dropdown-link,
-    .courses-content .dropdown-link {
-        font-weight: 700 !important;
-        font-family: 'Poppins', sans-serif !important;
-        -webkit-font-smoothing: antialiased !important;
-        -moz-osx-font-smoothing: grayscale !important;
-        text-rendering: optimizeLegibility !important;
-    }
-    
-    /* Logo görünürlüğü */
-    .logo-img {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        max-width: 180px !important;
-        height: auto !important;
-    }
-    
-    .logo-section {
-        display: flex !important;
-        align-items: center !important;
-    }
-    
-    .logo-link {
-        display: flex !important;
-        align-items: center !important;
-    }
-    
-</style>
+</header>

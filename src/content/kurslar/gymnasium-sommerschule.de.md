@@ -1,6 +1,7 @@
 ---
 title: "Sommerprogramm für Schüler:innen"
 lang: "de"
+customSlug: "gymnasium-sommerschule"
 badge:
   icon: "fas fa-sun"
   text: "Sommerschule"

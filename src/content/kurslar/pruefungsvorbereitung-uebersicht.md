@@ -1,10 +1,11 @@
 ---
 title: "Almanca Sınav Hazırlık Kursları Genel Bakış"
 lang: "tr"
+customSlug: "sinav-hazirlik-genel-bakis"
 badge:
   icon: "fas fa-certificate"
   text: "Sınav Hazırlık"
-description: "Goethe, TELC, TestDaF ve DSH sınavlarına hazırlık. Sınav odaklı eğitim ve başarı garantisi."
+description: "Goethe, TELC, TestDaF ve DSH sınavlarına hazırlık. Sınav odaklı eğitim ve kapsamlı hazırlık."
 image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
 features:
   - icon: "fas fa-certificate"
@@ -62,7 +63,7 @@ faqs:
   - question: "Hangi sınavlara hazırlık yapılıyor?"
     answer: "Goethe, TELC, TestDaF ve DSH sınavlarına hazırlık yapılmaktadır."
   - question: "Başarı garantisi var mı?"
-    answer: "Evet, %95 başarı oranı ile başarı garantisi sunuyoruz."
+    answer: "Hayır, Campus German sınav başarı garantisi vermez. Sınav sonuçları çeşitli faktörlere bağlıdır ve resmî sınav kurumları tarafından belirlenir. Ancak kapsamlı hazırlık ve sınav kayıt desteği sunuyoruz."
   - question: "Hangi kurs formatları sunulmaktadır?"
     answer: "Kurslarımız size esnek bir öğrenme deneyimi sunar: Hibrit Eğitim: Kursunuz, yüz yüze dersler ile canlı online derslerin birleşiminden oluşur. Hibrit sistem sayesinde, yüz yüze ders günlerinde dilediğiniz zaman online olarak da derse katılabilirsiniz. Canlı Online Eğitim: Bu formatta derslere tamamen canlı ve online olarak katılırsınız."
   - question: "Kurslarda hangi içerikler işlenmektedir?"

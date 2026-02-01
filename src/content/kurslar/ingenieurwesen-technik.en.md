@@ -1,0 +1,105 @@
+---
+title: "German Course for Engineering and Technical Sciences"
+lang: "en"
+customSlug: "engineering-technology"
+badge:
+  icon: "fas fa-cogs"
+  text: "Engineering"
+description: "Special German course for engineering and technical sciences students and professionals. Technical terms and professional German."
+image: "https://images.unsplash.com/photo-1504307651254-35680f086213?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Weekly Lessons"
+    description: "20-24 Lessons"
+  - icon: "fas fa-calendar-alt"
+    title: "Course Duration"
+    description: "12-24 Weeks"
+  - icon: "fas fa-users"
+    title: "Class Size"
+    description: "Maximum 10 People"
+  - icon: "fas fa-cogs"
+    title: "Focus"
+    description: "Technical German"
+heroButtons:
+  primary:
+    text: "Apply Now"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Program Details"
+    icon: "fas fa-info-circle"
+    href: "#program-details"
+tabs:
+  - id: "course-info"
+    icon: "fas fa-info-circle"
+    title: "Course Information"
+    content:
+      title: "About Engineering and Technical Course"
+      paragraphs:
+        - heading: "Course Overview"
+          text: "The German Course for Engineering and Technical Sciences is a program specially developed for students and professionals who want to use German effectively in technical and academic contexts. This course offered by CampusGerman provides strong preparation for students' education and career goals in Germany by bringing together terminology, academic language, and technical communication skills used in engineering fields. Germany is one of the world's leading countries in the field of engineering and technical sciences. For this reason, German knowledge is of great importance for following courses at universities, understanding technical documents, and communicating in professional environments. This course aims for students to use the language as a professional tool by supporting general German knowledge with technical content. The CampusGerman German Course for Engineering and Technical Sciences, thanks to its structure that combines theory and practice, ensures that participants not only learn technical German but also use it actively."
+        - heading: "Target Audience and Prerequisites"
+          text: "This course is suitable for participants who need German in engineering and technical fields. It is an ideal program especially for the following groups: Students studying in engineering faculties Candidates planning to study at technical universities in Germany Professionals working as engineers, technicians, or technical specialists Those who want to follow technical texts and courses in German At least A2 or B1 level general German knowledge is recommended for the course. This level ensures more efficient learning of technical terms and academic content. CampusGerman ensures students are directed to the right program by conducting level assessment before the course."
+        - heading: "Course Content and Learning Goals"
+          text: "The German Course for Engineering and Technical Sciences focuses on language structures and terminology frequently used in technical fields. The course content includes: Technical and engineering terms Reading academic and technical texts Writing instructions, reports, and technical documentation Interpreting graphs, diagrams, and technical drawings Technical presentation and explanation skills The learning goal is for the student to be able to use German correctly, clearly, and professionally in the field of engineering. At the end of the course, participants can understand technical courses and documents more comfortably and express themselves in academic environments."
+        - heading: "Teaching Method and Classroom Environment"
+          text: "This course at CampusGerman is conducted with an applied and field-focused teaching approach. In classes: Real technical texts and examples Case analyses Presentation and narration work Group discussions and applied exercises are used. The classroom environment is interactive and active participation of students is encouraged. Instructors are experienced in technical German and academic language and support students individually."
+        - heading: "Post-Course Progress"
+          text: "Students who complete the German Course for Engineering and Technical Sciences: Develop technical German vocabulary More easily adapt to engineering programs in Germany Can use German in technical meetings and presentations Progress toward academic and professional goals with stronger steps CampusGerman continues to guide students on advanced German programs, exam preparation courses, or career-focused education after the course."
+  - id: "dates-prices"
+    icon: "fas fa-calendar-alt"
+    title: "Dates and Prices"
+    content:
+      title: "Price Information"
+      pricing:
+        - name: "12 Weeks Engineering/Technical"
+          duration: "12 Weeks"
+          schedule: "20-24 Lessons/Week"
+          price: "Special Pricing"
+          highlighted: true
+  - id: "program-details"
+    icon: "fas fa-book-open"
+    title: "Program Details"
+    content:
+      title: "Program Content"
+      items:
+        - icon: "fas fa-check-circle"
+          text: "<strong>Technical Terms:</strong> Engineering and technical field terms"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Technical Reports:</strong> Writing and reading engineering reports"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Project Presentations:</strong> Technical project presentation techniques"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Business Life:</strong> Business German in technical sector"
+faqs:
+  - question: "Which engineering fields is it suitable for?"
+    answer: "It is suitable for all engineering fields: mechanical, electrical, civil, industrial engineering, etc."
+  - question: "What level should I start from?"
+    answer: "At least B2 level is recommended, but C1 level is the ideal level."
+  - question: "What course formats are offered?"
+    answer: "Our courses offer you a flexible learning experience: Hybrid Education: Your course consists of a combination of face-to-face classes and live online classes. Thanks to the hybrid system, you can also attend classes online whenever you want on face-to-face class days. Live Online Education: In this format, you attend classes completely live and online."
+  - question: "What content is covered in the courses?"
+    answer: "Our Intensive German programs include listening and reading comprehension with current texts, comprehensive grammar studies, and various communication-focused activities. This aims to develop your speaking and writing skills in a goal-oriented manner."
+  - question: "How can I get university education in Germany?"
+    answer: "To receive university education in Germany, you must first have recognized university entrance qualification (HZB). It is recommended to check whether your diploma is recognized in Germany through the anabin system. You also need to document your German language proficiency with official certificates such as telc, DSH. The Campus German University Preparation Program is designed for you to prepare for this process completely."
+  - question: "What requirements are necessary?"
+    answer: "You must be at least 18 years old. You must submit a blocked account opened in Germany or an official commitment letter."
+  - question: "What types of visas are recommended?"
+    answer: "Student Visa: Also covers the right to participate in preparatory German courses. There is no visa requirement for EU citizens."
+  - question: "What services are included in the courses?"
+    answer: "Placement test, no registration fee, course certificate for visa application, digital textbook, individual student counseling (1 time, approximately 45 minutes), webinars on 'University Education in Germany', Campus German certificate, e-learning platform, social and cultural activities organized throughout the year, free Wi-Fi access at all centers."
+  - question: "What are the qualifications of our instructors?"
+    answer: "Our teaching staff consists of university graduates with many years of teaching experience in German as a Foreign Language (DaF) and German as a Second Language (DaZ), experts in their field, and highly motivated people. We also have Federal Office for Migration and Refugees (BAMF) approved instructors. Our lessons are regularly evaluated by students."
+  - question: "How long does it take to learn German?"
+    answer: "German learning time depends on your goal and current level. You can complete the basic levels from A1 to B2 in 6-8 months. Advanced levels such as C1 and C2 may require an additional 4-6 months. You can shorten this time with our intensive courses."
+  - question: "Can I get a Goethe certificate?"
+    answer: "Yes, we offer Goethe certificate preparation courses at CampusGerman. We provide exam preparation at all levels from A1 to C2. You can take certificate exams at our campus or be directed to nearby test centers."
+  - question: "Are accommodation options available?"
+    answer: "Yes, we offer accommodation options in Germany. Student dormitories, homestay accommodation, and shared apartments are available. Our accommodation service is not included in the course fee, but we help you find the most suitable options."
+  - question: "Are payment plans and discounts available?"
+    answer: "Yes, we offer flexible payment plans. Monthly, 3-month, and 6-month payment options are available. There are discounts for early registration, group registrations, and long-term programs. Contact us for detailed information."
+hasDemandForm: true
+---
+
+<!-- Content will be added here -->
+

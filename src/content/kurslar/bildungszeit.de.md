@@ -1,6 +1,7 @@
 ---
 title: "Deutschkurse im Rahmen von Bildungszeit"
 lang: "de"
+customSlug: "bildungszeit"
 badge:
   icon: "fas fa-gavel"
   text: "Bildungszeit"
@@ -97,6 +98,8 @@ faqs:
     answer: "Ja, wir bieten flexible Zahlungsmodelle an. Es stehen monatliche, dreimonatige und sechsmonatige Zahlungspläne zur Verfügung. Für Frühbuchungen, Gruppenanmeldungen und langfristige Programme sind Rabatte möglich. Kontaktieren Sie uns für weitere Informationen."
 hasDemandForm: true
 ---
+
+
 
 
 

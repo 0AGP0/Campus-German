@@ -1,0 +1,230 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/dienstleistungen.css';
+import { getAdvantagesPath, isValidLang } from '../../utils/pathHelpers';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'en' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Lang tip kontrolü
+if (!isValidLang(lang)) {
+    throw new Error(`Invalid language: ${lang}`);
+}
+
+// Path helper'ları
+const advantagesPath = getAdvantagesPath(lang);
+
+// Slug mapping: card.slug -> actual URL slug per language
+const slugs: Record<string, Record<string, string>> = {
+    hybrid: {
+        es: 'aprendizaje-hibrido',
+        en: 'hybrid-learning',
+        de: 'hybrides-lernmodell',
+        tr: 'hibrit-egitim'
+    },
+    cityTours: {
+        es: 'tours-ciudad-universidad',
+        en: 'city-tours',
+        de: 'stadttouren',
+        tr: 'sehir-gezileri'
+    },
+    speakingClub: {
+        es: 'club-conversacion',
+        en: 'speaking-club',
+        de: 'sprachclub',
+        tr: 'konusma-kulubu'
+    },
+    coaching: {
+        es: 'coaching-aprendizaje',
+        en: 'learning-coaching',
+        de: 'lerncoaching',
+        tr: 'egitim-koclugu'
+    },
+    guarantee: {
+        es: 'garantia-reembolso',
+        en: 'money-back-guarantee',
+        de: 'geld-zurueck-garantie',
+        tr: 'para-iade-garantisi'
+    }
+};
+
+// Translations
+const t = {
+    en: {
+        title: "Our Advantages - CampusGerman",
+        heroTitle: "CampusGerman Advantages",
+        heroDescription: "Special advantages and services we offer you on your German learning journey. From hybrid learning models to free conversation clubs, from city tours to learning coaching - we offer a wide range of services.",
+        sectionTitle: "Our Advantages",
+        sectionSubtitle: "Specially designed advantages for every need",
+        exploreButton: "Explore Advantages",
+        contactButton: "Get in Touch",
+        ctaTitle: "Discover Our Advantages",
+        ctaDescription: "Specially designed advantages for every need, experienced instructors and flexible program options.",
+        ctaStats: {
+            advantages: "Advantages",
+            satisfaction: "Satisfaction",
+            support: "Support"
+        },
+        viewAllButton: "View All Advantages",
+        learnMoreButton: "Learn More",
+        cards: [
+            {
+                id: "hybrid-learning",
+                title: "Hybrid Learning Model",
+                subtitle: "Online and face-to-face education",
+                description: "Flexible learning opportunity with a hybrid model that combines online and face-to-face education. Online when you want, on campus when you want.",
+                features: ["Flexible schedule", "Online and face-to-face", "Same quality"],
+                slug: "hybrid"
+            },
+            {
+                id: "city-tours",
+                title: "City and University Tours",
+                subtitle: "Cultural experiences",
+                description: "Discover the city of Bremen and its universities. Experience culture while learning German with cultural tours, museum visits, and social activities.",
+                features: ["City tours", "University visits", "Cultural activities"],
+                slug: "cityTours"
+            },
+            {
+                id: "speaking-club",
+                title: "Free German Conversation Club",
+                subtitle: "Practice opportunity",
+                description: "Practice German in our free conversation club. You can practice daily conversation with native speaker teachers.",
+                features: ["Free", "Native speakers", "Daily practice"],
+                slug: "speakingClub"
+            },
+            {
+                id: "learning-coaching",
+                title: "Free German Learning Coaching/Tutoring",
+                subtitle: "Individual support",
+                description: "Accelerate your learning process with free learning coaching and tutoring support. Individual counseling and homework assistance.",
+                features: ["Free", "Individual support", "Homework help"],
+                slug: "coaching"
+            },
+            {
+                id: "guarantee",
+                title: "Money Back or Course Repeat Guarantee",
+                subtitle: "Secure learning",
+                description: "Money-back guarantee or course repeat if you are not satisfied. A sign of our success-oriented education approach.",
+                features: ["Money-back", "Course repeat", "Success guarantee"],
+                slug: "guarantee"
+            }
+        ]
+    }
+};
+
+const translations = t[lang as keyof typeof t];
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <!-- Hero Section -->
+    <section class="services-hero-section">
+        <div class="container">
+            <div class="services-hero-content">
+                <div class="hero-left">
+                    <h1 class="hero-title">
+                        {translations.heroTitle}
+                    </h1>
+                    
+                    <div class="hero-content">
+                        <p class="hero-description">
+                            {translations.heroDescription}
+                        </p>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <a href="#avantaj-kartlari" class="btn-primary">
+                            <i class="fas fa-arrow-down"></i>
+                            {translations.exploreButton}
+                        </a>
+                        <button class="btn-secondary" id="contactBtn">
+                            <i class="fas fa-envelope"></i>
+                            {translations.contactButton}
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-right">
+                    <div class="hero-cta-card">
+                        <div class="cta-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="cta-title">{translations.ctaTitle}</h3>
+                        <p class="cta-description">
+                            {translations.ctaDescription}
+                        </p>
+                        <div class="cta-stats">
+                            <div class="cta-stat">
+                                <div class="stat-number">5+</div>
+                                <div class="stat-label">{translations.ctaStats.advantages}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">100%</div>
+                                <div class="stat-label">{translations.ctaStats.satisfaction}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">{translations.ctaStats.support}</div>
+                            </div>
+                        </div>
+                        <a href="#avantaj-kartlari" class="cta-button">
+                            <i class="fas fa-arrow-down"></i>
+                            {translations.viewAllButton}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Avantaj Kartları Section -->
+    <section class="services-section" id="avantaj-kartlari">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{translations.sectionTitle}</h2>
+                <p class="section-subtitle">{translations.sectionSubtitle}</p>
+            </div>
+            
+            <div class="services-grid" id="servicesGrid">
+                {translations.cards.map((card) => (
+                    <div class="service-card" id={card.id}>
+                        <div class="service-header">
+                            <div class="service-icon-wrapper">
+                                <div class="service-icon">
+                                    <i class={`fas fa-${card.id === 'hybrid-learning' ? 'laptop-house' : card.id === 'city-tours' ? 'map-marked-alt' : card.id === 'speaking-club' ? 'comments' : card.id === 'learning-coaching' ? 'user-graduate' : 'shield-alt'}`}></i>
+                                </div>
+                            </div>
+                            <div class="service-header-text">
+                                <h3 class="service-title">{card.title}</h3>
+                                <p class="service-subtitle">{card.subtitle}</p>
+                            </div>
+                        </div>
+                        <div class="service-body">
+                            <p class="service-description">
+                                {card.description}
+                            </p>
+                            <ul class="service-features">
+                                {card.features.map((feature) => (
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>{feature}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div class="service-footer">
+                            <a href={`/${lang}/${advantagesPath}/${slugs[card.slug][lang]}`} class="service-link">
+                                <span>{translations.learnMoreButton}</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+</MainLayout>

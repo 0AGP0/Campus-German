@@ -1,6 +1,7 @@
 ---
 title: "Liseliler için Yaz Okulu Programı"
 lang: "tr"
+customSlug: "lise-yaz-okulu"
 badge:
   icon: "fas fa-sun"
   text: "Yaz Okulu"

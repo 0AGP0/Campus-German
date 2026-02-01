@@ -1,0 +1,272 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/ueber-uns.css';
+import { getContactPath, getSectionPath, isValidLang } from '../../utils/pathHelpers';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'en' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Lang tip kontrolü
+if (!isValidLang(lang)) {
+    throw new Error(`Invalid language: ${lang}`);
+}
+
+// Path helper'ları
+const contactPath = getContactPath(lang);
+const coursesPath = getSectionPath(lang);
+
+// Translations
+const t = {
+    en: {
+        title: "About Us - CampusGerman",
+        mission: {
+            title: "Our Mission",
+            paragraph1: "As CampusGerman, we are proud to be your trusted partner in your German learning journey. Since 2020, with our experienced team that has helped thousands of students achieve their language goals, we not only teach languages but also open doors to your education and career opportunities in Germany.",
+            paragraph2: "Our mission is to provide personalized training programs by understanding each student's unique learning style and goals. By blending modern technology with traditional teaching methods, we create effective and lasting learning experiences. We help you make German not just a course, but a part of your life.",
+            features: [
+                {
+                    title: "Quality Education",
+                    description: "We provide education at the highest standards with our expert instructors who are native German speakers and know Turkish. Each of our instructors has received academic training in German teaching and are professionals with years of experience."
+                },
+                {
+                    title: "Personalized Programs",
+                    description: "Each student's learning pace, goals, and special needs are different. Therefore, we prepare specially designed course programs for each of our students. We offer a wide range of options from group lessons to one-on-one private lessons."
+                },
+                {
+                    title: "International Certificates",
+                    description: "We are experts in preparing for world-recognized German certificates such as TestDaF, Goethe Institut, telc. 95% of our students successfully obtain their certificates by reaching their targeted level."
+                }
+            ]
+        },
+        team: {
+            title: "Our Team",
+            subtitle: "We are with you on your German learning journey with our experienced and expert instructors. Our team, consisting of professionals who specialize in their own fields and make a difference with their student-oriented approaches, not only teach languages but also guide you to achieve your education and career goals in Germany.",
+            members: [
+                {
+                    name: "Education Coordinators",
+                    role: "Course Programs",
+                    description: "Our expert team that designs and continuously develops our course programs offers an effective learning experience suitable for every level. By blending modern teaching methods with traditional approaches, we ensure our students reach their goals in the shortest time. Each program is continuously updated in line with student feedback and academic research.",
+                    skills: ["Program Development", "Educational Technologies", "Quality Control"]
+                },
+                {
+                    name: "German Instructors",
+                    role: "Language Education",
+                    description: "Our experienced instructors, who are native German speakers and know Turkish, improve both your grammar and speaking skills. Each of our instructors has received academic training in German teaching and are professionals with years of experience. Understanding cultural differences, we provide support in both language and cultural integration.",
+                    skills: ["A1-C2 Levels", "Conversation Practice", "Exam Preparation"]
+                },
+                {
+                    name: "Student Advisors",
+                    role: "Support Services",
+                    description: "Our advisor team, who are with you in any problem you encounter during your course process, provides continuous support for your success. By preparing personal learning plans, we keep your motivation high and help you focus on your goals. We also provide guidance on education and career opportunities in Germany.",
+                    skills: ["Personal Counseling", "Progress Tracking", "Motivation"]
+                },
+                {
+                    name: "Technology Team",
+                    role: "Online Platform",
+                    description: "Our technology team, which develops and continuously improves our online education platform, enriches your learning experience with modern tools. We bring together the power of technology with education through AI-supported learning tools, interactive course materials, and personalized learning paths.",
+                    skills: ["Platform Development", "Technical Support", "Innovation"]
+                }
+            ]
+        },
+        journey: {
+            title: "Our Journey",
+            subtitle: "The process from the establishment of CampusGerman to today is the story of our continuous development and student-oriented approach. Every year, we touch the lives of thousands of students and help them achieve their education and career goals in Germany.",
+            milestones: [
+                {
+                    year: "2020",
+                    title: "Foundation",
+                    description: "CampusGerman was founded with a quality and reliability-oriented approach in German education. We started writing our success stories with our first students. Our founding purpose was to enable Turkish students to acquire the necessary language skills to evaluate their education and career opportunities in Germany."
+                },
+                {
+                    year: "2021",
+                    title: "Team Expansion",
+                    description: "We added our experienced instructors to our team. We started offering more comprehensive training programs with teachers specialized in different levels. This year, with the rapid increase in the number of students, we developed more personalized training approaches."
+                },
+                {
+                    year: "2022",
+                    title: "Online Platform",
+                    description: "We launched our modern online education platform. Now our students can receive training both face-to-face and online. This platform we developed during the pandemic enabled our students to effectively learn German from home. We increased our training quality with interactive course materials and virtual classroom environments."
+                },
+                {
+                    year: "2023",
+                    title: "Achievements",
+                    description: "95% of our students reached their targeted level. We achieved high success rates in TestDaF, Goethe, and other international exams. This year, we recorded significant increases in the number of students accepted to universities in Germany. Our success stories have become a source of inspiration for our new students."
+                },
+                {
+                    year: "2024",
+                    title: "Continuous Development",
+                    description: "We are continuously developing our teaching methods. We continue to be pioneers with AI-supported learning tools and personalized training programs. This year, we increased our student satisfaction rate to 98% and strengthened our cooperation with our partner universities in Germany."
+                }
+            ]
+        },
+        stats: {
+            graduates: "Graduate Students",
+            instructors: "Expert Instructors",
+            successRate: "Success Rate",
+            experience: "Years of Experience"
+        },
+        cta: {
+            title: "Start Your German Learning Journey",
+            description: "Achieve your language goals with our expert team. Join our free level assessment exam and discover our personalized program. Acquire the necessary language skills to evaluate your education and career opportunities in Germany. With our course programs suitable for students of all levels, we are with you on the road to success.",
+            button1: "Free Consultation",
+            button2: "Explore Our Courses"
+        }
+    }
+};
+
+const translations = t[lang as keyof typeof t];
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="container">
+            <div class="mission-content">
+                <div class="mission-text">
+                    <h2 class="section-title">{translations.mission.title}</h2>
+                    <p class="mission-description">
+                        {translations.mission.paragraph1}
+                    </p>
+                    <p class="mission-description">
+                        {translations.mission.paragraph2}
+                    </p>
+                    <div class="mission-features">
+                        {translations.mission.features.map((feature) => (
+                            <div class="feature-item">
+                                <i class={feature.title === "Quality Education" ? "fas fa-graduation-cap" : feature.title === "Personalized Programs" ? "fas fa-users" : "fas fa-certificate"}></i>
+                                <div>
+                                    <h4>{feature.title}</h4>
+                                    <p>{feature.description}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div class="mission-image">
+                    <img src="https://avrupagoc.com/wp-content/uploads/2025/10/resim1.png" alt="Modern Education Center" class="mission-photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{translations.team.title}</h2>
+                <p class="section-subtitle">
+                    {translations.team.subtitle}
+                </p>
+            </div>
+            <div class="team-grid">
+                {translations.team.members.map((member) => (
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <img src={`https://images.unsplash.com/photo-${member.name === "Education Coordinators" ? "1507003211169-0a1dd7228f2d" : member.name === "German Instructors" ? "1494790108755-2616b612b786" : member.name === "Student Advisors" ? "1472099645785-5658abf4ff4e" : "1519085360753-af0119f7cbe7"}?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80`} alt={member.name} class="team-photo">
+                        </div>
+                        <h3 class="team-name">{member.name}</h3>
+                        <p class="team-role">{member.role}</p>
+                        <p class="team-description">
+                            {member.description}
+                        </p>
+                        <div class="team-skills">
+                            {member.skills.map((skill) => (
+                                <span class="skill-tag">{skill}</span>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{translations.journey.title}</h2>
+                <p class="section-subtitle">
+                    {translations.journey.subtitle}
+                </p>
+            </div>
+            <div class="timeline">
+                {translations.journey.milestones.map((milestone) => (
+                    <div class="timeline-item">
+                        <div class="timeline-marker">
+                            <i class={`fas fa-${milestone.year === "2020" ? "rocket" : milestone.year === "2021" ? "users" : milestone.year === "2022" ? "laptop" : milestone.year === "2023" ? "trophy" : "star"}`}></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">{milestone.year} - {milestone.title}</h3>
+                            <p class="timeline-description">
+                                {milestone.description}
+                            </p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">{translations.stats.graduates}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">{translations.stats.instructors}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">{translations.stats.successRate}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">{translations.stats.experience}</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">{translations.cta.title}</h2>
+                <p class="cta-description">
+                    {translations.cta.description}
+                </p>
+                <div class="cta-buttons">
+                    <a href={`/${lang}/${contactPath}`} class="cta-btn primary">
+                        <i class="fas fa-phone"></i>
+                        <span>{translations.cta.button1}</span>
+                    </a>
+                    <a href={`/${lang}/${coursesPath}`} class="cta-btn secondary">
+                        <i class="fas fa-book-open"></i>
+                        <span>{translations.cta.button2}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>

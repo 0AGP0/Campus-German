@@ -1,0 +1,92 @@
+---
+title: "Seasonal German Courses Overview"
+lang: "en"
+customSlug: "seasonal-overview"
+badge:
+  icon: "fas fa-calendar-alt"
+  text: "Seasonal"
+description: "Flexible learning options with summer school, weekly and evening courses. Learn German with seasonal programs."
+image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Flexible Schedule"
+    description: "Summer/Weekly/Evening"
+  - icon: "fas fa-calendar-alt"
+    title: "Period"
+    description: "Seasonal"
+  - icon: "fas fa-users"
+    title: "Class Size"
+    description: "Maximum 12 People"
+  - icon: "fas fa-sun"
+    title: "Program Type"
+    description: "Seasonal"
+heroButtons:
+  primary:
+    text: "Apply Now"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Browse Programs"
+    icon: "fas fa-list"
+    href: "#programlar"
+tabs:
+  - id: "kurs-bilgileri"
+    icon: "fas fa-info-circle"
+    title: "Course Information"
+    content:
+      title: "About Seasonal Courses"
+      items:
+        - icon: "fas fa-calendar-alt"
+          text: "<strong>Program Types:</strong> Summer school, weekly, evening courses"
+        - icon: "fas fa-clock"
+          text: "<strong>Flexibility:</strong> Different intensity options"
+        - icon: "fas fa-users"
+          text: "<strong>Class Size:</strong> Max. 12 students"
+        - icon: "fas fa-certificate"
+          text: "<strong>Certificate:</strong> Certificate of attendance at course completion"
+      additionalInfo:
+        title: "Program Options"
+        text: "You can choose the program that suits your needs with summer school programs, weekly courses and evening semi-intensive courses."
+  - id: "programlar"
+    icon: "fas fa-list"
+    title: "Programs"
+    content:
+      title: "Seasonal Program Options"
+      items:
+        - icon: "fas fa-sun"
+          text: "<strong>Summer School:</strong> Special programs for high school and university students"
+        - icon: "fas fa-calendar-week"
+          text: "<strong>Weekly Courses:</strong> A1-A2 and B1-C1 levels"
+        - icon: "fas fa-moon"
+          text: "<strong>Evening Courses:</strong> Semi-intensive evening programs"
+faqs:
+  - question: "When do summer school programs start?"
+    answer: "Summer school programs usually start in June, July and August."
+  - question: "For which levels are weekly courses available?"
+    answer: "Weekly courses are available for A1-A2 and B1-C1 levels."
+  - question: "What course formats are offered?"
+    answer: "Our courses offer you a flexible learning experience: Hybrid Education: Your course consists of a combination of face-to-face lessons and live online lessons. Thanks to the hybrid system, you can also join the lesson online whenever you want on face-to-face lesson days. Live Online Education: In this format, you attend lessons completely live and online."
+  - question: "What content is covered in the courses?"
+    answer: "Our Intensive German programs include listening and reading comprehension with current texts, comprehensive grammar studies and various communication-focused activities. In this way, it is aimed to develop your speaking and writing skills in a goal-oriented manner."
+  - question: "How can I study at a university in Germany?"
+    answer: "To be able to study at a university in Germany, you must first have a recognized university entrance qualification (HZB). It is recommended that you check whether your diploma is recognized in Germany via the anabin system. You also need to document your German language proficiency with official certificates such as telc, DSH. The Campus German University Preparation Program is designed to prepare you completely for this process."
+  - question: "What requirements are necessary?"
+    answer: "You must be at least 18 years old. You must provide a blocked account opened in Germany or an official commitment letter."
+  - question: "What types of visas are recommended?"
+    answer: "Student Visa: Also covers the right to attend preparatory German courses. There is no visa requirement for EU citizens."
+  - question: "What services are included in the courses?"
+    answer: "Level assessment test, no registration fee, course certificate for visa application, digital textbook, individual student counseling (1 time, approximately 45 minutes), webinars on 'University Education in Germany', Campus German certificate, e-learning platform, social and cultural activities organized throughout the year, free Wi-Fi access at all centers."
+  - question: "What are the qualifications of our instructors?"
+    answer: "Our teaching staff consists of university graduates, experts in their field with many years of teaching experience in German as a Foreign Language (DaF) and German as a Second Language (DaZ), and highly motivated individuals. We also have instructors approved by the Federal Office for Migration and Refugees (BAMF). Our lessons are regularly evaluated by students."
+  - question: "How long does it take to learn German?"
+    answer: "German learning time depends on your goal and current level. You can complete the basic levels from A1 to B2 in 6-8 months. Advanced levels such as C1 and C2 may require an additional 4-6 months. You can shorten this time with our intensive courses."
+  - question: "Can I get a Goethe certificate?"
+    answer: "Yes, we offer Goethe certificate preparation courses at CampusGerman. We provide exam preparation at all levels from A1 to C2. You can take certificate exams on our campus or be directed to nearby test centers."
+  - question: "Are accommodation options available?"
+    answer: "Yes, we offer accommodation options in Germany. Student dormitories, homestay accommodation and shared apartments are available. Our accommodation service is not included in the course fee, but we help you find the most suitable options."
+  - question: "Are payment plans and discounts available?"
+    answer: "Yes, we offer flexible payment plans. Monthly, 3-month and 6-month payment options are available. There are discounts for early registration, group registrations and long-term programs. Contact us for detailed information."
+---
+
+<!-- Content to be added here -->
+

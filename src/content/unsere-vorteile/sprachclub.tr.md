@@ -1,6 +1,7 @@
 ---
 title: "Ücretsiz Almanca Konuşma Kulübü"
 lang: "tr"
+customSlug: "konusma-kulubu"
 description: "Ücretsiz konuşma kulübümüz ile Almanca pratik yapın. Native speaker öğretmenler eşliğinde."
 image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15 Ocak 2024"
@@ -32,20 +33,34 @@ Konuşma kulübü, sınıf içi eğitimi tamamlayan ve öğrenme sürecini hızl
 
 gerçekleştirilir. Katılımcılar konuşma sırasında aktif rol alır, yalnızca dinleyici olarak kalmaz.
 
-## Ne Sıklıkla Düzenlenir?
+## Ne Zaman Düzenlenir?
 
-Konuşma kulübü belirli aralıklarla ve düzenli olarak organize edilir. Program dönemsel olarak planlanır ve öğrencilerin ders programlarıyla uyumlu olacak şekilde duyurulur. Bu sayede öğrenciler, yoğun ders temposu içinde ek bir yük hissetmeden konuşma pratiği yapabilir.
+Konuşma kulübü düzenli olarak gerçekleştirilir:
 
-## Native Speaker Öğretmenlerin Rolü
+- **Günler:** Salı ve Perşembe
+- **Saat:** 18:00 – 20:00
+- **Format:** Moderatör eşliğinde, yapılandırılmış konuşma pratiği formatı
 
-Konuşma kulübü oturumları, alanında deneyimli ve native speaker veya ileri düzey Almanca konuşan eğitmenler eşliğinde yürütülür. Eğitmenlerin rolü:
+Program dönemsel olarak planlanır ve öğrencilerin ders programlarıyla uyumlu olacak şekilde duyurulur.
 
-- Konuşmaları yönlendirmek
+## Moderatörlerin Rolü
+
+Konuşma kulübü oturumları, alanında deneyimli ve ileri düzey Almanca konuşan moderatörler eşliğinde yürütülür. Konuşma kulübü "serbest sohbet" gibi dağılmaya müsait bir format yerine, **moderatör kontrolünde yapılandırılır**.
+
+**Moderatörlerin görevleri:**
+- Herkesin konuşmasını sağlamak
+- Ortamı canlı tutmak
+- Konuyu dağıtmamak
+- Öğrencinin hata korkusunu azaltmak
 - Doğru telaffuz ve ifade biçimlerini göstermek
 - Öğrencileri cesaretlendirmek
 - Geri bildirim sağlamak
 
-şeklindedir. Bu yaklaşım sayesinde öğrenciler, Almanca'yı doğru ve doğal biçimde kullanmayı öğrenir.
+**Format:**
+- Konuşma pratiği, oyunlarla ve küçük görevlerle pekiştirilir
+- Öğrenciler "kısa konuşma görevleri" ile konuşmaya zorlanır (gönüllülükten çok rutin)
+
+Bu yaklaşım sayesinde öğrenciler, Almanca'yı doğru ve doğal biçimde kullanmayı öğrenir.
 
 ## İşlenen Konular
 
@@ -61,12 +76,18 @@ Konular, öğrencilerin seviyesine ve ihtiyaçlarına göre esnek şekilde belir
 
 ## Katılım Şartları
 
-Ücretsiz Almanca Konuşma Kulübü, CampusGerman öğrencilerine sunulan bir avantajdır. Katılım için:
+Ücretsiz Almanca Konuşma Kulübü, CampusGerman öğrencilerine sunulan bir avantajdır.
 
-- Aktif öğrenci olmak
-- Belirlenen tarih ve saatlerde katılım sağlamak
+### Ömür Boyu Katılım Hakkı
 
-yeterlidir. Ek bir ücret talep edilmez.
+- **En az 3 kur satın alan öğrenciler:** En az 3 kur satın alan öğrenciler, konuşma kulübüne **ömür boyu katılım hakkı** elde eder.
+
+**Bu kuralın amacı:**
+- Öğrenciye "kur bitince ilişki biter" duygusu yaşatmamak
+- Öğrencinin dil temasını uzun vadede sürdürmesi
+- Campus German topluluğunu canlı tutmak
+
+**Önemli:** Konuşma kulübü "sınav odaklı" değil; öğrencinin Almanya'daki günlük hayata uyumunu hızlandıran "sosyal Almanca" odağındadır.
 
 ## Pratik Yapma Fırsatları
 

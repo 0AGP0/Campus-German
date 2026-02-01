@@ -1,6 +1,7 @@
 ---
 title: "Dönemsel Almanca Kursları Genel Bakış"
 lang: "tr"
+customSlug: "donemsel-kurslar-genel-bakis"
 badge:
   icon: "fas fa-calendar-alt"
   text: "Dönemsel"

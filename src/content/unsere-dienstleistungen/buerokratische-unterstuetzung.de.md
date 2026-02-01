@@ -1,6 +1,7 @@
 ---
 title: "Unterstützung bei bürokratischen Angelegenheiten in Deutschland"
 lang: "de"
+customSlug: "buerokratische-unterstuetzung"
 description: "Professionelle Unterstützung bei offiziellen und bürokratischen Verfahren in Deutschland. Hilfe bei Aufenthaltstitel, Anmeldung und weiteren behördlichen Vorgängen."
 image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15. Januar 2024"

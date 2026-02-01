@@ -1,6 +1,7 @@
 ---
 title: "Hybrides Unterrichtsmodell"
 lang: "de"
+customSlug: "hybrides-lernmodell"
 description: "Flexibles Lernen durch ein hybrides Modell, das Präsenz- und Online-Unterricht miteinander verbindet."
 image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15. Januar 2024"

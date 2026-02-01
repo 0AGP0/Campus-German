@@ -1,0 +1,258 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/dienstleistungen.css';
+import { getServicesPath, isValidLang } from '../../utils/pathHelpers';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'es' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Lang tip kontrolü
+if (!isValidLang(lang)) {
+    throw new Error(`Invalid language: ${lang}`);
+}
+
+// Path helper'ları
+const servicesPath = getServicesPath(lang);
+
+// Slug mapping: card.slug -> actual URL slug per language
+const slugs: Record<string, Record<string, string>> = {
+    universityPlacement: {
+        es: 'colocacion-universitaria',
+        en: 'university-placement',
+        de: 'universitaetsvermittlung',
+        tr: 'universite-yerlestirme'
+    },
+    visaGuidance: {
+        es: 'orientacion-visa',
+        en: 'visa-guidance',
+        de: 'visumsberatung',
+        tr: 'vize-rehberligi'
+    },
+    accommodation: {
+        es: 'alojamiento',
+        en: 'accommodation',
+        de: 'unterkunft',
+        tr: 'konaklama'
+    },
+    airportPickup: {
+        es: 'recogida-aeropuerto',
+        en: 'airport-pickup',
+        de: 'flughafenabholung',
+        tr: 'havalimani-karsilama'
+    },
+    insuranceBank: {
+        es: 'seguro-banco',
+        en: 'insurance-and-bank',
+        de: 'krankenversicherung-und-bank',
+        tr: 'sigorta-banka'
+    },
+    bureaucracy: {
+        es: 'apoyo-burocratico',
+        en: 'bureaucratic-support',
+        de: 'buerokratische-unterstuetzung',
+        tr: 'burokrasi-destegi'
+    },
+    freeResources: {
+        es: 'recursos-gratuitos',
+        en: 'free-resources',
+        de: 'kostenlose-ressourcen',
+        tr: 'ucretsiz-kaynaklar'
+    }
+};
+
+// Translations
+const t = {
+    es: {
+        title: "Nuestros Servicios - CampusGerman",
+        heroTitle: "Servicios de CampusGerman",
+        heroDescription: "Servicios integrales que le ofrecemos en su viaje de aprendizaje de alemán. Desde colocación universitaria hasta orientación de visa, desde alojamiento hasta recogida en el aeropuerto: ofrecemos una amplia gama de servicios.",
+        sectionTitle: "Nuestros Servicios",
+        sectionSubtitle: "Servicios especialmente diseñados para cada necesidad",
+        exploreButton: "Explorar Servicios",
+        contactButton: "Contáctenos",
+        ctaTitle: "Descubra Nuestros Servicios",
+        ctaDescription: "Servicios especialmente diseñados para cada necesidad, instructores experimentados y opciones de programa flexibles.",
+        ctaStats: {
+            services: "Servicios",
+            satisfaction: "Satisfacción",
+            support: "Soporte"
+        },
+        viewAllButton: "Ver Todos los Servicios",
+        learnMoreButton: "Más Información",
+        cards: [
+            {
+                id: "university-placement",
+                title: "Programa de Colocación Universitaria / Pathway",
+                subtitle: "Universidad en Alemania",
+                description: "Programa integral de colocación para educación universitaria en Alemania. Programas Pathway y apoyo en solicitudes universitarias.",
+                features: ["Programas Pathway", "Apoyo en solicitudes", "Consultoría"],
+                slug: "universityPlacement"
+            },
+            {
+                id: "visa-guidance",
+                title: "Orientación de Visa",
+                subtitle: "Apoyo en solicitud de visa",
+                description: "Orientación profesional en el proceso de solicitud de visa de estudiante alemán. Formularios de solicitud, documentos requeridos y seguimiento del proceso.",
+                features: ["Apoyo en solicitud", "Revisión de documentos", "Seguimiento del proceso"],
+                slug: "visaGuidance"
+            },
+            {
+                id: "accommodation",
+                title: "Alojamiento en Bremen y Colocación en Residencia",
+                subtitle: "Alojamiento seguro",
+                description: "Residencias estudiantiles, alojamiento en familias anfitrionas y opciones de apartamentos compartidos en Bremen. Apoyo en alojamiento en ubicaciones seguras y céntricas.",
+                features: ["Residencias estudiantiles", "Familias anfitrionas", "Apartamentos compartidos"],
+                slug: "accommodation"
+            },
+            {
+                id: "airport-pickup",
+                title: "Recogida en el Aeropuerto",
+                subtitle: "Llegada sin problemas",
+                description: "Recogida desde el aeropuerto de Bremen y traslado a su alojamiento. Pase su primer día sin problemas.",
+                features: ["Recogida en aeropuerto", "Servicio de traslado", "Soporte 24/7"],
+                slug: "airportPickup"
+            },
+            {
+                id: "insurance-bank",
+                title: "Seguro de Salud/Cuenta Bloqueada y Cuenta Bancaria",
+                subtitle: "Asuntos financieros",
+                description: "Orientación y apoyo sobre seguro de salud, cuenta bloqueada y apertura de cuenta bancaria en Alemania. Ayuda con todas sus transacciones financieras.",
+                features: ["Seguro de salud", "Cuenta bloqueada", "Cuenta bancaria"],
+                slug: "insuranceBank"
+            },
+            {
+                id: "bureaucracy",
+                title: "Apoyo Burocrático en Alemania",
+                subtitle: "Trámites oficiales",
+                description: "Apoyo burocrático para sus trámites oficiales en Alemania. Ayuda con permisos de residencia, procedimientos de registro y otros documentos oficiales.",
+                features: ["Permiso de residencia", "Procedimientos de registro", "Apoyo en documentos"],
+                slug: "bureaucracy"
+            },
+            {
+                id: "free-resources",
+                title: "Recursos Gratuitos de Alemán",
+                subtitle: "Materiales de aprendizaje",
+                description: "Materiales gratuitos de aprendizaje de alemán, guías de estudio y acceso a recursos online. Todas las herramientas para aprender a su propio ritmo.",
+                features: ["Materiales gratuitos", "Recursos online", "Guías de estudio"],
+                slug: "freeResources"
+            }
+        ]
+    }
+};
+
+const translations = t[lang as keyof typeof t];
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <!-- Hero Section -->
+    <section class="services-hero-section">
+        <div class="container">
+            <div class="services-hero-content">
+                <div class="hero-left">
+                    <h1 class="hero-title">
+                        {translations.heroTitle}
+                    </h1>
+                    
+                    <div class="hero-content">
+                        <p class="hero-description">
+                            {translations.heroDescription}
+                        </p>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <a href="#servicios-cartas" class="btn-primary">
+                            <i class="fas fa-arrow-down"></i>
+                            {translations.exploreButton}
+                        </a>
+                        <button class="btn-secondary" id="contactBtn">
+                            <i class="fas fa-envelope"></i>
+                            {translations.contactButton}
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-right">
+                    <div class="hero-cta-card">
+                        <div class="cta-icon">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <h3 class="cta-title">{translations.ctaTitle}</h3>
+                        <p class="cta-description">
+                            {translations.ctaDescription}
+                        </p>
+                        <div class="cta-stats">
+                            <div class="cta-stat">
+                                <div class="stat-number">7+</div>
+                                <div class="stat-label">{translations.ctaStats.services}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">100%</div>
+                                <div class="stat-label">{translations.ctaStats.satisfaction}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">{translations.ctaStats.support}</div>
+                            </div>
+                        </div>
+                        <a href="#servicios-cartas" class="cta-button">
+                            <i class="fas fa-arrow-down"></i>
+                            {translations.viewAllButton}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Servicios Cartas Section -->
+    <section class="services-section" id="servicios-cartas">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{translations.sectionTitle}</h2>
+                <p class="section-subtitle">{translations.sectionSubtitle}</p>
+            </div>
+            
+            <div class="services-grid" id="servicesGrid">
+                {translations.cards.map((card) => (
+                    <div class="service-card" id={card.id}>
+                        <div class="service-header">
+                            <div class="service-icon-wrapper">
+                                <div class="service-icon">
+                                    <i class={`fas fa-${card.id === 'university-placement' ? 'university' : card.id === 'visa-guidance' ? 'passport' : card.id === 'accommodation' ? 'home' : card.id === 'airport-pickup' ? 'plane-arrival' : card.id === 'insurance-bank' ? 'credit-card' : card.id === 'bureaucracy' ? 'file-alt' : 'book-open'}`}></i>
+                                </div>
+                            </div>
+                            <div class="service-header-text">
+                                <h3 class="service-title">{card.title}</h3>
+                                <p class="service-subtitle">{card.subtitle}</p>
+                            </div>
+                        </div>
+                        <div class="service-body">
+                            <p class="service-description">
+                                {card.description}
+                            </p>
+                            <ul class="service-features">
+                                {card.features.map((feature) => (
+                                    <li>
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>{feature}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div class="service-footer">
+                            <a href={`/${lang}/${servicesPath}/${slugs[card.slug][lang]}`} class="service-link">
+                                <span>{translations.learnMoreButton}</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+</MainLayout>

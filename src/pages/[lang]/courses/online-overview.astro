@@ -1,0 +1,12 @@
+---
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'en' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// İngilizce'de online-overview slug'ını online-uebersicht sayfasına yönlendir
+return Astro.redirect(`/${lang}/courses/online-uebersicht`, 301);
+---

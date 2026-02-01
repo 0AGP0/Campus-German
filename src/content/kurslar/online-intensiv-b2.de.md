@@ -1,6 +1,7 @@
 ---
 title: "Online Intensiv-Deutschkurs B2"
 lang: "de"
+customSlug: "online-intensiv-b2"
 badge:
   icon: "fas fa-laptop"
   text: "Online B2"
@@ -73,6 +74,5 @@ faqs:
   - question: "Gibt es Zahlungspläne und Rabatte?"
     answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
 
-hasDemandForm: true
 ---
 

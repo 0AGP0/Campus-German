@@ -1,6 +1,7 @@
 ---
 title: "Studienkolleg Hazırlık"
 lang: "tr"
+customSlug: "studienkolleg-hazirlik"
 badge:
   icon: "fas fa-graduation-cap"
   text: "Üniversite Hazırlık"

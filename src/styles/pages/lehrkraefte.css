@@ -1,6 +1,6 @@
-﻿/* ===== INSTRUCTORS HERO SECTION ===== */
+/* ===== INSTRUCTORS HERO SECTION ===== */
 .instructors-hero-section {
-    background: linear-gradient(135deg, #0B1220 0%, #1F3A5F 50%, #059669 100%);
+    background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-secondary) 50%, var(--color-primary) 100%);
     padding: 100px 0;
     position: relative;
     overflow: hidden;
@@ -96,7 +96,7 @@
 /* ===== INSTRUCTORS SECTION ===== */
 .instructors-section {
     padding: 100px 0;
-    background: #F0FAF8;
+    background: var(--color-primary-bg);
 }
 
 .section-header {
@@ -107,9 +107,9 @@
 .section-title {
     font-size: 3rem;
     font-weight: 700;
-    color: #0B1220;
+    color: var(--color-text-primary);
     margin-bottom: 20px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -117,7 +117,7 @@
 
 .section-subtitle {
     font-size: 1.2rem;
-    color: #475569;
+    color: var(--color-text-secondary);
     max-width: 700px;
     margin: 0 auto;
     font-weight: 500;
@@ -154,7 +154,7 @@
 .instructor-image {
     width: 100%;
     aspect-ratio: 1;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -199,13 +199,13 @@
 .instructor-name {
     font-size: 2rem;
     font-weight: 700;
-    color: #0B1220;
+    color: var(--color-text-primary);
     margin-bottom: 8px;
 }
 
 .instructor-title {
     font-size: 1.1rem;
-    color: #059669;
+    color: var(--color-primary);
     font-weight: 600;
 }
 
@@ -220,11 +220,11 @@
     align-items: center;
     gap: 15px;
     font-size: 1rem;
-    color: #64748B;
+    color: var(--color-text-muted);
 }
 
 .info-row i {
-    color: #059669;
+    color: var(--color-primary);
     font-size: 18px;
     width: 24px;
     flex-shrink: 0;
@@ -232,22 +232,22 @@
 
 .instructor-description {
     line-height: 1.8;
-    color: #475569;
+    color: var(--color-text-secondary);
     font-size: 1rem;
     font-weight: 500;
 }
 
 .instructor-specialties {
-    background: rgba(5, 150, 105, 0.05);
+    background: var(--color-primary-light);
     padding: 25px;
     border-radius: 15px;
-    border-left: 4px solid #059669;
+    border-left: 4px solid var(--color-primary);
 }
 
 .instructor-specialties h4 {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #0B1220;
+    color: var(--color-text-primary);
     margin-bottom: 15px;
 }
 
@@ -262,12 +262,12 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #475569;
+    color: var(--color-text-secondary);
     font-size: 0.95rem;
 }
 
 .specialties-list li i {
-    color: #059669;
+    color: var(--color-primary);
     font-size: 14px;
 }
 
@@ -281,7 +281,7 @@
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     color: white;
     text-decoration: none;
     padding: 16px 32px;
@@ -301,7 +301,7 @@
 
 /* ===== CTA SECTION - FORCE GRID LAYOUT ===== */
 .cta-section {
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     padding: 100px 0;
     position: relative;
     overflow: hidden;
@@ -402,7 +402,7 @@
     align-items: center;
     gap: 12px;
     background: white;
-    color: #059669;
+    color: var(--color-primary);
     text-decoration: none;
     padding: 18px 36px;
     border-radius: 50px;

@@ -1,0 +1,1651 @@
+/* ===== ANA SAYFA STİLLERİ ===== */
+/* Bu dosya sadece ana sayfaya (index.astro) özel stilleri içerir */
+
+/* Bölümler arası hafif mesafe */
+main section + section {
+    margin-top: 24px;
+}
+
+/* ===== LOGO SLIDER SECTION (University Partners) ===== */
+.logo-slider-section {
+    padding: 24px 0 32px;
+    background: var(--color-bg-light, #f8f9fa);
+    overflow: hidden;
+}
+
+.logo-slider-wrap {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.logo-slider-heading {
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-primary, #1a365d);
+    margin: 0 0 24px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.logo-slider-heading::after {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary, #1a365d), transparent);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.logo-slider-mask {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.logo-slider-track {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+    width: max-content;
+    animation: logo-slider-scroll 35s linear infinite;
+}
+
+.logo-slider-track:hover {
+    animation-play-state: paused;
+}
+
+.logo-slider-item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 240px;
+    height: 88px;
+}
+
+.logo-slider-item img {
+    max-height: 80px;
+    max-width: 280px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(0.6);
+    opacity: 0.85;
+    transition: filter 0.25s ease, opacity 0.25s ease;
+}
+
+.logo-slider-item:hover img {
+    filter: grayscale(0);
+    opacity: 1;
+}
+
+/* Placeholder text when no image (replace with real logo img later) */
+.logo-placeholder {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-muted, #6c757d);
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: var(--color-bg-white, #fff);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    white-space: nowrap;
+}
+
+@keyframes logo-slider-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* ===== WHY CAMPUS GERMAN SECTION (matches info-cards / page style) ===== */
+.why-campusgerman-section {
+    padding: 0 40px 50px 40px;
+    background: var(--color-bg-blue);
+    position: relative;
+    border-radius: 24px;
+    margin: 0 16px;
+}
+
+.why-campusgerman-wrap {
+    max-width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+@media (min-width: 1024px) {
+    .why-campusgerman-section {
+        padding: 56px 96px 64px 96px;
+        margin: 0 24px;
+    }
+}
+
+.why-campusgerman-section .section-header {
+    margin-bottom: 40px;
+}
+
+.why-campusgerman-section .section-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.why-campusgerman-section .section-subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.why-campusgerman-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+@media (min-width: 768px) {
+    .why-campusgerman-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .why-campusgerman-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.why-campusgerman-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--color-bg-light) 0%, var(--color-bg-white) 100%);
+    border: 2px solid var(--color-primary-light);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.why-campusgerman-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.why-campusgerman-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(12, 192, 223, 0.15);
+    border-color: rgba(12, 192, 223, 0.3);
+}
+
+.why-campusgerman-card:hover::before {
+    transform: scaleX(1);
+}
+
+.why-campusgerman-card-icon {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-primary);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #fff;
+    box-shadow: 0 8px 25px rgba(12, 192, 223, 0.2);
+    transition: all 0.4s ease;
+}
+
+.why-campusgerman-card:hover .why-campusgerman-card-icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 12px 35px rgba(12, 192, 223, 0.3);
+}
+
+.why-campusgerman-card-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.why-campusgerman-card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 12px;
+    line-height: 1.3;
+}
+
+.why-campusgerman-card-desc {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin: 0;
+    font-weight: 500;
+}
+
+@media (max-width: 767px) {
+    .why-campusgerman-section {
+        padding: 0 20px 40px 20px;
+    }
+    .why-campusgerman-section .section-title {
+        font-size: 2.2rem;
+    }
+    .why-campusgerman-section .section-subtitle {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 479px) {
+    .why-campusgerman-section {
+        padding: 0 16px 32px 16px;
+    }
+    .why-campusgerman-section .section-title {
+        font-size: 1.8rem;
+    }
+    .why-campusgerman-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== WHY BREMEN COMPARISON SECTION (VS SPLIT SCREEN) ===== */
+.why-bremen-section {
+    padding: 40px 8px 48px;
+    background: transparent;
+    position: relative;
+    border-radius: 24px;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.why-bremen-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 6px;
+}
+
+.why-bremen-section .section-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.why-bremen-title {
+    font-size: 2.85rem;
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+    line-height: 1.2;
+}
+
+.why-bremen-subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    margin: 0;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Split: 3 sütun, satırlar hizalı (her satır = bir konu) */
+.why-bremen-split {
+    display: grid;
+    grid-template-columns: 1fr 44px 1fr;
+    grid-template-rows: auto repeat(5, auto);
+    gap: 0;
+    background: var(--color-bg-white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 
+        0 4px 24px rgba(0, 0, 0, 0.06),
+        0 0 0 1px rgba(12, 192, 223, 0.12),
+        0 16px 48px rgba(31, 58, 95, 0.06);
+    border: 1px solid var(--color-border-light);
+    position: relative;
+}
+
+/* Orta sütunda dikey çizgi (tüm satırlar) */
+.why-bremen-split::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg,
+        transparent 0%,
+        var(--color-border-medium) 8%,
+        var(--color-primary) 50%,
+        var(--color-border-medium) 92%,
+        transparent 100%);
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Başlık satırı (Bremen / Diğer şehirler) */
+.why-bremen-head {
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 14px 18px 12px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1;
+}
+
+/* Bremen tarafı: "daha iyi" vurgusu */
+.why-bremen-head-bremen {
+    background: linear-gradient(165deg, rgba(12, 192, 223, 0.14) 0%, rgba(12, 192, 223, 0.06) 100%);
+    color: var(--color-primary-darker);
+    border-left: 4px solid var(--color-primary);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.why-bremen-head-bremen::after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-left: 6px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px rgba(12, 192, 223, 0.3);
+    animation: why-bremen-pulse 2s ease-in-out infinite;
+}
+
+@keyframes why-bremen-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+.why-bremen-head-others {
+    background: linear-gradient(195deg, rgba(100, 116, 139, 0.06) 0%, rgba(148, 163, 184, 0.02) 100%);
+    color: var(--color-text-muted);
+}
+
+.why-bremen-side-head-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.why-bremen-head-bremen .why-bremen-side-head-icon {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(12, 192, 223, 0.3);
+}
+
+.why-bremen-head-others .why-bremen-side-head-icon {
+    background: linear-gradient(135deg, var(--color-text-muted) 0%, #94a3b8 100%);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(100, 116, 139, 0.2);
+}
+
+/* Ortada VS rozeti */
+.why-bremen-divider-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.02) 100%);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+}
+
+.why-bremen-vs {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(31, 58, 95, 0.35);
+}
+
+.why-bremen-divider-wrap .why-bremen-divider {
+    display: none;
+}
+
+.why-bremen-divider-cell {
+    background: transparent;
+    z-index: 1;
+}
+
+/* Hücreler: her satırda Bremen | çizgi | Diğer */
+.why-bremen-cell {
+    padding: 12px 18px 14px 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: background 0.2s ease;
+    z-index: 1;
+}
+
+.why-bremen-cell:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+/* Bremen hücreleri: daha iyi seçenek vurgusu */
+.why-bremen-cell-bremen {
+    background: linear-gradient(165deg, rgba(12, 192, 223, 0.1) 0%, rgba(12, 192, 223, 0.04) 100%);
+    border-left: 4px solid var(--color-primary);
+}
+
+.why-bremen-cell-bremen:hover {
+    background: linear-gradient(165deg, rgba(12, 192, 223, 0.12) 0%, rgba(12, 192, 223, 0.06) 100%);
+    box-shadow: inset 0 0 0 1px rgba(12, 192, 223, 0.08);
+}
+
+.why-bremen-cell-others {
+    background: linear-gradient(195deg, rgba(100, 116, 139, 0.04) 0%, transparent 100%);
+}
+
+.why-bremen-row:last-child .why-bremen-cell {
+    border-bottom: none;
+}
+
+.why-bremen-block-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.why-bremen-cell-bremen .why-bremen-block-num {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(12, 192, 223, 0.4), 0 0 0 2px rgba(12, 192, 223, 0.15);
+}
+
+.why-bremen-cell-others .why-bremen-block-num {
+    background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(100, 116, 139, 0.25);
+}
+
+.why-bremen-block-inner {
+    flex: 1;
+    min-width: 0;
+    padding-left: 4px;
+    border-left: 3px solid transparent;
+}
+
+.why-bremen-cell-bremen .why-bremen-block-inner {
+    border-left-color: var(--color-primary);
+    border-left-width: 3px;
+}
+
+.why-bremen-cell-others .why-bremen-block-inner {
+    border-left-color: rgba(100, 116, 139, 0.3);
+}
+
+.why-bremen-block-topic {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin: 0 0 6px;
+    line-height: 1.3;
+}
+
+.why-bremen-cell-others .why-bremen-block-topic {
+    color: var(--color-text-muted);
+}
+
+.why-bremen-block-text {
+    font-size: 0.98rem;
+    line-height: 1.55;
+    margin: 0;
+    color: var(--color-text-primary);
+    font-weight: 500;
+}
+
+.why-bremen-cell-bremen .why-bremen-block-text {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.why-bremen-cell-others .why-bremen-block-text {
+    color: var(--color-text-secondary);
+    font-weight: 400;
+}
+
+@media (min-width: 1024px) {
+    .why-bremen-section {
+        padding: 48px 12px 56px;
+        margin-left: 24px;
+        margin-right: 24px;
+    }
+    .why-bremen-wrap {
+        padding: 0 8px;
+    }
+    .why-bremen-title {
+        font-size: 3rem;
+    }
+    .why-bremen-subtitle {
+        font-size: 1.2rem;
+    }
+    .why-bremen-split {
+        grid-template-columns: 1fr 44px 1fr;
+    }
+    .why-bremen-head {
+        padding: 16px 24px 14px;
+        font-size: 0.95rem;
+    }
+    .why-bremen-side-head-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
+    .why-bremen-cell {
+        padding: 14px 24px 16px 14px;
+        gap: 14px;
+    }
+    .why-bremen-block-num {
+        width: 26px;
+        height: 26px;
+        font-size: 0.75rem;
+    }
+    .why-bremen-block-topic {
+        font-size: 1.1rem;
+    }
+    .why-bremen-block-text {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+}
+
+/* Mobil: her konu tek kart – konu başlığı + Bremen kutusu + Diğer şehirler kutusu */
+@media (max-width: 767px) {
+    .why-bremen-section {
+        padding: 36px 6px 44px;
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+    .why-bremen-wrap {
+        padding: 0 4px;
+    }
+    .why-bremen-title {
+        font-size: 1.95rem;
+    }
+    .why-bremen-subtitle {
+        font-size: 1.05rem;
+    }
+    .why-bremen-section .section-header {
+        margin-bottom: 22px;
+    }
+    /* Mobil: masaüstü "split grid" gizle, mobil sütun akışını göster */
+    .why-bremen-split {
+        display: none !important;
+    }
+    .why-bremen-mobile-columns {
+        display: block !important;
+    }
+    .why-bremen-block-num {
+        width: 22px;
+        height: 22px;
+        font-size: 0.65rem;
+    }
+    .why-bremen-block-topic {
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+    }
+    .why-bremen-block-text {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 479px) {
+    .why-bremen-title {
+        font-size: 1.65rem;
+    }
+    .why-bremen-section .section-header {
+        margin-bottom: 18px;
+    }
+}
+
+/* ===== WHY BREMEN – MOBILE COLUMNS (Bremen first, then Others) ===== */
+.why-bremen-mobile-columns {
+    display: none; /* desktop/tablet: kapalı */
+}
+
+.why-bremen-mobile-col {
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-light);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.why-bremen-mobile-col + .why-bremen-mobile-col {
+    margin-top: 18px;
+}
+
+.why-bremen-mobile-col-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 14px 12px;
+    font-size: 0.85rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.why-bremen-mobile-col-bremen .why-bremen-mobile-col-head {
+    background: linear-gradient(165deg, rgba(12, 192, 223, 0.14) 0%, rgba(12, 192, 223, 0.06) 100%);
+    color: var(--color-primary-darker);
+    border-left: 4px solid var(--color-primary);
+}
+
+.why-bremen-mobile-col-others .why-bremen-mobile-col-head {
+    background: linear-gradient(195deg, rgba(100, 116, 139, 0.06) 0%, rgba(148, 163, 184, 0.02) 100%);
+    color: var(--color-text-muted);
+    border-left: 4px solid rgba(100, 116, 139, 0.45);
+}
+
+.why-bremen-mobile-list {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.why-bremen-mobile-card {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+    padding: 14px 14px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.why-bremen-mobile-card:last-child {
+    border-bottom: none;
+}
+
+.why-bremen-mobile-card-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: #fff;
+    margin-top: 2px;
+}
+
+.why-bremen-mobile-col-bremen .why-bremen-mobile-card-num {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    box-shadow: 0 2px 10px rgba(12, 192, 223, 0.35);
+}
+
+.why-bremen-mobile-col-others .why-bremen-mobile-card-num {
+    background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+    box-shadow: 0 2px 10px rgba(100, 116, 139, 0.22);
+}
+
+.why-bremen-mobile-topic {
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: var(--color-secondary);
+    margin: 0 0 8px;
+    line-height: 1.25;
+}
+
+.why-bremen-mobile-col-others .why-bremen-mobile-topic {
+    color: var(--color-text-muted);
+}
+
+.why-bremen-mobile-text {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.why-bremen-mobile-col-bremen .why-bremen-mobile-text {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+/* ===== INDEX COURSES SECTION – Yeni tasarım (sol koyu filtre paneli, sağ minimal kartlar) ===== */
+.index-courses-section {
+    padding: 56px 0 72px;
+    background: var(--color-bg-red);
+    border-radius: 24px;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.index-courses-section .section-header {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.index-courses-section .section-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: var(--color-text-primary) !important;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+}
+
+.index-courses-section .section-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-secondary);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.55;
+}
+
+/* —— Kurslar: Filtre D (sol sidebar) —— */
+.index-courses-section .index-courses-layout {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.index-courses-section .index-courses-sidebar {
+    flex-shrink: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.index-courses-section .courses-filter-panel {
+    background: var(--color-bg-white);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--color-border-light);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.index-courses-section .filter-panel-search {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.index-courses-section .filter-panel-search .filter-panel-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    pointer-events: none;
+}
+
+.index-courses-section .filter-panel-search input {
+    width: 100%;
+    height: 44px;
+    padding: 0 40px 0 40px;
+    border: 1px solid var(--color-border-light);
+    border-radius: 10px;
+    background: #f9fafb;
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.index-courses-section .filter-panel-search input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.index-courses-section .filter-panel-search input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: var(--color-bg-white);
+}
+
+.index-courses-section .filter-panel-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: var(--color-border-light);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.index-courses-section .filter-panel-clear:hover {
+    background: var(--color-red-light);
+    color: var(--color-red);
+}
+
+.index-courses-section .filter-panel-group {
+    margin-bottom: 18px;
+}
+
+.index-courses-section .filter-panel-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
+}
+
+.index-courses-section .filter-btn-wrapper {
+    position: relative;
+}
+
+.index-courses-section .filter-panel-trigger {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid var(--color-border-light);
+    border-radius: 10px;
+    background: #f9fafb;
+    color: var(--color-text-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.index-courses-section .filter-panel-trigger:hover {
+    border-color: var(--color-primary);
+    background: var(--color-bg-white);
+}
+
+.index-courses-section .filter-panel-trigger i {
+    font-size: 0.65rem;
+    color: var(--color-text-muted);
+    transition: transform 0.2s;
+}
+
+.index-courses-section .filter-btn-wrapper:has(.filter-menu.active) .filter-panel-trigger i {
+    transform: rotate(180deg);
+}
+
+.index-courses-section .filter-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    min-width: 100%;
+    width: max-content;
+    background: var(--color-bg-white);
+    border-radius: 10px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--color-border-light);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+}
+
+.index-courses-section .filter-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.index-courses-section .filter-item {
+    display: block;
+    padding: 12px 14px;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-bottom: 1px solid var(--color-border-light);
+    transition: background 0.15s, color 0.15s;
+}
+
+.index-courses-section .filter-item:last-child {
+    border-bottom: none;
+}
+
+.index-courses-section .filter-item:hover {
+    background: var(--color-bg-light);
+    color: var(--color-primary);
+}
+
+.index-courses-section .filter-item.active {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.index-courses-section .filter-panel-clear-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    padding: 8px 0;
+    border: none;
+    background: none;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.index-courses-section .filter-panel-clear-all:hover {
+    color: var(--color-red);
+}
+
+.index-courses-section .filter-panel-results {
+    margin-top: 16px;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.index-courses-section .filter-panel-results strong,
+.index-courses-section .filter-panel-results #indexResultsCount {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.index-courses-section .filter-panel-results.no-results {
+    color: var(--color-red);
+}
+
+.index-courses-section .filter-panel-results.no-results #indexResultsCount {
+    color: var(--color-red);
+}
+
+.index-courses-section .index-courses-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--gradient-primary);
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(12, 192, 223, 0.35);
+}
+
+.index-courses-section .index-courses-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(12, 192, 223, 0.45);
+}
+
+/* Mobilde banner filtreden önce; masaüstünde filtrenin altında */
+.index-courses-section .index-courses-sidebar .countdown-discount-banner {
+    order: -1;
+}
+.index-courses-section .index-courses-sidebar .courses-filter-panel {
+    order: 0;
+}
+@media (min-width: 993px) {
+    .index-courses-section .index-courses-sidebar .countdown-discount-banner {
+        order: 1;
+    }
+    .index-courses-section .index-courses-sidebar .courses-filter-panel {
+        order: 0;
+    }
+}
+
+/* Countdown discount banner – yazılar belirgin */
+.index-courses-section .countdown-discount-banner {
+    margin-top: 0;
+    margin-bottom: 24px;
+    padding: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #0c4a4e;
+    border: 2px solid #0f766e;
+    box-shadow: 0 8px 24px rgba(12, 74, 78, 0.35);
+    position: relative;
+}
+@media (min-width: 993px) {
+    .index-courses-section .countdown-discount-banner {
+        margin-top: 24px;
+        margin-bottom: 0;
+    }
+}
+
+.index-courses-section .countdown-discount-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 18px;
+    padding: 22px 20px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.index-courses-section .index-courses-sidebar .countdown-discount-content {
+    flex: none;
+    width: 100%;
+    text-align: center;
+}
+.index-courses-section .index-courses-sidebar .countdown-discount-timer-block {
+    align-items: center;
+}
+.index-courses-section .index-courses-sidebar .countdown-discount-cta {
+    width: 100%;
+    justify-content: center;
+}
+
+.index-courses-section .countdown-discount-content {
+    flex: none;
+    width: 100%;
+    text-align: center;
+}
+
+.index-courses-section .countdown-discount-badge {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.index-courses-section .countdown-discount-desc {
+    font-size: 1rem;
+    color: #fff;
+    margin: 0 0 12px;
+    line-height: 1.45;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.index-courses-section .countdown-coupon-code {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px 16px;
+    background: #fff;
+    border-radius: 10px;
+    border: 2px solid #0f766e;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.index-courses-section .countdown-coupon-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0c4a4e;
+}
+
+.index-courses-section .countdown-coupon-value {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0f766e;
+    letter-spacing: 0.08em;
+    background: none;
+    padding: 0;
+}
+
+.index-courses-section .countdown-discount-hint {
+    font-size: 0.9rem;
+    color: #e0f2f1;
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.index-courses-section .countdown-discount-timer-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.index-courses-section .countdown-ends-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.index-courses-section .countdown-timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-variant-numeric: tabular-nums;
+    padding: 12px 18px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.index-courses-section .countdown-part {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.index-courses-section .countdown-part .countdown-unit {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #e0f2f1;
+    margin-left: 2px;
+    text-transform: uppercase;
+}
+
+.index-courses-section .countdown-sep {
+    color: #fff;
+    font-weight: 800;
+    font-size: 1rem;
+}
+
+.index-courses-section .countdown-discount-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 22px;
+    border-radius: 10px;
+    background: #fff;
+    color: #0c4a4e;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+}
+
+.index-courses-section .countdown-discount-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    background: #fff;
+    color: #0f766e;
+}
+
+@media (max-width: 768px) {
+    .index-courses-section .countdown-discount-banner {
+        margin-bottom: 20px;
+        border-radius: 14px;
+    }
+    .index-courses-section .countdown-discount-inner {
+        padding: 20px 18px;
+        gap: 16px;
+    }
+    .index-courses-section .countdown-discount-badge {
+        font-size: 1.5rem;
+    }
+    .index-courses-section .countdown-discount-desc {
+        font-size: 1.05rem;
+    }
+    .index-courses-section .countdown-discount-cta {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 1.05rem;
+    }
+}
+
+.index-courses-section .index-courses-main {
+    flex: 1;
+    min-width: 0;
+}
+
+/* —— Kurs kartları: vurgu çizgisi, overlay, güçlü hover, CTA —— */
+.index-courses-section .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 0;
+}
+
+.index-courses-section .course-card {
+    position: relative;
+    background: var(--color-bg-white);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--color-border-light);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(12, 192, 223, 0.05);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.index-courses-section .course-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: var(--gradient-primary);
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.index-courses-section .course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 56px rgba(12, 192, 223, 0.18), 0 0 0 2px rgba(12, 192, 223, 0.15);
+    border-color: transparent;
+}
+
+.index-courses-section .course-card:hover::before {
+    opacity: 1;
+}
+
+/* Fiyat – belirgin, Detaylar üstünde */
+.index-courses-section .course-card-price {
+    margin: 0 0 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border-left: 4px solid var(--color-primary);
+    background: rgba(12, 192, 223, 0.08);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.3;
+}
+
+.index-courses-section .course-card:hover .course-card-price {
+    background: rgba(12, 192, 223, 0.12);
+    color: #088399;
+}
+
+.index-courses-section .course-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.index-courses-section .course-card-media {
+    position: relative;
+    width: 100%;
+    height: 140px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--color-bg-gray), #e8f4f6);
+}
+
+.index-courses-section .course-card-media::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 60%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+.index-courses-section .course-card:hover .course-card-media::after {
+    opacity: 0.7;
+}
+
+.index-courses-section .course-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.index-courses-section .course-card:hover .course-card-media img {
+    transform: scale(1.08);
+}
+
+.index-courses-section .course-card-body {
+    padding: 16px 18px 18px;
+    position: relative;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.index-courses-section .course-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+    margin-bottom: 8px;
+}
+
+.index-courses-section .course-card-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #fff;
+    background: var(--gradient-primary);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(12, 192, 223, 0.35);
+}
+
+.index-courses-section .course-card-period {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-secondary);
+    background: var(--color-bg-light);
+    border-radius: 8px;
+}
+
+.index-courses-section .course-title {
+    font-size: 1.08rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.35;
+    margin: 0 0 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.25s ease;
+}
+
+.index-courses-section .course-card:hover .course-title {
+    color: var(--color-primary);
+}
+
+.index-courses-section .course-description {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0 0 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.index-courses-section .course-card-lessons {
+    font-size: 0.85rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.index-courses-section .course-card-lessons::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    flex-shrink: 0;
+}
+
+.index-courses-section .course-card-meta {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.index-courses-section .course-card-meta::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    flex-shrink: 0;
+}
+
+.index-courses-section .course-card-features {
+    list-style: none;
+    margin: 0 0 10px;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 8px;
+}
+
+.index-courses-section .course-card-features li {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    padding: 4px 10px;
+    background: var(--color-primary-light);
+    border-radius: 6px;
+}
+
+.index-courses-section .course-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 0;
+}
+
+.index-courses-section .course-card-cta-text {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    transition: color 0.2s ease;
+}
+
+.index-courses-section .course-card:hover .course-card-cta-text {
+    color: var(--color-secondary);
+}
+
+.index-courses-section .course-card-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: var(--gradient-primary);
+    color: #fff;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 16px rgba(12, 192, 223, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.index-courses-section .course-card:hover .course-card-arrow {
+    transform: translateX(4px);
+    box-shadow: 0 6px 22px rgba(12, 192, 223, 0.45);
+}
+
+/* Sayfalama */
+.index-courses-section .index-courses-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+}
+
+.index-courses-section .index-page-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--color-border-light);
+    border-radius: 12px;
+    background: var(--color-bg-white);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.index-courses-section .index-page-btn:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+.index-courses-section .index-page-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.index-courses-section .index-page-info {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.index-courses-section .index-page-info #indexCurrentPage,
+.index-courses-section .index-page-info #indexTotalPages {
+    color: var(--color-primary);
+}
+
+@media (min-width: 1024px) {
+    .index-courses-section {
+        margin-left: 24px;
+        margin-right: 24px;
+    }
+}
+
+@media (min-width: 992px) {
+    .index-courses-section .index-courses-layout {
+        flex-wrap: nowrap;
+    }
+    .index-courses-section .index-courses-sidebar {
+        width: 260px;
+        position: sticky;
+        top: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .index-courses-section {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+    .index-courses-section .courses-filter-panel {
+        padding: 20px;
+    }
+    .index-courses-section .course-card-media {
+        height: 130px;
+    }
+    .index-courses-section .course-card-body {
+        padding: 14px 16px 16px;
+    }
+    .index-courses-section .course-card-price {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+    .index-courses-section .course-card-features {
+        margin-bottom: 8px;
+    }
+    .index-courses-section .courses-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .index-courses-section .index-courses-pagination {
+        margin-top: 24px;
+    }
+    .index-courses-section .section-title {
+        font-size: 2.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .index-courses-section {
+        padding: 40px 0 56px;
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+    .index-courses-section .section-title {
+        font-size: 1.85rem;
+    }
+    .index-courses-section .course-card-body {
+        padding: 16px;
+    }
+    .index-courses-section .course-title {
+        font-size: 1rem;
+    }
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+

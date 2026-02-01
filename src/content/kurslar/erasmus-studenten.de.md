@@ -1,6 +1,7 @@
 ---
 title: "Spezialkurse für Erasmus-Studierende"
 lang: "de"
+customSlug: "erasmus-studenten"
 badge:
   icon: "fas fa-user-graduate"
   text: "Erasmus"

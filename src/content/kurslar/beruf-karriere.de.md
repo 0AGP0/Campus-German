@@ -1,6 +1,7 @@
 ---
 title: "Deutschkurse für Beruf und Karriere"
 lang: "de"
+customSlug: "beruf-karriere"
 badge:
   icon: "fas fa-briefcase"
   text: "Beruf/Karriere"

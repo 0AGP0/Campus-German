@@ -1,6 +1,7 @@
 ---
 title: "Üniversite Hazırlık Programı"
 lang: "tr"
+customSlug: "universite-hazirlik"
 badge:
   icon: "fas fa-university"
   text: "Üniversite Hazırlık"

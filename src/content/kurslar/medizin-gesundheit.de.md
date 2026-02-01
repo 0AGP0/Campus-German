@@ -1,6 +1,7 @@
 ---
 title: "Deutschkurs für Medizin und Gesundheitswissenschaften"
 lang: "de"
+customSlug: "medizin-gesundheit"
 badge:
   icon: "fas fa-stethoscope"
   text: "Medizin/Gesundheit"

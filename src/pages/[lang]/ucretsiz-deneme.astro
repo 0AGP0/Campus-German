@@ -1,0 +1,347 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/kontakt.css';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'tr' } },
+        { params: { lang: 'de' } },
+        { params: { lang: 'en' } },
+        { params: { lang: 'es' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Translations
+const t = {
+    tr: {
+        title: "Ücretsiz Deneme Dersi - CampusGerman",
+        heroTitle: "Ücretsiz Deneme Dersi Al",
+        heroDescription: "Almanca öğrenme yolculuğunuza başlamadan önce, eğitim kalitemizi deneyimleyin. Ücretsiz deneme dersimize katılın.",
+        formTitle: "Deneme Dersi Başvurusu",
+        formSubtitle: "Lütfen aşağıdaki formu doldurun, size en uygun zamanı belirleyip deneme dersinizi planlayacağız.",
+        formFields: {
+            name: "Ad Soyad",
+            email: "E-posta",
+            phone: "Telefon",
+            level: "Mevcut Seviyeniz",
+            message: "Eklemek istediğiniz notlar...",
+            kvkk: "Gizlilik ve cookies Politikasını kabul ediyorum."
+        },
+        levelOptions: {
+            beginner: "Başlangıç (A1)",
+            elementary: "Temel (A2)",
+            intermediate: "Orta (B1)",
+            upperIntermediate: "Orta Üstü (B2)",
+            advanced: "İleri (C1)",
+            notSure: "Emin Değilim"
+        },
+        submitButton: "Deneme Dersi Talep Et"
+    },
+    de: {
+        title: "Kostenlose Probestunde - CampusGerman",
+        heroTitle: "Kostenlose Probestunde nehmen",
+        heroDescription: "Erleben Sie unsere Bildungsqualität, bevor Sie Ihre Deutschlernreise beginnen. Nehmen Sie an unserer kostenlosen Probestunde teil.",
+        formTitle: "Probestunden-Anfrage",
+        formSubtitle: "Bitte füllen Sie das folgende Formular aus, wir werden den besten Zeitpunkt für Sie finden und Ihre Probestunde planen.",
+        formFields: {
+            name: "Name Nachname",
+            email: "E-Mail",
+            phone: "Telefon",
+            level: "Ihr aktuelles Niveau",
+            message: "Notizen, die Sie hinzufügen möchten...",
+            kvkk: "Ich akzeptiere die Datenschutz- und Cookie-Richtlinie."
+        },
+        levelOptions: {
+            beginner: "Anfänger (A1)",
+            elementary: "Grundstufe (A2)",
+            intermediate: "Mittelstufe (B1)",
+            upperIntermediate: "Obere Mittelstufe (B2)",
+            advanced: "Fortgeschritten (C1)",
+            notSure: "Nicht sicher"
+        },
+        submitButton: "Probestunde anfordern"
+    },
+    en: {
+        title: "Free Trial Lesson - CampusGerman",
+        heroTitle: "Get a Free Trial Lesson",
+        heroDescription: "Experience our education quality before you start your German learning journey. Join our free trial lesson.",
+        formTitle: "Trial Lesson Request",
+        formSubtitle: "Please fill out the form below, we will find the best time for you and schedule your trial lesson.",
+        formFields: {
+            name: "Full Name",
+            email: "Email",
+            phone: "Phone",
+            level: "Your Current Level",
+            message: "Notes you would like to add...",
+            kvkk: "I accept the Privacy and Cookies Policy."
+        },
+        levelOptions: {
+            beginner: "Beginner (A1)",
+            elementary: "Elementary (A2)",
+            intermediate: "Intermediate (B1)",
+            upperIntermediate: "Upper Intermediate (B2)",
+            advanced: "Advanced (C1)",
+            notSure: "Not Sure"
+        },
+        submitButton: "Request Trial Lesson"
+    },
+    es: {
+        title: "Clase de prueba gratuita - CampusGerman",
+        heroTitle: "Solicite una clase de prueba gratuita",
+        heroDescription: "Conozca nuestra calidad formativa antes de empezar su curso de alemán. Participe en nuestra clase de prueba gratuita.",
+        formTitle: "Solicitud de clase de prueba",
+        formSubtitle: "Rellene el formulario, le propondremos el mejor horario y planificaremos su clase de prueba.",
+        formFields: {
+            name: "Nombre completo",
+            email: "Email",
+            phone: "Teléfono",
+            level: "Su nivel actual",
+            message: "Notas que desee añadir...",
+            kvkk: "Acepto la Política de Privacidad y Cookies."
+        },
+        levelOptions: {
+            beginner: "Principiante (A1)",
+            elementary: "Elemental (A2)",
+            intermediate: "Intermedio (B1)",
+            upperIntermediate: "Intermedio alto (B2)",
+            advanced: "Avanzado (C1)",
+            notSure: "No estoy seguro"
+        },
+        submitButton: "Solicitar clase de prueba"
+    }
+};
+
+const translations = t[lang as keyof typeof t];
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <!-- Hero Section -->
+    <section class="contact-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="highlight">{translations.heroTitle}</span>
+                </h1>
+                <p class="hero-description">{translations.heroDescription}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-form-section" style="max-width: 800px; margin: 0 auto;">
+                    <div class="form-card">
+                        <div class="form-header">
+                            <div class="form-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h2>{translations.formTitle}</h2>
+                            <p>{translations.formSubtitle}</p>
+                        </div>
+                    
+                        <form id="trialForm" class="contact-form" data-lang={lang}>
+                            <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
+                            <input type="hidden" name="formType" value="trial-lesson" />
+                            <input type="hidden" name="formLang" value={lang} />
+                            <!-- Honeypot field -->
+                            <input type="text" name="website" style="position: absolute; left: -9999px; opacity: 0; pointer-events: none; tabindex: -1;" autocomplete="off" aria-hidden="true" />
+                            
+                            <div class="form-group">
+                                <input type="text" id="fullname" name="fullname" required placeholder={translations.formFields.name}>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" required placeholder={translations.formFields.email}>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="tel" id="phone" name="phone" required placeholder={translations.formFields.phone}>
+                            </div>
+                            
+                            <div class="form-group">
+                                <select id="level" name="level" required>
+                                    <option value="">{translations.formFields.level}</option>
+                                    <option value="beginner">{translations.levelOptions.beginner}</option>
+                                    <option value="elementary">{translations.levelOptions.elementary}</option>
+                                    <option value="intermediate">{translations.levelOptions.intermediate}</option>
+                                    <option value="upperIntermediate">{translations.levelOptions.upperIntermediate}</option>
+                                    <option value="advanced">{translations.levelOptions.advanced}</option>
+                                    <option value="notSure">{translations.levelOptions.notSure}</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <textarea id="message" name="message" rows="5" placeholder={translations.formFields.message}></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="kvkk-checkbox">
+                                    <input type="checkbox" id="kvkk" name="kvkk" required checked>
+                                    <label for="kvkk">
+                                        <a href="#gizlilik" target="_blank">{translations.formFields.kvkk}</a>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="submit" class="submit-btn">
+                                    <span>{translations.submitButton}</span>
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>
+
+<script is:inline>
+    // Security utilities
+    const { checkRateLimit, sanitizeObject, validateEmail, validatePhone, checkHoneypot } = (() => {
+        function checkRateLimit(formType, maxRequests = 5, windowMinutes = 1) {
+            const key = `form_rate_limit_${formType}`;
+            const now = Date.now();
+            const windowMs = windowMinutes * 60 * 1000;
+            const stored = localStorage.getItem(key);
+            if (!stored) {
+                localStorage.setItem(key, JSON.stringify([now]));
+                return true;
+            }
+            const requests = JSON.parse(stored);
+            const recentRequests = requests.filter(timestamp => now - timestamp < windowMs);
+            if (recentRequests.length >= maxRequests) return false;
+            recentRequests.push(now);
+            localStorage.setItem(key, JSON.stringify(recentRequests));
+            return true;
+        }
+        
+        function sanitizeInput(input) {
+            if (typeof input !== 'string') return '';
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
+        }
+        
+        function sanitizeObject(obj) {
+            if (typeof obj === 'string') return sanitizeInput(obj);
+            if (Array.isArray(obj)) return obj.map(item => sanitizeObject(item));
+            if (obj && typeof obj === 'object') {
+                const sanitized = {};
+                for (const key in obj) sanitized[key] = sanitizeObject(obj[key]);
+                return sanitized;
+            }
+            return obj;
+        }
+        
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+        
+        function validatePhone(phone) {
+            return /^[\d\s\-\+\(\)]+$/.test(phone) && phone.replace(/\D/g, '').length >= 8;
+        }
+        
+        function checkHoneypot(form, fieldName = 'website') {
+            const honeypot = form.querySelector(`[name="${fieldName}"]`);
+            return !(honeypot && honeypot.value);
+        }
+        
+        return { checkRateLimit, sanitizeObject, validateEmail, validatePhone, checkHoneypot };
+    })();
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const trialForm = document.getElementById('trialForm');
+        const lang = trialForm?.getAttribute('data-lang') || 'tr';
+        
+        const msg = { tr: { send: 'Gönderiliyor...', submit: 'Deneme Dersi Talep Et', rateLimit: 'Çok fazla istek gönderdiniz. Lütfen bir dakika bekleyin.', emailErr: 'Lütfen geçerli bir e-posta adresi girin.', phoneErr: 'Lütfen geçerli bir telefon numarası girin.', success: 'Deneme dersi talebiniz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.', error: 'Bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.' }, de: { send: 'Wird gesendet...', submit: 'Probestunde anfordern', rateLimit: 'Zu viele Anfragen. Bitte warten Sie eine Minute.', emailErr: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.', phoneErr: 'Bitte geben Sie eine gültige Telefonnummer ein.', success: 'Ihre Probestunden-Anfrage wurde erfolgreich gesendet! Wir werden uns so schnell wie möglich bei Ihnen melden.', error: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns.' }, en: { send: 'Sending...', submit: 'Request Trial Lesson', rateLimit: 'Too many requests. Please wait a minute.', emailErr: 'Please enter a valid email address.', phoneErr: 'Please enter a valid phone number.', success: 'Your trial lesson request has been sent! We will get back to you as soon as possible.', error: 'An error occurred. Please try again or contact us.' }, es: { send: 'Enviando...', submit: 'Solicitar clase de prueba', rateLimit: 'Demasiadas solicitudes. Espere un minuto.', emailErr: 'Introduzca un email válido.', phoneErr: 'Introduzca un número de teléfono válido.', success: '¡Solicitud de clase de prueba enviada! Nos pondremos en contacto lo antes posible.', error: 'Ha ocurrido un error. Inténtelo de nuevo o contáctenos.' } };
+        const m = msg[lang] || msg.tr;
+        
+        if (trialForm) {
+            trialForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const submitButton = trialForm.querySelector('button[type="submit"]');
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<span>' + m.send + '</span><i class="fas fa-spinner fa-spin"></i>';
+                }
+                
+                if (!checkRateLimit('trial-lesson', 5, 1)) {
+                    if (window.showSuccessModal) window.showSuccessModal('error', window.successModalTranslations?.rateLimitError || m.rateLimit);
+                    else alert(m.rateLimit);
+                    if (submitButton) { submitButton.disabled = false; submitButton.innerHTML = '<span>' + m.submit + '</span><i class="fas fa-paper-plane"></i>'; }
+                    return;
+                }
+                
+                if (!checkHoneypot(trialForm, 'website')) {
+                    if (submitButton) { submitButton.disabled = false; submitButton.innerHTML = '<span>' + m.submit + '</span><i class="fas fa-paper-plane"></i>'; }
+                    return;
+                }
+                
+                const formData = new FormData(trialForm);
+                const data = {};
+                for (let [key, value] of formData.entries()) data[key] = value;
+                
+                if (!validateEmail(data.email || '')) {
+                    if (window.showSuccessModal) window.showSuccessModal('error', window.successModalTranslations?.emailError || m.emailErr);
+                    else alert(m.emailErr);
+                    if (submitButton) { submitButton.disabled = false; submitButton.innerHTML = '<span>' + m.submit + '</span><i class="fas fa-paper-plane"></i>'; }
+                    return;
+                }
+                
+                if (!validatePhone(data.phone || '')) {
+                    if (window.showSuccessModal) window.showSuccessModal('error', window.successModalTranslations?.phoneError || m.phoneErr);
+                    else alert(m.phoneErr);
+                    if (submitButton) { submitButton.disabled = false; submitButton.innerHTML = '<span>' + m.submit + '</span><i class="fas fa-paper-plane"></i>'; }
+                    return;
+                }
+                
+                let standardizedData = {
+                    formType: 'trial-lesson',
+                    sourcePage: window.location.pathname,
+                    lang: data.formLang || lang,
+                    // Common fields (same as contact form)
+                    name: data.fullname || '',
+                    tel: data.phone || '',
+                    email: data.email || '',
+                    // Trial lesson specific fields
+                    level: data.level || '',
+                    notes: data.message || '',
+                    kvkk: data.kvkk || false,
+                    timestamp: new Date().toISOString()
+                };
+                
+                // Sanitize all inputs
+                standardizedData = sanitizeObject(standardizedData);
+                
+                try {
+                    const response = await fetch('https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(standardizedData)
+                    });
+                    
+                    if (response.ok) {
+                        if (window.showSuccessModal) window.showSuccessModal('success', window.successModalTranslations?.messageSuccess || m.success);
+                        else alert(m.success);
+                        trialForm.reset();
+                    } else throw new Error('Webhook request failed');
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    if (window.showSuccessModal) window.showSuccessModal('error', window.successModalTranslations?.errorMessage || m.error);
+                    else alert(m.error);
+                } finally {
+                    if (submitButton) { submitButton.disabled = false; submitButton.innerHTML = '<span>' + m.submit + '</span><i class="fas fa-paper-plane"></i>'; }
+                }
+            });
+        }
+    });
+</script>

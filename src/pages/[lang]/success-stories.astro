@@ -1,0 +1,192 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/erfolgsgeschichten.css';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'en' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Translations
+const t = {
+    tr: {
+        title: "Başarı Hikayeleri - CampusGerman",
+        sectionTitle: "Öğrencilerimizin Başarı Hikayeleri",
+        sectionSubtitle: "CampusGerman'da Almanca öğrenen öğrencilerimizin ilham verici hikayelerini keşfedin",
+        stories: [
+            {
+                name: "Ayşe Yılmaz",
+                role: "TestDaF Başarısı - C1 Seviyesi",
+                badge: "TestDaF: 20/20",
+                quote: "CampusGerman'da aldığım eğitim sayesinde TestDaF sınavından tam puan aldım. Özellikle konuşma ve yazma becerilerimde çok büyük ilerleme kaydettim. Eğitmenlerimizin sabırlı ve profesyonel yaklaşımı sayesinde hedefime ulaştım.",
+                details: ["6 Aylık Eğitim", "B1'den C1'e", "Almanya'da Üniversiteye Kabul"]
+            },
+            {
+                name: "Mehmet Demir",
+                role: "İş Hayatında Almanca - B2 Seviyesi",
+                badge: "Almanya'da İşe Başladı",
+                quote: "Almanya'da çalışmak için Almanca öğrenmem gerekiyordu. CampusGerman'ın iş odaklı programı sayesinde sadece 4 ayda B2 seviyesine ulaştım. Şimdi bir Alman şirketinde proje yöneticisi olarak çalışıyorum.",
+                details: ["4 Aylık Yoğun Program", "A2'den B2'ye", "Berlin'de İşe Başladı"]
+            },
+            {
+                name: "Zeynep Kaya",
+                role: "Telc C1 Sertifikası - Akademik Başarı",
+                badge: "Telc C1: Sehr Gut",
+                quote: "Yüksek lisans için Almanya'ya gelmek istiyordum. CampusGerman'ın akademik Almanca programı sayesinde Telc C1 sınavını başarıyla geçtim. Şu anda Almanya'da bir üniversitede İşletme yüksek lisansı yapıyorum.",
+                details: ["8 Aylık Program", "B2'den C1'e", "Yüksek Lisans Öğrencisi"]
+            }
+        ],
+        ctaTitle: "Siz de Başarı Hikayenizi Yazın",
+        ctaDescription: "CampusGerman'da Almanca öğrenerek hedeflerinize ulaşın. Deneyimli eğitmenlerimiz ve kişiselleştirilmiş programlarımızla başarıya ulaşın!",
+        ctaButton1: "Hemen Başvur Yap",
+        ctaButton2: "İletişime Geç"
+    },
+    de: {
+        title: "Erfolgsgeschichten - CampusGerman",
+        sectionTitle: "Erfolgsgeschichten unserer Teilnehmenden",
+        sectionSubtitle: "Entdecken Sie die inspirierenden Geschichten unserer Teilnehmenden, die bei CampusGerman Deutsch gelernt haben",
+        stories: [
+            {
+                name: "Ayşe Yılmaz",
+                role: "TestDaF-Erfolg - Niveau C1",
+                badge: "TestDaF: 20/20",
+                quote: "Dank der Ausbildung, die ich bei CampusGerman erhalten habe, habe ich die volle Punktzahl im TestDaF-Test erreicht. Besonders in meinen Sprech- und Schreibfähigkeiten habe ich große Fortschritte gemacht. Dank des geduldigen und professionellen Ansatzes unserer Lehrer habe ich mein Ziel erreicht.",
+                details: ["6 Monate Ausbildung", "Von B1 nach C1", "Universitätszulassung in Deutschland"]
+            },
+            {
+                name: "Mehmet Demir",
+                role: "Deutsch im Berufsleben - Niveau B2",
+                badge: "Begann in Deutschland zu arbeiten",
+                quote: "Ich musste Deutsch lernen, um in Deutschland zu arbeiten. Dank des geschäftsorientierten Programms von CampusGerman erreichte ich in nur 4 Monaten das B2-Niveau. Jetzt arbeite ich als Projektmanager in einem deutschen Unternehmen.",
+                details: ["4 Monate Intensivprogramm", "Von A2 nach B2", "Begann in Berlin zu arbeiten"]
+            },
+            {
+                name: "Zeynep Kaya",
+                role: "Telc C1-Zertifikat - Akademischer Erfolg",
+                badge: "Telc C1: Sehr Gut",
+                quote: "Ich wollte für meinen Master nach Deutschland kommen. Dank des akademischen Deutschprogramms von CampusGerman habe ich die Telc C1-Prüfung erfolgreich bestanden. Ich studiere derzeit Betriebswirtschaftslehre an einer Universität in Deutschland.",
+                details: ["8 Monate Programm", "Von B2 nach C1", "Masterstudentin"]
+            }
+        ],
+        ctaTitle: "Schreiben Sie Ihre Erfolgsgeschichte",
+        ctaDescription: "Erreichen Sie Ihre Ziele, indem Sie bei CampusGerman Deutsch lernen. Erreichen Sie den Erfolg mit unseren erfahrenen Trainern und personalisierten Programmen!",
+        ctaButton1: "Jetzt bewerben",
+        ctaButton2: "Kontaktieren Sie uns"
+    },
+    en: {
+        title: "Success Stories - CampusGerman",
+        sectionTitle: "Success Stories of Our Students",
+        sectionSubtitle: "Discover the inspiring stories of our students who learned German at CampusGerman",
+        stories: [
+            {
+                name: "Ayşe Yılmaz",
+                role: "TestDaF Success - C1 Level",
+                badge: "TestDaF: 20/20",
+                quote: "Thanks to the training I received at CampusGerman, I achieved a perfect score on the TestDaF exam. I made tremendous progress especially in my speaking and writing skills. Thanks to the patient and professional approach of our instructors, I reached my goal.",
+                details: ["6 Months Training", "From B1 to C1", "Admitted to University in Germany"]
+            },
+            {
+                name: "Mehmet Demir",
+                role: "German in Professional Life - B2 Level",
+                badge: "Started Working in Germany",
+                quote: "I needed to learn German to work in Germany. Thanks to CampusGerman's business-focused program, I reached B2 level in just 4 months. Now I work as a project manager in a German company.",
+                details: ["4 Months Intensive Program", "From A2 to B2", "Started Working in Berlin"]
+            },
+            {
+                name: "Zeynep Kaya",
+                role: "Telc C1 Certificate - Academic Success",
+                badge: "Telc C1: Sehr Gut",
+                quote: "I wanted to come to Germany for my master's degree. Thanks to CampusGerman's academic German program, I successfully passed the Telc C1 exam. I am currently studying Business Administration at a university in Germany.",
+                details: ["8 Months Program", "From B2 to C1", "Master's Student"]
+            }
+        ],
+        ctaTitle: "Write Your Success Story Too",
+        ctaDescription: "Achieve your goals by learning German at CampusGerman. Succeed with our experienced instructors and personalized programs!",
+        ctaButton1: "Apply Now",
+        ctaButton2: "Contact Us"
+    }
+};
+
+const translations = t[lang as keyof typeof t];
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <!-- Success Stories Section -->
+    <section class="success-stories-section">
+        <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">{translations.sectionTitle}</h2>
+                    <p class="section-subtitle">
+                        {translations.sectionSubtitle}
+                    </p>
+                </div>
+
+                <div class="stories-grid">
+                    {translations.stories.map((story, index) => (
+                        <div class="story-card">
+                            <div class="story-header">
+                                <div class="story-image">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="story-info">
+                                    <h3 class="story-name">{story.name}</h3>
+                                    <p class="story-role">{story.role}</p>
+                                    <div class="story-badge">
+                                        <i class={index === 0 ? "fas fa-trophy" : index === 1 ? "fas fa-briefcase" : "fas fa-certificate"}></i>
+                                        <span>{story.badge}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="story-content">
+                                <div class="story-quote">
+                                    <i class="fas fa-quote-left"></i>
+                                    <p>{story.quote}</p>
+                                </div>
+                                <div class="story-details">
+                                    {story.details.map((detail, idx) => (
+                                        <div class="detail-item">
+                                            <i class={idx === 0 ? "fas fa-calendar" : idx === 1 ? "fas fa-chart-line" : idx === 2 ? (index === 1 ? "fas fa-briefcase" : index === 2 ? "fas fa-university" : "fas fa-graduation-cap") : "fas fa-check"}></i>
+                                            <span>{detail}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+                <div class="cta-content">
+                    <div class="cta-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h2 class="cta-title">{translations.ctaTitle}</h2>
+                    <p class="cta-description">
+                        {translations.ctaDescription}
+                    </p>
+                    <div class="cta-actions">
+                        <a href={`/${lang}/buchung`} class="cta-button">
+                            <span>{translations.ctaButton1}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href={`/${lang}/kontakt`} class="cta-button-secondary">
+                            <span>{translations.ctaButton2}</span>
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+        </div>
+    </section>
+</MainLayout>
+
+
+
+
+

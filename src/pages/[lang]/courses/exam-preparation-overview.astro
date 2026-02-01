@@ -1,0 +1,12 @@
+---
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'en' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// İngilizce'de exam-preparation-overview slug'ını pruefungsvorbereitung-uebersicht sayfasına yönlendir
+return Astro.redirect(`/${lang}/courses/pruefungsvorbereitung-uebersicht`, 301);
+---

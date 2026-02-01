@@ -1,6 +1,7 @@
 ---
 title: "Stadt- und Universitätsbesichtigungen"
 lang: "de"
+customSlug: "stadttouren"
 description: "Entdecken Sie die Stadt Bremen und ihre Universitäten. Kulturelle Ausflüge und soziale Aktivitäten."
 image: "https://images.unsplash.com/photo-1523050854058-8df90110c9e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15. Januar 2024"

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Font örnekleri: Open Sans & Europa</title>
+  <!-- Open Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <!-- Outfit (Europa benzeri geometrik sans – Europa ticari font; lisanslı Europa kullanılacaksa self-host edin) -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0cc0df;
+      --secondary: #2c363f;
+      --text: #2c363f;
+      --text-muted: #64748b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px 16px 48px;
+      background: #f8fafc;
+      color: var(--text);
+    }
+    h1.page-title {
+      text-align: center;
+      font-size: 1.75rem;
+      margin-bottom: 8px;
+      color: var(--secondary);
+    }
+    p.page-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+      font-size: 1rem;
+    }
+    .example-section {
+      max-width: 720px;
+      margin: 0 auto 56px;
+      padding: 32px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .example-section h2 {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--primary);
+      color: var(--secondary);
+    }
+    .example-section .font-note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    /* —— Open Sans —— */
+    .font-open-sans {
+      font-family: 'Open Sans', sans-serif;
+    }
+    .font-open-sans .hero-title {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin: 0 0 12px;
+      color: var(--secondary);
+    }
+    .font-open-sans .hero-title .highlight {
+      color: var(--primary);
+    }
+    .font-open-sans .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin: 0 0 24px;
+    }
+    .font-open-sans .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 12px;
+      color: var(--secondary);
+    }
+    .font-open-sans .body-text {
+      font-size: 1rem;
+      line-height: 1.65;
+      margin: 0 0 16px;
+      color: var(--text);
+    }
+    .font-open-sans .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 0 0 8px;
+    }
+    .font-open-sans .card-desc {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .font-open-sans .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--primary), #0aa5c0);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .font-open-sans .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    /* —— Europa (Outfit ile örnek) —— */
+    .font-europa {
+      font-family: 'Outfit', sans-serif;
+    }
+    .font-europa .hero-title {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin: 0 0 12px;
+      color: var(--secondary);
+    }
+    .font-europa .hero-title .highlight {
+      color: var(--primary);
+    }
+    .font-europa .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin: 0 0 24px;
+    }
+    .font-europa .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 12px;
+      color: var(--secondary);
+    }
+    .font-europa .body-text {
+      font-size: 1rem;
+      line-height: 1.65;
+      margin: 0 0 16px;
+      color: var(--text);
+    }
+    .font-europa .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 0 0 8px;
+    }
+    .font-europa .card-desc {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .font-europa .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--primary), #0aa5c0);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .font-europa .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .card-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .card-demo {
+      flex: 1 1 200px;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="page-title">Font örnekleri</h1>
+  <p class="page-subtitle">Open Sans ve Europa (Europa ticari font; bu sayfada benzer geometrik sans “Outfit” ile gösterildi). Beğendiğinizi söyleyin, sitede uygulayalım.</p>
+
+  <!-- Open Sans -->
+  <section class="example-section font-open-sans">
+    <h2>Örnek A: Open Sans</h2>
+    <p class="font-note">Google Fonts – ücretsiz, okunaklı, kurumsal.</p>
+    <h3 class="hero-title">Almanca'yı <span class="highlight">Konuşarak</span> Öğrenin</h3>
+    <p class="hero-desc">CampusGerman ile Almanca öğrenmek artık çok kolay! Konuşma odaklı eğitim, native speaker öğretmenler ve kişiselleştirilmiş programlarla hedeflerinize ulaşın.</p>
+    <h4 class="section-title">Neden Campus German?</h4>
+    <p class="body-text">Kaliteli eğitim, güvenilir sonuçlar ve sizin için tasarlanmış programlar. Bremen'de öğrenci dostu ortamda Hochdeutsch ile öğrenin.</p>
+    <p class="label">Kurs kartı</p>
+    <div class="card-row">
+      <div class="card-demo">
+        <h5 class="card-title">Yoğun Almanca B1</h5>
+        <p class="card-desc">Konuşma odaklı, haftada 20 saat. Goethe / Telc hazırlık.</p>
+        <a href="#" class="btn">Detaylar</a>
+      </div>
+      <div class="card-demo">
+        <h5 class="card-title">Online Yoğun A2</h5>
+        <p class="card-desc">Canlı dersler, esnek saat. A2 seviyesine uygun program.</p>
+        <a href="#" class="btn">Detaylar</a>
+      </div>
+    </div>
+    <p class="body-text" style="margin-top: 20px;"><strong>Ağırlık örnekleri:</strong> Light 300, Regular 400, Medium 500, SemiBold 600, Bold 700, ExtraBold 800.</p>
+  </section>
+
+  <!-- Europa (Outfit) -->
+  <section class="example-section font-europa">
+    <h2>Örnek B: Europa (bu örnekte Outfit)</h2>
+    <p class="font-note">Europa ticari bir fonttur; lisanslı Europa kullanacaksanız font dosyalarını projeye ekleyip @font-face ile yükleyin. Burada benzer geometrik sans “Outfit” (Google Fonts) ile görünüm örneklenmiştir.</p>
+    <h3 class="hero-title">Almanca'yı <span class="highlight">Konuşarak</span> Öğrenin</h3>
+    <p class="hero-desc">CampusGerman ile Almanca öğrenmek artık çok kolay! Konuşma odaklı eğitim, native speaker öğretmenler ve kişiselleştirilmiş programlarla hedeflerinize ulaşın.</p>
+    <h4 class="section-title">Neden Campus German?</h4>
+    <p class="body-text">Kaliteli eğitim, güvenilir sonuçlar ve sizin için tasarlanmış programlar. Bremen'de öğrenci dostu ortamda Hochdeutsch ile öğrenin.</p>
+    <p class="label">Kurs kartı</p>
+    <div class="card-row">
+      <div class="card-demo">
+        <h5 class="card-title">Yoğun Almanca B1</h5>
+        <p class="card-desc">Konuşma odaklı, haftada 20 saat. Goethe / Telc hazırlık.</p>
+        <a href="#" class="btn">Detaylar</a>
+      </div>
+      <div class="card-demo">
+        <h5 class="card-title">Online Yoğun A2</h5>
+        <p class="card-desc">Canlı dersler, esnek saat. A2 seviyesine uygun program.</p>
+        <a href="#" class="btn">Detaylar</a>
+      </div>
+    </div>
+    <p class="body-text" style="margin-top: 20px;"><strong>Not:</strong> Gerçek Europa fontunu kullanmak için lisans satın alıp <code>public/fonts/</code> içine .woff2 dosyalarını koyup CSS’te @font-face tanımlayabilirsiniz.</p>
+  </section>
+
+  <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">Open Sans mı Europa mı? Seçtiğinizi söyleyin, tüm sitede uygulayalım.</p>
+</body>
+</html>

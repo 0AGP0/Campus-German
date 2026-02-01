@@ -1,6 +1,7 @@
 ---
 title: "Online Goethe/telc Prüfungsvorbereitungskurs"
 lang: "de"
+customSlug: "online-pruefungsvorbereitung"
 badge:
   icon: "fas fa-certificate"
   text: "Prüfungsvorbereitung"
@@ -43,8 +44,8 @@ tabs:
           text: "Der Kurs bereitet auf alle Niveaustufen der Goethe- und telc-Prüfungen vor – von A1 bis C1. Das Programm wird individuell auf das angestrebte Prüfungsniveau abgestimmt. Goethe-Zertifikate sind weltweit anerkannt und werden von zahlreichen Hochschulen und Arbeitgebern akzeptiert. telc-Zertifikate sind europaweit verbreitet und besonders relevant für Beruf, Ausbildung und Migration."
         - heading: "Kursinhalte und Vorbereitungsmethoden"
           text: "Während des Kurses wird jede Prüfungsfertigkeit gezielt trainiert: Lesen, Hören, Schreiben und Sprechen. Originalprüfungen, Probetests und realistische Prüfungsimulationen bereiten optimal auf die Prüfungssituation vor. Zusätzlich werden Zeitmanagement, Stressbewältigung und effektive Prüfungsstrategien vermittelt. Am Ende des Kurses verfügen die Teilnehmenden über alle notwendigen Kenntnisse und Fähigkeiten für eine erfolgreiche Prüfung."
-        - heading: "Unterrichtsmethode und Erfolgsgarantie"
-          text: "Der Unterricht findet live über Zoom oder vergleichbare Plattformen statt. Die maximale Klassengröße beträgt 8 Teilnehmende, und jede Gruppe wird von zwei Lehrkräften betreut. So kann individuell auf die Bedürfnisse der Lernenden eingegangen werden. Der Kurs beinhaltet gezielte Übungen, Probetests, ausführliche Feedbackrunden und individuelle Beratung. Mit einer Erfolgsquote von 95 % bieten wir eine Erfolgsgarantie. Bei Nichtbestehen ist eine Kurswiederholung möglich. Unser technisches Support-Team steht bei Fragen jederzeit zur Verfügung."
+        - heading: "Unterrichtsmethode und Unterstützungsleistungen"
+          text: "Der Unterricht findet live über Zoom oder vergleichbare Plattformen statt. Die maximale Klassengröße beträgt 8 Teilnehmende, und jede Gruppe wird von zwei Lehrkräften betreut. So kann individuell auf die Bedürfnisse der Lernenden eingegangen werden. Der Kurs beinhaltet gezielte Übungen, Probetests, ausführliche Feedbackrunden und individuelle Beratung. Bei Nichtbestehen ist eine Kurswiederholung möglich. Unser technisches Support-Team steht bei Fragen jederzeit zur Verfügung. **Wichtig:** Campus German gibt keine Prüfungserfolgsgarantie. Prüfungsergebnisse hängen von verschiedenen Faktoren ab und werden von den offiziellen Prüfungsstellen bestimmt."
   - id: "pruefungsinfos"
     icon: "fas fa-certificate"
     title: "Prüfungsinformationen"
@@ -61,7 +62,7 @@ faqs:
   - question: "Auf welche Prüfungen wird vorbereitet?"
     answer: "Der Kurs bereitet auf alle Niveaustufen der Goethe- und telc-Prüfungen vor."
   - question: "Gibt es eine Erfolgsgarantie?"
-    answer: "Ja, wir bieten eine Erfolgsgarantie mit einer Erfolgsquote von 95 %. Bei Nichtbestehen ist eine Kurswiederholung möglich."
+    answer: "Nein, Campus German gibt keine Prüfungserfolgsgarantie. Prüfungsergebnisse hängen von verschiedenen Faktoren ab und werden von den offiziellen Prüfungsstellen bestimmt. Bei Nichtbestehen ist eine Kurswiederholung möglich."
   - question: "Welche Kursformate werden angeboten?"
     answer: "Unsere Kurse bieten flexible Lernformate: Hybridunterricht – eine Kombination aus Präsenz- und Live-Online-Unterricht, bei der Sie auch an Präsenztagen online teilnehmen können; sowie Live-Online-Unterricht, bei dem Sie vollständig live und online am Unterricht teilnehmen."
   - question: "Welche Inhalte werden in den Kursen behandelt?"
@@ -85,6 +86,5 @@ faqs:
   - question: "Gibt es Zahlungspläne und Rabatte?"
     answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
 
-hasDemandForm: true
 ---
 

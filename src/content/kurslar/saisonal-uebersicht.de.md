@@ -1,6 +1,7 @@
 ---
 title: "Überblick über saisonale Deutschkurse"
 lang: "de"
+customSlug: "saisonal-uebersicht"
 badge:
   icon: "fas fa-calendar-alt"
   text: "Saisonal"
@@ -86,6 +87,5 @@ faqs:
   - question: "Gibt es Zahlungspläne und Rabatte?"
     answer: "Ja, wir bieten flexible Zahlungsmodelle an, darunter monatliche, dreimonatige und sechsmonatige Raten. Zudem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für weitere Informationen kontaktieren Sie uns bitte."
 
-hasDemandForm: true
 ---
 

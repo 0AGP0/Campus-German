@@ -2,16 +2,19 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import '../../styles/pages/buchung.css';
 import { coursePricing } from '../../data/coursePricing.ts';
+import { VALID_COUPONS } from '../../data/coupons.ts';
 
 export async function getStaticPaths() {
     return [
         { params: { lang: 'tr' } },
         { params: { lang: 'de' } },
+        { params: { lang: 'en' } },
+        { params: { lang: 'es' } },
     ];
 }
 
 const { lang } = Astro.params;
-const pricingData = coursePricing[lang as 'tr' | 'de'];
+const pricingData = coursePricing[lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en')];
 
 // Translations
 const t = {
@@ -19,31 +22,84 @@ const t = {
         title: "Kurs Rezervasyonu",
         heroTitle: "Kurs Rezervasyonu",
         heroDescription: "CampusGerman ile Almanya'da eğitiminizi planlayın. Adım adım rehberlik ile rezervasyonunuzu tamamlayın.",
-        step1: "Kurs",
-        step2: "Ek Hizmetler",
-        step3: "Kişisel Bilgiler",
-        step4: "Onay",
-        courseInfo: "Kurs Bilgileri",
-        courseInfoDesc: "Almanca kurs detaylarınızı belirleyin",
-        school: "Okul",
-        schoolPlaceholder: "Okul seçiniz",
-        courseType: "Kurs Tipi",
-        courseTypePlaceholder: "Kurs tipi seçiniz",
-        intensiveCourse: "Yoğun Kurs",
-        universityPathway: "Üniversite Hazırlık Programı",
+        step1: "Program",
+        step2: "Extralar",
+        step3: "Talep",
+        programLabel: "İlgilendiğiniz Program",
+        programPlaceholder: "Program seçiniz",
+        intensiveAcademic: "Yoğun + Akademik",
+        weeklyCourses: "Haftalık Kurslar",
+        youthCamp: "Yaz Kampı",
         examPrep: "Sınav Hazırlığı",
-        weeklyIntensive: "Haftalık Yoğun Almanca Kursu",
-        duration: "Süre (Hafta)",
+        levelLabel: "Seviye",
+        levelPlaceholder: "Seviye seçiniz",
+        weeksLabel: "Kaç hafta almak istiyorsunuz?",
+        weeksPlaceholder: "Hafta seçiniz",
+        weeksMax: "Maksimum 6 hafta",
+        intensiveWarning: "6 haftadan fazla için yoğun kursu öneriyoruz.",
+        examTypeLabel: "Hangi sınava hazırlanmak istiyorsunuz?",
+        examTypeTelc: "telc",
+        examTypeGoethe: "Goethe",
+        examTypeTestdaf: "TestDaF",
+        examLevelLabel: "Hangi seviyeye geçmek istiyorsunuz?",
+        visaLabel: "Vizeye ihtiyacınız var mı?",
+        visaYes: "Evet",
+        visaNo: "Hayır",
+        visaGuaranteeLabel: "Kabul garantisi",
+        accommodationLabel: "Konaklama istiyor musunuz?",
+        accommodationSingle: "Tek oda",
+        accommodationDouble: "Çift oda",
+        accommodationNo: "Hayır",
+        accommodationMonthsLabel: "Kaç ay?",
+        airportLabel: "Havaalanı karşılama istiyor musunuz?",
+        airportYes: "Evet",
+        airportNo: "Hayır",
+        cityLabel: "Şehir",
+        cityPlaceholder: "Şehir giriniz",
+        countryLabel: "Ülke",
+        countryPlaceholder: "Ülke giriniz",
+        nameLabel: "İsim Soyisim",
+        namePlaceholder: "Adınız Soyadınız",
+        emailLabel: "E-posta",
+        emailPlaceholder: "E-posta adresiniz",
+        phoneLabel: "Telefon Numarası",
+        phonePlaceholder: "Telefon numaranız",
+        extraLabel: "Ek istedikleriniz",
+        extraPlaceholder: "Varsa ek notlarınız...",
+        confirmSubmit: "Onay",
+        submitButton: "Gönder",
+        yes: "Evet",
+        no: "Hayır",
+        courseInfoDesc: "Program ve seviye seçiniz",
+        extrasDesc: "Vize, konaklama ve havaalanı seçenekleri",
+        requestDesc: "İletişim bilgilerinizi giriniz",
+        back: "Geri",
+        termsAccepted: "Genel Hüküm ve Koşullar'ı okudum ve kabul ediyorum",
+        privacyAccepted: "Kişisel Verilerin Korunması bilgilendirmesini kabul ediyorum",
+        completeBooking: "Rezervasyonu Tamamla",
+        priceCalculation: "Fiyat Hesaplaması",
+        priceCalculationDesc: "Anlık fiyat güncellemesi",
+        courseFees: "Kurs Ücretleri",
+        registrationFee: "Kayıt ücreti",
+        selectCourseType: "Kurs tipi seçiniz",
+        selectDuration: "Süre seçiniz",
+        total: "Toplam",
+        continueBtn: "Devam Et",
+        courseInfo: "Kurs Bilgileri",
+        courseInfoDesc: "Program ve tarih bilgilerinizi seçin",
+        couponLabel: "İndirim kuponu",
+        couponPlaceholder: "Kupon kodu girin",
+        couponApply: "Uygula",
+        couponSuccess: "%10 indirim uygulandı",
+        couponInvalid: "Geçersiz kupon",
+        duration: "Süre",
         durationPlaceholder: "Süre seçiniz",
         weeks: "Hafta",
-        level: "Başlamak istediğin seviye",
+        level: "Seviye",
         levelPlaceholder: "Seviye seçiniz",
-        startDate: "Başlamak istediğin tarih",
-        startDatePlaceholder: "Önce seviye seçiniz",
-        startDateHint: "Seviye seçtikten sonra tarihler görünecektir",
-        continuationInfo: "Seçtiğiniz seviyeden sonra eğitiminize devam etmek ister misiniz? Uygun bir üst seviyedeki kursları birlikte planlayabiliriz.",
-        continuationLabel: "Devam etmek istediğin diğer seviyeler",
-        continueBtn: "Devam Et",
+        startDate: "Başlangıç Tarihi",
+        startDatePlaceholder: "Tarih seçiniz",
+        startDateHint: "Tarihler seçtiğiniz programa göre listelenir",
         additionalServices: "Ek Hizmetler",
         additionalServicesDesc: "İsteğe bağlı hizmetleri seçiniz",
         airportTransfer: "Havaalanı Transferi",
@@ -51,17 +107,9 @@ const t = {
         stationToAirport: "Bremen Merkez İstasyonu → Bremen Havaalanı (100 €)",
         visaSupport: "Vize Destek Belgeleri",
         visaInvitation: "Vize Davet Mektubu (+50 €)",
-        accommodationNeeded: "Geldiğinizde konaklama yerine ihtiyacınız var mı?",
-        yes: "Evet",
-        no: "Hayır",
-        accommodationType: "Konaklama Türü",
-        singleRoom: "Tek Kişilik Oda",
-        doubleRoom: "Paylaşımlı Oda",
-        accommodationRoadmap: "Sadece Konaklama Yol Haritası",
-        accommodationDuration: "Süre",
-        accommodationDurationPlaceholder: "Süre seçiniz",
-        month: "Ay",
-        accommodationInfo: "Bilgilendirme: Dil kursu kaydı tamamlandıktan sonra Konaklama kaydı ve ödeme tamamlanacaktır. Kurstan başlangıç tarihinden 1 gün önceki iş günü konut teslimi yapılacaktır.",
+        optionalServices: "Ek Hizmetler",
+        visaGuaranteePrice: "Kabul garantisi (+50 €)",
+        airportPickupPrice: "Havaalanı karşılama (100 €)",
         personalInfo: "Kişisel Bilgiler",
         personalInfoDesc: "Kişisel bilgilerinizi giriniz",
         firstName: "Ad",
@@ -110,31 +158,86 @@ const t = {
         title: "Kursreservierung",
         heroTitle: "Kursreservierung",
         heroDescription: "Planen Sie Ihre Ausbildung in Deutschland mit CampusGerman. Vervollständigen Sie Ihre Reservierung Schritt für Schritt.",
-        step1: "Kurs",
-        step2: "Zusatzleistungen",
-        step3: "Persönliche Daten",
-        step4: "Bestätigung",
-        courseInfo: "Kursinformationen",
-        courseInfoDesc: "Bestimmen Sie Ihre Deutschkursdetails",
-        school: "Schule",
-        schoolPlaceholder: "Schule auswählen",
-        courseType: "Kurstyp",
-        courseTypePlaceholder: "Kurstyp auswählen",
-        intensiveCourse: "Intensivkurs",
-        universityPathway: "Universitätsvorbereitungsprogramm",
+        step1: "Programm",
+        step2: "Extras",
+        step3: "Anfrage",
+        programLabel: "Programm Ihrer Wahl",
+        programPlaceholder: "Programm wählen",
+        intensiveAcademic: "Intensiv + Akademisch",
+        weeklyCourses: "Wöchentliche Kurse",
+        youthCamp: "Sommercamp",
         examPrep: "Prüfungsvorbereitung",
-        weeklyIntensive: "Wöchentlicher Intensivkurs",
-        duration: "Dauer (Wochen)",
-        durationPlaceholder: "Dauer auswählen",
-        weeks: "Wochen",
-        level: "Niveau, mit dem Sie beginnen möchten",
-        levelPlaceholder: "Niveau auswählen",
-        startDate: "Datum, an dem Sie beginnen möchten",
-        startDatePlaceholder: "Wählen Sie zuerst ein Niveau",
-        startDateHint: "Nach der Auswahl des Niveaus werden die Termine angezeigt",
-        continuationInfo: "Möchten Sie nach dem gewählten Niveau mit Ihrer Ausbildung fortfahren? Wir können gemeinsam die passenden Kurse auf dem nächsten Niveau planen.",
-        continuationLabel: "Weitere Niveaus, mit denen Sie fortfahren möchten",
+        levelLabel: "Niveau",
+        levelPlaceholder: "Niveau wählen",
+        weeksLabel: "Wie viele Wochen möchten Sie?",
+        weeksPlaceholder: "Wochen wählen",
+        weeksMax: "Max. 6 Wochen",
+        intensiveWarning: "Für mehr als 6 Wochen empfehlen wir den Intensivkurs.",
+        examTypeLabel: "Für welche Prüfung möchten Sie sich vorbereiten?",
+        examTypeTelc: "telc",
+        examTypeGoethe: "Goethe",
+        examTypeTestdaf: "TestDaF",
+        examLevelLabel: "Welches Niveau möchten Sie erreichen?",
+        visaLabel: "Benötigen Sie ein Visum?",
+        visaYes: "Ja",
+        visaNo: "Nein",
+        visaGuaranteeLabel: "Zulassungsgarantie",
+        accommodationLabel: "Möchten Sie Unterkunft?",
+        accommodationSingle: "Einzelzimmer",
+        accommodationDouble: "Doppelzimmer",
+        accommodationNo: "Nein",
+        accommodationMonthsLabel: "Wie viele Monate?",
+        airportLabel: "Flughafenabholung gewünscht?",
+        airportYes: "Ja",
+        airportNo: "Nein",
+        cityLabel: "Stadt",
+        cityPlaceholder: "Stadt eingeben",
+        countryLabel: "Land",
+        countryPlaceholder: "Land eingeben",
+        nameLabel: "Name",
+        namePlaceholder: "Vor- und Nachname",
+        emailLabel: "E-Mail",
+        emailPlaceholder: "E-Mail-Adresse",
+        phoneLabel: "Telefon",
+        phonePlaceholder: "Telefonnummer",
+        extraLabel: "Weitere Wünsche",
+        extraPlaceholder: "Zusätzliche Anmerkungen...",
+        confirmSubmit: "Bestätigen",
+        submitButton: "Absenden",
+        yes: "Ja",
+        no: "Nein",
+        back: "Zurück",
+        termsAccepted: "Ich habe die AGB gelesen und akzeptiert",
+        privacyAccepted: "Ich akzeptiere die Datenschutzinformationen",
+        completeBooking: "Reservierung abschließen",
+        priceCalculation: "Preisberechnung",
+        priceCalculationDesc: "Echtzeit-Preisaktualisierung",
+        courseFees: "Kursgebühren",
+        registrationFee: "Anmeldegebühr",
+        selectCourseType: "Kurstyp wählen",
+        selectDuration: "Dauer wählen",
+        total: "Gesamt",
         continueBtn: "Weiter",
+        courseInfo: "Kursinformationen",
+        courseInfoDesc: "Programm und Niveau wählen",
+        extrasDesc: "Visum, Unterkunft und Flughafenabholung",
+        requestDesc: "Kontaktdaten eingeben",
+        optionalServices: "Zusatzleistungen",
+        visaGuaranteePrice: "Zulassungsgarantie (+50 €)",
+        airportPickupPrice: "Flughafenabholung (100 €)",
+        couponLabel: "Rabatt-Gutschein",
+        couponPlaceholder: "Gutscheincode eingeben",
+        couponApply: "Anwenden",
+        couponSuccess: "10 % Rabatt angewendet",
+        couponInvalid: "Ungültiger Gutschein",
+        duration: "Dauer",
+        durationPlaceholder: "Dauer wählen",
+        weeks: "Wochen",
+        level: "Niveau",
+        levelPlaceholder: "Niveau wählen",
+        startDate: "Startdatum",
+        startDatePlaceholder: "Datum wählen",
+        startDateHint: "Termine je nach Programm",
         additionalServices: "Zusatzleistungen",
         additionalServicesDesc: "Wählen Sie optionale Leistungen",
         airportTransfer: "Flughafentransfer",
@@ -196,6 +299,298 @@ const t = {
         accommodationTypeLabel: "Unterkunftsart",
         optionalServices: "Zusatzleistungen",
         total: "Gesamt"
+    },
+    en: {
+        title: "Course Booking",
+        heroTitle: "Course Booking",
+        heroDescription: "Plan your education in Germany with CampusGerman. Complete your reservation step by step.",
+        step1: "Program",
+        step2: "Extras",
+        step3: "Request",
+        programLabel: "Program of Interest",
+        programPlaceholder: "Select program",
+        intensiveAcademic: "Intensive + Academic",
+        weeklyCourses: "Weekly Courses",
+        youthCamp: "Summer Camp",
+        examPrep: "Exam Preparation",
+        levelLabel: "Level",
+        levelPlaceholder: "Select level",
+        weeksLabel: "How many weeks do you want?",
+        weeksPlaceholder: "Select weeks",
+        weeksMax: "Maximum 6 weeks",
+        intensiveWarning: "For more than 6 weeks we recommend the intensive course.",
+        examTypeLabel: "Which exam do you want to prepare for?",
+        examTypeTelc: "telc",
+        examTypeGoethe: "Goethe",
+        examTypeTestdaf: "TestDaF",
+        examLevelLabel: "Which level do you want to reach?",
+        visaLabel: "Do you need a visa?",
+        visaYes: "Yes",
+        visaNo: "No",
+        visaGuaranteeLabel: "Acceptance guarantee",
+        accommodationLabel: "Do you want accommodation?",
+        accommodationSingle: "Single room",
+        accommodationDouble: "Double room",
+        accommodationNo: "No",
+        accommodationMonthsLabel: "How many months?",
+        airportLabel: "Do you want airport pickup?",
+        airportYes: "Yes",
+        airportNo: "No",
+        cityLabel: "City",
+        cityPlaceholder: "Enter city",
+        countryLabel: "Country",
+        countryPlaceholder: "Enter country",
+        nameLabel: "Full Name",
+        namePlaceholder: "Your full name",
+        emailLabel: "Email",
+        emailPlaceholder: "Your email",
+        phoneLabel: "Phone",
+        phonePlaceholder: "Your phone number",
+        extraLabel: "Additional requests",
+        extraPlaceholder: "Any extra notes...",
+        confirmSubmit: "Confirm",
+        submitButton: "Submit",
+        yes: "Yes",
+        no: "No",
+        back: "Back",
+        termsAccepted: "I have read and accept the Terms and Conditions",
+        privacyAccepted: "I accept the Privacy Policy information",
+        completeBooking: "Complete Booking",
+        priceCalculation: "Price Calculation",
+        priceCalculationDesc: "Real-time price update",
+        courseFees: "Course Fees",
+        registrationFee: "Registration fee",
+        selectCourseType: "Select course type",
+        selectDuration: "Select duration",
+        total: "Total",
+        continueBtn: "Continue",
+        courseInfo: "Course Information",
+        courseInfoDesc: "Select program and level",
+        extrasDesc: "Visa, accommodation and airport pickup",
+        requestDesc: "Enter your contact details",
+        optionalServices: "Additional services",
+        visaGuaranteePrice: "Acceptance guarantee (+50 €)",
+        airportPickupPrice: "Airport pickup (100 €)",
+        couponLabel: "Discount coupon",
+        couponPlaceholder: "Enter coupon code",
+        couponApply: "Apply",
+        couponSuccess: "10% discount applied",
+        couponInvalid: "Invalid coupon",
+        duration: "Duration",
+        durationPlaceholder: "Select duration",
+        weeks: "Weeks",
+        level: "Level",
+        levelPlaceholder: "Select level",
+        startDate: "Start Date",
+        startDatePlaceholder: "Select date",
+        startDateHint: "Dates depend on program",
+        additionalServices: "Additional Services",
+        additionalServicesDesc: "Select optional services",
+        airportTransfer: "Airport Transfer",
+        airportToStation: "Bremen Airport → Bremen Central Station (100 €)",
+        stationToAirport: "Bremen Central Station → Bremen Airport (100 €)",
+        visaSupport: "Visa Support Documents",
+        visaInvitation: "Visa Invitation Letter (+50 €)",
+        accommodationNeeded: "Do you need accommodation when you arrive?",
+        yes: "Yes",
+        no: "No",
+        accommodationType: "Accommodation Type",
+        singleRoom: "Single Room",
+        doubleRoom: "Shared Room",
+        accommodationRoadmap: "Accommodation Roadmap Only",
+        accommodationDuration: "Duration",
+        accommodationDurationPlaceholder: "Select duration",
+        month: "Month",
+        accommodationInfo: "Information: After the language course registration is completed, accommodation registration and payment will be completed. Housing handover will be done on the business day before the course start date.",
+        personalInfo: "Personal Information",
+        personalInfoDesc: "Enter your personal information",
+        firstName: "First Name",
+        firstNamePlaceholder: "Enter your first name",
+        lastName: "Last Name",
+        lastNamePlaceholder: "Enter your last name",
+        gender: "Gender",
+        female: "Female",
+        male: "Male",
+        birthDate: "Date of Birth",
+        nationality: "Nationality",
+        nationalityPlaceholder: "Enter your nationality",
+        passportNumber: "Passport Number",
+        passportPlaceholder: "Enter your passport number",
+        germanLevel: "German Level",
+        germanLevelPlaceholder: "Select level",
+        absoluteBeginner: "Absolute Beginner",
+        emergencyContact: "Emergency Contact",
+        emergencyContactPlaceholder: "Full Name",
+        emergencyEmail: "Emergency Email",
+        emergencyEmailPlaceholder: "email@example.com",
+        emergencyPhone: "Emergency Phone",
+        emergencyPhonePlaceholder: "+1 XXX XXX XXXX",
+        confirmation: "Confirmation and Submission",
+        confirmationDesc: "Review and confirm your information",
+        bookingSummary: "Booking Summary",
+        courseInfoSummary: "Course Information",
+        accommodationInfoSummary: "Accommodation Information",
+        priceDetails: "Price Details",
+        termsAccepted: "I have read and accept the General Terms and Conditions",
+        privacyAccepted: "I have read and accept the Privacy Policy information",
+        back: "Back",
+        completeBooking: "Complete Booking",
+        priceCalculation: "Price Calculation",
+        priceCalculationDesc: "Real-time price update",
+        courseFees: "Course Fees",
+        registrationFee: "Registration fee",
+        selectCourseType: "Select course type",
+        selectDuration: "Select duration",
+        accommodationFees: "Accommodation Fees",
+        accommodationTypeLabel: "Accommodation type",
+        optionalServices: "Additional Services",
+        total: "Total"
+    },
+    es: {
+        title: "Reserva de curso",
+        heroTitle: "Reserva de curso",
+        heroDescription: "Planifique su formación en Alemania con CampusGerman. Complete su reserva paso a paso.",
+        step1: "Programa",
+        step2: "Extras",
+        step3: "Solicitud",
+        programLabel: "Programa de interés",
+        programPlaceholder: "Seleccione programa",
+        intensiveAcademic: "Intensivo + Académico",
+        weeklyCourses: "Cursos semanales",
+        youthCamp: "Campamento de verano",
+        examPrep: "Preparación de exámenes",
+        levelLabel: "Nivel",
+        levelPlaceholder: "Seleccione nivel",
+        weeksLabel: "¿Cuántas semanas desea?",
+        weeksPlaceholder: "Seleccione semanas",
+        weeksMax: "Máximo 6 semanas",
+        intensiveWarning: "Para más de 6 semanas recomendamos el curso intensivo.",
+        examTypeLabel: "¿Para qué examen desea prepararse?",
+        examTypeTelc: "telc",
+        examTypeGoethe: "Goethe",
+        examTypeTestdaf: "TestDaF",
+        examLevelLabel: "¿Qué nivel desea alcanzar?",
+        visaLabel: "¿Necesita visado?",
+        visaYes: "Sí",
+        visaNo: "No",
+        visaGuaranteeLabel: "Garantía de admisión",
+        accommodationLabel: "¿Desea alojamiento?",
+        accommodationSingle: "Habitación individual",
+        accommodationDouble: "Habitación doble",
+        accommodationNo: "No",
+        accommodationMonthsLabel: "¿Cuántos meses?",
+        airportLabel: "¿Desea recogida en aeropuerto?",
+        airportYes: "Sí",
+        airportNo: "No",
+        cityLabel: "Ciudad",
+        cityPlaceholder: "Introduzca ciudad",
+        countryLabel: "País",
+        countryPlaceholder: "Introduzca país",
+        nameLabel: "Nombre completo",
+        namePlaceholder: "Su nombre completo",
+        emailLabel: "Email",
+        emailPlaceholder: "Su email",
+        phoneLabel: "Teléfono",
+        phonePlaceholder: "Su número de teléfono",
+        extraLabel: "Solicitudes adicionales",
+        extraPlaceholder: "Notas adicionales...",
+        confirmSubmit: "Confirmar",
+        submitButton: "Enviar",
+        yes: "Sí",
+        no: "No",
+        back: "Atrás",
+        termsAccepted: "He leído y acepto las Condiciones Generales",
+        privacyAccepted: "Acepto la información de Protección de datos",
+        completeBooking: "Completar reserva",
+        priceCalculation: "Cálculo del precio",
+        priceCalculationDesc: "Actualización del precio en tiempo real",
+        courseFees: "Cuotas del curso",
+        registrationFee: "Tasa de inscripción",
+        selectCourseType: "Seleccione tipo de curso",
+        selectDuration: "Seleccione duración",
+        total: "Total",
+        continueBtn: "Continuar",
+        courseInfo: "Información del curso",
+        courseInfoDesc: "Seleccione programa y nivel",
+        extrasDesc: "Visado, alojamiento y recogida en aeropuerto",
+        requestDesc: "Introduzca sus datos de contacto",
+        optionalServices: "Servicios adicionales",
+        visaGuaranteePrice: "Garantía de admisión (+50 €)",
+        airportPickupPrice: "Recogida en aeropuerto (100 €)",
+        couponLabel: "Cupón de descuento",
+        couponPlaceholder: "Introduzca el código",
+        couponApply: "Aplicar",
+        couponSuccess: "10% de descuento aplicado",
+        couponInvalid: "Cupón no válido",
+        duration: "Duración",
+        durationPlaceholder: "Seleccione duración",
+        weeks: "Semanas",
+        level: "Nivel",
+        levelPlaceholder: "Seleccione nivel",
+        startDate: "Fecha de inicio",
+        startDatePlaceholder: "Seleccione fecha",
+        startDateHint: "Fechas según programa",
+        additionalServices: "Servicios adicionales",
+        additionalServicesDesc: "Seleccione servicios opcionales",
+        airportTransfer: "Traslado al aeropuerto",
+        airportToStation: "Aeropuerto de Bremen → Estación central (100 €)",
+        stationToAirport: "Estación central → Aeropuerto de Bremen (100 €)",
+        visaSupport: "Documentos de apoyo al visado",
+        visaInvitation: "Carta de invitación para visado (+50 €)",
+        accommodationNeeded: "¿Necesita alojamiento a su llegada?",
+        yes: "Sí",
+        no: "No",
+        accommodationType: "Tipo de alojamiento",
+        singleRoom: "Habitación individual",
+        doubleRoom: "Habitación compartida",
+        accommodationRoadmap: "Solo guía de alojamiento",
+        accommodationDuration: "Duración",
+        accommodationDurationPlaceholder: "Seleccione duración",
+        month: "Mes",
+        accommodationInfo: "Información: Tras completar la inscripción al curso de idiomas, se realizarán la reserva y el pago del alojamiento. La entrega de la vivienda tendrá lugar el día laborable anterior al inicio del curso.",
+        personalInfo: "Datos personales",
+        personalInfoDesc: "Introduzca sus datos personales",
+        firstName: "Nombre",
+        firstNamePlaceholder: "Introduzca su nombre",
+        lastName: "Apellidos",
+        lastNamePlaceholder: "Introduzca sus apellidos",
+        gender: "Género",
+        female: "Mujer",
+        male: "Hombre",
+        birthDate: "Fecha de nacimiento",
+        nationality: "Nacionalidad",
+        nationalityPlaceholder: "Introduzca su nacionalidad",
+        passportNumber: "Número de pasaporte",
+        passportPlaceholder: "Introduzca su número de pasaporte",
+        germanLevel: "Nivel de alemán",
+        germanLevelPlaceholder: "Seleccione nivel",
+        absoluteBeginner: "Principiante absoluto",
+        emergencyContact: "Contacto de emergencia",
+        emergencyContactPlaceholder: "Nombre completo",
+        emergencyEmail: "Email de emergencia",
+        emergencyEmailPlaceholder: "email@ejemplo.com",
+        emergencyPhone: "Teléfono de emergencia",
+        emergencyPhonePlaceholder: "+34 XXX XXX XXX",
+        confirmation: "Confirmación y envío",
+        confirmationDesc: "Revise y confirme sus datos",
+        bookingSummary: "Resumen de la reserva",
+        courseInfoSummary: "Información del curso",
+        accommodationInfoSummary: "Información del alojamiento",
+        priceDetails: "Detalles del precio",
+        termsAccepted: "He leído y acepto las Condiciones Generales",
+        privacyAccepted: "He leído y acepto la información sobre Protección de datos",
+        back: "Atrás",
+        completeBooking: "Completar reserva",
+        priceCalculation: "Cálculo del precio",
+        priceCalculationDesc: "Actualización del precio en tiempo real",
+        courseFees: "Cuotas del curso",
+        registrationFee: "Tasa de inscripción",
+        selectCourseType: "Seleccione tipo de curso",
+        selectDuration: "Seleccione duración",
+        accommodationFees: "Cuotas de alojamiento",
+        accommodationTypeLabel: "Tipo de alojamiento",
+        optionalServices: "Servicios opcionales",
+        total: "Total"
     }
 };
 
@@ -224,10 +619,10 @@ const translations = t[lang as keyof typeof t];
             <div class="booking-form-container">
                 <!-- Main Form Section -->
                 <div class="booking-form-main">
-                    <!-- Progress Steps -->
+                    <!-- Progress Steps (3 steps) -->
                     <div class="form-progress">
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 25%"></div>
+                            <div class="progress-fill" style="width: 33.33%"></div>
                         </div>
                         <div class="step-indicators">
                             <div class="step-indicator active" data-step="1">
@@ -242,10 +637,6 @@ const translations = t[lang as keyof typeof t];
                                 <span class="step-number">3</span>
                                 <span class="step-label">{translations.step3}</span>
                             </div>
-                            <div class="step-indicator" data-step="4">
-                                <span class="step-number">4</span>
-                                <span class="step-label">{translations.step4}</span>
-                            </div>
                         </div>
                     </div>
 
@@ -254,234 +645,42 @@ const translations = t[lang as keyof typeof t];
                         <!-- Form Section -->
                         <div class="form-section">
                             <!-- Booking Form -->
-                            <form id="booking-form" class="booking-form">
+                            <form id="booking-form" class="booking-form" data-coupon-success={translations.couponSuccess} data-coupon-invalid={translations.couponInvalid}>
                                 <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
                                 <!-- Honeypot field for spam protection -->
                                 <input type="text" name="website" style="position: absolute; left: -9999px; opacity: 0; pointer-events: none; tabindex: -1;" autocomplete="off" aria-hidden="true" />
-                                <!-- Step 1: Kurs (Course) -->
+                                <!-- Step 1: Program -->
                                 <div class="form-step active" data-step="1">
                                     <div class="step-header">
                                         <h2>{translations.courseInfo}</h2>
                                         <p>{translations.courseInfoDesc}</p>
                                     </div>
                                     <div class="form-grid">
-                                        <div class="form-group">
-                                            <label for="school">{translations.school} *</label>
-                                            <select id="school" name="school" required>
-                                                <option value="">{translations.schoolPlaceholder}</option>
-                                                <option value="bremen">Bremen</option>
-                                                <option value="online">Online</option>
-                                                <option value="hybrid">Hybrid</option>
-                                            </select>
+                                        <div class="form-group full-width">
+                                            <label>{translations.programLabel} *</label>
+                                            <div class="option-buttons" role="group" aria-label={translations.programLabel}>
+                                                <label class="option-btn">
+                                                    <input type="radio" name="program" value="intensive" required>
+                                                    <span class="option-btn-text">{translations.intensiveAcademic}</span>
+                                                </label>
+                                                <label class="option-btn">
+                                                    <input type="radio" name="program" value="weekly">
+                                                    <span class="option-btn-text">{translations.weeklyCourses}</span>
+                                                </label>
+                                                <label class="option-btn">
+                                                    <input type="radio" name="program" value="youth-camp">
+                                                    <span class="option-btn-text">{translations.youthCamp}</span>
+                                                </label>
+                                                <label class="option-btn">
+                                                    <input type="radio" name="program" value="exam-prep">
+                                                    <span class="option-btn-text">{translations.examPrep}</span>
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="course-type">{translations.courseType} *</label>
-                                            <select id="course-type" name="course-type" required>
-                                                <option value="">{translations.courseTypePlaceholder}</option>
-                                                <option value="intensive">{translations.intensiveCourse}</option>
-                                                <option value="university-pathway">{translations.universityPathway}</option>
-                                                <option value="exam-prep">{translations.examPrep}</option>
-                                                <option value="weekly-intensive">{translations.weeklyIntensive}</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group" id="duration-group" style="display: none;">
-                                            <label for="duration">{translations.duration} *</label>
-                                            <select id="duration" name="duration">
-                                                <option value="">{translations.durationPlaceholder}</option>
-                                                <option value="4">4 {translations.weeks}</option>
-                                                <option value="8">8 {translations.weeks}</option>
-                                                <option value="12">12 {translations.weeks}</option>
-                                                <option value="16">16 {translations.weeks}</option>
-                                                <option value="24">24 {translations.weeks}</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="level">{translations.level} *</label>
+                                        <div class="form-group" id="level-group">
+                                            <label for="level">{translations.levelLabel} *</label>
                                             <select id="level" name="level" required>
                                                 <option value="">{translations.levelPlaceholder}</option>
-                                                <option value="a1.1">A1.1</option>
-                                                <option value="a1.2">A1.2</option>
-                                                <option value="a2.1">A2.1</option>
-                                                <option value="a2.2">A2.2</option>
-                                                <option value="b1.1">B1.1</option>
-                                                <option value="b1.2">B1.2</option>
-                                                <option value="b2.1">B2.1</option>
-                                                <option value="b2.2">B2.2</option>
-                                                <option value="c1.1">C1.1</option>
-                                                <option value="c1.2">C1.2</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="start-date">{translations.startDate} *</label>
-                                            <select id="start-date" name="start-date" required disabled>
-                                                <option value="">{translations.startDatePlaceholder}</option>
-                                            </select>
-                                            <small style="display: block; margin-top: 5px; color: #6c757d; font-size: 0.85rem;">{translations.startDateHint}</small>
-                                        </div>
-                                        <div class="form-group full-width" id="continuation-section" style="display: none;">
-                                            <div class="info-box" style="background: #F0FAF8; border: 1px solid #059669; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
-                                                <p style="color: #0B1220; font-weight: 500; margin: 0;">
-                                                    {translations.continuationInfo}
-                                                </p>
-                                            </div>
-                                            <label>{translations.continuationLabel}</label>
-                                            <div class="checkbox-group" id="continuation-levels">
-                                                <!-- Dinamik olarak doldurulacak -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-navigation">
-                                        <button type="button" class="btn-next">{translations.continueBtn}</button>
-                                    </div>
-                                </div>
-
-                                <!-- Step 2: Ek Hizmetler (Additional Services) -->
-                                <div class="form-step" data-step="2">
-                                    <div class="step-header">
-                                        <h2>{translations.additionalServices}</h2>
-                                        <p>{translations.additionalServicesDesc}</p>
-                                    </div>
-                                    <div class="form-grid">
-                                        <div class="form-group full-width">
-                                            <label>{translations.airportTransfer}</label>
-                                            <div class="checkbox-group">
-                                                <label class="checkbox-label">
-                                                    <input type="checkbox" name="transfer-arrival" value="bremen-airport-to-station">
-                                                    <span class="checkbox-custom"></span>
-                                                    <span class="checkbox-text">{translations.airportToStation}</span>
-                                                </label>
-                                                <label class="checkbox-label">
-                                                    <input type="checkbox" name="transfer-departure" value="bremen-station-to-airport">
-                                                    <span class="checkbox-custom"></span>
-                                                    <span class="checkbox-text">{translations.stationToAirport}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group full-width">
-                                            <label>{translations.visaSupport}</label>
-                                            <div class="checkbox-group">
-                                                <label class="checkbox-label">
-                                                    <input type="checkbox" name="visa-support" value="yes">
-                                                    <span class="checkbox-custom"></span>
-                                                    <span class="checkbox-text">{translations.visaInvitation}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group full-width">
-                                            <label>{translations.accommodationNeeded}</label>
-                                            <div class="radio-group">
-                                                <label class="radio-label">
-                                                    <input type="radio" name="accommodation-needed" value="yes">
-                                                    <span class="radio-custom"></span>
-                                                    <span class="radio-text">{translations.yes}</span>
-                                                </label>
-                                                <label class="radio-label">
-                                                    <input type="radio" name="accommodation-needed" value="no" checked>
-                                                    <span class="radio-custom"></span>
-                                                    <span class="radio-text">{translations.no}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="accommodation-details" id="accommodation-details" style="display: none;">
-                                            <div class="form-group full-width">
-                                                <label>{translations.accommodationType} *</label>
-                                                <div class="radio-group">
-                                                    <label class="radio-label">
-                                                        <input type="radio" name="accommodation-type" value="einzelzimmer">
-                                                        <span class="radio-custom"></span>
-                                                        <span class="radio-text">{lang === 'tr' ? `${translations.singleRoom} (Einzelzimmer)` : translations.singleRoom}</span>
-                                                    </label>
-                                                    <label class="radio-label">
-                                                        <input type="radio" name="accommodation-type" value="doppelzimmer">
-                                                        <span class="radio-custom"></span>
-                                                        <span class="radio-text">{lang === 'tr' ? `${translations.doubleRoom} (Doppelzimmer)` : translations.doubleRoom}</span>
-                                                    </label>
-                                                    <label class="radio-label">
-                                                        <input type="radio" name="accommodation-type" value="roadmap">
-                                                        <span class="radio-custom"></span>
-                                                        <span class="radio-text">{translations.accommodationRoadmap}</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group" id="accommodation-duration-group" style="display: none;">
-                                                <label for="accommodation-duration">{translations.accommodationDuration} *</label>
-                                                <select id="accommodation-duration" name="accommodation-duration">
-                                                    <option value="">{translations.accommodationDurationPlaceholder}</option>
-                                                    <option value="1">1 {translations.month}</option>
-                                                    <option value="2">2 {translations.month}</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group full-width" id="accommodation-pricing" style="display: none;">
-                                                <div class="info-box" style="background: #F0FAF8; border: 1px solid #059669; border-radius: 12px; padding: 20px;">
-                                                    <h4 style="color: #059669; font-weight: 600; margin-bottom: 10px;">{lang === 'tr' ? 'Fiyat Bilgisi' : 'Preisinformation'}</h4>
-                                                    <div id="accommodation-price-display" style="color: #0B1220; font-weight: 500;"></div>
-                                                    <p style="color: #475569; font-size: 0.9rem; margin-top: 10px; margin-bottom: 0;">
-                                                        <strong>{lang === 'tr' ? 'Not:' : 'Hinweis:'}</strong> {lang === 'tr' ? '100 € kayıt ücreti (tek seferlik) - Bu ücret dil kursu ücretine eklenmez, sadece bilgilendirme amaçlıdır.' : '100 € Anmeldegebühr (einmalig) - Diese Gebühr wird nicht zum Sprachkurspreis hinzugefügt, dient nur zur Information.'}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="form-group full-width">
-                                                <div class="info-box" style="background: #FFF3CD; border: 1px solid #FFC107; border-radius: 12px; padding: 20px; margin-top: 20px;">
-                                                    <p style="color: #856404; font-weight: 500; margin: 0;">
-                                                        <strong>{lang === 'tr' ? 'Bilgilendirme:' : 'Information:'}</strong> {translations.accommodationInfo}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-navigation">
-                                        <button type="button" class="btn-prev">{translations.back}</button>
-                                        <button type="button" class="btn-next">{translations.continueBtn}</button>
-                                    </div>
-                                </div>
-
-                                <!-- Step 3: Veriler (Personal Information) -->
-                                <div class="form-step" data-step="3">
-                                    <div class="step-header">
-                                        <h2>{translations.personalInfo}</h2>
-                                        <p>{translations.personalInfoDesc}</p>
-                                    </div>
-                                    <div class="form-grid">
-                                        <div class="form-group">
-                                            <label for="first-name">{translations.firstName} *</label>
-                                            <input type="text" id="first-name" name="first-name" required placeholder={translations.firstNamePlaceholder}>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="last-name">{translations.lastName} *</label>
-                                            <input type="text" id="last-name" name="last-name" required placeholder={translations.lastNamePlaceholder}>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>{translations.gender} *</label>
-                                            <div class="radio-group">
-                                                <label class="radio-label">
-                                                    <input type="radio" name="gender" value="female" required>
-                                                    <span class="radio-custom"></span>
-                                                    <span class="radio-text">{translations.female}</span>
-                                                </label>
-                                                <label class="radio-label">
-                                                    <input type="radio" name="gender" value="male" required>
-                                                    <span class="radio-custom"></span>
-                                                    <span class="radio-text">{translations.male}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="birth-date">{translations.birthDate} *</label>
-                                            <input type="date" id="birth-date" name="birth-date" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="nationality">{translations.nationality} *</label>
-                                            <input type="text" id="nationality" name="nationality" required placeholder={translations.nationalityPlaceholder}>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="passport-number">{translations.passportNumber} *</label>
-                                            <input type="text" id="passport-number" name="passport-number" required placeholder={translations.passportPlaceholder}>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="german-level">{translations.germanLevel} *</label>
-                                            <select id="german-level" name="german-level" required>
-                                                <option value="">{translations.germanLevelPlaceholder}</option>
-                                                <option value="absolute-beginner">{translations.absoluteBeginner}</option>
                                                 <option value="a1">A1</option>
                                                 <option value="a2">A2</option>
                                                 <option value="b1">B1</option>
@@ -490,17 +689,112 @@ const translations = t[lang as keyof typeof t];
                                                 <option value="c2">C2</option>
                                             </select>
                                         </div>
+                                        <div class="form-group" id="weeks-block" style="display: none;">
+                                            <label for="weeks">{translations.weeksLabel} *</label>
+                                            <select id="weeks" name="weeks">
+                                                <option value="">{translations.weeksPlaceholder}</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                            </select>
+                                            <p class="field-hint" id="weeks-hint" style="display: none;">{translations.intensiveWarning}</p>
+                                        </div>
+                                        <div class="form-group full-width" id="exam-block" style="display: none;">
+                                            <label>{translations.examTypeLabel} *</label>
+                                            <div class="option-buttons" role="group">
+                                                <label class="option-btn">
+                                                    <input type="radio" name="exam-type" value="telc">
+                                                    <span class="option-btn-text">{translations.examTypeTelc}</span>
+                                                </label>
+                                                <label class="option-btn">
+                                                    <input type="radio" name="exam-type" value="goethe">
+                                                    <span class="option-btn-text">{translations.examTypeGoethe}</span>
+                                                </label>
+                                                <label class="option-btn">
+                                                    <input type="radio" name="exam-type" value="testdaf">
+                                                    <span class="option-btn-text">{translations.examTypeTestdaf}</span>
+                                                </label>
+                                            </div>
+                                            <label for="exam-level" class="mt-2">{translations.examLevelLabel} *</label>
+                                            <select id="exam-level" name="exam-level">
+                                                <option value="">{translations.levelPlaceholder}</option>
+                                                <option value="a1">A1</option>
+                                                <option value="a2">A2</option>
+                                                <option value="b1">B1</option>
+                                                <option value="b2">B2</option>
+                                                <option value="c1">C1</option>
+                                                <option value="c2">C2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-navigation">
+                                        <button type="button" class="btn-next">{translations.continueBtn}</button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2: Extralar -->
+                                <div class="form-step" data-step="2">
+                                    <div class="step-header">
+                                        <h2>{translations.step2}</h2>
+                                        <p>{translations.extrasDesc}</p>
+                                    </div>
+                                    <div class="form-grid">
                                         <div class="form-group">
-                                            <label for="emergency-contact">{translations.emergencyContact} *</label>
-                                            <input type="text" id="emergency-contact" name="emergency-contact" required placeholder={translations.emergencyContactPlaceholder}>
+                                            <label>{translations.visaLabel} *</label>
+                                            <div class="option-buttons" role="group">
+                                                <label class="option-btn">
+                                                    <input type="radio" name="visa-needed" value="yes" required>
+                                                    <span class="option-btn-text">{translations.visaYes}</span>
+                                                </label>
+                                                <label class="option-btn">
+                                                    <input type="radio" name="visa-needed" value="no" checked>
+                                                    <span class="option-btn-text">{translations.visaNo}</span>
+                                                </label>
+                                            </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="emergency-email">{translations.emergencyEmail} *</label>
-                                            <input type="email" id="emergency-email" name="emergency-email" required placeholder={translations.emergencyEmailPlaceholder}>
+                                            <label>{translations.accommodationLabel} *</label>
+                                            <div class="option-buttons" role="group">
+                                                <label class="option-btn">
+                                                    <input type="radio" name="accommodation-type" value="single" required>
+                                                    <span class="option-btn-text">{translations.accommodationSingle}</span>
+                                                </label>
+                                                <label class="option-btn">
+                                                    <input type="radio" name="accommodation-type" value="double">
+                                                    <span class="option-btn-text">{translations.accommodationDouble}</span>
+                                                </label>
+                                                <label class="option-btn">
+                                                    <input type="radio" name="accommodation-type" value="no" checked>
+                                                    <span class="option-btn-text">{translations.accommodationNo}</span>
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="emergency-phone">{translations.emergencyPhone} *</label>
-                                            <input type="tel" id="emergency-phone" name="emergency-phone" required placeholder={translations.emergencyPhonePlaceholder}>
+                                        <div class="form-group full-width" id="accommodation-months-block" style="display: none;">
+                                            <label for="accommodation-months">{translations.accommodationMonthsLabel}</label>
+                                            <select id="accommodation-months" name="accommodation-months">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group full-width">
+                                            <label>{translations.airportLabel} *</label>
+                                            <div class="option-buttons" role="group">
+                                                <label class="option-btn">
+                                                    <input type="radio" name="airport-pickup" value="yes" required>
+                                                    <span class="option-btn-text">{translations.airportYes}</span>
+                                                </label>
+                                                <label class="option-btn">
+                                                    <input type="radio" name="airport-pickup" value="no" checked>
+                                                    <span class="option-btn-text">{translations.airportNo}</span>
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-navigation">
@@ -509,60 +803,52 @@ const translations = t[lang as keyof typeof t];
                                     </div>
                                 </div>
 
-                                <!-- Step 4: Onay (Confirmation) -->
-                                <div class="form-step" data-step="4">
+                                <!-- Step 3: Talep -->
+                                <div class="form-step" data-step="3">
                                     <div class="step-header">
-                                        <h2>{translations.confirmation}</h2>
-                                        <p>{translations.confirmationDesc}</p>
+                                        <h2>{translations.step3}</h2>
+                                        <p>{translations.requestDesc}</p>
                                     </div>
-                                    
-                                    <div class="booking-summary">
-                                        <h3>{translations.bookingSummary}</h3>
-                                        <div class="summary-sections">
-                                            <div class="summary-section">
-                                                <h4>📚 {translations.courseInfoSummary}</h4>
-                                                <div class="summary-content" id="course-summary">
-                                                    {lang === 'tr' ? 'Kurs bilgileri yükleniyor...' : 'Kursinformationen werden geladen...'}
-                                                </div>
-                                            </div>
-                                            <div class="summary-section" id="accommodation-summary-section" style="display: none;">
-                                                <h4>🏠 {translations.accommodationInfoSummary}</h4>
-                                                <div class="summary-content" id="accommodation-summary">
-                                                    {lang === 'tr' ? 'Konaklama bilgileri yükleniyor...' : 'Unterkunftsinformationen werden geladen...'}
-                                                </div>
-                                            </div>
-                                            <div class="summary-section">
-                                                <h4>💰 {translations.priceDetails}</h4>
-                                                <div class="summary-content" id="price-summary">
-                                                    {lang === 'tr' ? 'Fiyat detayları yükleniyor...' : 'Preisdetails werden geladen...'}
-                                                </div>
-                                            </div>
+                                    <div class="form-grid">
+                                        <div class="form-group full-width">
+                                            <label for="full-name">{translations.nameLabel} *</label>
+                                            <input type="text" id="full-name" name="full-name" required placeholder={translations.namePlaceholder}>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="city">{translations.cityLabel} *</label>
+                                            <input type="text" id="city" name="city" required placeholder={translations.cityPlaceholder}>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="country">{translations.countryLabel} *</label>
+                                            <input type="text" id="country" name="country" required placeholder={translations.countryPlaceholder}>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phone">{translations.phoneLabel} *</label>
+                                            <input type="tel" id="phone" name="phone" required placeholder={translations.phonePlaceholder}>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">{translations.emailLabel} *</label>
+                                            <input type="email" id="email" name="email" required placeholder={translations.emailPlaceholder}>
                                         </div>
                                     </div>
-
                                     <div class="terms-section">
                                         <div class="checkbox-group">
                                             <label class="checkbox-label">
                                                 <input type="checkbox" name="terms-accepted" value="yes" required>
                                                 <span class="checkbox-custom"></span>
-                                                <span class="checkbox-text">
-                                                    <strong>{lang === 'tr' ? 'Genel Hüküm ve Koşullar' : 'Allgemeine Geschäftsbedingungen'}</strong> {lang === 'tr' ? "'ı okudum ve kabul ediyorum" : " - Ich habe gelesen und akzeptiere"} *
-                                                </span>
+                                                <span class="checkbox-text">{translations.termsAccepted} *</span>
                                             </label>
                                             <label class="checkbox-label">
                                                 <input type="checkbox" name="privacy-accepted" value="yes" required>
                                                 <span class="checkbox-custom"></span>
-                                                <span class="checkbox-text">
-                                                    <strong>{lang === 'tr' ? 'Kişisel Verilerin Korunması' : 'Datenschutz'}</strong> {lang === 'tr' ? ' hakkındaki bilgilendirmeyi okudum ve kabul ediyorum' : ' - Ich habe die Informationen gelesen und akzeptiere'} *
-                                                </span>
+                                                <span class="checkbox-text">{translations.privacyAccepted} *</span>
                                             </label>
                                         </div>
                                     </div>
-
                                     <div class="form-navigation">
                                         <button type="button" class="btn-prev">{translations.back}</button>
                                         <button type="submit" class="btn-submit">
-                                            <i class="fas fa-check"></i> {translations.completeBooking}
+                                            <i class="fas fa-check"></i> {translations.submitButton}
                                         </button>
                                     </div>
                                 </div>
@@ -578,67 +864,54 @@ const translations = t[lang as keyof typeof t];
                             
                             <div class="price-content">
                                 <div class="price-summary-card">
-                                    <!-- Course Section -->
                                     <div class="price-section" id="course-prices">
                                         <h4 class="price-section-title">{translations.courseFees}</h4>
-                                        <div class="price-item">
-                                            <span class="price-item-label">{translations.registrationFee}</span>
-                                            <span class="price-item-value">50 €</span>
-                                        </div>
                                         <div class="price-item" id="course-type-price">
                                             <span class="price-item-label">{translations.selectCourseType}</span>
                                             <span class="price-item-value">-</span>
                                         </div>
-                                        <div class="price-item" id="duration-price">
-                                            <span class="price-item-label">{translations.selectDuration}</span>
+                                        <div class="price-item" id="duration-price" style="display: none;">
+                                            <span class="price-item-label"></span>
                                             <span class="price-item-value">-</span>
                                         </div>
-                                    </div>
-                                    
-                                    <!-- Accommodation Section -->
-                                    <div class="price-section" id="accommodation-prices" style="display: none;">
-                                        <h4 class="price-section-title">{translations.accommodationFees}</h4>
-                                        <div class="price-item" id="accommodation-type-price">
-                                            <span class="price-item-label">{translations.accommodationTypeLabel}</span>
-                                            <span class="price-item-value">-</span>
+                                        <div class="price-item price-item-coupon" id="coupon-discount-row" style="display: none;">
+                                            <span class="price-item-label">{translations.couponSuccess}</span>
+                                            <span class="price-item-value" id="coupon-discount-value">-</span>
                                         </div>
                                     </div>
-                                    
-                                    <!-- Optional Services Section -->
-                                    <div class="price-section" id="optional-services" style="display: none;">
+                                    <div class="price-section" id="extras-prices">
                                         <h4 class="price-section-title">{translations.optionalServices}</h4>
-                                        <div class="price-item" id="transfer-arrival-price" style="display: none;">
-                                            <span class="price-item-label">{translations.airportToStation.split(' (')[0]}</span>
-                                            <span class="price-item-value">100 €</span>
-                                        </div>
-                                        <div class="price-item" id="transfer-departure-price" style="display: none;">
-                                            <span class="price-item-label">{translations.stationToAirport.split(' (')[0]}</span>
-                                            <span class="price-item-value">100 €</span>
-                                        </div>
-                                        <div class="price-item" id="visa-support-price" style="display: none;">
-                                            <span class="price-item-label">{translations.visaInvitation.split(' (')[0]}</span>
+                                        <div class="price-item" id="visa-price-row" style="display: none;">
+                                            <span class="price-item-label">{translations.visaGuaranteePrice}</span>
                                             <span class="price-item-value">50 €</span>
                                         </div>
-                                        <div class="price-item" id="accommodation-price" style="display: none;">
-                                            <span class="price-item-label">{translations.accommodationTypeLabel}</span>
+                                        <div class="price-item" id="accommodation-price-row" style="display: none;">
+                                            <span class="price-item-label"></span>
                                             <span class="price-item-value">-</span>
                                         </div>
+                                        <div class="price-item" id="airport-price-row" style="display: none;">
+                                            <span class="price-item-label">{translations.airportPickupPrice}</span>
+                                            <span class="price-item-value">100 €</span>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <!-- Coupon -->
+                                <div class="coupon-box">
+                                    <label for="coupon-input" class="coupon-label">{translations.couponLabel}</label>
+                                    <div class="coupon-row">
+                                        <input type="text" id="coupon-input" name="coupon" class="coupon-input" placeholder={translations.couponPlaceholder} autocomplete="off" value={Astro.url.searchParams.get('coupon') ?? ''} />
+                                        <button type="button" class="coupon-apply-btn" id="coupon-apply-btn">{translations.couponApply}</button>
+                                    </div>
+                                    <input type="hidden" name="couponDiscountPercent" id="coupon-discount-percent" value="" />
+                                    <p class="coupon-message" id="coupon-message" aria-live="polite" style="display: none;"></p>
                                 </div>
                                 
                                 <!-- Price Total Container -->
                                 <div class="price-total-container">
                                     <div class="price-total">
-                                        <div class="price-total-label">{lang === 'tr' ? 'Toplam Tutar' : 'Gesamtbetrag'}</div>
-                                        <div class="price-total-value" id="total-price">50 €</div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Price Notes -->
-                                <div class="price-notes">
-                                    <div class="price-notes-title">Önemli Notlar</div>
-                                    <div class="price-notes-text">
-                                        Fiyatlar tahminidir. Sezon, şehir ve özel durumlar için ek ücretler uygulanabilir.
+                                        <div class="price-total-label">{lang === 'tr' ? 'Toplam Tutar' : lang === 'de' ? 'Gesamtbetrag' : lang === 'es' ? 'Importe total' : 'Total Amount'}</div>
+                                        <div class="price-total-value" id="total-price">0 €</div>
                                     </div>
                                 </div>
                             </div>
@@ -649,7 +922,7 @@ const translations = t[lang as keyof typeof t];
         </div>
     </section>
 
-    <script define:vars={{ pricingData, lang }}>
+    <script define:vars={{ pricingData, lang, validCoupons: VALID_COUPONS }}>
         // Import security utilities
         const { checkRateLimit, sanitizeObject, validateEmail, validatePhone, checkHoneypot } = (() => {
             // Rate limiting
@@ -712,86 +985,70 @@ const translations = t[lang as keyof typeof t];
         document.addEventListener('DOMContentLoaded', function() {
             // ===== STEP NAVIGATION =====
             let currentStep = 1;
-            const totalSteps = 4;
+            const totalSteps = 3;
             const formSteps = document.querySelectorAll('.form-step');
             const stepIndicators = document.querySelectorAll('.step-indicator');
             const progressFill = document.querySelector('.progress-fill');
             const btnNext = document.querySelectorAll('.btn-next');
             const btnPrev = document.querySelectorAll('.btn-prev');
 
-            // Level to next levels mapping
-            const levelHierarchy = {
-                'a1.1': ['a1.2', 'a2.1', 'a2.2', 'b1.1', 'b1.2', 'b2.1', 'b2.2', 'c1.1', 'c1.2'],
-                'a1.2': ['a2.1', 'a2.2', 'b1.1', 'b1.2', 'b2.1', 'b2.2', 'c1.1', 'c1.2'],
-                'a2.1': ['a2.2', 'b1.1', 'b1.2', 'b2.1', 'b2.2', 'c1.1', 'c1.2'],
-                'a2.2': ['b1.1', 'b1.2', 'b2.1', 'b2.2', 'c1.1', 'c1.2'],
-                'b1.1': ['b1.2', 'b2.1', 'b2.2', 'c1.1', 'c1.2'],
-                'b1.2': ['b2.1', 'b2.2', 'c1.1', 'c1.2'],
-                'b2.1': ['b2.2', 'c1.1', 'c1.2'],
-                'b2.2': ['c1.1', 'c1.2'],
-                'c1.1': ['c1.2'],
-                'c1.2': []
-            };
-
-            // Course dates and pricing data from coursePricing.ts (already available via define:vars)
-            
-            // Convert date format from "02.03" to "2026-03-02" (YYYY-MM-DD)
-            function convertDateToISO(dateStr) {
-                // Remove any whitespace
-                dateStr = dateStr.trim();
-                const [day, month] = dateStr.split('.');
-                if (!day || !month) {
-                    console.error('Invalid date format:', dateStr);
-                    return null;
-                }
-                const isoDate = `2026-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-                // Validate date
-                const date = new Date(isoDate);
-                if (isNaN(date.getTime())) {
-                    console.error('Invalid date conversion:', dateStr, '->', isoDate);
-                    return null;
-                }
-                return isoDate;
-            }
-
-            // Build course dates object from pricingData
-            const courseDates = {};
-            const startDates = pricingData.startDates;
-            
-            if (!startDates) {
-                console.error('startDates not found in pricingData');
-            } else {
-                Object.keys(startDates).forEach(level => {
-                    const levelDates = startDates[level];
-                    Object.keys(levelDates).forEach(subLevel => {
-                        const dates = levelDates[subLevel];
-                        // Convert a1_1 -> a1.1, b2_2 -> b2.2, etc.
-                        const key = subLevel.replace(/_/g, '.');
-                        const convertedDates = dates.map(date => convertDateToISO(date)).filter(date => date !== null);
-                        if (convertedDates.length > 0) {
-                            courseDates[key] = convertedDates;
-                        } else {
-                            console.warn(`No valid dates for ${key}`);
-                        }
-                    });
-                });
-            }
-            
-            // Debug: log courseDates to console
-            console.log('Course Dates:', courseDates);
-
-            // Format date for display (DD.MM.YYYY)
-            function formatDateForDisplay(dateStr) {
+            // Format date for display: "2 March" (day + month name, no leading zero)
+            const localeForLang = (lang === 'tr' ? 'tr-TR' : lang === 'de' ? 'de-DE' : lang === 'es' ? 'es-ES' : 'en-GB');
+            function formatDateLong(dateStr) {
                 const date = new Date(dateStr);
-                const day = String(date.getDate()).padStart(2, '0');
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const year = date.getFullYear();
-                return `${day}.${month}.${year}`;
+                const day = date.getDate();
+                const month = date.toLocaleDateString(localeForLang, { month: 'long' });
+                return day + ' ' + month;
             }
+
+            function dateStrToISO(dateStr) {
+                dateStr = String(dateStr).trim();
+                const [day, month] = dateStr.split('.');
+                if (!day || !month) return null;
+                const year = 2026;
+                const iso = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                const d = new Date(iso);
+                return isNaN(d.getTime()) ? null : iso;
+            }
+
+            // Program change: show weeks (weekly/youth-camp) or exam (exam-prep)
+            const programRadios = document.querySelectorAll('[name="program"]');
+            const weeksBlock = document.getElementById('weeks-block');
+            const weeksSelect = document.getElementById('weeks');
+            const weeksHint = document.getElementById('weeks-hint');
+            const examBlock = document.getElementById('exam-block');
+            const accommodationTypeRadios = document.querySelectorAll('[name="accommodation-type"]');
+            const accommodationMonthsBlock = document.getElementById('accommodation-months-block');
+
+            function toggleProgramExtras() {
+                const program = document.querySelector('[name="program"]:checked')?.value;
+                if (weeksBlock) weeksBlock.style.display = (program === 'weekly' || program === 'youth-camp') ? 'block' : 'none';
+                if (examBlock) examBlock.style.display = program === 'exam-prep' ? 'block' : 'none';
+                if (weeksSelect) weeksSelect.removeAttribute('required');
+                if (program === 'weekly' || program === 'youth-camp') { if (weeksSelect) weeksSelect.setAttribute('required', 'required'); }
+                const examTypeRadios = document.querySelectorAll('[name="exam-type"]');
+                const examLevelSelect = document.getElementById('exam-level');
+                examTypeRadios.forEach(r => { r.removeAttribute('required'); });
+                if (examLevelSelect) examLevelSelect.removeAttribute('required');
+                if (program === 'exam-prep') {
+                    examTypeRadios.forEach(r => { r.setAttribute('required', 'required'); });
+                    if (examLevelSelect) examLevelSelect.setAttribute('required', 'required');
+                }
+                updatePrice();
+            }
+            programRadios.forEach(r => r.addEventListener('change', toggleProgramExtras));
+
+            function toggleAccommodationMonths() {
+                const acc = document.querySelector('[name="accommodation-type"]:checked')?.value;
+                if (accommodationMonthsBlock) accommodationMonthsBlock.style.display = (acc === 'single' || acc === 'double') ? 'block' : 'none';
+                updatePrice();
+            }
+            accommodationTypeRadios.forEach(r => r.addEventListener('change', toggleAccommodationMonths));
 
             // Extract numeric price from string like "790€" -> 790
             function extractPrice(priceStr) {
-                return parseInt(priceStr.replace(/[^0-9]/g, '')) || 0;
+                if (priceStr == null || priceStr === '') return 0;
+                return parseInt(String(priceStr).replace(/[^0-9]/g, ''), 10) || 0;
             }
 
             // Get level from sublevel (a1.1 -> a1, b2.2 -> b2)
@@ -799,60 +1056,37 @@ const translations = t[lang as keyof typeof t];
                 return subLevel.split('.')[0];
             }
 
-            // Get course price based on course type and level
-            function getCoursePrice(courseType, level, duration = null) {
-                const mainLevel = getMainLevel(level);
-                
-                if (courseType === 'intensive') {
-                    return extractPrice(pricingData.intensive[mainLevel]?.fullCourse || '0€');
-                } else if (courseType === 'online') {
-                    return extractPrice(pricingData.online[mainLevel]?.fullCourse || '0€');
-                } else if (courseType === 'exam-prep') {
-                    return extractPrice(pricingData.examPrep.goetheTelc[mainLevel]?.fullCourse || '0€');
-                } else if (courseType === 'weekly-intensive' && duration) {
-                    // Weekly pricing: check if A1-A2 or B1-C1
+            // Accommodation prices per month (single / double)
+            const ACCOMMODATION_SINGLE_PER_MONTH = 450;
+            const ACCOMMODATION_DOUBLE_PER_MONTH = 350;
+            const EXAM_PRICE = 800;
+            const VISA_GUARANTEE = 50;
+            const AIRPORT_PICKUP = 100;
+
+            // Get course price: program, level, weeks (for weekly/youth-camp)
+            function getCoursePrice(program, level, weeks) {
+                const mainLevel = (level || '').toString().split('.')[0] || 'a1';
+                if (program === 'exam-prep') return EXAM_PRICE;
+                if (program === 'intensive') {
+                    return extractPrice(pricingData.intensive[mainLevel]?.fullCourse || '0€') || 0;
+                }
+                if (program === 'weekly' || program === 'youth-camp') {
+                    const w = parseInt(weeks, 10) || 0;
+                    if (w < 1) return 0;
                     const isA1A2 = mainLevel === 'a1' || mainLevel === 'a2';
                     const pricingKey = isA1A2 ? 'a1a2' : 'b1b2c1';
-                    const weeklyPricing = pricingData.weeklyPricing[pricingKey];
-                    
+                    const weeklyPricing = pricingData.weeklyPricing?.[pricingKey];
                     if (!weeklyPricing) return 0;
-                    
-                    const durationNum = parseInt(duration);
-                    let weeklyPriceNum = 0;
-                    
-                    // Exact match
-                    if (weeklyPricing[duration]) {
-                        weeklyPriceNum = extractPrice(weeklyPricing[duration]);
-                    } 
-                    // Fallback for 12 weeks: use 8 weeks price
-                    else if (durationNum === 12) {
-                        weeklyPriceNum = extractPrice(weeklyPricing['8'] || '0€');
-                    }
-                    // Fallback for 24 weeks: use 16 weeks price
-                    else if (durationNum === 24) {
-                        weeklyPriceNum = extractPrice(weeklyPricing['16'] || '0€');
-                    }
-                    // Find closest lower duration
-                    else {
-                        const durations = Object.keys(weeklyPricing).map(Number).sort((a, b) => b - a);
-                        const closestDuration = durations.find(d => d <= durationNum) || durations[durations.length - 1];
-                        weeklyPriceNum = extractPrice(weeklyPricing[String(closestDuration)] || '0€');
-                    }
-                    
-                    // Calculate total: weekly price × duration
-                    return weeklyPriceNum * durationNum;
+                    const durations = Object.keys(weeklyPricing).map(Number).sort((a, b) => a - b);
+                    const closest = durations.find(d => d >= w) || durations[durations.length - 1];
+                    const pricePerWeek = extractPrice(weeklyPricing[String(closest)] || '0€');
+                    return Math.round(pricePerWeek * w);
                 }
                 return 0;
             }
 
-            // Accommodation pricing
-            const accommodationPricing = {
-                'einzelzimmer': { '1': 690, '2': 1380 },
-                'doppelzimmer': { '1': 490, '2': 980 }
-            };
-
             function updateProgress() {
-                const progress = (currentStep / totalSteps) * 100;
+                const progress = Math.round((currentStep / totalSteps) * 100);
                 progressFill.style.width = progress + '%';
                 
                 stepIndicators.forEach((indicator, index) => {
@@ -876,27 +1110,11 @@ const translations = t[lang as keyof typeof t];
                 });
                 currentStep = step;
                 updateProgress();
-                
-                // If step 4 (confirmation), update booking summary
-                if (step === 4) {
-                    updateBookingSummary();
-                }
+                updatePrice();
             }
             
-            // Update booking summary in step 4
-            function updateBookingSummary() {
-                const courseSummary = document.getElementById('course-summary');
-                const accommodationSummary = document.getElementById('accommodation-summary');
-                const accommodationSummarySection = document.getElementById('accommodation-summary-section');
-                const priceSummary = document.getElementById('price-summary');
-                
-                // Get form values
-                const school = document.getElementById('school')?.value || '';
-                const courseType = document.getElementById('course-type')?.value || '';
-                const level = document.getElementById('level')?.value || '';
-                const startDate = document.getElementById('start-date')?.value || '';
-                const duration = document.getElementById('duration')?.value || '';
-                const continuationLevels = Array.from(document.querySelectorAll('[name="continuation-levels"]:checked')).map(cb => cb.value);
+            function _unusedBookingSummary() {
+                return;
                 
                 // Course type translations
                 const courseTypeNames = {
@@ -911,46 +1129,125 @@ const translations = t[lang as keyof typeof t];
                         'university-pathway': 'Universitätsvorbereitungsprogramm',
                         'exam-prep': 'Prüfungsvorbereitung',
                         'weekly-intensive': 'Wöchentlicher Intensivkurs'
+                    },
+                    en: {
+                        'intensive': 'Intensive Course',
+                        'university-pathway': 'University Preparation Program',
+                        'exam-prep': 'Exam Preparation',
+                        'weekly-intensive': 'Weekly Intensive German Course'
+                    },
+                    es: {
+                        'intensive': 'Curso intensivo',
+                        'university-pathway': 'Programa de preparación universitaria',
+                        'exam-prep': 'Preparación de exámenes',
+                        'weekly-intensive': 'Curso intensivo semanal de alemán'
                     }
                 };
                 
                 const schoolNames = {
-                    tr: {
-                        'bremen': 'Bremen',
-                        'online': 'Online',
-                        'hybrid': 'Hybrid'
-                    },
-                    de: {
-                        'bremen': 'Bremen',
-                        'online': 'Online',
-                        'hybrid': 'Hybrid'
-                    }
+                    tr: { 'bremen': 'Bremen', 'online': 'Online', 'hybrid': 'Hybrid' },
+                    de: { 'bremen': 'Bremen', 'online': 'Online', 'hybrid': 'Hybrid' },
+                    en: { 'bremen': 'Bremen', 'online': 'Online', 'hybrid': 'Hybrid' },
+                    es: { 'bremen': 'Bremen', 'online': 'Online', 'hybrid': 'Hybrid' }
                 };
                 
                 const currentLang = lang || 'tr';
                 const t = courseTypeNames[currentLang] || courseTypeNames.tr;
                 const s = schoolNames[currentLang] || schoolNames.tr;
                 
+                // Summary labels translation
+                const summaryLabels = {
+                    tr: {
+                        school: 'Okul',
+                        courseType: 'Kurs Tipi',
+                        level: 'Seviye',
+                        startDate: 'Başlangıç Tarihi',
+                        duration: 'Süre',
+                        weeks: 'Hafta',
+                        continuationLevels: 'Devam Seviyeleri',
+                        accommodationType: 'Konaklama Tipi',
+                        month: 'Ay',
+                        price: 'Fiyat',
+                        registrationFee: 'Kayıt Ücreti',
+                        airportTransferArrival: 'Havaalanı Transferi (Varış)',
+                        airportTransferDeparture: 'Havaalanı Transferi (Gidiş)',
+                        visaSupport: 'Vize Destek Belgeleri',
+                        total: 'Toplam'
+                    },
+                    de: {
+                        school: 'Schule',
+                        courseType: 'Kurstyp',
+                        level: 'Niveau',
+                        startDate: 'Startdatum',
+                        duration: 'Dauer',
+                        weeks: 'Wochen',
+                        continuationLevels: 'Fortsetzungsniveaus',
+                        accommodationType: 'Unterkunftsart',
+                        month: 'Monat',
+                        price: 'Preis',
+                        registrationFee: 'Anmeldegebühr',
+                        airportTransferArrival: 'Flughafentransfer (Ankunft)',
+                        airportTransferDeparture: 'Flughafentransfer (Abreise)',
+                        visaSupport: 'Visumunterstützungsdokumente',
+                        total: 'Gesamt'
+                    },
+                    en: {
+                        school: 'School',
+                        courseType: 'Course Type',
+                        level: 'Level',
+                        startDate: 'Start Date',
+                        duration: 'Duration',
+                        weeks: 'Weeks',
+                        continuationLevels: 'Continuation Levels',
+                        accommodationType: 'Accommodation Type',
+                        month: 'Month',
+                        price: 'Price',
+                        registrationFee: 'Registration Fee',
+                        airportTransferArrival: 'Airport Transfer (Arrival)',
+                        airportTransferDeparture: 'Airport Transfer (Departure)',
+                        visaSupport: 'Visa Support Documents',
+                        total: 'Total'
+                    },
+                    es: {
+                        school: 'Centro',
+                        courseType: 'Tipo de curso',
+                        level: 'Nivel',
+                        startDate: 'Fecha de inicio',
+                        duration: 'Duración',
+                        weeks: 'Semanas',
+                        continuationLevels: 'Niveles de continuación',
+                        accommodationType: 'Tipo de alojamiento',
+                        month: 'Mes',
+                        price: 'Precio',
+                        registrationFee: 'Tasa de inscripción',
+                        airportTransferArrival: 'Traslado aeropuerto (llegada)',
+                        airportTransferDeparture: 'Traslado aeropuerto (salida)',
+                        visaSupport: 'Documentos de apoyo al visado',
+                        total: 'Total'
+                    }
+                };
+                const labels = summaryLabels[currentLang] || summaryLabels.tr;
+                
                 // Build course summary
                 if (courseSummary) {
                     let courseHtml = '<div class="summary-item">';
                     if (school) {
-                        courseHtml += `<div class="summary-row"><strong>${currentLang === 'tr' ? 'Okul' : 'Schule'}:</strong> <span>${s[school] || school}</span></div>`;
+                        courseHtml += `<div class="summary-row"><strong>${labels.school}:</strong> <span>${s[school] || school}</span></div>`;
                     }
                     if (courseType) {
-                        courseHtml += `<div class="summary-row"><strong>${currentLang === 'tr' ? 'Kurs Tipi' : 'Kurstyp'}:</strong> <span>${t[courseType] || courseType}</span></div>`;
+                        courseHtml += `<div class="summary-row"><strong>${labels.courseType}:</strong> <span>${t[courseType] || courseType}</span></div>`;
                     }
                     if (level) {
-                        courseHtml += `<div class="summary-row"><strong>${currentLang === 'tr' ? 'Seviye' : 'Niveau'}:</strong> <span>${level.toUpperCase()}</span></div>`;
+                        courseHtml += `<div class="summary-row"><strong>${labels.level}:</strong> <span>${level.toUpperCase()}</span></div>`;
                     }
                     if (startDate) {
-                        courseHtml += `<div class="summary-row"><strong>${currentLang === 'tr' ? 'Başlangıç Tarihi' : 'Startdatum'}:</strong> <span>${formatDateForDisplay(startDate)}</span></div>`;
+                        courseHtml += `<div class="summary-row"><strong>${labels.startDate}:</strong> <span>${formatDateForDisplay(startDate)}</span></div>`;
                     }
                     if (duration) {
-                        courseHtml += `<div class="summary-row"><strong>${currentLang === 'tr' ? 'Süre' : 'Dauer'}:</strong> <span>${duration} ${currentLang === 'tr' ? 'Hafta' : 'Wochen'}</span></div>`;
+                        courseHtml += `<div class="summary-row"><strong>${labels.duration}:</strong> <span>${duration} ${labels.weeks}</span></div>`;
                     }
                     if (continuationLevels.length > 0) {
-                        courseHtml += `<div class="summary-row"><strong>${currentLang === 'tr' ? 'Devam Seviyeleri' : 'Fortsetzungsniveaus'}:</strong> <span>${continuationLevels.map(l => l.toUpperCase()).join(', ')}</span></div>`;
+                        courseHtml += `<div class="summary-row"><strong>${labels.continuationLevels}:</strong> <span>${continuationLevels.map(l => l.toUpperCase()).join(', ')}</span></div>`;
                     }
                     courseHtml += '</div>';
                     courseSummary.innerHTML = courseHtml;
@@ -975,15 +1272,20 @@ const translations = t[lang as keyof typeof t];
                                     'einzelzimmer': 'Einzelzimmer',
                                     'doppelzimmer': 'Doppelzimmer',
                                     'roadmap': 'Nur Unterkunfts-Roadmap'
+                                },
+                                en: {
+                                    'einzelzimmer': 'Single Room (Einzelzimmer)',
+                                    'doppelzimmer': 'Shared Room (Doppelzimmer)',
+                                    'roadmap': 'Accommodation Roadmap Only'
                                 }
                             };
                             const accT = accTypeNames[currentLang] || accTypeNames.tr;
-                            accHtml += `<div class="summary-row"><strong>${currentLang === 'tr' ? 'Konaklama Tipi' : 'Unterkunftsart'}:</strong> <span>${accT[accommodationType] || accommodationType}</span></div>`;
+                            accHtml += `<div class="summary-row"><strong>${labels.accommodationType}:</strong> <span>${accT[accommodationType] || accommodationType}</span></div>`;
                         }
                         if (accommodationDuration && accommodationType !== 'roadmap') {
                             const accPrice = accommodationPricing[accommodationType]?.[accommodationDuration] || 0;
-                            accHtml += `<div class="summary-row"><strong>${currentLang === 'tr' ? 'Süre' : 'Dauer'}:</strong> <span>${accommodationDuration} ${currentLang === 'tr' ? 'Ay' : 'Monat'}</span></div>`;
-                            accHtml += `<div class="summary-row"><strong>${currentLang === 'tr' ? 'Fiyat' : 'Preis'}:</strong> <span>${accPrice} €</span></div>`;
+                            accHtml += `<div class="summary-row"><strong>${labels.duration}:</strong> <span>${accommodationDuration} ${labels.month}</span></div>`;
+                            accHtml += `<div class="summary-row"><strong>${labels.price}:</strong> <span>${accPrice} €</span></div>`;
                         }
                         accHtml += '</div>';
                         accommodationSummary.innerHTML = accHtml;
@@ -1001,7 +1303,7 @@ const translations = t[lang as keyof typeof t];
                     let priceHtml = '<div class="summary-item">';
                     
                     // Registration fee
-                    priceHtml += `<div class="summary-row"><strong>${currentLang === 'tr' ? 'Kayıt Ücreti' : 'Anmeldegebühr'}:</strong> <span>50 €</span></div>`;
+                    priceHtml += `<div class="summary-row"><strong>${labels.registrationFee}:</strong> <span>50 €</span></div>`;
                     
                     // Course price
                     const courseTypePriceEl = document.getElementById('course-type-price');
@@ -1019,17 +1321,17 @@ const translations = t[lang as keyof typeof t];
                     const visaSupport = document.querySelector('[name="visa-support"]:checked');
                     
                     if (transferArrival) {
-                        priceHtml += `<div class="summary-row"><strong>${currentLang === 'tr' ? 'Havaalanı Transferi (Varış)' : 'Flughafentransfer (Ankunft)'}:</strong> <span>100 €</span></div>`;
+                        priceHtml += `<div class="summary-row"><strong>${labels.airportTransferArrival}:</strong> <span>100 €</span></div>`;
                     }
                     if (transferDeparture) {
-                        priceHtml += `<div class="summary-row"><strong>${currentLang === 'tr' ? 'Havaalanı Transferi (Gidiş)' : 'Flughafentransfer (Abreise)'}:</strong> <span>100 €</span></div>`;
+                        priceHtml += `<div class="summary-row"><strong>${labels.airportTransferDeparture}:</strong> <span>100 €</span></div>`;
                     }
                     if (visaSupport) {
-                        priceHtml += `<div class="summary-row"><strong>${currentLang === 'tr' ? 'Vize Destek Belgeleri' : 'Visumunterstützungsdokumente'}:</strong> <span>50 €</span></div>`;
+                        priceHtml += `<div class="summary-row"><strong>${labels.visaSupport}:</strong> <span>50 €</span></div>`;
                     }
                     
                     // Total
-                    priceHtml += `<div class="summary-row summary-total"><strong>${currentLang === 'tr' ? 'Toplam' : 'Gesamt'}:</strong> <span>${totalPrice}</span></div>`;
+                    priceHtml += `<div class="summary-row summary-total"><strong>${labels.total}:</strong> <span>${totalPrice}</span></div>`;
                     priceHtml += '</div>';
                     priceSummary.innerHTML = priceHtml;
                 }
@@ -1037,11 +1339,29 @@ const translations = t[lang as keyof typeof t];
 
             function validateStep(step) {
                 const currentStepElement = formSteps[step - 1];
-                const requiredFields = currentStepElement.querySelectorAll('[required]');
                 let isValid = true;
 
+                if (step === 1) {
+                    const program = document.querySelector('[name="program"]:checked')?.value;
+                    const level = document.getElementById('level')?.value;
+                    if (!program) { document.querySelector('[name="program"]')?.closest('.form-group')?.classList.add('error'); isValid = false; } else { document.querySelector('[name="program"]')?.closest('.form-group')?.classList.remove('error'); }
+                    if (!level) { document.getElementById('level')?.classList.add('error'); isValid = false; } else { document.getElementById('level')?.classList.remove('error'); }
+                    if (program === 'weekly' || program === 'youth-camp') {
+                        const weeks = document.getElementById('weeks')?.value;
+                        if (!weeks) { document.getElementById('weeks')?.classList.add('error'); isValid = false; } else { document.getElementById('weeks')?.classList.remove('error'); }
+                    }
+                    if (program === 'exam-prep') {
+                        const examType = document.querySelector('[name="exam-type"]:checked')?.value;
+                        const examLevel = document.getElementById('exam-level')?.value;
+                        if (!examType) { document.querySelector('[name="exam-type"]')?.closest('.form-group')?.classList.add('error'); isValid = false; }
+                        if (!examLevel) { document.getElementById('exam-level')?.classList.add('error'); isValid = false; }
+                    }
+                    return isValid;
+                }
+
+                const requiredFields = currentStepElement.querySelectorAll('[required]');
                 requiredFields.forEach(field => {
-                    if (field.offsetParent !== null) { // Check if visible
+                    if (field.offsetParent !== null) {
                         if (!field.value || (field.type === 'radio' && !currentStepElement.querySelector(`[name="${field.name}"]:checked`))) {
                             isValid = false;
                             field.classList.add('error');
@@ -1050,7 +1370,6 @@ const translations = t[lang as keyof typeof t];
                         }
                     }
                 });
-
                 return isValid;
             }
 
@@ -1074,301 +1393,131 @@ const translations = t[lang as keyof typeof t];
                 });
             });
 
-            // ===== CONDITIONAL LOGIC =====
-
-            // Course Type → Duration visibility
-            const courseTypeSelect = document.getElementById('course-type');
-            const durationGroup = document.getElementById('duration-group');
-            const durationSelect = document.getElementById('duration');
-
-            if (courseTypeSelect) {
-                courseTypeSelect.addEventListener('change', function() {
-                    if (this.value === 'weekly-intensive') {
-                        durationGroup.style.display = 'block';
-                        if (durationSelect) durationSelect.setAttribute('required', 'required');
-                    } else {
-                        durationGroup.style.display = 'none';
-                        if (durationSelect) {
-                            durationSelect.removeAttribute('required');
-                            durationSelect.value = '';
-                        }
-                    }
-                    updatePrice();
-                });
-            }
-
-            // Duration change → Update price (for weekly-intensive)
-            if (durationSelect) {
-                durationSelect.addEventListener('change', function() {
-                    updatePrice();
-                });
-            }
-
-            // Level → Date selection
-            const levelSelect = document.getElementById('level');
-            const startDateSelect = document.getElementById('start-date');
-
-            if (levelSelect && startDateSelect) {
-                levelSelect.addEventListener('change', function() {
-                    const selectedLevel = this.value;
-                    startDateSelect.innerHTML = '<option value="">Tarih seçiniz</option>';
-                    
-                    if (selectedLevel && courseDates[selectedLevel]) {
-                        startDateSelect.removeAttribute('disabled');
-                        // Sort dates chronologically
-                        const sortedDates = [...courseDates[selectedLevel]].sort((a, b) => {
-                            return new Date(a) - new Date(b);
-                        });
-                        
-                        sortedDates.forEach(date => {
-                            const option = document.createElement('option');
-                            option.value = date;
-                            option.textContent = formatDateForDisplay(date);
-                            startDateSelect.appendChild(option);
-                        });
-                        
-                        console.log(`Level ${selectedLevel} dates:`, sortedDates);
-                    } else {
-                        startDateSelect.setAttribute('disabled', 'disabled');
-                        console.warn(`No dates found for level: ${selectedLevel}`);
-                        console.log('Available courseDates keys:', Object.keys(courseDates));
-                    }
-                    updatePrice(); // Update price when level changes
-                });
-            }
-
-            // Start Date → Continuation Courses
-            const continuationSection = document.getElementById('continuation-section');
-            const continuationLevels = document.getElementById('continuation-levels');
-
-            if (startDateSelect && continuationSection && continuationLevels) {
-                startDateSelect.addEventListener('change', function() {
-                    const selectedLevel = levelSelect.value;
-                    
-                    if (this.value && selectedLevel && levelHierarchy[selectedLevel]) {
-                        continuationSection.style.display = 'block';
-                        continuationLevels.innerHTML = '';
-                        
-                        levelHierarchy[selectedLevel].forEach(level => {
-                            const label = document.createElement('label');
-                            label.className = 'checkbox-label';
-                            label.innerHTML = `
-                                <input type="checkbox" name="continuation-levels" value="${level}">
-                                <span class="checkbox-custom"></span>
-                                <span class="checkbox-text">${level.toUpperCase()}</span>
-                            `;
-                            continuationLevels.appendChild(label);
-                        });
-                    } else {
-                        continuationSection.style.display = 'none';
-                    }
-                });
-            }
-
-            // Accommodation logic
-            const accommodationNeeded = document.querySelectorAll('[name="accommodation-needed"]');
-            const accommodationDetails = document.getElementById('accommodation-details');
-            const accommodationTypeRadios = document.querySelectorAll('[name="accommodation-type"]');
-            const accommodationDurationGroup = document.getElementById('accommodation-duration-group');
-            const accommodationDurationSelect = document.getElementById('accommodation-duration');
-            const accommodationPricingDisplay = document.getElementById('accommodation-pricing');
-            const accommodationPriceDisplay = document.getElementById('accommodation-price-display');
-
-            accommodationNeeded.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (this.value === 'yes') {
-                        accommodationDetails.style.display = 'block';
-                    } else {
-                        accommodationDetails.style.display = 'none';
-                        // Reset accommodation fields
-                        accommodationTypeRadios.forEach(r => r.checked = false);
-                        if (accommodationDurationSelect) accommodationDurationSelect.value = '';
-                        if (accommodationDurationGroup) accommodationDurationGroup.style.display = 'none';
-                        if (accommodationPricingDisplay) accommodationPricingDisplay.style.display = 'none';
-                    }
-                    updatePrice();
-                });
+            // Program, level, weeks, extras → update price
+            document.getElementById('level')?.addEventListener('change', updatePrice);
+            document.getElementById('weeks')?.addEventListener('change', function() {
+                const w = parseInt(this.value, 10);
+                if (weeksHint) weeksHint.style.display = (w >= 6 && w > 0) ? 'block' : 'none';
+                updatePrice();
             });
+            document.querySelectorAll('[name="visa-needed"]').forEach(el => el.addEventListener('change', updatePrice));
+            document.querySelectorAll('[name="accommodation-type"]').forEach(el => el.addEventListener('change', updatePrice));
+            document.getElementById('accommodation-months')?.addEventListener('change', updatePrice);
+            document.querySelectorAll('[name="airport-pickup"]').forEach(el => el.addEventListener('change', updatePrice));
 
-            accommodationTypeRadios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (this.value === 'roadmap') {
-                        accommodationDurationGroup.style.display = 'none';
-                        accommodationPricingDisplay.style.display = 'none';
-                    } else {
-                        accommodationDurationGroup.style.display = 'block';
-                        accommodationDurationSelect.setAttribute('required', 'required');
-                    }
+            // ===== COUPON =====
+            let appliedCoupon = null;
+            const couponInput = document.getElementById('coupon-input');
+            const couponApplyBtn = document.getElementById('coupon-apply-btn');
+            const couponMessage = document.getElementById('coupon-message');
+            const couponDiscountRow = document.getElementById('coupon-discount-row');
+            const couponDiscountValue = document.getElementById('coupon-discount-value');
+            const couponDiscountPercentInput = document.getElementById('coupon-discount-percent');
+            const formEl = document.getElementById('booking-form');
+            const couponSuccessText = (formEl && formEl.dataset.couponSuccess) ? formEl.dataset.couponSuccess : (lang === 'tr' ? '%10 indirim uygulandı' : lang === 'de' ? '10 % Rabatt angewendet' : lang === 'es' ? '10% de descuento aplicado' : '10% discount applied');
+            const couponInvalidText = (formEl && formEl.dataset.couponInvalid) ? formEl.dataset.couponInvalid : (lang === 'tr' ? 'Geçersiz kupon' : lang === 'de' ? 'Ungültiger Gutschein' : lang === 'es' ? 'Cupón no válido' : 'Invalid coupon');
+            function applyCoupon() {
+                const raw = couponInput?.value?.trim() || '';
+                const code = raw.toUpperCase();
+                const found = Array.isArray(validCoupons) && validCoupons.find(function(c) { return (c.code || '').toUpperCase() === code; });
+                if (found) {
+                    appliedCoupon = found;
+                    if (couponDiscountPercentInput) couponDiscountPercentInput.value = String(found.discountPercent || 0);
+                    if (couponMessage) { couponMessage.textContent = couponSuccessText; couponMessage.style.display = 'block'; couponMessage.classList.remove('coupon-message-error'); couponMessage.classList.add('coupon-message-success'); }
+                    if (couponInput) couponInput.disabled = true;
+                    if (couponApplyBtn) couponApplyBtn.disabled = true;
                     updatePrice();
-                });
-            });
-
-            if (accommodationDurationSelect) {
-                accommodationDurationSelect.addEventListener('change', function() {
-                    const accommodationType = document.querySelector('[name="accommodation-type"]:checked');
-                    if (accommodationType && accommodationType.value !== 'roadmap' && this.value) {
-                        const price = accommodationPricing[accommodationType.value][this.value];
-                        const currentLang = lang || 'tr';
-                        const roomType = accommodationType.value === 'einzelzimmer' 
-                            ? (currentLang === 'tr' ? 'Tek Kişilik Oda (Einzelzimmer)' : 'Einzelzimmer')
-                            : (currentLang === 'tr' ? 'Paylaşımlı Oda (Doppelzimmer)' : 'Doppelzimmer');
-                        const monthText = currentLang === 'tr' ? 'Ay' : 'Monat';
-                        accommodationPriceDisplay.innerHTML = `
-                            <strong>${roomType}:</strong><br>
-                            ${this.value} ${monthText}: <strong>${price} €</strong>
-                        `;
-                        accommodationPricingDisplay.style.display = 'block';
-                    } else {
-                        accommodationPricingDisplay.style.display = 'none';
-                    }
+                } else {
+                    appliedCoupon = null;
+                    if (couponDiscountPercentInput) couponDiscountPercentInput.value = '';
+                    if (couponMessage) { couponMessage.textContent = couponInvalidText; couponMessage.style.display = 'block'; couponMessage.classList.remove('coupon-message-success'); couponMessage.classList.add('coupon-message-error'); }
+                    if (couponDiscountRow) couponDiscountRow.style.display = 'none';
                     updatePrice();
-                });
+                }
+            }
+            if (couponApplyBtn) couponApplyBtn.addEventListener('click', applyCoupon);
+            if (couponInput) couponInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); applyCoupon(); } });
+            if (couponInput?.value?.trim() && Array.isArray(validCoupons) && validCoupons.find(function(c) { return (c.code || '').toUpperCase() === couponInput.value.trim().toUpperCase(); })) {
+                setTimeout(applyCoupon, 100);
             }
 
             // ===== PRICE CALCULATION =====
+            const programLabels = { tr: { intensive: 'Yoğun', weekly: 'Haftalık', 'youth-camp': 'Yaz Kampı', 'exam-prep': 'Sınav Hazırlığı' }, de: { intensive: 'Intensiv', weekly: 'Wöchentlich', 'youth-camp': 'Sommercamp', 'exam-prep': 'Prüfungsvorbereitung' }, en: { intensive: 'Intensive', weekly: 'Weekly', 'youth-camp': 'Summer Camp', 'exam-prep': 'Exam Prep' }, es: { intensive: 'Intensivo', weekly: 'Semanal', 'youth-camp': 'Campamento verano', 'exam-prep': 'Preparación exámenes' } };
             function updatePrice() {
-                let total = 50; // Registration fee
+                let total = 0;
                 const courseTypePrice = document.getElementById('course-type-price');
                 const durationPrice = document.getElementById('duration-price');
-                const optionalServices = document.getElementById('optional-services');
-                const transferArrivalPrice = document.getElementById('transfer-arrival-price');
-                const transferDeparturePrice = document.getElementById('transfer-departure-price');
-                const visaSupportPrice = document.getElementById('visa-support-price');
-                const accommodationPrice = document.getElementById('accommodation-price');
+                const visaPriceRow = document.getElementById('visa-price-row');
+                const accommodationPriceRow = document.getElementById('accommodation-price-row');
+                const airportPriceRow = document.getElementById('airport-price-row');
                 const totalPriceElement = document.getElementById('total-price');
+                const program = document.querySelector('[name="program"]:checked')?.value;
+                const level = document.getElementById('level')?.value || 'a1';
+                const weeks = document.getElementById('weeks')?.value;
+                const currentLang = lang || 'tr';
+                const t = programLabels[currentLang] || programLabels.tr;
 
-                // Get form values
-                const courseType = document.getElementById('course-type')?.value;
-                const level = document.getElementById('level')?.value;
-                const duration = document.getElementById('duration')?.value;
-                const school = document.getElementById('school')?.value;
+                if (!courseTypePrice) return;
 
-                // Course type price calculation
-                if (courseType && level && courseTypePrice) {
-                    let coursePrice = 0;
-                    let courseLabel = '';
-                    const currentLang = lang || 'tr';
-                    const translations = {
-                        tr: {
-                            intensive: 'Yoğun Kurs',
-                            online: 'Online Kurs',
-                            examPrep: 'Sınav Hazırlığı',
-                            weeklyIntensive: 'Haftalık Yoğun Almanca Kursu',
-                            universityPathway: 'Üniversite Hazırlık Programı',
-                            weeks: 'Hafta'
-                        },
-                        de: {
-                            intensive: 'Intensivkurs',
-                            online: 'Online-Kurs',
-                            examPrep: 'Prüfungsvorbereitung',
-                            weeklyIntensive: 'Wöchentlicher Intensivkurs',
-                            universityPathway: 'Universitätsvorbereitungsprogramm',
-                            weeks: 'Wochen'
-                        }
-                    };
-                    const t = translations[currentLang] || translations.tr;
-                    
-                    if (courseType === 'intensive') {
-                        coursePrice = getCoursePrice('intensive', level);
-                        courseLabel = t.intensive;
-                    } else if (courseType === 'online') {
-                        coursePrice = getCoursePrice('online', level);
-                        courseLabel = t.online;
-                    } else if (courseType === 'exam-prep') {
-                        coursePrice = getCoursePrice('exam-prep', level);
-                        courseLabel = t.examPrep;
-                    } else if (courseType === 'weekly-intensive' && duration) {
-                        coursePrice = getCoursePrice('weekly-intensive', level, duration);
-                        courseLabel = `${t.weeklyIntensive} (${duration} ${t.weeks})`;
-                    } else if (courseType === 'university-pathway') {
-                        // University Pathway Course - use intensive pricing
-                        coursePrice = getCoursePrice('intensive', level);
-                        courseLabel = t.universityPathway;
-                    }
-
-                    if (coursePrice > 0) {
-                        courseTypePrice.querySelector('.price-item-label').textContent = courseLabel;
-                        courseTypePrice.querySelector('.price-item-value').textContent = coursePrice + ' €';
-                        courseTypePrice.style.display = 'flex';
-                        total += coursePrice;
-                    } else {
-                        courseTypePrice.style.display = 'none';
-                    }
-                } else if (courseTypePrice) {
-                    courseTypePrice.style.display = 'none';
-                }
-
-                // Duration price (only for weekly-intensive - already included above)
-                if (courseType === 'weekly-intensive' && duration && durationPrice) {
-                    durationPrice.style.display = 'none'; // Already included in course price
-                } else if (durationPrice) {
-                    durationPrice.style.display = 'none';
-                }
-
-                // Transfer prices
-                const transferArrival = document.querySelector('[name="transfer-arrival"]:checked');
-                const transferDeparture = document.querySelector('[name="transfer-departure"]:checked');
-                
-                if (transferArrival && transferArrivalPrice) {
-                    transferArrivalPrice.style.display = 'flex';
-                    total += 100;
-                } else if (transferArrivalPrice) {
-                    transferArrivalPrice.style.display = 'none';
-                }
-
-                if (transferDeparture && transferDeparturePrice) {
-                    transferDeparturePrice.style.display = 'flex';
-                    total += 100;
-                } else if (transferDeparturePrice) {
-                    transferDeparturePrice.style.display = 'none';
-                }
-
-                // Visa support
-                const visaSupport = document.querySelector('[name="visa-support"]:checked');
-                if (visaSupport && visaSupportPrice) {
-                    visaSupportPrice.style.display = 'flex';
-                    total += 50;
-                } else if (visaSupportPrice) {
-                    visaSupportPrice.style.display = 'none';
-                }
-
-                // Accommodation (not added to total, just display)
-                const accommodationType = document.querySelector('[name="accommodation-type"]:checked');
-                const accommodationDuration = document.getElementById('accommodation-duration')?.value;
-                if (accommodationType && accommodationDuration && accommodationType.value !== 'roadmap') {
-                    const accPrice = accommodationPricing[accommodationType.value][accommodationDuration];
-                    if (accommodationPrice) {
-                        const currentLang = lang || 'tr';
-                        const roomType = accommodationType.value === 'einzelzimmer'
-                            ? (currentLang === 'tr' ? 'Tek Kişilik Oda (Einzelzimmer)' : 'Einzelzimmer')
-                            : (currentLang === 'tr' ? 'Paylaşımlı Oda (Doppelzimmer)' : 'Doppelzimmer');
-                        const monthText = currentLang === 'tr' ? 'Ay' : 'Monat';
-                        accommodationPrice.querySelector('.price-item-label').textContent = 
-                            `${roomType} (${accommodationDuration} ${monthText})`;
-                        accommodationPrice.querySelector('.price-item-value').textContent = `${accPrice} €`;
-                        accommodationPrice.style.display = 'flex';
-                    }
-                } else if (accommodationPrice) {
-                    accommodationPrice.style.display = 'none';
-                }
-
-                // Show optional services section if any service is selected
-                if (transferArrival || transferDeparture || visaSupport || (accommodationType && accommodationType.value !== 'roadmap')) {
-                    optionalServices.style.display = 'block';
+                if (program && level) {
+                    const coursePrice = program === 'exam-prep' ? EXAM_PRICE : getCoursePrice(program, level, weeks);
+                    const programLabel = t[program] || program;
+                    let labelSuffix = ' (' + (level || 'A1').toUpperCase() + ')';
+                    if (program === 'weekly' || program === 'youth-camp') labelSuffix = weeks ? ' ' + weeks + ' ' + (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Wochen' : currentLang === 'es' ? 'semanas' : 'weeks') + ' (' + level.toUpperCase() + ')' : ' (' + level.toUpperCase() + ')';
+                    if (program === 'exam-prep') labelSuffix = ' (800 €)';
+                    courseTypePrice.querySelector('.price-item-label').textContent = (programLabel + labelSuffix).trim();
+                    courseTypePrice.querySelector('.price-item-value').textContent = coursePrice > 0 ? coursePrice + ' €' : '-';
+                    courseTypePrice.style.display = 'flex';
+                    if (coursePrice > 0) total += coursePrice;
+                    if (durationPrice) durationPrice.style.display = 'none';
                 } else {
-                    optionalServices.style.display = 'none';
+                    courseTypePrice.querySelector('.price-item-label').textContent = currentLang === 'tr' ? 'Kurs tipi seçiniz' : currentLang === 'de' ? 'Kurstyp wählen' : currentLang === 'es' ? 'Seleccione tipo' : 'Select course type';
+                    courseTypePrice.querySelector('.price-item-value').textContent = '-';
+                    if (durationPrice) durationPrice.style.display = 'none';
                 }
 
-                // Update total
-                if (totalPriceElement) {
-                    totalPriceElement.textContent = total + ' €';
+                const visaNeeded = document.querySelector('[name="visa-needed"]:checked')?.value === 'yes';
+                if (visaPriceRow) {
+                    visaPriceRow.style.display = visaNeeded ? 'flex' : 'none';
+                    if (visaNeeded) total += VISA_GUARANTEE;
                 }
+
+                const accommodationType = document.querySelector('[name="accommodation-type"]:checked')?.value;
+                const accommodationMonths = parseInt(document.getElementById('accommodation-months')?.value || '1', 10) || 1;
+                if (accommodationPriceRow) {
+                    if (accommodationType === 'single') {
+                        const accPrice = ACCOMMODATION_SINGLE_PER_MONTH * accommodationMonths;
+                        accommodationPriceRow.querySelector('.price-item-label').textContent = (currentLang === 'tr' ? 'Tek oda' : currentLang === 'de' ? 'Einzelzimmer' : currentLang === 'es' ? 'Habitación individual' : 'Single room') + ' (' + accommodationMonths + ' ' + (currentLang === 'tr' ? 'ay' : currentLang === 'de' ? 'Monate' : currentLang === 'es' ? 'meses' : 'months') + ')';
+                        accommodationPriceRow.querySelector('.price-item-value').textContent = accPrice + ' €';
+                        accommodationPriceRow.style.display = 'flex';
+                        total += accPrice;
+                    } else if (accommodationType === 'double') {
+                        const accPrice = ACCOMMODATION_DOUBLE_PER_MONTH * accommodationMonths;
+                        accommodationPriceRow.querySelector('.price-item-label').textContent = (currentLang === 'tr' ? 'Çift oda' : currentLang === 'de' ? 'Doppelzimmer' : currentLang === 'es' ? 'Habitación doble' : 'Double room') + ' (' + accommodationMonths + ' ' + (currentLang === 'tr' ? 'ay' : currentLang === 'de' ? 'Monate' : currentLang === 'es' ? 'meses' : 'months') + ')';
+                        accommodationPriceRow.querySelector('.price-item-value').textContent = accPrice + ' €';
+                        accommodationPriceRow.style.display = 'flex';
+                        total += accPrice;
+                    } else {
+                        accommodationPriceRow.style.display = 'none';
+                    }
+                }
+
+                const airportPickup = document.querySelector('[name="airport-pickup"]:checked')?.value === 'yes';
+                if (airportPriceRow) {
+                    airportPriceRow.style.display = airportPickup ? 'flex' : 'none';
+                    if (airportPickup) total += AIRPORT_PICKUP;
+                }
+
+                if (appliedCoupon && appliedCoupon.discountPercent) {
+                    const discount = Math.round(total * appliedCoupon.discountPercent / 100);
+                    total -= discount;
+                    if (couponDiscountRow) { couponDiscountRow.style.display = 'flex'; }
+                    if (couponDiscountValue) couponDiscountValue.textContent = '-' + discount + ' €';
+                } else {
+                    if (couponDiscountRow) couponDiscountRow.style.display = 'none';
+                }
+                if (totalPriceElement) totalPriceElement.textContent = total + ' €';
             }
-
-            // Add event listeners for price updates
-            document.querySelectorAll('[name="transfer-arrival"], [name="transfer-departure"], [name="visa-support"]').forEach(el => {
-                el.addEventListener('change', updatePrice);
-            });
 
             // ===== FORM SUBMISSION =====
             const bookingForm = document.getElementById('booking-form');
@@ -1380,7 +1529,8 @@ const translations = t[lang as keyof typeof t];
                     const submitButton = bookingForm.querySelector('button[type="submit"]');
                     if (submitButton) {
                         submitButton.disabled = true;
-                        submitButton.textContent = lang === 'tr' ? 'Gönderiliyor...' : 'Wird gesendet...';
+                        const submittingText = lang === 'tr' ? 'Gönderiliyor...' : lang === 'de' ? 'Wird gesendet...' : lang === 'es' ? 'Enviando...' : 'Submitting...';
+                        submitButton.textContent = submittingText;
                     }
                     
                     // 1. Check rate limiting
@@ -1388,11 +1538,13 @@ const translations = t[lang as keyof typeof t];
                         if (window.showSuccessModal) {
                             window.showSuccessModal('error', window.successModalTranslations?.rateLimitError || 'Çok fazla istek gönderdiniz. Lütfen bir dakika bekleyin.');
                         } else {
-                            alert(lang === 'tr' ? 'Çok fazla istek gönderdiniz. Lütfen bir dakika bekleyin.' : 'Zu viele Anfragen. Bitte warten Sie eine Minute.');
+                            const rateLimitMsg = lang === 'tr' ? 'Çok fazla istek gönderdiniz. Lütfen bir dakika bekleyin.' : lang === 'de' ? 'Zu viele Anfragen. Bitte warten Sie eine Minute.' : lang === 'es' ? 'Demasiadas solicitudes. Espere un minuto.' : 'Too many requests. Please wait a minute.';
+                            alert(rateLimitMsg);
                         }
                         if (submitButton) {
                             submitButton.disabled = false;
-                            submitButton.innerHTML = '<i class="fas fa-check"></i> ' + (lang === 'tr' ? 'Rezervasyonu Tamamla' : 'Reservierung abschließen');
+                            const completeText = lang === 'tr' ? 'Rezervasyonu Tamamla' : lang === 'de' ? 'Reservierung abschließen' : lang === 'es' ? 'Completar reserva' : 'Complete Booking';
+                            submitButton.innerHTML = '<i class="fas fa-check"></i> ' + completeText;
                         }
                         return;
                     }
@@ -1402,24 +1554,27 @@ const translations = t[lang as keyof typeof t];
                         console.warn('Bot detected via honeypot');
                         if (submitButton) {
                             submitButton.disabled = false;
-                            submitButton.innerHTML = '<i class="fas fa-check"></i> ' + (lang === 'tr' ? 'Rezervasyonu Tamamla' : 'Reservierung abschließen');
+                            const completeText = lang === 'tr' ? 'Rezervasyonu Tamamla' : lang === 'de' ? 'Reservierung abschließen' : lang === 'es' ? 'Completar reserva' : 'Complete Booking';
+                            submitButton.innerHTML = '<i class="fas fa-check"></i> ' + completeText;
                         }
                         return;
                     }
                     
                     // 3. Validate email and phone
-                    const email = bookingForm.querySelector('[name="emergency-email"]')?.value || '';
-                    const phone = bookingForm.querySelector('[name="emergency-phone"]')?.value || '';
+                    const email = bookingForm.querySelector('[name="email"]')?.value || '';
+                    const phone = bookingForm.querySelector('[name="phone"]')?.value || '';
                     
                     if (!validateEmail(email)) {
                         if (window.showSuccessModal) {
                             window.showSuccessModal('error', window.successModalTranslations?.emailError || 'Lütfen geçerli bir e-posta adresi girin.');
                         } else {
-                            alert(lang === 'tr' ? 'Lütfen geçerli bir e-posta adresi girin.' : 'Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+                            const emailErrorMsg = lang === 'tr' ? 'Lütfen geçerli bir e-posta adresi girin.' : lang === 'de' ? 'Bitte geben Sie eine gültige E-Mail-Adresse ein.' : lang === 'es' ? 'Introduzca un email válido.' : 'Please enter a valid email address.';
+                            alert(emailErrorMsg);
                         }
                         if (submitButton) {
                             submitButton.disabled = false;
-                            submitButton.innerHTML = '<i class="fas fa-check"></i> ' + (lang === 'tr' ? 'Rezervasyonu Tamamla' : 'Reservierung abschließen');
+                            const completeText = lang === 'tr' ? 'Rezervasyonu Tamamla' : lang === 'de' ? 'Reservierung abschließen' : lang === 'es' ? 'Completar reserva' : 'Complete Booking';
+                            submitButton.innerHTML = '<i class="fas fa-check"></i> ' + completeText;
                         }
                         return;
                     }
@@ -1428,11 +1583,13 @@ const translations = t[lang as keyof typeof t];
                         if (window.showSuccessModal) {
                             window.showSuccessModal('error', window.successModalTranslations?.phoneError || 'Lütfen geçerli bir telefon numarası girin.');
                         } else {
-                            alert(lang === 'tr' ? 'Lütfen geçerli bir telefon numarası girin.' : 'Bitte geben Sie eine gültige Telefonnummer ein.');
+                            const phoneErrorMsg = lang === 'tr' ? 'Lütfen geçerli bir telefon numarası girin.' : lang === 'de' ? 'Bitte geben Sie eine gültige Telefonnummer ein.' : lang === 'es' ? 'Introduzca un número de teléfono válido.' : 'Please enter a valid phone number.';
+                            alert(phoneErrorMsg);
                         }
                         if (submitButton) {
                             submitButton.disabled = false;
-                            submitButton.innerHTML = '<i class="fas fa-check"></i> ' + (lang === 'tr' ? 'Rezervasyonu Tamamla' : 'Reservierung abschließen');
+                            const completeText = lang === 'tr' ? 'Rezervasyonu Tamamla' : lang === 'de' ? 'Reservierung abschließen' : lang === 'es' ? 'Completar reserva' : 'Complete Booking';
+                            submitButton.innerHTML = '<i class="fas fa-check"></i> ' + completeText;
                         }
                         return;
                     }
@@ -1459,30 +1616,21 @@ const translations = t[lang as keyof typeof t];
                     let standardizedData = {
                         formType: 'booking',
                         sourcePage: data.sourcePage || window.location.pathname,
-                        lang: '<%- lang %>',
-                        // Common fields
-                        name: `${data['first-name'] || ''} ${data['last-name'] || ''}`.trim(),
-                        tel: data['emergency-phone'] || '',
-                        email: data['emergency-email'] || '',
-                        // Booking specific fields
-                        school: data.school || '',
-                        courseType: data['course-type'] || '',
+                        lang: typeof lang !== 'undefined' ? lang : 'tr',
+                        name: data['full-name'] || '',
+                        city: data.city || '',
+                        country: data.country || '',
+                        tel: data.phone || '',
+                        email: data.email || '',
+                        program: data.program || '',
                         level: data.level || '',
-                        startDate: data['start-date'] || '',
-                        duration: data.duration || '',
-                        continuationLevels: data['continuation-levels'] || [],
-                        transferArrival: data['transfer-arrival'] || false,
-                        transferDeparture: data['transfer-departure'] || false,
-                        visaSupport: data['visa-support'] || false,
-                        accommodationNeeded: data['accommodation-needed'] || 'no',
-                        accommodationType: data['accommodation-type'] || '',
-                        accommodationDuration: data['accommodation-duration'] || '',
-                        gender: data.gender || '',
-                        birthDate: data['birth-date'] || '',
-                        nationality: data.nationality || '',
-                        passportNumber: data['passport-number'] || '',
-                        germanLevel: data['german-level'] || '',
-                        emergencyContact: data['emergency-contact'] || '',
+                        weeks: data.weeks || '',
+                        examType: data['exam-type'] || '',
+                        examLevel: data['exam-level'] || '',
+                        visaNeeded: data['visa-needed'] || 'no',
+                        accommodationType: data['accommodation-type'] || 'no',
+                        accommodationMonths: data['accommodation-months'] || '',
+                        airportPickup: data['airport-pickup'] || 'no',
                         termsAccepted: data['terms-accepted'] || false,
                         privacyAccepted: data['privacy-accepted'] || false,
                         totalPrice: document.getElementById('total-price')?.textContent || '0 €',
@@ -1506,12 +1654,14 @@ const translations = t[lang as keyof typeof t];
                             if (window.showSuccessModal) {
                                 window.showSuccessModal('success', window.successModalTranslations?.bookingSuccess || 'Rezervasyonunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
                             } else {
-                                alert(lang === 'tr' ? 'Rezervasyonunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.' : 'Ihre Reservierung wurde erfolgreich gesendet! Wir werden uns so schnell wie möglich bei Ihnen melden.');
+                                const successMsg = lang === 'tr' ? 'Rezervasyonunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.' : lang === 'de' ? 'Ihre Reservierung wurde erfolgreich gesendet! Wir werden uns so schnell wie möglich bei Ihnen melden.' : lang === 'es' ? '¡Reserva enviada! Nos pondremos en contacto lo antes posible.' : 'Your booking has been successfully submitted! We will get back to you as soon as possible.';
+                                alert(successMsg);
                             }
                             bookingForm.reset();
-                            // Reset to first step
+                            // Reset to first step and hide conditional blocks
                             showStep(1);
-                            // Reset price calculator
+                            if (typeof toggleProgramExtras === 'function') toggleProgramExtras();
+                            if (typeof toggleAccommodationMonths === 'function') toggleAccommodationMonths();
                             updatePrice();
                         } else {
                             throw new Error('Webhook request failed');
@@ -1521,12 +1671,14 @@ const translations = t[lang as keyof typeof t];
                         if (window.showSuccessModal) {
                             window.showSuccessModal('error', window.successModalTranslations?.errorMessage || 'Bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.');
                         } else {
-                            alert(lang === 'tr' ? 'Bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.' : 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns.');
+                            const errorMsg = lang === 'tr' ? 'Bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.' : lang === 'de' ? 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns.' : lang === 'es' ? 'Ha ocurrido un error. Inténtelo de nuevo o contáctenos.' : 'An error occurred. Please try again or contact us.';
+                            alert(errorMsg);
                         }
                     } finally {
                         if (submitButton) {
                             submitButton.disabled = false;
-                            submitButton.innerHTML = '<i class="fas fa-check"></i> ' + (lang === 'tr' ? 'Rezervasyonu Tamamla' : 'Reservierung abschließen');
+                            const completeText = lang === 'tr' ? 'Rezervasyonu Tamamla' : lang === 'de' ? 'Reservierung abschließen' : lang === 'es' ? 'Completar reserva' : 'Complete Booking';
+                            submitButton.innerHTML = '<i class="fas fa-check"></i> ' + completeText;
                         }
                     }
                 });

@@ -1,0 +1,1425 @@
+﻿Campus German
+
+0) Açıklama
+0.1 Dokümanın Amacı
+Bu doküman, Campus German’ın eğitim modeli, operasyonel kuralları ve partner (acenta) işleyişini tek bir kaynakta toplamak için hazırlanmıştır.
+Amaç; web sitesi metinleri, agent handbook, partner sunumu ve günlük operasyonlarda çelişkisiz, net ve ölçülebilir bir dil kullanmaktır.
+Bu doküman şu alanlarda referans olarak kullanılacaktır:
+• Web sitesi: program sayfaları, avantajlar, SSS, kayıt formu açıklamaları
+• Partner/Acenta: satış argümanları, komisyon ve süreç kuralları, belge SLA’ları
+• Operasyon: seviye tespit, kur geçiş, telafi, iade/kupon, konaklama akışı
+• Marka dili: “ne vaat ediyoruz / neyi vaat etmiyoruz” sınırlarının standardı
+0.2 Kapsam ve Sınırlar
+Campus German bir dil okuludur. Bu doküman, yalnızca dil eğitimi ve dil eğitimine bağlı operasyonları kapsar.
+Aşağıdaki alanlar bu dokümanın kapsamına girmez ve Campus German tarafından hizmet olarak sunulmaz:
+• Vize danışmanlığı / vize süreç yönetimi / resmî makamlarda temsil
+• Akademik danışmanlık (üniversite-bölüm seçimi, başvuru dosyası hazırlama vb.)
+0.3 Hedef Kitle
+• Almanya’da Almanca öğrenmek isteyen öğrenciler (16+)
+• Türkiye ve diğer ülkelerde Campus German programlarını satan acenteler ve partnerler
+• İç operasyon ekibi (kayıt, belge, kurs koordinasyonu, partner ilişkileri)
+0.4 Temel İlkeler
+• Eğitim bütünlüğü: Öğrenci, “kur tekrarı döngüsüne” itilmeden ilerlemelidir.
+• Standart ve şeffaflık: Kurallar önceden yazılıdır; sonradan sürpriz çıkmaz.
+• Süreklilik: Vize gecikmesi, hastalık gibi durumlarda bile süreç kopmaz (hibrit).
+• Konuşma odaklı ilerleme: Amaç yalnızca sınav değil, Almanya’da kullanılabilir dil.
+0.5 Tanımlar (Kısa Sözlük)
+• Kur: Belirli seviyede (ör. A2, B1) tamamlanan eğitim bloğu.
+• Yoğun Akademik Kurs: A1–C1 seviyelerinde, ders sayısı ve yoğunluğu standart olan ana program.
+• Haftalık Kurs: Kur aralarında katılıma izin veren, 2/4/8/16 hafta bazlı fiyatlanan kurs formatı.
+• Online Kurs: Tamamen çevrimiçi yürütülen yoğun kurs programı.
+• Hybrid (Hibrit): Yüz yüze kursa kayıtlı öğrencinin gerekli durumlarda çevrimiçi katılımı sürdürebilmesi.
+• Placement Test: Seviye tespit sınavı.
+• Speaking Check: Kur sonunda yapılan canlı konuşma değerlendirmesi.
+• Vize amaçlı yüz yüze kurs: Kurs kayıt belgesi/davet mektubu düzenlenen yüz yüze program.
+• Vize gerekmeyen kurs: Vize belgesi gerektirmeyen, Almanya’da bulunan öğrencilere yönelik kurs.
+• Voucher / Kupon: Vize amaçlı yüz yüze kursta iptal yerine verilen, online kurs kullanım hakkı (1 yıl geçerli).
+0.6 Güncelleme Mantığı (Sürüm Disiplini)
+Bu dokümandaki tüm kritik kurallar (iade, voucher, belge SLA’sı, komisyon) değiştiğinde:
+• Sürüm tarihi güncellenir
+• Değişiklikler “Güncelleme Notları” bölümünde özetlenir
+• Website + handbook + sözleşmeler aynı anda revize edilir
+1) Kurum Kimliği
+1.1 Campus German Kimdir?
+Campus German, Bremen merkezli bir dil okuludur. Eğitim yaklaşımı, Almanca’yı yalnızca sınıf içinde değil; öğrencinin Almanya’daki günlük yaşamına ve sosyal çevresine taşıyacak şekilde kurgulanır.
+Campus German’ın temel iddiası:
+Dil kursu, tek başına “kitap takibi” değildir. Dil, düzenli pratik ve sürdürülebilir rutin ile gelişir. Bu nedenle Campus German modeli:
+• yapılandırılmış ders sistemi,
+• konuşma odaklı pekiştirme,
+• hibrit süreklilik
+üzerine kuruludur.
+1.2 Lokasyon ve İletişim
+• Adres: Bürgermeister Smidt Str. 80, 28195 Bremen
+• Partner/Acenta iletişimi: partner@campusgerman.com
+• Ödeme yöntemi: IBAN (banka havalesi)
+1.3 Misyon
+Campus German’ın misyonu; öğrencinin Almanca öğrenme sürecini “şansa bağlı dalgalanmalar” yerine, net standartlarla ve süreklilikle yürütmektir. Öncelik:
+• öğrenci memnuniyeti,
+• öğrenmenin kalıcılığı,
+• konuşma özgüveni,
+• kur tekrarı riskinin azaltılmasıdır.
+1.4 Vizyon
+Campus German, Bremen’de “deneyim odaklı Almanca” yaklaşımıyla, öğrencinin Almanya’da yaşarken dili aktif kullanabildiği, sürdürülebilir ilerleme sağladığı bir eğitim ekosistemi kurmayı hedefler.
+1.5 Konumlandırma Cümlesi (Brand Statement)
+Campus German, Bremen’de Almancayı deneyimle öğreten; konuşma özgüvenini, eğitim bütünlüğünü ve hibrit sürekliliği merkeze alan bir dil okuludur.
+Alternatif kısa sloganlar:
+• “Dil sınıfta başlar, Bremen’de oturur.”
+• “Sınav için değil, hayat için Almanca.”
+• “Konuşma cesareti olan Almanca.”
+1.6 Neyi Önemseriz?
+• Eğitim standardı: kaliteyi kişiye değil sisteme bağlamak
+• Ölçülebilir ilerleme: seviye geçişi net kriterlerle
+• Konuşma pratiği: düzenli speaking club yapısı
+• Süreklilik: hibrit modelle kopmayı önlemek
+• Şeffaf politika: iade/kupon/komisyon kuralları net
+1.7 Neyi Yapmıyoruz (Kısa ön not)
+Campus German bir dil okuludur:
+• vize danışmanlığı yapmaz, vize süreçlerini takip etmez
+• akademik yönlendirme yapmaz (üniversite/bölüm seçimi vb.)
+• vize veya kabul garantisi vermez
+Kurs kaydı ve kursa ilişkin belgeler sunulur; karar resmî makamlara aittir.
+2) Neden Bremen?
+2.1 Bölümün Amacı
+Bu bölüm, Campus German’ın “Bremen merkezli” konumlanmasının sadece bir lokasyon tercihi olmadığını; eğitim modeliyle doğrudan bağlantılı bir strateji olduğunu açıklar. Bremen; öğrencinin dili daha hızlı “hayata taşıyabildiği”, adaptasyon sürecinin daha kolay yönetilebildiği ve bu sayede öğrenmenin sürdürülebilir olduğu bir şehir olarak konumlandırılır.
+2.2 Bremen’in Kimliği ve Hikâye Gücü (Bremen Mızıkacıları)
+Bremen, Almanya’nın kültürel hafızasında güçlü bir hikâye ile temsil edilir: Bremen Mızıkacıları (Stadtmusikanten). Bu tür semboller, bir şehrin “turistik” değil “anlatılabilir” olmasını sağlar.
+Campus German açısından önemi:
+• Acenta için satış anlatısı oluşturur: “Bremen = kültür + şehir kimliği + öğrenci deneyimi”
+• Öğrenci için aidiyet hissini artırır: “buraya geldim ve bir şehrin parçasıyım” duygusu
+• Eğitim modelini destekler: kültür üzerinden konuşma görevleri, şehir içi pratikler ve sosyal etkinlikler daha anlamlı hale gelir
+Bremen’i anlatmak, sadece “şehir tanıtımı” değil; öğrencinin motivasyonunu yükselten bir “hikâye çerçevesi” kurmaktır.
+2.3 Öğrenci Dostu Şehir: Kompakt Yapı ve Hızlı Adaptasyon
+Bremen’in en büyük avantajlarından biri kompakt ve yönetilebilir bir şehir ölçeğine sahip olmasıdır. İlk kez Almanya’ya gelen öğrenciler için “şehir büyüklüğü” çoğu zaman stres kaynağı olur. Bremen’de ise öğrenci günlük rutinini daha hızlı kurabilir.
+Bu şu sonuçları doğurur:
+• Ulaşım, yön bulma ve günlük işleri halletme daha kısa sürede oturur
+• Öğrenci “kaybolma/çekinme” hissini daha az yaşar
+• İlk haftalarda oluşan stres azaldıkça, öğrenci dili daha rahat kullanmaya başlar
+Eğitim açısından karşılığı:
+• Öğrenci günlük hayatta daha çok iletişim kurar
+• Pratik fırsatları artar
+• Ders dışı temas süresi yükselir (bu da gelişimi hızlandırır)
+2.4 Sosyal Yaşam: Çevre Edinme ve Motivasyon
+Dil öğreniminde başarının görünmeyen belirleyicilerinden biri sosyal çevredir. Öğrenci çevre edinemediğinde:
+• yalnızlaşır,
+• motivasyonu düşer,
+• konuşma pratiği yapmaz,
+• dili “pasif bilgi” olarak bırakır.
+Bremen’in sosyal yaşam ritmi ve şehir ölçeği, öğrencinin:
+• etkinliklere katılmasını,
+• arkadaş çevresi kurmasını,
+• güvenli bir rutine oturmasını
+kolaylaştırır.
+Campus German modeliyle bağ:
+Campus German, konuşma kulübü ve kültürel etkinliklerle bu sosyal adaptasyonu “rastlantı” olmaktan çıkarıp, öğrencinin rutinine yerleştirir. Böylece Bremen’in sosyal avantajı, eğitim avantajına dönüşür.
+2.5 Hochdeutsch Avantajı: Daha Temiz ve Anlaşılır İletişim
+Özellikle Almanya’ya yeni gelen öğrenciler için “aksan” ve “lehçe” konusu ciddi bir bariyer olabilir. Hochdeutsch’un daha anlaşılır olması, öğrencinin ilk dönemde daha hızlı ilerlemesine katkı sağlar.
+Bremen bağlamında iletişim avantajı:
+• Öğrenci günlük hayatta daha anlaşılır bir dil ortamı içinde olur
+• Yanlış anlamalar azalır
+• Öğrenci konuşma denemelerini daha az stresle yapar
+• Bu da “konuşma özgüveni” gelişimini hızlandırır
+Öğrenci ilk aylarda “anlamıyorum” duygusuna sık düşerse, motivasyonu hızla kırılır. Bremen’de bu risk daha kontrollüdür.
+2.6 Bremen’de Deneyim Odaklı Öğrenmenin Eğitim Etkisi
+Campus German’ın “deneyim odaklı öğrenme” yaklaşımı için Bremen uygun bir zemin sunar çünkü:
+• şehir ölçeği pratik görevlerini (market, kütüphane, toplu taşıma, sosyal etkinlik) yönetilebilir kılar,
+• öğrenci ders dışında daha sık iletişim kurar,
+• adaptasyon hızlı ilerlediği için öğrenci dili “kullanarak öğrenme” moduna geçer.
+Bu yaklaşımın hedeflediği sonuç:
+• Öğrenci kursu sadece tamamlamaz;
+• Almanya’da yaşamaya uygun sosyal Almanca refleksi geliştirir.
+2.7 Partner (Acenta) İçin Bremen’in Satış Avantajı
+Acenteler açısından Bremen’in avantajı sadece eğitim değil, “satış hikâyesi”nin net olmasıdır.
+Satışta kullanılabilecek net çerçeve:
+• Bremen: öğrenci dostu, kompakt, sosyal, anlaşılır iletişim ortamı
+• Sonuç: daha hızlı adaptasyon + daha çok pratik + daha yüksek memnuniyet
+• Bu da: daha az şikâyet, daha az kur tekrarı riski, daha güçlü referans üretimi
+2.8 Kısa Özet (Bu bölümün tek cümlelik çıktısı)
+Bremen, Campus German’ın deneyim odaklı öğrenme modelini güçlendiren; öğrencinin hızlı adapte olduğu, sosyal çevre kurabildiği ve Hochdeutsch avantajıyla dili daha rahat pratiğe dökebildiği bir şehirdir.
+3) Piyasa Gerçekleri ve Campus German’ın Konumlanması
+3.1 Bölümün Amacı
+Bu bölüm, Almanya’daki dil kursu pazarında öğrencilerin en sık yaşadığı problemleri “gerçek hayattaki sonuçlarıyla” ortaya koyar ve Campus German’ın bu problemlere karşı nasıl konumlandığını netleştirir.
+Hedef; hem öğrenciye hem acentaya şu mesajı açık vermektir:
+• Piyasa sorunları rastlantısal değildir; tekrar eden bir döngüdür.
+• Campus German bu döngüyü standart + süreklilik + konuşma odaklılık ile kırmayı hedefler.
+
+3.2 Temel Piyasa Gerçeği: Memnuniyetsizlik ve Kur Tekrarı Döngüsü
+Almanya’ya gelen birçok öğrenci, başladığı dil kursundan memnun kalmamaktadır. Bu memnuniyetsizlik, çoğu zaman sadece “dersin kötü olması” değil; öğrencinin gelişimini doğrudan etkileyen sistem sorunlarından kaynaklanır.
+Bu memnuniyetsizliğin en belirgin sonucu:
+• Öğrencinin kur tekrarı yapması veya
+• kurs değiştirmesi ve sürece sıfırdan başlamasıdır.
+Döngünün maliyeti:
+• Zaman kaybı: hedeflenen seviye gecikir
+• Bütçe kaybı: tekrar kur ücretleri, ek yaşam giderleri
+• Motivasyon kaybı: “olmuyor” hissi → öğrenmenin yavaşlaması
+• Adaptasyon kaybı: öğrenci çevre kurmak yerine “süreci kurtarmaya” çalışır
+Campus German bu noktada kendini şu şekilde tanımlar:
+Biz bir “hızlı kayıt” ticarethanesi değiliz; önceliğimiz eğitimin bütünlüğünü ve öğrencinin tutarlı ilerlemesini sağlamaktır.
+
+3.3 Öğrencilerin En Çok Şikâyet Ettiği Piyasa Eksikleri
+Bu eksikler, öğrencinin kurs deneyimini doğrudan bozan temel başlıklardır.
+3.3.1 Eğitmen yeterliliği sorunu
+Piyasada bazı kurslar, ana dili Almanca olmayan veya Almancası yeterli seviyede olmayan kişilerle ders yürütebilmektedir. Bu durum:
+• telaffuz,
+• temel kalıp kullanımı,
+• doğru dil refleksi
+gelişimini zayıflatır.
+Sonuç: Öğrenci “öğreniyorum” zanneder ama gerçek iletişimde zorlanır.
+3.3.2 Kur kalitesinin öğretmene bağlı değişmesi
+Bazı kurumlarda bir kurun kalitesi büyük ölçüde öğretmenin kişisel tarzına bağlıdır. Bu da öğrencinin gelişimini “şansa” bırakır.
+Sonuç: Aynı seviye içinde bile öğrenme standardı dalgalanır.
+3.3.3 Konuşma pratiği eksikliği
+En klasik problem: öğrenci grameri ve kelimeyi görür ama konuşma kası gelişmez.
+Sonuç: “Anlıyorum ama konuşamıyorum” bariyeri → özgüven kaybı.
+3.3.4 Süreç kopması (devamsızlık, vize gecikmesi, hastalık)
+Öğrencinin dersi kaçırması veya gecikmeler yaşaması çoğu zaman süreci koparır.
+Sonuç: ritim bozulur → öğrenci geri düşer → kur tekrarı ihtimali yükselir.
+3.3.5 Şehirle bağ kuramama ve sosyal yalnızlık
+Öğrenci şehirle bağ kuramadığında ve sosyal çevre edinemediğinde öğrenme yavaşlar.
+Sonuç: motivasyon düşer, pratik azalır, kurs “formal bir iş” haline gelir.
+
+3.4 Campus German’ın Konumlanması: “Sistem Kurarak” Döngüyü Kırmak
+Campus German, bu eksikleri tek tek yamamak yerine, eğitimi sistemleştirerek çözmeyi hedefler.
+3.4.1 Eğitmen standardı ile güven
+Campus German, A1’den C1’e kadar dersleri ana dili Almanca olan veya ana dili gibi aksansız Almanca konuşan öğretmenlerle yürütür.
+Amaç: öğrencinin doğru telaffuz ve doğru dil refleksiyle ilerlemesi.
+3.4.2 Müfredat standardı ile tutarlılık
+Kalite, öğretmen şansına bırakılmaz. Dersler; belirli bir müfredat düzeni, materyal planı ve sınıf içi aktivite standardı ile yürütülür.
+Amaç: öğrencinin aynı seviye içinde tutarlı öğrenme yaşaması.
+3.4.3 Konuşma kulübü ile “aktif dil”
+Campus German konuşma tarafını dersin dışına itmez; sistemin içine alır.
+• Haftada iki gün konuşma kulübü
+• Moderatör eşliğinde pratik
+• Oyunlarla pekiştirme
+Amaç: konuşma özgüvenini erken dönemde oluşturmak.
+3.4.4 Hibrit süreklilik ile kopmayı engelleme
+Öğrenci zorunlu durumlarda derse online katılarak süreci koparmadan devam edebilir.
+Amaç: ritmi korumak, tekrar riskini azaltmak.
+3.4.5 Bremen deneyimi ile motivasyon ve adaptasyon
+Şehirle bağ kuran öğrenci daha çok pratik yapar ve daha hızlı ilerler.
+Campus German, kültürel şehir/üniversite gezileri gibi yapılarla bu adaptasyonu destekler.
+
+3.5 Acenta Perspektifi: Bu Konumlanma Neden Satış Kolaylaştırır?
+Acentalar için kritik olan iki şey vardır:
+1. Öğrenci memnuniyeti (şikâyet azalır, referans artar)
+2. Süreç yönetimi (belge, iletişim, net kurallar)
+Campus German modeli, acentaya şu faydayı sağlar:
+• net bir satış hikâyesi: “Bremen’de deneyim odaklı, konuşma ağırlıklı, hibrit süreklilik”
+• daha az iade/şikâyet riski
+• daha az kur tekrarı sonucu kriz yönetimi
+• standartlı süreç ve partner iletişim kanalının olması
+
+3.6 Bu Bölümün Tek Cümlelik Özeti
+Piyasada memnuniyetsizlik ve kur tekrarı çoğunlukla sistem sorunlarından kaynaklanır; Campus German bu döngüyü eğitmen standardı, müfredat tutarlılığı, konuşma odaklı yapı ve hibrit süreklilik ile kırmayı hedefler.
+4) Eğitim Modeli ve Kalite Sistemi
+4.1 Bölümün Amacı
+Bu bölüm, Campus German’ın eğitim modelini “slogan” olmaktan çıkarıp somut bir sisteme dönüştürür.
+Hedef; öğrencinin ve acentanın şunu net görmesi:
+• Campus German’da kalite “öğretmene göre değişmez”, standartlarla korunur.
+• Öğrenme sadece kitap takibi değildir; iletişim refleksi, konuşma özgüveni ve süreklilik ile tamamlanır.
+
+4.2 Eğitim Modelinin Omurgası (4 Sütun)
+Campus German eğitim modeli, dört ana sütun üzerine kuruludur:
+1. Eğitmen standardı
+2. Müfredat ve materyal düzeni
+3. İnteraktif & pratik odaklı ders kurgusu
+4. Konuşma + deneyim + süreklilik (hibrit) destek sistemi
+Bu dört sütun birlikte çalıştığında, öğrencinin gelişimi “şansa” değil sisteme bağlı olur.
+
+4.3 Eğitmen Standardı (Kaliteyi Başlatan Nokta)
+Piyasada sık görülen risklerden biri, Almanca’yı yakın dönemde öğrenmiş ve öğretmenlik iddiasıyla ders veren kişilerle eğitim yürütülmesidir. Bu durum özellikle:
+• telaffuz,
+• kalıp kullanımı,
+• doğal akış,
+• “doğru örnek” üzerinden öğrenme
+başlıklarında öğrenciyi zayıflatır.
+Campus German standardı:
+• A1’den C1’e kadar dersler, ana dili Almanca olan veya ana dili gibi aksansız Almanca konuşan öğretmenlerle yürütülür.
+Bu standardın hedeflediği sonuç:
+• Öğrencinin dili en baştan doğru kalıplarla öğrenmesi
+• Telaffuz ve ifade biçimlerinin daha erken oturması
+• “sınav Almancası” yerine gerçek iletişime yakın ilerleme
+
+4.4 Müfredat ve Materyal Düzeni (Tutarlılık ve Ölçülebilirlik)
+Campus German’da materyal, “dersi yürütmek için bir araçtır”; dersin kendisi değildir.
+Materyal seçimi, seviye hedeflerine uygun ve piyasada kabul görmüş kaynaklarla standardize edilir.
+Kullanılan ana materyaller:
+• A1 – A2 – B1: Netzwerk Neu
+• B2 – C1: Aspekte Neu
+Neden standardizasyon önemli?
+• Kur içeriği öğretmene göre değişmez
+• Öğrenci “kur ne verdi, ne vermedi?” sorusunda belirsizlik yaşamaz
+• Acenta satışta net konuşur: “Bu seviyede şu hedefler ve şu materyal”
+• Ölçme-değerlendirme daha adil yürür
+
+4.5 İnteraktif Ders Yaklaşımı (Akıllı Tahta + Oyunlaştırma)
+Campus German’ın hedefi, öğrenciyi sadece kitap takip eden pasif bir öğrenme modunda tutmamak; dersi canlı, pratik ve katılımcı bir deneyime dönüştürmektir.
+Bu yaklaşımın bileşenleri:
+• İnteraktif akıllı tahta kullanımı:
+o kelime ve kalıp tekrarları
+o sınıf içi mini görevler
+o kısa diyalog simülasyonları
+• Oyunlaştırma ve pratik uygulamalar:
+o öğrenci katılımını artırır
+o konuşma korkusunu azaltır
+o dili “kullanım” üzerinden pekiştirir
+Bu yaklaşımın ana fikri: Öğrenciyi “teste hazırlanan” değil, “iletişime hazırlanan” bir yapıya taşımak.
+Not: Campus German ayrıca dönemsel olarak “Alman Film Akşamları” planlamaktadır. Bu etkinlikler hem dinleme becerisini hem de kültürel bağ kurmayı güçlendirecek şekilde kurgulanır.
+
+4.6 Konuşma Odaklı Destek (Speaking Club Sistemi)
+Konuşma pratiği, dil öğreniminin en kırılgan noktasıdır. Bu nedenle konuşma, “ekstra” değil, sistemin temel parçasıdır.
+Campus German konuşma kulübü:
+• Gün/Saat: Salı & Perşembe, 18:00–20:00
+• Format: Almanca bilen moderatör eşliğinde, oyunlarla pekiştirme
+• Katılım hakkı: En az 3 kur satın alan öğrenciler için ömür boyu katılım hakkı
+• Disiplin: Düzeni bozan katılımcıları gruptan çıkarma hakkı saklıdır
+Bu sistemin hedeflediği sonuç:
+• Öğrencinin konuşma özgüveninin erken oluşması
+• “Anlıyorum ama konuşamıyorum” bariyerinin kırılması
+• Ders dışında da dil temasının düzenli sürmesi
+
+4.7 Hibrit Süreklilik (Kopmayı Önleyen Mekanizma)
+Öğrencinin süreçte karşılaşabileceği sorunlar (hastalık, vize gecikmesi, zorunlu durumlar) öğrenmenin kopmasına neden olmamalıdır.
+Campus German hibrit modeli:
+• Öğrenci gerekli durumlarda dersine online katılabilir
+• Etkinliklere dahil olur ve ödevlerini sürdürür
+• Süreç kopmaz, ritim korunur
+Resmî tatiller:
+• Resmî tatillerde ders yapılmaz
+• Telafi dersleri planlanır
+• Toplam ders sayısı kesinlikle korunur
+
+4.8 Kültürel Şehir ve Üniversite Gezileri (Motivasyon ve Adaptasyon)
+Campus German, öğrencinin motivasyonunu ve sosyal adaptasyonunu güçlendirmek için kültürel şehir ve üniversite gezileri düzenler.
+Bu gezilerin işlevi:
+• Öğrencinin Bremen’e aidiyet geliştirmesi
+• Sosyal çevre edinmeyi kolaylaştırması
+• Akademik motivasyonu artırması
+• Dil öğreniminin “hayatla birleşmesi”
+
+4.9 Kaliteyi Koruyan Ölçme Mantığı (Bu bölümün çıktısı)
+Eğitim modeli, ilerleme standardını korumak için “seviye geçiş” politikasıyla tamamlanır. Bu politika Bölüm 5’te ayrıntılı anlatılır; ancak burada temel çerçeve şöyledir:
+• Kur geçişi otomatik değildir
+• Katılım + quiz + speaking check ile ölçülür
+• Başarısızlık halinde gelişim planı uygulanır
+
+4.10 Bu Bölümün Tek Cümlelik Özeti
+Campus German, eğitmen standardı, materyal-müfredat tutarlılığı, interaktif ders yaklaşımı, konuşma kulübü ve hibrit süreklilik ile öğrencinin öğrenme sürecini şansa bırakmadan yönetir.
+5) Seviye Tespit ve Seviye İlerleme Politikası
+5.1 Bölümün Amacı
+Bu bölümün amacı, Campus German’da öğrencinin hangi seviyeden başlayacağını ve bir üst seviyeye nasıl geçeceğini ölçülebilir, şeffaf ve standardize bir sistemle tanımlamaktır.
+Bu sistem iki kritik hedefi korur:
+1. Eğitim kalitesi: Seviye geçişi “otomatik” değil, gerçekten hak edilerek olur.
+2. Öğrenci memnuniyeti: Öğrenci yanlış seviyeden başlatılıp zorlanmaz veya gereksiz tekrar yaptırılmaz.
+
+5.2 Placement Test (Seviye Tespit) — Genel Çerçeve
+Campus German’da seviye tespiti iki yöntemle yapılır:
+5.2.1 Online Placement Test (Standart yöntem)
+• Seviye tespit sınavı online yapılır.
+• Sınav, video gözetimi altında gerçekleştirilir.
+• Amaç: öğrencinin başlangıç seviyesini objektif biçimde belirlemek.
+Online sınavın avantajı:
+• Öğrenci kurs başlamadan seviyesini netleştirir
+• Doğru sınıfa yerleşir
+• Kurs başlangıcında zaman kaybı azalır
+5.2.2 Yüz Yüze Placement Test (Alternatif yöntem)
+Öğrenci online sınava katılamazsa veya teknik olarak gerçekleştiremezse:
+• Seviye tespiti okulda yüz yüze yapılır.
+Not: Yerleşimin doğru yapılması için seviye tespiti zorunludur.
+
+5.3 Yerleştirme Mantığı (Doğru Seviyeye Başlatma)
+Seviye tespit sonucuna göre öğrenci:
+• A1.1 / A1.2
+• A2.1 / A2.2
+• B1.1 / B1.2
+• B2.1 / B2.2
+• C1.1 / C1.2
+gibi alt kurlardan uygun olanına yerleştirilir.
+İlke:
+Öğrenciyi “kolay olsun” diye aşağıdan başlatmak da “hızlı gitsin” diye yukarıdan başlatmak da doğru değildir. Amaç, öğrencinin hem zorlanacağı hem de gelişeceği doğru noktayı bulmaktır.
+
+5.4 Kur Geçişi (Level Progression) — Final Kriter Seti
+Campus German’da bir üst seviyeye geçiş 3 koşulun birlikte sağlanmasına bağlıdır.
+5.4.1 Katılım kriteri (zorunlu)
+• Kurs süresince derslere katılım en az %90 olmalıdır.
+Katılımın amacı:
+Dil öğrenimi “rutin” ister. Katılım düşerse kalite düşer ve öğrenci bir üst kurda zorlanır.
+Hybrid katılım notu:
+Zorunlu durumlarda derslere online katılım sağlanması, katılım olarak kabul edilir.
+5.4.2 Akademik kriter (zorunlu)
+• Kur boyunca yapılan quiz/ölçme araçlarının ortalamasında en az 60/100.
+Bu kriter neyi ölçer?
+• Kelime, gramer ve okuma-dinleme temellerinin oturup oturmadığını
+• Kur hedeflerinin minimum seviyede karşılanıp karşılanmadığını
+5.4.3 Konuşma kriteri: Speaking Check (zorunlu)
+• Kur sonunda öğretmen tarafından uygulanan canlı konuşma değerlendirmesi yapılır.
+• Değerlendirme yüz yüze veya video call ile canlı yürütülür.
+Speaking Check değerlendirme başlıkları:
+• Anlaşılabilirlik (telaffuz/aksan yönetimi)
+• Akıcılık (konuşmanın ritmi)
+• Doğruluk (temel gramer hataları)
+• Kelime kullanımı (günlük ve hedef kelimeler)
+• İletişim becerisi (cevap verebilme, soru sorabilme, diyalog sürdürebilme)
+Amaç:
+Öğrencinin sadece “bilmesi” değil, dili kullanabilmesi.
+
+5.5 Kur Geçişi Kararı Nasıl Verilir?
+Kur geçişi kararı:
+• katılım yüzdesi,
+• quiz ortalaması,
+• speaking check sonucu
+üçlüsünün birlikte değerlendirilmesiyle verilir.
+Önemli ilke:
+• Katılım ve quiz iyi olsa bile, konuşma performansı minimum hedefin altındaysa öğrenci bir üst kurda zorlanabilir.
+• Bu yüzden speaking check, sistemi “sınav odaklı” değil “kullanım odaklı” yapar.
+
+5.6 Kriterler Sağlanmazsa Ne Olur? (Gelişim Planı)
+Öğrenci kriterleri sağlayamazsa süreç “ceza” gibi değil, gelişim planı gibi yönetilir.
+5.6.1 Gelişim planı içeriği
+• Öğrencinin eksik kaldığı alanlar net yazılır (kelime/gramer/konuşma/katılım)
+• Öğrenciye bir sonraki kur başlangıcına kadar takip edebileceği öneri planı sunulur
+• Gerekirse konuşma kulübü katılımı özellikle teşvik edilir
+5.6.2 Yönlendirme
+• Öğrenci uygun bir sonraki başlangıç tarihine yönlendirilir
+• Doğru seviyede tekrar ile “temeli sağlamlaştırma” hedeflenir
+
+5.7 Resmî Tatiller ve Ders Sayısı Koruma (Seviye İlerlemesini Etkileyen Kural)
+Campus German’da:
+• resmî tatillerde ders işlenmez,
+• telafi dersleri yapılır,
+• toplam ders sayısı kesinlikle korunur.
+Bu sayede öğrencinin kur hedefi eksik ders nedeniyle zayıflamaz.
+
+5.8 Özel Durumlar (Standartlaştırılmış Yaklaşım)
+5.8.1 Öğrenci ders kaçırırsa
+Öğrenci bir dersi kaçırsa bile:
+• hibrit modelle dersi online takip edebilir,
+• ödevlerini tamamlayabilir,
+• ritmi koruyabilir.
+5.8.2 Vize gecikmesi
+Öğrenci vize gecikmesi yaşarsa:
+• derslere online katılarak kur sürecini kaybetmez,
+• Almanya’ya geldiği andan itibaren derslere fiziksel katılabilir.
+
+5.9 Bu Bölümün Tek Cümlelik Özeti
+Campus German’da seviye tespiti video gözetimli online sınavla yapılır; seviye ilerleme ise %90 katılım + 60/100 quiz ortalaması + canlı speaking check kriterleriyle ölçülerek kaliteyi koruyan şeffaf bir sistemle yönetilir.
+6) Konuşma Kulübü Politikası
+6.1 Bölümün Amacı
+Bu bölüm, Campus German konuşma kulübünü “ekstra bir etkinlik” olmaktan çıkarıp, eğitim modelinin temel parçası olarak tanımlar. Konuşma kulübünün hedefi; öğrencinin sınıfta öğrendiği dili gerçek iletişime taşıması, özgüven kazanması ve “anlıyorum ama konuşamıyorum” bariyerini sistemli biçimde aşmasıdır.
+Konuşma kulübü aynı zamanda Campus German’ın piyasaya karşı en güçlü farklarından biridir:
+Öğrenciye sadece kur satmak değil, dil temasını kalıcı hale getirmek.
+
+6.2 Program Bilgisi (Zaman, Yer, Katılım)
+Konuşma Kulübü Takvimi
+• Günler: Salı ve Perşembe
+• Saat: 18:00 – 20:00
+• Format: Moderatör eşliğinde, konuşma odaklı pratik
+Katılım şekli
+• Konuşma kulübü, Campus German öğrencilerine yönelik planlanır.
+• Katılım için öğrencinin belirlenen koşulu sağlaması gerekir (bkz. 6.4).
+
+6.3 Moderasyon ve İçerik Formatı
+Konuşma kulübü “serbest sohbet” gibi dağılmaya müsait bir format yerine, moderatör kontrolünde yapılandırılır.
+Moderasyon standardı
+• Kulüp, Almanca bilen bir moderatör eşliğinde yürütülür.
+• Moderatörün görevi: herkesin konuşmasını sağlamak, ortamı canlı tutmak, konuyu dağıtmamak ve öğrencinin hata korkusunu azaltmaktır.
+İçerik yaklaşımı
+• Konuşma pratiği, oyunlarla ve küçük görevlerle pekiştirilir.
+• Öğrenciler “kısa konuşma görevleri” ile konuşmaya zorlanır (gönüllülükten çok rutin).
+Hedeflenen kazanımlar
+• Konuşma özgüveni
+• Diksiyon ve anlaşılabilirlik
+• Günlük kalıpları hızlı kullanma
+• Diyalog sürdürebilme
+Not: Konuşma kulübü “sınav odaklı” değil; öğrencinin Almanya’daki günlük hayata uyumunu hızlandıran “sosyal Almanca” odağındadır.
+
+6.4 Katılım Hakkı (Ömür Boyu Hak Kuralı)
+Campus German, konuşma kulübünü değer üreten bir “kalıcı hak” olarak konumlandırır.
+Ömür boyu katılım hakkı
+• En az 3 kur satın alan öğrenciler, konuşma kulübüne ömür boyu katılım hakkı elde eder.
+Bu kuralın amacı
+• Öğrenciye “kur bitince ilişki biter” duygusu yaşatmamak
+• Öğrencinin dil temasını uzun vadede sürdürmesi
+• Campus German topluluğunu canlı tutmak
+Pratik gerçeklik notu (politika dili)
+• Campus German, konuşma kulübünün sürdürülebilirliği ve düzeni için katılım kurallarını güncelleyebilir.
+• Kulüp, eğitim kalitesini korumak adına belirli dönemlerde kayıt/rezervasyon ile işletilebilir (bkz. 6.6).
+
+6.5 Topluluk Kuralları ve Disiplin
+Konuşma kulübü, iyi niyetli bir topluluk olsa da “düzen” olmadan sürdürülemez. Bu nedenle Campus German’ın disiplin yetkisi net olarak tanımlanır.
+Temel kurallar
+• Saygılı iletişim
+• Söz kesmeme, başkalarının konuşmasına alan tanıma
+• Moderatör yönlendirmelerine uyma
+• Kulübün amacını sabote edecek davranışlardan kaçınma
+Disiplin yetkisi
+• Konuşma kulübünün düzenini bozan, tekrar eden şekilde olumsuz etkileyen veya topluluğu provoke eden katılımcılar hakkında Campus German’ın:
+o uyarı verme,
+o belirli süreli uzaklaştırma,
+o kulüpten çıkarma
+hakkı saklıdır.
+Neden bu kadar net?
+• Kulüp “özgür alan” değil; öğrencinin gelişimi için tasarlanmış bir öğrenme ortamıdır.
+• Bir kişinin düzensizliği, 20 kişinin motivasyonunu bozabilir.
+
+6.6 Kapasite ve Rezervasyon Sistemi (Gerektiğinde)
+Şu an için yoğunluk beklenmemekle birlikte, ileride talep artarsa konuşma kulübünün kalitesini korumak için rezervasyon uygulanabilir.
+Rezervasyon sistemi devreye girerse
+• Katılım, önceden kayıt ile planlanır
+• Kapasite dolarsa bir sonraki oturum için liste oluşturulur
+• Bu sistemin amacı “sınırlamak” değil; kulübün kalitesini korumaktır
+
+6.7 Sürdürülebilirlik ve Kalite Mantığı
+Konuşma kulübünün Campus German’daki rolü:
+• dersin konuşma tarafını güçlendirmek
+• öğrenciyi sosyal hayata daha hızlı adapte etmek
+• öğrencinin dili “aktif hale getirmesini” sağlamak
+• uzun vadeli öğrenci topluluğu oluşturmak
+Bu nedenle kulüp:
+• “ekstra etkinlik” değil,
+• eğitim sisteminin kalıcı bir parçasıdır.
+6.8 Bu Bölümün Tek Cümlelik Özeti
+Campus German konuşma kulübü, Salı–Perşembe 18:00–20:00 arasında moderatör eşliğinde yürütülen; en az 3 kur satın alan öğrencilere ömür boyu katılım hakkı veren ve disiplin/rezervasyon kurallarıyla kaliteyi koruyan yapılandırılmış bir konuşma pratiği sistemidir.
+7) Kurs Formatları ve Operasyon
+7.1 Bölümün Amacı
+Bu bölüm, Campus German’daki kursların nasıl organize edildiğini; Bremen/Online/Hybrid formatlarının farklarını, takvim ve sınıf dağılım mantığını, tatil-telafi sistemini ve temel operasyon kurallarını netleştirir.
+Amaç; hem öğrencinin hem de acentanın şu konularda net bilgiye sahip olmasıdır:
+• Kurslar hangi formatlarda sunulur?
+• Başlangıç tarihleri ve günlük ders akışı nasıl işler?
+• Grup dağılımı nasıl yapılır?
+• Tatil ve telafi dersleri nasıl yönetilir?
+• Yaş sınırı ve temel katılım kuralları nelerdir?
+
+7.2 Kurs Formatları (Bremen / Online / Hybrid)
+7.2.1 Bremen (Yüz Yüze Kurs)
+• Dersler, Campus German’ın Bremen’deki merkezinde yüz yüze yürütülür.
+• Öğrenci sınıf içi etkinliklere doğrudan katılır, sosyal çevre edinme ve adaptasyon hızlanır.
+Adres (referans): Bürgermeister Smidt Str. 80, 28195 Bremen
+7.2.2 Online (Tamamen Çevrimiçi)
+• Kurs, tamamen çevrimiçi yürütülür.
+• Online model, Almanya dışından başlayan veya yoğun programı uzaktan sürdürmek isteyen öğrenciler için uygundur.
+7.2.3 Hybrid (Hibrit Katılım Modeli)
+Hybrid bir “ayrı kurs” değil; yüz yüze kursa kayıtlı öğrencinin, gerekli durumlarda derslere çevrimiçi katılım sağlayabilmesidir.
+Hibrit modelin amacı:
+• Vize gecikmesi, hastalık veya zorunlu durumlarda sürecin kopmasını önlemek
+• Katılım ve öğrenme ritmini korumak
+• Öğrencinin kur hedefinden geriye düşmemesini sağlamak
+Kural:
+Öğrenci Almanya’ya geldiği andan itibaren derslere fiziksel olarak katılabilir.
+
+7.3 Kurs Takvimi ve Başlangıç Tarihleri
+7.3.1 Aynı tarih prensibi
+Campus German’da Bremen / Online / Hybrid programlarının başlangıç tarihleri aynıdır.
+Bu ne sağlar?
+• Acentaların satış planlaması kolaylaşır
+• Öğrencinin online başlayıp Bremen’e geçmesi gibi senaryolar daha yönetilebilir olur
+• Tek takvim, daha az karışıklık demektir
+7.3.2 Seviye bazlı başlangıçlar
+Başlangıç tarihleri, A1.1’den C1.2’ye kadar belirlenen seviye akışına göre planlanır. Öğrencinin doğru başlangıç seviyesi, Bölüm 5’teki seviye tespit sistemi ile belirlenir.
+
+7.4 Günlük Ders Akışı ve Grup Dağılımı
+7.4.1 Sabah / öğleden sonra grupları
+Campus German’da gruplar, sabah veya öğleden sonra olarak planlanabilir.
+Önemli operasyon kuralı:
+Öğrencinin sabah/öğleden sonra seçimi şu an için kesin bir tercih olarak garanti edilmez. Dağılım:
+• kontenjan durumuna,
+• öğretmen müsaitliğine
+göre yapılır.
+Bu yaklaşımın amacı:
+Eğitim kalitesini ve öğretmen standardını korumak, grupları sağlıklı şekilde yönetmek.
+
+7.5 Resmî Tatiller ve Telafi Dersi Politikası
+7.5.1 Temel kural
+• Resmî tatillerde ders yapılmaz.
+• Telafi dersleri planlanır.
+• Toplam ders sayısı kesinlikle korunur.
+7.5.2 Neden bu kadar kritik?
+Öğrencinin kur hedeflerini tutturabilmesi için ders sayısının korunması şarttır. Bu kural:
+• öğrencinin seviye geçiş kriterlerini etkileyen “ders eksikliği” riskini sıfırlar,
+• acentaya da “plan stabil” mesajı verir.
+
+7.6 Derse Katılım ve Ders Kaçırma Durumu
+7.6.1 Ders kaçırma durumunda yaklaşım
+Öğrenci bireysel olarak bir dersi kaçırsa bile, süreç kopmamalıdır.
+Campus German’da:
+• Öğrenci hibrit model sayesinde dersi online takip ederek ritmi koruyabilir.
+• Ödev ve takip sürecini sürdürerek eksiklerini kapatabilir.
+Not:
+Buradaki mantık “telafi dersi” değil; dersin sürekliliğini koruyacak şekilde öğrencinin sürece dahil kalmasıdır.
+(Resmî tatil gibi okul kaynaklı iptallerde ise telafi dersi yapılır.)
+
+7.7 Minimum Yaş Kuralı
+Campus German kursları için minimum yaş:
+• 16+
+Bu sınır, sınıf dinamiğini ve öğrenme ortamının verimini korumak için uygulanır.
+
+7.8 Operasyonel Netlik: Bu Bölümün Çıktıları
+Bu bölüm, acenta ve öğrenci için şu net taahhütleri sağlar:
+• Kurs formatları: Bremen / Online / Hybrid
+• Başlangıç tarihleri: tüm formatlarda aynı
+• Grup dağılımı: kontenjan + öğretmen müsaitliği
+• Tatiller: ders yok, telafi var, ders sayısı korunur
+• Süreç kopması: hibrit model ile önlenir
+• Yaş sınırı: 16+
+
+7.9 Bu Bölümün Tek Cümlelik Özeti
+Campus German, Bremen/Online/Hybrid formatlarında aynı başlangıç takvimiyle ilerleyen; grup dağılımını kontenjan ve öğretmen müsaitliğine göre yöneten; resmî tatillerde telafi dersiyle toplam ders sayısını koruyan ve hibrit modelle öğrencinin sürecini koparmayan operasyonel bir kurs yapısına sahiptir.
+
+8) Programlar (Ürün Kataloğu)
+8.1 Bölümün Amacı
+Bu bölüm, Campus German’ın sunduğu tüm programları “ürün kataloğu” mantığında standartlaştırır. Her program için:
+• kime uygun olduğu,
+• temel içerik ve hedef,
+• kurs formatı (Bremen/Online/Hybrid),
+• süre/yoğunluk mantığı,
+• önemli kurallar ve sınırlar
+net şekilde tanımlanır.
+Bu sayede:
+• web sitesinde program sayfaları tutarlı yazılır,
+• acenta satışta net anlatır,
+• öğrenci doğru programı seçer.
+8.2 Program Haritası (Genel Bakış)
+Campus German programları 4 ana grupta toplanır:
+1. Yoğun Akademik Almanca A1–C1 (Bremen / Hybrid)
+2. Online Yoğun Almanca A1–C1
+3. Haftalık Yoğun Kurslar (2–16 hafta)
+4. Sınav Hazırlık (TELC C1 Hochschule odaklı)
+5. University Pathway (Uni Bremen + HS Bremen)
+Not: (1) ve (2) ana omurgadır. Haftalık kurslar esneklik sağlar. Sınav hazırlık ve Pathway ise hedef odaklı özel ürünlerdir.
+8.3 Yoğun Akademik Almanca A1–C1 (Bremen / Hybrid)
+8.3.1 Program Tanımı
+Yoğun Akademik Almanca programı, A1’den C1’e kadar seviyeleri kapsayan ve Campus German’ın ana eğitim omurgasını oluşturan programdır.
+Bu program, öğrencinin Almanca’yı sistemli şekilde ilerleterek akademik hayat ve günlük yaşam için gerekli “iletişim refleksini” geliştirmesini hedefler.
+8.3.2 Kimler için uygun?
+• Almanya’da eğitim veya yaşam planlayan öğrenciler
+• Dil gelişimini kısa sürede ileri taşımak isteyenler
+• Düzenli bir kur akışı içinde A1’den C1’e kadar ilerlemek isteyenler
+• Vize sürecinde kurs kaydına ihtiyaç duyan öğrenciler (bkz. Belgelendirme kuralları)
+8.3.3 Format ve süre mantığı
+• Bremen (yüz yüze) ana format
+• Zorunlu durumlarda öğrenci hibrit olarak derse katılabilir (Hybrid bir ayrı kurs değil, süreklilik modelidir)
+• Ders sayısı ve kur süreleri, Campus German’ın belirlediği standart akışa göre yürütülür (ders sayısı korunur)
+8.3.4 İçerik ve materyal
+• A1–A2–B1: Netzwerk Neu
+• B2–C1: Aspekte Neu
+• Ders içeriği: sadece kitap takibi değil; interaktif etkinlikler ve pratik uygulamalarla desteklenir.
+8.3.5 Başarı ve seviye geçiş
+Seviye geçişi otomatik değildir.
+• %90 katılım
+• Quiz ortalaması ≥ 60/100
+• Kur sonu Speaking Check
+(Bkz. Bölüm 5)
+8.4 Online Yoğun Almanca A1–C1
+8.4.1 Program Tanımı
+Online Yoğun Almanca programı, Campus German’ın A1–C1 seviyelerindeki yoğun kurs akışını tamamen çevrimiçi formatta sunar.
+8.4.2 Kimler için uygun?
+• Almanya dışında olup Almanca’ya güçlü bir başlangıç yapmak isteyenler
+• Bremen’e gelmeden önce dil seviyesini yükseltmek isteyenler
+• Kur akışını online sürdürmeyi planlayan öğrenciler
+• Vize reddi sonrası alternatif olarak online devam etmek isteyen öğrenciler
+8.4.3 Ders yoğunluğu (standart bilgi)
+• 1 ders: 45 dakika
+• A1–A2: 20 ders/hafta
+• B1–B2–C1: 25 ders/hafta
+8.4.4 İçerik ve materyal
+Online programda da materyal standardı korunur:
+• A1–A2–B1: Netzwerk Neu
+• B2–C1: Aspekte Neu
+8.5 Haftalık Yoğun Kurslar (2–16 Hafta)
+8.5.1 Program Tanımı
+Haftalık kurslar, yoğun kurslarla aynı eğitim çizgisinde ilerleyen; ancak “kur arası giriş” ve “3 aylık vize kaydı zorunluluğu” gibi sebeplerle fiyatlandırması ve satın alma mantığı farklılaştırılmış esnek bir programdır.
+8.5.2 Kimler için uygun?
+• Kur başlangıç tarihini beklemeden belirli bir süre katılım yapmak isteyenler
+• Kısa dönem Almanya’da olup dilini güçlendirmek isteyenler
+• Vize amaçlı uzun kayıt yerine, kısa süreli yoğun program isteyenler
+8.5.3 Süre seçenekleri
+• 2 hafta
+• 4 hafta
+• 8 hafta
+• 16 hafta
+(İleride 24 hafta opsiyonu ayrıca planlanabilir)
+8.5.4 Not (satış netliği)
+Haftalık kurslar “daha düşük kalite” anlamına gelmez. Bu, aynı öğrenme modelinin esnek paketlenmiş halidir.
+8.6 Sınav Hazırlık Programı (TELC C1 Hochschule)
+8.6.1 Program Tanımı
+Sınav Hazırlık programı, ağırlıklı olarak TELC C1 Hochschule sınavını hedefleyen; öğrenciye sınav formatını, soru tiplerini ve pratik stratejilerini öğreten özel bir programdır.
+8.6.2 Kimler için uygun?
+• TELC C1 Hochschule sınavına girecek öğrenciler
+• Üniversiteye geçiş veya akademik hedefler için C1 belgesi isteyenler
+• Sınav formatına özel pratik ihtiyacı olanlar
+8.6.3 Program içeriği
+• Toplam: 80 ders saati
+• 3 örnek sınav (deneme)
+• Diğer sınav türleri de tanıtılır; ana odak TELC C1 Hochschule’dur.
+8.6.4 Açılma sıklığı
+• Program 3 ayda 1 açılır.
+8.7 University Pathway (Uni Bremen + HS Bremen)
+8.7.1 Program Tanımı
+University Pathway, Uni Bremen ve Hochschule Bremen hedefli üniversite hazırlık yaklaşımını kapsayan bir program başlığıdır.
+8.7.2 Kapsam (çok net sınır)
+Bu ürün, “genel danışmanlık” değildir. Campus German bu başlık altında:
+• Şartlı kabulü olmayan öğrencilere 500€ karşılığında şartlı kabul desteği sunar.
+Kapsama dahil değildir:
+• Üniversite/bölüm seçimi danışmanlığı
+• Başvuru dosyasının tüm yönetimi
+• Vize süreci yönetimi / temsil
+• Kayıt ve diğer aşamaların takibi
+Bu netlik, hem hukuki sınır hem de beklenti yönetimi için kritik.
+8.8 Programlar Arası Geçiş Mantığı (Pratik Senaryolar)
+Bu bölüm, acenta satışında sık gelen sorular için “net çerçeve” sağlar:
+• Öğrenci online başlayıp Bremen’e geçebilir (takvimler aynı)
+• Öğrenci vize gecikmesi yaşarsa hibrit katılımla ritmi korur
+• Öğrenci vize reddi alırsa indirimli online devam veya iade seçeneği vardır (Bkz. Bölüm 11)
+• Öğrenci konuşma pratiğini kur bitse bile sürdürebilir (en az 3 kur almışsa ömür boyu speaking club)
+8.9 Bu Bölümün Tek Cümlelik Özeti
+Campus German; yoğun akademik A1–C1 (Bremen/Hybrid), online yoğun A1–C1, haftalık esnek kurslar, TELC C1 Hochschule sınav hazırlığı ve Uni Bremen + HS Bremen odaklı Pathway başlığı altında şartlı kabul desteği sunan program portföyüyle öğrencinin hedeflerine göre yapılandırılmış seçenekler sunar.
+9) Fiyatlandırma ve İndirim Politikaları
+9.1 Bölümün Amacı
+Bu bölüm, Campus German fiyatlarını “tek bir standart” altında toplar ve hem web sitesi hem acenta satışı hem de operasyon için net, çelişkisiz bir fiyat politikası oluşturur.
+Bu bölümde hedef:
+• Öğrencinin “neye ne ödediğini” açıkça görmesi
+• Acentanın hızlı teklif verebilmesi
+• Paket indirimlerinin standardize edilmesi
+• Online / Bremen-Hybrid / Haftalık formatlar arasındaki farkın netleşmesi
+
+9.2 Fiyat Gösterim Standardı (Her yerde aynı dil)
+Campus German fiyatları paylaşılırken aşağıdaki bilgiler birlikte verilir:
+• Seviye (A1 / A2 / B1 / B2 / C1)
+• Toplam ders sayısı (Lesson Hours)
+• 1 ders = 45 dakika
+• Haftalık yoğunluk (A1–A2: 20 ders/hafta | B1–C1: 25 ders/hafta)
+• Format (Bremen/Hybrid veya Online)
+• İndirim koşulları (varsa)
+Not: Resmî tatillerde ders yapılmaz; telafi dersleri planlanır ve toplam ders sayısı korunur (Bölüm 7).
+
+9.3 Yoğun Akademik Almanca Fiyatları (Bremen / Hybrid)
+9.3.1 Seviye bazlı fiyatlar
+Aşağıdaki fiyatlar, Bremen’de yüz yüze yürütülen ve gerektiğinde hibrit katılım ile sürdürülebilen yoğun akademik kurslar içindir.
+• A1: ~160 ders → 890 €
+• A2: ~160 ders → 890 €
+• B1: ~200 ders → 1.090 €
+• B2: ~200 ders → 1.090 €
+• C1: ~200 ders → 1.190 €
+9.3.2 Toplam paket örneği (bilgilendirme)
+A1 + A2 + B1 + B2 + C1 toplamı (indirimsiz) ≈ 5.050 €
+Bu satır webde “örnek toplam maliyet” olarak kullanılabilir; ancak satışta asıl amaç öğrencinin hedef seviyesine göre paket oluşturmaktır.
+
+9.4 Online Yoğun Almanca Fiyatları (A1–C1)
+9.4.1 Seviye bazlı fiyatlar
+• A1: ~160 ders → 790 €
+• A2: ~160 ders → 790 €
+• B1: ~200 ders → 990 €
+• B2: ~200 ders → 990 €
+• C1: ~200 ders → 1.090 €
+9.4.2 Ders yoğunluğu standardı (online için özellikle net)
+• 1 ders = 45 dakika
+• A1 – A2: 20 ders/hafta
+• B1 – B2 – C1: 25 ders/hafta
+
+9.5 Paket İndirim Politikası (Kur bazlı)
+9.5.1 İndirim kuralı 1
+• B1 + B2 + C1 birlikte satın alımda: %5 indirim
+9.5.2 İndirim kuralı 2
+• 4 kur satın alımda (A2 + B1 + B2 + C1): %10 indirim
+9.5.3 İndirimlerin sunum standardı
+İndirimler:
+• kurs sayfalarında açıkça belirtilir
+• acentaya ayrıca “satış notu” olarak iletilir
+• öğrenciyle iletişimde sürpriz/sonradan değişen oranlar kullanılmaz
+
+9.6 Haftalık Yoğun Kurs Fiyatları (2–16 Hafta)
+9.6.1 A1 – A2 Haftalık Fiyatlar
+• 2 hafta: haftalık 260 €
+• 4 hafta: haftalık 230 €
+• 8 hafta: haftalık 200 €
+• 16 hafta: haftalık 180 €
+9.6.2 B1 – B2 – C1 Haftalık Fiyatlar
+• 2 hafta: haftalık 290 €
+• 4 hafta: haftalık 250 €
+• 8 hafta: haftalık 225 €
+• 16 hafta: haftalık 200 €
+9.6.3 Bu fiyatların mantığı (açıklama cümlesi)
+Haftalık kurslar, yoğun kurslarla aynı öğrenme çizgisinde ilerleyen ancak “esnek süre” ve “kur aralarında katılım” gibi ihtiyaçlara göre paketlenmiş bir modeldir.
+
+9.7 Ek Ücretler ve Yan Hizmetler (Fiyatlandırma Mantığı)
+Bu dokümanda fiyatı kesinleşmiş ek hizmetler:
+9.7.1 Konaklama (aylık)
+• Tek kişilik oda: 690 € / ay
+• Paylaşımlı oda: 550 € / ay
+• Depozito: 600 €
+• Temizlik ücreti: 60 € (tek sefer)
+(Diğer detaylar Bölüm 12)
+9.7.2 (Opsiyonel) Vize Davet Mektubu Ücreti
+Sen daha önce form taslağında “Visa Invitation Letter +50€” notunu düşmüştün.
+Bunu “tek kaynak”ta çelişkisiz yapmak için burada netleştirelim:
+• Eğer Campus German’da opsiyonel davet mektubu için sabit bir ücret uygulanacaksa: +50 €
+• Eğer bu ücret uygulanmayacaksa: bu madde dokümandan tamamen çıkarılmalı.
+Şu an elimizde iki veri var:
+• Form taslağında +50€ geçiyor
+• Belge SLA’sı ve politika metninde ücret netleşmemiş
+İstersen bu maddede karar verelim; ben dokümanı ona göre sabitleyeyim.
+9.8 Fiyatların İletişim Dili (Web + Acenta için kısa standart)
+Web sitesinde ve acenta tekliflerinde fiyatlar şu kısa formatla verilir:
+Örnek:
+“B1 Yoğun Akademik Kurs: 200 ders (45 dk) – 1.090€ | B1–C1 haftalık 25 ders/hafta”
+Bu sayede öğrenci fiyatı “görür” ama aynı anda paket içeriğini de anlayabilir.
+9.9 Bu Bölümün Tek Cümlelik Özeti
+Campus German fiyatlandırması, Bremen/Hybrid ve Online yoğun kurslar ile haftalık esnek kurs modellerini; ders sayısı ve ders süresi standardıyla şeffaf biçimde sunar, ayrıca B1-B2-C1 toplu paket alımında %5 ve 4 kur alımında %10 indirim politikası uygular.
+10) Ödeme ve Belgelendirme
+10.1 Bölümün Amacı
+Bu bölüm, Campus German’da ödeme sürecini ve kurs kaydına bağlı olarak düzenlenen belgeleri standartlaştırır.
+Hedef; öğrencinin ve acentanın şu konularda net bilgiye sahip olmasıdır:
+• Ödeme nasıl yapılır?
+• Ödeme sonrası hangi belgeler hazırlanır?
+• Belgeler hangi dilde ve ne kadar sürede iletilir?
+• Hangi seviyeler için belge düzenlenir?
+• Resmî makamlarla yapılan bildirim “vize takibi” mi, değil mi?
+
+10.2 Ödeme Yöntemi (IBAN)
+Campus German’da ödeme yöntemi:
+• IBAN (banka havalesi)
+Operasyonel prensip:
+Belge hazırlama ve kesin kayıt işlemleri, ödemenin Campus German hesabına ulaşması (hesaba geçmesi) ile başlar.
+
+10.3 Kayıt ve Belgelendirme Mantığı
+Campus German, dil okulu olarak yalnızca kurs kaydına ilişkin belgeleri düzenler.
+Bu belgeler, öğrencinin kursa kayıt olduğunu ve kursun detaylarını doğrulayan resmi dokümanlardır.
+Önemli sınır:
+Campus German vize danışmanlığı yapmaz; vize sürecini takip etmez ve karar mekanizmalarına müdahil olmaz. (Bkz. Bölüm 14)
+
+10.4 Belge Türleri (Standart Set)
+Ödeme hesaba ulaştıktan sonra, öğrencinin satın aldığı hizmete göre aşağıdaki belgeler düzenlenir:
+10.4.1 Kayıt Belgesi (Anmelde-/Teilnahmebestätigung)
+• Öğrencinin ilgili seviyeye/kursa kayıt olduğunu gösteren belgedir.
+• Kurs seviyesi, başlangıç tarihi ve ilgili eğitim bilgilerini içerir.
+10.4.2 Vize Davet Mektubu (Opsiyonel)
+• Öğrenci/acentanın talebi doğrultusunda ve ilgili ürün kapsamında düzenlenir.
+• Ücret: +50 €
+Not: Bu mektup bir “garanti” değildir; kurs kaydına ilişkin destekleyici bir evraktır.
+
+10.5 Belge Dili
+• Düzenlenen evrakların dili: Almanca
+Bu standart, resmî süreçlerde kullanılabilirliği artırmak için uygulanır.
+
+10.6 Belge Hazırlama Süresi (SLA)
+Campus German’ın standart belge hazırlama taahhüdü:
+• Ödeme hesaba geçtiği andan itibaren en geç 1 hafta içinde
+o kayıt belgesi
+o (opsiyon seçildiyse) vize davet mektubu
+hazırlanır ve iletilir.
+
+10.7 Belge Düzenleme Kapsamı: “Sadece Tam Ödeme Yapılan Seviyeler”
+Campus German’da belge düzenleme kuralı nettir:
+• Belge yalnızca tam ödeme yapılan seviye(ler)/kurslar için düzenlenir.
+• Diğer seviyeler için “ön kayıt belgesi” düzenlenmez.
+• Öğrenci birden fazla seviyeyi birlikte satın almışsa, belge kapsamı tam ödemesi yapılan seviyelerle sınırlı olacak şekilde düzenlenir.
+Amaç:
+Belgelendirmede şeffaflık ve yanlış beklentiyi önleme.
+
+10.8 Bremen Ausländerbehörde Bilgilendirmesi (Vize Takibi Değildir)
+Kayıt belgesi düzenlendikten sonra, gerekli görülen durumlarda Bremen Yabancılar Dairesi’ne öğrencinin kurs kaydı hakkında bilgilendirme yapılabilir.
+Bu bilgilendirmenin niteliği:
+• Vize danışmanlığı değildir
+• Vize takibi / temsil değildir
+• Sadece kurs kaydının bildirimidir
+Bu sınır, hem hukuki netlik hem de doğru beklenti yönetimi için önemlidir.
+
+10.9 Belge İletimi (Operasyon Standardı)
+Belge sürecinin öğrenci/acentaya iletimi şu şekilde yürütülür:
+• Bilgilendirme e-postası
+• Kayıt belgesi (ve varsa vize davet mektubu) eklenerek teslim
+Bu süreçte acenta, öğrencinin dosya akışını tek yerden takip edebilmesi için partner kanalı üzerinden destek alabilir.
+
+10.10 Bu Bölümün Tek Cümlelik Özeti
+Campus German’da ödeme IBAN ile yapılır; ödeme hesaba geçtikten sonra en geç 1 hafta içinde Almanca kayıt belgesi ve opsiyonel (+50€) vize davet mektubu hazırlanır; belgeler yalnızca tam ödeme yapılan seviyeler için düzenlenir ve resmî makamlara yapılan bilgilendirme vize takibi değildir.
+11) İade, İptal, Vize Reddi ve Kupon Politikaları
+11.1 Bölümün Amacı
+Bu bölüm, Campus German’da iade/iptal/vize reddi gibi “kriz” gibi görünen durumları, önceden tanımlı ve şeffaf kurallarla yönetmek için hazırlanmıştır.
+Amaç; hem öğrenci hem acenta tarafında:
+• yanlış beklentiyi önlemek,
+• süreçleri standartlaştırmak,
+• karar mekanizmasını kişiye bağlı olmaktan çıkarmaktır.
+Bu bölümün dili özellikle nettir; çünkü en çok anlaşmazlık bu başlıklarda doğar.
+
+11.2 Temel İlke: Şeffaflık ve Belgeli Süreç
+Campus German’da iade/iptal talepleri:
+• yazılı bildirimle alınır,
+• gerekirse doğrulama/teyit mekanizmalarıyla desteklenir,
+• süre ve kapsam açısından standart kurallara tabidir.
+Genel masraf notu:
+Tüm iade işlemlerinde banka/SWIFT kesintileri gibi dış kaynaklı masraflar Campus German kontrolünde değildir; iade tutarı bu masraflar hariç uygulanır.
+
+11.3 İlk Hafta Para İade Garantisi (Vize Gerekli Olmayan Kurslar)
+11.3.1 Kapsam
+İlk hafta para iade garantisi yalnızca:
+• vize gerekmeyen kurslar için,
+• Almanya’da bulunan öğrenciler için geçerlidir.
+11.3.2 Süre şartı
+• İade talebi, ilk hafta içinde yapılmalıdır.
+11.3.3 Katılım şartı (memnuniyet temelli)
+Bu iade, “memnuniyet” temelli bir yaklaşımdır; ancak öğrencinin derse katılımı esastır.
+• Öğrenci derse hiç katılmadıysa iade uygulanmaz.
+• Öğrenci iade talep ettiği andan itibaren devam eden derslere katılamaz.
+11.3.4 İade süresi
+• İade, talep tarihinden itibaren 1 ay içerisinde gerçekleştirilir.
+• Banka/SWIFT masrafları iade tutarından düşebilir.
+Not (operasyon netliği):
+Bu garanti, “vize amaçlı yüz yüze kurslar” için geçerli değildir (bkz. 11.5).
+
+11.4 Vize Reddi Durumunda Seçenekler (Belge + Teyit Şartı)
+11.4.1 Vize reddinin ispatı
+Vize reddi sürecinde Campus German, yalnızca basit bir ret yazısına dayanarak otomatik işlem yapmaz. Süreç:
+1. Öğrenci vize reddine ilişkin yazılı belgeyi iletir
+2. Durum gerektiğinde Bremen Ausländerbehörde ile teyit edilerek netleştirilir
+3. Teyit sonrası aşağıdaki seçenekler sunulur
+11.4.2 Öğrenci seçenekleri
+Vize reddi teyit edildikten sonra öğrenci:
+Seçenek A — Online devam (indirimli)
+• Öğrenci isterse kalan kurlarına indirimli şekilde online devam edebilir.
+Seçenek B — Kalan kurların iadesi
+• Öğrenci devam etmek istemezse, kalan kurların bedeli
+o kesinti olmaksızın (banka/SWIFT masrafları hariç)
+o 1 ay içinde iade edilir.
+Bu yapı, hem öğrenciyi korur hem de sürecin kötüye kullanımını engeller.
+
+11.5 Vize Amaçlı Yüz Yüze Kurslarda İptal / İade Politikası
+11.5.1 Temel kural: İade yok
+Vize amacıyla yüz yüze kursa kayıt yapıldığında ve bu kapsamda kayıt belgesi/davet mektubu düzenlendiğinde:
+• kurs iptali halinde ücret iadesi bulunmaz.
+Gerekçe:
+Belge düzenlenmesi ile birlikte süreç “vize amacı” kapsamında işletilmiş olur ve bu ürün, farklı bir risk yapısına sahiptir.
+11.5.2 Alternatif çözüm: Online kupon (Voucher)
+İade yerine Campus German, kalan kurlar için öğrenciye:
+• online kurs kuponu (voucher) sunar.
+
+11.6 Voucher / Kupon Politikası (Vize Kurs İptali Alternatifi)
+11.6.1 Geçerlilik süresi
+• Voucher, düzenlendiği tarihten itibaren 1 yıl geçerlidir.
+11.6.2 Kullanım şekli
+• Öğrenci dilerse kuponu daha sonra kendi eğitimi için kullanabilir.
+• Kupon, online kurs kullanım hakkı olarak tanımlanır.
+11.6.3 Devir (başkasına aktarma)
+• Kupon devri mümkündür.
+• Devir için kupon kodu ile birlikte, öğrencinin devri kabul ettiğine dair e-posta bilgilendirmesi yapılır.
+11.6.4 Kupon formatı
+• Kupon bir kod (ve/veya yazılı kupon belgesi) olarak düzenlenir ve kayıt e-postası ile iletilir.
+
+11.7 Kursa Başlama / Fiziksel Katılım Kuralı (Vize Gecikmesi Senaryosu)
+Öğrenci vize gecikmesi yaşarsa:
+• kursa hibrit model ile online katılabilir,
+• Almanya’ya geldiği andan itibaren fiziksel derslere dahil olabilir.
+Bu kural, öğrencinin “kuru kaybetmemesini” ve sürecin kopmamasını hedefler.
+
+11.8 Bu Bölümün Tek Cümlelik Özeti
+Campus German’da ilk hafta iade garantisi yalnızca vize gerekmeyen kurslarda ve Almanya’daki öğrenciler için geçerli olup, vize reddi teyit sonrası online devam veya kalan kurların iadesi seçenekleri sunar; vize amaçlı yüz yüze kurslarda ise iade yerine 1 yıl geçerli devredilebilir online voucher uygulanır.
+12) Konaklama Modeli (Geçici Destek)
+12.1 Bölümün Amacı
+Bu bölüm, Campus German’ın konaklama tarafını “dil kursu hizmetinin bir parçası” gibi belirsiz bırakmadan; geçici destek modeli olarak netleştirir.
+Amaç; öğrencinin beklentisini doğru yönetmek ve acentanın satışta yanlış vaat vermesini önlemektir.
+Bu modelin temel yaklaşımı şudur:
+Konaklama bir “otel/daire kiralama hizmeti” değil; öğrencinin Bremen’e ilk gelişinde kısa süreli adaptasyon ihtiyacını karşılamak için sunulan bir destek paketidir.
+
+12.2 Konaklamanın Ürün Tanımı (Çerçeve)
+• Konaklama, zorunlu bir hizmet değildir.
+• Sadece öğrencinin Bremen’e ilk gelişinde kısa süreli çözüm sağlamak için planlanmıştır.
+• Öğrencinin bunu “kalıcı ev” gibi değerlendirmemesi gerekir.
+Önemli ilke:
+Campus German bu modeli “geçici konaklama” olarak sunar ve oda seçimi/ev tercihi gibi beklentileri garanti etmez.
+
+12.3 Konaklama Tipleri ve Fiyatlar (Aylık)
+Campus German konaklaması iki ana oda tipinde sunulur:
+1. Tek kişilik oda: 690 € / ay
+2. Paylaşımlı oda: 550 € / ay
+Bu fiyatlar aylık bazdadır ve geçici konaklama mantığında uygulanır.
+
+12.4 Depozito ve Temizlik Ücreti
+• Depozito: 600 €
+• Temizlik ücreti: 60 € (tek seferlik)
+Not:
+Temizlik ücreti, konaklama hizmeti kapsamında sabit bir bedel olarak alınır.
+
+12.5 Dahil Olan Hizmetler
+Konaklama ücretine şu kalemler dahildir:
+• internet
+• elektrik
+• ısınma
+• mobilya
+Bu, öğrencinin Bremen’e geldiği ilk dönemde ek masraf ve organizasyon yükünü azaltmak için tasarlanmıştır.
+
+12.6 Süre Mantığı ve Uzatma Kuralı
+Konaklama:
+• temelde 1 aylık planlanır,
+• ihtiyaç halinde uzatılabilir, ancak uzatma yalnızca ev sahibinin izni ve müsaitlik devam ediyorsa mümkündür.
+Operasyonel not:
+Bu kural, konaklamanın “garanti uzatılabilir” gibi sunulmasını engeller.
+
+12.7 Check-in / Teslim Kuralı (Çok Net)
+• Check-in (oda teslimi), kurs başlangıç tarihinden 1 iş günü önce yapılır.
+• Erken teslim mümkün değildir.
+Bu kural, ev teslim planlaması ve operasyonel düzeni korumak için uygulanır.
+
+12.8 Oda Seçimi Yok (Beklenti Yönetimi)
+Campus German konaklamasında:
+• “oda seçimi” veya “daire seçimi” şeklinde bir tercih sistemi yoktur.
+• Öğrencinin bunu “geçici konaklama” olarak görmesi gerekir.
+Amaç:
+Yanlış beklentiyi ve olası anlaşmazlıkları en baştan önlemek.
+
+12.9 Kadın / Erkek Ayrımı (Güvenlik ve Düzen)
+• Kadın ve erkek öğrenciler tamamen ayrı binalarda konaklar.
+Bu yapı:
+• düzeni korumak,
+• güvenliği artırmak,
+• ortak yaşam dinamiklerini yönetilebilir kılmak
+amacıyla uygulanır.
+
+12.10 Kabul Süreci (Mülakat ve Onay Mantığı)
+Konaklama, otomatik bir “herkese açık” ürün değildir.
+Öğrenciler:
+• kısa bir görüşme/mülakat süreci sonrası değerlendirilir
+• uygun görülürse kabul edilir
+Neden mülakat var?
+• ortak yaşam düzenini korumak
+• ev içi uyumu sağlamak
+• sorunsuz bir konaklama deneyimi oluşturmak
+
+12.11 Reddedilme Durumu ve Alternatif Destek
+Öğrenci konaklamaya kabul edilmezse veya kontenjan doluysa:
+• öğrencinin konaklama bulabilmesi için yol haritası iletilir
+• uygun otel seçeneklerini içeren bir bilgilendirme PDF’i paylaşılır
+Not:
+Bu durumda ek bir “konaklama bulma hizmeti” verilmez; destek, yol haritası ve bilgilendirme ile sınırlıdır.
+
+12.12 Bu Bölümün Tek Cümlelik Özeti
+Campus German konaklaması, Bremen’e ilk geliş için sunulan geçici bir destek modelidir; tek kişilik 690€/ay ve paylaşımlı 550€/ay seçenekleriyle, 600€ depozito ve 60€ temizlik ücreti içerir; check-in kurstan 1 iş günü önce yapılır, oda seçimi yoktur, kadın/erkek ayrı binalarda konaklar ve kabul süreci mülakatla yürütülür; uygun olmayan durumlarda yol haritası ve otel PDF’i sağlanır.
+13) Partnerlik (Acenta) Politikası
+13.1 Bölümün Amacı
+Bu bölüm, Campus German’ın acenta/partner iş modelini netleştirir ve iki taraf için de sürdürülebilir, şeffaf bir işleyiş standardı oluşturur.
+Amaç; partnerin şunu bilmesidir:
+• Campus German acentayı “sadece satış kanalı” olarak değil, süreçte desteklenen bir paydaş olarak görür.
+• Komisyon, iskonto, ödeme zamanları ve iletişim kanalları önceden tanımlıdır.
+• Operasyonel süreçler kişiye göre değil, standarda göre yürür.
+
+13.2 Partner İletişim Kanalı (Tek Kapı)
+Tüm partner/acentaya yönelik süreçler için resmi iletişim kanalı:
+• partner@campusgerman.com
+İlke:
+Kayıt, ödeme, belge, kurs başlangıcı, değişiklik talepleri ve raporlama bu kanal üzerinden yönetilir. Böylece süreç izlenebilir ve kayıtlara dayanır.
+
+13.3 Campus German Partner Desteği (Operasyon + Satış)
+Campus German, partnerlerine aşağıdaki alanlarda aktif destek sağlar:
+13.3.1 Regional Sales Manager desteği
+• Öğrencinin Bremen’e ikna sürecinde itiraz yönetimi
+• Program seçimi ve ürün netliği (hangi kurs, hangi format, hangi tarihler)
+• Süreçte doğan sorularda hızlı koordinasyon
+• Partnerin “öğrenciyle tek başına mücadele etmesini” önleyen destek hattı
+13.3.2 Pazarlama ve satış materyalleri (Sales Kit)
+Partnerlere aşağıdaki materyaller sunulur:
+• Broşür / tanıtım dökümanları
+• Fiyat listesi
+• Banner / görseller
+• Video içerikler
+• İlerleyen dönemde: basılı materyallerin gönderimi (plan)
+Amaç:
+Acentanın hızlı ve tutarlı satış yapabilmesi.
+13.3.3 Aylık raporlama
+Partner süreçlerinin şeffaf yürütülmesi için raporlama standardı:
+• Aylık raporlama yapılır.
+• Rapor içeriği: kayıtlar, ödeme durumları, başlangıç tarihleri, süreç güncellemeleri.
+
+13.4 Komisyon Politikası
+13.4.1 Komisyon oranı
+• Komisyon oranı: %20
+• Komisyon, dil kursları için geçerlidir.
+• (Yoğun akademik / online / haftalık dil kursları dahil olarak uygulanır.)
+13.4.2 Komisyon ödeme zamanı
+• Komisyon, toplam tutar Campus German hesabına ulaştıktan sonra
+• en geç 3 ay içerisinde partnerin bildirdiği şirket IBAN’ına ödenir.
+13.4.3 Fatura yükümlülüğü
+• Partner/acenta, komisyon ödemesi için komisyon faturası iletmekle yükümlüdür.
+İlke:
+Ödeme süreci muhasebe açısından kayıt altına alınır; sözlü teyit ile ilerlenmez.
+
+13.5 Genel İskonto Politikası (%10) ve Şeffaflık
+Campus German’da genel olarak kullanılan bir indirim/iskonto çerçevesi bulunur:
+• Genel iskonto oranı: %10
+Partner bu iskontoyu:
+• ister öğrencisine yansıtabilir,
+• ister kendi marjına dahil edebilir.
+Ancak şeffaflık notu:
+• Bu iskonto, kurs sayfalarında da belirtildiği için öğrencinin bunu fark etmesi mümkündür.
+• Bu nedenle partnerin iletişim dilinin “gizli indirim” gibi değil, şeffaf biçimde yönetilmesi önerilir.
+
+13.6 Belge Süreci Taahhüdü (Partner için kritik SLA)
+Partner satışında en kritik nokta belgedir. Campus German bu konuda standart taahhüt verir:
+• Ödeme hesaba ulaştıktan sonra 1 hafta içinde
+o kayıt belgesi
+o (opsiyonel) vize davet mektubu
+düzenlenir ve iletilir.
+(Bkz. Bölüm 10)
+Ayrıca gerekli görülen durumlarda Bremen Ausländerbehörde’ye kurs kaydı hakkında bilgilendirme yapılabilir. (Vize takibi değildir.)
+
+13.7 Partner Süreç Kuralları (Operasyonel Netlik)
+Acenta/partner tarafında süreçlerin düzenli işlemesi için temel kurallar:
+• Öğrenci bilgileri ve ödeme doğrulaması tamamlanmadan “kesin kayıt” kabul edilmez.
+• Başlangıç seviyesi placement test ile belirlenir.
+• Belge sadece tam ödeme yapılan seviyeler için düzenlenir.
+• İade/kupon kuralları Bölüm 11’e tabidir; partnerin farklı söz vermesi geçersizdir.
+
+13.8 Bu Bölümün Tek Cümlelik Özeti
+Campus German partner modeli; partner@campusgerman.com üzerinden tek kanallı iletişim, %20 komisyon, en geç 3 ay içinde komisyon ödemesi (fatura şartıyla), aylık raporlama ve sales kit desteği üzerine kuruludur; belge süreci ödeme sonrası 1 haftalık SLA ile yürütülür ve tüm operasyon kuralları şeffaf biçimde standardize edilmiştir.
+14) Neleri Yapmıyoruz (Sınırlar)
+14.1 Bölümün Amacı
+Bu bölüm, Campus German’ın hizmet sınırlarını açık ve yazılı şekilde belirler.
+Amaç; hem öğrencinin hem acentanın “dil okulu” ile “danışmanlık şirketi” beklentisini karıştırmasını önlemek, yanlış vaat riskini sıfırlamak ve hukuki/operasyonel netlik sağlamaktır.
+Bu sınırlar doğru kurulduğunda:
+• öğrenci doğru beklentiyle başlar,
+• acenta satışta güvenli hareket eder,
+• Campus German süreçleri tutarlı yönetir.
+
+14.2 Temel Konum: Campus German Bir Dil Okuludur
+Campus German’ın ana hizmeti:
+• Almanca eğitimi (Bremen/Online/Hybrid),
+• seviye yönetimi,
+• konuşma pratiği sistemi,
+• kursa ilişkin belgelendirme
+sunmaktır.
+Bunun dışındaki hizmetler, Campus German’ın faaliyet alanı değildir.
+
+14.3 Vize Danışmanlığı ve Vize Süreç Yönetimi Yapmıyoruz
+Campus German:
+• vize danışmanlığı vermez,
+• vize dosyası hazırlamaz,
+• randevu/başvuru süreci yönetmez,
+• öğrenciyi resmî kurumlar nezdinde temsil etmez,
+• vize sürecine müdahil olmaz.
+Önemli ayrım:
+Campus German kurs kaydı kapsamında gerekli kurs belgelerini hazırlar (Bölüm 10).
+Gerekli görüldüğünde Bremen Ausländerbehörde’ye “kurs kaydı hakkında bilgilendirme” yapılabilir; bu işlem vize takibi veya danışmanlık değildir.
+
+14.4 Akademik Danışmanlık ve Yönlendirme Yapmıyoruz
+Campus German:
+• üniversite/bölüm seçimi danışmanlığı yapmaz,
+• akademik kariyer planlama hizmeti vermez,
+• başvuru dosyasını (uni-assist vb.) yönetmez,
+• öğrenci adına üniversite süreçlerini takip etmez.
+Not:
+“University Pathway” başlığı altında sunulan hizmet, genel danışmanlık değildir. Bu kapsamda yalnızca tanımlanmış ürün sunulur (ör. şartlı kabul desteği 500€) ve kapsam dışına çıkılmaz (Bölüm 8.7).
+
+14.5 Garanti Vermiyoruz (Vize / Kabul / Sonuç Garantisi)
+Campus German:
+• vize garantisi vermez,
+• kabul garantisi vermez,
+• sınav kazanma garantisi vermez,
+• herhangi bir resmî sonucun “kesin” olacağını taahhüt etmez.
+Neden?
+Bu sonuçlar resmî kurumların ve sınav otoritelerinin değerlendirmesine bağlıdır. Campus German yalnızca eğitim hizmeti sunar ve eğitim standardını taahhüt eder.
+
+14.6 Acentalar İçin Uyum Kuralı (Yanlış Vaadi Önleme)
+Campus German partnerleri/acenteleri:
+• Campus German adına vize veya kabul garantisi veremez,
+• “danışmanlık dahil” gibi kapsam dışı vaatlerde bulunamaz,
+• iade/kupon kurallarını değiştiren veya genişleten sözler veremez.
+Bu tür ifadeler:
+• öğrenciyle yanlış beklenti oluşturur,
+• anlaşmazlık doğurur,
+• partner ilişkisinde risk yaratır.
+
+14.7 İletişim Dili Standardı (Web / Satış / DM)
+Sınırlar, agresif bir dille değil; güven veren ve net bir dille aktarılmalıdır.
+Önerilen standart cümleler:
+• “Campus German bir dil okuludur; vize danışmanlığı sunmayız. Kurs kaydı ve kurs belgelerini hazırlarız.”
+• “Üniversite/bölüm seçimi gibi akademik danışmanlık hizmeti vermiyoruz.”
+• “Vize ve kabul kararları resmî kurumlara aittir; garanti veremeyiz.”
+
+14.8 Bu Bölümün Tek Cümlelik Özeti
+Campus German bir dil okuludur; vize danışmanlığı ve akademik yönlendirme yapmaz, vize/kabul garantisi vermez; yalnızca Almanca eğitimi ve kurs kaydına ilişkin belgeleri standart prosedürlerle sunar ve partnerlerin de bu sınırlar içinde iletişim kurması esastır.
+15) Website İçerik Haritası (Site Map)
+15.1 Bölümün Amacı
+Bu bölüm, Campus German web sitesinin sayfa yapısını (IA – Information Architecture) tek bir standartta toplar. Her sayfanın:
+• amacı,
+• hedef kitlesi,
+• temel içerik blokları,
+• kritik CTA’sı (buton)
+netleştirilir.
+Bu sayede web sitesi:
+• satış odaklı ama güven veren,
+• karışıklık yaratmayan,
+• acenta ve öğrenciye aynı mesajı veren
+bir yapıda ilerler.
+
+15.2 Ana Sayfa (Main Page)
+Amaç
+Campus German’ın “deneyim odaklı Bremen dil okulu” konumlanmasını 10 saniyede anlatmak ve kullanıcıyı doğru programa yönlendirmek.
+Önerilen bloklar
+1. Hero: “Bremen’de Deneyim Odaklı Almanca” + kısa vaat
+2. Bremen vurgusu (Mızıkacılar / öğrenci dostu / Hochdeutsch)
+3. Programlar hızlı kartlar (Yoğun / Online / Haftalık / Sınav / Pathway)
+4. Avantajlar (akıllı tahta, hibrit, konuşma kulübü, geziler)
+5. “Gerçekler & Çözümler” mini blok (piyasa sorunu → çözüm)
+6. Konaklama (geçici destek) mini bilgi
+7. Partner/Acenta kutusu (komisyon + iletişim)
+8. SSS kısa versiyon + link
+9. İletişim + harita + WhatsApp/Email
+Ana CTA
+• Buton: Kurs Yeri Ayırt
+İkincil CTA
+• Ücretsiz Deneme Dersi Al
+• Ücretsiz Yol Haritası PDF’i Al
+• Partner veya Eğitmen Ol
+
+15.3 Almanca Kursları (Ana Kategori Sayfası)
+Amaç
+Kullanıcıyı kurs tiplerine göre doğru alt sayfaya yönlendirmek ve fiyat-tarih mantığını basit anlatmak.
+Alt Kategoriler
+15.3.1 Yoğun Akademik Almanca Kursları
+• “Genel Bakış” sayfası (fiyatlar + tarihler + formatlar)
+• A1 / A2 / B1 / B2 / C1 ayrı sayfalar (SEO + içerik netliği)
+• Üniversite Hazırlık Yılı Programı (sayfa)
+• Yoğun Akademik Almanca Kursu – Öğrenci Vizesi Garantili
+Not: Buradaki “garantili” ifadesi Bölüm 14 ile çelişiyor.
+Bunu webde “Vize için uygun kayıt belgesi sunulur” gibi revize etmeliyiz.
+15.3.2 Dönemsel Almanca Kursları
+• Genel Bakış
+• Liseliler için Yaz Okulu Programı*
+• Üniversiteler için Yaz Okulu Programı*
+• Haftalık A1–A2 Kursu
+• Haftalık B1–B2–C1 Kursu
+• Akşam Yarı Yoğun Almanca Kursları*
+15.3.3 Online Kurslar
+• Online Genel Bakış (fiyatlar + tarihler)
+• Online A1 / A2 / B1 / B2 / C1
+• Online Goethe/TELC Hazırlık
+Ana CTA
+• Buton: Kurs Yeri Ayırt
+
+15.4 Sınav Hazırlık (Exam Preparation)
+Amaç
+Sınav hedefi olan öğrenciyi doğru programa yönlendirmek ve “içerik + süre + açılma sıklığı”nı net yazmak.
+Alt sayfalar
+• Genel Bakış (fiyatlar + tarihler)
+• Goethe/TELC A1
+• Goethe/TELC A2
+• Goethe/TELC B1
+• Goethe/TELC B2
+• Goethe/TELC C1
+• TesDaF/DSH Hazırlık
+• TELC C1 Hochschule (özellikle vurgulu, 80 saat + 3 deneme, 3 ayda 1)
+CTA
+• Kurs Yeri Ayırt
+
+15.5 Firma / Sponsorlu Kurslar
+Amaç
+Kurumsal müşteriyi ve sponsorlu programları ayrı bir dilde anlatmak (B2B).
+Önerilen alt sayfalar (senin liste + geliştirme)
+• Firmalara özel Almanca Kursu*
+• Bildungzeit kapsamındaki Almanca Kursu* (referans: casa-bremen benzeri)
+• DAAD bursiyerleri için Almanca Kursu*
+• Erasmus+ kapsaminda öğretmenlere Almanca Kursu*
+• Erasmus öğrencilerine özel kurslar*
+• Meslek & kariyer Almancası*
+o Kariyere Giriş / Career Pathway*
+o Tıp & Sağlık için Almanca*
+o FSP hazırlık*
+o Mühendislik/Teknik Almanca*
+o Ekonomi/Yönetim Almancası*
+CTA
+• Teklif Al / Kurumsal Görüşme Talebi
+
+15.6 Hakkımızda (About)
+Amaç
+Güven inşa etmek, standardı göstermek, partner ve eğitmen başvurusu almak.
+Alt sayfalar
+• Misyonumuz
+• Kalite Standartlarımız
+• Partnerlik Politikamız
+• Eğitmenlerimiz
+• Medya’da Biz
+CTA
+• Partner veya Eğitmen Ol
+
+15.7 Avantajlarımız (Benefits)
+Amaç
+Campus German farklarını “madde madde kanıt” şeklinde sunmak.
+İçerik blokları (senin liste)
+• Akıllı Tahta ile interaktif eğitim
+• Hibrit eğitim modeli
+• Şehir ve üniversite gezileri
+• Ücretsiz Almanca konuşma kulübü (ömür boyu hak şartı ile açıklanmalı)
+• Ücretsiz Almanca eğitim koçluğu/etüdü
+• İlk hafta para iade garantisi (vize gerekmeyen kurslar için)
+CTA
+• Ücretsiz Deneme Dersi Al
+
+15.8 Sunduklarımız (Services / Onboarding)
+Amaç
+Dil kursu dışındaki “destek hizmetlerini” net sınırlarla anlatmak.
+Sayfa blokları (senin liste)
+• Üniversite Yerleştirme Programı / Pathway (kapsam sınırı net)
+• Vize Rehberliği (burada dikkat: “rehberlik” bile yanlış anlaşılabilir → “bilgilendirme” dili)
+• Bremen konaklama ve yurt yerleştirmesi (geçici destek olarak)
+• Havaalanı karşılama
+• Sağlık sigortası / bloke / banka hesabı (burayı da “danışmanlık değil, bilgi paylaşımı” gibi konumlamak gerek)
+• Almanya bürokrasi rehberi
+• Ücretsiz Almanca kaynaklar
+CTA
+• Ücretsiz Yol Haritası PDF’i Al
+
+15.9 Kazananlar (Social Proof)
+Amaç
+Güven ve dönüşüm artırmak.
+İçerik
+• Telc/Goethe sınavını geçen öğrenciler
+• Öğrenci yorumları (video + yazılı)
+• “Before/After” ilerleme hikâyeleri (etik ve ölçülü)
+
+15.10 İletişim (Contact)
+Amaç
+Hızlı dönüş ve lead toplama.
+İçerik
+• Form
+• Harita + adres
+• partner@campusgerman.com ve genel iletişim
+• Çalışma saatleri / dönüş süresi standardı
+
+15.11 SSS (Sıkça Sorulan Sorular)
+Amaç
+Satış itirazlarını otomatik çözmek, destek yükünü düşürmek.
+Konu başlıkları önerisi
+• Seviye tespit nasıl?
+• Kur geçiş kriteri nedir?
+• Hibrit nasıl işler?
+• Tatilde ders sayısı ne olur?
+• Belgeler ne kadar sürede gelir?
+• Vize reddinde ne olur?
+• Konuşma kulübü şartları nedir?
+• Konaklama nasıl, check-in ne zaman?
+• Komisyon nasıl işler? (partner SSS ayrı da olabilir)
+
+15.12 Kurs Kayıt Formu Akışı (Kısa Özet)
+Bu bölümün detayı daha sonra “form dokümanı” olarak ayrıca yazılabilir ama sitede kısa bilgi olmalı:
+• Okul: Bremen / Online / Hybrid
+• Kurstyp: Intensive / Pathway / Exam / Weekly
+• Seviye + tarih seçimi
+• Ek hizmetler (konaklama, vb.)
+• Özet + iletişim
+
+15.13 Yasal Sayfalar (Hazırlanacak)
+• AGB (Genel Şartlar)
+• Datenschutz (KVKK/GDPR uyumlu)
+• Impressum
+• Widerruf / Refund Policy (Bölüm 11 ile uyumlu)
+
+15.14 Bu Bölümün Tek Cümlelik Özeti
+Campus German web sitesi; ana sayfadan program seçimine, avantajlardan partnerliğe kadar tüm akışı net CTA’lar ve sınırları açık bir dille sunacak şekilde yapılandırılır; her sayfa aynı “standart mesajı” farklı hedef kitlelere uygun formatta taşır.
+16) Sunum ve Satış Materyalleri
+16.1 Bölümün Amacı
+Bu bölüm, Campus German’ın satış ve partner yönetimi için ihtiyaç duyduğu tüm materyalleri tek bir sistem altında tanımlar. Amaç, farklı ekiplerin (marketing / satış / operasyon) aynı dili kullanması ve acentanın da “tek paket” üzerinden hızlı satış yapabilmesidir.
+Bu bölüm, 3 ana hedefi destekler:
+1. Dönüşüm: Öğrenci/acentayı net CTA ile harekete geçirmek
+2. Güven: Şeffaf kurallar ve standart vaatler
+3. Operasyon kolaylığı: Tek kaynak, tek doküman seti
+
+16.2 Partner Sunumu (Gamma Slide Deck)
+16.2.1 Amaç
+Acentalara Campus German’ın farkını, süreç taahhütlerini ve partner modelini 10–15 dakikada anlatan sunum.
+16.2.2 Sunumun ana bölümleri (önerilen akış)
+• Biz kimiz?
+• Neden Bremen?
+• Dil okulu bizce ne demek?
+• Piyasa gerçekleri & çözümler
+• Eğitim modeli: standart + konuşma + hibrit
+• Programlar
+• Fiyat özeti
+• Belgeler & SLA
+• İade/kupon kuralları
+• Konaklama (geçici destek)
+• Partner modeli (komisyon, raporlama, sales kit)
+• Neleri yapmıyoruz (sınırlar)
+• CTA: nasıl başlarız?
+16.2.3 Format standardı
+• 20–30 slayt ideal
+• 1 slayt = 1 ana fikir
+• “Çok tablo” yerine: özet + ek PDF link
+
+16.3 One-Pager / Fact Sheet (Tek Sayfa)
+16.3.1 Amaç
+Acentanın WhatsApp, e-posta veya PDF olarak öğrencisine 1 dakikada gönderebileceği “özet kart”.
+16.3.2 İçerik şablonu
+• Campus German (Bremen) kısa tanım
+• 5 fark: native eğitmen, materyal standardı, konuşma kulübü, hibrit, Bremen deneyimi
+• Programlar (4–5 madde)
+• Fiyat özet (A1–C1 + online)
+• Belge SLA: ödeme sonrası 1 hafta
+• Partner iletişimi: partner@campusgerman.com
+Bu doküman “satışa ilk temas” materyalidir.
+
+16.4 Fiyat PDF’i (Detaylı)
+16.4.1 Amaç
+Sunumda sadece “özet fiyat” verip, detayları PDF ile yönetmek. Böylece hem şeffaflık sağlanır hem sunum şişmez.
+16.4.2 İçerik
+• Bremen/Hybrid yoğun kurs fiyatları (A1–C1, ders sayılarıyla)
+• Online yoğun kurs fiyatları (A1–C1)
+• Paket indirimleri (%5 / %10)
+• Haftalık kurs fiyatları (A1–A2 / B1–C1)
+• Konaklama fiyatları (690 / 550 + depozito + temizlik)
+• Opsiyonel vize davet mektubu (+50€)
+
+16.5 Tarihler PDF’i (Kurs Takvimi)
+16.5.1 Amaç
+Acenta ve öğrenciye “hangi seviye ne zaman başlıyor?” sorusunu tek sayfada cevaplamak.
+16.5.2 İçerik
+• A1.1–C1.2 tüm başlangıç tarihleri
+• Bremen/Online/Hybrid aynı takvim notu
+• Resmî tatiller listesi + telafi dersi prensibi
+• Kısa açıklama: placement test ile doğru kura yerleşim
+
+16.6 Partner Onboarding Paketi (Starter Kit)
+16.6.1 Amaç
+Yeni partnerin 24 saat içinde satışa başlayabilmesi.
+16.6.2 İçerik seti (minimum)
+• Partner sunumu (Gamma/PDF)
+• Fact Sheet (1 sayfa)
+• Fiyat PDF’i
+• Tarihler PDF’i
+• Partner iletişim protokolü (mail şablonu + gerekli bilgiler listesi)
+• Logo + brand kit (renkler, fontlar, sosyal medya görselleri)
+• SSS dokümanı (öğrenci + partner için ayrı)
+
+16.7 E-posta / WhatsApp Şablonları (Satış + Operasyon)
+16.7.1 Amaç
+Acentaların ve iç ekibin aynı dili kullanması.
+16.7.2 Hazırlanması gereken şablonlar
+• Öğrenciye ilk teklif mesajı (Bremen vurgulu)
+• Program seçimi mesajı (Yoğun/Online/Haftalık)
+• Belgeler ve ödeme sonrası süreç mesajı
+• Vize reddi durumunda seçenekler mesajı
+• Konaklama geçici destek bilgilendirmesi
+• Partner komisyon ve fatura hatırlatma
+• Kurs başlangıcı “welcome” mesajı
+
+16.8 Sosyal Kanıt Paketi (Proof Kit)
+16.8.1 Amaç
+Acentaların satışı güçlendirmesi ve website dönüşümü artırmak.
+16.8.2 İçerik
+• Sınavı geçen öğrenciler (TELC/Goethe) – izinli paylaşım
+• Öğrenci yorumları (kısa video + yazı)
+• Bremen deneyim fotoğrafları (geziler/film akşamı)
+• “Konuşma kulübü” atmosfer içerikleri
+Bu bölüm, “Kazananlar” sayfasını da besler.
+
+16.9 İç Operasyon Dokümanları (Back Office)
+16.9.1 Amaç
+Satış ile operasyonun kopmasını önlemek.
+16.9.2 İçerik
+• Kayıt kontrol listesi
+• Ödeme teyit prosedürü
+• Belge hazırlama prosedürü (1 hafta SLA)
+• Voucher oluşturma prosedürü
+• Konaklama kabul/red prosedürü
+• Speaking club katılım doğrulama (3 kur şartı)
+• Aylık partner rapor şablonu
+
+16.10 Bu Bölümün Tek Cümlelik Özeti
+Campus German satış sistemi; partner sunumu, tek sayfa fact sheet, fiyat ve tarih PDF’leri, onboarding kit, mesaj şablonları ve sosyal kanıt paketleriyle acentanın hızlı satış yapmasını, öğrencinin şeffaf bilgi almasını ve operasyonun standardize şekilde yürütülmesini sağlar.
+
+

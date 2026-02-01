@@ -1,4 +1,4 @@
-﻿/* ===== SERVICES HERO SECTION ===== */
+/* ===== SERVICES HERO SECTION ===== */
 .services-hero-section {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     padding: 80px 0;
@@ -13,7 +13,7 @@
     right: 0;
     width: 400px;
     height: 400px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     border-radius: 50%;
     opacity: 0.1;
     transform: translate(200px, -200px);
@@ -43,7 +43,7 @@
 
 /* Left Side */
 .services-hero-section .hero-left {
-    color: #0B1220;
+    color: var(--color-text-primary);
     max-width: 600px;
 }
 
@@ -52,7 +52,7 @@
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 30px;
-    color: #0B1220;
+    color: var(--color-text-primary);
 }
 
 /* Hero content - OVERRIDE GLOBAL GRID for text container */
@@ -66,7 +66,7 @@
 .services-hero-section .hero-description {
     font-size: 1.1rem;
     line-height: 1.8;
-    color: #475569;
+    color: var(--color-text-secondary);
     margin-bottom: 25px;
     text-align: justify;
     font-weight: 500;
@@ -100,7 +100,7 @@
 }
 
 .services-hero-section .btn-primary {
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     color: white;
     box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);
 }
@@ -112,7 +112,7 @@
 
 .services-hero-section .btn-secondary {
     background: white;
-    color: #059669;
+    color: var(--color-primary);
     border: 2px solid #FF8888;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
@@ -151,12 +151,12 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
 }
 
 .services-hero-section .cta-icon {
     font-size: 60px;
-    color: #059669;
+    color: var(--color-primary);
     margin-bottom: 25px;
     opacity: 0.9;
 }
@@ -164,14 +164,14 @@
 .services-hero-section .cta-title {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #0B1220;
+    color: var(--color-text-primary);
     margin-bottom: 20px;
     line-height: 1.3;
 }
 
 .services-hero-section .cta-description {
     font-size: 1rem;
-    color: #475569;
+    color: var(--color-text-secondary);
     line-height: 1.6;
     margin-bottom: 30px;
     font-weight: 500;
@@ -193,14 +193,14 @@
 .services-hero-section .cta-stat .stat-number {
     font-size: 28px;
     font-weight: 800;
-    color: #059669;
+    color: var(--color-primary);
     display: block;
     line-height: 1;
 }
 
 .services-hero-section .cta-stat .stat-label {
     font-size: 12px;
-    color: #475569;
+    color: var(--color-text-secondary);
     margin-top: 8px;
     font-weight: 500;
 }
@@ -209,7 +209,7 @@
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     color: white;
     text-decoration: none;
     padding: 18px 36px;
@@ -258,9 +258,9 @@
 .services-section .section-title {
     font-size: 2.8rem;
     font-weight: 700;
-    color: #0B1220;
+    color: var(--color-text-primary);
     margin-bottom: 20px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -268,7 +268,7 @@
 
 .services-section .section-subtitle {
     font-size: 1.2rem;
-    color: #475569;
+    color: var(--color-text-secondary);
     font-weight: 500;
     max-width: 600px;
     margin: 0 auto;
@@ -303,7 +303,7 @@
     left: 0;
     right: 0;
     height: 5px;
-    background: linear-gradient(90deg, #1F3A5F 0%, #059669 50%, #FF8888 100%);
+    background: linear-gradient(90deg, var(--color-secondary) 0%, var(--color-primary) 50%, #FF8888 100%);
     transform: scaleX(0);
     transition: transform 0.4s ease;
     z-index: 1;
@@ -334,7 +334,7 @@
     width: 70px;
     height: 70px;
     min-width: 70px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     border-radius: 18px;
     display: flex;
     align-items: center;
@@ -373,14 +373,14 @@
 .service-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #0B1220;
+    color: var(--color-text-primary);
     margin-bottom: 8px;
     line-height: 1.3;
 }
 
 .service-subtitle {
     font-size: 0.95rem;
-    color: #475569;
+    color: var(--color-text-secondary);
     font-weight: 500;
     line-height: 1.4;
 }
@@ -393,7 +393,7 @@
 }
 
 .service-description {
-    color: #475569;
+    color: var(--color-text-secondary);
     line-height: 1.7;
     margin-bottom: 20px;
     font-size: 0.95rem;
@@ -413,11 +413,11 @@
     align-items: center;
     gap: 12px;
     font-size: 0.9rem;
-    color: #475569;
+    color: var(--color-text-secondary);
 }
 
 .service-features li i {
-    color: #059669;
+    color: var(--color-primary);
     font-size: 16px;
     flex-shrink: 0;
 }
@@ -432,7 +432,7 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    color: #059669;
+    color: var(--color-primary);
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
@@ -440,7 +440,7 @@
 }
 
 .service-link:hover {
-    color: #1F3A5F;
+    color: var(--color-secondary);
     gap: 15px;
 }
 
@@ -738,5 +738,46 @@
     .service-link {
         font-size: 0.9rem;
     }
+}
+
+/* ===== ARTICLE SIDEBAR - BASE STYLES ONLY ===== */
+/* JavaScript handles sticky positioning - CSS only provides base styles */
+.article-sidebar {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 25px !important;
+    align-self: flex-start !important;
+    z-index: 10;
+}
+
+/* Ensure ALL parent containers don't block sticky - CRITICAL */
+/* Target ALL possible parent containers in the DOM hierarchy */
+html,
+body,
+body > main,
+body > main > section.article-section,
+body > main > section.article-section > .container,
+body > main > section.article-section > .container > .article-layout,
+main,
+main > section.article-section,
+main > section.article-section > .container,
+main > section.article-section > .container > .article-layout,
+.article-section,
+.article-section .container,
+.article-section .container .article-layout,
+.article-layout,
+section.article-section,
+section.article-section > .container,
+section.article-section > .container > .article-layout,
+section.article-section .article-layout,
+.article-section > .container,
+.article-section > .container > .article-layout {
+    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    position: relative !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
 }
 

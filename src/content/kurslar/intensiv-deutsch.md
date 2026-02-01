@@ -1,6 +1,7 @@
 ---
 title: "Yoğun Almanca"
 lang: "tr"
+customSlug: "yogun-deutsch"
 badge:
   icon: "fas fa-fire"
   text: "Yoğun Almanca"

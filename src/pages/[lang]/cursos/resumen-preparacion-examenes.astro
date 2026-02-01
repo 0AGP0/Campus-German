@@ -1,0 +1,12 @@
+---
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'es' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// İspanyolca'da resumen-preparacion-examenes slug'ını pruefungsvorbereitung-uebersicht sayfasına yönlendir
+return Astro.redirect(`/${lang}/cursos/pruefungsvorbereitung-uebersicht`, 301);
+---

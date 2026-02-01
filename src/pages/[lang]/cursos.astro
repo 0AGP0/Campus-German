@@ -1,0 +1,1431 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import AkademikAlmancaSarmal from '../../components/AkademikAlmancaSarmal.astro';
+import '../../styles/pages/kurslar.css';
+import { getCollection } from 'astro:content';
+import { coursePricing } from '../../data/coursePricing';
+import { cleanSlug, isOverviewPage, getSectionPath, getContactPath, isValidLang } from '../../utils/pathHelpers';
+import { getFormattedStartDates } from '../../utils/coursePricingHelper';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'es' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Lang tip kontrolü
+if (!isValidLang(lang)) {
+    throw new Error(`Invalid language: ${lang}`);
+}
+
+// Path helper'ları
+const sectionPath = getSectionPath(lang);
+const contactPath = getContactPath(lang);
+
+// Tüm kursları al ve kategorilere ayır
+const allKurslar = await getCollection('kurslar');
+const kurslarByLang = allKurslar.filter(kurs => kurs.data.lang === lang);
+
+// Ana kurslar (genel bakış sayfaları hariç)
+const anaKurslar = kurslarByLang.filter(kurs => {
+    return !isOverviewPage(kurs.slug);
+});
+
+// Kategorilere göre ayır
+const yogunKurslar = anaKurslar.filter(kurs => 
+    (kurs.slug.startsWith('intensiv-') || kurs.slug.startsWith('yogun-')) && 
+    !kurs.slug.includes('studentenvisum') && !kurs.slug.includes('ogrenci-vizesi')
+);
+const onlineKurslar = anaKurslar.filter(kurs => 
+    kurs.slug.startsWith('online-')
+);
+const donemselKurslar = anaKurslar.filter(kurs => 
+    kurs.slug.includes('woechentlich-') || 
+    kurs.slug.includes('haftalik-') || 
+    kurs.slug.includes('sommerschule') || 
+    kurs.slug.includes('yaz-okulu') || 
+    kurs.slug.includes('abend-') ||
+    kurs.slug.includes('aksam-') ||
+    kurs.slug.includes('saisonal-') ||
+    kurs.slug.includes('donemsel-') ||
+    kurs.slug.includes('weekly') ||
+    kurs.slug.includes('semanal') ||
+    kurs.slug.includes('nocturno') ||
+    kurs.slug.includes('evening')
+);
+const sinavKurslar = anaKurslar.filter(kurs => 
+    kurs.slug.includes('goethe-') || 
+    kurs.slug.includes('telc-') || 
+    kurs.slug.includes('testdaf-') || 
+    kurs.slug.includes('dsh-') ||
+    kurs.slug.includes('pruefungsvorbereitung-')
+);
+const kurumsalKurslar = anaKurslar.filter(kurs => 
+    kurs.slug.includes('firmenkurs') ||
+    kurs.slug.includes('firma-') || 
+    kurs.slug.includes('bildungszeit') || 
+    kurs.slug.includes('daad-') || 
+    kurs.slug.includes('erasmus-') || 
+    kurs.slug.includes('beruf-') ||
+    kurs.slug.includes('meslek-') || 
+    kurs.slug.includes('career-') || 
+    kurs.slug.includes('medizin-') ||
+    kurs.slug.includes('tip-') || 
+    kurs.slug.includes('fsp-') || 
+    kurs.slug.includes('ingenieurwesen-') ||
+    kurs.slug.includes('muhendislik-') || 
+    kurs.slug.includes('wirtschaft-') ||
+    kurs.slug.includes('ekonomi-')
+);
+
+const pricingLang = 'de';
+const startDates = getFormattedStartDates(pricingLang as 'tr' | 'de' | 'en' | 'es');
+---
+
+<MainLayout title="Cursos - CampusGerman" lang={lang}>
+    <!-- Hero Section -->
+    <section class="courses-hero-section">
+        <div class="container">
+            <!-- Main Hero Content -->
+            <div class="courses-hero-content">
+                <div class="hero-left">
+                    <h1 class="hero-title">
+                        ¡Cursos de alemán en CampusGerman!
+                    </h1>
+                    
+                    <div class="hero-content">
+                        <p class="hero-description">
+                            ¿Quiere aprender alemán para estudiar en Alemania, trabajar en Alemania, comenzar una formación profesional o simplemente mejorar sus conocimientos de alemán? Cualquiera que sea su motivación, encontrará el curso de alemán adecuado en CampusGerman en las vibrantes ciudades universitarias de Alemania.
+                        </p>
+                        
+                        <p class="hero-description">
+                            Elegir nuestros cursos de alemán en CampusGerman le permitirá alcanzar su objetivo de manera eficiente y agradable en un ambiente de aprendizaje relajado y amigable.
+                        </p>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <a href="#cursos-tarjetas" class="btn-primary">
+                            <i class="fas fa-arrow-down"></i>
+                            Explorar cursos
+                        </a>
+                        <button class="btn-secondary" id="contactBtn">
+                            <i class="fas fa-envelope"></i>
+                            Contactar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-right">
+                    <div class="hero-cta-card">
+                        <div class="cta-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="cta-title">Descubra nuestros cursos</h3>
+                        <p class="cta-description">
+                            Cursos especialmente diseñados para cada nivel, instructores experimentados y opciones de programa flexibles.
+                        </p>
+                        <div class="cta-stats">
+                            <div class="cta-stat">
+                                <div class="stat-number">6</div>
+                                <div class="stat-label">Nivel</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">50+</div>
+                                <div class="stat-label">Cursos</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">Éxito</div>
+                            </div>
+                        </div>
+                        <a href="#cursos-tarjetas" class="cta-button">
+                            <i class="fas fa-arrow-down"></i>
+                            Ver todos los cursos
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Campus German Akademik Almanca Sarmalı -->
+    <AkademikAlmancaSarmal lang={lang} />
+    
+    <!-- Kurs Kartları Section -->
+    <section class="courses-section" id="kurs-kartlari">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nuestros cursos de alemán</h2>
+                <p class="section-subtitle">Cursos especialmente diseñados para cada nivel y necesidad</p>
+            </div>
+            
+            <!-- Filtreleme ve Arama -->
+            <div class="courses-filter-section">
+                <div class="filter-search-box">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input 
+                            type="text" 
+                            id="courseSearchInput" 
+                            placeholder="Buscar curso..."
+                        />
+                        <button class="search-clear" id="searchClearBtn" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="filter-buttons-row">
+                    <div class="filter-btn-wrapper">
+                        <button class="filter-btn" id="levelFilterBtn">
+                            <span>Nivel de idioma</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="filter-menu" id="levelFilterDropdown">
+                            <a href="#" class="filter-item" data-value="all">Todos los niveles</a>
+                            <a href="#" class="filter-item" data-value="a1">A1</a>
+                            <a href="#" class="filter-item" data-value="a2">A2</a>
+                            <a href="#" class="filter-item" data-value="b1">B1</a>
+                            <a href="#" class="filter-item" data-value="b2">B2</a>
+                            <a href="#" class="filter-item" data-value="c1">C1</a>
+                            <a href="#" class="filter-item" data-value="c2">C2</a>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-btn-wrapper">
+                        <button class="filter-btn" id="typeFilterBtn">
+                            <span>Tipo de curso</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="filter-menu" id="typeFilterDropdown">
+                            <a href="#" class="filter-item" data-value="all">Todos los cursos</a>
+                            <a href="#" class="filter-item" data-value="yuz-yuze">Presencial</a>
+                            <a href="#" class="filter-item" data-value="online">Online</a>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-btn-wrapper">
+                        <button class="filter-btn" id="periodFilterBtn">
+                            <span>Período</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="filter-menu" id="periodFilterDropdown">
+                            <a href="#" class="filter-item" data-value="all">Todos los períodos</a>
+                            <a href="#" class="filter-item" data-value="yaz-donemi">Verano</a>
+                            <a href="#" class="filter-item" data-value="yil-boyu">Todo el año</a>
+                        </div>
+                    </div>
+                    
+                    <button class="clear-btn" id="clearFiltersBtn" style="display: none;">
+                        <i class="fas fa-times"></i>
+                        Restablecer
+                    </button>
+                </div>
+                
+                <div class="results-count" id="resultsInfo">
+                    <span id="resultsCount">{anaKurslar.length}</span> cursos encontrados
+                </div>
+            </div>
+            
+            <div class="courses-grid" id="coursesGrid">
+                {anaKurslar.map(kurs => {
+                    // Kurs tipini belirle (filtreleme için)
+                    let courseType = 'yuz-yuze';
+                    let courseLevel = 'all';
+                    let coursePeriod = 'yil-boyu';
+                    
+                    const cleanedSlug = cleanSlug(kurs.slug);
+                    
+                    if (cleanedSlug.startsWith('online-')) {
+                        courseType = 'online';
+                    }
+                    
+                    // Seviye belirleme
+                    if (cleanedSlug.includes('-a1') || cleanedSlug.includes('a1-')) {
+                        courseLevel = 'a1';
+                    } else if (cleanedSlug.includes('-a2') || cleanedSlug.includes('a2-')) {
+                        courseLevel = 'a2';
+                    } else if (cleanedSlug.includes('-b1') || cleanedSlug.includes('b1-')) {
+                        courseLevel = 'b1';
+                    } else if (cleanedSlug.includes('-b2') || cleanedSlug.includes('b2-')) {
+                        courseLevel = 'b2';
+                    } else if (cleanedSlug.includes('-c1') || cleanedSlug.includes('c1-')) {
+                        courseLevel = 'c1';
+                    }
+                    
+                    // Dönem belirleme
+                    if (cleanedSlug.includes('yaz-okulu')) {
+                        coursePeriod = 'yaz-donemi';
+                    }
+                    
+                    return (
+                        <div class="course-card" data-level={`all ${courseLevel}`} data-type={courseType} data-period={coursePeriod}>
+                            <div class="course-image">
+                                <img src={kurs.data.image} alt={kurs.data.title}>
+                            </div>
+                            <div class="course-content">
+                                <h3 class="course-title">{kurs.data.title}</h3>
+                                <div class="course-details">
+                                    {kurs.data.features.map(feature => (
+                                        <div class="course-detail">
+                                            <i class={feature.icon}></i>
+                                            <span>{feature.description}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <p class="course-description">
+                                    {kurs.data.description}
+                                </p>
+                                <a href={`/${lang}/${sectionPath}/${kurs.data.customSlug || cleanSlug(kurs.slug)}`} class="course-btn">
+                                    <span>Ver detalles</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination-wrapper" id="paginationContainer" style="display: none;">
+                <div class="pagination">
+                    <button class="page-btn prev" id="prevPageBtn" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="page-numbers" id="paginationNumbers"></div>
+                    <button class="page-btn next" id="nextPageBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="page-info" id="paginationInfo">
+                    Página <span id="currentPageNum">1</span> / <span id="totalPagesNum">1</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Fiyatlar ve Tarihler Section -->
+    <section class="pricing-dates-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Precios y fechas</h2>
+                <p class="section-subtitle">Precios y fechas de inicio de los cursos de alemán</p>
+            </div>
+            
+            <div class="pricing-content">
+                <!-- Akademik Almanca Kursları Fiyatları -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">Precios de cursos académicos de alemán</h3>
+                    <div class="pricing-table-wrapper">
+                        <table class="pricing-table">
+                            <thead>
+                                <tr>
+                                    <th>Nivel</th>
+                                    <th>Clases</th>
+                                    <th>Duración</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {(['a1', 'a2', 'b1', 'b2', 'c1'] as const).map(level => {
+                                    const pricing = coursePricing[pricingLang as 'tr' | 'de'].intensive[level];
+                                    return (
+                                        <tr>
+                                            <td><strong>{level.toUpperCase()}</strong></td>
+                                            <td>{pricing.lessons}</td>
+                                            <td>{pricing.duration}</td>
+                                            <td><strong>{pricing.fullCourse}</strong></td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Online Kurs Fiyatları -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">Precios de cursos de alemán online</h3>
+                    <div class="pricing-table-wrapper">
+                        <table class="pricing-table">
+                            <thead>
+                                <tr>
+                                    <th>Nivel</th>
+                                    <th>Clases</th>
+                                    <th>Duración</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {(['a1', 'a2', 'b1', 'b2', 'c1'] as const).map(level => {
+                                    const pricing = coursePricing[pricingLang as 'tr' | 'de'].online[level];
+                                    return (
+                                        <tr>
+                                            <td><strong>{level.toUpperCase()}</strong></td>
+                                            <td>{pricing.lessons}</td>
+                                            <td>{pricing.duration}</td>
+                                            <td><strong>{pricing.fullCourse}</strong></td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Sınav Hazırlık Kursları Fiyatları -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">Precios de cursos de preparación de exámenes</h3>
+                    <div class="pricing-table-wrapper">
+                        <table class="pricing-table">
+                            <thead>
+                                <tr>
+                                    <th>Tipo de examen</th>
+                                    <th>Clases</th>
+                                    <th>Duración</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {(['a1', 'a2', 'b1', 'b2', 'c1'] as const).map(level => {
+                                    const pricing = coursePricing[pricingLang as 'tr' | 'de'].examPrep.goetheTelc[level];
+                                    return (
+                                        <tr>
+                                            <td><strong>Goethe/TELC {level.toUpperCase()}</strong></td>
+                                            <td>{pricing.lessons}</td>
+                                            <td>{pricing.duration}</td>
+                                            <td><strong>{pricing.fullCourse}</strong></td>
+                                        </tr>
+                                    );
+                                })}
+                                <tr>
+                                    <td><strong>TestDaF/DSH</strong></td>
+                                    <td>{coursePricing[pricingLang as 'tr' | 'de'].examPrep.testdafDsh.lessons}</td>
+                                    <td>{coursePricing[pricingLang as 'tr' | 'de'].examPrep.testdafDsh.duration}</td>
+                                    <td><strong>{coursePricing[pricingLang as 'tr' | 'de'].examPrep.testdafDsh.fullCourse}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Kurs Zamanları -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">Horarios de los cursos</h3>
+                    <div class="schedule-grid">
+                        <div class="schedule-card">
+                            <h4><i class="fas fa-sun"></i> Cursos de mañana</h4>
+                            <div class="schedule-item">
+                                <strong>A1-A2:</strong>
+                                <p>{coursePricing[pricingLang as 'tr' | 'de'].schedule.morning.a1a2.time}</p>
+                                <p class="schedule-break">{coursePricing[pricingLang as 'tr' | 'de'].schedule.morning.a1a2.break}</p>
+                                <p class="schedule-lessons">{coursePricing[pricingLang as 'tr' | 'de'].schedule.morning.a1a2.lessons}</p>
+                            </div>
+                            <div class="schedule-item">
+                                <strong>B1-C1:</strong>
+                                <p>{coursePricing[pricingLang as 'tr' | 'de'].schedule.morning.b1c1.time}</p>
+                                <p class="schedule-break">{coursePricing[pricingLang as 'tr' | 'de'].schedule.morning.b1c1.break}</p>
+                                <p class="schedule-lessons">{coursePricing[pricingLang as 'tr' | 'de'].schedule.morning.b1c1.lessons}</p>
+                            </div>
+                        </div>
+                        <div class="schedule-card">
+                            <h4><i class="fas fa-moon"></i> Cursos de tarde</h4>
+                            <div class="schedule-item">
+                                <strong>A1-A2:</strong>
+                                <p>{coursePricing[pricingLang as 'tr' | 'de'].schedule.afternoon.a1a2.time}</p>
+                                <p class="schedule-break">{coursePricing[pricingLang as 'tr' | 'de'].schedule.afternoon.a1a2.break}</p>
+                                <p class="schedule-lessons">{coursePricing[pricingLang as 'tr' | 'de'].schedule.afternoon.a1a2.lessons}</p>
+                            </div>
+                            <div class="schedule-item">
+                                <strong>B1-C1:</strong>
+                                <p>{coursePricing[pricingLang as 'tr' | 'de'].schedule.afternoon.b1c1.time}</p>
+                                <p class="schedule-break">{coursePricing[pricingLang as 'tr' | 'de'].schedule.afternoon.b1c1.break}</p>
+                                <p class="schedule-lessons">{coursePricing[pricingLang as 'tr' | 'de'].schedule.afternoon.b1c1.lessons}</p>
+                            </div>
+                        </div>
+                        <div class="schedule-card">
+                            <h4><i class="fas fa-cloud-moon"></i> Cursos nocturnos</h4>
+                            <div class="schedule-item">
+                                <strong>A1-A2:</strong>
+                                <p>{coursePricing[pricingLang as 'tr' | 'de'].schedule.evening.a1a2.time}</p>
+                                <p class="schedule-break">{coursePricing[pricingLang as 'tr' | 'de'].schedule.evening.a1a2.break}</p>
+                                <p class="schedule-lessons">{coursePricing[pricingLang as 'tr' | 'de'].schedule.evening.a1a2.lessons}</p>
+                            </div>
+                            <div class="schedule-item">
+                                <strong>B1-C1:</strong>
+                                <p>{coursePricing[pricingLang as 'tr' | 'de'].schedule.evening.b1c1.time}</p>
+                                <p class="schedule-break">{coursePricing[pricingLang as 'tr' | 'de'].schedule.evening.b1c1.break}</p>
+                                <p class="schedule-lessons">{coursePricing[pricingLang as 'tr' | 'de'].schedule.evening.b1c1.lessons}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="schedule-days"><i class="fas fa-calendar-week"></i> {coursePricing[pricingLang as 'tr' | 'de'].schedule.days}</p>
+                </div>
+                
+                <!-- Kurs Başlangıç Tarihleri -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">Nuestras fechas de curso</h3>
+                    <p class="pricing-subtitle">Cursos intensivos académicos / Cursos de alemán online</p>
+                    <div class="course-dates-table-wrapper">
+                        <table class="course-dates-table">
+                            <thead>
+                                <tr>
+                                    <th>A1.1</th>
+                                    <th>A1.2</th>
+                                    <th>A2.1</th>
+                                    <th>A2.2</th>
+                                    <th>B1.1</th>
+                                    <th>B1.2</th>
+                                    <th>B2.1</th>
+                                    <th>B2.2</th>
+                                    <th>C1.1</th>
+                                    <th>C1.2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{startDates.a1.a1_1[0]}</td>
+                                    <td>{startDates.a1.a1_2[0]}</td>
+                                    <td>{startDates.a2.a2_1[0]}</td>
+                                    <td>{startDates.a2.a2_2[0]}</td>
+                                    <td>{startDates.b1.b1_1[0]}</td>
+                                    <td>{startDates.b1.b1_2[0]}</td>
+                                    <td>{startDates.b2.b2_1[0]}</td>
+                                    <td>{startDates.b2.b2_2[0]}</td>
+                                    <td>{startDates.c1.c1_1[0]}</td>
+                                    <td>{startDates.c1.c1_2[0]}</td>
+                                </tr>
+                                <tr>
+                                    <td>{startDates.a1.a1_1[1]}</td>
+                                    <td>{startDates.a1.a1_2[1]}</td>
+                                    <td>{startDates.a2.a2_1[1]}</td>
+                                    <td>{startDates.a2.a2_2[1]}</td>
+                                    <td>{startDates.b1.b1_1[1]}</td>
+                                    <td>{startDates.b1.b1_2[1]}</td>
+                                    <td>{startDates.b2.b2_1[1]}</td>
+                                    <td>{startDates.b2.b2_2[1]}</td>
+                                    <td>{startDates.c1.c1_1[1]}</td>
+                                    <td>{startDates.c1.c1_2[1]}</td>
+                                </tr>
+                                <tr>
+                                    <td>{startDates.a1.a1_1[2]}</td>
+                                    <td>{startDates.a1.a1_2[2]}</td>
+                                    <td>{startDates.a2.a2_1[2]}</td>
+                                    <td>{startDates.a2.a2_2[2]}</td>
+                                    <td>{startDates.b1.b1_1[2]}</td>
+                                    <td>{startDates.b1.b1_2[2]}</td>
+                                    <td>{startDates.b2.b2_1[2]}</td>
+                                    <td>{startDates.b2.b2_2[2]}</td>
+                                    <td>{startDates.c1.c1_1[2]}</td>
+                                    <td>{startDates.c1.c1_2[2]}</td>
+                                </tr>
+                                <tr>
+                                    <td>{startDates.a1.a1_1[3]}</td>
+                                    <td>{startDates.a1.a1_2[3]}</td>
+                                    <td>{startDates.a2.a2_1[3]}</td>
+                                    <td>{startDates.a2.a2_2[3]}</td>
+                                    <td>{startDates.b1.b1_1[3]}</td>
+                                    <td>{startDates.b1.b1_2[3]}</td>
+                                    <td>{startDates.b2.b2_1[3]}</td>
+                                    <td>{startDates.b2.b2_2[3]}</td>
+                                    <td>{startDates.c1.c1_1[3]}</td>
+                                    <td>{startDates.c1.c1_2[3]}</td>
+                                </tr>
+                                <tr>
+                                    <td>{startDates.a1.a1_1[4]}</td>
+                                    <td>{startDates.a1.a1_2[4]}</td>
+                                    <td>{startDates.a2.a2_1[4]}</td>
+                                    <td>{startDates.a2.a2_2[4]}</td>
+                                    <td>{startDates.b1.b1_1[4]}</td>
+                                    <td>{startDates.b1.b1_2[4]}</td>
+                                    <td>{startDates.b2.b2_1[4]}</td>
+                                    <td>{startDates.b2.b2_2[4]}</td>
+                                    <td>{startDates.c1.c1_1[4]}</td>
+                                    <td>{startDates.c1.c1_2[4]}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="course-dates-info">
+                        <p><strong>A1 · 8 semanas · 20+ 4 clases</strong></p>
+                        <p><strong>A2 · 8 semanas · 20+ 4 clases</strong></p>
+                        <p><strong>B1 · 8 semanas · 25+ 4 clases</strong></p>
+                        <p><strong>B2 · 8 semanas · 25+ 4 clases</strong></p>
+                        <p><strong>C1 · 8 semanas · 25+ 4 clases</strong></p>
+                    </div>
+                </div>
+                
+                <!-- Tatiller -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">Festivos 2026</h3>
+                    <div class="holidays-list">
+                        {coursePricing[pricingLang as 'tr' | 'de'].holidays.map(holiday => (
+                            <div class="holiday-item">
+                                <span class="holiday-name">{holiday.name}</span>
+                                <span class="holiday-date">{holiday.date}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                
+                <!-- Vize Bilgisi -->
+                <div class="pricing-block pricing-info-box">
+                    <p><i class="fas fa-info-circle"></i> {coursePricing[pricingLang as 'tr' | 'de'].visaInfo}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Dil Seviyeleri Section -->
+    <section class="language-levels-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Niveles de idioma A1 – C1</h2>
+                <p class="section-subtitle">¡Cursos de alemán A1 en Alemania y mucho más!</p>
+            </div>
+            
+            <div class="levels-content">
+                <div class="levels-text">
+                    <p class="levels-description">
+                        El primer día de curso realizará una prueba de nivel y luego se incorporará a la clase que mejor se adapte a su nivel. Las cuatro destrezas (lectura, escucha, escritura y habla) se miden según el Marco Común Europeo de Referencia (MCER) y los niveles se estructuran así:
+                    </p>
+                    
+                    <div class="levels-info">
+                        <div class="level-group">
+                            <h3>A1 y A2</h3>
+                            <p>Principiante y elemental</p>
+                        </div>
+                        <div class="level-group">
+                            <h3>B1 y B2</h3>
+                            <p>Intermedio e intermedio-alto</p>
+                        </div>
+                        <div class="level-group">
+                            <h3>C1</h3>
+                            <p>Intermedio-alto / Avanzado</p>
+                        </div>
+                    </div>
+                    
+                    <p class="levels-description">
+                        Como regla general, calculamos 8 semanas por nivel; para B2 y C1 suele hacer falta 12 semanas o más.
+                    </p>
+                    
+                    <p class="levels-description">
+                        Tras completar con éxito su curso de alemán, recibirá un certificado según su nivel (p. ej. A2, B1, etc.).
+                    </p>
+                    
+                    <p class="levels-description">
+                        Puede consultar aquí la descripción detallada de los niveles: <a href="#" class="cefr-link">CEFR global scale</a>
+                    </p>
+                </div>
+                
+                <div class="levels-visual">
+                    <div class="levels-pyramid">
+                        <div class="level-c2">
+                            <div class="level-content">
+                                <h4>C2</h4>
+                                <p>Mastery</p>
+                            </div>
+                        </div>
+                        <div class="level-c1">
+                            <div class="level-content">
+                                <h4>C1</h4>
+                                <p>Competencia operativa eficaz</p>
+                                <span class="level-duration">12+ semanas</span>
+                            </div>
+                        </div>
+                        <div class="level-b2">
+                            <div class="level-content">
+                                <h4>B2</h4>
+                                <p>Vantage</p>
+                                <span class="level-duration">12 semanas</span>
+                            </div>
+                        </div>
+                        <div class="level-b1">
+                            <div class="level-content">
+                                <h4>B1</h4>
+                                <p>Threshold</p>
+                                <span class="level-duration">8 semanas</span>
+                            </div>
+                        </div>
+                        <div class="level-a2">
+                            <div class="level-content">
+                                <h4>A2</h4>
+                                <p>Waystage</p>
+                                <span class="level-duration">8 semanas</span>
+                            </div>
+                        </div>
+                        <div class="level-a1">
+                            <div class="level-content">
+                                <h4>A1</h4>
+                                <p>Breakthrough</p>
+                                <span class="level-duration">8 semanas</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="levels-legend">
+                        <div class="legend-item">
+                            <div class="legend-color beginner"></div>
+                            <span>Nivel principiante</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color intermediate"></div>
+                            <span>Nivel intermedio</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color advanced"></div>
+                            <span>Nivel avanzado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CampusGerman Hizmetleri Section -->
+    <section class="campusgerman-services-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Servicios CampusGerman</h2>
+                <p class="section-subtitle">Estamos a su lado en su camino de aprendizaje del alemán</p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- German Language Exams -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 class="service-title">Exámenes de alemán en nuestra escuela acreditada</h3>
+                        <p class="service-description">
+                            CampusGerman es un centro de exámenes acreditado y autorizado para TELC y el Instituto TestDaF. Preparamos para los exámenes TELC A1, A2, B1, B2 y C1 Hochschule, así como para TestDaF y DSH. C1 Hochschule, TestDaF y DSH son exámenes de alemán oficialmente reconocidos para el acceso a la universidad en Alemania. Todos los exámenes excepto DSH pueden realizarse con regularidad en CampusGerman.
+                        </p>
+                        <a href="#exam-preparation" class="service-cta">
+                            <span>Ver detalles</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service for CampusGerman Students -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 class="service-title">Servicio para estudiantes de CampusGerman</h3>
+                        <p class="service-description">
+                            Para que su curso de alemán sea un éxito completo, le apoyamos con nuestro servicio integral. Le asesoramos de forma individual desde el primer contacto hasta el día en que recibe su certificado, organizamos su alojamiento con anfitriones alemanes si lo desea y le ayudamos también en temas como seguro médico y visado para estudiantes de idiomas.
+                        </p>
+                        <p class="service-description">
+                            ¡Nuestras puertas están siempre abiertas para ayudarle!
+                        </p>
+                        <a href="#student-services" class="service-cta">
+                            <span>Ver detalles</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Accommodations -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 class="service-title">Alojamiento para su curso de alemán</h3>
+                        <p class="service-description">
+                            Durante su curso de alemán podemos ofrecerle alojamiento con anfitriones alemanes. Según sus preferencias, puede hospedarse con una familia o una persona, en un piso compartido con varios compañeros o solo en su propio apartamento.
+                        </p>
+                        <p class="service-description">
+                            Puede alquilar una habitación con desayuno o media pensión, o cocinar usted mismo y compartir la cocina con sus anfitriones. Lo que mejor se adapte a usted.
+                        </p>
+                        <p class="service-description">
+                            Todas las habitaciones son individuales y no están lejos de la escuela; suele tardar como máximo 30 minutos en llegar a pie, en autobús o en bicicleta.
+                        </p>
+                        <a href="#accommodations" class="service-cta">
+                            <span>Ver detalles</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- German Lessons -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                    <div class="service-content">
+                        <h3 class="service-title">Clases de alemán en CampusGerman</h3>
+                        <p class="service-description">
+                            Nuestros cursos están claramente estructurados y se orientan al Marco Común Europeo de Referencia. Los medios modernos, los materiales actuales y la combinación de trabajo con textos y vocabulario, gramática, fonética y expresión oral permiten un aprendizaje efectivo. Las clases son pequeñas y constan de personas de distintos países; el énfasis está siempre en el uso práctico del idioma, es decir, en la capacidad de hablar y comprender.
+                        </p>
+                        <a href="#german-lessons" class="service-cta">
+                            <span>Ver detalles</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Preguntas frecuentes</h2>
+                <p class="section-subtitle">Obtenga información sobre los temas que le interesan</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Qué formatos de curso se ofrecen?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nuestros cursos le ofrecen una experiencia de aprendizaje flexible:</p>
+                        <p><strong>Formación híbrida:</strong></p>
+                        <p>Su curso consiste en una combinación de clases presenciales y clases online en vivo. Gracias al sistema híbrido, también puede asistir online los días de clase presencial. Nuestras aulas cuentan con equipamiento técnico para que profesores, estudiantes presenciales y participantes online interactúen al mismo tiempo.</p>
+                        <p><strong>Formación online en vivo:</strong></p>
+                        <p>En este formato participa íntegramente en vivo y online. Puede seguir las clases online desde casa, en movimiento o desde nuestros centros. Puede usar los espacios de estudio y las instalaciones técnicas en nuestros centros de Düsseldorf y Berlín (alquiler de tablet/iPad, impresora, fotocopiadora, escáner). También tendrá ocasión de conocer a otros participantes de distintos países en nuestra cafetería o en las actividades sociales.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Qué contenidos se trabajan en los cursos?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nuestros programas intensivos de alemán incluyen comprensión auditiva y lectora con textos actuales, estudios gramaticales completos y actividades centradas en la comunicación. El objetivo es desarrollar sobre todo su expresión oral y escrita de forma orientada a objetivos.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Cómo puedo estudiar en una universidad en Alemania?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Para estudiar en Alemania necesita primero una cualificación de acceso a la universidad (HZB) reconocida. Se recomienda comprobar en el sistema anabin si su titulación está reconocida en Alemania.</p>
+                        <p>Además debe acreditar su nivel de alemán con certificados oficiales como telc o DSH. El Programa de Preparación Universitaria de Campus German está pensado para prepararle por completo para este proceso.</p>
+                        <p>Quienes no tengan acceso directo deben cursar primero la formación preparatoria del Studienkolleg y superar la Feststellungsprüfung. Después puede matricularse en un grado adecuado. Le apoyamos paso a paso con nuestro servicio de asesoramiento académico.</p>
+                        <p>Las solicitudes se suelen presentar a través de los sistemas de las universidades o de la plataforma Uni-Assist. Los estudiantes de fuera de la UE necesitan visado de estudiante. También se requiere un seguro médico válido.</p>
+                        <p>Además debe acreditar que puede cubrir los gastos de formación y de vida. Tras la admisión, solo tiene que completar la matrícula y entregar la documentación requerida.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Qué requisitos son necesarios?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Debe tener al menos 18 años.</p>
+                        <p>Debe presentar una cuenta bloqueada en Alemania o una declaración de compromiso oficial.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Qué tipos de visado se recomiendan?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p><strong>Visado de estudiante:</strong></p>
+                        <p>Incluye también el derecho a participar en cursos de preparación de alemán.</p>
+                        <p>Los ciudadanos de la UE no necesitan visado.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Qué servicios incluyen los cursos?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Prueba de nivel</p>
+                        <p>Sin tasa de inscripción</p>
+                        <p>Certificado de curso para solicitud de visado</p>
+                        <p>Libro de texto digital</p>
+                        <p>Asesoramiento individual (1 vez, aprox. 45 min)</p>
+                        <p>Webinars sobre "Estudios en Alemania"</p>
+                        <p>Certificado de Campus German</p>
+                        <p>Plataforma de e-learning</p>
+                        <p>Actividades sociales y culturales durante todo el año</p>
+                        <p>Wi‑Fi gratuito en todos los centros</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Qué cualificaciones tienen nuestros profesores?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nuestro equipo docente está formado por profesores con formación académica y amplia experiencia en Alemán como Lengua Extranjera (DaF) y Alemán como Segunda Lengua (DaZ).</p>
+                        <p>También contamos con profesores reconocidos por la Oficina Federal de Migración y Refugiados (BAMF). Los cursos son evaluados regularmente por los participantes.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Cuánto tiempo se tarda en aprender alemán?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Depende de su objetivo y de su nivel actual. Los niveles básicos A1–B2 pueden completarse en unos 6–8 meses. Para niveles avanzados como C1 y C2 suelen hacer falta 4–6 meses más. Nuestros cursos intensivos pueden acortar este plazo.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Puedo obtener un certificado Goethe?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, en CampusGerman ofrecemos cursos de preparación para certificados Goethe (A1–C2). Los exámenes pueden realizarse en nuestro campus o en centros de examen cercanos.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Hay opciones de alojamiento?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, le ayudamos a organizar alojamiento en Alemania (residencias, familias de acogida, pisos compartidos). El alojamiento no está incluido en el precio del curso, pero le ayudamos a encontrar la opción más adecuada.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Hay planes de pago y descuentos?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, ofrecemos planes de pago flexibles (mensual, trimestral o semestral) y descuentos por inscripción anticipada, grupos y programas largos. Contacte con nosotros para más información.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-cta">
+                <p>¿Tiene más preguntas?</p>
+                <a href={`/${lang}/${contactPath}`} class="faq-contact-btn">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contáctenos</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</MainLayout>
+
+<script define:vars={{ lang }}>
+    // Temiz Filtreleme ve Sayfalama Sistemi
+    (function() {
+        const coursesGrid = document.getElementById('coursesGrid');
+        const courseCards = Array.from(coursesGrid.querySelectorAll('.course-card'));
+        const itemsPerPage = 9;
+        
+        let currentFilters = {
+            level: 'all',
+            type: 'all',
+            period: 'all',
+            search: ''
+        };
+        
+        let currentPage = 1;
+        let filteredCourses = [...courseCards];
+        
+        // Filtre butonları ve menüleri
+        const filterButtons = {
+            level: document.getElementById('levelFilterBtn'),
+            type: document.getElementById('typeFilterBtn'),
+            period: document.getElementById('periodFilterBtn')
+        };
+        
+        const filterMenus = {
+            level: document.getElementById('levelFilterDropdown'),
+            type: document.getElementById('typeFilterDropdown'),
+            period: document.getElementById('periodFilterDropdown')
+        };
+        
+        // Dropdown açma/kapama
+        Object.keys(filterButtons).forEach(key => {
+            const btn = filterButtons[key];
+            const menu = filterMenus[key];
+            
+            if (btn && menu) {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    Object.values(filterMenus).forEach(m => {
+                        if (m && m !== menu) m.classList.remove('active');
+                    });
+                    menu.classList.toggle('active');
+                });
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            Object.values(filterMenus).forEach(menu => {
+                if (menu) menu.classList.remove('active');
+            });
+        });
+        
+        // Filtre seçimi
+        document.querySelectorAll('.filter-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const menu = item.closest('.filter-menu');
+                const filterType = menu.id.replace('FilterDropdown', '');
+                const value = item.getAttribute('data-value');
+                
+                menu.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                
+                currentFilters[filterType] = value;
+                
+                const btn = filterButtons[filterType];
+                if (btn) {
+                    const span = btn.querySelector('span');
+                    if (span) span.textContent = item.textContent.trim();
+                }
+                
+                menu.classList.remove('active');
+                currentPage = 1;
+                applyFilters();
+            });
+        });
+        
+        // Filtreleri temizle
+        const clearBtn = document.getElementById('clearFiltersBtn');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                currentFilters = { level: 'all', type: 'all', period: 'all', search: '' };
+                currentPage = 1;
+                
+                const searchInput = document.getElementById('courseSearchInput');
+                const searchClear = document.getElementById('searchClearBtn');
+                if (searchInput) {
+                    searchInput.value = '';
+                    if (searchClear) searchClear.style.display = 'none';
+                }
+                
+                document.querySelectorAll('.filter-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-value') === 'all') item.classList.add('active');
+                });
+                
+                Object.keys(filterButtons).forEach(key => {
+                    const btn = filterButtons[key];
+                    if (btn) {
+                        const span = btn.querySelector('span');
+                        if (span) {
+                            if (key === 'level') span.textContent = 'Nivel de idioma';
+                            else if (key === 'type') span.textContent = 'Tipo de curso';
+                            else if (key === 'period') span.textContent = 'Período';
+                        }
+                    }
+                });
+                
+                applyFilters();
+            });
+        }
+        
+        // Arama
+        const searchInput = document.getElementById('courseSearchInput');
+        const searchClear = document.getElementById('searchClearBtn');
+        
+        if (searchInput) {
+            let timeout;
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    currentFilters.search = e.target.value.toLowerCase().trim();
+                    currentPage = 1;
+                    applyFilters();
+                }, 300);
+            });
+            
+            searchInput.addEventListener('keyup', () => {
+                if (searchClear) {
+                    searchClear.style.display = searchInput.value.length > 0 ? 'flex' : 'none';
+                }
+            });
+        }
+        
+        if (searchClear) {
+            searchClear.addEventListener('click', () => {
+                if (searchInput) {
+                    searchInput.value = '';
+                    currentFilters.search = '';
+                    searchClear.style.display = 'none';
+                    currentPage = 1;
+                    applyFilters();
+                }
+            });
+        }
+        
+        // Filtreleme
+        function applyFilters() {
+            filteredCourses = courseCards.filter(card => {
+                const level = card.getAttribute('data-level');
+                const type = card.getAttribute('data-type');
+                const period = card.getAttribute('data-period');
+                const title = card.querySelector('.course-title')?.textContent.toLowerCase() || '';
+                const description = card.querySelector('.course-description')?.textContent.toLowerCase() || '';
+                
+                const levelMatch = currentFilters.level === 'all' || level.includes(currentFilters.level);
+                const typeMatch = currentFilters.type === 'all' || type === currentFilters.type;
+                const periodMatch = currentFilters.period === 'all' || period === currentFilters.period;
+                const searchMatch = !currentFilters.search || title.includes(currentFilters.search) || description.includes(currentFilters.search);
+                
+                return levelMatch && typeMatch && periodMatch && searchMatch;
+            });
+            
+            courseCards.forEach(card => card.style.display = 'none');
+            
+            const activeCount = Object.values(currentFilters).filter(v => v !== 'all' && v !== '').length;
+            if (clearBtn) clearBtn.style.display = activeCount > 0 ? 'flex' : 'none';
+            
+            updateResultsCount();
+            updatePagination();
+        }
+        
+        // Sonuç sayısı
+        function updateResultsCount() {
+            const resultsInfo = document.getElementById('resultsInfo');
+            const resultsCount = document.getElementById('resultsCount');
+            if (resultsInfo && resultsCount) {
+                resultsCount.textContent = filteredCourses.length;
+                if (filteredCourses.length === 0) {
+                    resultsInfo.innerHTML = `<i class="fas fa-search"></i> No se encontraron resultados`;
+                    resultsInfo.classList.add('no-results');
+                } else {
+                    resultsInfo.classList.remove('no-results');
+                }
+            }
+        }
+        
+        // Sayfalama
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentPageCourses = filteredCourses.slice(startIndex, endIndex);
+            
+            currentPageCourses.forEach(card => card.style.display = 'block');
+            
+            const paginationContainer = document.getElementById('paginationContainer');
+            const prevBtn = document.getElementById('prevPageBtn');
+            const nextBtn = document.getElementById('nextPageBtn');
+            const pageNumbers = document.getElementById('paginationNumbers');
+            const currentPageNum = document.getElementById('currentPageNum');
+            const totalPagesNum = document.getElementById('totalPagesNum');
+            
+            if (totalPages > 1) {
+                if (paginationContainer) paginationContainer.style.display = 'flex';
+                if (currentPageNum) currentPageNum.textContent = currentPage;
+                if (totalPagesNum) totalPagesNum.textContent = totalPages;
+                if (prevBtn) prevBtn.disabled = currentPage === 1;
+                if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+                
+                if (pageNumbers) {
+                    pageNumbers.innerHTML = '';
+                    const maxVisible = 5;
+                    let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+                    let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+                    
+                    if (endPage - startPage < maxVisible - 1) {
+                        startPage = Math.max(1, endPage - maxVisible + 1);
+                    }
+                    
+                    if (startPage > 1) {
+                        const btn = document.createElement('button');
+                        btn.className = 'page-num';
+                        btn.textContent = '1';
+                        btn.onclick = () => goToPage(1);
+                        pageNumbers.appendChild(btn);
+                        if (startPage > 2) {
+                            const ellipsis = document.createElement('span');
+                            ellipsis.className = 'page-ellipsis';
+                            ellipsis.textContent = '...';
+                            pageNumbers.appendChild(ellipsis);
+                        }
+                    }
+                    
+                    for (let i = startPage; i <= endPage; i++) {
+                        const btn = document.createElement('button');
+                        btn.className = 'page-num' + (i === currentPage ? ' active' : '');
+                        btn.textContent = i;
+                        btn.onclick = () => goToPage(i);
+                        pageNumbers.appendChild(btn);
+                    }
+                    
+                    if (endPage < totalPages) {
+                        if (endPage < totalPages - 1) {
+                            const ellipsis = document.createElement('span');
+                            ellipsis.className = 'page-ellipsis';
+                            ellipsis.textContent = '...';
+                            pageNumbers.appendChild(ellipsis);
+                        }
+                        const btn = document.createElement('button');
+                        btn.className = 'page-num';
+                        btn.textContent = totalPages;
+                        btn.onclick = () => goToPage(totalPages);
+                        pageNumbers.appendChild(btn);
+                    }
+                }
+            } else {
+                if (paginationContainer) paginationContainer.style.display = 'none';
+            }
+        }
+        
+        function goToPage(page) {
+            currentPage = page;
+            applyFilters();
+        }
+        
+        const prevPageBtn = document.getElementById('prevPageBtn');
+        const nextPageBtn = document.getElementById('nextPageBtn');
+        
+        if (prevPageBtn) {
+            prevPageBtn.addEventListener('click', () => {
+                if (currentPage > 1) goToPage(currentPage - 1);
+            });
+        }
+        
+        if (nextPageBtn) {
+            nextPageBtn.addEventListener('click', () => {
+                const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+                if (currentPage < totalPages) goToPage(currentPage + 1);
+            });
+        }
+        
+        // İlk yükleme
+        document.querySelectorAll('.filter-item[data-value="all"]').forEach(item => {
+            item.classList.add('active');
+        });
+        applyFilters();
+    })();
+</script>
+
+<style>
+    /* Temiz Filtreleme Stilleri */
+    .courses-filter-section {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .filter-search-box {
+        margin-bottom: 20px;
+    }
+    
+    .search-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    
+    .search-wrapper i.fa-search {
+        position: absolute;
+        left: 16px;
+        color: #64748B;
+        z-index: 1;
+    }
+    
+    .search-wrapper input {
+        width: 100%;
+        padding: 12px 45px 12px 45px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        background: #f8f9fa;
+    }
+    
+    .search-wrapper input:focus {
+        outline: none;
+        border-color: #059669;
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+    }
+    
+    .search-clear {
+        position: absolute;
+        right: 12px;
+        background: #e5e7eb;
+        border: none;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        z-index: 1;
+    }
+    
+    .search-clear:hover {
+        background: #dc2626;
+        color: #ffffff;
+    }
+    
+    .filter-buttons-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    
+    .filter-btn-wrapper {
+        position: relative;
+    }
+    
+    .filter-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        background: #ffffff;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #0B1220;
+    }
+    
+    .filter-btn:hover {
+        border-color: #059669;
+        background: #F0FAF8;
+    }
+    
+    .filter-btn i {
+        font-size: 12px;
+        color: #64748B;
+    }
+    
+    .filter-menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        min-width: 180px;
+        background: #ffffff;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+    }
+    
+    .filter-menu.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .filter-item {
+        display: block;
+        padding: 10px 16px;
+        color: #0B1220;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 0.9rem;
+    }
+    
+    .filter-item:last-child {
+        border-bottom: none;
+    }
+    
+    .filter-item:hover {
+        background: #F0FAF8;
+        color: #059669;
+    }
+    
+    .filter-item.active {
+        background: #059669;
+        color: #ffffff;
+        font-weight: 600;
+    }
+    
+    .clear-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 16px;
+        background: #ef4444;
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+    
+    .clear-btn:hover {
+        background: #dc2626;
+    }
+    
+    .results-count {
+        margin-top: 16px;
+        padding: 10px 16px;
+        background: #F0FAF8;
+        border-left: 3px solid #059669;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        color: #0B1220;
+        font-weight: 500;
+    }
+    
+    .results-count.no-results {
+        background: #fef2f2;
+        border-left-color: #ef4444;
+        color: #991b1b;
+    }
+    
+    .results-count #resultsCount {
+        font-weight: 700;
+        color: #059669;
+        font-size: 1rem;
+    }
+    
+    .results-count.no-results #resultsCount {
+        color: #ef4444;
+    }
+    
+    @media (max-width: 768px) {
+        .courses-filter-section {
+            padding: 20px;
+        }
+        
+        .filter-buttons-row {
+            flex-direction: column;
+        }
+        
+        .filter-btn-wrapper {
+            width: 100%;
+        }
+        
+        .filter-btn {
+            width: 100%;
+            justify-content: space-between;
+        }
+        
+        .filter-menu {
+            left: 0;
+            right: 0;
+            width: 100%;
+        }
+        
+        .clear-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>

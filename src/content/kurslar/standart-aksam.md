@@ -1,6 +1,7 @@
 ---
 title: "Standart & Akşam Almanca Kursu"
 lang: "tr"
+customSlug: "standart-aksam"
 badge:
   icon: "fas fa-moon"
   text: "Esnek Saatler"

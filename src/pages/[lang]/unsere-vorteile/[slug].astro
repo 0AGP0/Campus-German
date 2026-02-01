@@ -1,32 +1,31 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
+import { cleanSlug, getAdvantagesPath, isValidLang } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
   const allAvantajlarimiz = await getCollection('unsere-vorteile');
   
   const paths = [];
   
-  for (const avantaj of allAvantajlarimiz) {
-    // Astro removes dots from slugs, so "hibrit-egitim.tr.md" becomes "hibrit-egitimtr"
-    // We need to check if slug ends with language code (tr, de, en)
-    const slug = avantaj.slug;
-    const langCode = avantaj.data.lang;
+  // Sadece Almanca sayfalar için
+  const almancaAvantajlar = allAvantajlarimiz.filter(avantaj => avantaj.data.lang === 'de');
+  
+  for (const avantaj of almancaAvantajlar) {
+    const langCode = 'de';
     
-    // Check if slug ends with the language code
-    // e.g., "hibrit-egitimtr" ends with "tr"
-    if (!slug.endsWith(langCode)) {
-      continue;
+    // Use customSlug if available, otherwise use default slug cleaning
+    let finalSlug;
+    if (avantaj.data.customSlug) {
+      finalSlug = avantaj.data.customSlug;
+    } else {
+      finalSlug = cleanSlug(avantaj.slug);
     }
-    
-    // Remove language code from end of slug
-    // "hibrit-egitimtr" -> "hibrit-egitim"
-    const cleanSlug = slug.slice(0, -langCode.length);
     
     paths.push({
       params: { 
         lang: langCode,
-        slug: cleanSlug
+        slug: finalSlug
       },
       props: { avantaj },
     });
@@ -38,6 +37,14 @@ export async function getStaticPaths() {
 const { avantaj } = Astro.props;
 const { lang } = Astro.params;
 const { Content } = await avantaj.render();
+
+// Lang tip kontrolü
+if (!isValidLang(lang)) {
+    throw new Error(`Invalid language: ${lang}`);
+}
+
+// Path helper'ları
+const advantagesPath = getAdvantagesPath(lang);
 ---
 
 <MainLayout title={`${avantaj.data.title} - CampusGerman`} lang={lang} includeHizmetCSS={true}>
@@ -106,13 +113,13 @@ const { Content } = await avantaj.render();
                         <div class="sidebar-widget">
                             <h3 class="widget-title">
                                 <i class="fas fa-phone-alt"></i>
-                                {lang === 'tr' ? 'Hızlı İletişim' : 'Schneller Kontakt'}
+                                {lang === 'tr' ? 'Hızlı İletişim' : lang === 'de' ? 'Schneller Kontakt' : 'Quick Contact'}
                             </h3>
                             <div class="widget-content">
                                 <p>{lang === 'tr' ? 'Avantajlarımız hakkında daha fazla bilgi almak için bizimle iletişime geçin.' : 'Kontaktieren Sie uns für weitere Informationen zu unseren Vorteilen.'}</p>
                                 <a href={`/${lang}/kontakt`} class="widget-button">
                                     <i class="fas fa-envelope"></i>
-                                    {lang === 'tr' ? 'İletişime Geç' : 'Kontakt aufnehmen'}
+                                    {lang === 'tr' ? 'İletişime Geç' : lang === 'de' ? 'Kontakt aufnehmen' : 'Contact Us'}
                                 </a>
                             </div>
                         </div>
@@ -121,12 +128,12 @@ const { Content } = await avantaj.render();
                         <div class="sidebar-widget">
                             <h3 class="widget-title">
                                 <i class="fas fa-list"></i>
-                                {lang === 'tr' ? 'Diğer Avantajlarımız' : 'Weitere Vorteile'}
+                                {lang === 'tr' ? 'Diğer Avantajlarımız' : lang === 'de' ? 'Weitere Vorteile' : 'Other Advantages'}
                             </h3>
                             <div class="widget-content">
                                 <ul class="related-list">
                                     <li>
-                                        <a href={`/${lang}/unsere-vorteile/hibrit-egitim`}>
+                                        <a href={`/${lang}/${advantagesPath}/hibrit-egitim`}>
                                             <i class="fas fa-laptop-house"></i>
                                             {lang === 'tr' ? 'Hibrit Eğitim' : 'Hybrides Lernen'}
                                         </a>
@@ -163,7 +170,7 @@ const { Content } = await avantaj.render();
                         <div class="sidebar-widget cta-widget">
                             <h3 class="widget-title">
                                 <i class="fas fa-rocket"></i>
-                                {lang === 'tr' ? 'Hemen Başla' : 'Jetzt starten'}
+                                {lang === 'tr' ? 'Hemen Başla' : lang === 'de' ? 'Jetzt starten' : 'Get Started'}
                             </h3>
                             <div class="widget-content">
                                 <p>{lang === 'tr' ? 'Almanca öğrenme yolculuğunuza bugün başlayın!' : 'Starten Sie heute Ihre Deutschlernreise!'}</p>
@@ -202,25 +209,25 @@ const { Content } = await avantaj.render();
                     </div>
                     <div class="cta-form">
                         <div class="form-header">
-                            <h3>{lang === 'tr' ? 'Ücretsiz Bilgi Alın' : 'Kostenlose Informationen'}</h3>
-                            <p>{lang === 'tr' ? 'Size en uygun programı bulalım' : 'Lassen Sie uns das richtige Programm für Sie finden'}</p>
+                            <h3>{lang === 'tr' ? 'Ücretsiz Bilgi Alın' : lang === 'de' ? 'Kostenlose Informationen' : 'Get Free Information'}</h3>
+                            <p>{lang === 'tr' ? 'Size en uygun programı bulalım' : lang === 'de' ? 'Lassen Sie uns das richtige Programm für Sie finden' : 'Let us find the right program for you'}</p>
                         </div>
                         <form class="contact-form">
                             <div class="form-group">
-                                <input type="text" id="name" name="name" placeholder={lang === 'tr' ? 'Adınız Soyadınız' : 'Ihr Name'} required>
+                                <input type="text" id="name" name="name" placeholder={lang === 'tr' ? 'Adınız Soyadınız' : lang === 'de' ? 'Ihr Name' : 'Your Name'} required>
                                 <i class="fas fa-user"></i>
                             </div>
                             <div class="form-group">
-                                <input type="email" id="email" name="email" placeholder={lang === 'tr' ? 'E-posta Adresiniz' : 'Ihre E-Mail'} required>
+                                <input type="email" id="email" name="email" placeholder={lang === 'tr' ? 'E-posta Adresiniz' : lang === 'de' ? 'Ihre E-Mail' : 'Your Email'} required>
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div class="form-group">
-                                <input type="tel" id="phone" name="phone" placeholder={lang === 'tr' ? 'Telefon Numaranız' : 'Ihre Telefonnummer'} required>
+                                <input type="tel" id="phone" name="phone" placeholder={lang === 'tr' ? 'Telefon Numaranız' : lang === 'de' ? 'Ihre Telefonnummer' : 'Your Phone Number'} required>
                                 <i class="fas fa-phone"></i>
                             </div>
                             <button type="submit" class="submit-btn">
                                 <i class="fas fa-paper-plane"></i>
-                                <span>{lang === 'tr' ? 'Ücretsiz Bilgi Al' : 'Kostenlose Informationen anfordern'}</span>
+                                <span>{lang === 'tr' ? 'Ücretsiz Bilgi Al' : lang === 'de' ? 'Kostenlose Informationen anfordern' : 'Get Free Info'}</span>
                             </button>
                         </form>
                     </div>

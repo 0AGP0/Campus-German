@@ -1,6 +1,7 @@
 ---
 title: "Medizinisches Deutsch (Fachsprachprüfung)"
 lang: "de"
+customSlug: "medizin-deutsch"
 badge:
   icon: "fas fa-user-md"
   text: "Für Mediziner"
@@ -113,5 +114,4 @@ faqs:
   - question: "Gibt es Zahlungspläne und Rabatte?"
     answer: "Ja, wir bieten flexible Zahlungsmodelle an, darunter monatliche, dreimonatige und sechsmonatige Raten. Zudem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für weitere Informationen kontaktieren Sie uns bitte."
 
-hasDemandForm: true
 ---

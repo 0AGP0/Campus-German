@@ -1,0 +1,10 @@
+# robots.txt for CampusGerman
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://campusgerman.com/sitemap.xml
+
+# Disallow admin or private areas if any
+# Disallow: /admin/
+# Disallow: /private/

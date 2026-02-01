@@ -1,6 +1,7 @@
 ---
 title: "Kariyere Giriş Programı / Career Pathway"
 lang: "tr"
+customSlug: "kariyer-yolu"
 badge:
   icon: "fas fa-rocket"
   text: "Career Pathway"

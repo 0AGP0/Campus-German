@@ -1,0 +1,90 @@
+---
+title: "Online German Courses Overview"
+lang: "en"
+customSlug: "online-overview"
+badge:
+  icon: "fas fa-laptop"
+  text: "Online"
+description: "Learn German comfortably from home. Live lessons, interactive materials and flexible schedule options."
+image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-laptop"
+    title: "Format"
+    description: "Live Online"
+  - icon: "fas fa-clock"
+    title: "Flexible Schedule"
+    description: "24/7 Access"
+  - icon: "fas fa-users"
+    title: "Class Size"
+    description: "Maximum 10 People"
+  - icon: "fas fa-globe"
+    title: "Access"
+    description: "From Anywhere in the World"
+heroButtons:
+  primary:
+    text: "Apply Now"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Browse Programs"
+    icon: "fas fa-list"
+    href: "#programlar"
+tabs:
+  - id: "kurs-bilgileri"
+    icon: "fas fa-info-circle"
+    title: "Course Information"
+    content:
+      title: "About Online Courses"
+      items:
+        - icon: "fas fa-laptop"
+          text: "<strong>Format:</strong> Live online lessons"
+        - icon: "fas fa-clock"
+          text: "<strong>Flexibility:</strong> Flexible schedule options"
+        - icon: "fas fa-users"
+          text: "<strong>Class Size:</strong> Max. 10 students"
+        - icon: "fas fa-globe"
+          text: "<strong>Access:</strong> From anywhere in the world"
+      additionalInfo:
+        title: "Online Education Advantages"
+        text: "Learn German comfortably from home with live lessons. 24/7 access to lesson recordings and interactive materials."
+  - id: "programlar"
+    icon: "fas fa-list"
+    title: "Programs"
+    content:
+      title: "Online Program Options"
+      items:
+        - icon: "fas fa-fire"
+          text: "<strong>Intensive Online:</strong> All levels from A1 to C1"
+        - icon: "fas fa-certificate"
+          text: "<strong>Exam Preparation:</strong> Goethe/TELC online preparation"
+faqs:
+  - question: "Are online lessons live?"
+    answer: "Yes, all lessons are conducted live and you can access lesson recordings afterwards."
+  - question: "Which platform is used?"
+    answer: "Zoom or similar professional online education platforms are used."
+  - question: "What course formats are offered?"
+    answer: "Our courses offer you a flexible learning experience: Hybrid Education: Your course consists of a combination of face-to-face lessons and live online lessons. Thanks to the hybrid system, you can also join the lesson online whenever you want on face-to-face lesson days. Live Online Education: In this format, you attend lessons completely live and online."
+  - question: "What content is covered in the courses?"
+    answer: "Our Intensive German programs include listening and reading comprehension with current texts, comprehensive grammar studies and various communication-focused activities. In this way, it is aimed to develop your speaking and writing skills in a goal-oriented manner."
+  - question: "How can I study at a university in Germany?"
+    answer: "To be able to study at a university in Germany, you must first have a recognized university entrance qualification (HZB). It is recommended that you check whether your diploma is recognized in Germany via the anabin system. You also need to document your German language proficiency with official certificates such as telc, DSH. The Campus German University Preparation Program is designed to prepare you completely for this process."
+  - question: "What requirements are necessary?"
+    answer: "You must be at least 18 years old. You must provide a blocked account opened in Germany or an official commitment letter."
+  - question: "What types of visas are recommended?"
+    answer: "Student Visa: Also covers the right to attend preparatory German courses. There is no visa requirement for EU citizens."
+  - question: "What services are included in the courses?"
+    answer: "Level assessment test, no registration fee, course certificate for visa application, digital textbook, individual student counseling (1 time, approximately 45 minutes), webinars on 'University Education in Germany', Campus German certificate, e-learning platform, social and cultural activities organized throughout the year, free Wi-Fi access at all centers."
+  - question: "What are the qualifications of our instructors?"
+    answer: "Our teaching staff consists of university graduates, experts in their field with many years of teaching experience in German as a Foreign Language (DaF) and German as a Second Language (DaZ), and highly motivated individuals. We also have instructors approved by the Federal Office for Migration and Refugees (BAMF). Our lessons are regularly evaluated by students."
+  - question: "How long does it take to learn German?"
+    answer: "German learning time depends on your goal and current level. You can complete the basic levels from A1 to B2 in 6-8 months. Advanced levels such as C1 and C2 may require an additional 4-6 months. You can shorten this time with our intensive courses."
+  - question: "Can I get a Goethe certificate?"
+    answer: "Yes, we offer Goethe certificate preparation courses at CampusGerman. We provide exam preparation at all levels from A1 to C2. You can take certificate exams on our campus or be directed to nearby test centers."
+  - question: "Are accommodation options available?"
+    answer: "Yes, we offer accommodation options in Germany. Student dormitories, homestay accommodation and shared apartments are available. Our accommodation service is not included in the course fee, but we help you find the most suitable options."
+  - question: "Are payment plans and discounts available?"
+    answer: "Yes, we offer flexible payment plans. Monthly, 3-month and 6-month payment options are available. There are discounts for early registration, group registrations and long-term programs. Contact us for detailed information."
+---
+
+<!-- Content to be added here -->
+

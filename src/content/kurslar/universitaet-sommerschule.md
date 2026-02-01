@@ -1,6 +1,7 @@
 ---
 title: "Üniversiteler için Yaz Okulu Programı"
 lang: "tr"
+customSlug: "universite-yaz-okulu"
 badge:
   icon: "fas fa-sun"
   text: "Yaz Okulu"

@@ -1,10 +1,11 @@
 ---
 title: "TestDaF Hazırlık"
 lang: "tr"
+customSlug: "testdaf-hazirlik"
 badge:
   icon: "fas fa-university"
   text: "Üniversiteye Giriş"
-description: "Almanya'daki üniversitelerin kapısını aralayan anahtar: TestDaF. Sadece dil bilginizi değil, sınav stratejinizi geliştiriyoruz. Deneme sınavları, zaman yönetimi taktikleri ve akademik yazma kalıplarıyla hedeflediğiniz TDN 4 skoruna ulaşmanızı garanti altına alın."
+description: "Almanya'daki üniversitelerin kapısını aralayan anahtar: TestDaF. Sadece dil bilginizi değil, sınav stratejinizi geliştiriyoruz. Deneme sınavları, zaman yönetimi taktikleri ve akademik yazma kalıplarıyla hedeflediğiniz TDN 4 skoruna ulaşmanız için kapsamlı hazırlık."
 image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80"
 features:
   - icon: "fas fa-calendar-week"
@@ -91,7 +92,7 @@ faqs:
   - question: "Sınav ücreti kursa dahil mi?"
     answer: "Hayır, resmi TestDaF sınav ücreti (yaklaşık €195-210) ayrıca ödenir. Sınav kayıt işlemlerinizde size yardımcı oluruz."
   - question: "Kursun sonunda başarı garantisi var mı?"
-    answer: "Sınav sonucu tamamen bireysel performansa bağlıdır. Ancak kurslarımıza düzenli katılan ve ödevlerini yapan öğrencilerimizin %85'inden fazlası hedefledikleri TDN 4 skorunu alıyor."
+    answer: "Hayır, Campus German sınav başarı garantisi vermez. Sınav sonucu tamamen bireysel performansa bağlıdır ve resmî sınav kurumları tarafından belirlenir. Ancak kurslarımıza düzenli katılan ve ödevlerini yapan öğrencilerimizin %85'inden fazlası hedefledikleri TDN 4 skorunu alıyor."
   - question: "Hangi kurs formatları sunulmaktadır?"
     answer: "Kurslarımız size esnek bir öğrenme deneyimi sunar: Hibrit Eğitim: Kursunuz, yüz yüze dersler ile canlı online derslerin birleşiminden oluşur. Hibrit sistem sayesinde, yüz yüze ders günlerinde dilediğiniz zaman online olarak da derse katılabilirsiniz. Canlı Online Eğitim: Bu formatta derslere tamamen canlı ve online olarak katılırsınız."
   - question: "Kurslarda hangi içerikler işlenmektedir?"

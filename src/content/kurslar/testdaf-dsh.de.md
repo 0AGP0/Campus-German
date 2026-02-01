@@ -1,6 +1,7 @@
 ---
 title: "TestDaF/DSH Vorbereitungskurs"
 lang: "de"
+customSlug: "testdaf-dsh"
 badge:
   icon: "fas fa-university"
   text: "Universitätsprüfung"
@@ -43,8 +44,8 @@ tabs:
           text: "Während des Kurses bereiten sich die Teilnehmenden gezielt auf das TestDaF- und DSH-Prüfungsformat vor. Alle vier Prüfungsteile (Lesen, Hören, Schreiben, Sprechen) werden detailliert bearbeitet und Prüfungstechniken vermittelt. Akademisches Schreiben, Textanalyse, Forschungsschreibtechniken und professionelle Präsentationsfähigkeiten werden unterrichtet. Probeklausuren, Originalprüfungen und Prüfungssimulationen bereiten die Teilnehmenden auf die reale Prüfungssituation vor. Am Ende des Kurses verfügen die Teilnehmenden über alle notwendigen Kenntnisse und Fähigkeiten, um die TestDaF- oder DSH-Prüfung erfolgreich zu bestehen."
         - heading: "Lehrmethode und Unterrichtsumfeld"
           text: "Der Kurs wird von erfahrenen Lehrkräften durchgeführt, und jede Klasse besteht aus maximal 6 Teilnehmenden. Diese sehr kleine Klassengröße ermöglicht maximale Konzentration auf die individuellen Bedürfnisse der Lernenden. Der Unterricht wird durch prüfungsformat-spezifische Übungen, akademische Schreibarbeiten, Probeklausuren, Feedback-Sitzungen und individuelle Beratung bereichert. Die Teilnehmenden lernen nicht nur Grammatik, sondern entwickeln auch ihre akademischen und professionellen Fähigkeiten."
-        - heading: "Erfolgsgarantie und Unterstützungsleistungen"
-          text: "Wir bieten eine Erfolgsgarantie mit einer Erfolgsquote von 95%. Sollte die Prüfung nicht bestanden werden, besteht die Möglichkeit, den Kurs zu wiederholen. Darüber hinaus unterstützen wir bei Prüfungsanmeldungsprozessen und Universitätsbewerbungsberatung. Unsere Studierenden werden über Prüfungstermine, Anmeldeverfahren, Prüfungsgebühren und Universitätsbewerbungsprozesse informiert. Nach Kursende haben die Teilnehmenden alle notwendigen Vorbereitungen für eine erfolgreiche TestDaF- oder DSH-Prüfung abgeschlossen und können sich an deutschen Universitäten bewerben."
+        - heading: "Unterstützungsleistungen"
+          text: "Wir unterstützen Sie bei Prüfungsanmeldungsprozessen und informieren über Prüfungstermine, Anmeldeverfahren und Prüfungsgebühren. Nach Kursende haben die Teilnehmenden alle notwendigen Vorbereitungen für die TestDaF- oder DSH-Prüfung abgeschlossen und können sich an deutschen Universitäten bewerben. Sollte die Prüfung nicht bestanden werden, besteht die Möglichkeit, den Kurs zu wiederholen. **Wichtig:** Campus German gibt keine Prüfungserfolgsgarantie oder Universitätsbewerbungsberatung. Prüfungsergebnisse und Universitätszulassungen hängen von verschiedenen Faktoren ab und werden von den offiziellen Prüfungsstellen und Universitäten bestimmt."
   - id: "pruefungs-info"
     icon: "fas fa-university"
     title: "Prüfungsinformationen"
@@ -85,8 +86,9 @@ faqs:
   - question: "Gibt es Zahlungspläne und Rabatte?"
     answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
 
-hasDemandForm: true
 ---
+
+
 
 
 

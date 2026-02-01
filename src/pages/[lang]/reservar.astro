@@ -1,0 +1,12 @@
+---
+// Página de reserva en español: redirige a /es/buchung (mismo contenido, ruta en alemán)
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'es' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+return Astro.redirect(`/${lang}/buchung`, 301);
+---

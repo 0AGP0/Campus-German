@@ -1,0 +1,12 @@
+---
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'tr' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Türkçe'de sinav-hazirlik-genel-bakis slug'ını pruefungsvorbereitung-uebersicht sayfasına yönlendir
+return Astro.redirect(`/${lang}/kurslar/pruefungsvorbereitung-uebersicht`, 301);
+---

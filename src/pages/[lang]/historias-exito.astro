@@ -1,0 +1,111 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/erfolgsgeschichten.css';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'es' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+const translations = {
+    title: "Historias de éxito - CampusGerman",
+    sectionTitle: "Historias de éxito de nuestros estudiantes",
+    sectionSubtitle: "Descubra las historias inspiradoras de quienes aprendieron alemán en CampusGerman",
+    stories: [
+        {
+            name: "Ayşe Yılmaz",
+            role: "Éxito TestDaF - Nivel C1",
+            badge: "TestDaF: 20/20",
+            quote: "Gracias a la formación en CampusGerman obtuve la puntuación máxima en el TestDaF. Avancé mucho sobre todo en expresión oral y escrita. Gracias al enfoque paciente y profesional de los profesores, alcancé mi objetivo.",
+            details: ["6 meses de formación", "De B1 a C1", "Admisión universitaria en Alemania"]
+        },
+        {
+            name: "Mehmet Demir",
+            role: "Alemán en el trabajo - Nivel B2",
+            badge: "Empezó a trabajar en Alemania",
+            quote: "Necesitaba aprender alemán para trabajar en Alemania. Gracias al programa orientado al negocio de CampusGerman, llegué al B2 en solo 4 meses. Ahora trabajo como jefe de proyectos en una empresa alemana.",
+            details: ["4 meses de programa intensivo", "De A2 a B2", "Empezó a trabajar en Berlín"]
+        },
+        {
+            name: "Zeynep Kaya",
+            role: "Certificado Telc C1 - Éxito académico",
+            badge: "Telc C1: Sehr Gut",
+            quote: "Quería venir a Alemania para el máster. Gracias al programa de alemán académico de CampusGerman aprobé el Telc C1. Actualmente estudio Administración de Empresas en una universidad alemana.",
+            details: ["8 meses de programa", "De B2 a C1", "Estudiante de máster"]
+        }
+    ],
+    ctaTitle: "Escriba también su historia de éxito",
+    ctaDescription: "Alcanza tus objetivos aprendiendo alemán en CampusGerman. ¡Logra el éxito con nuestros profesores experimentados y programas personalizados!",
+    ctaButton1: "Solicitar ahora",
+    ctaButton2: "Contactar"
+};
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <section class="success-stories-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{translations.sectionTitle}</h2>
+                <p class="section-subtitle">{translations.sectionSubtitle}</p>
+            </div>
+            <div class="stories-grid">
+                {translations.stories.map((story, index) => (
+                    <div class="story-card">
+                        <div class="story-header">
+                            <div class="story-image">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="story-info">
+                                <h3 class="story-name">{story.name}</h3>
+                                <p class="story-role">{story.role}</p>
+                                <div class="story-badge">
+                                    <i class={index === 0 ? "fas fa-trophy" : index === 1 ? "fas fa-briefcase" : "fas fa-certificate"}></i>
+                                    <span>{story.badge}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="story-content">
+                            <div class="story-quote">
+                                <i class="fas fa-quote-left"></i>
+                                <p>{story.quote}</p>
+                            </div>
+                            <div class="story-details">
+                                {story.details.map((detail, idx) => (
+                                    <div class="detail-item">
+                                        <i class={idx === 0 ? "fas fa-calendar" : idx === 1 ? "fas fa-chart-line" : idx === 2 ? (index === 1 ? "fas fa-briefcase" : index === 2 ? "fas fa-university" : "fas fa-graduation-cap") : "fas fa-check"}></i>
+                                        <span>{detail}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h2 class="cta-title">{translations.ctaTitle}</h2>
+                <p class="cta-description">{translations.ctaDescription}</p>
+                <div class="cta-actions">
+                    <a href={`/${lang}/reservar`} class="cta-button">
+                        <span>{translations.ctaButton1}</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href={`/${lang}/contacto`} class="cta-button-secondary">
+                        <span>{translations.ctaButton2}</span>
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>

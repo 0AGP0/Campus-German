@@ -1,0 +1,12 @@
+---
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'tr' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// Türkçe'de online-kurslar-genel-bakis slug'ını online-uebersicht sayfasına yönlendir
+return Astro.redirect(`/${lang}/kurslar/online-uebersicht`, 301);
+---

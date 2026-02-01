@@ -1,0 +1,672 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../../layouts/MainLayout.astro';
+import AkademikAlmancaSarmal from '../../../components/AkademikAlmancaSarmal.astro';
+import '../../../styles/pages/kurslar.css';
+import { coursePricing } from '../../../data/coursePricing';
+import { getFormattedStartDates } from '../../../utils/coursePricingHelper';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'es' } },
+    ];
+}
+
+const { lang } = Astro.params;
+const startDates = getFormattedStartDates(lang as 'tr' | 'de' | 'en' | 'es');
+
+// Slug'dan dil uzantısını temizle
+function cleanSlug(slug: string): string {
+    let clean = slug;
+    // Tire ile biten uzantıları kaldır
+    if (clean.endsWith('-es')) {
+        clean = clean.replace(/-es$/, '');
+    } else if (clean.endsWith('-de')) {
+        clean = clean.replace(/-de$/, '');
+    } else if (clean.endsWith('-tr')) {
+        clean = clean.replace(/-tr$/, '');
+    } else if (clean.endsWith('-en')) {
+        clean = clean.replace(/-en$/, '');
+    }
+    // Tire olmadan biten uzantıları kaldır
+    else if (clean.endsWith('es')) {
+        clean = clean.replace(/es$/, '');
+    } else if (clean.endsWith('de')) {
+        clean = clean.replace(/de$/, '');
+    } else if (clean.endsWith('tr')) {
+        clean = clean.replace(/tr$/, '');
+    } else if (clean.endsWith('en')) {
+        clean = clean.replace(/en$/, '');
+    }
+    return clean;
+}
+
+// Cursos online listesi
+const allKurslar = await getCollection('kurslar');
+const cursosOnline = allKurslar.filter(kurs => {
+    const cleanedSlug = cleanSlug(kurs.slug);
+    return kurs.data.lang === lang && 
+        cleanedSlug.startsWith('online-') &&
+        cleanedSlug !== 'online-uebersicht' &&
+        cleanedSlug !== 'online-kurslar-genel-bakis' &&
+        cleanedSlug !== 'online-overview' &&
+        cleanedSlug !== 'resumen-online';
+});
+
+// Para español, usar datos de precios alemanes como fallback
+const pricingLang = lang === 'es' ? 'de' : lang;
+
+const t = {
+    es: {
+        title: "Resumen de Cursos de Alemán Online - CampusGerman",
+        heroTitle: "Cursos de Alemán Online",
+        heroDescription1: "Aprenda alemán cómodamente desde casa. Clases en vivo, materiales interactivos y opciones de horario flexible.",
+        heroDescription2: "Aprenda desde cualquier lugar del mundo a su propio ritmo.",
+        buttonText1: "Explorar Cursos",
+        buttonText2: "Contáctenos",
+        ctaCardTitle: "Descubra Nuestros Cursos Online",
+        ctaCardDescription: "Clases en vivo, acceso 24/7 y materiales interactivos.",
+        stat1Number: "7+",
+        stat1Label: "Cursos",
+        stat2Number: "En Vivo",
+        stat2Label: "Clases",
+        stat3Number: "24/7",
+        stat3Label: "Acceso",
+        allCoursesButton: "Ver Todos los Cursos",
+        sectionTitle: "Nuestros Cursos de Alemán Online",
+        sectionSubtitle: "Aprendizaje cómodo desde casa",
+    }
+};
+
+const translations = t[lang as keyof typeof t];
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <!-- Hero Section -->
+    <section class="courses-hero-section">
+        <div class="container">
+            <div class="courses-hero-content">
+                <div class="hero-left">
+                    <h1 class="hero-title">
+                        {translations.heroTitle}
+                    </h1>
+                    
+                    <div class="hero-content">
+                        <p class="hero-description">
+                            {translations.heroDescription1}
+                        </p>
+                        
+                        <p class="hero-description">
+                            {translations.heroDescription2}
+                        </p>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <a href="#cursos-tarjetas" class="btn-primary">
+                            <i class="fas fa-arrow-down"></i>
+                            {translations.buttonText1}
+                        </a>
+                        <button class="btn-secondary" id="contactBtn">
+                            <i class="fas fa-envelope"></i>
+                            {translations.buttonText2}
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-right">
+                    <div class="hero-cta-card">
+                        <div class="cta-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3 class="cta-title">{translations.ctaCardTitle}</h3>
+                        <p class="cta-description">
+                            {translations.ctaCardDescription}
+                        </p>
+                        <div class="cta-stats">
+                            <div class="cta-stat">
+                                <div class="stat-number">{translations.stat1Number}</div>
+                                <div class="stat-label">{translations.stat1Label}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">{translations.stat2Number}</div>
+                                <div class="stat-label">{translations.stat2Label}</div>
+                            </div>
+                            <div class="cta-stat">
+                                <div class="stat-number">{translations.stat3Number}</div>
+                                <div class="stat-label">{translations.stat3Label}</div>
+                            </div>
+                        </div>
+                        <a href="#cursos-tarjetas" class="cta-button">
+                            <i class="fas fa-arrow-down"></i>
+                            {translations.allCoursesButton}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Campus German Akademik Almanca Sarmalı -->
+    <AkademikAlmancaSarmal lang={lang} />
+    
+    <!-- Tarjetas de Cursos Section -->
+    <section class="courses-section" id="cursos-tarjetas">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{translations.sectionTitle}</h2>
+                <p class="section-subtitle">{translations.sectionSubtitle}</p>
+            </div>
+            
+            <div class="courses-grid">
+                {cursosOnline.map(kurs => (
+                    <div class="course-card">
+                        <div class="course-image">
+                            <img src={kurs.data.image} alt={kurs.data.title}>
+                        </div>
+                        <div class="course-content">
+                            <h3 class="course-title">{kurs.data.title}</h3>
+                            <div class="course-details">
+                                {kurs.data.features.map(feature => (
+                                    <div class="course-detail">
+                                        <i class={feature.icon}></i>
+                                        <span>{feature.description}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <p class="course-description">
+                                {kurs.data.description}
+                            </p>
+                            <a href={`/${lang}/cursos/${cleanSlug(kurs.slug)}`} class="course-btn">
+                                <span>Ver Detalles</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+    
+    <!-- Precios y Fechas Section -->
+    <section class="pricing-dates-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Precios y Fechas</h2>
+                <p class="section-subtitle">Precios y fechas de inicio de los Cursos de Alemán Online</p>
+            </div>
+            
+            <div class="pricing-content">
+                <!-- Precios de Cursos Online -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">Precios de Cursos de Alemán Online</h3>
+                    <div class="pricing-table-wrapper">
+                        <table class="pricing-table">
+                            <thead>
+                                <tr>
+                                    <th>Nivel</th>
+                                    <th>Número de Clases</th>
+                                    <th>Duración</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {(['a1', 'a2', 'b1', 'b2', 'c1'] as const).map(level => {
+                                    const pricing = coursePricing[pricingLang as 'tr' | 'de' | 'en'].online[level];
+                                    return (
+                                        <tr>
+                                            <td><strong>{level.toUpperCase()}</strong></td>
+                                            <td>{pricing.lessons}</td>
+                                            <td>{pricing.duration}</td>
+                                            <td><strong>{pricing.fullCourse}</strong></td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pricing-info-box" style="margin-top: 20px;">
+                        <p><i class="fas fa-info-circle"></i> <strong>{coursePricing[pricingLang as 'tr' | 'de' | 'en'].lessonInfo}</strong> - {coursePricing[pricingLang as 'tr' | 'de' | 'en'].onlineNote}</p>
+                    </div>
+                </div>
+                
+                <!-- Fechas de Inicio de Cursos -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">Nuestras Fechas de Cursos</h3>
+                    <p class="pricing-subtitle">Cursos Académicos Intensivos / Cursos de Alemán Online</p>
+                    <div class="course-dates-table-wrapper">
+                        <table class="course-dates-table">
+                            <thead>
+                                <tr>
+                                    <th>A1.1</th>
+                                    <th>A1.2</th>
+                                    <th>A2.1</th>
+                                    <th>A2.2</th>
+                                    <th>B1.1</th>
+                                    <th>B1.2</th>
+                                    <th>B2.1</th>
+                                    <th>B2.2</th>
+                                    <th>C1.1</th>
+                                    <th>C1.2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{startDates.a1.a1_1[0]}</td>
+                                    <td>{startDates.a1.a1_2[0]}</td>
+                                    <td>{startDates.a2.a2_1[0]}</td>
+                                    <td>{startDates.a2.a2_2[0]}</td>
+                                    <td>{startDates.b1.b1_1[0]}</td>
+                                    <td>{startDates.b1.b1_2[0]}</td>
+                                    <td>{startDates.b2.b2_1[0]}</td>
+                                    <td>{startDates.b2.b2_2[0]}</td>
+                                    <td>{startDates.c1.c1_1[0]}</td>
+                                    <td>{startDates.c1.c1_2[0]}</td>
+                                </tr>
+                                <tr>
+                                    <td>{startDates.a1.a1_1[1]}</td>
+                                    <td>{startDates.a1.a1_2[1]}</td>
+                                    <td>{startDates.a2.a2_1[1]}</td>
+                                    <td>{startDates.a2.a2_2[1]}</td>
+                                    <td>{startDates.b1.b1_1[1]}</td>
+                                    <td>{startDates.b1.b1_2[1]}</td>
+                                    <td>{startDates.b2.b2_1[1]}</td>
+                                    <td>{startDates.b2.b2_2[1]}</td>
+                                    <td>{startDates.c1.c1_1[1]}</td>
+                                    <td>{startDates.c1.c1_2[1]}</td>
+                                </tr>
+                                <tr>
+                                    <td>{startDates.a1.a1_1[2]}</td>
+                                    <td>{startDates.a1.a1_2[2]}</td>
+                                    <td>{startDates.a2.a2_1[2]}</td>
+                                    <td>{startDates.a2.a2_2[2]}</td>
+                                    <td>{startDates.b1.b1_1[2]}</td>
+                                    <td>{startDates.b1.b1_2[2]}</td>
+                                    <td>{startDates.b2.b2_1[2]}</td>
+                                    <td>{startDates.b2.b2_2[2]}</td>
+                                    <td>{startDates.c1.c1_1[2]}</td>
+                                    <td>{startDates.c1.c1_2[2]}</td>
+                                </tr>
+                                <tr>
+                                    <td>{startDates.a1.a1_1[3]}</td>
+                                    <td>{startDates.a1.a1_2[3]}</td>
+                                    <td>{startDates.a2.a2_1[3]}</td>
+                                    <td>{startDates.a2.a2_2[3]}</td>
+                                    <td>{startDates.b1.b1_1[3]}</td>
+                                    <td>{startDates.b1.b1_2[3]}</td>
+                                    <td>{startDates.b2.b2_1[3]}</td>
+                                    <td>{startDates.b2.b2_2[3]}</td>
+                                    <td>{startDates.c1.c1_1[3]}</td>
+                                    <td>{startDates.c1.c1_2[3]}</td>
+                                </tr>
+                                <tr>
+                                    <td>{startDates.a1.a1_1[4]}</td>
+                                    <td>{startDates.a1.a1_2[4]}</td>
+                                    <td>{startDates.a2.a2_1[4]}</td>
+                                    <td>{startDates.a2.a2_2[4]}</td>
+                                    <td>{startDates.b1.b1_1[4]}</td>
+                                    <td>{startDates.b1.b1_2[4]}</td>
+                                    <td>{startDates.b2.b2_1[4]}</td>
+                                    <td>{startDates.b2.b2_2[4]}</td>
+                                    <td>{startDates.c1.c1_1[4]}</td>
+                                    <td>{startDates.c1.c1_2[4]}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="course-dates-info">
+                        <p><strong>A1 · 8 semanas · 20+ 4 clases</strong></p>
+                        <p><strong>A2 · 8 semanas · 20+ 4 clases</strong></p>
+                        <p><strong>B1 · 8 semanas · 25+ 4 clases</strong></p>
+                        <p><strong>B2 · 8 semanas · 25+ 4 clases</strong></p>
+                        <p><strong>C1 · 8 semanas · 25+ 4 clases</strong></p>
+                    </div>
+                </div>
+                
+                <!-- Días Festivos -->
+                <div class="pricing-block">
+                    <h3 class="pricing-block-title">Días Festivos 2026</h3>
+                    <div class="holidays-list">
+                        {coursePricing[pricingLang as 'tr' | 'de' | 'en'].holidays.map(holiday => (
+                            <div class="holiday-item">
+                                <span class="holiday-name">{holiday.name}</span>
+                                <span class="holiday-date">{holiday.date}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Niveles de Idioma Section -->
+    <section class="language-levels-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Niveles de Idioma A1 – C1</h2>
+                <p class="section-subtitle">¡Cursos de Alemán A1 en Alemania y mucho más!</p>
+            </div>
+            
+            <div class="levels-content">
+                <div class="levels-text">
+                    <p class="levels-description">
+                        En su primer día de curso realizará una prueba de nivelación y luego se unirá a la clase que mejor se adapte a su nivel. Las cuatro habilidades lingüísticas de lectura, comprensión auditiva, escritura y expresión oral se miden según los estándares del Marco Común Europeo de Referencia (MCER) y los niveles están estructurados de la siguiente manera:
+                    </p>
+                    
+                    <div class="levels-info">
+                        <div class="level-group">
+                            <h3>A1 y A2</h3>
+                            <p>Nivel principiante y básico</p>
+                        </div>
+                        <div class="level-group">
+                            <h3>B1 y B2</h3>
+                            <p>Nivel preintermedio e intermedio</p>
+                        </div>
+                        <div class="level-group">
+                            <h3>C1</h3>
+                            <p>Nivel intermedio superior/avanzado</p>
+                        </div>
+                    </div>
+                    
+                    <p class="levels-description">
+                        Como regla general, calculamos 8 semanas para cada nivel; para B2 y C1 generalmente toma 12 semanas o más.
+                    </p>
+                    
+                    <p class="levels-description">
+                        Después de completar con éxito su curso de alemán, recibirá un certificado apropiado para su nivel (por ejemplo, A2, B1, etc.).
+                    </p>
+                    
+                    <p class="levels-description">
+                        Puede encontrar una descripción detallada de los niveles aquí: <a href="#" class="cefr-link">Escala global CEFR</a>
+                    </p>
+                </div>
+                
+                <div class="levels-visual">
+                    <div class="levels-pyramid">
+                        <div class="level-c2">
+                            <div class="level-content">
+                                <h4>C2</h4>
+                                <p>Mastery</p>
+                            </div>
+                        </div>
+                        <div class="level-c1">
+                            <div class="level-content">
+                                <h4>C1</h4>
+                                <p>Competencia Operativa Efectiva</p>
+                                <span class="level-duration">12+ semanas</span>
+                            </div>
+                        </div>
+                        <div class="level-b2">
+                            <div class="level-content">
+                                <h4>B2</h4>
+                                <p>Vantage</p>
+                                <span class="level-duration">12 semanas</span>
+                            </div>
+                        </div>
+                        <div class="level-b1">
+                            <div class="level-content">
+                                <h4>B1</h4>
+                                <p>Threshold</p>
+                                <span class="level-duration">8 semanas</span>
+                            </div>
+                        </div>
+                        <div class="level-a2">
+                            <div class="level-content">
+                                <h4>A2</h4>
+                                <p>Waystage</p>
+                                <span class="level-duration">8 semanas</span>
+                            </div>
+                        </div>
+                        <div class="level-a1">
+                            <div class="level-content">
+                                <h4>A1</h4>
+                                <p>Breakthrough</p>
+                                <span class="level-duration">8 semanas</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="levels-legend">
+                        <div class="legend-item">
+                            <div class="legend-color beginner"></div>
+                            <span>Nivel Principiante</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color intermediate"></div>
+                            <span>Nivel Intermedio</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color advanced"></div>
+                            <span>Nivel Avanzado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Servicios de CampusGerman Section -->
+    <section class="campusgerman-services-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Servicios de CampusGerman</h2>
+                <p class="section-subtitle">Estamos a su lado en su viaje de aprendizaje del alemán</p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- Colocación Universitaria / Pathway -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 class="service-title">Programa de Colocación Universitaria / Pathway</h3>
+                        <p class="service-description">
+                            Estudiar en una universidad en Alemania es un proceso de múltiples etapas que requiere planificación adecuada y apoyo profesional. El Programa de Colocación Universitaria / Pathway que ofrecemos como CampusGerman es un servicio de orientación integral que tiene como objetivo colocar a los estudiantes de manera segura, consciente y completa en universidades de Alemania.
+                        </p>
+                        <a href={`/${lang}/nuestros-servicios/colocacion-universitaria`} class="service-cta">
+                            <span>Ver Detalles</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Orientación de Visa -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-passport"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 class="service-title">Orientación de Visa</h3>
+                        <p class="service-description">
+                            Uno de los pasos más críticos para los estudiantes que desean estudiar en Alemania es el proceso de visa de estudiante. Las solicitudes incompletas o incorrectamente realizadas pueden hacer que el proceso se prolongue o incluso resulte en rechazo. La Orientación de Visa que ofrecemos como CampusGerman tiene como objetivo guiar a los estudiantes profesionalmente desde el principio de la solicitud hasta su conclusión.
+                        </p>
+                        <a href={`/${lang}/nuestros-servicios/orientacion-visa`} class="service-cta">
+                            <span>Ver Detalles</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Alojamiento -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 class="service-title">Alojamiento y Residencia Estudiantil en Bremen</h3>
+                        <p class="service-description">
+                            Una de las cuestiones más importantes al comenzar la educación en Alemania es encontrar un alojamiento seguro y adecuado. El proceso de alojamiento puede ser complejo y estresante, especialmente para estudiantes que vienen del extranjero. El servicio de Alojamiento y Residencia Estudiantil en Bremen que ofrecemos como CampusGerman tiene como objetivo que los estudiantes completen este proceso sin problemas y de manera segura.
+                        </p>
+                        <a href={`/${lang}/nuestros-servicios/alojamiento`} class="service-cta">
+                            <span>Ver Detalles</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Recogida en el Aeropuerto -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-plane-arrival"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3 class="service-title">Recogida en el Aeropuerto</h3>
+                        <p class="service-description">
+                            Comenzar la educación en el extranjero puede ser emocionante y desafiante para los estudiantes que vienen a Alemania por primera vez. Después de un viaje largo, el proceso de transporte y asentamiento en una ciudad desconocida puede ser estresante. El Servicio de Recogida en el Aeropuerto que ofrecemos como CampusGerman tiene como objetivo que los estudiantes pasen sus primeros días en Alemania de manera segura, cómoda y sin problemas.
+                        </p>
+                        <a href={`/${lang}/nuestros-servicios/recogida-aeropuerto`} class="service-cta">
+                            <span>Ver Detalles</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Preguntas Frecuentes Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Preguntas Frecuentes</h2>
+                <p class="section-subtitle">Obtenga información sobre temas que le interesan</p>
+            </div>
+            
+            <div class="faq-container">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Qué formatos de curso se ofrecen?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nuestros cursos le ofrecen una experiencia de aprendizaje flexible:</p>
+                        <p><strong>Educación Híbrida:</strong></p>
+                        <p>Su curso consiste en una combinación de clases presenciales y clases online en vivo. Gracias al sistema híbrido, también puede unirse a la clase online cuando lo desee en días de clases presenciales. Nuestras aulas tienen equipamiento técnico que permite a los profesores, estudiantes en clase y participantes online interactuar al mismo tiempo.</p>
+                        <p><strong>Educación Online en Vivo:</strong></p>
+                        <p>En este formato, asiste a clases completamente en vivo y online. Puede unirse a clases online en vivo desde su hogar, mientras está fuera o desde nuestros centros.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Qué contenido se cubre en los cursos?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nuestros programas de Alemán Intensivo incluyen comprensión auditiva y lectora con textos actuales, estudios gramaticales integrales y diversas actividades centradas en la comunicación. De esta manera, se busca desarrollar sus habilidades de habla y escritura de manera orientada a objetivos.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Cómo puedo obtener educación universitaria en Alemania?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Para poder estudiar en una universidad en Alemania, primero debe tener una calificación de ingreso universitario reconocida (HZB). Se recomienda que verifique si su diploma está reconocido en Alemania a través del sistema anabin. También necesita documentar su competencia en alemán con certificados oficiales como telc, DSH. El Programa de Preparación Universitaria de Campus German está diseñado para prepararlo completamente para este proceso.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Qué requisitos son necesarios?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Debe tener al menos 18 años. Debe proporcionar una cuenta bloqueada abierta en Alemania o una carta de compromiso oficial.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 5 -->
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Qué tipos de visas se recomiendan?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p><strong>Visa de Estudiante:</strong></p>
+                        <p>También cubre el derecho a asistir a cursos preparatorios de alemán. No hay requisito de visa para ciudadanos de la UE.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 6 -->
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Qué servicios están incluidos en los cursos?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Prueba de evaluación de nivel, sin tarifa de registro, certificado del curso para solicitud de visa, libro de texto digital, consultoría estudiantil individual (1 vez, aproximadamente 45 minutos), webinars sobre 'Educación Universitaria en Alemania', certificado de Campus German, plataforma de e-learning, actividades sociales y culturales organizadas durante todo el año, acceso gratuito a Wi-Fi en todos los centros.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 7 -->
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Cuáles son las calificaciones de nuestros instructores?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nuestro personal docente consiste en graduados universitarios, expertos en su campo con muchos años de experiencia docente en Alemán como Lengua Extranjera (DaF) y Alemán como Segunda Lengua (DaZ), e individuos altamente motivados. También tenemos instructores aprobados por la Oficina Federal de Migración y Refugiados (BAMF). Nuestras clases son evaluadas regularmente por los estudiantes.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 8 -->
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Cuánto tiempo se tarda en aprender alemán?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>El tiempo de aprendizaje de alemán depende de su objetivo y nivel actual. Puede completar los niveles básicos desde A1 hasta B2 en 6-8 meses. Los niveles avanzados como C1 y C2 pueden requerir 4-6 meses adicionales. Puede acortar este tiempo con nuestros cursos intensivos.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 9 -->
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Puedo obtener un certificado de Goethe?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, ofrecemos cursos de preparación para certificados de Goethe en CampusGerman. Proporcionamos preparación para exámenes en todos los niveles desde A1 hasta C2. Puede tomar exámenes de certificado en nuestro campus o ser dirigido a centros de prueba cercanos.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 10 -->
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Hay opciones de alojamiento disponibles?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, ofrecemos opciones de alojamiento en Alemania. Residencias estudiantiles, alojamiento en familias anfitrionas y apartamentos compartidos están disponibles. Nuestro servicio de alojamiento no está incluido en la tarifa del curso, pero le ayudamos a encontrar las opciones más adecuadas.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 11 -->
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>¿Hay planes de pago y descuentos disponibles?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, ofrecemos planes de pago flexibles. Opciones de pago mensual, de 3 meses y de 6 meses están disponibles. Hay descuentos para registro temprano, registros grupales y programas a largo plazo. Contáctenos para obtener información detallada.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-cta">
+                <p>¿Tiene otras preguntas?</p>
+                <a href={`/${lang}/contacto`} class="faq-contact-btn">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contáctenos</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</MainLayout>

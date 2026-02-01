@@ -1,6 +1,7 @@
 ---
 title: "Online Almanca Kursları Genel Bakış"
 lang: "tr"
+customSlug: "online-kurslar-genel-bakis"
 badge:
   icon: "fas fa-laptop"
   text: "Online"

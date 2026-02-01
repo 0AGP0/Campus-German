@@ -3,6 +3,10 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SuccessModal from '../components/SuccessModal.astro';
+import '../styles/global.css';
+import '../styles/header.css';
+import '../styles/footer.css';
+import '../styles/sticky-sidebar.css';
 
 const { title = 'CampusGerman - Almanca Dil Kursu', lang = 'tr', includeHizmetCSS = false } = Astro.props;
 ---
@@ -14,13 +18,13 @@ const { title = 'CampusGerman - Almanca Dil Kursu', lang = 'tr', includeHizmetCS
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="http://campusgerman.com/wp-content/uploads/2025/11/German_logo-1-1.png">
-    <link rel="shortcut icon" type="image/png" href="http://campusgerman.com/wp-content/uploads/2025/11/German_logo-1-1.png">
-    <link rel="apple-touch-icon" href="http://campusgerman.com/wp-content/uploads/2025/11/German_logo-1-1.png">
+    <!-- Favicon / Google site icon (Campus German logo) -->
+    <link rel="icon" type="image/png" href="/Campusgerman.png">
+    <link rel="shortcut icon" type="image/png" href="/Campusgerman.png">
+    <link rel="apple-touch-icon" href="/Campusgerman.png">
+    <meta property="og:image" content="https://campusgerman.com/Campusgerman.png">
     
-    <!-- CSS -->
-    <link rel="stylesheet" href="/style.css">
+    <!-- CSS: hizmet.css (koşullu) - global.css ve header.css import ediliyor -->
     {includeHizmetCSS ? (
         <link rel="stylesheet" href="/hizmet.css" />
     ) : ''}
@@ -28,12 +32,18 @@ const { title = 'CampusGerman - Almanca Dil Kursu', lang = 'tr', includeHizmetCS
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Outfit (Europa benzeri geometrik sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Script early so header dropdown works as soon as DOM is ready (defer = after parse, before paint) -->
+    <script src="/script.js?v=2" defer></script>
 </head>
 <body>
-    <!-- Header Component -->
+    <!-- Header Component (fixed) -->
     <Header lang={lang} />
+    <!-- Spacer: fixed header yüksekliği kadar boşluk, hero header altında kalmasın -->
+    <div class="header-spacer" aria-hidden="true"></div>
     
     <!-- Main Content -->
     <main>
@@ -45,9 +55,6 @@ const { title = 'CampusGerman - Almanca Dil Kursu', lang = 'tr', includeHizmetCS
     
     <!-- Success Modal -->
     <SuccessModal lang={lang} />
-    
-    <!-- JavaScript -->
-    <script is:inline src="/script.js"></script>
 </body>
 </html>
 

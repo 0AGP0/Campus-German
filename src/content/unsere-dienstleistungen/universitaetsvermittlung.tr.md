@@ -1,6 +1,7 @@
 ---
 title: "Üniversite Yerleştirme Programı / Pathway"
 lang: "tr"
+customSlug: "universite-yerlestirme"
 description: "Almanya'da üniversite eğitimi için kapsamlı yerleştirme programı. Pathway programları ve üniversite başvuru desteği."
 image: "https://images.unsplash.com/photo-1523050854058-8df90110c9e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15 Ocak 2024"

@@ -1,15 +1,23 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import '../../styles/pages/dienstleistungen.css';
+import { getAdvantagesPath, isValidLang } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
     return [
-        { params: { lang: 'tr' } },
         { params: { lang: 'de' } },
     ];
 }
 
 const { lang } = Astro.params;
+
+// Lang tip kontrolü
+if (!isValidLang(lang)) {
+    throw new Error(`Invalid language: ${lang}`);
+}
+
+// Path helper'ları
+const advantagesPath = getAdvantagesPath(lang);
 
 // Translations
 const t = {
@@ -26,6 +34,13 @@ const t = {
         heroDescription: "Besondere Vorteile und Dienstleistungen, die wir Ihnen auf Ihrer Deutschlernreise bieten. Von hybriden Lernmodellen bis hin zu kostenlosen Sprachclubs, von Stadttouren bis hin zu Lerncoaching - wir bieten eine breite Palette von Dienstleistungen.",
         sectionTitle: "Unsere Vorteile",
         sectionSubtitle: "Speziell entwickelte Vorteile für jeden Bedarf",
+    },
+    en: {
+        title: "Our Advantages - CampusGerman",
+        heroTitle: "CampusGerman Advantages",
+        heroDescription: "Special advantages and services we offer you on your German learning journey. From hybrid learning models to free conversation clubs, from city tours to learning coaching - we offer a wide range of services.",
+        sectionTitle: "Our Advantages",
+        sectionSubtitle: "Specially designed advantages for every need",
     }
 };
 
@@ -139,7 +154,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-vorteile/hibrit-egitim`} class="service-link">
+                        <a href={`/${lang}/${advantagesPath}/hybrides-lernmodell`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -181,7 +196,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-vorteile/sehir-uni-gezileri`} class="service-link">
+                        <a href={`/${lang}/unsere-vorteile/stadt-und-universitaetstouren`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -223,7 +238,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-vorteile/konusma-kulubu`} class="service-link">
+                        <a href={`/${lang}/unsere-vorteile/sprachclub`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -265,7 +280,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-vorteile/egitim-koclugu`} class="service-link">
+                        <a href={`/${lang}/unsere-vorteile/lerncoaching`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -307,7 +322,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-vorteile/garanti`} class="service-link">
+                        <a href={`/${lang}/unsere-vorteile/geld-zurueck-garantie`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>

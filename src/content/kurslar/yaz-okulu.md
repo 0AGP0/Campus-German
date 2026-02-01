@@ -1,6 +1,7 @@
 ---
 title: "Yaz Okulu (Sommerkurs)"
 lang: "tr"
+customSlug: "yaz-okulu"
 badge:
   icon: "fas fa-sun"
   text: "Yaz Programı"

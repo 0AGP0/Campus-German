@@ -1,0 +1,102 @@
+---
+title: "German Course for DAAD Scholarship Holders"
+lang: "en"
+customSlug: "daad-scholars"
+badge:
+  icon: "fas fa-graduation-cap"
+  text: "DAAD"
+description: "Special German course for DAAD scholarship holders. Academic German and university preparation."
+image: "https://images.unsplash.com/photo-1523050854058-8df90110c9e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Weekly Lessons"
+    description: "20-24 Lessons"
+  - icon: "fas fa-calendar-alt"
+    title: "Course Duration"
+    description: "Flexible"
+  - icon: "fas fa-users"
+    title: "Class Size"
+    description: "Maximum 12 People"
+  - icon: "fas fa-graduation-cap"
+    title: "Goal"
+    description: "DAAD Scholarship Holders"
+heroButtons:
+  primary:
+    text: "Apply Now"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "DAAD Information"
+    icon: "fas fa-info-circle"
+    href: "#daad-info"
+tabs:
+  - id: "course-info"
+    icon: "fas fa-info-circle"
+    title: "Course Information"
+    content:
+      title: "About DAAD Scholarship Holders Course"
+      paragraphs:
+        - heading: "Course Overview"
+          text: "The German Course for DAAD Scholarship Holders is a special program prepared to develop the German skills that students receiving education in Germany with DAAD (German Academic Exchange Service) scholarship will need in academic and daily life. This course offered by CampusGerman aims for scholarship holders to adapt more quickly and smoothly to university life in Germany. For DAAD scholarship holders, German knowledge is of great importance not only for following courses; but also in terms of academic communication, university internal correspondence, and social integration. This course provides participants with comprehensive preparation by combining general German knowledge with academic language, university terminology, and official communication. The program is structured in accordance with CEFR standards and adapted according to students' current levels. The CampusGerman German Course for DAAD Scholarship Holders is a goal-oriented language program designed to make the scholarship process more efficient and successful."
+        - heading: "Target Audience and Prerequisites"
+          text: "This course is suitable for students who have won or plan to win a DAAD scholarship. It particularly addresses the following groups: Students who will pursue undergraduate, graduate, or doctoral studies in Germany with DAAD scholarship Scholarship holders who want to strengthen their academic German skills Candidates who need to communicate in German in the university environment Those who want to strengthen their language infrastructure before coming to Germany Although there is no specific starting level requirement for course participation, students at A2 and above levels benefit more from the course content. CampusGerman directs students to appropriate groups by conducting level and needs analysis before the course."
+        - heading: "Course Content and Learning Goals"
+          text: "The German Course for DAAD Scholarship Holders focuses on language skills for academic and university life. The course content includes: Academic German words and expressions University internal communication and correspondence language Skills for following courses and seminars Reading and understanding academic texts Presentation and discussion language The learning goal is for the student to be able to use German effectively, correctly, and fluently in the academic environment. At the end of the course, participants can follow university courses more comfortably and express themselves confidently in academic communication."
+        - heading: "Teaching Method and Classroom Environment"
+          text: "This course at CampusGerman is conducted with an academically focused and applied teaching approach. In classes: Examples from real university course content Academic texts and case studies Presentation and discussion exercises Listening and speaking-focused studies are used. The classroom environment is interactive and active participation of scholarship holders is encouraged. Instructors are experienced in academic German and university system."
+        - heading: "Post-Course Progress"
+          text: "Students who complete the German Course for DAAD Scholarship Holders: Take their academic German skills to advanced level Adapt more quickly to university life in Germany Gain a strong language infrastructure that supports their academic success Can transition to advanced academic or exam preparation programs CampusGerman continues to support scholarship holders in advanced German programs and academic counseling processes after the course."
+  - id: "dates-prices"
+    icon: "fas fa-calendar-alt"
+    title: "Dates and Prices"
+    content:
+      title: "Price Information"
+      pricing:
+        - name: "DAAD Scholarship Holders"
+          duration: "Flexible"
+          schedule: "20-24 Lessons/Week"
+          price: "Special Pricing"
+          highlighted: true
+  - id: "daad-info"
+    icon: "fas fa-graduation-cap"
+    title: "DAAD Information"
+    content:
+      title: "Features for DAAD Scholarship Holders"
+      items:
+        - icon: "fas fa-check-circle"
+          text: "<strong>Academic German:</strong> Language skills required for university education"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Special Discount:</strong> Special pricing for DAAD scholarship holders"
+        - icon: "fas fa-check-circle"
+          text: "<strong>University Preparation:</strong> TestDaF/DSH preparation support"
+faqs:
+  - question: "How do I prove I'm a DAAD scholarship holder?"
+    answer: "It is sufficient to submit your DAAD scholarship document during registration."
+  - question: "Is academic German taught?"
+    answer: "Yes, the course is focused on academic German and university preparation."
+  - question: "What course formats are offered?"
+    answer: "Our courses offer you a flexible learning experience: Hybrid Education: Your course consists of a combination of face-to-face classes and live online classes. Thanks to the hybrid system, you can also attend classes online whenever you want on face-to-face class days. Live Online Education: In this format, you attend classes completely live and online."
+  - question: "What content is covered in the courses?"
+    answer: "Our Intensive German programs include listening and reading comprehension with current texts, comprehensive grammar studies, and various communication-focused activities. This aims to develop your speaking and writing skills in a goal-oriented manner."
+  - question: "How can I get university education in Germany?"
+    answer: "To receive university education in Germany, you must first have recognized university entrance qualification (HZB). It is recommended to check whether your diploma is recognized in Germany through the anabin system. You also need to document your German language proficiency with official certificates such as telc, DSH. The Campus German University Preparation Program is designed for you to prepare for this process completely."
+  - question: "What requirements are necessary?"
+    answer: "You must be at least 18 years old. You must submit a blocked account opened in Germany or an official commitment letter."
+  - question: "What types of visas are recommended?"
+    answer: "Student Visa: Also covers the right to participate in preparatory German courses. There is no visa requirement for EU citizens."
+  - question: "What services are included in the courses?"
+    answer: "Placement test, no registration fee, course certificate for visa application, digital textbook, individual student counseling (1 time, approximately 45 minutes), webinars on 'University Education in Germany', Campus German certificate, e-learning platform, social and cultural activities organized throughout the year, free Wi-Fi access at all centers."
+  - question: "What are the qualifications of our instructors?"
+    answer: "Our teaching staff consists of university graduates with many years of teaching experience in German as a Foreign Language (DaF) and German as a Second Language (DaZ), experts in their field, and highly motivated people. We also have Federal Office for Migration and Refugees (BAMF) approved instructors. Our lessons are regularly evaluated by students."
+  - question: "How long does it take to learn German?"
+    answer: "German learning time depends on your goal and current level. You can complete the basic levels from A1 to B2 in 6-8 months. Advanced levels such as C1 and C2 may require an additional 4-6 months. You can shorten this time with our intensive courses."
+  - question: "Can I get a Goethe certificate?"
+    answer: "Yes, we offer Goethe certificate preparation courses at CampusGerman. We provide exam preparation at all levels from A1 to C2. You can take certificate exams at our campus or be directed to nearby test centers."
+  - question: "Are accommodation options available?"
+    answer: "Yes, we offer accommodation options in Germany. Student dormitories, homestay accommodation, and shared apartments are available. Our accommodation service is not included in the course fee, but we help you find the most suitable options."
+  - question: "Are payment plans and discounts available?"
+    answer: "Yes, we offer flexible payment plans. Monthly, 3-month, and 6-month payment options are available. There are discounts for early registration, group registrations, and long-term programs. Contact us for detailed information."
+---
+
+<!-- Content will be added here -->
+

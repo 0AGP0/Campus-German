@@ -1,6 +1,7 @@
 ---
 title: "Firmalara özel Almanca Kursu"
 lang: "tr"
+customSlug: "kurumsal-kurs"
 badge:
   icon: "fas fa-briefcase"
   text: "Firma Kursu"

@@ -1,0 +1,106 @@
+/* ===== STICKY SIDEBAR SYSTEM - MINIMAL CSS ===== */
+/* JavaScript handles all sticky positioning - CSS only ensures parent containers allow it */
+
+/* ===== PARENT CONTAINERS: Allow sticky ===== */
+/* Article Section (for Avantajlar and Hizmetler pages) */
+section.article-section,
+.article-section {
+    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    position: relative !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+}
+
+.article-section .container,
+section.article-section .container {
+    overflow: visible !important;
+    position: relative !important;
+    height: auto !important;
+}
+
+.article-section .article-layout,
+section.article-section .article-layout {
+    overflow: visible !important;
+    position: relative !important;
+    height: auto !important;
+}
+
+/* Mission Statement Section (for Hakkımızda subpages) */
+section.mission-statement,
+.mission-statement {
+    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    position: relative !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+}
+
+.mission-statement .mission-container,
+section.mission-statement .mission-container {
+    overflow: visible !important;
+    position: relative !important;
+    height: auto !important;
+}
+
+.mission-statement .mission-statement-wrapper,
+section.mission-statement .mission-statement-wrapper {
+    overflow: visible !important;
+    position: relative !important;
+    height: auto !important;
+}
+
+/* ===== SIDEBAR BASE STYLES ===== */
+/* JavaScript handles sticky positioning */
+.article-sidebar,
+.mission-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    z-index: 10;
+}
+
+/* Responsive: Stack on mobile */
+/* JavaScript handles disabling sticky on mobile - CSS only handles layout */
+@media (max-width: 1024px) {
+    .article-layout,
+    .mission-statement-wrapper {
+        grid-template-columns: 1fr !important;
+        overflow-x: hidden !important;
+    }
+    
+    .article-content,
+    .mission-statement-main,
+    .article-sidebar,
+    .mission-sidebar {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* Prevent content from overflowing */
+    .mission-statement-main * ,
+    .article-content * {
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
+    
+    /* Images and tables should be responsive */
+    .mission-statement-main img,
+    .article-content img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    .mission-statement-main table,
+    .article-content table {
+        display: block;
+        overflow-x: auto;
+        max-width: 100%;
+    }
+}

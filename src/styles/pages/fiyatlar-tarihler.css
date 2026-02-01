@@ -1,0 +1,189 @@
+/* ===== Fiyatlar ve Tarihler Sayfası ===== */
+.fiyatlar-hero {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 60px 0 50px;
+    position: relative;
+}
+
+.fiyatlar-hero .page-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 12px;
+}
+
+.fiyatlar-hero .page-subtitle {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    max-width: 640px;
+}
+
+.fiyatlar-section {
+    padding: 50px 0;
+}
+
+.fiyatlar-section:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.fiyatlar-section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-primary, #0B1220);
+}
+
+.fiyatlar-table-wrap {
+    overflow-x: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.fiyatlar-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    min-width: 480px;
+}
+
+.fiyatlar-table th,
+.fiyatlar-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.fiyatlar-table th {
+    background: var(--color-primary, #0B1220);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.fiyatlar-table tr:hover td {
+    background: #f8f9fa;
+}
+
+.fiyatlar-table .price-cell {
+    font-weight: 700;
+    color: var(--color-primary);
+    white-space: nowrap;
+}
+
+.fiyatlar-dates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.fiyatlar-dates-badge {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+.fiyatlar-dates-badge strong {
+    display: block;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+}
+
+.fiyatlar-dates-badge span {
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+}
+
+.fiyatlar-info-box {
+    background: #e8f4fd;
+    border-left: 4px solid var(--color-primary);
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 20px 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.fiyatlar-note {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-top: 12px;
+}
+
+.fiyatlar-holidays-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.fiyatlar-holidays-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.fiyatlar-holidays-list li:last-child {
+    border-bottom: none;
+}
+
+.fiyatlar-schedule-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.fiyatlar-schedule-card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    color: var(--color-text-primary);
+}
+
+.fiyatlar-schedule-card p {
+    margin: 6px 0;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+}
+
+.fiyatlar-cta {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.fiyatlar-cta .btn-buchung {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color-primary, #0B1220);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.fiyatlar-cta .btn-buchung:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .fiyatlar-hero .page-title {
+        font-size: 1.75rem;
+    }
+    .fiyatlar-table th,
+    .fiyatlar-table td {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    .fiyatlar-dates-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

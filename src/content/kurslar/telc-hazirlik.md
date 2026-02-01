@@ -1,6 +1,7 @@
 ---
 title: "TELC Sertifika Hazırlık"
 lang: "tr"
+customSlug: "telc-hazirlik"
 badge:
   icon: "fas fa-certificate"
   text: "Sertifika"

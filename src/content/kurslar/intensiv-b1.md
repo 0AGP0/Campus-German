@@ -1,6 +1,7 @@
 ---
 title: "Yoğun Almanca B1 Kursu"
 lang: "tr"
+customSlug: "yogun-b1"
 badge:
   icon: "fas fa-fire"
   text: "B1 Seviye"

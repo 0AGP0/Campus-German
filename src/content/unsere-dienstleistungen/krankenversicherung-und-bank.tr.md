@@ -1,6 +1,7 @@
 ---
 title: "Sağlık Sigortası/Bloke ve Banka Hesabı"
 lang: "tr"
+customSlug: "sigorta-banka"
 description: "Almanya'da sağlık sigortası, bloke hesap ve banka hesabı açma konularında rehberlik ve destek. Tüm finansal işlemleriniz için yardım."
 image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15 Ocak 2024"

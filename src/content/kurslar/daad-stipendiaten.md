@@ -1,6 +1,7 @@
 ---
 title: "DAAD Bursiyerleri İçin Almanca Kursu"
 lang: "tr"
+customSlug: "daad-bursiyerleri"
 badge:
   icon: "fas fa-graduation-cap"
   text: "DAAD"

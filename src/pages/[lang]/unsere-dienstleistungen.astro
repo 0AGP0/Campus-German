@@ -1,15 +1,23 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import '../../styles/pages/dienstleistungen.css';
+import { getServicesPath, isValidLang } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
     return [
-        { params: { lang: 'tr' } },
         { params: { lang: 'de' } },
     ];
 }
 
 const { lang } = Astro.params;
+
+// Lang tip kontrolü
+if (!isValidLang(lang)) {
+    throw new Error(`Invalid language: ${lang}`);
+}
+
+// Path helper'ları
+const servicesPath = getServicesPath(lang);
 
 // Translations
 const t = {
@@ -26,6 +34,13 @@ const t = {
         heroDescription: "Umfassende Dienstleistungen, die wir Ihnen auf Ihrer Deutschlernreise bieten. Von Universitätsvermittlung bis hin zu Visumsberatung, von Unterkunft bis hin zu Flughafenabholung - wir bieten eine breite Palette von Dienstleistungen.",
         sectionTitle: "Unsere Dienstleistungen",
         sectionSubtitle: "Speziell entwickelte Dienstleistungen für jeden Bedarf",
+    },
+    en: {
+        title: "Our Services - CampusGerman",
+        heroTitle: "CampusGerman Services",
+        heroDescription: "Comprehensive services we offer you on your German learning journey. From university placement to visa guidance, from accommodation to airport pickup - we offer a wide range of services.",
+        sectionTitle: "Our Services",
+        sectionSubtitle: "Specially designed services for every need",
     }
 };
 
@@ -139,7 +154,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-dienstleistungen/universite-yerlestirme`} class="service-link">
+                        <a href={`/${lang}/${servicesPath}/universitaetsvermittlung`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -181,7 +196,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-dienstleistungen/vize-rehberligi`} class="service-link">
+                        <a href={`/${lang}/unsere-dienstleistungen/visumsberatung`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -223,7 +238,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-dienstleistungen/konaklama`} class="service-link">
+                        <a href={`/${lang}/unsere-dienstleistungen/unterkunft`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -265,7 +280,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-dienstleistungen/havalimani-karsilama`} class="service-link">
+                        <a href={`/${lang}/unsere-dienstleistungen/flughafenabholung`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -307,7 +322,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-dienstleistungen/saglik-sigorta-banka`} class="service-link">
+                        <a href={`/${lang}/unsere-dienstleistungen/krankenversicherung-und-bank`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -349,7 +364,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-dienstleistungen/burokrasi-destek`} class="service-link">
+                        <a href={`/${lang}/unsere-dienstleistungen/buerokratische-unterstuetzung`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -391,7 +406,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-dienstleistungen/ucretsiz-kaynaklar`} class="service-link">
+                        <a href={`/${lang}/unsere-dienstleistungen/kostenlose-ressourcen`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>

@@ -1,6 +1,7 @@
 ---
 title: "Ekonomi ve Yönetim Bilimleri için Almanca Kursu"
 lang: "tr"
+customSlug: "is-yonetim"
 badge:
   icon: "fas fa-chart-line"
   text: "Ekonomi/Yönetim"

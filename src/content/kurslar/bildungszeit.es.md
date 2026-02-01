@@ -1,0 +1,102 @@
+---
+title: "Curso de Alemán dentro de Bildungszeit"
+lang: "es"
+customSlug: "bildungszeit"
+badge:
+  icon: "fas fa-gavel"
+  text: "Bildungszeit"
+description: "Curso de alemán dentro de Bildungszeit (Bildungsurlaub). Aprenda alemán con el derecho legal a permiso educativo para empleados."
+image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Clases Semanales"
+    description: "30 Clases (UE)"
+  - icon: "fas fa-calendar-alt"
+    title: "Duración del Curso"
+    description: "1 Semana"
+  - icon: "fas fa-users"
+    title: "Tamaño de Clase"
+    description: "Máximo 12 Personas"
+  - icon: "fas fa-briefcase"
+    title: "Objetivo"
+    description: "Empleados"
+heroButtons:
+  primary:
+    text: "Aplicar Ahora"
+    icon: "fas fa-arrow-right"
+    href: "/reservar"
+  secondary:
+    text: "Información Bildungszeit"
+    icon: "fas fa-info-circle"
+    href: "#informacion-bildungszeit"
+tabs:
+  - id: "informacion-curso"
+    icon: "fas fa-info-circle"
+    title: "Información del Curso"
+    content:
+      title: "Acerca del Curso Bildungszeit"
+      paragraphs:
+        - heading: "Resumen del Curso"
+          text: "El Curso de Alemán dentro de Bildungszeit es un programa especial que tiene como objetivo mejorar las habilidades de alemán dentro de Bildungszeit (permiso educativo), que es el derecho educativo legal de individuos que trabajan en Alemania. Este curso ofrecido por CampusGerman apoya el desarrollo profesional y personal de los empleados mientras tiene como objetivo que usen alemán más efectivamente en la vida diaria y empresarial. Bildungszeit es un derecho otorgado a empleados en muchos estados en Alemania y permite permiso educativo pagado por ciertos períodos. Los cursos de alemán de CampusGerman dentro de este alcance están planificados de acuerdo con los requisitos legales relevantes y se llevan a cabo dentro del marco de programas aprobados. El curso tiene como objetivo proporcionar progreso concreto en poco tiempo con su estructura intensiva y orientada a objetivos. El Curso de Alemán Bildungszeit de CampusGerman hace que el aprendizaje de alemán sea compatible con la vida empresarial gracias a su estructura que considera las limitaciones de tiempo de los empleados y contenido enfocado en la práctica."
+        - heading: "Audiencia Objetivo y Prerrequisitos"
+          text: "Este curso es adecuado para individuos que trabajan en Alemania y quieren aprender alemán usando su derecho de Bildungszeit. Se dirige particularmente a los siguientes grupos: Empleados de tiempo completo o tiempo parcial en Alemania Aquellos que quieren mejorar habilidades de comunicación en alemán en el entorno laboral Empleados que quieren usar su permiso educativo de manera eficiente Individuos que quieren invertir en su desarrollo profesional y personal No hay requisito de nivel de inicio específico para el curso, pero los programas pueden ofrecerse en diferentes niveles desde A1 hasta niveles avanzados. CampusGerman hace orientación de programa apropiada evaluando el nivel actual de idioma de los participantes."
+        - heading: "Contenido del Curso y Objetivos de Aprendizaje"
+          text: "El Curso de Alemán Bildungszeit tiene un plan de estudios intensivo y práctico dirigido a permitir que los participantes obtengan máxima eficiencia en poco tiempo. El contenido del curso incluye: Expresiones alemanas usadas en la vida diaria y empresarial Estructuras gramaticales básicas o avanzadas Estudios enfocados en comprensión auditiva y expresión oral Escenarios de comunicación para el entorno laboral El objetivo de aprendizaje es que el participante pueda usar alemán de manera más fluida, correcta y segura. Al final del curso, los estudiantes hacen progreso significativo en comunicación en alemán."
+        - heading: "Método de Enseñanza y Ambiente del Aula"
+          text: "Los cursos Bildungszeit en CampusGerman se llevan a cabo con un método de enseñanza intensivo e interactivo. En las clases se utilizan: Ejercicios de expresión oral y diálogo en vivo Actividades grupales Ejercicios enfocados en la práctica Escenarios diarios y profesionales. El ambiente del aula es de apoyo y se alienta la participación activa de los participantes empleados. Los instructores tienen experiencia en educación de adultos y especializados en enseñanza de alemán."
+        - heading: "Progreso Post-Curso"
+          text: "Los participantes que completan el Curso de Alemán dentro de Bildungszeit: Fortalecen habilidades de comunicación en alemán Usan alemán más cómodamente en la vida empresarial Pueden transicionar a cursos de alemán del siguiente nivel Contribuyen a su desarrollo profesional CampusGerman también informa a los participantes sobre programas avanzados y cursos de alemán profesional después del curso."
+  - id: "fechas-precios"
+    icon: "fas fa-calendar-alt"
+    title: "Fechas y Precios"
+    content:
+      title: "Información de Precios"
+      pricing:
+        - name: "1 Semana Bildungszeit"
+          duration: "1 Semana"
+          schedule: "30 Clases/Semana"
+          price: "Precio Especial"
+          highlighted: true
+  - id: "informacion-bildungszeit"
+    icon: "fas fa-gavel"
+    title: "Información Bildungszeit"
+    content:
+      title: "Acerca de Bildungszeit"
+      items:
+        - icon: "fas fa-check-circle"
+          text: "<strong>Derecho Legal:</strong> 5 días de permiso educativo pagado por año"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Solicitud:</strong> Se usa obteniendo permiso del empleador"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Aprobación:</strong> El curso está aprobado para Bildungszeit"
+faqs:
+  - question: "¿Qué es Bildungszeit?"
+    answer: "Bildungszeit es el derecho para empleados en Alemania de usar 5 días de permiso educativo pagado por año."
+  - question: "¿Mi empleador está obligado a dar permiso?"
+    answer: "Sí, Bildungszeit es un derecho legal y el empleador está obligado a dar permiso (puede posponer debido a necesidades empresariales)."
+  - question: "¿Qué formatos de curso se ofrecen?"
+    answer: "Nuestros cursos le ofrecen una experiencia de aprendizaje flexible: Educación Híbrida: Su curso consiste en una combinación de clases presenciales y clases online en vivo. Gracias al sistema híbrido, también puede asistir a clases online cuando lo desee en días de clases presenciales. Educación Online en Vivo: En este formato, asiste a clases completamente en vivo y online."
+  - question: "¿Qué contenido se cubre en los cursos?"
+    answer: "Nuestros programas de Alemán Intensivo incluyen comprensión auditiva y lectora con textos actuales, estudios gramaticales integrales y diversas actividades centradas en la comunicación. Esto tiene como objetivo desarrollar sus habilidades de habla y escritura de manera orientada a objetivos."
+  - question: "¿Cómo puedo obtener educación universitaria en Alemania?"
+    answer: "Para recibir educación universitaria en Alemania, primero debe tener una calificación de ingreso universitario reconocida (HZB). Se recomienda verificar si su diploma está reconocido en Alemania a través del sistema anabin. También necesita documentar su competencia en alemán con certificados oficiales como telc, DSH. El Programa de Preparación Universitaria de Campus German está diseñado para que se prepare completamente para este proceso."
+  - question: "¿Qué requisitos son necesarios?"
+    answer: "Debe tener al menos 18 años. Debe presentar una cuenta bloqueada abierta en Alemania o una carta de compromiso oficial."
+  - question: "¿Qué tipos de visas se recomiendan?"
+    answer: "Visa de Estudiante: También cubre el derecho a participar en cursos preparatorios de alemán. No hay requisito de visa para ciudadanos de la UE."
+  - question: "¿Qué servicios están incluidos en los cursos?"
+    answer: "Prueba de evaluación de nivel, sin tarifa de registro, certificado del curso para solicitud de visa, libro de texto digital, consultoría estudiantil individual (1 vez, aproximadamente 45 minutos), webinars sobre 'Educación Universitaria en Alemania', certificado de Campus German, plataforma de e-learning, actividades sociales y culturales organizadas durante todo el año, acceso gratuito a Wi-Fi en todos los centros."
+  - question: "¿Cuáles son las calificaciones de nuestros instructores?"
+    answer: "Nuestro personal docente consiste en graduados universitarios con muchos años de experiencia docente en Alemán como Lengua Extranjera (DaF) y Alemán como Segunda Lengua (DaZ), expertos en su campo y personas altamente motivadas. También tenemos instructores aprobados por la Oficina Federal de Migración y Refugiados (BAMF). Nuestras clases son evaluadas regularmente por los estudiantes."
+  - question: "¿Cuánto tiempo se tarda en aprender alemán?"
+    answer: "El tiempo de aprendizaje de alemán depende de su objetivo y nivel actual. Puede completar los niveles básicos desde A1 hasta B2 en 6-8 meses. Los niveles avanzados como C1 y C2 pueden requerir 4-6 meses adicionales. Puede acortar este tiempo con nuestros cursos intensivos."
+  - question: "¿Puedo obtener un certificado de Goethe?"
+    answer: "Sí, ofrecemos cursos de preparación para certificados de Goethe en CampusGerman. Proporcionamos preparación para exámenes en todos los niveles desde A1 hasta C2. Puede tomar exámenes de certificado en nuestro campus o ser dirigido a centros de prueba cercanos."
+  - question: "¿Hay opciones de alojamiento disponibles?"
+    answer: "Sí, ofrecemos opciones de alojamiento en Alemania. Residencias estudiantiles, alojamiento en familias anfitrionas y apartamentos compartidos están disponibles. Nuestro servicio de alojamiento no está incluido en la tarifa del curso, pero le ayudamos a encontrar las opciones más adecuadas."
+  - question: "¿Hay planes de pago y descuentos disponibles?"
+    answer: "Sí, ofrecemos planes de pago flexibles. Opciones de pago mensual, de 3 meses y de 6 meses están disponibles. Hay descuentos para registro temprano, registros grupales y programas a largo plazo. Contáctenos para obtener información detallada."
+hasDemandForm: true
+---
+
+<!-- Content will be added here -->

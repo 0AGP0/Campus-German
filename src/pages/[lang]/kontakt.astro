@@ -4,7 +4,6 @@ import '../../styles/pages/kontakt.css';
 
 export async function getStaticPaths() {
     return [
-        { params: { lang: 'tr' } },
         { params: { lang: 'de' } },
     ];
 }
@@ -18,7 +17,16 @@ const t = {
         heroTitle: { main: "İletişim", highlight: "Bilgileri" },
         heroDescription: "CampusGerman ile iletişime geçin. Uzman danışmanlarımız size yardımcı olmaya hazır.",
         addressTitle: "Adres",
-        addressLines: ["CampusGerman", "Almanya", "Eğitim Merkezi"],
+        addressLine: "Bürgermeister Smidt Straße 80, 28195 Bremen",
+        fromGermany: "Almanya içinden",
+        fromOtherCountries: "Diğer ülkelerden",
+        karabagName: "Herr Karabag",
+        karabagLangs: "İngilizce ve Almanca",
+        karabagRole: "Kayıt, Kurs Yönetimi ve İnsan Kaynakları",
+        akmanName: "Herr Akman",
+        akmanLangs: "İngilizce, İspanyolca, Fransızca, Korece, Türkçe",
+        akmanRole: "Uluslararası Öğrenciler, Konaklama ve Partnerlik İlişkileri",
+        chatWhatsApp: "WhatsApp ile yaz",
         phoneTitle: "Telefon",
         emailTitle: "E-posta",
         workingHoursTitle: "Çalışma Saatleri",
@@ -57,7 +65,16 @@ const t = {
         heroTitle: { main: "Kontakt", highlight: "Informationen" },
         heroDescription: "Nehmen Sie Kontakt mit CampusGerman auf. Unsere Fachberater sind bereit, Ihnen zu helfen.",
         addressTitle: "Adresse",
-        addressLines: ["CampusDeutsch", "Deutschland", "Bildungszentrum"],
+        addressLine: "Bürgermeister Smidt Straße 80, 28195 Bremen",
+        fromGermany: "Aus Deutschland",
+        fromOtherCountries: "Aus dem Ausland",
+        karabagName: "Herr Karabag",
+        karabagLangs: "Englisch und Deutsch",
+        karabagRole: "Anmeldung, Kursverwaltung und Personalwesen",
+        akmanName: "Herr Akman",
+        akmanLangs: "Englisch, Spanisch, Französisch, Koreanisch, Türkisch",
+        akmanRole: "Internationale Studierende, Unterkunft und Partnerschaften",
+        chatWhatsApp: "Bei WhatsApp schreiben",
         phoneTitle: "Telefon",
         emailTitle: "E-Mail",
         workingHoursTitle: "Arbeitszeiten",
@@ -126,20 +143,49 @@ const translations = t[lang as keyof typeof t];
                                 <div class="method-content">
                                     <h4>{translations.addressTitle}</h4>
                                     <div class="address-info">
-                                        {translations.addressLines.map((line) => <p><strong>{line}</strong></p>)}
+                                        <p><strong>{translations.addressLine}</strong></p>
                                     </div>
                                 </div>
                             </div>
                         
-                            <div class="contact-method">
-                                <div class="method-icon">
-                                    <i class="fas fa-phone-alt"></i>
+                            <div class="contact-method contact-phone-block">
+                                <h4 class="contact-phone-label">{translations.fromGermany}</h4>
+                                <div class="contact-phone-row">
+                                    <div class="contact-phone-detail">
+                                        <a href="tel:+491636927842" class="contact-phone-number">+49 163 6927842</a>
+                                        <span class="contact-phone-name">{translations.karabagName}</span>
+                                        <div class="contact-lang-flags" aria-label={translations.karabagLangs}>
+                                            <img src="https://flagcdn.com/gb.svg" alt="EN" width="22" height="16" class="contact-lang-flag" />
+                                            <img src="https://flagcdn.com/de.svg" alt="DE" width="22" height="16" class="contact-lang-flag" />
+                                        </div>
+                                        <span class="contact-phone-langs visually-hidden">{translations.karabagLangs}</span>
+                                        <p class="contact-phone-role">{translations.karabagRole}</p>
+                                        <div class="contact-phone-actions">
+                                            <a href="tel:+491636927842" class="contact-btn-call" aria-label="Anrufen"><i class="fas fa-phone-alt"></i></a>
+                                            <a href="https://wa.me/491636927842" target="_blank" rel="noopener noreferrer" class="contact-btn-whatsapp">{translations.chatWhatsApp} <i class="fab fa-whatsapp"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="method-content">
-                                    <h4>{translations.phoneTitle}</h4>
-                                    <div class="phone-numbers">
-                                        <a href="tel:+902121234567">+90 (212) 123 45 67</a>
-                                        <a href="tel:+902121234568">+90 (212) 123 45 68</a>
+                            </div>
+                            <div class="contact-method contact-phone-block">
+                                <h4 class="contact-phone-label">{translations.fromOtherCountries}</h4>
+                                <div class="contact-phone-row">
+                                    <div class="contact-phone-detail">
+                                        <a href="tel:+4915203823792" class="contact-phone-number">+49 1520 3823792</a>
+                                        <span class="contact-phone-name">{translations.akmanName}</span>
+                                        <div class="contact-lang-flags" aria-label={translations.akmanLangs}>
+                                            <img src="https://flagcdn.com/gb.svg" alt="EN" width="22" height="16" class="contact-lang-flag" />
+                                            <img src="https://flagcdn.com/es.svg" alt="ES" width="22" height="16" class="contact-lang-flag" />
+                                            <img src="https://flagcdn.com/fr.svg" alt="FR" width="22" height="16" class="contact-lang-flag" />
+                                            <img src="https://flagcdn.com/kr.svg" alt="KR" width="22" height="16" class="contact-lang-flag" />
+                                            <img src="https://flagcdn.com/tr.svg" alt="TR" width="22" height="16" class="contact-lang-flag" />
+                                        </div>
+                                        <span class="contact-phone-langs visually-hidden">{translations.akmanLangs}</span>
+                                        <p class="contact-phone-role">{translations.akmanRole}</p>
+                                        <div class="contact-phone-actions">
+                                            <a href="tel:+4915203823792" class="contact-btn-call" aria-label="Anrufen"><i class="fas fa-phone-alt"></i></a>
+                                            <a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="contact-btn-whatsapp">{translations.chatWhatsApp} <i class="fab fa-whatsapp"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

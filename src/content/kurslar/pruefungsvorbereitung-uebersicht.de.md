@@ -1,6 +1,7 @@
 ---
 title: "Deutsch-Prüfungsvorbereitungskurse – Überblick"
 lang: "de"
+customSlug: "pruefungsvorbereitung-uebersicht"
 badge:
   icon: "fas fa-certificate"
   text: "Prüfungsvorbereitung"
@@ -62,7 +63,7 @@ faqs:
   - question: "Auf welche Prüfungen wird vorbereitet?"
     answer: "Es wird auf Goethe-, TELC-, TestDaF- und DSH-Prüfungen vorbereitet."
   - question: "Gibt es eine Erfolgsgarantie?"
-    answer: "Ja, wir bieten eine Erfolgsgarantie mit einer Erfolgsquote von 95%."
+    answer: "Nein, Campus German gibt keine Prüfungserfolgsgarantie. Prüfungsergebnisse hängen von verschiedenen Faktoren ab und werden von den offiziellen Prüfungsstellen bestimmt. Wir bieten jedoch umfassende Vorbereitung und Unterstützung bei der Prüfungsanmeldung."
   - question: "Welche Kursformate werden angeboten?"
     answer: "Unsere Kurse bieten flexible Lernformate: Hybridunterricht – eine Kombination aus Präsenz- und Live-Online-Unterricht, bei der Sie auch an Präsenztagen online teilnehmen können; sowie Live-Online-Unterricht, bei dem Sie vollständig live und online am Unterricht teilnehmen."
   - question: "Welche Inhalte werden in den Kursen behandelt?"
@@ -86,6 +87,5 @@ faqs:
   - question: "Gibt es Zahlungspläne und Rabatte?"
     answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
 
-hasDemandForm: true
 ---
 

@@ -1,10 +1,11 @@
 ---
 title: "TestDaF-Vorbereitung"
 lang: "de"
+customSlug: "testdaf-vorbereitung"
 badge:
   icon: "fas fa-university"
   text: "Universitätszugang"
-description: "Der Schlüssel zu den Toren deutscher Universitäten: TestDaF. Wir verbessern nicht nur Ihre Sprachkenntnisse, sondern auch Ihre Prüfungsstrategie. Mit Probeprüfungen, Zeitmanagement-Taktiken und akademischen Schreibmustern garantieren wir, dass Sie Ihre Zielnote TDN 4 erreichen."
+description: "Der Schlüssel zu den Toren deutscher Universitäten: TestDaF. Wir verbessern nicht nur Ihre Sprachkenntnisse, sondern auch Ihre Prüfungsstrategie. Mit Probeprüfungen, Zeitmanagement-Taktiken und akademischen Schreibmustern bereiten wir Sie optimal auf Ihre Zielnote TDN 4 vor."
 image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80"
 features:
   - icon: "fas fa-calendar-week"
@@ -91,7 +92,7 @@ faqs:
   - question: "Ist die Prüfungsgebühr im Kurspreis enthalten?"
     answer: "Nein, die offizielle TestDaF-Prüfungsgebühr (ca. €195-210) wird separat bezahlt. Wir helfen Ihnen bei der Prüfungsanmeldung."
   - question: "Gibt es am Ende des Kurses eine Erfolgsgarantie?"
-    answer: "Das Prüfungsergebnis hängt vollständig von der individuellen Leistung ab. Mehr als 85% unserer Studierenden, die regelmäßig an unseren Kursen teilnehmen und ihre Aufgaben erledigen, erreichen jedoch ihre Zielnote TDN 4."
+    answer: "Campus German gibt keine Prüfungserfolgsgarantie. Das Prüfungsergebnis hängt vollständig von der individuellen Leistung ab und wird von den offiziellen Prüfungsstellen bestimmt. Mehr als 85% unserer Studierenden, die regelmäßig an unseren Kursen teilnehmen und ihre Aufgaben erledigen, erreichen jedoch ihre Zielnote TDN 4."
   - question: "Welche Kursformate werden angeboten?"
     answer: "Unsere Kurse bieten flexible Lernformate: Hybridunterricht – eine Kombination aus Präsenz- und Live-Online-Unterricht, bei der Sie auch an Präsenztagen online teilnehmen können; sowie Live-Online-Unterricht, bei dem Sie vollständig live und online am Unterricht teilnehmen."
   - question: "Welche Inhalte werden in den Kursen behandelt?"
@@ -115,8 +116,9 @@ faqs:
   - question: "Gibt es Zahlungspläne und Rabatte?"
     answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
 
-hasDemandForm: true
 ---
+
+
 
 
 

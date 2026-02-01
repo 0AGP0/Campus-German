@@ -1,10 +1,11 @@
 ---
 title: "Goethe/TELC A1 Hazırlık Kursu"
 lang: "tr"
+customSlug: "goethe-telc-a1"
 badge:
   icon: "fas fa-certificate"
   text: "A1 Sınav"
-description: "Goethe ve TELC A1 sınavlarına hazırlık. Sınav odaklı eğitim ve deneme sınavları ile başarı garantisi."
+description: "Goethe ve TELC A1 sınavlarına hazırlık. Sınav odaklı eğitim ve deneme sınavları ile kapsamlı hazırlık."
 image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
 features:
   - icon: "fas fa-clock"
@@ -43,8 +44,8 @@ tabs:
           text: "Kurs süresince öğrenciler, A1 sınav formatına özel hazırlık yaparlar. Sınavın dört bölümü (okuma, dinleme, yazma, konuşma) detaylı bir şekilde çalışılır ve sınav teknikleri öğretilir. Deneme sınavları, çıkmış sorular ve sınav simülasyonları ile öğrenciler gerçek sınav ortamına hazırlanırlar. Ayrıca, zaman yönetimi, stres yönetimi ve sınav stratejileri gibi konularda da destek sağlanır. Kurs sonunda öğrenciler, A1 sınavında başarılı olmak için gerekli tüm bilgi ve becerilere sahip olurlar."
         - heading: "Öğretim Metodu ve Sınıf Ortamı"
           text: "Kurs, deneyimli öğretmenler tarafından yürütülmektedir ve her sınıfta maksimum 8 öğrenci bulunur. Bu küçük sınıf mevcudu, öğrencilerin bireysel ihtiyaçlarına odaklanmayı sağlar. Dersler, sınav formatına özel alıştırmalar, deneme sınavları, geri bildirim seansları ve bireysel danışmanlık ile zenginleştirilmiştir. Öğrenciler sadece dilbilgisi öğrenmekle kalmaz, aynı zamanda sınav tekniklerini ve stratejilerini de öğrenirler."
-        - heading: "Başarı Garantisi ve Destek Hizmetleri"
-          text: "%95 başarı oranı ile başarı garantisi sunuyoruz. Başarısız olursanız, kurs tekrarı imkanı vardır. Ayrıca, sınav başvuru süreçleri konusunda da destek sağlıyoruz. Öğrencilerimiz, sınav tarihleri, başvuru süreçleri ve sınav ücretleri konusunda bilgilendirilirler. Kurs sonunda, öğrenciler A1 seviye sertifikası almak için gerekli tüm hazırlığı tamamlamış olurlar."
+        - heading: "Destek Hizmetleri"
+          text: "Sınav başvuru süreçleri konusunda destek sağlıyoruz. Öğrencilerimiz, sınav tarihleri, başvuru süreçleri ve sınav ücretleri konusunda bilgilendirilirler. Kurs sonunda, öğrenciler A1 seviye sertifikası almak için gerekli tüm hazırlığı tamamlamış olurlar. Başarısız olursanız, kurs tekrarı imkanı vardır. **Önemli:** Campus German sınav başarı garantisi vermez. Sınav sonuçları çeşitli faktörlere bağlıdır ve resmî sınav kurumları tarafından belirlenir."
   - id: "sinav-bilgisi"
     icon: "fas fa-certificate"
     title: "Sınav Bilgileri"

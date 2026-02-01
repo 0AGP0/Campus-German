@@ -1,0 +1,105 @@
+---
+title: "German Courses for Profession and Career"
+lang: "en"
+customSlug: "career-courses"
+badge:
+  icon: "fas fa-briefcase"
+  text: "Profession/Career"
+description: "Profession and career-focused German course. Professional German skills that can be used in business life."
+image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Weekly Lessons"
+    description: "20-24 Lessons"
+  - icon: "fas fa-calendar-alt"
+    title: "Course Duration"
+    description: "8-12 Weeks"
+  - icon: "fas fa-users"
+    title: "Class Size"
+    description: "Maximum 12 People"
+  - icon: "fas fa-briefcase"
+    title: "Focus"
+    description: "Business German"
+heroButtons:
+  primary:
+    text: "Apply Now"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Program Details"
+    icon: "fas fa-info-circle"
+    href: "#program-details"
+tabs:
+  - id: "course-info"
+    icon: "fas fa-info-circle"
+    title: "Course Information"
+    content:
+      title: "About Profession and Career Course"
+      paragraphs:
+        - heading: "Course Overview"
+          text: "The German for Profession and Career Course is a program specially prepared for students and employees who want to use German effectively in business life and professional environments. This course offered by CampusGerman aims to provide participants with a strong language infrastructure for their business and career goals in Germany by combining general German knowledge with professional communication, business correspondence, and career-focused language use. To be successful in working life in Germany, not only technical knowledge but also correct and professional German communication skills are required. This course teaches using German in the right context in areas such as speaking at meetings, writing emails, making presentations, and participating in job interviews. The program is structured in accordance with CEFR standards and content depth is adjusted according to students' current levels. The CampusGerman German for Profession and Career Course aims not just to learn the language but to make it an active part of career development."
+        - heading: "Target Audience and Prerequisites"
+          text: "This course addresses a wide participant profile who want to use German professionally and career-focused. It is particularly suitable for the following groups: Students planning to work in Germany Those who want to direct their post-graduation career in Germany Professionals who need to communicate in a German work environment Candidates who want to use German effectively in job applications At least A2 or B1 level general German knowledge is recommended for course participation. This level enables faster learning of professional expressions and business language structures. CampusGerman directs students to the most suitable program by conducting level assessment before the course."
+        - heading: "Course Content and Learning Goals"
+          text: "The German for Profession and Career Course focuses on language structures and terminology frequently used in the business world. The course content includes: German expressions used in business life Professional email and correspondence language Preparing CV and motivation letter Meeting and presentation language Speaking practice for job interviews The learning goal is for the student to be able to use German fluently, clearly, and correctly in professional environments. At the end of the course, participants can express themselves more confidently in German work environments."
+        - heading: "Teaching Method and Classroom Environment"
+          text: "This course at CampusGerman is conducted with a practice-based and communication-focused teaching approach. In classes: Real business life scenarios Role-playing and case studies Group discussions Writing and speaking-focused exercises are used. The classroom environment is interactive and active participation of students is encouraged. Instructors are experienced in professional German and business language."
+        - heading: "Post-Course Progress"
+          text: "Students who complete the German for Profession and Career Course: Develop German communication skills in business life Become more prepared for career opportunities in Germany Show stronger performance in job applications and interviews Can transition to advanced professional or exam preparation courses CampusGerman continues to guide students on career-focused programs and advanced German education after the course."
+  - id: "dates-prices"
+    icon: "fas fa-calendar-alt"
+    title: "Dates and Prices"
+    content:
+      title: "Price Information"
+      pricing:
+        - name: "8 Weeks Profession/Career"
+          duration: "8 Weeks"
+          schedule: "20-24 Lessons/Week"
+          price: "Special Pricing"
+          highlighted: true
+  - id: "program-details"
+    icon: "fas fa-book-open"
+    title: "Program Details"
+    content:
+      title: "Program Content"
+      items:
+        - icon: "fas fa-check-circle"
+          text: "<strong>Business German:</strong> Professional business German"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Business Correspondence:</strong> Email and official correspondence"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Presentation Techniques:</strong> Business presentations and meetings"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Job Interviews:</strong> Job applications and interviews"
+faqs:
+  - question: "What level should I start from?"
+    answer: "At least B1 level is recommended, but B2 level is the ideal level."
+  - question: "Is there preparation for job interviews?"
+    answer: "Yes, the course includes preparation for job interviews, CV preparation, and job applications."
+  - question: "What course formats are offered?"
+    answer: "Our courses offer you a flexible learning experience: Hybrid Education: Your course consists of a combination of face-to-face classes and live online classes. Thanks to the hybrid system, you can also attend classes online whenever you want on face-to-face class days. Live Online Education: In this format, you attend classes completely live and online."
+  - question: "What content is covered in the courses?"
+    answer: "Our Intensive German programs include listening and reading comprehension with current texts, comprehensive grammar studies, and various communication-focused activities. This aims to develop your speaking and writing skills in a goal-oriented manner."
+  - question: "How can I get university education in Germany?"
+    answer: "To receive university education in Germany, you must first have recognized university entrance qualification (HZB). It is recommended to check whether your diploma is recognized in Germany through the anabin system. You also need to document your German language proficiency with official certificates such as telc, DSH. The Campus German University Preparation Program is designed for you to prepare for this process completely."
+  - question: "What requirements are necessary?"
+    answer: "You must be at least 18 years old. You must submit a blocked account opened in Germany or an official commitment letter."
+  - question: "What types of visas are recommended?"
+    answer: "Student Visa: Also covers the right to participate in preparatory German courses. There is no visa requirement for EU citizens."
+  - question: "What services are included in the courses?"
+    answer: "Placement test, no registration fee, course certificate for visa application, digital textbook, individual student counseling (1 time, approximately 45 minutes), webinars on 'University Education in Germany', Campus German certificate, e-learning platform, social and cultural activities organized throughout the year, free Wi-Fi access at all centers."
+  - question: "What are the qualifications of our instructors?"
+    answer: "Our teaching staff consists of university graduates with many years of teaching experience in German as a Foreign Language (DaF) and German as a Second Language (DaZ), experts in their field, and highly motivated people. We also have Federal Office for Migration and Refugees (BAMF) approved instructors. Our lessons are regularly evaluated by students."
+  - question: "How long does it take to learn German?"
+    answer: "German learning time depends on your goal and current level. You can complete the basic levels from A1 to B2 in 6-8 months. Advanced levels such as C1 and C2 may require an additional 4-6 months. You can shorten this time with our intensive courses."
+  - question: "Can I get a Goethe certificate?"
+    answer: "Yes, we offer Goethe certificate preparation courses at CampusGerman. We provide exam preparation at all levels from A1 to C2. You can take certificate exams at our campus or be directed to nearby test centers."
+  - question: "Are accommodation options available?"
+    answer: "Yes, we offer accommodation options in Germany. Student dormitories, homestay accommodation, and shared apartments are available. Our accommodation service is not included in the course fee, but we help you find the most suitable options."
+  - question: "Are payment plans and discounts available?"
+    answer: "Yes, we offer flexible payment plans. Monthly, 3-month, and 6-month payment options are available. There are discounts for early registration, group registrations, and long-term programs. Contact us for detailed information."
+hasDemandForm: true
+---
+
+<!-- Content will be added here -->
+

@@ -1,0 +1,380 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../../layouts/MainLayout.astro';
+import '../../../styles/pages/ueber-uns-subpages.css';
+import { cleanSlug, getAboutPath, getSectionPath, getContactPath, isValidLang } from '../../../utils/pathHelpers';
+
+export async function getStaticPaths() {
+  const allUeberUns = await getCollection('ueber-uns');
+  const paths = [];
+
+  // Almanca: normal sayfa (path /de/ueber-uns/...)
+  const almancaSayfalar = allUeberUns.filter(page => page.data.lang === 'de');
+  for (const page of almancaSayfalar) {
+    const finalSlug = page.data.customSlug ?? cleanSlug(page.slug);
+    paths.push({
+      params: { lang: 'de', slug: finalSlug },
+      props: { page, redirectTo: null },
+    });
+  }
+
+  // Türkçe: redirect sayfası (path /tr/ueber-uns/... -> /tr/hakkimizda/...) — Google eski URL'yi açınca 301 yerine sayfa olsun
+  const turkceSayfalar = allUeberUns.filter(page => page.data.lang === 'tr');
+  for (const page of turkceSayfalar) {
+    const finalSlug = page.data.customSlug ?? cleanSlug(page.slug);
+    paths.push({
+      params: { lang: 'tr', slug: finalSlug },
+      props: { page: null, redirectTo: `/tr/hakkimizda/${finalSlug}/` },
+    });
+  }
+
+  return paths;
+}
+
+const { page, redirectTo } = Astro.props;
+const { lang } = Astro.params;
+const isRedirectSlug = !!redirectTo;
+const canonicalUrlSlug = redirectTo ? `https://campusgerman.com${redirectTo}` : '';
+
+let Content: import('astro').ContentComponent | null = null;
+if (page) {
+  const rendered = await page.render();
+  Content = rendered.Content;
+}
+
+// Lang tip kontrolü
+if (!isValidLang(lang)) {
+    throw new Error(`Invalid language: ${lang}`);
+}
+
+// Path helper'ları
+const aboutPath = getAboutPath(lang);
+const coursesPath = getSectionPath(lang);
+const contactPath = getContactPath(lang);
+
+// Get all related pages for sidebar (sadece sayfa varsa)
+const allUeberUns = await getCollection('ueber-uns');
+const relatedPages = page
+  ? allUeberUns.filter(p => p.data.lang === lang && p.slug !== page.slug).slice(0, 5)
+  : [];
+
+// Translations
+const t = {
+  tr: {
+    backToAbout: "Hakkımızda",
+    coreValues: "Temel Değerlerimiz",
+    whyWeExist: "Neden Varız",
+    ourApproach: "Yaklaşımımız",
+    impact: "Etkimiz",
+    principles: "İlkelerimiz",
+    startJourney: "Almanca Öğrenme Yolculuğunuza Başlayın",
+    startJourneyDesc: "Uzman ekibimizle birlikte dil hedeflerinize ulaşın. Ücretsiz seviye tespit sınavımıza katılın ve size özel programımızı keşfedin.",
+    freeConsultation: "Ücretsiz Danışmanlık",
+    viewCourses: "Kurslarımızı İncele",
+  },
+  de: {
+    backToAbout: "Über uns",
+    coreValues: "Unsere Kernwerte",
+    whyWeExist: "Warum wir existieren",
+    ourApproach: "Unser Ansatz",
+    impact: "Unsere Wirkung",
+    principles: "Unsere Prinzipien",
+    startJourney: "Beginnen Sie Ihre Deutschlernreise",
+    startJourneyDesc: "Erreichen Sie Ihre Sprachziele mit unserem Expertenteam. Nehmen Sie an unserem kostenlosen Einstufungstest teil und entdecken Sie Ihr maßgeschneidertes Programm.",
+    freeConsultation: "Kostenlose Beratung",
+    viewCourses: "Unsere Kurse ansehen",
+  }
+};
+
+const translations = t[lang as keyof typeof t] || t.tr;
+---
+
+{isRedirectSlug ? (
+  <html lang="tr">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />
+      <link rel="canonical" href={canonicalUrlSlug} />
+      <title>Yönlendiriliyor - Campus German</title>
+    </head>
+    <body>
+      <p>Doğru sayfaya yönlendiriliyorsunuz: <a href={redirectTo}>tıklayın</a>.</p>
+    </body>
+  </html>
+) : (
+<MainLayout title={`${page!.data.title} - CampusGerman`} lang={lang}>
+    <!-- 1. Hero Section -->
+    <section class="mission-hero">
+        <div class="mission-container">
+            <a href={`/${lang}/${aboutPath}`} class="mission-back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>{translations.backToAbout}</span>
+            </a>
+            <div class="mission-hero-content">
+                <div class="mission-hero-icon">
+                    <i class={page.data.icon}></i>
+                </div>
+                <h1 class="mission-hero-title">{page.data.heroTitle || page.data.title}</h1>
+                <p class="mission-hero-desc">{page.data.heroDescription || page.data.description}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Mission Statement Section - Only main content with sidebar -->
+    <section class="mission-statement">
+        <div class="mission-container">
+            <div class="mission-statement-wrapper">
+                <div class="mission-statement-main">
+                    <div class="mission-statement-card">
+                        {page.data.image && (
+                            <div class="mission-statement-image">
+                                <img src={page.data.image} alt={page.data.title}>
+                            </div>
+                        )}
+                        <Content />
+                    </div>
+                </div>
+                <aside class="mission-sidebar">
+                    <div class="mission-sidebar-section">
+                        <h3 class="mission-sidebar-title">{lang === 'tr' ? 'İlgili Sayfalar' : lang === 'de' ? 'Verwandte Seiten' : 'Related Pages'}</h3>
+                        <ul class="mission-sidebar-links">
+                            {relatedPages.map((relatedPage) => {
+                                const linkSlug = relatedPage.data.customSlug || cleanSlug(relatedPage.slug);
+                                return (
+                                    <li>
+                                        <a href={`/${lang}/${aboutPath}/${linkSlug}`} class="mission-sidebar-link">
+                                            <i class="fas fa-chevron-right"></i>
+                                            <span>{relatedPage.data.title}</span>
+                                        </a>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                    <div class="mission-sidebar-section">
+                        <h3 class="mission-sidebar-title">{lang === 'tr' ? 'Hızlı Linkler' : lang === 'de' ? 'Schnelllinks' : 'Quick Links'}</h3>
+                        <ul class="mission-sidebar-links">
+                            <li>
+                                <a href={`/${lang}/${aboutPath}`} class="mission-sidebar-link">
+                                    <i class="fas fa-chevron-right"></i>
+                                    <span>{lang === 'tr' ? 'Hakkımızda' : lang === 'de' ? 'Über uns' : 'About Us'}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href={`/${lang}/lehrkraefte`} class="mission-sidebar-link">
+                                    <i class="fas fa-chevron-right"></i>
+                                    <span>{lang === 'tr' ? 'Eğitmenlerimiz' : lang === 'de' ? 'Unsere Lehrkräfte' : 'Our Teachers'}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href={`/${lang}/${coursesPath}`} class="mission-sidebar-link">
+                                    <i class="fas fa-chevron-right"></i>
+                                    <span>{lang === 'tr' ? 'Kurslarımız' : lang === 'de' ? 'Unsere Kurse' : 'Our Courses'}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href={`/${lang}/${contactPath}`} class="mission-sidebar-link">
+                                    <i class="fas fa-chevron-right"></i>
+                                    <span>{lang === 'tr' ? 'İletişim' : lang === 'de' ? 'Kontakt' : 'Contact'}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mission-sidebar-cta">
+                        <h3 class="mission-sidebar-title">{lang === 'tr' ? 'Ücretsiz Danışmanlık' : lang === 'de' ? 'Kostenlose Beratung' : 'Free Consultation'}</h3>
+                        <p class="mission-sidebar-cta-text">{lang === 'tr' ? 'Almanca öğrenme yolculuğunuzda size yardımcı olmak için buradayız.' : lang === 'de' ? 'Wir sind hier, um Ihnen auf Ihrer Deutschlernreise zu helfen.' : 'We are here to help you on your German learning journey.'}</p>
+                        <a href={`/${lang}/${contactPath}`} class="mission-sidebar-btn">
+                            <i class="fas fa-phone"></i>
+                            <span>{lang === 'tr' ? 'İletişime Geç' : lang === 'de' ? 'Kontakt aufnehmen' : 'Contact Us'}</span>
+                        </a>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Core Values Section -->
+    {page.data.features && page.data.features.length > 0 && (
+        <section class="mission-core-values">
+            <div class="mission-container">
+                <h2 class="mission-section-title">{translations.coreValues}</h2>
+                <div class="mission-values-grid">
+                    {page.data.features.map((feature) => (
+                        <div class="mission-value-card">
+                            <div class="mission-value-icon">
+                                <i class={feature.icon}></i>
+                            </div>
+                            <h3 class="mission-value-title">{feature.title}</h3>
+                            <p class="mission-value-desc">{feature.description}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    )}
+
+    <!-- 4. Why We Exist Section -->
+    <section class="mission-why-exist">
+        <div class="mission-container">
+            <div class="mission-why-content">
+                <div class="mission-why-text">
+                    <h2 class="mission-section-title">{translations.whyWeExist}</h2>
+                    <div class="mission-why-timeline">
+                        <div class="mission-timeline-item">
+                            <div class="mission-timeline-number">01</div>
+                            <div class="mission-timeline-content">
+                                <h3>{lang === 'tr' ? 'Kaliteli Eğitim' : 'Qualitätsbildung'}</h3>
+                                <p>{lang === 'tr' ? 'En yüksek standartlarda Almanca eğitimi sunuyoruz' : 'Wir bieten Deutschunterricht auf höchstem Niveau'}</p>
+                            </div>
+                        </div>
+                        <div class="mission-timeline-item">
+                            <div class="mission-timeline-number">02</div>
+                            <div class="mission-timeline-content">
+                                <h3>{lang === 'tr' ? 'Kişiselleştirme' : 'Personalisierung'}</h3>
+                                <p>{lang === 'tr' ? 'Her öğrenci için özel program tasarlıyoruz' : 'Wir erstellen individuelle Programme für jeden Schüler'}</p>
+                            </div>
+                        </div>
+                        <div class="mission-timeline-item">
+                            <div class="mission-timeline-number">03</div>
+                            <div class="mission-timeline-content">
+                                <h3>{lang === 'tr' ? 'Başarı Odaklı' : 'Erfolgsorientiert'}</h3>
+                                <p>{lang === 'tr' ? 'Öğrencilerimizin hedeflerine ulaşmasını sağlıyoruz' : 'Wir helfen unseren Schülern, ihre Ziele zu erreichen'}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Our Approach Section -->
+    <section class="mission-approach">
+        <div class="mission-container">
+            <h2 class="mission-section-title">{translations.ourApproach}</h2>
+            <div class="mission-approach-list">
+                <div class="mission-approach-item mission-approach-left">
+                    <div class="mission-approach-text">
+                        <h3>{lang === 'tr' ? 'Öğrenci Odaklı Yaklaşım' : 'Schülerorientierter Ansatz'}</h3>
+                        <p>{lang === 'tr' ? 'Her öğrencinin farklı bir öğrenme hızı, farklı hedefleri ve farklı ihtiyaçları vardır. Bu nedenle, standart bir eğitim programı yerine, her öğrencimiz için özel olarak tasarlanmış kurs programları hazırlıyoruz.' : 'Jeder Schüler hat ein anderes Lerntempo, andere Ziele und andere Bedürfnisse. Daher erstellen wir maßgeschneiderte Kursprogramme für jeden unserer Schüler, anstatt eines Standard-Bildungsprogramms.'}</p>
+                    </div>
+                    <div class="mission-approach-visual">
+                        <div class="mission-approach-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="mission-approach-item mission-approach-right">
+                    <div class="mission-approach-visual">
+                        <div class="mission-approach-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                    </div>
+                    <div class="mission-approach-text">
+                        <h3>{lang === 'tr' ? 'Kalite ve Güvenilirlik' : 'Qualität und Zuverlässigkeit'}</h3>
+                        <p>{lang === 'tr' ? 'Ana dili Almanca olan ve Türkçe bilen uzman eğitmenlerimizle, en yüksek standartlarda eğitim sunuyoruz. Eğitim kalitemiz, öğrencilerimizin %95\'inin hedefledikleri seviyeye ulaşması ile kanıtlanmıştır.' : 'Mit unseren muttersprachlichen Deutschlehrern, die auch Türkisch sprechen, bieten wir Bildung auf höchstem Niveau. Unsere Bildungsqualität wird durch die Tatsache bewiesen, dass 95% unserer Schüler das angestrebte Niveau erreichen.'}</p>
+                    </div>
+                </div>
+                <div class="mission-approach-item mission-approach-left">
+                    <div class="mission-approach-text">
+                        <h3>{lang === 'tr' ? 'Sürekli Gelişim' : 'Kontinuierliche Entwicklung'}</h3>
+                        <p>{lang === 'tr' ? 'Eğitim metodlarımızı sürekli geliştiriyoruz. Yapay zeka destekli öğrenme araçları ve kişiselleştirilmiş eğitim programları ile öncü olmaya devam ediyoruz.' : 'Wir entwickeln unsere Unterrichtsmethoden kontinuierlich weiter. Wir bleiben führend mit KI-gestützten Lernwerkzeugen und personalisierten Bildungsprogrammen.'}</p>
+                    </div>
+                    <div class="mission-approach-visual">
+                        <div class="mission-approach-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Impact/Stats Section -->
+    <section class="mission-stats">
+        <div class="mission-container">
+            <h2 class="mission-section-title mission-stats-title">{translations.impact}</h2>
+            <div class="mission-stats-grid">
+                <div class="mission-stat-card">
+                    <div class="mission-stat-number">500+</div>
+                    <div class="mission-stat-text">{lang === 'tr' ? 'Mezun Öğrenci' : 'Absolventen'}</div>
+                </div>
+                <div class="mission-stat-card">
+                    <div class="mission-stat-number">15+</div>
+                    <div class="mission-stat-text">{lang === 'tr' ? 'Uzman Eğitmen' : 'Expertenlehrer'}</div>
+                </div>
+                <div class="mission-stat-card">
+                    <div class="mission-stat-number">95%</div>
+                    <div class="mission-stat-text">{lang === 'tr' ? 'Başarı Oranı' : 'Erfolgsquote'}</div>
+                </div>
+                <div class="mission-stat-card">
+                    <div class="mission-stat-number">4</div>
+                    <div class="mission-stat-text">{lang === 'tr' ? 'Yıllık Deneyim' : 'Jahre Erfahrung'}</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Principles Section -->
+    <section class="mission-principles">
+        <div class="mission-container">
+            <h2 class="mission-section-title">{translations.principles}</h2>
+            <div class="mission-principles-grid">
+                <div class="mission-principle-card">
+                    <div class="mission-principle-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3>{lang === 'tr' ? 'Öğrenci Odaklılık' : 'Schülerorientierung'}</h3>
+                    <p>{lang === 'tr' ? 'Her öğrencinin ihtiyaçlarına özel çözümler üretiyoruz' : 'Wir entwickeln maßgeschneiderte Lösungen für die Bedürfnisse jedes Schülers'}</p>
+                </div>
+                <div class="mission-principle-card">
+                    <div class="mission-principle-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>{lang === 'tr' ? 'Kalite Standartları' : 'Qualitätsstandards'}</h3>
+                    <p>{lang === 'tr' ? 'En yüksek eğitim kalitesini garanti ediyoruz' : 'Wir garantieren höchste Bildungsqualität'}</p>
+                </div>
+                <div class="mission-principle-card">
+                    <div class="mission-principle-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>{lang === 'tr' ? 'Sürekli İyileştirme' : 'Kontinuierliche Verbesserung'}</h3>
+                    <p>{lang === 'tr' ? 'Eğitim metodlarımızı sürekli geliştiriyoruz' : 'Wir entwickeln unsere Unterrichtsmethoden kontinuierlich weiter'}</p>
+                </div>
+                <div class="mission-principle-card">
+                    <div class="mission-principle-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>{lang === 'tr' ? 'Şeffaflık' : 'Transparenz'}</h3>
+                    <p>{lang === 'tr' ? 'Tüm süreçlerde açık ve şeffaf iletişim kuruyoruz' : 'Wir kommunizieren in allen Prozessen offen und transparent'}</p>
+                </div>
+                <div class="mission-principle-card">
+                    <div class="mission-principle-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>{lang === 'tr' ? 'Başarı Odaklılık' : 'Erfolgsorientierung'}</h3>
+                    <p>{lang === 'tr' ? 'Öğrencilerimizin başarısı bizim önceliğimizdir' : 'Der Erfolg unserer Schüler ist unsere Priorität'}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. CTA Section -->
+    <section class="mission-cta">
+        <div class="mission-container">
+            <h2 class="mission-cta-title">{translations.startJourney}</h2>
+            <p class="mission-cta-desc">{translations.startJourneyDesc}</p>
+            <div class="mission-cta-buttons">
+                <a href={`/${lang}/${contactPath}`} class="mission-btn mission-btn-primary">
+                    <i class="fas fa-phone"></i>
+                    <span>{translations.freeConsultation}</span>
+                </a>
+                <a href={`/${lang}/${coursesPath}`} class="mission-btn mission-btn-secondary">
+                    <i class="fas fa-book-open"></i>
+                    <span>{translations.viewCourses}</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</MainLayout>
+)}

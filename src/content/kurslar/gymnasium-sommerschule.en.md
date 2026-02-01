@@ -1,0 +1,107 @@
+---
+title: "Summer School Program for High School Students"
+lang: "en"
+customSlug: "highschool-summer-school"
+badge:
+  icon: "fas fa-sun"
+  text: "Summer School"
+description: "Specially designed summer school program for high school students. Experience cultural experiences while learning German."
+image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Weekly Lessons"
+    description: "20 Lessons (UE)"
+  - icon: "fas fa-calendar-alt"
+    title: "Period"
+    description: "Summer Months"
+  - icon: "fas fa-users"
+    title: "Class Size"
+    description: "Maximum 15 People"
+  - icon: "fas fa-user-graduate"
+    title: "Age Group"
+    description: "14-18 Age"
+heroButtons:
+  primary:
+    text: "Apply Now"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Program Details"
+    icon: "fas fa-info-circle"
+    href: "#program-details"
+tabs:
+  - id: "course-info"
+    icon: "fas fa-info-circle"
+    title: "Course Information"
+    content:
+      title: "About High School Summer School"
+      paragraphs:
+        - heading: "Course Overview"
+          text: "The High School Students Summer School is a summer period program specially designed for high school students who want to learn German at an early age, with the right methods and intensive practice. This program offered by CampusGerman aims for students to develop their German language skills while using their summer vacation productively and to become familiar with the education system in Germany at an early stage. The summer school program is not limited to classroom language education only. German learning is supported by social activities, cultural interaction, and daily life practices. In this way, students have the opportunity to learn the language in natural use rather than theoretically. The program is structured in accordance with CEFR standards and pedagogical approaches suitable for students' age group are prioritized. The CampusGerman High School Students Summer School creates a strong language and culture foundation for students considering high school or university education in Germany."
+        - heading: "Target Audience and Prerequisites"
+          text: "This program is suitable for students studying at high school level and interested in learning German. It particularly addresses the following groups: High school students aged 14–18 Those who want to learn German at an early age Students who have future education plans in Germany Those who want to use their summer vacation for language education There is no specific German level requirement for program participation. Groups are formed at different levels from students who are new to learning German to those with basic knowledge. CampusGerman ensures students are placed in appropriate classes by conducting level assessment before the program."
+        - heading: "Course Content and Learning Goals"
+          text: "The High School Students Summer School program has a curriculum that makes language learning fun and effective. Within the scope of the program: Basic and level-based German education Daily communication and speaking practice Vocabulary and grammar studies Listening and reading activities Cultural awareness and group work The learning goal is for the student to be able to understand and use German at a basic level, while also gaining confidence in the language."
+        - heading: "Teaching Method and Classroom Environment"
+          text: "The summer school program at CampusGerman is conducted with a communication-focused and age group-appropriate teaching method. In classes: Game and interaction-based activities Group work Role-playing Visual and audio materials are used. The classroom environment is safe, supportive, and motivating. Instructors are experienced in working with young age groups."
+        - heading: "Post-Course Progress"
+          text: "Students who complete the High School Students Summer School: Make a strong start in German Can transition to next level German courses Gain early advantage for education plans in Germany Gain motivation toward language learning CampusGerman also informs students about long-term language and education planning after the program."
+  - id: "dates-prices"
+    icon: "fas fa-calendar-alt"
+    title: "Dates and Prices"
+    content:
+      title: "Program Prices"
+      pricing:
+        - name: "2 Weeks"
+          duration: "2 Weeks"
+          schedule: "20 Lessons/Week"
+          price: "Special Pricing"
+        - name: "4 Weeks"
+          duration: "4 Weeks"
+          schedule: "20 Lessons/Week"
+          price: "Special Pricing"
+          highlighted: true
+  - id: "program-details"
+    icon: "fas fa-book-open"
+    title: "Program Details"
+    content:
+      title: "Program Content"
+      items:
+        - icon: "fas fa-chalkboard-teacher"
+          text: "<strong>German Classes:</strong> Fun and interactive classes"
+        - icon: "fas fa-map-marked-alt"
+          text: "<strong>Cultural Tours:</strong> City tours and museum visits"
+        - icon: "fas fa-users"
+          text: "<strong>Social Activities:</strong> Sports, games, and fun activities"
+faqs:
+  - question: "Is accommodation included?"
+    answer: "Accommodation is organized separately. Homestay or dormitory options are available."
+  - question: "Is there an age limit?"
+    answer: "Yes, the program is designed for high school students aged 14-18."
+  - question: "What course formats are offered?"
+    answer: "Our courses offer you a flexible learning experience: Hybrid Education: Your course consists of a combination of face-to-face classes and live online classes. Thanks to the hybrid system, you can also attend classes online whenever you want on face-to-face class days. Live Online Education: In this format, you attend classes completely live and online."
+  - question: "What content is covered in the courses?"
+    answer: "Our Intensive German programs include listening and reading comprehension with current texts, comprehensive grammar studies, and various communication-focused activities. This aims to develop your speaking and writing skills in a goal-oriented manner."
+  - question: "How can I get university education in Germany?"
+    answer: "To receive university education in Germany, you must first have recognized university entrance qualification (HZB). It is recommended to check whether your diploma is recognized in Germany through the anabin system. You also need to document your German language proficiency with official certificates such as telc, DSH. The Campus German University Preparation Program is designed for you to prepare for this process completely."
+  - question: "What requirements are necessary?"
+    answer: "You must be at least 18 years old. You must submit a blocked account opened in Germany or an official commitment letter."
+  - question: "What types of visas are recommended?"
+    answer: "Student Visa: Also covers the right to participate in preparatory German courses. There is no visa requirement for EU citizens."
+  - question: "What services are included in the courses?"
+    answer: "Placement test, no registration fee, course certificate for visa application, digital textbook, individual student counseling (1 time, approximately 45 minutes), webinars on 'University Education in Germany', Campus German certificate, e-learning platform, social and cultural activities organized throughout the year, free Wi-Fi access at all centers."
+  - question: "What are the qualifications of our instructors?"
+    answer: "Our teaching staff consists of university graduates with many years of teaching experience in German as a Foreign Language (DaF) and German as a Second Language (DaZ), experts in their field, and highly motivated people. We also have Federal Office for Migration and Refugees (BAMF) approved instructors. Our lessons are regularly evaluated by students."
+  - question: "How long does it take to learn German?"
+    answer: "German learning time depends on your goal and current level. You can complete the basic levels from A1 to B2 in 6-8 months. Advanced levels such as C1 and C2 may require an additional 4-6 months. You can shorten this time with our intensive courses."
+  - question: "Can I get a Goethe certificate?"
+    answer: "Yes, we offer Goethe certificate preparation courses at CampusGerman. We provide exam preparation at all levels from A1 to C2. You can take certificate exams at our campus or be directed to nearby test centers."
+  - question: "Are accommodation options available?"
+    answer: "Yes, we offer accommodation options in Germany. Student dormitories, homestay accommodation, and shared apartments are available. Our accommodation service is not included in the course fee, but we help you find the most suitable options."
+  - question: "Are payment plans and discounts available?"
+    answer: "Yes, we offer flexible payment plans. Monthly, 3-month, and 6-month payment options are available. There are discounts for early registration, group registrations, and long-term programs. Contact us for detailed information."
+hasDemandForm: true
+---
+
+<!-- Content will be added here -->
+

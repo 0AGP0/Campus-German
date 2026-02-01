@@ -48,10 +48,10 @@ export function extractCourseInfo(slug: string): CoursePricingInfo {
   } else if (slugLower.startsWith('online-') || (slugLower.includes('online-') && !slugLower.startsWith('yogun-'))) {
     type = 'online';
     hasPricing = level !== null;
-  } else if (slugLower === 'university-pathway' || slugLower === 'universite-hazirlik') {
+  } else if (slugLower === 'studienkolleg') {
     type = 'intensive';
     hasPricing = level !== null;
-  } else if (slugLower.startsWith('yogun-') || (slugLower.includes('yogun-') && !slugLower.includes('online-'))) {
+  } else if (slugLower.startsWith('yogun-') || slugLower.startsWith('intensiv-') || (slugLower.includes('yogun-') && !slugLower.includes('online-')) || (slugLower.includes('intensiv-') && !slugLower.includes('online-'))) {
     type = 'intensive';
     hasPricing = level !== null;
   } else if (
@@ -97,9 +97,12 @@ export function extractCourseInfo(slug: string): CoursePricingInfo {
 /**
  * Kurs için fiyat bilgilerini getirir
  */
-export function getCoursePricingData(lang: 'tr' | 'de', slug: string) {
+export function getCoursePricingData(lang: 'tr' | 'de' | 'en' | 'es', slug: string) {
   const info = extractCourseInfo(slug);
   const slugLower = slug.toLowerCase();
+  
+  // İspanyolca için Almanca verilerini kullan
+  const pricingLang = lang === 'es' ? 'de' : lang;
   
   // online-sinav-hazirlik için level kontrolünü atla
   if (!info.hasPricing || (!info.level && slugLower !== 'online-sinav-hazirlik')) {
@@ -108,14 +111,14 @@ export function getCoursePricingData(lang: 'tr' | 'de', slug: string) {
   
   if (info.type === 'intensive') {
     return {
-      pricing: getCoursePricing(lang, 'intensive', info.level),
-      dates: getCourseDates(lang, info.level),
-      schedule: coursePricing[lang].schedule,
-      holidays: coursePricing[lang].holidays,
-      weeklyPricing: coursePricing[lang].weeklyPricing,
-      visaInfo: coursePricing[lang].visaInfo,
-      lessonInfo: coursePricing[lang].lessonInfo,
-      onlineNote: coursePricing[lang].onlineNote,
+      pricing: getCoursePricing(pricingLang, 'intensive', info.level),
+      dates: getCourseDates(pricingLang, info.level),
+      schedule: coursePricing[pricingLang].schedule,
+      holidays: coursePricing[pricingLang].holidays,
+      weeklyPricing: coursePricing[pricingLang].weeklyPricing,
+      visaInfo: coursePricing[pricingLang].visaInfo,
+      lessonInfo: coursePricing[pricingLang].lessonInfo,
+      onlineNote: coursePricing[pricingLang].onlineNote,
     };
   } else if (info.type === 'online') {
     // Online sınav hazırlık kursu için özel fiyatlandırma
@@ -126,11 +129,11 @@ export function getCoursePricingData(lang: 'tr' | 'de', slug: string) {
       // Kullanıcı seviye seçebilir, bu yüzden genel bir fiyat gösteriyoruz
       pricing = {
         fullCourse: "990€", // Ortalama fiyat (B1 seviyesi baz alınarak)
-        lessons: "160-200 ders",
+        lessons: "20+ 4 / 25+ 4 ders",
         duration: "8-12 hafta",
       };
     } else {
-      pricing = getCoursePricing(lang, 'online', info.level);
+      pricing = getCoursePricing(pricingLang, 'online', info.level);
     }
     
     // Online sınav hazırlık için tüm seviyeler için tarihleri göster
@@ -140,7 +143,7 @@ export function getCoursePricingData(lang: 'tr' | 'de', slug: string) {
       const allDates: string[] = [];
       const levels: CourseLevel[] = ['a1', 'a2', 'b1', 'b2', 'c1'];
       levels.forEach(level => {
-        const levelDates = getCourseDates(lang, level);
+        const levelDates = getCourseDates(pricingLang, level);
         if (levelDates) {
           Object.values(levelDates).flat().forEach(date => {
             if (!allDates.includes(date)) {
@@ -154,18 +157,18 @@ export function getCoursePricingData(lang: 'tr' | 'de', slug: string) {
         all: allDates.sort()
       };
     } else {
-      dates = info.level ? getCourseDates(lang, info.level) : null;
+      dates = info.level ? getCourseDates(pricingLang, info.level) : null;
     }
     
     return {
       pricing: pricing,
       dates: dates,
-      schedule: coursePricing[lang].schedule,
-      holidays: coursePricing[lang].holidays,
-      weeklyPricing: coursePricing[lang].weeklyPricing,
-      visaInfo: coursePricing[lang].visaInfo,
-      lessonInfo: coursePricing[lang].lessonInfo,
-      onlineNote: coursePricing[lang].onlineNote,
+      schedule: coursePricing[pricingLang].schedule,
+      holidays: coursePricing[pricingLang].holidays,
+      weeklyPricing: coursePricing[pricingLang].weeklyPricing,
+      visaInfo: coursePricing[pricingLang].visaInfo,
+      lessonInfo: coursePricing[pricingLang].lessonInfo,
+      onlineNote: coursePricing[pricingLang].onlineNote,
       isExamPrep: slugLower === 'online-sinav-hazirlik', // Online sınav hazırlık olduğunu belirt
     };
   } else if (info.type === 'seasonal' && info.hasPricing && info.level) {
@@ -173,12 +176,12 @@ export function getCoursePricingData(lang: 'tr' | 'de', slug: string) {
     return {
       pricing: null, // Haftalık kurslar için tam kurs fiyatı yok
       dates: null, // Haftalık kurslar için sabit tarih yok
-      schedule: coursePricing[lang].schedule,
-      holidays: coursePricing[lang].holidays,
-      weeklyPricing: coursePricing[lang].weeklyPricing,
-      visaInfo: coursePricing[lang].visaInfo,
-      lessonInfo: coursePricing[lang].lessonInfo,
-      onlineNote: coursePricing[lang].onlineNote,
+      schedule: coursePricing[pricingLang].schedule,
+      holidays: coursePricing[pricingLang].holidays,
+      weeklyPricing: coursePricing[pricingLang].weeklyPricing,
+      visaInfo: coursePricing[pricingLang].visaInfo,
+      lessonInfo: coursePricing[pricingLang].lessonInfo,
+      onlineNote: coursePricing[pricingLang].onlineNote,
       isWeeklyOnly: true, // Sadece haftalık fiyatlar gösterilecek
     };
   } else if (info.type === 'exam' && info.hasPricing) {
@@ -189,17 +192,17 @@ export function getCoursePricingData(lang: 'tr' | 'de', slug: string) {
     // TestDaF/DSH kontrolü
     if (slugLower.includes('testdaf') || slugLower.includes('dsh')) {
       examPricing = {
-        fullCourse: coursePricing[lang].examPrep.testdafDsh.fullCourse,
-        lessons: coursePricing[lang].examPrep.testdafDsh.lessons,
-        duration: coursePricing[lang].examPrep.testdafDsh.duration,
+        fullCourse: coursePricing[pricingLang].examPrep.testdafDsh.fullCourse,
+        lessons: coursePricing[pricingLang].examPrep.testdafDsh.lessons,
+        duration: coursePricing[pricingLang].examPrep.testdafDsh.duration,
       };
     } else if (slugLower.includes('goethe') || slugLower.includes('telc')) {
       // Goethe/TELC sınavları için seviye bazlı fiyat
-      if (info.level && coursePricing[lang].examPrep.goetheTelc[info.level]) {
+      if (info.level && coursePricing[pricingLang].examPrep.goetheTelc[info.level]) {
         examPricing = {
-          fullCourse: coursePricing[lang].examPrep.goetheTelc[info.level].fullCourse,
-          lessons: coursePricing[lang].examPrep.goetheTelc[info.level].lessons,
-          duration: coursePricing[lang].examPrep.goetheTelc[info.level].duration,
+          fullCourse: coursePricing[pricingLang].examPrep.goetheTelc[info.level].fullCourse,
+          lessons: coursePricing[pricingLang].examPrep.goetheTelc[info.level].lessons,
+          duration: coursePricing[pricingLang].examPrep.goetheTelc[info.level].duration,
         };
       }
     }
@@ -211,12 +214,12 @@ export function getCoursePricingData(lang: 'tr' | 'de', slug: string) {
     
     return {
       pricing: examPricing,
-      dates: info.level ? getCourseDates(lang, info.level) : null, // Sınav hazırlık kursları da normal tarihleri kullanabilir
-      schedule: coursePricing[lang].schedule,
-      holidays: coursePricing[lang].holidays,
+      dates: info.level ? getCourseDates(pricingLang, info.level) : null, // Sınav hazırlık kursları da normal tarihleri kullanabilir
+      schedule: coursePricing[pricingLang].schedule,
+      holidays: coursePricing[pricingLang].holidays,
       weeklyPricing: null, // Sınav hazırlık kursları için haftalık fiyat yok
       visaInfo: null, // Sınav hazırlık kursları için vize bilgisi yok
-      lessonInfo: coursePricing[lang].lessonInfo,
+      lessonInfo: coursePricing[pricingLang].lessonInfo,
       onlineNote: null,
       isExamPrep: true, // Sınav hazırlık kursu olduğunu belirt
     };
@@ -240,3 +243,34 @@ export function getWeeklyPricingCategory(level: CourseLevel | null): 'a1a2' | 'b
   return null;
 }
 
+/** DD.MM formatındaki kurs tarihini "2 Mart" gibi dile göre metne çevirir */
+const MONTH_NAMES: Record<string, Record<number, string>> = {
+  tr: { 1: 'Ocak', 2: 'Şubat', 3: 'Mart', 4: 'Nisan', 5: 'Mayıs', 6: 'Haziran', 7: 'Temmuz', 8: 'Ağustos', 9: 'Eylül', 10: 'Ekim', 11: 'Kasım', 12: 'Aralık' },
+  de: { 1: 'Januar', 2: 'Februar', 3: 'März', 4: 'April', 5: 'Mai', 6: 'Juni', 7: 'Juli', 8: 'August', 9: 'September', 10: 'Oktober', 11: 'November', 12: 'Dezember' },
+  en: { 1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July', 8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December' },
+  es: { 1: 'Enero', 2: 'Febrero', 3: 'Marzo', 4: 'Abril', 5: 'Mayo', 6: 'Junio', 7: 'Julio', 8: 'Agosto', 9: 'Septiembre', 10: 'Octubre', 11: 'Noviembre', 12: 'Diciembre' },
+};
+
+export function formatCourseDate(ddmm: string, lang: 'tr' | 'de' | 'en' | 'es'): string {
+  if (!ddmm || !ddmm.includes('.')) return ddmm;
+  const parts = ddmm.trim().split('.');
+  const day = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10);
+  if (isNaN(day) || isNaN(month) || month < 1 || month > 12) return ddmm;
+  const monthName = MONTH_NAMES[lang]?.[month] || MONTH_NAMES.en[month];
+  if (lang === 'en') return `${monthName} ${day}`;
+  if (lang === 'de') return `${day}. ${monthName}`;
+  return `${day} ${monthName}`;
+}/** Tüm kurs başlangıç tarihlerini dile göre "2 Mart" formatında döndürür */
+export function getFormattedStartDates(lang: 'tr' | 'de' | 'en' | 'es') {
+  const pricingLang = lang === 'es' ? 'de' : lang;
+  const raw = coursePricing[pricingLang].startDates;
+  const format = (arr: string[]) => arr.map((d) => formatCourseDate(d, lang));
+  return {
+    a1: { a1_1: format(raw.a1.a1_1), a1_2: format(raw.a1.a1_2) },
+    a2: { a2_1: format(raw.a2.a2_1), a2_2: format(raw.a2.a2_2) },
+    b1: { b1_1: format(raw.b1.b1_1), b1_2: format(raw.b1.b1_2) },
+    b2: { b2_1: format(raw.b2.b2_1), b2_2: format(raw.b2.b2_2) },
+    c1: { c1_1: format(raw.c1.c1_1), c1_2: format(raw.c1.c1_2) },
+  };
+}

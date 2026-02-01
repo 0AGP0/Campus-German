@@ -1,7 +1,8 @@
 ---
-title: "Para İade veya Kurs Tekrar Garantisi"
+title: "İlk Hafta Para İade Garantisi"
 lang: "tr"
-description: "Memnun kalmazsanız para iadesi veya kurs tekrar garantisi. Başarı odaklı eğitim."
+customSlug: "para-iade-garantisi"
+description: "Vize gerektirmeyen kurslar için ilk hafta para iade garantisi. Sadece Almanya'da bulunan öğrenciler için geçerlidir."
 image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15 Ocak 2024"
 author: "CampusGerman Ekibi"
@@ -9,83 +10,73 @@ category: "Avantajlarımız"
 icon: "fas fa-shield-alt"
 ---
 
-Almanca eğitimi, ciddi bir zaman ve emek yatırımı gerektirir. CampusGerman olarak öğrencilerimizin bu sürece güvenle başlamasını önemsiyoruz. Bu nedenle sunduğumuz Para İade veya Kurs Tekrar Garantisi, eğitim kalitemizin ve başarı odaklı yaklaşımımızın en net göstergelerinden biridir.
+Campus German, belirli kurslar için **ilk hafta para iade garantisi** sunar. Ancak bu garanti tüm kurslar için geçerli değildir ve belirli koşullara tabidir.
 
-## Garanti Anlayışımız
+## Önemli Sınırlama: Sadece Vize Gerektirmeyen Kurslar İçin
 
-CampusGerman'da eğitim anlayışı yalnızca ders vermekle sınırlı değildir. Öğrencilerimizin hedeflerine ulaşmasını temel alan bir sistemle çalışırız. Para iade veya kurs tekrar garantisi, öğrencilerin aldıkları hizmetten memnun kalmalarını ve kendilerini güvende hissetmelerini amaçlar.
+İlk hafta para iade garantisi **yalnızca** şu durumlarda geçerlidir:
 
-Bu garanti, Almanca öğrenme sürecinde karşılaşılabilecek belirsizlikleri ortadan kaldırır ve öğrencilerin sürece daha rahat odaklanmasını sağlar.
+- ✅ **Vize gerektirmeyen** kurslar için
+- ✅ **Almanya'da bulunan** öğrenciler için
 
-## Garanti Kapsamı ve Koşulları
+**Geçerli değildir:**
+- ❌ Vize amaçlı yüz yüze kurslar (vize başvurusu yapılan kurslar)
+- ❌ Henüz Almanya'da bulunmayan öğrenciler
 
-Garanti uygulamamız belirli şartlar çerçevesinde sunulur. Genel olarak:
+**Neden bu sınırlama?**  
+Vize amaçlı kurslar farklı bir risk yapısına sahiptir. Bu kurslar için farklı iade kuralları geçerlidir (Voucher politikasına bakınız).
 
-- Öğrencinin derslere düzenli katılım sağlaması
-- Eğitim sürecini aktif şekilde takip etmesi
-- Program gerekliliklerini yerine getirmesi
+## Garanti Koşulları
 
-beklenir. Bu şartlar, öğrencinin eğitimden maksimum fayda sağlamasını amaçlar.
+### Zaman Şartı
 
-## Para İade Şartları
+- İade talebi, kursun **ilk haftası içinde** yapılmalıdır
+- İlk haftadan sonra iade mümkün değildir
 
-Belirlenen koşulların sağlanmasına rağmen öğrencinin beklentilerinin karşılanmaması durumunda, para iade seçeneği devreye girebilir. Bu süreç:
+### Katılım Şartı
 
-- Şeffaf kriterler çerçevesinde değerlendirilir
-- Öğrencinin durumu bireysel olarak incelenir
-- Karar süreci açık ve anlaşılır şekilde yürütülür
+Bu garanti "memnuniyet" temelli bir yaklaşımdır; ancak öğrencinin derse katılımı esastır:
 
-Para iade politikası, öğrencilerimize karşı olan sorumluluğumuzun bir parçasıdır.
+- ✅ Öğrencinin kurslara **katılmış olması** gerekir
+- ❌ Öğrenci derse **hiç katılmadıysa** iade uygulanmaz
+- ❌ Öğrenci iade talep ettiği andan itibaren devam eden derslere **katılamaz**
 
-## Kurs Tekrar Garantisi Nasıl Çalışır?
+### İade Süresi
 
-Para iade seçeneğine alternatif olarak sunulan kurs tekrar garantisi, öğrencilerin hedefledikleri seviyeye ulaşana kadar desteklenmesini sağlar. Bu garanti kapsamında:
+- İade, talep tarihinden itibaren **1 ay içerisinde** gerçekleştirilir
+- Banka/SWIFT masrafları iade tutarından düşebilir
 
-- Öğrenci, ilgili seviyeyi yeniden alabilir
-- Ders tekrarları ile eksikler giderilir
-- Öğrenme süreci pekiştirilir
+## Vize Amaçlı Kurslarda Ne Olur?
 
-Bu yaklaşım, özellikle yoğun Almanca programlarında öğrenme kalitesini artırır.
+**Vize amaçlı yüz yüze kurslar** için (vize başvurusu yapılan kurslar):
 
-## Başarı Odaklı Eğitim Anlayışı
+- ❌ **Para iade garantisi yoktur**
+- ✅ Bunun yerine: Kalan kurlar için **Online Voucher** (kupon) verilir
+- ✅ Voucher **1 yıl geçerlidir** ve devredilebilir
 
-CampusGerman'da garanti sistemi, bir pazarlama unsuru değil, başarı odaklı eğitim anlayışının doğal bir sonucudur. Eğitim süreci boyunca:
+Detaylı bilgi için Voucher politikamıza bakınız.
 
-- Öğrenci gelişimi düzenli olarak takip edilir
-- Geri bildirimler dikkate alınır
-- Gerekli görülen durumlarda ek destek sağlanır
+## Sıkça Sorulan Sorular
 
-Amaç, öğrencinin Almanca'yı gerçekten öğrenmesini ve hedeflediği seviyeye ulaşmasını sağlamaktır.
+**Garanti tüm kurslar için geçerli mi?**  
+Hayır. Garanti yalnızca vize gerektirmeyen kurslar ve Almanya'da bulunan öğrenciler için geçerlidir.
 
-## Öğrencilere Sağladığı Güven
+**Hiç derse katılmadıysam ne olur?**  
+Hiç derse katılmadıysanız iade uygulanmaz. Garanti memnuniyet temellidir ve katılım gerektirir.
 
-Para iade veya kurs tekrar garantisi, öğrenciler için önemli bir güven unsurudur. Bu garanti sayesinde:
+**İade ne kadar sürer?**  
+İade, talebinizden itibaren 1 ay içinde gerçekleştirilir. Banka/SWIFT masrafları düşülebilir.
 
-- Eğitim sürecine risksiz başlama imkânı
-- Kuruma duyulan güvenin artması
-- Öğrencinin motivasyonunun korunması
-- Uzun vadeli hedeflere daha kararlı ilerleme
+**Vize amaçlı kurslar için geçerli mi?**  
+Hayır. Vize amaçlı yüz yüze kurslar için para iade garantisi yoktur. Bunun yerine kalan kurlar için online voucher alırsınız.
 
-sağlanır. Öğrenciler, yalnızca ders alan değil, sürecin merkezinde yer alan birer birey olarak desteklenir.
+## Şeffaflık ve Net Koşullar
 
-## Örnek Senaryolar
+Tüm garanti koşullarını açık ve şeffaf şekilde paylaşıyoruz. Kayıt aşamasında kapsam, koşullar ve süreçler detaylı olarak açıklanır, böylece her öğrenci sürece bilinçli ve bilgili şekilde başlar.
 
-**Senaryo 1:**
-Öğrenci düzenli katılım sağlar ancak belirlenen seviyede yeterli ilerleme gösteremez. Kurs tekrar garantisi ile aynı seviyeyi yeniden alır.
+## Sonuç: Herkes İçin Net Kurallar
 
-**Senaryo 2:**
-Öğrenci, eğitim sürecinin beklentilerini karşılamadığını düşünür. Şartlar incelenir ve uygun görülmesi halinde para iade süreci başlatılır.
+Campus German'ın ilk hafta para iade garantisi, Almanya'da bulunan ve vize gerektirmeyen kurslara katılan öğrenciler için bir avantajdır. Net koşullar ve şeffaf iletişimle güven oluşturuyor ve yanlış anlaşılmaları önlüyoruz.
 
-**Senaryo 3:**
-Öğrenci ek destek alarak seviyesini pekiştirir ve hedeflediği sınavlara daha güçlü hazırlanır.
-
-## Şartlar ve Şeffaflık
-
-Garanti uygulamamız, tüm öğrenciler için açık ve net şekilde paylaşılır. Kayıt aşamasında garanti kapsamı, şartlar ve süreçler detaylı olarak açıklanır. Böylece öğrenciler, sürece bilinçli şekilde dahil olur.
-
-## Sonuç: Güvenle Başlayın
-
-CampusGerman Para İade veya Kurs Tekrar Garantisi, öğrencilerin eğitim sürecine güvenle başlamasını sağlayan güçlü bir avantajdır. Kaliteye olan inancımız ve öğrenci odaklı yaklaşımımız sayesinde, Almanca öğrenme sürecini risksiz ve sürdürülebilir hale getiriyoruz.
-
-Siz de Almanca öğrenirken güven, kalite ve başarıyı bir arada yaşamak istiyorsanız, CampusGerman'ın garanti sistemiyle tanışın.
+İade politikamız hakkında sorularınız varsa, lütfen bizimle iletişime geçin.
 

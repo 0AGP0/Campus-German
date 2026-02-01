@@ -1,0 +1,12 @@
+---
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'en' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// İngilizce'de seasonal-overview slug'ını saisonal-uebersicht sayfasına yönlendir
+return Astro.redirect(`/${lang}/courses/saisonal-uebersicht`, 301);
+---

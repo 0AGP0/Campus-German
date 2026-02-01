@@ -1,6 +1,7 @@
 ---
 title: "Krankenversicherung, Sperrkonto und Bankkonto"
 lang: "de"
+customSlug: "krankenversicherung-und-bank"
 description: "Beratung und Unterstützung zu Krankenversicherung, Sperrkonto und Kontoeröffnung in Deutschland. Hilfe bei allen finanziellen Formalitäten."
 image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15. Januar 2024"

@@ -1,8 +1,8 @@
-﻿/* ===== HAKKIMIZDA SAYFASI CSS ===== */
+/* ===== HAKKIMIZDA SAYFASI CSS ===== */
 
 /* About Hero Section */
 .about-hero {
-    background: linear-gradient(135deg, #F0FAF8 0%, #ffffff 50%, #F0FAF8 100%);
+    background: linear-gradient(135deg, var(--color-primary-bg) 0%, #ffffff 50%, var(--color-primary-bg) 100%);
     padding: 80px 0 60px;
     position: relative;
     overflow: hidden;
@@ -34,12 +34,12 @@
 
 .about-hero .title-main {
     display: block;
-    color: #0B1220;
+    color: var(--color-text-primary);
 }
 
 .about-hero .title-highlight {
     display: block;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -47,7 +47,7 @@
 
 .about-hero .hero-description {
     font-size: 1.3rem;
-    color: #64748B;
+    color: var(--color-text-muted);
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
@@ -115,7 +115,7 @@
 .mission-text .section-title {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #0B1220;
+    color: var(--color-text-primary);
     margin-bottom: 25px;
     position: relative;
 }
@@ -127,13 +127,13 @@
     left: 0;
     width: 60px;
     height: 4px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     border-radius: 2px;
 }
 
 .mission-description {
     font-size: 1.2rem;
-    color: #475569;
+    color: var(--color-text-secondary);
     line-height: 1.7;
     margin-bottom: 40px;
     font-weight: 500;
@@ -150,22 +150,22 @@
     align-items: flex-start;
     gap: 20px;
     padding: 25px;
-    background: #F0FAF8;
+    background: var(--color-primary-bg);
     border-radius: 16px;
-    border: 1px solid rgba(5, 150, 105, 0.1);
+    border: 1px solid var(--color-primary-light);
     transition: all 0.3s ease;
 }
 
 .feature-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(5, 150, 105, 0.15);
-    border-color: #059669;
+    box-shadow: 0 15px 40px var(--color-primary-light);
+    border-color: var(--color-primary);
 }
 
 .feature-item i {
     width: 50px;
     height: 50px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -178,12 +178,12 @@
 .feature-item h4 {
     font-size: 1.2rem;
     font-weight: 700;
-    color: #0B1220;
+    color: var(--color-text-primary);
     margin-bottom: 8px;
 }
 
 .feature-item p {
-    color: #475569;
+    color: var(--color-text-secondary);
     line-height: 1.6;
     margin: 0;
     font-weight: 500;
@@ -212,7 +212,7 @@
 /* ===== TEAM SECTION ===== */
 .team-section {
     padding: 60px 0;
-    background: linear-gradient(135deg, #F0FAF8 0%, #ffffff 100%);
+    background: linear-gradient(135deg, var(--color-primary-bg) 0%, #ffffff 100%);
     position: relative;
     overflow: hidden;
 }
@@ -238,7 +238,7 @@
 .section-title {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #0B1220;
+    color: var(--color-text-primary);
     margin-bottom: 20px;
     position: relative;
 }
@@ -251,13 +251,13 @@
     transform: translateX(-50%);
     width: 60px;
     height: 4px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     border-radius: 2px;
 }
 
 .section-subtitle {
     font-size: 1.2rem;
-    color: #475569;
+    color: var(--color-text-secondary);
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
@@ -280,7 +280,7 @@
     padding: 25px 25px;
     text-align: center;
     box-shadow: 0 10px 30px rgba(31, 58, 95, 0.1);
-    border: 1px solid rgba(5, 150, 105, 0.1);
+    border: 1px solid var(--color-primary-light);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -293,7 +293,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
@@ -338,19 +338,19 @@
 .team-name {
     font-size: 1.2rem;
     font-weight: 700;
-    color: #0B1220;
+    color: var(--color-text-primary);
     margin-bottom: 6px;
 }
 
 .team-role {
     font-size: 0.95rem;
-    color: #059669;
+    color: var(--color-primary);
     font-weight: 600;
     margin-bottom: 12px;
 }
 
 .team-description {
-    color: #475569;
+    color: var(--color-text-secondary);
     line-height: 1.5;
     font-weight: 500;
     margin-bottom: 15px;
@@ -365,8 +365,8 @@
 }
 
 .skill-tag {
-    background: rgba(5, 150, 105, 0.1);
-    color: #059669;
+    background: var(--color-primary-light);
+    color: var(--color-primary);
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 0.85rem;
@@ -407,7 +407,7 @@
     top: 0;
     bottom: 0;
     width: 3px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     transform: translateX(-50%);
 }
 
@@ -429,7 +429,7 @@
 .timeline-marker {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -447,7 +447,7 @@
     padding: 20px 25px;
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(31, 58, 95, 0.1);
-    border: 1px solid rgba(5, 150, 105, 0.1);
+    border: 1px solid var(--color-primary-light);
     margin: 0 30px;
     flex: 1;
     max-width: 550px;
@@ -456,12 +456,12 @@
 .timeline-title {
     font-size: 1.2rem;
     font-weight: 700;
-    color: #0B1220;
+    color: var(--color-text-primary);
     margin-bottom: 10px;
 }
 
 .timeline-description {
-    color: #475569;
+    color: var(--color-text-secondary);
     line-height: 1.5;
     font-weight: 500;
     margin: 0;
@@ -471,7 +471,7 @@
 /* ===== STATS SECTION ===== */
 .stats-section {
     padding: 80px 0;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     position: relative;
     overflow: hidden;
 }
@@ -518,7 +518,7 @@
     font-size: 3rem;
     font-weight: 900;
     margin-bottom: 10px;
-    background: linear-gradient(135deg, #ffffff 0%, #F0FAF8 100%);
+    background: linear-gradient(135deg, #ffffff 0%, var(--color-primary-bg) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -532,7 +532,7 @@
 
 /* ===== CTA SECTION - FORCE GRID LAYOUT ===== */
 .cta-section {
-    background: linear-gradient(135deg, #F0FAF8 0%, #ffffff 100%);
+    background: linear-gradient(135deg, var(--color-primary-bg) 0%, #ffffff 100%);
     padding: 80px 0;
     position: relative;
     overflow: hidden;
@@ -588,7 +588,7 @@
 .cta-title {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #0B1220;
+    color: var(--color-text-primary);
     margin-bottom: 25px;
     position: relative;
 }
@@ -601,13 +601,13 @@
     transform: translateX(-50%);
     width: 60px;
     height: 4px;
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     border-radius: 2px;
 }
 
 .cta-description {
     font-size: 1.2rem;
-    color: #475569;
+    color: var(--color-text-secondary);
     font-weight: 500;
     max-width: 600px;
     margin: 0 auto 40px;
@@ -636,7 +636,7 @@
 }
 
 .cta-btn.primary {
-    background: linear-gradient(135deg, #1F3A5F 0%, #059669 100%);
+    background: var(--gradient-primary);
     color: white;
     box-shadow: 0 10px 30px rgba(31, 58, 95, 0.3);
 }
@@ -648,7 +648,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #F97316 0%, #1F3A5F 100%);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%);
     transition: left 0.3s ease;
     z-index: -1;
 }
@@ -659,8 +659,8 @@
 
 .cta-btn.secondary {
     background: white;
-    color: #059669;
-    border: 2px solid #059669;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
     box-shadow: 0 10px 30px rgba(5, 150, 105, 0.2);
 }
 
@@ -671,7 +671,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: #059669;
+    background: var(--color-primary);
     transition: left 0.3s ease;
     z-index: -1;
 }

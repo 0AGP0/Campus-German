@@ -1,6 +1,7 @@
 ---
 title: "Erasmus Öğrencilerine Özel Kurslar"
 lang: "tr"
+customSlug: "erasmus-ogrencileri"
 badge:
   icon: "fas fa-user-graduate"
   text: "Erasmus"

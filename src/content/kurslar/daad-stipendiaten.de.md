@@ -1,6 +1,7 @@
 ---
 title: "Deutschkurse für DAAD-Stipendiaten"
 lang: "de"
+customSlug: "daad-stipendiaten"
 badge:
   icon: "fas fa-graduation-cap"
   text: "DAAD"

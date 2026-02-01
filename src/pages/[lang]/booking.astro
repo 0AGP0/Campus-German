@@ -1,0 +1,14 @@
+---
+// İngilizce booking sayfası - buchung.astro'ya redirect
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'en' } },
+    ];
+}
+
+const { lang } = Astro.params;
+
+// İngilizce'de booking slug'ını buchung sayfasına yönlendir
+// Ama aslında buchung.astro zaten 'en' desteği var, o yüzden direkt buchung'a yönlendirelim
+return Astro.redirect(`/${lang}/buchung`, 301);
+---

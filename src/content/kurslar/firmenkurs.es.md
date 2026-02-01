@@ -1,0 +1,102 @@
+---
+title: "Curso Personalizado de Alemán para Empresas"
+lang: "es"
+customSlug: "curso-empresarial"
+badge:
+  icon: "fas fa-briefcase"
+  text: "Curso Empresarial"
+description: "Cursos de alemán especialmente diseñados para empresas. Contenido enfocado en negocios y opciones de programa flexibles."
+image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Programa Flexible"
+    description: "Según Necesidades de la Empresa"
+  - icon: "fas fa-users"
+    title: "Tamaño de Clase"
+    description: "Grupos Privados"
+  - icon: "fas fa-briefcase"
+    title: "Contenido"
+    description: "Enfocado en Negocios"
+  - icon: "fas fa-building"
+    title: "Objetivo"
+    description: "Empresas"
+heroButtons:
+  primary:
+    text: "Aplicar Ahora"
+    icon: "fas fa-arrow-right"
+    href: "/reservar"
+  secondary:
+    text: "Información de Empresa"
+    icon: "fas fa-info-circle"
+    href: "#informacion-empresa"
+tabs:
+  - id: "informacion-curso"
+    icon: "fas fa-info-circle"
+    title: "Información del Curso"
+    content:
+      title: "Acerca del Curso Personalizado para Empresas"
+      paragraphs:
+        - heading: "Resumen del Curso"
+          text: "El Curso Personalizado de Alemán para Empresas es un programa de educación en alemán orientado a objetivos especialmente diseñado según las necesidades de empresas e instituciones. Este curso ofrecido por CampusGerman tiene como objetivo desarrollar las habilidades de alemán de los empleados de una manera que contribuya directamente a los procesos empresariales. El contenido educativo está completamente personalizado teniendo en cuenta sector, posición, mercado objetivo y necesidades de comunicación interna de la empresa. Para empresas que hacen negocios con Alemania o operan en mercados de habla alemana, la comunicación efectiva es de gran importancia. El Curso Personalizado de Alemán para Empresas va más allá del conocimiento general de alemán y progresa a través de escenarios reales que los empleados encuentran en la vida empresarial diaria. Se apunta al uso correcto y profesional de alemán en áreas como reuniones, presentaciones, correos electrónicos, reuniones con clientes e informes escritos. Este programa de CampusGerman ofrece desarrollo sostenible en educación de idioma corporativo con programación flexible, grupos basados en nivel y plan de estudios adaptado a objetivos empresariales."
+        - heading: "Audiencia Objetivo y Prerrequisitos"
+          text: "Este curso es para instituciones y empleados que necesitan usar alemán activamente en la vida empresarial. Es particularmente adecuado para los siguientes grupos: Empleados de empresas que hacen negocios con Alemania Equipos asignados a proyectos internacionales Equipos gerenciales, de ventas, marketing o técnicos Profesionales que necesitan alemán en comunicación corporativa El nivel de inicio para la participación en el curso se determina según las necesidades de la empresa. Los programas pueden adaptarse desde A1 hasta niveles avanzados. CampusGerman crea el plan de educación más adecuado realizando análisis detallado de necesidades y nivel para la empresa y participantes antes de la educación."
+        - heading: "Contenido del Curso y Objetivos de Aprendizaje"
+          text: "El contenido del Curso Personalizado de Alemán para Empresas está completamente moldeado según los objetivos de la institución. Dentro del alcance del programa: Expresiones alemanas dirigidas a la vida empresarial Correspondencia corporativa y lenguaje de correo electrónico Técnicas de reunión y presentación Comunicación con clientes y socios empresariales Palabras y expresiones específicas del sector El objetivo de aprendizaje es que los empleados puedan usar alemán de manera fluida, correcta y profesional en el entorno laboral. Al final del curso, los participantes se vuelven más seguros y efectivos en comunicación en alemán."
+        - heading: "Método de Enseñanza y Ambiente del Aula"
+          text: "El Curso Personalizado de Alemán para Empresas en CampusGerman se lleva a cabo con un enfoque de enseñanza basado en práctica y enfocado en instituciones. En las clases se utilizan: Escenarios empresariales reales Análisis de casos Juegos de roles Documentos de muestra específicos de la empresa. La educación puede organizarse en formato presencial, online o híbrido. Los instructores tienen experiencia en alemán corporativo y educación de adultos."
+        - heading: "Progreso Post-Curso"
+          text: "Los participantes que completan el Curso Personalizado de Alemán para Empresas: Usan alemán más efectivamente en la vida empresarial Aumentan la calidad de comunicación corporativa Toman un papel más activo en proyectos internacionales Pueden transicionar a programas avanzados de alemán profesional CampusGerman ofrece apoyo a empresas sobre seguimiento de desarrollo y planificación de educación avanzada después de la educación."
+  - id: "fechas-precios"
+    icon: "fas fa-calendar-alt"
+    title: "Fechas y Precios"
+    content:
+      title: "Información de Precios"
+      pricing:
+        - name: "Curso Personalizado para Empresas"
+          duration: "Flexible"
+          schedule: "Según Necesidades de la Empresa"
+          price: "Precio Especial"
+          highlighted: true
+  - id: "informacion-empresa"
+    icon: "fas fa-building"
+    title: "Información de Empresa"
+    content:
+      title: "Características del Curso para Empresas"
+      items:
+        - icon: "fas fa-check-circle"
+          text: "<strong>Contenido Personalizado:</strong> Preparado específicamente para necesidades empresariales"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Programa Flexible:</strong> Adecuado para horarios de trabajo empresariales"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Enfocado en Negocios:</strong> Alemán que puede usarse en la vida empresarial"
+faqs:
+  - question: "¿Cómo se organizan los cursos para empresas?"
+    answer: "Se prepara contenido y programa especial según las necesidades de la empresa. Contáctenos para detalles."
+  - question: "¿Hay un número mínimo de participantes?"
+    answer: "Sí, generalmente se requiere un mínimo de 5-6 participantes. Contáctenos para detalles."
+  - question: "¿Qué formatos de curso se ofrecen?"
+    answer: "Nuestros cursos le ofrecen una experiencia de aprendizaje flexible: Educación Híbrida: Su curso consiste en una combinación de clases presenciales y clases online en vivo. Gracias al sistema híbrido, también puede asistir a clases online cuando lo desee en días de clases presenciales. Educación Online en Vivo: En este formato, asiste a clases completamente en vivo y online."
+  - question: "¿Qué contenido se cubre en los cursos?"
+    answer: "Nuestros programas de Alemán Intensivo incluyen comprensión auditiva y lectora con textos actuales, estudios gramaticales integrales y diversas actividades centradas en la comunicación. Esto tiene como objetivo desarrollar sus habilidades de habla y escritura de manera orientada a objetivos."
+  - question: "¿Cómo puedo obtener educación universitaria en Alemania?"
+    answer: "Para recibir educación universitaria en Alemania, primero debe tener una calificación de ingreso universitario reconocida (HZB). Se recomienda verificar si su diploma está reconocido en Alemania a través del sistema anabin. También necesita documentar su competencia en alemán con certificados oficiales como telc, DSH. El Programa de Preparación Universitaria de Campus German está diseñado para que se prepare completamente para este proceso."
+  - question: "¿Qué requisitos son necesarios?"
+    answer: "Debe tener al menos 18 años. Debe presentar una cuenta bloqueada abierta en Alemania o una carta de compromiso oficial."
+  - question: "¿Qué tipos de visas se recomiendan?"
+    answer: "Visa de Estudiante: También cubre el derecho a participar en cursos preparatorios de alemán. No hay requisito de visa para ciudadanos de la UE."
+  - question: "¿Qué servicios están incluidos en los cursos?"
+    answer: "Prueba de evaluación de nivel, sin tarifa de registro, certificado del curso para solicitud de visa, libro de texto digital, consultoría estudiantil individual (1 vez, aproximadamente 45 minutos), webinars sobre 'Educación Universitaria en Alemania', certificado de Campus German, plataforma de e-learning, actividades sociales y culturales organizadas durante todo el año, acceso gratuito a Wi-Fi en todos los centros."
+  - question: "¿Cuáles son las calificaciones de nuestros instructores?"
+    answer: "Nuestro personal docente consiste en graduados universitarios con muchos años de experiencia docente en Alemán como Lengua Extranjera (DaF) y Alemán como Segunda Lengua (DaZ), expertos en su campo y personas altamente motivadas. También tenemos instructores aprobados por la Oficina Federal de Migración y Refugiados (BAMF). Nuestras clases son evaluadas regularmente por los estudiantes."
+  - question: "¿Cuánto tiempo se tarda en aprender alemán?"
+    answer: "El tiempo de aprendizaje de alemán depende de su objetivo y nivel actual. Puede completar los niveles básicos desde A1 hasta B2 en 6-8 meses. Los niveles avanzados como C1 y C2 pueden requerir 4-6 meses adicionales. Puede acortar este tiempo con nuestros cursos intensivos."
+  - question: "¿Puedo obtener un certificado de Goethe?"
+    answer: "Sí, ofrecemos cursos de preparación para certificados de Goethe en CampusGerman. Proporcionamos preparación para exámenes en todos los niveles desde A1 hasta C2. Puede tomar exámenes de certificado en nuestro campus o ser dirigido a centros de prueba cercanos."
+  - question: "¿Hay opciones de alojamiento disponibles?"
+    answer: "Sí, ofrecemos opciones de alojamiento en Alemania. Residencias estudiantiles, alojamiento en familias anfitrionas y apartamentos compartidos están disponibles. Nuestro servicio de alojamiento no está incluido en la tarifa del curso, pero le ayudamos a encontrar las opciones más adecuadas."
+  - question: "¿Hay planes de pago y descuentos disponibles?"
+    answer: "Sí, ofrecemos planes de pago flexibles. Opciones de pago mensual, de 3 meses y de 6 meses están disponibles. Hay descuentos para registro temprano, registros grupales y programas a largo plazo. Contáctenos para obtener información detallada."
+hasDemandForm: true
+---
+
+<!-- Content will be added here -->

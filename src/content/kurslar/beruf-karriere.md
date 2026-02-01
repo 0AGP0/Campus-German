@@ -1,6 +1,7 @@
 ---
 title: "Meslek ve Kariyer için Almanca Kursları"
 lang: "tr"
+customSlug: "meslek-kariyer"
 badge:
   icon: "fas fa-briefcase"
   text: "Meslek/Kariyer"

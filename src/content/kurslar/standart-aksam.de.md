@@ -1,6 +1,7 @@
 ---
 title: "Standard- & Abend-Deutschkurs"
 lang: "de"
+customSlug: "standard-abend"
 badge:
   icon: "fas fa-moon"
   text: "Flexible Zeiten"
@@ -111,8 +112,9 @@ faqs:
   - question: "Gibt es Zahlungspläne und Rabatte?"
     answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
 
-hasDemandForm: true
 ---
+
+
 
 
 

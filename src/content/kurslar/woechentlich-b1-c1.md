@@ -1,6 +1,7 @@
 ---
 title: "Haftalık B1-B2-C1 Almanca Kursu"
 lang: "tr"
+customSlug: "haftalik-b1-c1"
 badge:
   icon: "fas fa-calendar-week"
   text: "Haftalık"

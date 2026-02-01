@@ -1,6 +1,7 @@
 ---
 title: "Goethe/TELC A2 Prüfungsvorbereitungskurs"
 lang: "de"
+customSlug: "goethe-telc-a2"
 badge:
   icon: "fas fa-certificate"
   text: "A2 Prüfung"
@@ -43,8 +44,8 @@ tabs:
           text: "Während des Kurses arbeiten die Teilnehmenden intensiv mit prüfungsspezifischen Materialien. Alle vier Prüfungsteile – Lesen, Hören, Schreiben und Sprechen – werden systematisch trainiert, und gezielte Prüfungstechniken werden vermittelt. Probeklausuren, prüfungsnahe Aufgaben und Prüfungssimulationen bereiten auf die reale Prüfungssituation vor. Zusätzlich werden Zeitmanagement, Stressbewältigung und effektive Prüfungsstrategien behandelt. Am Ende des Kurses verfügen die Teilnehmenden über alle notwendigen Kenntnisse und Fertigkeiten für eine erfolgreiche A2-Prüfung."
         - heading: "Lehrmethode und Unterrichtsumfeld"
           text: "Der Unterricht wird von erfahrenen Lehrkräften durchgeführt. Die maximale Gruppengröße von 8 Teilnehmenden ermöglicht eine individuelle Betreuung und gezieltes Feedback. Der Kurs kombiniert prüfungsspezifische Übungen, Probeklausuren, Feedback-Sitzungen und individuelle Beratung. Die Teilnehmenden verbessern nicht nur ihre Sprachkenntnisse, sondern lernen auch die entscheidenden Strategien für den Prüfungserfolg."
-        - heading: "Erfolgsgarantie und Unterstützungsleistungen"
-          text: "Wir bieten eine Erfolgsquote von bis zu 95 %. Sollte die Prüfung nicht bestanden werden, besteht die Möglichkeit, den Kurs zu wiederholen. Darüber hinaus unterstützen wir bei der Prüfungsanmeldung und informieren über Prüfungstermine, Anmeldeverfahren und Prüfungsgebühren. Nach Kursabschluss sind die Teilnehmenden vollständig auf den Erwerb des A2-Zertifikats vorbereitet."
+        - heading: "Unterstützungsleistungen"
+          text: "Wir unterstützen Sie bei der Prüfungsanmeldung und informieren über Prüfungstermine, Anmeldeverfahren und Prüfungsgebühren. Nach Kursabschluss sind die Teilnehmenden vollständig auf den Erwerb des A2-Zertifikats vorbereitet. Sollte die Prüfung nicht bestanden werden, besteht die Möglichkeit, den Kurs zu wiederholen. **Wichtig:** Campus German gibt keine Prüfungserfolgsgarantie. Prüfungsergebnisse hängen von verschiedenen Faktoren ab und werden von den offiziellen Prüfungsstellen bestimmt."
   - id: "pruefungs-info"
     icon: "fas fa-certificate"
     title: "Prüfungsinformationen"
@@ -89,8 +90,9 @@ faqs:
   - question: "Gibt es Zahlungspläne und Rabatte?"
     answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
 
-hasDemandForm: true
 ---
+
+
 
 
 

@@ -1,0 +1,234 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../../layouts/MainLayout.astro';
+import { cleanSlug, getServicesPath, getContactPath, getBookingPath, isValidLang } from '../../../utils/pathHelpers';
+
+export async function getStaticPaths() {
+  const allSunduklarimiz = await getCollection('unsere-dienstleistungen');
+  
+  const paths = [];
+  
+  // Sadece İngilizce sayfalar için
+  const ingilizceHizmetler = allSunduklarimiz.filter(hizmet => hizmet.data.lang === 'en');
+  
+  for (const hizmet of ingilizceHizmetler) {
+    const langCode = 'en';
+    
+    // Use customSlug if available, otherwise use default slug cleaning
+    let finalSlug;
+    if (hizmet.data.customSlug) {
+      finalSlug = hizmet.data.customSlug;
+    } else {
+      finalSlug = cleanSlug(hizmet.slug);
+    }
+    
+    paths.push({
+      params: { 
+        lang: langCode,
+        slug: finalSlug
+      },
+      props: { hizmet },
+    });
+  }
+  
+  return paths;
+}
+
+const { hizmet } = Astro.props;
+const { Content } = await hizmet.render();
+const { lang } = Astro.params;
+
+// Lang tip kontrolü
+if (!isValidLang(lang)) {
+    throw new Error(`Invalid language: ${lang}`);
+}
+
+// Path helper'ları
+const servicesPath = getServicesPath(lang);
+const contactPath = getContactPath(lang);
+const bookingPath = getBookingPath(lang);
+
+// Related services: [path slug per lang, labels]
+const relatedServices = [
+  { slug: { tr: 'universite-yerlestirme', de: 'universitaetsvermittlung', en: 'university-placement', es: 'mediacion-universitaria' }, icon: 'fas fa-university', tr: 'Üniversite Yerleştirme', de: 'Universitätsvermittlung', en: 'University Placement', es: 'Mediación Universitaria' },
+  { slug: { tr: 'vize-rehberligi', de: 'visumsberatung', en: 'visa-guidance', es: 'orientacion-visa' }, icon: 'fas fa-passport', tr: 'Vize Rehberliği', de: 'Visumsberatung', en: 'Visa Guidance', es: 'Orientación de Visa' },
+  { slug: { tr: 'konaklama', de: 'unterkunft', en: 'accommodation', es: 'alojamiento' }, icon: 'fas fa-home', tr: 'Konaklama', de: 'Unterkunft', en: 'Accommodation', es: 'Alojamiento' },
+  { slug: { tr: 'havalimani-karsilama', de: 'flughafenabholung', en: 'airport-pickup', es: 'recogida-aeropuerto' }, icon: 'fas fa-plane-arrival', tr: 'Havaalanı Karşılama', de: 'Flughafenabholung', en: 'Airport Pickup', es: 'Recogida en el Aeropuerto' },
+  { slug: { tr: 'sigorta-banka', de: 'krankenversicherung-und-bank', en: 'insurance-and-bank', es: 'seguro-y-banco' }, icon: 'fas fa-credit-card', tr: 'Sağlık Sigortası/Banka', de: 'Krankenversicherung/Bank', en: 'Insurance and Bank', es: 'Seguro y Banco' },
+  { slug: { tr: 'burokrasi-destegi', de: 'buerokratische-unterstuetzung', en: 'bureaucratic-support', es: 'apoyo-burocratico' }, icon: 'fas fa-file-alt', tr: 'Bürokrasi Desteği', de: 'Bürokratische Unterstützung', en: 'Bureaucratic Support', es: 'Apoyo Burocrático' },
+  { slug: { tr: 'ucretsiz-kaynaklar', de: 'kostenlose-ressourcen', en: 'free-resources', es: 'recursos-gratuitos' }, icon: 'fas fa-book-open', tr: 'Ücretsiz Kaynaklar', de: 'Kostenlose Ressourcen', en: 'Free Resources', es: 'Recursos Gratuitos' },
+];
+---
+
+<MainLayout title={`${hizmet.data.title} - CampusGerman`} lang={lang} includeHizmetCSS={true}>
+    <!-- Main Content -->
+    <main>
+        <!-- Article Section -->
+        <section class="article-section">
+            <div class="container">
+                <div class="article-layout">
+                    <!-- Article Content -->
+                    <article class="article-content">
+                        <div class="article-header">
+                            <h1 class="article-title">{hizmet.data.title}</h1>
+                            <div class="article-meta">
+                                <span class="article-date">
+                                    <i class="fas fa-calendar"></i>
+                                    {hizmet.data.date}
+                                </span>
+                                <span class="article-author">
+                                    <i class="fas fa-user"></i>
+                                    {hizmet.data.author}
+                                </span>
+                                <span class="article-category">
+                                    <i class="fas fa-tag"></i>
+                                    {hizmet.data.category}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="article-image">
+                            <img src={hizmet.data.image} alt={hizmet.data.title}>
+                        </div>
+
+                        <div class="article-body">
+                            <Content />
+                        </div>
+
+                        <div class="article-footer">
+                            <div class="article-tags">
+                                <span class="tag-label">{lang === 'tr' ? 'Etiketler:' : lang === 'de' ? 'Tags:' : lang === 'es' ? 'Etiquetas:' : 'Tags:'}</span>
+                                <a href="#" class="tag">{lang === 'tr' ? 'Almanca' : lang === 'de' ? 'Deutsch' : lang === 'es' ? 'Alemán' : 'German'}</a>
+                                <a href="#" class="tag">{lang === 'tr' ? 'Hizmetler' : lang === 'de' ? 'Dienstleistungen' : lang === 'es' ? 'Servicios' : 'Services'}</a>
+                                <a href="#" class="tag">CampusGerman</a>
+                            </div>
+                            <div class="article-share">
+                                <span class="share-label">{lang === 'tr' ? 'Paylaş:' : lang === 'de' ? 'Teilen:' : lang === 'es' ? 'Compartir:' : 'Share:'}</span>
+                                <a href="#" class="share-link" aria-label="Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="share-link" aria-label="Twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="share-link" aria-label="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="#" class="share-link" aria-label="WhatsApp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Sidebar -->
+                    <aside class="article-sidebar">
+                        <!-- Quick Contact Widget -->
+                        <div class="sidebar-widget">
+                            <h3 class="widget-title">
+                                <i class="fas fa-phone-alt"></i>
+                                {lang === 'tr' ? 'Hızlı İletişim' : lang === 'de' ? 'Schneller Kontakt' : lang === 'es' ? 'Contacto Rápido' : 'Quick Contact'}
+                            </h3>
+                            <div class="widget-content">
+                                <p>{lang === 'tr' ? 'Hizmetlerimiz hakkında daha fazla bilgi almak için bizimle iletişime geçin.' : lang === 'de' ? 'Kontaktieren Sie uns für weitere Informationen zu unseren Dienstleistungen.' : lang === 'es' ? 'Contáctenos para obtener más información sobre nuestros servicios.' : 'Contact us for more information about our services.'}</p>
+                                <a href={`/${lang}/${contactPath}`} class="widget-button">
+                                    <i class="fas fa-envelope"></i>
+                                    {lang === 'tr' ? 'İletişime Geç' : lang === 'de' ? 'Kontakt aufnehmen' : lang === 'es' ? 'Contáctenos' : 'Contact Us'}
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Related Services Widget -->
+                        <div class="sidebar-widget">
+                            <h3 class="widget-title">
+                                <i class="fas fa-list"></i>
+                                {lang === 'tr' ? 'Diğer Hizmetlerimiz' : lang === 'de' ? 'Weitere Dienstleistungen' : lang === 'es' ? 'Otros Servicios' : 'Other Services'}
+                            </h3>
+                            <div class="widget-content">
+                                <ul class="related-list">
+                                    {relatedServices.map((item) => (
+                                        <li>
+                                            <a href={`/${lang}/${servicesPath}/${item.slug[lang] || item.slug.en}`}>
+                                                <i class={item.icon}></i>
+                                                {lang === 'tr' ? item.tr : lang === 'de' ? item.de : lang === 'es' ? item.es : item.en}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- CTA Widget -->
+                        <div class="sidebar-widget cta-widget">
+                            <h3 class="widget-title">
+                                <i class="fas fa-rocket"></i>
+                                {lang === 'tr' ? 'Hemen Başla' : lang === 'de' ? 'Jetzt starten' : lang === 'es' ? 'Empezar Ahora' : 'Get Started'}
+                            </h3>
+                            <div class="widget-content">
+                                <p>{lang === 'tr' ? 'Almanca öğrenme yolculuğunuza bugün başlayın!' : lang === 'de' ? 'Starten Sie heute Ihre Deutschlernreise!' : lang === 'es' ? '¡Comience su viaje de aprendizaje de alemán hoy!' : 'Start your German learning journey today!'}</p>
+                                <a href={`/${lang}/${bookingPath}`} class="widget-cta-button">
+                                    <i class="fas fa-arrow-right"></i>
+                                    {lang === 'tr' ? 'Hemen Başvur Yap' : lang === 'de' ? 'Jetzt bewerben' : lang === 'es' ? 'Aplicar Ahora' : 'Apply Now'}
+                                </a>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <div class="cta-text">
+                        <h2 class="cta-title">{lang === 'tr' ? 'Hizmetlerimizden Yararlanmaya Hazır mısınız?' : lang === 'de' ? 'Bereit, unsere Dienstleistungen zu nutzen?' : lang === 'es' ? '¿Listo para Beneficiarse de Nuestros Servicios?' : 'Ready to Benefit from Our Services?'}</h2>
+                        <p class="cta-description">
+                            {lang === 'tr' 
+                                ? 'CampusGerman ile Almanca öğrenme yolculuğunuza başlayın. Uzman eğitmenlerimiz ve modern eğitim metodlarımızla hedeflerinize ulaşın.'
+                                : lang === 'de' 
+                                ? 'Starten Sie Ihre Deutschlernreise mit CampusGerman. Erreichen Sie Ihre Ziele mit unseren Expertenlehrern und modernen Unterrichtsmethoden.'
+                                : lang === 'es'
+                                ? 'Comience su viaje de aprendizaje de alemán con CampusGerman. Alcance sus objetivos con nuestros instructores expertos y métodos de enseñanza modernos.'
+                                : 'Start your German learning journey with CampusGerman. Reach your goals with our expert instructors and modern teaching methods.'}
+                        </p>
+                        <div class="cta-buttons">
+                            <a href={`/${lang}/${bookingPath}`} class="cta-primary">
+                                <i class="fas fa-arrow-right"></i>
+                                {lang === 'tr' ? 'Hemen Başvur Yap' : lang === 'de' ? 'Jetzt bewerben' : lang === 'es' ? 'Aplicar Ahora' : 'Apply Now'}
+                            </a>
+                            <a href={`/${lang}/${contactPath}`} class="cta-secondary">
+                                <i class="fas fa-envelope"></i>
+                                {lang === 'tr' ? 'İletişime Geç' : lang === 'de' ? 'Kontakt aufnehmen' : lang === 'es' ? 'Contáctenos' : 'Contact Us'}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="cta-form">
+                        <div class="form-header">
+                            <h3>{lang === 'tr' ? 'Ücretsiz Bilgi Alın' : lang === 'de' ? 'Kostenlose Informationen' : lang === 'es' ? 'Obtener Información Gratuita' : 'Get Free Information'}</h3>
+                            <p>{lang === 'tr' ? 'Size en uygun programı bulalım' : lang === 'de' ? 'Lassen Sie uns das richtige Programm für Sie finden' : lang === 'es' ? 'Encontremos el programa adecuado para usted' : 'Let us find the right program for you'}</p>
+                        </div>
+                        <form class="contact-form">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" placeholder={lang === 'tr' ? 'Adınız Soyadınız' : lang === 'de' ? 'Ihr Name' : lang === 'es' ? 'Su Nombre Completo' : 'Your Name'} required>
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" placeholder={lang === 'tr' ? 'E-posta Adresiniz' : lang === 'de' ? 'Ihre E-Mail' : lang === 'es' ? 'Su Correo Electrónico' : 'Your Email'} required>
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" id="phone" name="phone" placeholder={lang === 'tr' ? 'Telefon Numaranız' : lang === 'de' ? 'Ihre Telefonnummer' : lang === 'es' ? 'Su Número de Teléfono' : 'Your Phone Number'} required>
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>{lang === 'tr' ? 'Ücretsiz Bilgi Al' : lang === 'de' ? 'Kostenlose Informationen anfordern' : lang === 'es' ? 'Obtener Información Gratuita' : 'Get Free Info'}</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</MainLayout>
+

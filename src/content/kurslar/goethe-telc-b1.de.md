@@ -1,6 +1,7 @@
 ---
 title: "Goethe/TELC B1 Prüfungsvorbereitungskurs"
 lang: "de"
+customSlug: "goethe-telc-b1"
 badge:
   icon: "fas fa-certificate"
   text: "B1 Prüfung"
@@ -43,8 +44,8 @@ tabs:
           text: "Im Kurs wird gezielt nach dem B1-Prüfungsformat gearbeitet. Alle vier Prüfungsteile (Lesen, Hören, Schreiben, Sprechen) werden systematisch trainiert und mit passenden Prüfungstechniken ergänzt. Probeklausuren, prüfungsnahe Aufgaben und Simulationen bereiten Schritt für Schritt auf die echte Prüfungssituation vor. Zusätzlich werden Zeitmanagement, Stressbewältigung und individuelle Prüfungsstrategien behandelt. Am Ende des Kurses verfügen die Teilnehmenden über alle notwendigen Fähigkeiten, um die B1-Prüfung sicher und erfolgreich abzulegen."
         - heading: "Lehrmethode und Unterrichtsumfeld"
           text: "Der Unterricht wird von erfahrenen Lehrkräften durchgeführt. Mit maximal 8 Teilnehmenden pro Gruppe ist eine sehr individuelle Betreuung möglich. Der Kurs kombiniert prüfungsspezifische Übungen, Probeklausuren, Feedback-Sitzungen und auf Wunsch individuelle Beratung. So verbessern die Teilnehmenden nicht nur ihre Sprachkompetenz, sondern erlernen auch die entscheidenden Strategien für den Prüfungserfolg."
-        - heading: "Erfolgsgarantie und Unterstützungsleistungen"
-          text: "Wir bieten eine Erfolgsquote von bis zu 95 %. Falls die Prüfung beim ersten Versuch nicht bestanden wird, ist eine Kurswiederholung möglich. Zusätzlich unterstützen wir bei der Prüfungsanmeldung und informieren über Prüfungstermine, Anmeldeabläufe und Prüfungsgebühren. Nach Kursende sind die Teilnehmenden optimal auf das B1-Zertifikat vorbereitet."
+        - heading: "Unterstützungsleistungen"
+          text: "Wir unterstützen Sie bei der Prüfungsanmeldung und informieren über Prüfungstermine, Anmeldeabläufe und Prüfungsgebühren. Nach Kursende sind die Teilnehmenden optimal auf das B1-Zertifikat vorbereitet. Falls die Prüfung beim ersten Versuch nicht bestanden wird, ist eine Kurswiederholung möglich. **Wichtig:** Campus German gibt keine Prüfungserfolgsgarantie. Prüfungsergebnisse hängen von verschiedenen Faktoren ab und werden von den offiziellen Prüfungsstellen bestimmt."
   - id: "pruefungs-info"
     icon: "fas fa-certificate"
     title: "Prüfungsinformationen"
@@ -87,8 +88,9 @@ faqs:
   - question: "Gibt es Zahlungspläne und Rabatte?"
     answer: "Ja, wir bieten flexible Zahlungsmodelle an (monatlich, 3-monatlich oder 6-monatlich). Außerdem gibt es Rabatte für Frühbucher, Gruppenanmeldungen und Langzeitprogramme. Für Details kontaktieren Sie uns bitte."
 
-hasDemandForm: true
 ---
+
+
 
 
 

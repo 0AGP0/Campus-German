@@ -1,6 +1,7 @@
 ---
 title: "Mühendislik ve Teknik Bilimler için Almanca Kursu"
 lang: "tr"
+customSlug: "muhendislik-teknik"
 badge:
   icon: "fas fa-cogs"
   text: "Mühendislik"

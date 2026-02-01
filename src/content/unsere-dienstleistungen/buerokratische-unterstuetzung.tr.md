@@ -1,6 +1,7 @@
 ---
 title: "Almanya Bürokrasi Desteği"
 lang: "tr"
+customSlug: "burokrasi-destegi"
 description: "Almanya'daki resmi işlemleriniz için bürokrasi desteği. İkamet izni, kayıt işlemleri ve diğer resmi belgeler için yardım."
 image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15 Ocak 2024"

@@ -1,0 +1,107 @@
+---
+title: "Special Courses for Erasmus Students"
+lang: "en"
+customSlug: "erasmus-students"
+badge:
+  icon: "fas fa-user-graduate"
+  text: "Erasmus"
+description: "Special German course for Erasmus students. Academic German and preparation for university life."
+image: "https://images.unsplash.com/photo-1523050854058-8df90110c9e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
+features:
+  - icon: "fas fa-clock"
+    title: "Weekly Lessons"
+    description: "20 Lessons (UE)"
+  - icon: "fas fa-calendar-alt"
+    title: "Course Duration"
+    description: "2-12 Weeks"
+  - icon: "fas fa-users"
+    title: "Class Size"
+    description: "Maximum 12 People"
+  - icon: "fas fa-user-graduate"
+    title: "Goal"
+    description: "Erasmus Students"
+heroButtons:
+  primary:
+    text: "Apply Now"
+    icon: "fas fa-arrow-right"
+    href: "/booking"
+  secondary:
+    text: "Erasmus Information"
+    icon: "fas fa-info-circle"
+    href: "#erasmus-info"
+tabs:
+  - id: "course-info"
+    icon: "fas fa-info-circle"
+    title: "Course Information"
+    content:
+      title: "About Erasmus Students Course"
+      paragraphs:
+        - heading: "Course Overview"
+          text: "The German Course for Erasmus Students is a special program prepared to develop the German skills that Erasmus exchange program students coming to Germany will need in academic and daily life. This course offered by CampusGerman aims to make students' short-term education periods more efficient, smooth, and enjoyable. Understanding courses, university internal communication, participation in social life, and official procedures in the Erasmus process largely depend on German knowledge. This course enables students to use German actively not only in the classroom environment but also in daily life. The program is structured in accordance with CEFR standards and flexibly adapted according to students' current levels. The CampusGerman German Course for Erasmus Students is a goal-oriented preparation program that strengthens the Erasmus experience linguistically with its short-term but effective structure."
+        - heading: "Target Audience and Prerequisites"
+          text: "This course is suitable for students who will receive education in Germany within the scope of Erasmus exchange program. It particularly addresses the following groups: Undergraduate and graduate students going to Germany with Erasmus Candidates who want to follow courses and academic environment in German Erasmus students who want to communicate in German in daily life Those who want to strengthen their language infrastructure before coming to Germany Although there is no specific level requirement for course participation, it is suitable for students at A1–B1 levels. CampusGerman ensures students are placed in appropriate groups according to their needs by conducting level assessment before the course."
+        - heading: "Course Content and Learning Goals"
+          text: "The German Course for Erasmus Students has a balanced curriculum covering academic and daily life. The course content includes: German used in university and campus life Daily communication and social life language Basic academic expressions for following courses, seminars, and projects Official procedures and university correspondence Cultural awareness and communication skills The learning goal is for the student to be able to use German fluently, correctly, and practically during the Erasmus period."
+        - heading: "Teaching Method and Classroom Environment"
+          text: "This course at CampusGerman is conducted with a communication-focused and practice-weighted teaching method. In classes: Live speaking and dialogue exercises Group activities Daily and academic scenarios Listening and pronunciation exercises are used. The classroom environment is supportive and interactive. Instructors are experienced in working with international student groups."
+        - heading: "Post-Course Progress"
+          text: "Students who complete the German Course for Erasmus Students: Adapt more quickly to university life in Germany Use German more comfortably in classes and social life Complete the Erasmus process without language barriers Can transition to advanced German courses CampusGerman continues to support students on their language development during and after the Erasmus process."
+  - id: "dates-prices"
+    icon: "fas fa-calendar-alt"
+    title: "Dates and Prices"
+    content:
+      title: "Price Information"
+      pricing:
+        - name: "2 Weeks Erasmus"
+          duration: "2 Weeks"
+          schedule: "20 Lessons/Week"
+          price: "Special Pricing"
+        - name: "12 Weeks Erasmus"
+          duration: "12 Weeks"
+          schedule: "20 Lessons/Week"
+          price: "Special Pricing"
+          highlighted: true
+  - id: "erasmus-info"
+    icon: "fas fa-user-graduate"
+    title: "Erasmus Information"
+    content:
+      title: "Features for Erasmus Students"
+      items:
+        - icon: "fas fa-check-circle"
+          text: "<strong>Academic German:</strong> Preparation for university courses"
+        - icon: "fas fa-check-circle"
+          text: "<strong>Special Discount:</strong> Special pricing for Erasmus students"
+        - icon: "fas fa-check-circle"
+          text: "<strong>University Life:</strong> German university culture and life"
+faqs:
+  - question: "How do I prove I'm an Erasmus student?"
+    answer: "It is sufficient to submit your Erasmus document during registration."
+  - question: "Is academic German taught?"
+    answer: "Yes, the course is focused on academic German and preparation for university life."
+  - question: "What course formats are offered?"
+    answer: "Our courses offer you a flexible learning experience: Hybrid Education: Your course consists of a combination of face-to-face classes and live online classes. Thanks to the hybrid system, you can also attend classes online whenever you want on face-to-face class days. Live Online Education: In this format, you attend classes completely live and online."
+  - question: "What content is covered in the courses?"
+    answer: "Our Intensive German programs include listening and reading comprehension with current texts, comprehensive grammar studies, and various communication-focused activities. This aims to develop your speaking and writing skills in a goal-oriented manner."
+  - question: "How can I get university education in Germany?"
+    answer: "To receive university education in Germany, you must first have recognized university entrance qualification (HZB). It is recommended to check whether your diploma is recognized in Germany through the anabin system. You also need to document your German language proficiency with official certificates such as telc, DSH. The Campus German University Preparation Program is designed for you to prepare for this process completely."
+  - question: "What requirements are necessary?"
+    answer: "You must be at least 18 years old. You must submit a blocked account opened in Germany or an official commitment letter."
+  - question: "What types of visas are recommended?"
+    answer: "Student Visa: Also covers the right to participate in preparatory German courses. There is no visa requirement for EU citizens."
+  - question: "What services are included in the courses?"
+    answer: "Placement test, no registration fee, course certificate for visa application, digital textbook, individual student counseling (1 time, approximately 45 minutes), webinars on 'University Education in Germany', Campus German certificate, e-learning platform, social and cultural activities organized throughout the year, free Wi-Fi access at all centers."
+  - question: "What are the qualifications of our instructors?"
+    answer: "Our teaching staff consists of university graduates with many years of teaching experience in German as a Foreign Language (DaF) and German as a Second Language (DaZ), experts in their field, and highly motivated people. We also have Federal Office for Migration and Refugees (BAMF) approved instructors. Our lessons are regularly evaluated by students."
+  - question: "How long does it take to learn German?"
+    answer: "German learning time depends on your goal and current level. You can complete the basic levels from A1 to B2 in 6-8 months. Advanced levels such as C1 and C2 may require an additional 4-6 months. You can shorten this time with our intensive courses."
+  - question: "Can I get a Goethe certificate?"
+    answer: "Yes, we offer Goethe certificate preparation courses at CampusGerman. We provide exam preparation at all levels from A1 to C2. You can take certificate exams at our campus or be directed to nearby test centers."
+  - question: "Are accommodation options available?"
+    answer: "Yes, we offer accommodation options in Germany. Student dormitories, homestay accommodation, and shared apartments are available. Our accommodation service is not included in the course fee, but we help you find the most suitable options."
+  - question: "Are payment plans and discounts available?"
+    answer: "Yes, we offer flexible payment plans. Monthly, 3-month, and 6-month payment options are available. There are discounts for early registration, group registrations, and long-term programs. Contact us for detailed information."
+hasDemandForm: true
+---
+
+<!-- Content will be added here -->
+

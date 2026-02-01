@@ -1,6 +1,7 @@
 ---
 title: "Akşam Yarı Yoğun Almanca Kursları"
 lang: "tr"
+customSlug: "aksam-yari-yogun"
 badge:
   icon: "fas fa-moon"
   text: "Akşam Kursu"

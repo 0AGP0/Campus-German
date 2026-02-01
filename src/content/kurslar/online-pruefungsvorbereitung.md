@@ -1,10 +1,11 @@
 ---
 title: "Online Goethe/TELC Sınav Hazırlık Kursu"
 lang: "tr"
+customSlug: "online-sinav-hazirlik"
 badge:
   icon: "fas fa-certificate"
   text: "Sınav Hazırlık"
-description: "Online ortamda Goethe ve TELC sınavlarına hazırlanın. Sınav odaklı eğitim ve deneme sınavları ile başarı garantisi."
+description: "Online ortamda Goethe ve TELC sınavlarına hazırlanın. Sınav odaklı eğitim ve deneme sınavları ile kapsamlı hazırlık."
 image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
 features:
   - icon: "fas fa-clock"
@@ -43,8 +44,8 @@ tabs:
           text: "Bu kurs, Goethe ve TELC sınavlarının tüm seviyelerine (A1'den C1'e kadar) hazırlık yapmaktadır. Öğrenciler, hedefledikleri sınav seviyesine göre özelleştirilmiş bir program alırlar. Goethe sınavları, dünya çapında tanınan Almanca dil sertifikalarıdır ve birçok üniversite ve işveren tarafından kabul edilir. TELC sınavları ise Avrupa çapında yaygın olarak kullanılan dil sertifikalarıdır ve özellikle iş hayatı ve göçmenlik başvuruları için önemlidir."
         - heading: "Kurs İçeriği ve Hazırlık Yöntemleri"
           text: "Kurs süresince öğrenciler, sınav formatına özel hazırlık yaparlar. Her sınav bölümü (okuma, dinleme, yazma, konuşma) detaylı bir şekilde çalışılır ve sınav teknikleri öğretilir. Deneme sınavları, çıkmış sorular ve sınav simülasyonları ile öğrenciler gerçek sınav ortamına hazırlanırlar. Ayrıca, zaman yönetimi, stres yönetimi ve sınav stratejileri gibi konularda da destek sağlanır. Kurs sonunda öğrenciler, hedefledikleri sınavda başarılı olmak için gerekli tüm bilgi ve becerilere sahip olurlar."
-        - heading: "Öğretim Metodu ve Başarı Garantisi"
-          text: "Kurs, Zoom veya benzeri platformlar üzerinden canlı olarak yürütülmektedir. Her sınıfta maksimum 8 öğrenci bulunur ve her sınıfın iki öğretmeni vardır. Bu sistem, öğrencilerin bireysel ihtiyaçlarına odaklanmayı sağlar. Dersler, sınav formatına özel alıştırmalar, deneme sınavları, geri bildirim seansları ve bireysel danışmanlık ile zenginleştirilmiştir. %95 başarı oranı ile başarı garantisi sunuyoruz. Başarısız olursanız, kurs tekrarı imkanı vardır. Teknik destek ekibimiz, herhangi bir teknik sorun yaşamanız durumunda size yardımcı olmaya hazırdır."
+        - heading: "Öğretim Metodu ve Destek Hizmetleri"
+          text: "Kurs, Zoom veya benzeri platformlar üzerinden canlı olarak yürütülmektedir. Her sınıfta maksimum 8 öğrenci bulunur ve her sınıfın iki öğretmeni vardır. Bu sistem, öğrencilerin bireysel ihtiyaçlarına odaklanmayı sağlar. Dersler, sınav formatına özel alıştırmalar, deneme sınavları, geri bildirim seansları ve bireysel danışmanlık ile zenginleştirilmiştir. Başarısız olursanız, kurs tekrarı imkanı vardır. Teknik destek ekibimiz, herhangi bir teknik sorun yaşamanız durumunda size yardımcı olmaya hazırdır. **Önemli:** Campus German sınav başarı garantisi vermez. Sınav sonuçları çeşitli faktörlere bağlıdır ve resmî sınav kurumları tarafından belirlenir."
   - id: "sinav-bilgisi"
     icon: "fas fa-certificate"
     title: "Sınav Bilgileri"
@@ -61,7 +62,7 @@ faqs:
   - question: "Hangi sınavlara hazırlık yapılıyor?"
     answer: "Goethe ve TELC sınavlarının tüm seviyelerine hazırlık yapılmaktadır."
   - question: "Başarı garantisi var mı?"
-    answer: "Evet, %95 başarı oranı ile başarı garantisi sunuyoruz. Başarısız olursanız kurs tekrarı imkanı vardır."
+    answer: "Hayır, Campus German sınav başarı garantisi vermez. Sınav sonuçları çeşitli faktörlere bağlıdır ve resmî sınav kurumları tarafından belirlenir. Başarısız olursanız kurs tekrarı imkanı vardır."
   - question: "Hangi kurs formatları sunulmaktadır?"
     answer: "Kurslarımız size esnek bir öğrenme deneyimi sunar: Hibrit Eğitim: Kursunuz, yüz yüze dersler ile canlı online derslerin birleşiminden oluşur. Hibrit sistem sayesinde, yüz yüze ders günlerinde dilediğiniz zaman online olarak da derse katılabilirsiniz. Canlı Online Eğitim: Bu formatta derslere tamamen canlı ve online olarak katılırsınız."
   - question: "Kurslarda hangi içerikler işlenmektedir?"

@@ -1,6 +1,7 @@
 ---
 title: "Kostenlose Deutschlernmaterialien"
 lang: "de"
+customSlug: "kostenlose-ressourcen"
 description: "Kostenlose Lernmaterialien, Arbeitsleitfäden und Online-Ressourcen zum Deutschlernen. Alle Werkzeuge, um im eigenen Tempo zu lernen."
 image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
 date: "15. Januar 2024"

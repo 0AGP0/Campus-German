@@ -1,6 +1,7 @@
 ---
 title: "Erasmus+ Öğretmenlere Almanca Kursu"
 lang: "tr"
+customSlug: "erasmus-ogretmenler"
 badge:
   icon: "fas fa-chalkboard-teacher"
   text: "Erasmus+"
