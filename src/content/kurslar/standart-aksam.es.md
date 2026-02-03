@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-graduation-cap"
     title: "Nivel"
     description: "A1 a C1"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Aplicar Ahora"
+    text: "Enviar Solicitud"
     icon: "fas fa-arrow-right"
-    href: "/reservar"
+    href: "#demand-form"
   secondary:
     text: "Descargar Horario del Curso"
     icon: "fas fa-download"
@@ -49,25 +50,6 @@ tabs:
       additionalInfo:
         title: "Programa Flexible"
         text: "Nuestros cursos estándar están diseñados para estudiantes que no pueden asistir a cursos intensivos diurnos pero quieren aprender alemán a un ritmo regular."
-  - id: "fechas-precios"
-    icon: "fas fa-calendar-alt"
-    title: "Programa y Precios"
-    content:
-      title: "Opciones de Pago Flexibles"
-      pricing:
-        - name: "Curso Nocturno"
-          duration: "12 Semanas"
-          schedule: "Lun-Mié-Vie (Noche)"
-          price: "650 €"
-        - name: "Curso de Fin de Semana"
-          duration: "16 Semanas"
-          schedule: "Sábado (Día Completo)"
-          price: "700 €"
-        - name: "Tarifa de Registro"
-          duration: "Primer Registro"
-          schedule: "Una Vez"
-          price: "50 €"
-          highlighted: true
   - id: "lecciones"
     icon: "fas fa-book-open"
     title: "Lecciones"

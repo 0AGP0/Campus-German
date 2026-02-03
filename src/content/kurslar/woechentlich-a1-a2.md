@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-layer-group"
     title: "Seviye"
     description: "A1-A2"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Hemen Başvur"
+    text: "Talep Gönder"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "#demand-form"
   secondary:
     text: "Ders Programı"
     icon: "fas fa-download"

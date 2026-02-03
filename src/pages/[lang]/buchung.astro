@@ -3,6 +3,7 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import '../../styles/pages/buchung.css';
 import { coursePricing } from '../../data/coursePricing.ts';
 import { VALID_COUPONS } from '../../data/coupons.ts';
+import { getStartDateOptions } from '../../utils/coursePricingHelper';
 
 export async function getStaticPaths() {
     return [
@@ -15,6 +16,8 @@ export async function getStaticPaths() {
 
 const { lang } = Astro.params;
 const pricingData = coursePricing[lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en')];
+const pricingLang = lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en');
+const startDateOptions = getStartDateOptions(lang as 'tr' | 'de' | 'en' | 'es');
 
 // Translations
 const t = {
@@ -33,15 +36,30 @@ const t = {
         examPrep: "Sınav Hazırlığı",
         levelLabel: "Seviye",
         levelPlaceholder: "Seviye seçiniz",
+        courseSelectionLabel: "Katılmak istediği Kurs (Çoklu Seçim)",
+        timezoneLabel: "Tercih ettiğiniz ders saati (çoklu seçim)",
+        timezoneHint: "Sabah, öğle veya akşam gruplarından birini veya birkaçını seçin",
+        timeMorning: "Sabah",
+        timeAfternoon: "Öğle",
+        timeEvening: "Akşam",
+        campBerlin: "Berlin Camp",
+        campMuenchen: "Münster Camp",
+        campBremen: "Bremen Camp",
+        examTelcB1: "Telc B1",
+        examTelcB2: "Telc B2",
+        examTelcC1HS: "Telc C1 HS",
+        examTestdaf: "TestDaF",
         weeksLabel: "Kaç hafta almak istiyorsunuz?",
         weeksPlaceholder: "Hafta seçiniz",
         weeksMax: "Maksimum 6 hafta",
         intensiveWarning: "6 haftadan fazla için yoğun kursu öneriyoruz.",
         examTypeLabel: "Hangi sınava hazırlanmak istiyorsunuz?",
-        examTypeTelc: "telc",
-        examTypeGoethe: "Goethe",
-        examTypeTestdaf: "TestDaF",
-        examLevelLabel: "Hangi seviyeye geçmek istiyorsunuz?",
+        examTypeTelcA1A2: "Telc A1/A2",
+        examTypeTelcB1B2: "Telc B1/B2",
+        examTypeTelcC1C2: "Telc C1/C2",
+        examTypeTestdafA1A2: "TestDaF A1/A2",
+        examTypeTestdafB1B2: "TestDaF B1/B2",
+        examTypeTestdafC1C2: "TestDaF C1/C2",
         visaLabel: "Vizeye ihtiyacınız var mı?",
         visaYes: "Evet",
         visaNo: "Hayır",
@@ -50,7 +68,6 @@ const t = {
         accommodationSingle: "Tek oda",
         accommodationDouble: "Çift oda",
         accommodationNo: "Hayır",
-        accommodationMonthsLabel: "Kaç ay?",
         airportLabel: "Havaalanı karşılama istiyor musunuz?",
         airportYes: "Evet",
         airportNo: "Hayır",
@@ -169,15 +186,30 @@ const t = {
         examPrep: "Prüfungsvorbereitung",
         levelLabel: "Niveau",
         levelPlaceholder: "Niveau wählen",
+        courseSelectionLabel: "Gewünschte Kurse (Mehrfachauswahl)",
+        timezoneLabel: "Bevorzugte Kurszeit (Mehrfachauswahl)",
+        timezoneHint: "Wählen Sie eine oder mehrere Gruppen: Vormittag, Nachmittag oder Abend",
+        timeMorning: "Vormittag",
+        timeAfternoon: "Nachmittag",
+        timeEvening: "Abend",
+        campBerlin: "Berlin Camp",
+        campMuenchen: "Münster Camp",
+        campBremen: "Bremen Camp",
+        examTelcB1: "Telc B1",
+        examTelcB2: "Telc B2",
+        examTelcC1HS: "Telc C1 HS",
+        examTestdaf: "TestDaF",
         weeksLabel: "Wie viele Wochen möchten Sie?",
         weeksPlaceholder: "Wochen wählen",
         weeksMax: "Max. 6 Wochen",
         intensiveWarning: "Für mehr als 6 Wochen empfehlen wir den Intensivkurs.",
         examTypeLabel: "Für welche Prüfung möchten Sie sich vorbereiten?",
-        examTypeTelc: "telc",
-        examTypeGoethe: "Goethe",
-        examTypeTestdaf: "TestDaF",
-        examLevelLabel: "Welches Niveau möchten Sie erreichen?",
+        examTypeTelcA1A2: "Telc A1/A2",
+        examTypeTelcB1B2: "Telc B1/B2",
+        examTypeTelcC1C2: "Telc C1/C2",
+        examTypeTestdafA1A2: "TestDaF A1/A2",
+        examTypeTestdafB1B2: "TestDaF B1/B2",
+        examTypeTestdafC1C2: "TestDaF C1/C2",
         visaLabel: "Benötigen Sie ein Visum?",
         visaYes: "Ja",
         visaNo: "Nein",
@@ -186,7 +218,6 @@ const t = {
         accommodationSingle: "Einzelzimmer",
         accommodationDouble: "Doppelzimmer",
         accommodationNo: "Nein",
-        accommodationMonthsLabel: "Wie viele Monate?",
         airportLabel: "Flughafenabholung gewünscht?",
         airportYes: "Ja",
         airportNo: "Nein",
@@ -315,15 +346,30 @@ const t = {
         examPrep: "Exam Preparation",
         levelLabel: "Level",
         levelPlaceholder: "Select level",
+        courseSelectionLabel: "Course(s) you want to join (multiple selection)",
+        timezoneLabel: "Preferred course time(s) (multiple selection)",
+        timezoneHint: "Select one or more: morning, afternoon or evening group",
+        timeMorning: "Morning",
+        timeAfternoon: "Afternoon",
+        timeEvening: "Evening",
+        campBerlin: "Berlin Camp",
+        campMuenchen: "Münster Camp",
+        campBremen: "Bremen Camp",
+        examTelcB1: "Telc B1",
+        examTelcB2: "Telc B2",
+        examTelcC1HS: "Telc C1 HS",
+        examTestdaf: "TestDaF",
         weeksLabel: "How many weeks do you want?",
         weeksPlaceholder: "Select weeks",
         weeksMax: "Maximum 6 weeks",
         intensiveWarning: "For more than 6 weeks we recommend the intensive course.",
         examTypeLabel: "Which exam do you want to prepare for?",
-        examTypeTelc: "telc",
-        examTypeGoethe: "Goethe",
-        examTypeTestdaf: "TestDaF",
-        examLevelLabel: "Which level do you want to reach?",
+        examTypeTelcA1A2: "Telc A1/A2",
+        examTypeTelcB1B2: "Telc B1/B2",
+        examTypeTelcC1C2: "Telc C1/C2",
+        examTypeTestdafA1A2: "TestDaF A1/A2",
+        examTypeTestdafB1B2: "TestDaF B1/B2",
+        examTypeTestdafC1C2: "TestDaF C1/C2",
         visaLabel: "Do you need a visa?",
         visaYes: "Yes",
         visaNo: "No",
@@ -332,7 +378,6 @@ const t = {
         accommodationSingle: "Single room",
         accommodationDouble: "Double room",
         accommodationNo: "No",
-        accommodationMonthsLabel: "How many months?",
         airportLabel: "Do you want airport pickup?",
         airportYes: "Yes",
         airportNo: "No",
@@ -461,15 +506,30 @@ const t = {
         examPrep: "Preparación de exámenes",
         levelLabel: "Nivel",
         levelPlaceholder: "Seleccione nivel",
+        courseSelectionLabel: "Curso(s) al que desea unirse (selección múltiple)",
+        timezoneLabel: "Horario de curso preferido (selección múltiple)",
+        timezoneHint: "Seleccione uno o más: grupo de mañana, tarde o noche",
+        timeMorning: "Mañana",
+        timeAfternoon: "Tarde",
+        timeEvening: "Noche",
+        campBerlin: "Berlin Camp",
+        campMuenchen: "Münster Camp",
+        campBremen: "Bremen Camp",
+        examTelcB1: "Telc B1",
+        examTelcB2: "Telc B2",
+        examTelcC1HS: "Telc C1 HS",
+        examTestdaf: "TestDaF",
         weeksLabel: "¿Cuántas semanas desea?",
         weeksPlaceholder: "Seleccione semanas",
         weeksMax: "Máximo 6 semanas",
         intensiveWarning: "Para más de 6 semanas recomendamos el curso intensivo.",
         examTypeLabel: "¿Para qué examen desea prepararse?",
-        examTypeTelc: "telc",
-        examTypeGoethe: "Goethe",
-        examTypeTestdaf: "TestDaF",
-        examLevelLabel: "¿Qué nivel desea alcanzar?",
+        examTypeTelcA1A2: "Telc A1/A2",
+        examTypeTelcB1B2: "Telc B1/B2",
+        examTypeTelcC1C2: "Telc C1/C2",
+        examTypeTestdafA1A2: "TestDaF A1/A2",
+        examTypeTestdafB1B2: "TestDaF B1/B2",
+        examTypeTestdafC1C2: "TestDaF C1/C2",
         visaLabel: "¿Necesita visado?",
         visaYes: "Sí",
         visaNo: "No",
@@ -478,7 +538,6 @@ const t = {
         accommodationSingle: "Habitación individual",
         accommodationDouble: "Habitación doble",
         accommodationNo: "No",
-        accommodationMonthsLabel: "¿Cuántos meses?",
         airportLabel: "¿Desea recogida en aeropuerto?",
         airportYes: "Sí",
         airportNo: "No",
@@ -661,33 +720,67 @@ const translations = t[lang as keyof typeof t];
                                             <div class="option-buttons" role="group" aria-label={translations.programLabel}>
                                                 <label class="option-btn">
                                                     <input type="radio" name="program" value="intensive" required>
-                                                    <span class="option-btn-text">{translations.intensiveAcademic}</span>
+                                                    <span class="option-btn-text">🎓 {translations.intensiveAcademic}</span>
                                                 </label>
                                                 <label class="option-btn">
                                                     <input type="radio" name="program" value="weekly">
-                                                    <span class="option-btn-text">{translations.weeklyCourses}</span>
+                                                    <span class="option-btn-text">📆 {translations.weeklyCourses}</span>
                                                 </label>
                                                 <label class="option-btn">
                                                     <input type="radio" name="program" value="youth-camp">
-                                                    <span class="option-btn-text">{translations.youthCamp}</span>
+                                                    <span class="option-btn-text">🏖️ {translations.youthCamp}</span>
                                                 </label>
                                                 <label class="option-btn">
                                                     <input type="radio" name="program" value="exam-prep">
-                                                    <span class="option-btn-text">{translations.examPrep}</span>
+                                                    <span class="option-btn-text">📚 {translations.examPrep}</span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="form-group" id="level-group">
-                                            <label for="level">{translations.levelLabel} *</label>
-                                            <select id="level" name="level" required>
-                                                <option value="">{translations.levelPlaceholder}</option>
-                                                <option value="a1">A1</option>
-                                                <option value="a2">A2</option>
-                                                <option value="b1">B1</option>
-                                                <option value="b2">B2</option>
-                                                <option value="c1">C1</option>
-                                                <option value="c2">C2</option>
+                                        <div class="form-group full-width" id="course-selection-group" style="display: none;">
+                                            <label>{translations.courseSelectionLabel} *</label>
+                                            <div id="course-levels-block" class="course-options-group" style="display: none;">
+                                                <div class="option-buttons option-buttons-checkboxes" role="group">
+                                                    <label class="option-btn"><input type="checkbox" name="course-selection" value="a1"><span class="option-btn-text">A1</span></label>
+                                                    <label class="option-btn"><input type="checkbox" name="course-selection" value="a2"><span class="option-btn-text">A2</span></label>
+                                                    <label class="option-btn"><input type="checkbox" name="course-selection" value="b1"><span class="option-btn-text">B1</span></label>
+                                                    <label class="option-btn"><input type="checkbox" name="course-selection" value="b2"><span class="option-btn-text">B2</span></label>
+                                                    <label class="option-btn"><input type="checkbox" name="course-selection" value="c1"><span class="option-btn-text">C1</span></label>
+                                                </div>
+                                            </div>
+                                            <div id="course-camps-block" class="course-options-group" style="display: none;">
+                                                <div class="option-buttons option-buttons-checkboxes" role="group">
+                                                    <label class="option-btn"><input type="checkbox" name="course-selection" value="berlin-camp"><span class="option-btn-text">{translations.campBerlin}</span></label>
+                                                    <label class="option-btn"><input type="checkbox" name="course-selection" value="muenster-camp"><span class="option-btn-text">{translations.campMuenchen}</span></label>
+                                                    <label class="option-btn"><input type="checkbox" name="course-selection" value="bremen-camp"><span class="option-btn-text">{translations.campBremen}</span></label>
+                                                </div>
+                                            </div>
+                                            <div id="course-exam-block" class="course-options-group" style="display: none;">
+                                                <div class="option-buttons option-buttons-checkboxes" role="group">
+                                                    <label class="option-btn"><input type="checkbox" name="course-selection" value="telc-b1"><span class="option-btn-text">{translations.examTelcB1}</span></label>
+                                                    <label class="option-btn"><input type="checkbox" name="course-selection" value="telc-b2"><span class="option-btn-text">{translations.examTelcB2}</span></label>
+                                                    <label class="option-btn"><input type="checkbox" name="course-selection" value="telc-c1hs"><span class="option-btn-text">{translations.examTelcC1HS}</span></label>
+                                                    <label class="option-btn"><input type="checkbox" name="course-selection" value="testdaf"><span class="option-btn-text">{translations.examTestdaf}</span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group full-width">
+                                            <label for="start-date">{translations.startDate} *</label>
+                                            <select id="start-date" name="start-date" required>
+                                                <option value="">{translations.startDatePlaceholder}</option>
+                                                {startDateOptions.map((opt) => (
+                                                    <option value={opt.value}>{opt.label}</option>
+                                                ))}
                                             </select>
+                                            <p class="field-hint">{translations.startDateHint}</p>
+                                        </div>
+                                        <div class="form-group full-width">
+                                            <label>{translations.timezoneLabel}</label>
+                                            <p class="field-hint">{translations.timezoneHint}</p>
+                                            <div class="option-buttons option-buttons-checkboxes timezone-options" role="group">
+                                                <label class="option-btn"><input type="checkbox" name="timezone" value="morning"><span class="option-btn-text">{translations.timeMorning}</span></label>
+                                                <label class="option-btn"><input type="checkbox" name="timezone" value="afternoon"><span class="option-btn-text">{translations.timeAfternoon}</span></label>
+                                                <label class="option-btn"><input type="checkbox" name="timezone" value="evening"><span class="option-btn-text">{translations.timeEvening}</span></label>
+                                            </div>
                                         </div>
                                         <div class="form-group" id="weeks-block" style="display: none;">
                                             <label for="weeks">{translations.weeksLabel} *</label>
@@ -701,33 +794,6 @@ const translations = t[lang as keyof typeof t];
                                                 <option value="6">6</option>
                                             </select>
                                             <p class="field-hint" id="weeks-hint" style="display: none;">{translations.intensiveWarning}</p>
-                                        </div>
-                                        <div class="form-group full-width" id="exam-block" style="display: none;">
-                                            <label>{translations.examTypeLabel} *</label>
-                                            <div class="option-buttons" role="group">
-                                                <label class="option-btn">
-                                                    <input type="radio" name="exam-type" value="telc">
-                                                    <span class="option-btn-text">{translations.examTypeTelc}</span>
-                                                </label>
-                                                <label class="option-btn">
-                                                    <input type="radio" name="exam-type" value="goethe">
-                                                    <span class="option-btn-text">{translations.examTypeGoethe}</span>
-                                                </label>
-                                                <label class="option-btn">
-                                                    <input type="radio" name="exam-type" value="testdaf">
-                                                    <span class="option-btn-text">{translations.examTypeTestdaf}</span>
-                                                </label>
-                                            </div>
-                                            <label for="exam-level" class="mt-2">{translations.examLevelLabel} *</label>
-                                            <select id="exam-level" name="exam-level">
-                                                <option value="">{translations.levelPlaceholder}</option>
-                                                <option value="a1">A1</option>
-                                                <option value="a2">A2</option>
-                                                <option value="b1">B1</option>
-                                                <option value="b2">B2</option>
-                                                <option value="c1">C1</option>
-                                                <option value="c2">C2</option>
-                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-navigation">
@@ -771,17 +837,6 @@ const translations = t[lang as keyof typeof t];
                                                     <span class="option-btn-text">{translations.accommodationNo}</span>
                                                 </label>
                                             </div>
-                                        </div>
-                                        <div class="form-group full-width" id="accommodation-months-block" style="display: none;">
-                                            <label for="accommodation-months">{translations.accommodationMonthsLabel}</label>
-                                            <select id="accommodation-months" name="accommodation-months">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                            </select>
                                         </div>
                                         <div class="form-group full-width">
                                             <label>{translations.airportLabel} *</label>
@@ -1011,36 +1066,32 @@ const translations = t[lang as keyof typeof t];
                 return isNaN(d.getTime()) ? null : iso;
             }
 
-            // Program change: show weeks (weekly/youth-camp) or exam (exam-prep)
+            // Program change: show course selection block (levels / camps / exam), weeks (weekly/youth-camp)
             const programRadios = document.querySelectorAll('[name="program"]');
             const weeksBlock = document.getElementById('weeks-block');
             const weeksSelect = document.getElementById('weeks');
             const weeksHint = document.getElementById('weeks-hint');
-            const examBlock = document.getElementById('exam-block');
+            const courseLevelsBlock = document.getElementById('course-levels-block');
+            const courseCampsBlock = document.getElementById('course-camps-block');
+            const courseExamBlock = document.getElementById('course-exam-block');
             const accommodationTypeRadios = document.querySelectorAll('[name="accommodation-type"]');
-            const accommodationMonthsBlock = document.getElementById('accommodation-months-block');
 
+            const courseSelectionGroup = document.getElementById('course-selection-group');
             function toggleProgramExtras() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
+                if (courseSelectionGroup) courseSelectionGroup.style.display = program ? 'block' : 'none';
                 if (weeksBlock) weeksBlock.style.display = (program === 'weekly' || program === 'youth-camp') ? 'block' : 'none';
-                if (examBlock) examBlock.style.display = program === 'exam-prep' ? 'block' : 'none';
                 if (weeksSelect) weeksSelect.removeAttribute('required');
                 if (program === 'weekly' || program === 'youth-camp') { if (weeksSelect) weeksSelect.setAttribute('required', 'required'); }
-                const examTypeRadios = document.querySelectorAll('[name="exam-type"]');
-                const examLevelSelect = document.getElementById('exam-level');
-                examTypeRadios.forEach(r => { r.removeAttribute('required'); });
-                if (examLevelSelect) examLevelSelect.removeAttribute('required');
-                if (program === 'exam-prep') {
-                    examTypeRadios.forEach(r => { r.setAttribute('required', 'required'); });
-                    if (examLevelSelect) examLevelSelect.setAttribute('required', 'required');
-                }
+                if (courseLevelsBlock) courseLevelsBlock.style.display = (program === 'intensive' || program === 'weekly') ? 'block' : 'none';
+                if (courseCampsBlock) courseCampsBlock.style.display = program === 'youth-camp' ? 'block' : 'none';
+                if (courseExamBlock) courseExamBlock.style.display = program === 'exam-prep' ? 'block' : 'none';
+                document.querySelectorAll('[name="course-selection"]').forEach(cb => { cb.checked = false; });
                 updatePrice();
             }
             programRadios.forEach(r => r.addEventListener('change', toggleProgramExtras));
 
             function toggleAccommodationMonths() {
-                const acc = document.querySelector('[name="accommodation-type"]:checked')?.value;
-                if (accommodationMonthsBlock) accommodationMonthsBlock.style.display = (acc === 'single' || acc === 'double') ? 'block' : 'none';
                 updatePrice();
             }
             accommodationTypeRadios.forEach(r => r.addEventListener('change', toggleAccommodationMonths));
@@ -1056,9 +1107,6 @@ const translations = t[lang as keyof typeof t];
                 return subLevel.split('.')[0];
             }
 
-            // Accommodation prices per month (single / double)
-            const ACCOMMODATION_SINGLE_PER_MONTH = 450;
-            const ACCOMMODATION_DOUBLE_PER_MONTH = 350;
             const EXAM_PRICE = 800;
             const VISA_GUARANTEE = 50;
             const AIRPORT_PICKUP = 100;
@@ -1343,18 +1391,21 @@ const translations = t[lang as keyof typeof t];
 
                 if (step === 1) {
                     const program = document.querySelector('[name="program"]:checked')?.value;
-                    const level = document.getElementById('level')?.value;
+                    const startDate = document.getElementById('start-date')?.value;
+                    const courseSelectionGroup = document.getElementById('course-selection-group');
+                    const checkedCourses = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(c => c.value);
+                    const courseLevelsBlock = document.getElementById('course-levels-block');
+                    const courseCampsBlock = document.getElementById('course-camps-block');
+                    const courseExamBlock = document.getElementById('course-exam-block');
+                    const hasVisibleCourseSelection = (program === 'intensive' || program === 'weekly') ? (courseLevelsBlock?.offsetParent && checkedCourses.length > 0) :
+                        (program === 'youth-camp') ? (courseCampsBlock?.offsetParent && checkedCourses.length > 0) :
+                        (program === 'exam-prep') ? (courseExamBlock?.offsetParent && checkedCourses.length > 0) : false;
                     if (!program) { document.querySelector('[name="program"]')?.closest('.form-group')?.classList.add('error'); isValid = false; } else { document.querySelector('[name="program"]')?.closest('.form-group')?.classList.remove('error'); }
-                    if (!level) { document.getElementById('level')?.classList.add('error'); isValid = false; } else { document.getElementById('level')?.classList.remove('error'); }
+                    if (!startDate) { document.getElementById('start-date')?.classList.add('error'); isValid = false; } else { document.getElementById('start-date')?.classList.remove('error'); }
+                    if (program && !hasVisibleCourseSelection) { if (courseSelectionGroup) courseSelectionGroup.classList.add('error'); isValid = false; } else { if (courseSelectionGroup) courseSelectionGroup.classList.remove('error'); }
                     if (program === 'weekly' || program === 'youth-camp') {
                         const weeks = document.getElementById('weeks')?.value;
                         if (!weeks) { document.getElementById('weeks')?.classList.add('error'); isValid = false; } else { document.getElementById('weeks')?.classList.remove('error'); }
-                    }
-                    if (program === 'exam-prep') {
-                        const examType = document.querySelector('[name="exam-type"]:checked')?.value;
-                        const examLevel = document.getElementById('exam-level')?.value;
-                        if (!examType) { document.querySelector('[name="exam-type"]')?.closest('.form-group')?.classList.add('error'); isValid = false; }
-                        if (!examLevel) { document.getElementById('exam-level')?.classList.add('error'); isValid = false; }
                     }
                     return isValid;
                 }
@@ -1393,8 +1444,8 @@ const translations = t[lang as keyof typeof t];
                 });
             });
 
-            // Program, level, weeks, extras → update price
-            document.getElementById('level')?.addEventListener('change', updatePrice);
+            // Program, course-selection, weeks, extras → update price
+            document.querySelectorAll('[name="course-selection"]').forEach(el => el.addEventListener('change', updatePrice));
             document.getElementById('weeks')?.addEventListener('change', function() {
                 const w = parseInt(this.value, 10);
                 if (weeksHint) weeksHint.style.display = (w >= 6 && w > 0) ? 'block' : 'none';
@@ -1402,7 +1453,6 @@ const translations = t[lang as keyof typeof t];
             });
             document.querySelectorAll('[name="visa-needed"]').forEach(el => el.addEventListener('change', updatePrice));
             document.querySelectorAll('[name="accommodation-type"]').forEach(el => el.addEventListener('change', updatePrice));
-            document.getElementById('accommodation-months')?.addEventListener('change', updatePrice);
             document.querySelectorAll('[name="airport-pickup"]').forEach(el => el.addEventListener('change', updatePrice));
 
             // ===== COUPON =====
@@ -1452,18 +1502,21 @@ const translations = t[lang as keyof typeof t];
                 const airportPriceRow = document.getElementById('airport-price-row');
                 const totalPriceElement = document.getElementById('total-price');
                 const program = document.querySelector('[name="program"]:checked')?.value;
-                const level = document.getElementById('level')?.value || 'a1';
+                const checkedCourses = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(c => c.value);
+                const firstCourse = checkedCourses[0] || '';
+                const levelForPrice = (firstCourse && ['a1','a2','b1','b2','c1'].includes(firstCourse)) ? firstCourse : (program === 'exam-prep' ? 'exam' : 'a1');
                 const weeks = document.getElementById('weeks')?.value;
                 const currentLang = lang || 'tr';
                 const t = programLabels[currentLang] || programLabels.tr;
 
                 if (!courseTypePrice) return;
 
-                if (program && level) {
+                if (program && (checkedCourses.length > 0 || program === 'exam-prep')) {
+                    const level = levelForPrice === 'exam' ? 'b1' : levelForPrice;
                     const coursePrice = program === 'exam-prep' ? EXAM_PRICE : getCoursePrice(program, level, weeks);
                     const programLabel = t[program] || program;
-                    let labelSuffix = ' (' + (level || 'A1').toUpperCase() + ')';
-                    if (program === 'weekly' || program === 'youth-camp') labelSuffix = weeks ? ' ' + weeks + ' ' + (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Wochen' : currentLang === 'es' ? 'semanas' : 'weeks') + ' (' + level.toUpperCase() + ')' : ' (' + level.toUpperCase() + ')';
+                    let labelSuffix = checkedCourses.length ? ' (' + checkedCourses.map(c => c.toUpperCase().replace(/-/g, ' ')).join(', ') + ')' : '';
+                    if (program === 'weekly' || program === 'youth-camp') labelSuffix = weeks ? ' ' + weeks + ' ' + (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Wochen' : currentLang === 'es' ? 'semanas' : 'weeks') + labelSuffix : labelSuffix;
                     if (program === 'exam-prep') labelSuffix = ' (800 €)';
                     courseTypePrice.querySelector('.price-item-label').textContent = (programLabel + labelSuffix).trim();
                     courseTypePrice.querySelector('.price-item-value').textContent = coursePrice > 0 ? coursePrice + ' €' : '-';
@@ -1482,25 +1535,8 @@ const translations = t[lang as keyof typeof t];
                     if (visaNeeded) total += VISA_GUARANTEE;
                 }
 
-                const accommodationType = document.querySelector('[name="accommodation-type"]:checked')?.value;
-                const accommodationMonths = parseInt(document.getElementById('accommodation-months')?.value || '1', 10) || 1;
-                if (accommodationPriceRow) {
-                    if (accommodationType === 'single') {
-                        const accPrice = ACCOMMODATION_SINGLE_PER_MONTH * accommodationMonths;
-                        accommodationPriceRow.querySelector('.price-item-label').textContent = (currentLang === 'tr' ? 'Tek oda' : currentLang === 'de' ? 'Einzelzimmer' : currentLang === 'es' ? 'Habitación individual' : 'Single room') + ' (' + accommodationMonths + ' ' + (currentLang === 'tr' ? 'ay' : currentLang === 'de' ? 'Monate' : currentLang === 'es' ? 'meses' : 'months') + ')';
-                        accommodationPriceRow.querySelector('.price-item-value').textContent = accPrice + ' €';
-                        accommodationPriceRow.style.display = 'flex';
-                        total += accPrice;
-                    } else if (accommodationType === 'double') {
-                        const accPrice = ACCOMMODATION_DOUBLE_PER_MONTH * accommodationMonths;
-                        accommodationPriceRow.querySelector('.price-item-label').textContent = (currentLang === 'tr' ? 'Çift oda' : currentLang === 'de' ? 'Doppelzimmer' : currentLang === 'es' ? 'Habitación doble' : 'Double room') + ' (' + accommodationMonths + ' ' + (currentLang === 'tr' ? 'ay' : currentLang === 'de' ? 'Monate' : currentLang === 'es' ? 'meses' : 'months') + ')';
-                        accommodationPriceRow.querySelector('.price-item-value').textContent = accPrice + ' €';
-                        accommodationPriceRow.style.display = 'flex';
-                        total += accPrice;
-                    } else {
-                        accommodationPriceRow.style.display = 'none';
-                    }
-                }
+                // Konaklama fiyat yansıtılmaz (fiyatı olmasın)
+                if (accommodationPriceRow) accommodationPriceRow.style.display = 'none';
 
                 const airportPickup = document.querySelector('[name="airport-pickup"]:checked')?.value === 'yes';
                 if (airportPriceRow) {
@@ -1612,7 +1648,8 @@ const translations = t[lang as keyof typeof t];
                         }
                     }
                     
-                    // Standardize common fields
+                    const courseSelectionArr = Array.isArray(data['course-selection']) ? data['course-selection'] : (data['course-selection'] ? [data['course-selection']] : []);
+                    const timezoneArr = Array.isArray(data.timezone) ? data.timezone : (data.timezone ? [data.timezone] : []);
                     let standardizedData = {
                         formType: 'booking',
                         sourcePage: data.sourcePage || window.location.pathname,
@@ -1623,13 +1660,14 @@ const translations = t[lang as keyof typeof t];
                         tel: data.phone || '',
                         email: data.email || '',
                         program: data.program || '',
-                        level: data.level || '',
+                        level: courseSelectionArr[0] || data.level || '',
+                        courseSelection: courseSelectionArr,
+                        startDate: data['start-date'] || '',
+                        timezone: timezoneArr,
                         weeks: data.weeks || '',
-                        examType: data['exam-type'] || '',
-                        examLevel: data['exam-level'] || '',
+                        examType: (data.program === 'exam-prep' && courseSelectionArr.length) ? courseSelectionArr.join(', ') : (data['exam-type'] || ''),
                         visaNeeded: data['visa-needed'] || 'no',
                         accommodationType: data['accommodation-type'] || 'no',
-                        accommodationMonths: data['accommodation-months'] || '',
                         airportPickup: data['airport-pickup'] || 'no',
                         termsAccepted: data['terms-accepted'] || false,
                         privacyAccepted: data['privacy-accepted'] || false,

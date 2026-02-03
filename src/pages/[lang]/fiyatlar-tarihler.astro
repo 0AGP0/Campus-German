@@ -3,6 +3,7 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import '../../styles/pages/fiyatlar-tarihler.css';
 import { coursePricing } from '../../data/coursePricing';
 import { isValidLang } from '../../utils/pathHelpers';
+import { getSimpleCourseStartDates } from '../../utils/coursePricingHelper';
 
 export async function getStaticPaths() {
     return [
@@ -33,12 +34,12 @@ const t = {
         goetheTelc: 'Goethe / TELC Seviye Kursları',
         testdafDsh: 'TestDaF / DSH Hazırlık',
         schedule: 'Kurs Saatleri',
-        scheduleNote: 'Pazartesi–Cuma. Sabah ve öğleden sonra grupları.',
+        scheduleNote: 'Pazartesi–Cuma. Sabah, öğleden sonra ve akşam grupları.',
         morning: 'Sabah',
         afternoon: 'Öğleden Sonra',
+        evening: 'Akşam',
         startDates: 'Kurs Başlangıç Tarihleri 2026',
-        mainStart: 'Ana başlangıç (A1.1, A2.1, B1.1, B2.1, C1.1)',
-        midStart: 'Ara başlangıç (A1.2, A2.2, B1.2, B2.2, C1.2)',
+        startDatesSubtitle: 'Kurslara kayıt aşağıdaki tarihlerde açılır.',
         holidays: 'Tatil Günleri 2026',
         visaInfo: 'Vize bilgisi',
         lessonInfo: 'Ders bilgisi',
@@ -62,12 +63,12 @@ const t = {
         goetheTelc: 'Goethe-/TELC-Niveaukurse',
         testdafDsh: 'TestDaF-/DSH-Vorbereitung',
         schedule: 'Kurszeiten',
-        scheduleNote: 'Montag–Freitag. Vormittags- und Nachmittagsgruppen.',
+        scheduleNote: 'Montag–Freitag. Vormittags-, Nachmittags- und Abendgruppen.',
         morning: 'Vormittag',
         afternoon: 'Nachmittag',
+        evening: 'Abend',
         startDates: 'Kursstarttermine 2026',
-        mainStart: 'Hauptstart (A1.1, A2.1, B1.1, B2.1, C1.1)',
-        midStart: 'Zwischenstart (A1.2, A2.2, B1.2, B2.2, C1.2)',
+        startDatesSubtitle: 'Die Kursanmeldung öffnet an den folgenden Terminen.',
         holidays: 'Feiertage 2026',
         visaInfo: 'Visumshinweis',
         lessonInfo: 'Unterrichtsinfo',
@@ -91,12 +92,12 @@ const t = {
         goetheTelc: 'Goethe / TELC Level Courses',
         testdafDsh: 'TestDaF / DSH Preparation',
         schedule: 'Course Schedule',
-        scheduleNote: 'Monday–Friday. Morning and afternoon groups.',
+        scheduleNote: 'Monday–Friday. Morning, afternoon and evening groups.',
         morning: 'Morning',
         afternoon: 'Afternoon',
+        evening: 'Evening',
         startDates: 'Course Start Dates 2026',
-        mainStart: 'Main start (A1.1, A2.1, B1.1, B2.1, C1.1)',
-        midStart: 'Mid-level start (A1.2, A2.2, B1.2, B2.2, C1.2)',
+        startDatesSubtitle: 'Course registration opens on the following dates.',
         holidays: 'Holidays 2026',
         visaInfo: 'Visa information',
         lessonInfo: 'Lesson information',
@@ -120,12 +121,12 @@ const t = {
         goetheTelc: 'Cursos Goethe / TELC por Nivel',
         testdafDsh: 'Preparación TestDaF / DSH',
         schedule: 'Horarios de Cursos',
-        scheduleNote: 'Lunes–Viernes. Grupos de mañana y tarde.',
+        scheduleNote: 'Lunes–Viernes. Grupos de mañana, tarde y noche.',
         morning: 'Mañana',
         afternoon: 'Tarde',
+        evening: 'Noche',
         startDates: 'Fechas de Inicio 2026',
-        mainStart: 'Inicio principal (A1.1, A2.1, B1.1, B2.1, C1.1)',
-        midStart: 'Inicio intermedio (A1.2, A2.2, B1.2, B2.2, C1.2)',
+        startDatesSubtitle: 'La inscripción a los cursos se abre en las siguientes fechas.',
         holidays: 'Días Festivos 2026',
         visaInfo: 'Información de visado',
         lessonInfo: 'Información de lección',
@@ -143,6 +144,7 @@ const t = {
 const levels = ['a1', 'a2', 'b1', 'b2', 'c1'] as const;
 const levelLabels = { a1: 'A1', a2: 'A2', b1: 'B1', b2: 'B2', c1: 'C1' };
 const bookingSlug = lang === 'tr' || lang === 'de' ? 'buchung' : lang === 'en' ? 'booking' : 'reservar';
+const simpleStartDates = getSimpleCourseStartDates(lang as 'tr' | 'de' | 'en' | 'es');
 ---
 
 <MainLayout title={`${t.title} - CampusGerman`} lang={lang}>
@@ -307,29 +309,25 @@ const bookingSlug = lang === 'tr' || lang === 'de' ? 'buchung' : lang === 'en' ?
         <div class="container">
             <h2 class="fiyatlar-section-title">{t.schedule}</h2>
             <p class="fiyatlar-note">{t.scheduleNote} {data.schedule.days}</p>
-            <div class="fiyatlar-schedule-card">
-                <h4>{t.morning} – A1/A2</h4>
-                <p><strong>{data.schedule.morning.a1a2.time}</strong></p>
-                <p>{data.schedule.morning.a1a2.lessons}</p>
-                <p>{data.schedule.morning.a1a2.break}</p>
-            </div>
-            <div class="fiyatlar-schedule-card">
-                <h4>{t.morning} – B1/C1</h4>
-                <p><strong>{data.schedule.morning.b1c1.time}</strong></p>
-                <p>{data.schedule.morning.b1c1.lessons}</p>
-                <p>{data.schedule.morning.b1c1.break}</p>
-            </div>
-            <div class="fiyatlar-schedule-card">
-                <h4>{t.afternoon} – A1/A2</h4>
-                <p><strong>{data.schedule.afternoon.a1a2.time}</strong></p>
-                <p>{data.schedule.afternoon.a1a2.lessons}</p>
-                <p>{data.schedule.afternoon.a1a2.break}</p>
-            </div>
-            <div class="fiyatlar-schedule-card">
-                <h4>{t.afternoon} – B1/C1</h4>
-                <p><strong>{data.schedule.afternoon.b1c1.time}</strong></p>
-                <p>{data.schedule.afternoon.b1c1.lessons}</p>
-                <p>{data.schedule.afternoon.b1c1.break}</p>
+            <div class="fiyatlar-schedule-grid">
+                <div class="fiyatlar-schedule-card">
+                    <h4>{t.morning}</h4>
+                    <p><strong>{data.schedule.morning.all.time}</strong></p>
+                    <p>{data.schedule.morning.all.lessons}</p>
+                    <p>{data.schedule.morning.all.break}</p>
+                </div>
+                <div class="fiyatlar-schedule-card">
+                    <h4>{t.afternoon}</h4>
+                    <p><strong>{data.schedule.afternoon.all.time}</strong></p>
+                    <p>{data.schedule.afternoon.all.lessons}</p>
+                    <p>{data.schedule.afternoon.all.break}</p>
+                </div>
+                <div class="fiyatlar-schedule-card">
+                    <h4>{t.evening}</h4>
+                    <p><strong>{data.schedule.evening.all.time}</strong></p>
+                    <p>{data.schedule.evening.all.lessons}</p>
+                    <p>{data.schedule.evening.all.break}</p>
+                </div>
             </div>
         </div>
     </section>
@@ -338,9 +336,12 @@ const bookingSlug = lang === 'tr' || lang === 'de' ? 'buchung' : lang === 'en' ?
     <section class="fiyatlar-section">
         <div class="container">
             <h2 class="fiyatlar-section-title">{t.startDates}</h2>
-            <p><strong>{t.mainStart}</strong>: {Object.values(data.startDates.a1)[0].map((d: string) => d + '.2026').join(', ')}</p>
-            <p><strong>{t.midStart}</strong>: {Object.values(data.startDates.a1)[1].map((d: string) => d + '.2026').join(', ')}</p>
-            <p class="fiyatlar-note">{t.startNote}</p>
+            <p class="fiyatlar-dates-subtitle">{t.startDatesSubtitle}</p>
+            <div class="fiyatlar-dates-badges">
+                {simpleStartDates.map((dateStr) => (
+                    <span class="fiyatlar-date-badge">{dateStr} 2026</span>
+                ))}
+            </div>
         </div>
     </section>
 

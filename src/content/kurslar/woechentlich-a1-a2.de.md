@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-layer-group"
     title: "Niveau"
     description: "A1–A2"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Jetzt bewerben"
+    text: "Anfrage senden"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "#demand-form"
   secondary:
     text: "Stundenplan"
     icon: "fas fa-download"

@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-graduation-cap"
     title: "Niveau"
     description: "A1 - C1"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Jetzt bewerben"
+    text: "Anfrage senden"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "#demand-form"
   secondary:
     text: "Stundenplan herunterladen"
     icon: "fas fa-download"
@@ -49,25 +50,6 @@ tabs:
       additionalInfo:
         title: "Flexibles Programm"
         text: "Unsere Standardkurse sind für Lernende konzipiert, die nicht an Tagesintensivkursen teilnehmen können, aber in einem regelmäßigen Tempo Deutsch lernen möchten."
-  - id: "termine-preise"
-    icon: "fas fa-calendar-alt"
-    title: "Programme und Preise"
-    content:
-      title: "Flexible Zahlungsoptionen"
-      pricing:
-        - name: "Abendkurs"
-          duration: "12 Wochen"
-          schedule: "Mo-Mi-Fr (Abend)"
-          price: "650 €"
-        - name: "Wochenendkurs"
-          duration: "16 Wochen"
-          schedule: "Samstag (Ganztags)"
-          price: "700 €"
-        - name: "Anmeldegebühr"
-          duration: "Erste Anmeldung"
-          schedule: "Einmalig"
-          price: "50 €"
-          highlighted: true
   - id: "unterricht"
     icon: "fas fa-book-open"
     title: "Unterricht"

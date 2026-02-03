@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-level-up-alt"
     title: "Level"
     description: "B1 - B2"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Apply Now"
+    text: "Send Request"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "#demand-form"
   secondary:
     text: "About Studienkolleg"
     icon: "fas fa-info-circle"
@@ -49,25 +50,6 @@ tabs:
       additionalInfo:
         title: "Why Studienkolleg Preparation?"
         text: "Studienkolleg entrance exams are quite competitive. Not only German is required, but also the ability to understand and solve subject courses in German. In our course, you increase your chances of success by gaining both language and basic subject knowledge."
-  - id: "dates-prices"
-    icon: "fas fa-calendar-alt"
-    title: "Program and Prices"
-    content:
-      title: "Studienkolleg Preparation Programs"
-      pricing:
-        - name: "Studienkolleg Preparation (German + Basic)"
-          duration: "8 Weeks"
-          schedule: "Mon - Fri (Intensive)"
-          price: "1,100 €"
-        - name: "German Module Only"
-          duration: "8 Weeks"
-          schedule: "Mon - Fri (Morning)"
-          price: "750 €"
-        - name: "One-on-One Subject Course Coaching"
-          duration: "Flexible"
-          schedule: "10 Hour Package"
-          price: "600 €"
-          highlighted: true
   - id: "lessons"
     icon: "fas fa-book-open"
     title: "Curriculum"

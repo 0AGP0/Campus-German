@@ -4,7 +4,7 @@ import MainLayout from '../../../layouts/MainLayout.astro';
 import AkademikAlmancaSarmal from '../../../components/AkademikAlmancaSarmal.astro';
 import '../../../styles/pages/kurslar.css';
 import { coursePricing } from '../../../data/coursePricing';
-import { getFormattedStartDates } from '../../../utils/coursePricingHelper';
+import { getSimpleCourseStartDates } from '../../../utils/coursePricingHelper';
 
 export async function getStaticPaths() {
     return [
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
-const startDates = getFormattedStartDates(lang as 'tr' | 'de' | 'en' | 'es');
+const simpleStartDates = getSimpleCourseStartDates(lang as 'tr' | 'de' | 'en' | 'es');
 
 // Slug'dan dil uzantısını temizle
 function cleanSlug(slug: string): string {
@@ -63,6 +63,8 @@ const t = {
         allCoursesButton: "Tüm Kursları Görüntüle",
         sectionTitle: "Yoğun Almanca Kurslarımız",
         sectionSubtitle: "Hızlı ilerleme için yoğun programlar",
+        courseDetail1: "İnteraktif Eğitim Akıllı Tahta ile",
+        courseDetail2: "Ek Modüler Yapı Desteği",
     },
     de: {
         title: "Übersicht Intensivkurse - CampusGerman",
@@ -82,6 +84,8 @@ const t = {
         allCoursesButton: "Alle Kurse anzeigen",
         sectionTitle: "Unsere Intensivkurse",
         sectionSubtitle: "Intensive Programme für schnelle Fortschritte",
+        courseDetail1: "Interaktive Ausbildung mit Smartboard",
+        courseDetail2: "und modulare Strukturunterstützung",
     },
     en: {
         title: "Intensive German Courses Overview - CampusGerman",
@@ -101,6 +105,8 @@ const t = {
         allCoursesButton: "View All Courses",
         sectionTitle: "Our Intensive German Courses",
         sectionSubtitle: "Intensive programs for rapid progress",
+        courseDetail1: "Interactive Education with Smart Board",
+        courseDetail2: "and Additional Modular Structure Support",
     }
 };
 
@@ -192,17 +198,19 @@ const translations = t[lang as keyof typeof t];
                         <div class="course-content">
                             <h3 class="course-title">{kurs.data.title}</h3>
                             <div class="course-details">
-                                {kurs.data.features.map(feature => (
-                                    <div class="course-detail">
-                                        <i class={feature.icon}></i>
-                                        <span>{feature.description}</span>
-                                    </div>
-                                ))}
+                                <div class="course-detail">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                    <span>{translations.courseDetail1}</span>
+                                </div>
+                                <div class="course-detail">
+                                    <i class="fas fa-layer-group"></i>
+                                    <span>{translations.courseDetail2}</span>
+                                </div>
                             </div>
                             <p class="course-description">
                                 {kurs.data.description}
                             </p>
-                            <a href={`/${lang}/${lang === 'tr' ? 'kurslar' : lang === 'de' ? 'kurse' : 'courses'}/${cleanSlug(kurs.slug)}`} class="course-btn">
+                            <a href={`/${lang}/${lang === 'tr' ? 'kurslar' : lang === 'de' ? 'kurse' : 'courses'}/${kurs.data.customSlug ?? cleanSlug(kurs.slug)}`} class="course-btn">
                                 <span>{lang === 'tr' ? 'Detayları Gör' : lang === 'de' ? 'Details ansehen' : 'View Details'}</span>
                                 <i class="fas fa-arrow-right"></i>
                             </a>
@@ -259,46 +267,25 @@ const translations = t[lang as keyof typeof t];
                         <div class="schedule-card">
                             <h4><i class="fas fa-sun"></i> {lang === 'tr' ? 'Sabah Kursları' : lang === 'de' ? 'Vormittagskurse' : 'Morning Courses'}</h4>
                             <div class="schedule-item">
-                                <strong>A1-A2:</strong>
-                                <p>{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.morning.a1a2.time}</p>
-                                <p class="schedule-break">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.morning.a1a2.break}</p>
-                                <p class="schedule-lessons">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.morning.a1a2.lessons}</p>
-                            </div>
-                            <div class="schedule-item">
-                                <strong>B1-C1:</strong>
-                                <p>{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.morning.b1c1.time}</p>
-                                <p class="schedule-break">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.morning.b1c1.break}</p>
-                                <p class="schedule-lessons">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.morning.b1c1.lessons}</p>
+                                <p>{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.morning.all.time}</p>
+                                <p class="schedule-break">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.morning.all.break}</p>
+                                <p class="schedule-lessons">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.morning.all.lessons}</p>
                             </div>
                         </div>
                         <div class="schedule-card">
                             <h4><i class="fas fa-moon"></i> {lang === 'tr' ? 'Öğleden Sonra Kursları' : lang === 'de' ? 'Nachmittagskurse' : 'Afternoon Courses'}</h4>
                             <div class="schedule-item">
-                                <strong>A1-A2:</strong>
-                                <p>{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.afternoon.a1a2.time}</p>
-                                <p class="schedule-break">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.afternoon.a1a2.break}</p>
-                                <p class="schedule-lessons">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.afternoon.a1a2.lessons}</p>
-                            </div>
-                            <div class="schedule-item">
-                                <strong>B1-C1:</strong>
-                                <p>{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.afternoon.b1c1.time}</p>
-                                <p class="schedule-break">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.afternoon.b1c1.break}</p>
-                                <p class="schedule-lessons">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.afternoon.b1c1.lessons}</p>
+                                <p>{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.afternoon.all.time}</p>
+                                <p class="schedule-break">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.afternoon.all.break}</p>
+                                <p class="schedule-lessons">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.afternoon.all.lessons}</p>
                             </div>
                         </div>
                         <div class="schedule-card">
                             <h4><i class="fas fa-cloud-moon"></i> {lang === 'tr' ? 'Akşam Kursları' : lang === 'de' ? 'Abendkurse' : 'Evening Courses'}</h4>
                             <div class="schedule-item">
-                                <strong>A1-A2:</strong>
-                                <p>{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.evening.a1a2.time}</p>
-                                <p class="schedule-break">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.evening.a1a2.break}</p>
-                                <p class="schedule-lessons">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.evening.a1a2.lessons}</p>
-                            </div>
-                            <div class="schedule-item">
-                                <strong>B1-C1:</strong>
-                                <p>{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.evening.b1c1.time}</p>
-                                <p class="schedule-break">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.evening.b1c1.break}</p>
-                                <p class="schedule-lessons">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.evening.b1c1.lessons}</p>
+                                <p>{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.evening.all.time}</p>
+                                <p class="schedule-break">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.evening.all.break}</p>
+                                <p class="schedule-lessons">{coursePricing[lang as 'tr' | 'de' | 'en'].schedule.evening.all.lessons}</p>
                             </div>
                         </div>
                     </div>
@@ -308,93 +295,11 @@ const translations = t[lang as keyof typeof t];
                 <!-- Kurs Başlangıç Tarihleri -->
                 <div class="pricing-block">
                     <h3 class="pricing-block-title">{lang === 'tr' ? 'Kurs Tarihlerimiz' : lang === 'de' ? 'Unsere Kurstermine' : 'Our Course Dates'}</h3>
-                    <p class="pricing-subtitle">{lang === 'tr' ? 'Intensiv Akademik Kurslar / Online Almanca Kursları' : lang === 'de' ? 'Intensiv Akademische Kurse / Online Deutschkurse' : 'Intensive Academic Courses / Online German Courses'}</p>
-                    <div class="course-dates-table-wrapper">
-                        <table class="course-dates-table">
-                            <thead>
-                                <tr>
-                                    <th>A1.1</th>
-                                    <th>A1.2</th>
-                                    <th>A2.1</th>
-                                    <th>A2.2</th>
-                                    <th>B1.1</th>
-                                    <th>B1.2</th>
-                                    <th>B2.1</th>
-                                    <th>B2.2</th>
-                                    <th>C1.1</th>
-                                    <th>C1.2</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{startDates.a1.a1_1[0]}</td>
-                                    <td>{startDates.a1.a1_2[0]}</td>
-                                    <td>{startDates.a2.a2_1[0]}</td>
-                                    <td>{startDates.a2.a2_2[0]}</td>
-                                    <td>{startDates.b1.b1_1[0]}</td>
-                                    <td>{startDates.b1.b1_2[0]}</td>
-                                    <td>{startDates.b2.b2_1[0]}</td>
-                                    <td>{startDates.b2.b2_2[0]}</td>
-                                    <td>{startDates.c1.c1_1[0]}</td>
-                                    <td>{startDates.c1.c1_2[0]}</td>
-                                </tr>
-                                <tr>
-                                    <td>{startDates.a1.a1_1[1]}</td>
-                                    <td>{startDates.a1.a1_2[1]}</td>
-                                    <td>{startDates.a2.a2_1[1]}</td>
-                                    <td>{startDates.a2.a2_2[1]}</td>
-                                    <td>{startDates.b1.b1_1[1]}</td>
-                                    <td>{startDates.b1.b1_2[1]}</td>
-                                    <td>{startDates.b2.b2_1[1]}</td>
-                                    <td>{startDates.b2.b2_2[1]}</td>
-                                    <td>{startDates.c1.c1_1[1]}</td>
-                                    <td>{startDates.c1.c1_2[1]}</td>
-                                </tr>
-                                <tr>
-                                    <td>{startDates.a1.a1_1[2]}</td>
-                                    <td>{startDates.a1.a1_2[2]}</td>
-                                    <td>{startDates.a2.a2_1[2]}</td>
-                                    <td>{startDates.a2.a2_2[2]}</td>
-                                    <td>{startDates.b1.b1_1[2]}</td>
-                                    <td>{startDates.b1.b1_2[2]}</td>
-                                    <td>{startDates.b2.b2_1[2]}</td>
-                                    <td>{startDates.b2.b2_2[2]}</td>
-                                    <td>{startDates.c1.c1_1[2]}</td>
-                                    <td>{startDates.c1.c1_2[2]}</td>
-                                </tr>
-                                <tr>
-                                    <td>{startDates.a1.a1_1[3]}</td>
-                                    <td>{startDates.a1.a1_2[3]}</td>
-                                    <td>{startDates.a2.a2_1[3]}</td>
-                                    <td>{startDates.a2.a2_2[3]}</td>
-                                    <td>{startDates.b1.b1_1[3]}</td>
-                                    <td>{startDates.b1.b1_2[3]}</td>
-                                    <td>{startDates.b2.b2_1[3]}</td>
-                                    <td>{startDates.b2.b2_2[3]}</td>
-                                    <td>{startDates.c1.c1_1[3]}</td>
-                                    <td>{startDates.c1.c1_2[3]}</td>
-                                </tr>
-                                <tr>
-                                    <td>{startDates.a1.a1_1[4]}</td>
-                                    <td>{startDates.a1.a1_2[4]}</td>
-                                    <td>{startDates.a2.a2_1[4]}</td>
-                                    <td>{startDates.a2.a2_2[4]}</td>
-                                    <td>{startDates.b1.b1_1[4]}</td>
-                                    <td>{startDates.b1.b1_2[4]}</td>
-                                    <td>{startDates.b2.b2_1[4]}</td>
-                                    <td>{startDates.b2.b2_2[4]}</td>
-                                    <td>{startDates.c1.c1_1[4]}</td>
-                                    <td>{startDates.c1.c1_2[4]}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="course-dates-info">
-                        <p><strong>{lang === 'tr' ? 'A1 · 8 hafta · 20+ 4 ders' : lang === 'de' ? 'A1 · 8 Wochen · 20+ 4 UStd' : 'A1 · 8 weeks · 20+ 4 lessons'}</strong></p>
-                        <p><strong>{lang === 'tr' ? 'A2 · 8 hafta · 20+ 4 ders' : lang === 'de' ? 'A2 · 8 Wochen · 20+ 4 UStd' : 'A2 · 8 weeks · 20+ 4 lessons'}</strong></p>
-                        <p><strong>{lang === 'tr' ? 'B1 · 8 hafta · 25+ 4 ders' : lang === 'de' ? 'B1 · 8 Wochen · 25+ 4 UStd' : 'B1 · 8 weeks · 25+ 4 lessons'}</strong></p>
-                        <p><strong>{lang === 'tr' ? 'B2 · 8 hafta · 25+ 4 ders' : lang === 'de' ? 'B2 · 8 Wochen · 25+ 4 UStd' : 'B2 · 8 weeks · 25+ 4 lessons'}</strong></p>
-                        <p><strong>{lang === 'tr' ? 'C1 · 8 hafta · 25+ 4 ders' : lang === 'de' ? 'C1 · 8 Wochen · 25+ 4 UStd' : 'C1 · 8 weeks · 25+ 4 lessons'}</strong></p>
+                    <p class="pricing-subtitle">{lang === 'tr' ? 'Kurslara kayıt aşağıdaki tarihlerde açılır.' : lang === 'de' ? 'Die Kursanmeldung öffnet an den folgenden Terminen.' : 'Course registration opens on the following dates.'}</p>
+                    <div class="course-dates-badges">
+                        {simpleStartDates.map((dateStr) => (
+                            <span class="course-date-badge">{dateStr} 2026</span>
+                        ))}
                     </div>
                 </div>
                 

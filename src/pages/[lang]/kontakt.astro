@@ -29,6 +29,8 @@ const t = {
         chatWhatsApp: "WhatsApp ile yaz",
         phoneTitle: "Telefon",
         emailTitle: "E-posta",
+        emailForInfo: "Bilgi için",
+        emailForPartner: "Partnerlik için",
         workingHoursTitle: "Çalışma Saatleri",
         workingHours: {
             weekdays: "Hafta İçi: 09:00 – 21:00",
@@ -77,6 +79,8 @@ const t = {
         chatWhatsApp: "Bei WhatsApp schreiben",
         phoneTitle: "Telefon",
         emailTitle: "E-Mail",
+        emailForInfo: "Für Informationen",
+        emailForPartner: "Für Partnerschaft",
         workingHoursTitle: "Arbeitszeiten",
         workingHours: {
             weekdays: "Wochentage: 09:00 - 21:00",
@@ -197,9 +201,8 @@ const translations = t[lang as keyof typeof t];
                                 <div class="method-content">
                                     <h4>{translations.emailTitle}</h4>
                                     <div class="email-addresses">
-                                        <a href="mailto:info@campusgerman.com">info@campusgerman.com</a>
-                                        <a href="mailto:kurslar@campusgerman.com">kurslar@campusgerman.com</a>
-                                        <a href="mailto:danismanlik@campusgerman.com">danismanlik@campusgerman.com</a>
+                                        <div class="email-row"><span class="email-label">{translations.emailForInfo}:</span> <a href="mailto:info@campusgerman.com">info@campusgerman.com</a></div>
+                                        <div class="email-row"><span class="email-label">{translations.emailForPartner}:</span> <a href="mailto:partner@campusgerman.com">partner@campusgerman.com</a></div>
                                     </div>
                                 </div>
                             </div>

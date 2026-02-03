@@ -1,6 +1,114 @@
 /* ===== HEADER STYLES ===== */
 /* Bu dosya global.css'deki CSS değişkenlerini kullanır */
 
+/* ===== PROMO BANNER (top header üstü, kapatılabilir) ===== */
+.promo-banner {
+    display: block;
+    background: linear-gradient(90deg, var(--color-primary) 0%, #0aa5c0 35%, var(--color-primary-dark) 100%);
+    min-height: 44px;
+    padding: 0;
+    box-shadow: 0 4px 20px rgba(12, 192, 223, 0.35);
+    position: relative;
+    overflow: hidden;
+}
+
+.promo-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
+    pointer-events: none;
+}
+
+.promo-banner-closed {
+    display: none !important;
+}
+
+.promo-banner-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 48px 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    position: relative;
+    z-index: 1;
+}
+
+.promo-banner-text {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.promo-banner-icon {
+    margin-right: 6px;
+    opacity: 0.95;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.promo-banner-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 8px;
+    padding: 6px 16px;
+    background: var(--color-accent);
+    color: var(--color-secondary) !important;
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(255, 210, 31, 0.45);
+    transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.promo-banner-link:hover {
+    background: #ffe04d;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 16px rgba(255, 210, 31, 0.55);
+}
+
+.promo-banner-link i {
+    font-size: 18px;
+}
+
+.promo-banner-close {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.promo-banner-close:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.promo-banner-close i {
+    font-size: 12px;
+}
+
 /* ===== TOP HEADER BAR ===== */
 .top-header {
     display: block !important;
@@ -291,9 +399,26 @@
 }
 
 .logo-img {
-    max-width: 180px;
+    max-width: 140px;
     height: auto;
     display: block;
+}
+
+/* Mobilde logo küçült – header büyümesin */
+@media (max-width: 1024px) {
+    .logo-img {
+        max-width: 120px;
+    }
+}
+@media (max-width: 768px) {
+    .logo-img {
+        max-width: 105px;
+    }
+}
+@media (max-width: 480px) {
+    .logo-img {
+        max-width: 90px;
+    }
 }
 
 .logo-icon {
@@ -566,41 +691,61 @@
     padding: 8px;
 }
 
+/* Hakkımızda, Avantajlarımız, Sunduklarımız: iki sütun – dropdown boyu kısalır */
+.dropdown-menu.dropdown-menu-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 12px;
+    min-width: 380px;
+    padding: 12px;
+}
+.dropdown-menu.dropdown-menu-cols .dropdown-cta {
+    grid-column: 1 / -1;
+}
+.dropdown-menu.dropdown-menu-cols .dropdown-link {
+    margin: 0;
+}
+
+/* Hakkımızda, Avantajlarımız, Sunduklarımız: kurslar dropdown ile aynı link tasarımı */
 .dropdown-menu:not(.courses-dropdown) .dropdown-link {
     display: flex;
     align-items: center;
     padding: 12px 16px;
     color: var(--color-text-primary);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     transition: all var(--transition-fast);
-    border-radius: 8px;
-    margin: 2px 0;
+    border-radius: 10px;
+    line-height: 1.5;
+    background: rgba(12, 192, 223, 0.03);
+    border: 1px solid rgba(12, 192, 223, 0.1);
     position: relative;
+    overflow: hidden;
 }
 
 .dropdown-menu:not(.courses-dropdown) .dropdown-link::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 50%;
-    transform: translateY(-50%) scaleX(0);
+    top: 0;
+    bottom: 0;
     width: 3px;
-    height: 60%;
     background: var(--gradient-primary);
-    border-radius: 0 3px 3px 0;
+    transform: scaleY(0);
     transition: transform var(--transition-fast);
 }
 
 .dropdown-menu:not(.courses-dropdown) .dropdown-link:hover {
-    background: var(--color-primary-light);
+    background: rgba(12, 192, 223, 0.08);
     color: var(--color-primary);
-    padding-left: 20px;
+    border-color: rgba(12, 192, 223, 0.3);
+    transform: translateX(4px);
+    box-shadow: var(--shadow-sm);
 }
 
 .dropdown-menu:not(.courses-dropdown) .dropdown-link:hover::before {
-    transform: translateY(-50%) scaleX(1);
+    transform: scaleY(1);
 }
 
 /* Dropdown CTA */
@@ -847,7 +992,7 @@ span.hamburger-line,
 }
 
 .mobile-logo-img {
-    max-width: 150px;
+    max-width: 100px;
     height: auto;
 }
 

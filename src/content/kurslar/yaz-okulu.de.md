@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-home"
     title: "Unterkunft"
     description: "Studentenwohnheim inklusive"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Jetzt bewerben"
+    text: "Anfrage senden"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "#demand-form"
   secondary:
     text: "Sommerprogramm"
     icon: "fas fa-calendar-alt"
@@ -51,25 +52,6 @@ tabs:
       additionalInfo:
         title: "Nicht nur Sprache, sondern Erfahrung!"
         text: "Die Sommerschule ist nicht nur Sprachenlernen, sondern auch das Erleben der deutschen Kultur, neue Freunde finden und unvergessliche Erinnerungen sammeln. Vormittags im Klassenzimmer, nachmittags die Stadt erkunden."
-  - id: "termine-preise"
-    icon: "fas fa-calendar-alt"
-    title: "Termine und Preise"
-    content:
-      title: "2024 Sommerschule Perioden"
-      pricing:
-        - name: "2-Wochen-Programm"
-          duration: "Juni - Juli"
-          schedule: "Unterricht + Unterkunft + Aktivität"
-          price: "950 €"
-        - name: "4-Wochen-Programm"
-          duration: "Juli - August"
-          schedule: "Unterricht + Unterkunft + Aktivität"
-          price: "1.750 €"
-        - name: "8-Wochen-Programm"
-          duration: "Juni - August"
-          schedule: "Unterricht + Unterkunft + Aktivität"
-          price: "3.200 €"
-          highlighted: true
   - id: "unterricht"
     icon: "fas fa-book-open"
     title: "Tagesprogramm"

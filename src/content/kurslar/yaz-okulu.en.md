@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-home"
     title: "Accommodation"
     description: "Student Dorm Included"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Apply Now"
+    text: "Send Request"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "#demand-form"
   secondary:
     text: "Summer Program"
     icon: "fas fa-calendar-alt"
@@ -51,25 +52,6 @@ tabs:
       additionalInfo:
         title: "Not Just Language, Experience!"
         text: "Summer school is not just about learning the language, but also living German culture, making new friends, and collecting unforgettable memories. You study in class in the mornings and explore the city in the afternoons."
-  - id: "dates-prices"
-    icon: "fas fa-calendar-alt"
-    title: "Dates and Prices"
-    content:
-      title: "2024 Summer School Periods"
-      pricing:
-        - name: "2 Week Program"
-          duration: "June - July"
-          schedule: "Class + Accommodation + Activity"
-          price: "950 €"
-        - name: "4 Week Program"
-          duration: "July - August"
-          schedule: "Class + Accommodation + Activity"
-          price: "1,750 €"
-        - name: "8 Week Program"
-          duration: "June - August"
-          schedule: "Class + Accommodation + Activity"
-          price: "3,200 €"
-          highlighted: true
   - id: "lessons"
     icon: "fas fa-book-open"
     title: "Daily Program"

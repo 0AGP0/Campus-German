@@ -1,0 +1,330 @@
+/* ===== BROŞÜR SAYFASI ===== */
+
+/* Hero: tam genişlik, kompakt şerit – baştan */
+.brochure-hero {
+    background: linear-gradient(90deg, var(--color-secondary, #2c363f) 0%, var(--color-secondary-dark, #1e262d) 100%);
+    padding: 28px 20px;
+}
+
+.brochure-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.brochure-hero-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 6px 0;
+    line-height: 1.3;
+}
+
+.brochure-hero-accent {
+    color: var(--color-primary, #0cc0df);
+    font-weight: 600;
+}
+
+.brochure-hero-desc {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.45;
+    margin: 0;
+    max-width: 560px;
+}
+
+/* Form bölümü: yan boşluk minimum */
+.brochure-section {
+    padding: 32px 0 56px;
+    background: var(--color-bg-light, #F8FAFC);
+}
+
+.brochure-section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+@media (max-width: 768px) {
+    .brochure-section-inner {
+        padding: 0 12px;
+    }
+}
+
+.brochure-form-wrapper {
+    max-width: 100%;
+    background: white;
+    border-radius: 14px;
+    padding: 28px 24px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--color-border-light, #E2E8F0);
+}
+
+.brochure-form .form-block {
+    margin-bottom: 24px;
+}
+
+.brochure-form .form-block:last-of-type {
+    margin-bottom: 0;
+}
+
+.form-block-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 6px;
+}
+
+.form-block-hint {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 14px;
+    line-height: 1.4;
+}
+
+/* Broşür kartları */
+.brochure-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.brochure-card {
+    display: block;
+    cursor: pointer;
+    border-radius: 12px;
+    overflow: visible;
+}
+
+.brochure-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.brochure-checkbox:focus-visible + .brochure-card-inner {
+    outline: 2px solid var(--color-primary, #0cc0df);
+    outline-offset: 2px;
+}
+
+.brochure-card-inner {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border: 2px solid var(--color-border-light, #E2E8F0);
+    border-radius: 12px;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.brochure-card:hover .brochure-card-inner {
+    border-color: var(--color-primary, #0cc0df);
+}
+
+.brochure-checkbox:checked + .brochure-card-inner {
+    border-color: var(--color-primary, #0cc0df);
+}
+
+.brochure-check-overlay {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-primary, #0cc0df);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.brochure-checkbox:checked + .brochure-card-inner .brochure-check-overlay {
+    opacity: 1;
+}
+
+.brochure-image-wrap {
+    aspect-ratio: 200 / 280;
+    background: var(--color-bg-gray, #F1F5F9);
+    overflow: hidden;
+}
+
+.brochure-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.brochure-title {
+    padding: 10px 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    text-align: center;
+    line-height: 1.3;
+}
+
+/* Form alanları */
+.form-fields .form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-fields .form-group {
+    margin-bottom: 12px;
+}
+
+.form-fields .form-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.form-fields input,
+.form-fields select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--color-border-light, #E2E8F0);
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.form-fields input:focus,
+.form-fields select:focus {
+    outline: none;
+    border-color: var(--color-primary, #0cc0df);
+}
+
+.form-fields select {
+    cursor: pointer;
+}
+
+.privacy-note {
+    font-size: 0.8rem;
+    color: var(--color-text-muted, #64748B);
+    margin: 10px 0 18px;
+    line-height: 1.4;
+}
+
+.form-actions {
+    margin-top: 0;
+}
+
+.submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 20px;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.submit-btn:hover {
+    opacity: 0.92;
+}
+
+/* Başarı ekranı */
+.brochure-success {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.brochure-success .success-icon {
+    font-size: 2.25rem;
+    color: var(--color-primary, #0cc0df);
+    margin-bottom: 10px;
+}
+
+.brochure-success .success-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 6px;
+}
+
+.brochure-success .success-message {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+
+.download-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+.download-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: white;
+    color: var(--color-primary, #0cc0df);
+    border: 2px solid var(--color-primary, #0cc0df);
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    min-width: 220px;
+    justify-content: center;
+}
+
+.download-link-btn:hover {
+    background: var(--color-primary, #0cc0df);
+    color: white;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (max-width: 640px) {
+    .brochure-hero {
+        padding: 22px 14px;
+    }
+
+    .brochure-hero-title {
+        font-size: 1.3rem;
+    }
+
+    .brochure-form-wrapper {
+        padding: 22px 18px;
+    }
+
+    .brochure-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .form-fields .form-row-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .download-link-btn {
+        min-width: 100%;
+    }
+}

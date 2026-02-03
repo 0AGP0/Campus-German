@@ -55,7 +55,7 @@ const t = {
         heroDescription: "CampusGerman ile Almanca öğrenmek artık çok kolay! Konuşma odaklı eğitim, native speaker öğretmenler ve kişiselleştirilmiş programlarla hedeflerinize ulaşın.",
         heroFeatures: ["Sınırlı Kontenjan", "Kültür Programları", "Goethe-Telc-Test Daf-FSP"],
         heroCta1: "Hemen Başvur",
-        heroCta2: "Whatsapptan Bilgi Al<br>EN/DE/TUR/ES",
+        heroCta2: "Whatsapptan Bilgi Al",
         trustItems: [
             { number: "2000+", label: "Mutlu Öğrenci" },
             { number: "98%", label: "Farklı Millet" },
@@ -296,7 +296,7 @@ const t = {
         heroDescription: "Learning German is easy with CampusGerman! Reach your goals with conversation-focused education, native speaker teachers, and personalized programs.",
         heroFeatures: ["Limited Quota", "Cultural Programs", "Goethe-Telc-TestDaF-FSP"],
         heroCta1: "Apply Now",
-        heroCta2: "Get Info via WhatsApp<br>EN/DE/TUR/ES",
+        heroCta2: "Get Info via WhatsApp",
         trustItems: [
             { number: "2000+", label: "Happy Students" },
             { number: "98%", label: "Different Nations" },
@@ -545,7 +545,7 @@ const t = {
         heroDescription: "Mit CampusGerman Deutsch lernen – konversationsorientiert, muttersprachliche Lehrer, passende Programme.",
         heroFeatures: ["Kleine Gruppen", "Flexibel", "Goethe-Zertifikat"],
         heroCta1: "Jetzt bewerben",
-        heroCta2: "Infos",
+        heroCta2: "Infos per WhatsApp",
         trustItems: [
             { number: "2000+", label: "Studenten" },
             { number: "98%", label: "Erfolgsquote" },
@@ -784,7 +784,7 @@ const t = {
         heroDescription: "¡Aprender alemán es fácil con CampusGerman! Alcanza tus objetivos con educación centrada en la conversación, profesores nativos y programas personalizados.",
         heroFeatures: ["Cupo Limitado", "Programas Culturales", "Goethe-Telc-TestDaF-FSP"],
         heroCta1: "Aplicar ahora",
-        heroCta2: "Obtén Información por WhatsApp<br>EN/DE/TUR/ES",
+        heroCta2: "Obtén Información por WhatsApp",
         trustItems: [
             { number: "2000+", label: "Estudiantes Felices" },
             { number: "98%", label: "Diferentes Naciones" },
@@ -1190,18 +1190,26 @@ const translations = t[lang as keyof typeof t];
                 <h2 id="why-campusgerman-heading" class="section-title">{translations.whyChooseTitle}</h2>
                 <p class="section-subtitle">{translations.whyChooseSubtitle}</p>
             </div>
-            <div class="why-campusgerman-grid">
-                {translations.whyChooseCards.map((card) => (
-                    <div class="why-campusgerman-card">
-                        <div class="why-campusgerman-card-icon">
-                            <i class="fas fa-check" aria-hidden="true"></i>
+            <div class="why-campusgerman-carousel-wrap">
+                <button type="button" class="why-campusgerman-carousel-btn why-campusgerman-carousel-prev" id="whyCarouselPrev" aria-label={lang === 'tr' ? 'Önceki' : lang === 'de' ? 'Zurück' : lang === 'es' ? 'Anterior' : 'Previous'}>
+                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <div class="why-campusgerman-grid" id="whyCampusGermanCarousel" role="region" aria-label={translations.whyChooseTitle}>
+                    {translations.whyChooseCards.map((card) => (
+                        <div class="why-campusgerman-card">
+                            <div class="why-campusgerman-card-icon">
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                            </div>
+                            <div class="why-campusgerman-card-content">
+                                <h3 class="why-campusgerman-card-title">{card.title}</h3>
+                                <p class="why-campusgerman-card-desc">{card.desc}</p>
+                            </div>
                         </div>
-                        <div class="why-campusgerman-card-content">
-                            <h3 class="why-campusgerman-card-title">{card.title}</h3>
-                            <p class="why-campusgerman-card-desc">{card.desc}</p>
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
+                <button type="button" class="why-campusgerman-carousel-btn why-campusgerman-carousel-next" id="whyCarouselNext" aria-label={lang === 'tr' ? 'Sonraki' : lang === 'de' ? 'Weiter' : lang === 'es' ? 'Siguiente' : 'Next'}>
+                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -1223,7 +1231,7 @@ const translations = t[lang as keyof typeof t];
                                 <p class="countdown-discount-desc">{translations.countdownDiscountDesc}</p>
                                 <div class="countdown-coupon-code">
                                     <span class="countdown-coupon-label">{lang === 'tr' ? 'Kupon' : lang === 'de' ? 'Gutschein' : lang === 'es' ? 'Cupón' : 'Coupon'}:</span>
-                                    <code class="countdown-coupon-value">CAMPUS10</code>
+                                    <code class="countdown-coupon-value">HBCampusGerman</code>
                                 </div>
                                 <p class="countdown-discount-hint">{lang === 'tr' ? 'Rezervasyon formunda bu kodu girin.' : lang === 'de' ? 'Code im Buchungsformular eingeben.' : lang === 'es' ? 'Introduce el código en el formulario.' : 'Enter this code on the booking form.'}</p>
                             </div>
@@ -1239,7 +1247,7 @@ const translations = t[lang as keyof typeof t];
                                     <span class="countdown-part"><span id="countdownSecs">00</span> <span class="countdown-unit">{lang === 'tr' ? 'sn' : lang === 'de' ? 'Sek' : lang === 'es' ? 's' : 'sec'}</span></span>
                                 </div>
                             </div>
-                            <a href={`${bookingPath}?coupon=CAMPUS10`} class="countdown-discount-cta">
+                            <a href={`${bookingPath}?coupon=HBCampusGerman`} class="countdown-discount-cta">
                                 <i class="fas fa-tag"></i>
                                 {translations.countdownGrabCta}
                             </a>
@@ -1468,8 +1476,8 @@ const translations = t[lang as keyof typeof t];
         </div>
     </section>
 
-    <!-- Video Section -->
-    <section class="video-section">
+    <!-- Video Section (Başarı Hikayelerimiz) – şimdilik gizli -->
+    <section class="video-section section-hidden" aria-hidden="true">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">{translations.successStoriesTitle}</h2>
@@ -1851,6 +1859,25 @@ const translations = t[lang as keyof typeof t];
 <script>
     // Wait for DOM to be ready
     document.addEventListener('DOMContentLoaded', function() {
+
+    // Neden Campus German – mobilde carousel (önceki/sonraki)
+    (function() {
+        const carousel = document.getElementById('whyCampusGermanCarousel');
+        const prevBtn = document.getElementById('whyCarouselPrev');
+        const nextBtn = document.getElementById('whyCarouselNext');
+        if (!carousel || !prevBtn || !nextBtn) return;
+        const cardWidth = () => {
+            const first = carousel.querySelector('.why-campusgerman-card');
+            if (!first) return carousel.clientWidth * 0.85;
+            return first.offsetWidth + 24;
+        };
+        prevBtn.addEventListener('click', function() {
+            carousel.scrollBy({ left: -cardWidth(), behavior: 'smooth' });
+        });
+        nextBtn.addEventListener('click', function() {
+            carousel.scrollBy({ left: cardWidth(), behavior: 'smooth' });
+        });
+    })();
 
     // Countdown discount banner
     (function() {

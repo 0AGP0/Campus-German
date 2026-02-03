@@ -365,6 +365,11 @@
     pointer-events: none;
 }
 
+.course-options-group,
+.timezone-options {
+    margin-top: 8px;
+}
+
 .field-hint {
     font-size: 0.9rem;
     color: var(--color-primary);
@@ -780,6 +785,7 @@
     border-radius: 10px;
     background: rgba(12, 192, 223, 0.06);
     border: 1px solid rgba(12, 192, 223, 0.2);
+    min-width: 0;
 }
 
 .coupon-label {
@@ -792,15 +798,20 @@
 
 .coupon-row {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
+    align-items: center;
 }
 
 .coupon-input {
-    flex: 1;
+    flex: 1 1 140px;
+    min-width: 0;
     padding: 10px 12px;
     border: 1px solid #dee2e6;
     border-radius: 8px;
     font-size: 0.9rem;
+    font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+    letter-spacing: 0.02em;
 }
 
 .coupon-input:focus {
@@ -815,6 +826,7 @@
 }
 
 .coupon-apply-btn {
+    flex-shrink: 0;
     padding: 10px 16px;
     border-radius: 8px;
     border: none;

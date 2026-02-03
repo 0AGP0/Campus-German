@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-layer-group"
     title: "Level"
     description: "A1-A2"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Apply Now"
+    text: "Send Request"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "#demand-form"
   secondary:
     text: "Course Schedule"
     icon: "fas fa-download"

@@ -8,8 +8,13 @@ import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, form
 export async function getStaticPaths() {
   const allKurslar = await getCollection('kurslar');
   
-  // Silinmiş genel bakış sayfalarını filtrele
-  const silinmisSayfalar = ['intensiv-studentenvisum'];
+  // Silinmiş / kaldırılan sayfalar (online-almanca, online-sinav-hazirlik ve dil karşılıkları)
+  const silinmisSayfalar = [
+    'intensiv-studentenvisum',
+    'online-almanca', 'online-sinav-hazirlik',
+    'online-deutsch', 'online-german', 'aleman-online',
+    'online-pruefungsvorbereitung', 'online-exam-preparation', 'preparacion-examenes-online',
+  ];
   
   const paths = [];
   
@@ -205,8 +210,8 @@ const displayBadgeText = shortenLabels(kurs.data.badge?.text ?? '');
                             <span>{tab.title}</span>
                         </button>
                     ))}
-                    {/* Eğer pricingData var ama tabs'da fiyat tab'ı yoksa, yeni tab butonu ekle */}
-                    {pricingData && !hasPricingTab && (
+                    {/* Eğer pricingData var, tabs'da fiyat tab'ı yoksa ve talep sayfası değilse, yeni tab butonu ekle */}
+                    {pricingData && !hasPricingTab && !kurs.data.hasDemandForm && (
                         <button class="tab-btn" data-tab="fiyatlar-tarihler">
                             <i class="fas fa-euro-sign"></i>
                             <span>{kurs.data.lang === 'tr' ? 'Fiyatlar ve Tarihler' : 'Preise und Termine'}</span>
@@ -316,35 +321,15 @@ const displayBadgeText = shortenLabels(kurs.data.badge?.text ?? '');
                                                         <div class="schedule-info">
                                                             <div class="schedule-item">
                                                                 <h6><i class="fas fa-sun"></i> {kurs.data.lang === 'tr' ? 'Sabah Kursları' : 'Vormittagskurse'}</h6>
-                                                                {courseInfo.level === 'a1' || courseInfo.level === 'a2' ? (
-                                                                    <>
-                                                                        <p><strong>A1-A2:</strong> {pricingData.schedule.morning.a1a2.time}</p>
-                                                                        <p class="schedule-break">{pricingData.schedule.morning.a1a2.break}</p>
-                                                                        <p class="schedule-lessons">{pricingData.schedule.morning.a1a2.lessons}</p>
-                                                                    </>
-                                                                ) : (
-                                                                    <>
-                                                                        <p><strong>B1-C1:</strong> {pricingData.schedule.morning.b1c1.time}</p>
-                                                                        <p class="schedule-break">{pricingData.schedule.morning.b1c1.break}</p>
-                                                                        <p class="schedule-lessons">{pricingData.schedule.morning.b1c1.lessons}</p>
-                                                                    </>
-                                                                )}
+                                                                <p>{pricingData.schedule.morning.all.time}</p>
+                                                                <p class="schedule-break">{pricingData.schedule.morning.all.break}</p>
+                                                                <p class="schedule-lessons">{pricingData.schedule.morning.all.lessons}</p>
                                                             </div>
                                                             <div class="schedule-item">
                                                                 <h6><i class="fas fa-moon"></i> {kurs.data.lang === 'tr' ? 'Öğleden Sonra Kursları' : 'Nachmittagskurse'}</h6>
-                                                                {courseInfo.level === 'a1' || courseInfo.level === 'a2' ? (
-                                                                    <>
-                                                                        <p><strong>A1-A2:</strong> {pricingData.schedule.afternoon.a1a2.time}</p>
-                                                                        <p class="schedule-break">{pricingData.schedule.afternoon.a1a2.break}</p>
-                                                                        <p class="schedule-lessons">{pricingData.schedule.afternoon.a1a2.lessons}</p>
-                                                                    </>
-                                                                ) : (
-                                                                    <>
-                                                                        <p><strong>B1-C1:</strong> {pricingData.schedule.afternoon.b1c1.time}</p>
-                                                                        <p class="schedule-break">{pricingData.schedule.afternoon.b1c1.break}</p>
-                                                                        <p class="schedule-lessons">{pricingData.schedule.afternoon.b1c1.lessons}</p>
-                                                                    </>
-                                                                )}
+                                                                <p>{pricingData.schedule.afternoon.all.time}</p>
+                                                                <p class="schedule-break">{pricingData.schedule.afternoon.all.break}</p>
+                                                                <p class="schedule-lessons">{pricingData.schedule.afternoon.all.lessons}</p>
                                                             </div>
                                                             <p class="schedule-days"><i class="fas fa-calendar-week"></i> {pricingData.schedule.days}</p>
                                                         </div>
@@ -465,8 +450,8 @@ const displayBadgeText = shortenLabels(kurs.data.badge?.text ?? '');
                         );
                     })}
                     
-                    {/* Eğer pricingData var ama tabs'da fiyat tab'ı yoksa, yeni tab içeriği ekle */}
-                    {pricingData && !hasPricingTab && (
+                    {/* Eğer pricingData var, tabs'da fiyat tab'ı yoksa ve talep sayfası değilse, yeni tab içeriği ekle */}
+                    {pricingData && !hasPricingTab && !kurs.data.hasDemandForm && (
                         <div class="tab-content" id="fiyatlar-tarihler">
                                 <div class="course-card">
                                     <div class="card-header">
@@ -561,35 +546,15 @@ const displayBadgeText = shortenLabels(kurs.data.badge?.text ?? '');
                                                     <div class="schedule-info">
                                                         <div class="schedule-item">
                                                             <h6><i class="fas fa-sun"></i> {kurs.data.lang === 'tr' ? 'Sabah Kursları' : 'Vormittagskurse'}</h6>
-                                                            {courseInfo.level === 'a1' || courseInfo.level === 'a2' ? (
-                                                                <>
-                                                                    <p><strong>A1-A2:</strong> {pricingData.schedule.morning.a1a2.time}</p>
-                                                                    <p class="schedule-break">{pricingData.schedule.morning.a1a2.break}</p>
-                                                                    <p class="schedule-lessons">{pricingData.schedule.morning.a1a2.lessons}</p>
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    <p><strong>B1-C1:</strong> {pricingData.schedule.morning.b1c1.time}</p>
-                                                                    <p class="schedule-break">{pricingData.schedule.morning.b1c1.break}</p>
-                                                                    <p class="schedule-lessons">{pricingData.schedule.morning.b1c1.lessons}</p>
-                                                                </>
-                                                            )}
+                                                            <p>{pricingData.schedule.morning.all.time}</p>
+                                                            <p class="schedule-break">{pricingData.schedule.morning.all.break}</p>
+                                                            <p class="schedule-lessons">{pricingData.schedule.morning.all.lessons}</p>
                                                         </div>
                                                         <div class="schedule-item">
                                                             <h6><i class="fas fa-moon"></i> {kurs.data.lang === 'tr' ? 'Öğleden Sonra Kursları' : 'Nachmittagskurse'}</h6>
-                                                            {courseInfo.level === 'a1' || courseInfo.level === 'a2' ? (
-                                                                <>
-                                                                    <p><strong>A1-A2:</strong> {pricingData.schedule.afternoon.a1a2.time}</p>
-                                                                    <p class="schedule-break">{pricingData.schedule.afternoon.a1a2.break}</p>
-                                                                    <p class="schedule-lessons">{pricingData.schedule.afternoon.a1a2.lessons}</p>
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    <p><strong>B1-C1:</strong> {pricingData.schedule.afternoon.b1c1.time}</p>
-                                                                    <p class="schedule-break">{pricingData.schedule.afternoon.b1c1.break}</p>
-                                                                    <p class="schedule-lessons">{pricingData.schedule.afternoon.b1c1.lessons}</p>
-                                                                </>
-                                                            )}
+                                                            <p>{pricingData.schedule.afternoon.all.time}</p>
+                                                            <p class="schedule-break">{pricingData.schedule.afternoon.all.break}</p>
+                                                            <p class="schedule-lessons">{pricingData.schedule.afternoon.all.lessons}</p>
                                                         </div>
                                                         <p class="schedule-days"><i class="fas fa-calendar-week"></i> {pricingData.schedule.days}</p>
                                                     </div>

@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-level-up-alt"
     title: "Seviye"
     description: "B1 - B2"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Hemen Başvur"
+    text: "Talep Gönder"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "#demand-form"
   secondary:
     text: "Studienkolleg Hakkında"
     icon: "fas fa-info-circle"
@@ -49,25 +50,6 @@ tabs:
       additionalInfo:
         title: "Neden Studienkolleg Hazırlık?"
         text: "Studienkolleg giriş sınavları oldukça rekabetçidir. Sadece Almanca değil, alan derslerini Almanca anlama ve çözme becerisi gerektirir. Kursumuzda hem dil hem de temel alan bilgisi kazanarak başarı şansınızı artırırsınız."
-  - id: "tarihler-fiyatlar"
-    icon: "fas fa-calendar-alt"
-    title: "Program ve Fiyatlar"
-    content:
-      title: "Studienkolleg Hazırlık Programları"
-      pricing:
-        - name: "Studienkolleg Hazırlık (Almanca + Temel)"
-          duration: "8 Hafta"
-          schedule: "Pzt - Cum (Yoğun)"
-          price: "1,100 €"
-        - name: "Sadece Almanca Modülü"
-          duration: "8 Hafta"
-          schedule: "Pzt - Cum (Sabah)"
-          price: "750 €"
-        - name: "Birebir Alan Dersi Koçluğu"
-          duration: "Esnek"
-          schedule: "10 Saat Paket"
-          price: "600 €"
-          highlighted: true
   - id: "dersler"
     icon: "fas fa-book-open"
     title: "Müfredat"

@@ -294,35 +294,15 @@ const sectionPath = 'kurse';
                                                         <div class="schedule-info">
                                                             <div class="schedule-item">
                                                                 <h6><i class="fas fa-sun"></i> {kurs.data.lang === 'tr' ? 'Sabah Kursları' : 'Vormittagskurse'}</h6>
-                                                                {courseInfo.level === 'a1' || courseInfo.level === 'a2' ? (
-                                                                    <>
-                                                                        <p><strong>A1-A2:</strong> {pricingData.schedule.morning.a1a2.time}</p>
-                                                                        <p class="schedule-break">{pricingData.schedule.morning.a1a2.break}</p>
-                                                                        <p class="schedule-lessons">{pricingData.schedule.morning.a1a2.lessons}</p>
-                                                                    </>
-                                                                ) : (
-                                                                    <>
-                                                                        <p><strong>B1-C1:</strong> {pricingData.schedule.morning.b1c1.time}</p>
-                                                                        <p class="schedule-break">{pricingData.schedule.morning.b1c1.break}</p>
-                                                                        <p class="schedule-lessons">{pricingData.schedule.morning.b1c1.lessons}</p>
-                                                                    </>
-                                                                )}
+                                                                <p>{pricingData.schedule.morning.all.time}</p>
+                                                                <p class="schedule-break">{pricingData.schedule.morning.all.break}</p>
+                                                                <p class="schedule-lessons">{pricingData.schedule.morning.all.lessons}</p>
                                                             </div>
                                                             <div class="schedule-item">
                                                                 <h6><i class="fas fa-moon"></i> {kurs.data.lang === 'tr' ? 'Öğleden Sonra Kursları' : 'Nachmittagskurse'}</h6>
-                                                                {courseInfo.level === 'a1' || courseInfo.level === 'a2' ? (
-                                                                    <>
-                                                                        <p><strong>A1-A2:</strong> {pricingData.schedule.afternoon.a1a2.time}</p>
-                                                                        <p class="schedule-break">{pricingData.schedule.afternoon.a1a2.break}</p>
-                                                                        <p class="schedule-lessons">{pricingData.schedule.afternoon.a1a2.lessons}</p>
-                                                                    </>
-                                                                ) : (
-                                                                    <>
-                                                                        <p><strong>B1-C1:</strong> {pricingData.schedule.afternoon.b1c1.time}</p>
-                                                                        <p class="schedule-break">{pricingData.schedule.afternoon.b1c1.break}</p>
-                                                                        <p class="schedule-lessons">{pricingData.schedule.afternoon.b1c1.lessons}</p>
-                                                                    </>
-                                                                )}
+                                                                <p>{pricingData.schedule.afternoon.all.time}</p>
+                                                                <p class="schedule-break">{pricingData.schedule.afternoon.all.break}</p>
+                                                                <p class="schedule-lessons">{pricingData.schedule.afternoon.all.lessons}</p>
                                                             </div>
                                                             <p class="schedule-days"><i class="fas fa-calendar-week"></i> {pricingData.schedule.days}</p>
                                                         </div>
@@ -539,35 +519,15 @@ const sectionPath = 'kurse';
                                                     <div class="schedule-info">
                                                         <div class="schedule-item">
                                                             <h6><i class="fas fa-sun"></i> {kurs.data.lang === 'tr' ? 'Sabah Kursları' : 'Vormittagskurse'}</h6>
-                                                            {courseInfo.level === 'a1' || courseInfo.level === 'a2' ? (
-                                                                <>
-                                                                    <p><strong>A1-A2:</strong> {pricingData.schedule.morning.a1a2.time}</p>
-                                                                    <p class="schedule-break">{pricingData.schedule.morning.a1a2.break}</p>
-                                                                    <p class="schedule-lessons">{pricingData.schedule.morning.a1a2.lessons}</p>
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    <p><strong>B1-C1:</strong> {pricingData.schedule.morning.b1c1.time}</p>
-                                                                    <p class="schedule-break">{pricingData.schedule.morning.b1c1.break}</p>
-                                                                    <p class="schedule-lessons">{pricingData.schedule.morning.b1c1.lessons}</p>
-                                                                </>
-                                                            )}
+                                                            <p>{pricingData.schedule.morning.all.time}</p>
+                                                            <p class="schedule-break">{pricingData.schedule.morning.all.break}</p>
+                                                            <p class="schedule-lessons">{pricingData.schedule.morning.all.lessons}</p>
                                                         </div>
                                                         <div class="schedule-item">
                                                             <h6><i class="fas fa-moon"></i> {kurs.data.lang === 'tr' ? 'Öğleden Sonra Kursları' : 'Nachmittagskurse'}</h6>
-                                                            {courseInfo.level === 'a1' || courseInfo.level === 'a2' ? (
-                                                                <>
-                                                                    <p><strong>A1-A2:</strong> {pricingData.schedule.afternoon.a1a2.time}</p>
-                                                                    <p class="schedule-break">{pricingData.schedule.afternoon.a1a2.break}</p>
-                                                                    <p class="schedule-lessons">{pricingData.schedule.afternoon.a1a2.lessons}</p>
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    <p><strong>B1-C1:</strong> {pricingData.schedule.afternoon.b1c1.time}</p>
-                                                                    <p class="schedule-break">{pricingData.schedule.afternoon.b1c1.break}</p>
-                                                                    <p class="schedule-lessons">{pricingData.schedule.afternoon.b1c1.lessons}</p>
-                                                                </>
-                                                            )}
+                                                            <p>{pricingData.schedule.afternoon.all.time}</p>
+                                                            <p class="schedule-break">{pricingData.schedule.afternoon.all.break}</p>
+                                                            <p class="schedule-lessons">{pricingData.schedule.afternoon.all.lessons}</p>
                                                         </div>
                                                         <p class="schedule-days"><i class="fas fa-calendar-week"></i> {pricingData.schedule.days}</p>
                                                     </div>

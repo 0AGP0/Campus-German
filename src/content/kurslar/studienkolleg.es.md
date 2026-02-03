@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-level-up-alt"
     title: "Nivel"
     description: "B1 - B2"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Aplicar Ahora"
+    text: "Enviar Solicitud"
     icon: "fas fa-arrow-right"
-    href: "/reservar"
+    href: "#demand-form"
   secondary:
     text: "Acerca de Studienkolleg"
     icon: "fas fa-info-circle"
@@ -49,25 +50,6 @@ tabs:
       additionalInfo:
         title: "¿Por qué Preparación Studienkolleg?"
         text: "Los exámenes de ingreso a Studienkolleg son bastante competitivos. No solo se requiere alemán, sino también la capacidad de entender y resolver materias en alemán. En nuestro curso, aumenta sus posibilidades de éxito al adquirir tanto conocimiento del idioma como conocimiento básico de materias."
-  - id: "fechas-precios"
-    icon: "fas fa-calendar-alt"
-    title: "Programa y Precios"
-    content:
-      title: "Programas de Preparación Studienkolleg"
-      pricing:
-        - name: "Preparación Studienkolleg (Alemán + Básico)"
-          duration: "8 Semanas"
-          schedule: "Lun - Vie (Intensivo)"
-          price: "1,100 €"
-        - name: "Módulo de Alemán Solamente"
-          duration: "8 Semanas"
-          schedule: "Lun - Vie (Mañana)"
-          price: "750 €"
-        - name: "Coaching Individual de Materias"
-          duration: "Flexible"
-          schedule: "Paquete de 10 Horas"
-          price: "600 €"
-          highlighted: true
   - id: "lecciones"
     icon: "fas fa-book-open"
     title: "Plan de Estudios"

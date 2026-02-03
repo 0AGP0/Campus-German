@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-graduation-cap"
     title: "Level"
     description: "A1 to C1"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Apply Now"
+    text: "Send Request"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "#demand-form"
   secondary:
     text: "Download Course Schedule"
     icon: "fas fa-download"
@@ -49,25 +50,6 @@ tabs:
       additionalInfo:
         title: "Flexible Program"
         text: "Our standard courses are designed for students who cannot attend daytime intensive courses but want to learn German at a regular pace."
-  - id: "dates-prices"
-    icon: "fas fa-calendar-alt"
-    title: "Program and Prices"
-    content:
-      title: "Flexible Payment Options"
-      pricing:
-        - name: "Evening Course"
-          duration: "12 Weeks"
-          schedule: "Mon-Wed-Fri (Evening)"
-          price: "650 €"
-        - name: "Weekend Course"
-          duration: "16 Weeks"
-          schedule: "Saturday (Full Day)"
-          price: "700 €"
-        - name: "Registration Fee"
-          duration: "First Registration"
-          schedule: "One Time"
-          price: "50 €"
-          highlighted: true
   - id: "lessons"
     icon: "fas fa-book-open"
     title: "Lessons"

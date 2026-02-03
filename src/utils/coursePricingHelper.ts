@@ -129,7 +129,7 @@ export function getCoursePricingData(lang: 'tr' | 'de' | 'en' | 'es', slug: stri
       // Kullanıcı seviye seçebilir, bu yüzden genel bir fiyat gösteriyoruz
       pricing = {
         fullCourse: "990€", // Ortalama fiyat (B1 seviyesi baz alınarak)
-        lessons: "20+ 4 / 25+ 4 ders",
+        lessons: "20+ 4 ders",
         duration: "8-12 hafta",
       };
     } else {
@@ -249,9 +249,7 @@ const MONTH_NAMES: Record<string, Record<number, string>> = {
   de: { 1: 'Januar', 2: 'Februar', 3: 'März', 4: 'April', 5: 'Mai', 6: 'Juni', 7: 'Juli', 8: 'August', 9: 'September', 10: 'Oktober', 11: 'November', 12: 'Dezember' },
   en: { 1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July', 8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December' },
   es: { 1: 'Enero', 2: 'Febrero', 3: 'Marzo', 4: 'Abril', 5: 'Mayo', 6: 'Junio', 7: 'Julio', 8: 'Agosto', 9: 'Septiembre', 10: 'Octubre', 11: 'Noviembre', 12: 'Diciembre' },
-};
-
-export function formatCourseDate(ddmm: string, lang: 'tr' | 'de' | 'en' | 'es'): string {
+};export function formatCourseDate(ddmm: string, lang: 'tr' | 'de' | 'en' | 'es'): string {
   if (!ddmm || !ddmm.includes('.')) return ddmm;
   const parts = ddmm.trim().split('.');
   const day = parseInt(parts[0], 10);
@@ -273,4 +271,36 @@ export function getFormattedStartDates(lang: 'tr' | 'de' | 'en' | 'es') {
     b2: { b2_1: format(raw.b2.b2_1), b2_2: format(raw.b2.b2_2) },
     c1: { c1_1: format(raw.c1.c1_1), c1_2: format(raw.c1.c1_2) },
   };
+}
+
+/** Kayıt açılış tarihleri: Seviye ayrımı olmadan, kronolojik sırada "2 Mart" formatında liste. Kurslara kayıt bu tarihlerde açılır. */
+export function getSimpleCourseStartDates(lang: 'tr' | 'de' | 'en' | 'es'): string[] {
+  const pricingLang = lang === 'es' ? 'de' : lang;
+  const raw = coursePricing[pricingLang].startDates;
+  const allRaw = [...raw.a1.a1_1, ...raw.a1.a1_2];
+  const unique = [...new Set(allRaw)];
+  const sortKey = (ddmm: string) => {
+    const [d, m] = ddmm.split('.').map(Number);
+    return m * 100 + d;
+  };
+  unique.sort((a, b) => sortKey(a) - sortKey(b));
+  return unique.map((d) => formatCourseDate(d, lang));
+}
+
+/** Kayıt tarihleri: value = "dd.mm", label = "2 Mart 2026" formatında seçenekler (form dropdown için). */
+export function getStartDateOptions(lang: 'tr' | 'de' | 'en' | 'es', year = 2026): { value: string; label: string }[] {
+  const formatted = getSimpleCourseStartDates(lang);
+  const pricingLang = lang === 'es' ? 'de' : lang;
+  const raw = coursePricing[pricingLang].startDates;
+  const allRaw = [...raw.a1.a1_1, ...raw.a1.a1_2];
+  const unique = [...new Set(allRaw)];
+  unique.sort((a, b) => {
+    const [d1, m1] = a.split('.').map(Number);
+    const [d2, m2] = b.split('.').map(Number);
+    return (m1 * 100 + d1) - (m2 * 100 + d2);
+  });
+  return unique.map((ddmm) => ({
+    value: ddmm,
+    label: (formatCourseDate(ddmm, lang)) + ' ' + year,
+  }));
 }

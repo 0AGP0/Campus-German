@@ -3398,7 +3398,7 @@ section .content-layout .container {
 
 .schedule-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 30px;
     margin-top: 20px;
 }
@@ -3570,6 +3570,24 @@ section .content-layout .container {
 
 .course-dates-table td:last-child {
     border-right: none;
+}
+
+.course-dates-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.course-date-badge {
+    display: inline-block;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1px solid #f59e0b;
+    border-radius: 10px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
 }
 
 .course-dates-info {

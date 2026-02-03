@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-graduation-cap"
     title: "Seviye"
     description: "A1 - C1 Arası"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Hemen Başvur"
+    text: "Talep Gönder"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "#demand-form"
   secondary:
     text: "Ders Programını İndir"
     icon: "fas fa-download"
@@ -49,25 +50,6 @@ tabs:
       additionalInfo:
         title: "Esnek Program"
         text: "Standart kurslarımız, gündüz yoğun kurslara katılamayan ancak düzenli bir tempoda Almanca öğrenmek isteyen öğrenciler için tasarlanmıştır."
-  - id: "tarihler-fiyatlar"
-    icon: "fas fa-calendar-alt"
-    title: "Program ve Fiyatlar"
-    content:
-      title: "Esnek Ödeme Seçenekleri"
-      pricing:
-        - name: "Akşam Kursu"
-          duration: "12 Hafta"
-          schedule: "Pzt-Çar-Cum (Akşam)"
-          price: "650 €"
-        - name: "Hafta Sonu Kursu"
-          duration: "16 Hafta"
-          schedule: "Cumartesi (Tam Gün)"
-          price: "700 €"
-        - name: "Kayıt Ücreti"
-          duration: "İlk Kayıt"
-          schedule: "Tek Seferlik"
-          price: "50 €"
-          highlighted: true
   - id: "dersler"
     icon: "fas fa-book-open"
     title: "Dersler"

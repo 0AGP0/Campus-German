@@ -132,12 +132,24 @@
     border-bottom: none;
 }
 
+.fiyatlar-schedule-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+    .fiyatlar-schedule-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .fiyatlar-schedule-card {
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 16px;
 }
 
 .fiyatlar-schedule-card h4 {
@@ -150,6 +162,28 @@
     margin: 6px 0;
     font-size: 0.95rem;
     color: var(--color-text-secondary);
+}
+
+.fiyatlar-dates-subtitle {
+    margin-bottom: 20px;
+    color: var(--color-text-secondary);
+}
+
+.fiyatlar-dates-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.fiyatlar-date-badge {
+    display: inline-block;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid #0ea5e9;
+    border-radius: 10px;
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 0.95rem;
 }
 
 .fiyatlar-cta {

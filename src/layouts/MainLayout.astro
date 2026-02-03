@@ -36,6 +36,10 @@ const { title = 'CampusGerman - Almanca Dil Kursu', lang = 'tr', includeHizmetCS
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Header height: promo banner her sayfa yüklemesinde açık (152px) -->
+    <script is:inline>
+        document.documentElement.style.setProperty('--header-height', '156px');
+    </script>
     <!-- Script early so header dropdown works as soon as DOM is ready (defer = after parse, before paint) -->
     <script src="/script.js?v=2" defer></script>
 </head>

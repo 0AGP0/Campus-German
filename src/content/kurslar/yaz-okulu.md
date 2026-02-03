@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-home"
     title: "Konaklama"
     description: "Öğrenci Yurdu Dahil"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Hemen Başvur"
+    text: "Talep Gönder"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "#demand-form"
   secondary:
     text: "Yaz Programı"
     icon: "fas fa-calendar-alt"
@@ -51,25 +52,6 @@ tabs:
       additionalInfo:
         title: "Sadece Dil Değil, Deneyim!"
         text: "Yaz okulu sadece dil öğrenmek değil, aynı zamanda Alman kültürünü yaşamak, yeni arkadaşlar edinmek ve unutulmaz anılar biriktirmektir. Sabahları sınıfta, öğleden sonra şehri keşfedersiniz."
-  - id: "tarihler-fiyatlar"
-    icon: "fas fa-calendar-alt"
-    title: "Tarihler ve Fiyatlar"
-    content:
-      title: "2024 Yaz Okulu Dönemleri"
-      pricing:
-        - name: "2 Haftalık Program"
-          duration: "Haziran - Temmuz"
-          schedule: "Ders + Konaklama + Aktivite"
-          price: "950 €"
-        - name: "4 Haftalık Program"
-          duration: "Temmuz - Ağustos"
-          schedule: "Ders + Konaklama + Aktivite"
-          price: "1,750 €"
-        - name: "8 Haftalık Program"
-          duration: "Haziran - Ağustos"
-          schedule: "Ders + Konaklama + Aktivite"
-          price: "3,200 €"
-          highlighted: true
   - id: "dersler"
     icon: "fas fa-book-open"
     title: "Günlük Program"

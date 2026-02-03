@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-level-up-alt"
     title: "Niveau"
     description: "B1 - B2"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Jetzt bewerben"
+    text: "Anfrage senden"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "#demand-form"
   secondary:
     text: "Über Studienkolleg"
     icon: "fas fa-info-circle"
@@ -49,25 +50,6 @@ tabs:
       additionalInfo:
         title: "Warum Studienkolleg-Vorbereitung?"
         text: "Studienkolleg-Aufnahmeprüfungen sind sehr wettbewerbsintensiv. Sie erfordern nicht nur Deutschkenntnisse, sondern auch die Fähigkeit, Fachfächer auf Deutsch zu verstehen und zu lösen. In unserem Kurs erwerben Sie sowohl Sprach- als auch Grundlagenfachwissen und erhöhen so Ihre Erfolgschancen."
-  - id: "termine-preise"
-    icon: "fas fa-calendar-alt"
-    title: "Programme und Preise"
-    content:
-      title: "Studienkolleg-Vorbereitungsprogramme"
-      pricing:
-        - name: "Studienkolleg-Vorbereitung (Deutsch + Grundlagen)"
-          duration: "8 Wochen"
-          schedule: "Mo - Fr (Intensiv)"
-          price: "1.100 €"
-        - name: "Nur Deutsch-Modul"
-          duration: "8 Wochen"
-          schedule: "Mo - Fr (Vormittag)"
-          price: "750 €"
-        - name: "Einzelunterricht Fachfächer-Coaching"
-          duration: "Flexibel"
-          schedule: "10-Stunden-Paket"
-          price: "600 €"
-          highlighted: true
   - id: "lehrplan"
     icon: "fas fa-book-open"
     title: "Lehrplan"

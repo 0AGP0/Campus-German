@@ -1,10 +1,10 @@
 // Kurs Fiyatları ve Tarihleri Data
 export const coursePricing = {
   tr: {
-    // Akademik Almanca Kursları Fiyatları (Yoğun)
+    // Akademik Almanca Kursları Fiyatları (Yoğun) – yeni fiyatlar
     intensive: {
       a1: {
-        fullCourse: "790€",
+        fullCourse: "890€",
         lessons: "20+ 4 ders",
         duration: "8 hafta",
         weeklyLessons: "20 ders",
@@ -18,78 +18,82 @@ export const coursePricing = {
         totalLessons: "20+ 4",
       },
       b1: {
-        fullCourse: "1090€",
-        lessons: "25+ 4 ders",
+        fullCourse: "990€",
+        lessons: "20+ 4 ders",
         duration: "8 hafta",
-        weeklyLessons: "25 ders",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 ders",
+        totalLessons: "20+ 4",
       },
       b2: {
-        fullCourse: "1090€",
-        lessons: "25+ 4 ders",
+        fullCourse: "990€",
+        lessons: "20+ 4 ders",
         duration: "8 hafta",
-        weeklyLessons: "25 ders",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 ders",
+        totalLessons: "20+ 4",
       },
       c1: {
-        fullCourse: "1190€",
-        lessons: "25+ 4 ders",
+        fullCourse: "1090€",
+        lessons: "20+ 4 ders",
         duration: "8 hafta",
-        weeklyLessons: "25 ders",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 ders",
+        totalLessons: "20+ 4",
       },
     },
-    // Online Almanca Kursları Fiyatları
+    // Online Almanca Kursları Fiyatları (intensive ile aynı yeni fiyatlar)
     online: {
       a1: {
-        fullCourse: "390€",
+        fullCourse: "890€",
         lessons: "20+ 4 ders",
         duration: "8 hafta",
         weeklyLessons: "20 ders",
         totalLessons: "20+ 4",
       },
       a2: {
-        fullCourse: "440€",
+        fullCourse: "890€",
         lessons: "20+ 4 ders",
         duration: "8 hafta",
         weeklyLessons: "20 ders",
         totalLessons: "20+ 4",
       },
       b1: {
-        fullCourse: "540€",
-        lessons: "25+ 4 ders",
+        fullCourse: "990€",
+        lessons: "20+ 4 ders",
         duration: "8 hafta",
-        weeklyLessons: "25 ders",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 ders",
+        totalLessons: "20+ 4",
       },
       b2: {
-        fullCourse: "540€",
-        lessons: "25+ 4 ders",
+        fullCourse: "990€",
+        lessons: "20+ 4 ders",
         duration: "8 hafta",
-        weeklyLessons: "25 ders",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 ders",
+        totalLessons: "20+ 4",
       },
       c1: {
-        fullCourse: "590€",
-        lessons: "25+ 4 ders",
+        fullCourse: "1090€",
+        lessons: "20+ 4 ders",
         duration: "8 hafta",
-        weeklyLessons: "25 ders",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 ders",
+        totalLessons: "20+ 4",
       },
     },
-    // Haftalık Kurs Fiyatları
+    // Haftalık Kurs Fiyatları – yeni fiyatlar (1-4: 210€, 5-8: 200€, 9-16: 180€, 17-23: 170€, 24+: 160€)
     weeklyPricing: {
       a1a2: {
-        "2": "Haftalık 260€",
-        "4": "Haftalık 230€",
+        "2": "Haftalık 210€",
+        "4": "Haftalık 210€",
         "8": "Haftalık 200€",
         "16": "Haftalık 180€",
+        "23": "Haftalık 170€",
+        "24": "Haftalık 160€",
       },
       b1b2c1: {
-        "2": "Haftalık 290€",
-        "4": "Haftalık 250€",
-        "8": "Haftalık 225€",
-        "16": "Haftalık 200€",
+        "2": "Haftalık 210€",
+        "4": "Haftalık 210€",
+        "8": "Haftalık 200€",
+        "16": "Haftalık 180€",
+        "23": "Haftalık 170€",
+        "24": "Haftalık 160€",
       },
     },
     // Sınav Hazırlık Kursları Fiyatları
@@ -107,62 +111,47 @@ export const coursePricing = {
         },
         b1: {
           fullCourse: "990€",
-          lessons: "25+ 4 ders",
+          lessons: "20+ 4 ders",
           duration: "8 hafta",
         },
         b2: {
           fullCourse: "1.050€",
-          lessons: "25+ 4 ders",
+          lessons: "20+ 4 ders",
           duration: "8 hafta",
         },
         c1: {
           fullCourse: "1.150€",
-          lessons: "25+ 4 ders",
+          lessons: "20+ 4 ders",
           duration: "8 hafta",
         },
       },
       testdafDsh: {
         fullCourse: "1.390€",
-        lessons: "20+ 4 / 25+ 4 ders",
+        lessons: "20+ 4 ders",
         duration: "8-10 hafta",
       },
     },
-    // Kurs Zamanları
+    // Kurs Zamanları (tüm seviyeler aynı saatlerde)
     schedule: {
       morning: {
-        a1a2: {
+        all: {
           time: "09:00 – 12:30 (*)",
-          break: "20 dakika mola - Günlük 4 Ders Saati",
+          break: "Mola - Günlük 4 Ders Saati",
           lessons: "Günlük 4 Ders Saati",
-        },
-        b1c1: {
-          time: "09:00 – 12:30 (*)",
-          break: "Toplam 30 dakika mola - Günlük 5 Ders Saati",
-          lessons: "Günlük 5 Ders Saati",
         },
       },
       afternoon: {
-        a1a2: {
+        all: {
           time: "13:00 – 16:30 (*)",
-          break: "20 dakika mola",
+          break: "Mola",
           lessons: "Günlük 4 Ders Saati",
-        },
-        b1c1: {
-          time: "13:00 – 16:30 (*)",
-          break: "Toplam 30 dakika mola",
-          lessons: "Günlük 5 Ders Saati",
         },
       },
       evening: {
-        a1a2: {
+        all: {
           time: "18:30 – 22:00 (*)",
-          break: "20 dakika mola",
+          break: "Mola",
           lessons: "Günlük 4 Ders Saati",
-        },
-        b1c1: {
-          time: "18:30 – 22:00 (*)",
-          break: "Toplam 30 dakika mola",
-          lessons: "Günlük 5 Ders Saati",
         },
       },
       days: "Pazartesiden Cumaya ders olacak.",
@@ -208,13 +197,13 @@ export const coursePricing = {
     // Ders Bilgisi
     lessonInfo: "1 ders = 45 dakika",
     // Online kurs notu
-    onlineNote: "1 ders = 45 dakika, A1 - A2 haftalık 20 ders | B1-B2 - C1 haftalık 25 ders",
+    onlineNote: "1 ders = 45 dakika, tüm seviyeler 20+ 4 ders",
   },
   de: {
-    // Akademik Almanca Kursları Fiyatları (Yoğun)
+    // Akademik Almanca Kursları Fiyatları (Yoğun) – neue Preise
     intensive: {
       a1: {
-        fullCourse: "790€",
+        fullCourse: "890€",
         lessons: "20+ 4 UStd",
         duration: "8 Wochen",
         weeklyLessons: "20 UStd",
@@ -228,78 +217,82 @@ export const coursePricing = {
         totalLessons: "20+ 4",
       },
       b1: {
-        fullCourse: "1090€",
-        lessons: "25+ 4 UStd",
+        fullCourse: "990€",
+        lessons: "20+ 4 UStd",
         duration: "8 Wochen",
-        weeklyLessons: "25 UStd",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 UStd",
+        totalLessons: "20+ 4",
       },
       b2: {
-        fullCourse: "1090€",
-        lessons: "25+ 4 UStd",
+        fullCourse: "990€",
+        lessons: "20+ 4 UStd",
         duration: "8 Wochen",
-        weeklyLessons: "25 UStd",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 UStd",
+        totalLessons: "20+ 4",
       },
       c1: {
-        fullCourse: "1190€",
-        lessons: "25+ 4 UStd",
+        fullCourse: "1090€",
+        lessons: "20+ 4 UStd",
         duration: "8 Wochen",
-        weeklyLessons: "25 UStd",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 UStd",
+        totalLessons: "20+ 4",
       },
     },
-    // Online Almanca Kursları Fiyatları
+    // Online Almanca Kursları Fiyatları (wie Intensiv)
     online: {
       a1: {
-        fullCourse: "390€",
+        fullCourse: "890€",
         lessons: "20+ 4 UStd",
         duration: "8 Wochen",
         weeklyLessons: "20 UStd",
         totalLessons: "20+ 4",
       },
       a2: {
-        fullCourse: "440€",
+        fullCourse: "890€",
         lessons: "20+ 4 UStd",
         duration: "8 Wochen",
         weeklyLessons: "20 UStd",
         totalLessons: "20+ 4",
       },
       b1: {
-        fullCourse: "540€",
-        lessons: "25+ 4 UStd",
+        fullCourse: "990€",
+        lessons: "20+ 4 UStd",
         duration: "8 Wochen",
-        weeklyLessons: "25 UStd",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 UStd",
+        totalLessons: "20+ 4",
       },
       b2: {
-        fullCourse: "540€",
-        lessons: "25+ 4 UStd",
+        fullCourse: "990€",
+        lessons: "20+ 4 UStd",
         duration: "8 Wochen",
-        weeklyLessons: "25 UStd",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 UStd",
+        totalLessons: "20+ 4",
       },
       c1: {
-        fullCourse: "590€",
-        lessons: "25+ 4 UStd",
+        fullCourse: "1090€",
+        lessons: "20+ 4 UStd",
         duration: "8 Wochen",
-        weeklyLessons: "25 UStd",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 UStd",
+        totalLessons: "20+ 4",
       },
     },
-    // Haftalık Kurs Fiyatları
+    // Haftalık Kurs Fiyatları – neue Preise
     weeklyPricing: {
       a1a2: {
-        "2": "Wöchentlich 260€",
-        "4": "Wöchentlich 230€",
+        "2": "Wöchentlich 210€",
+        "4": "Wöchentlich 210€",
         "8": "Wöchentlich 200€",
         "16": "Wöchentlich 180€",
+        "23": "Wöchentlich 170€",
+        "24": "Wöchentlich 160€",
       },
       b1b2c1: {
-        "2": "Wöchentlich 290€",
-        "4": "Wöchentlich 250€",
-        "8": "Wöchentlich 225€",
-        "16": "Wöchentlich 200€",
+        "2": "Wöchentlich 210€",
+        "4": "Wöchentlich 210€",
+        "8": "Wöchentlich 200€",
+        "16": "Wöchentlich 180€",
+        "23": "Wöchentlich 170€",
+        "24": "Wöchentlich 160€",
       },
     },
     // Sınav Hazırlık Kursları Fiyatları
@@ -317,62 +310,47 @@ export const coursePricing = {
         },
         b1: {
           fullCourse: "990€",
-          lessons: "25+ 4 UStd",
+          lessons: "20+ 4 UStd",
           duration: "8 Wochen",
         },
         b2: {
           fullCourse: "1.050€",
-          lessons: "25+ 4 UStd",
+          lessons: "20+ 4 UStd",
           duration: "8 Wochen",
         },
         c1: {
           fullCourse: "1.150€",
-          lessons: "25+ 4 UStd",
+          lessons: "20+ 4 UStd",
           duration: "8 Wochen",
         },
       },
       testdafDsh: {
         fullCourse: "1.390€",
-        lessons: "20+ 4 / 25+ 4 UStd",
+        lessons: "20+ 4 UStd",
         duration: "8-10 Wochen",
       },
     },
-    // Kurs Zamanları
+    // Kurs Zamanları (alle Niveaus gleiche Zeiten)
     schedule: {
       morning: {
-        a1a2: {
+        all: {
           time: "09:00 – 12:30 Uhr (*)",
-          break: "20 Min Pause - Tägl. 4 UStd",
+          break: "Pause - Tägl. 4 UStd",
           lessons: "Tägl. 4 UStd",
-        },
-        b1c1: {
-          time: "09:00 – 12:30 Uhr (*)",
-          break: "30 Min Pause - Tägl. 5 UStd",
-          lessons: "Tägl. 5 UStd",
         },
       },
       afternoon: {
-        a1a2: {
+        all: {
           time: "13:00 – 16:30 Uhr (*)",
-          break: "20 Min Pause",
+          break: "Pause",
           lessons: "Tägl. 4 UStd",
-        },
-        b1c1: {
-          time: "13:00 – 16:30 Uhr (*)",
-          break: "30 Min Pause",
-          lessons: "Tägl. 5 UStd",
         },
       },
       evening: {
-        a1a2: {
+        all: {
           time: "18:30 – 22:00 Uhr (*)",
-          break: "20 Min Pause",
+          break: "Pause",
           lessons: "Tägl. 4 UStd",
-        },
-        b1c1: {
-          time: "18:30 – 22:00 Uhr (*)",
-          break: "30 Min Pause",
-          lessons: "Tägl. 5 UStd",
         },
       },
       days: "Unterricht von Montag bis Freitag.",
@@ -418,13 +396,13 @@ export const coursePricing = {
     // Ders Bilgisi
     lessonInfo: "1 UStd = 45 Min",
     // Online kurs notu
-    onlineNote: "1 Unterrichtsstunde = 45 Minuten, A1 - A2 wöchentlich 20 UStd | B1-B2 - C1 wöchentlich 25 UStd",
+    onlineNote: "1 UStd = 45 Min, alle Niveaus 20+ 4 UStd",
   },
   en: {
-    // Academic German Courses Pricing (Intensive)
+    // Academic German Courses Pricing (Intensive) – new prices
     intensive: {
       a1: {
-        fullCourse: "790€",
+        fullCourse: "890€",
         lessons: "20+ 4 lessons",
         duration: "8 weeks",
         weeklyLessons: "20 lessons",
@@ -438,78 +416,82 @@ export const coursePricing = {
         totalLessons: "20+ 4",
       },
       b1: {
-        fullCourse: "1090€",
-        lessons: "25+ 4 lessons",
+        fullCourse: "990€",
+        lessons: "20+ 4 lessons",
         duration: "8 weeks",
-        weeklyLessons: "25 lessons",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 lessons",
+        totalLessons: "20+ 4",
       },
       b2: {
-        fullCourse: "1090€",
-        lessons: "25+ 4 lessons",
+        fullCourse: "990€",
+        lessons: "20+ 4 lessons",
         duration: "8 weeks",
-        weeklyLessons: "25 lessons",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 lessons",
+        totalLessons: "20+ 4",
       },
       c1: {
-        fullCourse: "1190€",
-        lessons: "25+ 4 lessons",
+        fullCourse: "1090€",
+        lessons: "20+ 4 lessons",
         duration: "8 weeks",
-        weeklyLessons: "25 lessons",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 lessons",
+        totalLessons: "20+ 4",
       },
     },
-    // Online German Courses Pricing
+    // Online German Courses Pricing (same as intensive)
     online: {
       a1: {
-        fullCourse: "390€",
+        fullCourse: "890€",
         lessons: "20+ 4 lessons",
         duration: "8 weeks",
         weeklyLessons: "20 lessons",
         totalLessons: "20+ 4",
       },
       a2: {
-        fullCourse: "440€",
+        fullCourse: "890€",
         lessons: "20+ 4 lessons",
         duration: "8 weeks",
         weeklyLessons: "20 lessons",
         totalLessons: "20+ 4",
       },
       b1: {
-        fullCourse: "540€",
-        lessons: "25+ 4 lessons",
+        fullCourse: "990€",
+        lessons: "20+ 4 lessons",
         duration: "8 weeks",
-        weeklyLessons: "25 lessons",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 lessons",
+        totalLessons: "20+ 4",
       },
       b2: {
-        fullCourse: "540€",
-        lessons: "25+ 4 lessons",
+        fullCourse: "990€",
+        lessons: "20+ 4 lessons",
         duration: "8 weeks",
-        weeklyLessons: "25 lessons",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 lessons",
+        totalLessons: "20+ 4",
       },
       c1: {
-        fullCourse: "590€",
-        lessons: "25+ 4 lessons",
+        fullCourse: "1090€",
+        lessons: "20+ 4 lessons",
         duration: "8 weeks",
-        weeklyLessons: "25 lessons",
-        totalLessons: "25+ 4",
+        weeklyLessons: "20 lessons",
+        totalLessons: "20+ 4",
       },
     },
-    // Weekly Course Pricing
+    // Weekly Course Pricing – new prices
     weeklyPricing: {
       a1a2: {
-        "2": "Weekly 260€",
-        "4": "Weekly 230€",
+        "2": "Weekly 210€",
+        "4": "Weekly 210€",
         "8": "Weekly 200€",
         "16": "Weekly 180€",
+        "23": "Weekly 170€",
+        "24": "Weekly 160€",
       },
       b1b2c1: {
-        "2": "Weekly 290€",
-        "4": "Weekly 250€",
-        "8": "Weekly 225€",
-        "16": "Weekly 200€",
+        "2": "Weekly 210€",
+        "4": "Weekly 210€",
+        "8": "Weekly 200€",
+        "16": "Weekly 180€",
+        "23": "Weekly 170€",
+        "24": "Weekly 160€",
       },
     },
     // Exam Preparation Courses Pricing
@@ -527,62 +509,47 @@ export const coursePricing = {
         },
         b1: {
           fullCourse: "990€",
-          lessons: "25+ 4 lessons",
+          lessons: "20+ 4 lessons",
           duration: "8 weeks",
         },
         b2: {
           fullCourse: "1,050€",
-          lessons: "25+ 4 lessons",
+          lessons: "20+ 4 lessons",
           duration: "8 weeks",
         },
         c1: {
           fullCourse: "1,150€",
-          lessons: "25+ 4 lessons",
+          lessons: "20+ 4 lessons",
           duration: "8 weeks",
         },
       },
       testdafDsh: {
         fullCourse: "1,390€",
-        lessons: "20+ 4 / 25+ 4 lessons",
+        lessons: "20+ 4 lessons",
         duration: "8-10 weeks",
       },
     },
-    // Course Schedule
+    // Course Schedule (all levels same times)
     schedule: {
       morning: {
-        a1a2: {
+        all: {
           time: "09:00 – 12:30 (*)",
-          break: "20 minutes break - Daily 4 lessons",
+          break: "Break - Daily 4 lessons",
           lessons: "Daily 4 lessons",
-        },
-        b1c1: {
-          time: "09:00 – 12:30 (*)",
-          break: "Total 30 minutes break - Daily 5 lessons",
-          lessons: "Daily 5 lessons",
         },
       },
       afternoon: {
-        a1a2: {
+        all: {
           time: "13:00 – 16:30 (*)",
-          break: "20 minutes break",
+          break: "Break",
           lessons: "Daily 4 lessons",
-        },
-        b1c1: {
-          time: "13:00 – 16:30 (*)",
-          break: "Total 30 minutes break",
-          lessons: "Daily 5 lessons",
         },
       },
       evening: {
-        a1a2: {
+        all: {
           time: "18:30 – 22:00 (*)",
-          break: "20 minutes break",
+          break: "Break",
           lessons: "Daily 4 lessons",
-        },
-        b1c1: {
-          time: "18:30 – 22:00 (*)",
-          break: "Total 30 minutes break",
-          lessons: "Daily 5 lessons",
         },
       },
       days: "Classes from Monday to Friday.",
@@ -626,7 +593,7 @@ export const coursePricing = {
     // Lesson Information
     lessonInfo: "1 lesson = 45 minutes",
     // Online course note
-    onlineNote: "1 lesson = 45 minutes, A1 - A2 weekly 20 lessons | B1-B2 - C1 weekly 25 lessons",
+    onlineNote: "1 lesson = 45 minutes, all levels 20+ 4 lessons",
   },
 };
 

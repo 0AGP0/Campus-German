@@ -105,7 +105,9 @@ const navTranslations = {
         insuranceBank: 'Sağlık Sigortası/Bloke ve Banka Hesabı',
         bureaucracy: 'Almanya Bürokrasi Desteği',
         freeResources: 'Ücretsiz Almanca Kaynaklar',
-        servicesCta: 'Ücretsiz Danışma Randevusu Al'
+        servicesCta: 'Ücretsiz Danışma Randevusu Al',
+        promoBannerText: 'Bremen için sadece mart ayı kurslarına özel indirim için ',
+        promoBannerLink: "WhatsApp'tan ulaşın"
     },
     de: {
         home: 'Startseite',
@@ -202,7 +204,9 @@ const navTranslations = {
         insuranceBank: 'Versicherung & Bank',
         bureaucracy: 'Bürokratie-Support',
         freeResources: 'Deutsch-Ressourcen',
-        servicesCta: 'Beratungstermin'
+        servicesCta: 'Beratungstermin',
+        promoBannerText: 'Sonderrabatt nur für März-Kurse in Bremen – ',
+        promoBannerLink: 'Per WhatsApp kontaktieren'
     },
     en: {
         home: 'Home',
@@ -302,7 +306,9 @@ const navTranslations = {
         insuranceBank: 'Health Insurance/Blocked Account and Bank Account',
         bureaucracy: 'Germany Bureaucracy Support',
         freeResources: 'Free German Resources',
-        servicesCta: 'Schedule Free Consultation'
+        servicesCta: 'Schedule Free Consultation',
+        promoBannerText: 'Special discount for March courses in Bremen only – ',
+        promoBannerLink: 'Contact via WhatsApp'
     },
     es: {
         home: 'Inicio',
@@ -402,7 +408,9 @@ const navTranslations = {
         insuranceBank: 'Seguro de Salud/Cuenta Bloqueada y Cuenta Bancaria',
         bureaucracy: 'Apoyo Burocrático en Alemania',
         freeResources: 'Recursos Gratuitos de Alemán',
-        servicesCta: 'Programar Consulta Gratuita'
+        servicesCta: 'Programar Consulta Gratuita',
+        promoBannerText: 'Descuento especial solo para cursos de marzo en Bremen – ',
+        promoBannerLink: 'Contáctenos por WhatsApp'
     }
 };
 
@@ -497,6 +505,7 @@ const sectionMapping = {
         contact: 'iletisim',
         winners: 'basari-hikayeleri',
         booking: 'buchung',
+        brochure: 'brosur',
         pricesDates: 'fiyatlar-tarihler'
     },
     de: {
@@ -507,6 +516,7 @@ const sectionMapping = {
         contact: 'kontakt',
         winners: 'erfolgsgeschichten',
         booking: 'buchung',
+        brochure: 'brosur',
         pricesDates: 'fiyatlar-tarihler'
     },
     en: {
@@ -517,6 +527,7 @@ const sectionMapping = {
         contact: 'contact',
         winners: 'success-stories',
         booking: 'booking',
+        brochure: 'brosur',
         pricesDates: 'fiyatlar-tarihler'
     },
     es: {
@@ -527,6 +538,7 @@ const sectionMapping = {
         contact: 'contacto',
         winners: 'historias-exito',
         booking: 'reservar',
+        brochure: 'brosur',
         pricesDates: 'fiyatlar-tarihler'
     }
 };
@@ -536,7 +548,16 @@ const slugs = slugMapping;
 const sections = sectionMapping[lang as keyof typeof sectionMapping];
 ---
 
-<header class="main-header">
+<header class="main-header" id="main-header">
+    <!-- Promo Banner (Bremen Mart indirim - kapatılabilir) -->
+    <div class="promo-banner" id="promo-banner" role="region" aria-label="Kampanya">
+        <div class="promo-banner-inner">
+            <span class="promo-banner-text"><i class="fas fa-tag promo-banner-icon" aria-hidden="true"></i> {t.promoBannerText}<a href="https://wa.me/491636927842" target="_blank" rel="noopener noreferrer" class="promo-banner-link"><i class="fab fa-whatsapp"></i> {t.promoBannerLink}</a></span>
+            <button type="button" class="promo-banner-close" id="promo-banner-close" aria-label={lang === 'tr' ? 'Bannerı kapat' : lang === 'de' ? 'Banner schließen' : lang === 'es' ? 'Cerrar banner' : 'Close banner'}>
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
     <!-- Top Header Bar -->
     <div class="top-header">
         <div class="top-header-container">
@@ -555,12 +576,12 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                     <span>{t.getQuote}</span>
                 </a>
                 <span class="top-header-divider"></span>
-                <a href={`/${lang}/${sections.contact}`} class="top-header-link">
-                    <i class="fas fa-envelope"></i>
+                <a href="https://wa.me/491636927842" target="_blank" rel="noopener noreferrer" class="top-header-link">
+                    <i class="fab fa-whatsapp"></i>
                     <span>{t.contactUs}</span>
                 </a>
                 <span class="top-header-divider"></span>
-                <a href="/Campus_German_Brosur.pdf" target="_blank" class="top-header-link">
+                <a href={`/${lang}/${sections.brochure}`} class="top-header-link">
                     <i class="fas fa-download"></i>
                     <span>{t.brochure}</span>
                 </a>
@@ -658,13 +679,11 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                                     <!-- Online Tab -->
                                     <div class="course-tab-panel" data-panel="online">
                                         <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineOverview[lang]}`} class="dropdown-link">{t.onlineOverview}</a>
-                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineGerman[lang]}`} class="dropdown-link">{t.onlineGerman}</a>
                                         <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineA1[lang]}`} class="dropdown-link">{t.onlineA1}</a>
                                         <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineA2[lang]}`} class="dropdown-link">{t.onlineA2}</a>
                                         <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineB1[lang]}`} class="dropdown-link">{t.onlineB1}</a>
                                         <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineB2[lang]}`} class="dropdown-link">{t.onlineB2}</a>
                                         <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineC1[lang]}`} class="dropdown-link">{t.onlineC1}</a>
-                                        <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineExam[lang]}`} class="dropdown-link">{t.onlineExam}</a>
                                     </div>
                                     <!-- Sınav Hazırlık Tab -->
                                     <div class="course-tab-panel" data-panel="sinav">
@@ -702,13 +721,13 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                         </div>
                     </li>
 
-                    <!-- 2. Hakkımızda - Minimal Dropdown -->
+                    <!-- 2. Hakkımızda - Minimal Dropdown (iki sütun) -->
                     <li class="nav-item">
                         <a href={`/${lang}/${sections.about}`} class="nav-link">
                             <span>{t.about}</span>
                             <i class="fas fa-chevron-down dropdown-arrow"></i>
                         </a>
-                        <div class="dropdown-menu">
+                        <div class="dropdown-menu dropdown-menu-cols">
                             <a href={`/${lang}/${sections.about}/${slugs.mission[lang]}`} class="dropdown-link">{t.mission}</a>
                             <a href={`/${lang}/${sections.about}/${slugs.quality[lang]}`} class="dropdown-link">{t.quality}</a>
                             <a href={`/${lang}/${sections.about}/${slugs.whyBremen[lang]}`} class="dropdown-link">{t.whyBremen}</a>
@@ -724,13 +743,13 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                         </div>
                     </li>
 
-                    <!-- 3. Avantajlarımız - Minimal Dropdown -->
+                    <!-- 3. Avantajlarımız - Minimal Dropdown (iki sütun) -->
                     <li class="nav-item">
                         <a href={`/${lang}/${sections.advantages}`} class="nav-link">
                             <span>{t.advantages}</span>
                             <i class="fas fa-chevron-down dropdown-arrow"></i>
                         </a>
-                        <div class="dropdown-menu">
+                        <div class="dropdown-menu dropdown-menu-cols">
                             <a href={`/${lang}/${sections.advantages}/${slugs.hybrid[lang]}`} class="dropdown-link">{t.hybrid}</a>
                             <a href={`/${lang}/${sections.advantages}/${slugs.cityTours[lang]}`} class="dropdown-link">{t.cityTours}</a>
                             <a href={`/${lang}/${sections.advantages}/${slugs.speakingClub[lang]}`} class="dropdown-link">{t.speakingClub}</a>
@@ -742,13 +761,13 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                         </div>
                     </li>
 
-                    <!-- 4. Sunduklarımız - Minimal Dropdown -->
+                    <!-- 4. Sunduklarımız - Minimal Dropdown (iki sütun) -->
                     <li class="nav-item">
                         <a href={`/${lang}/${sections.services}`} class="nav-link">
                             <span>{t.services}</span>
                             <i class="fas fa-chevron-down dropdown-arrow"></i>
                         </a>
-                        <div class="dropdown-menu">
+                        <div class="dropdown-menu dropdown-menu-cols">
                             <a href={`/${lang}/${sections.services}/${slugs.universityPlacement[lang]}`} class="dropdown-link">{t.universityPlacement}</a>
                             <a href={`/${lang}/${sections.services}/${slugs.visaGuidance[lang]}`} class="dropdown-link">{t.visaGuidance}</a>
                             <a href={`/${lang}/${sections.services}/${slugs.accommodation[lang]}`} class="dropdown-link">{t.accommodation}</a>
@@ -878,9 +897,6 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                             <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineOverview[lang]}`} class="mobile-submenu-link">{t.onlineOverview}</a>
                         </li>
                         <li class="mobile-submenu-item">
-                            <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineGerman[lang]}`} class="mobile-submenu-link">{t.onlineGerman}</a>
-                        </li>
-                        <li class="mobile-submenu-item">
                             <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineA1[lang]}`} class="mobile-submenu-link">{t.onlineA1}</a>
                         </li>
                         <li class="mobile-submenu-item">
@@ -894,9 +910,6 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                         </li>
                         <li class="mobile-submenu-item">
                             <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineC1[lang]}`} class="mobile-submenu-link">{t.onlineC1}</a>
-                        </li>
-                        <li class="mobile-submenu-item">
-                            <a href={`/${lang}/${sections.courses}/${courseSlugs.onlineExam[lang]}`} class="mobile-submenu-link">{t.onlineExam}</a>
                         </li>
                         
                         <!-- Sınav Hazırlık -->
@@ -1128,3 +1141,36 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
         </div>
     </div>
 </header>
+
+<script>
+    (function() {
+        const HEADER_HEIGHT_DEFAULT = 112;
+        const PROMO_BANNER_HEIGHT = 44;
+
+        function setHeaderHeight(px) {
+            document.documentElement.style.setProperty('--header-height', px + 'px');
+        }
+
+        function hidePromo() {
+            const banner = document.getElementById('promo-banner');
+            if (banner) {
+                banner.classList.add('promo-banner-closed');
+                banner.setAttribute('aria-hidden', 'true');
+            }
+            setHeaderHeight(HEADER_HEIGHT_DEFAULT);
+        }
+
+        function initPromoBanner() {
+            const closeBtn = document.getElementById('promo-banner-close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', hidePromo);
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPromoBanner);
+        } else {
+            initPromoBanner();
+        }
+    })();
+</script>

@@ -1,0 +1,305 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/brosur.css';
+import { brochures } from '../../data/brochures';
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'tr' } },
+        { params: { lang: 'de' } },
+        { params: { lang: 'en' } },
+        { params: { lang: 'es' } },
+    ];
+}
+
+const { lang } = Astro.params;
+const langKey = lang as 'tr' | 'de' | 'en' | 'es';
+
+// Course options for dropdown (general course categories - from Header labels)
+const courseOptionsByLang = {
+    tr: [
+        { value: '', label: 'İlgilendiğiniz kursu seçiniz' },
+        { value: 'yogun-deutsch', label: 'Yoğun Almanca Kursları Genel Bakış' },
+        { value: 'donemsel-kurslar-genel-bakis', label: 'Dönemsel Almanca Kursları Genel Bakış' },
+        { value: 'online-kurslar-genel-bakis', label: 'Online Almanca Kursları Genel Bakış' },
+        { value: 'sinav-hazirlik-genel-bakis', label: 'Almanca Sınav Hazırlık Kursları Genel Bakış' },
+        { value: 'kurumsal-kurs', label: 'Firmalara özel Almanca Kursu' },
+        { value: 'diger', label: 'Diğer / Henüz kararsız' },
+    ],
+    de: [
+        { value: '', label: 'Wählen Sie Ihren Kurs' },
+        { value: 'intensiv-deutsch', label: 'Intensivkurse Übersicht' },
+        { value: 'saisonal-uebersicht', label: 'Saisonkurse Übersicht' },
+        { value: 'online-uebersicht', label: 'Online-Kurse Übersicht' },
+        { value: 'pruefungsvorbereitung-uebersicht', label: 'Prüfungsvorbereitung Übersicht' },
+        { value: 'firmenkurs', label: 'Firmenkurs' },
+        { value: 'sonstige', label: 'Sonstige / Noch unschlüssig' },
+    ],
+    en: [
+        { value: '', label: 'Select the course you are interested in' },
+        { value: 'intensive-german', label: 'Intensive German Courses Overview' },
+        { value: 'seasonal-overview', label: 'Seasonal German Courses Overview' },
+        { value: 'online-overview', label: 'Online German Courses Overview' },
+        { value: 'exam-preparation-overview', label: 'German Exam Preparation Courses Overview' },
+        { value: 'corporate-course', label: 'Corporate German Course' },
+        { value: 'other', label: 'Other / Not sure yet' },
+    ],
+    es: [
+        { value: '', label: 'Seleccione el curso que le interesa' },
+        { value: 'aleman-intensivo', label: 'Resumen de Cursos Intensivos de Alemán' },
+        { value: 'resumen-estacional', label: 'Resumen de Cursos Estacionales de Alemán' },
+        { value: 'resumen-online', label: 'Resumen de Cursos Online de Alemán' },
+        { value: 'resumen-preparacion-examenes', label: 'Resumen de Cursos de Preparación de Exámenes' },
+        { value: 'curso-empresarial', label: 'Curso de Alemán para Empresas' },
+        { value: 'otro', label: 'Otro / Aún no decidido' },
+    ],
+};
+
+const t = {
+    tr: {
+        title: 'Broşürler - CampusGerman',
+        heroTitle: 'Broşürlerimiz',
+        heroSub: 'Ücretsiz indirin',
+        heroDescription: 'Kurslarımız ve hizmetlerimiz hakkında broşürleri ücretsiz indirmek için formu doldurun. Seçtiğiniz broşürler anında indirilebilir olacaktır.',
+        heroBadge1: 'Ücretsiz',
+        heroBadge2: 'Anında indirme',
+        heroBadge3: 'PDF formatında',
+        step1: 'Broşür seçin',
+        step2: 'Bilgilerinizi girin',
+        selectBrochures: 'Broşürlerinizi seçin',
+        selectBrochuresHint: 'İndirmek istediğiniz broşürleri işaretleyin (birden fazla seçebilirsiniz).',
+        firstName: 'Ad',
+        firstNamePlaceholder: 'Adınız',
+        lastName: 'Soyad',
+        lastNamePlaceholder: 'Soyadınız',
+        email: 'E-posta',
+        emailPlaceholder: 'E-posta adresiniz',
+        phone: 'Telefon',
+        phonePlaceholder: 'Telefon numaranız',
+        courseInterest: 'İlgilendiğiniz kurs',
+        submit: 'Broşürleri İndir',
+        successTitle: 'Teşekkürler!',
+        successMessage: 'Seçtiğiniz broşürleri aşağıdaki bağlantılardan ücretsiz indirebilirsiniz.',
+        downloadPdf: 'PDF İndir',
+        privacyNote: 'Bilgileriniz yalnızca broşür indirme talebiniz için kullanılacaktır.',
+    },
+    de: {
+        title: 'Broschüren - CampusGerman',
+        heroTitle: 'Unsere Broschüren',
+        heroSub: 'Kostenlos herunterladen',
+        heroDescription: 'Füllen Sie das Formular aus, um unsere Broschüren zu Kursen und Leistungen kostenlos herunterzuladen. Ihre ausgewählten Broschüren stehen sofort zum Download bereit.',
+        heroBadge1: 'Kostenlos',
+        heroBadge2: 'Sofort-Download',
+        heroBadge3: 'PDF-Format',
+        step1: 'Broschüren wählen',
+        step2: 'Ihre Angaben',
+        selectBrochures: 'Wählen Sie Ihre Broschüren',
+        selectBrochuresHint: 'Markieren Sie die Broschüren, die Sie herunterladen möchten (Mehrfachauswahl möglich).',
+        firstName: 'Vorname',
+        firstNamePlaceholder: 'Ihr Vorname',
+        lastName: 'Nachname',
+        lastNamePlaceholder: 'Ihr Nachname',
+        email: 'E-Mail',
+        emailPlaceholder: 'Ihre E-Mail-Adresse',
+        phone: 'Telefon',
+        phonePlaceholder: 'Ihre Telefonnummer',
+        courseInterest: 'Kurs, der Sie interessiert',
+        submit: 'Broschüren herunterladen',
+        successTitle: 'Vielen Dank!',
+        successMessage: 'Sie können Ihre ausgewählten Broschüren über die folgenden Links kostenlos herunterladen.',
+        downloadPdf: 'PDF herunterladen',
+        privacyNote: 'Ihre Angaben werden nur für Ihre Broschüren-Anfrage verwendet.',
+    },
+    en: {
+        title: 'Brochures - CampusGerman',
+        heroTitle: 'Our Brochures',
+        heroSub: 'Download for free',
+        heroDescription: 'Fill in the form to download our brochures about courses and services for free. Your selected brochures will be available to download immediately.',
+        heroBadge1: 'Free',
+        heroBadge2: 'Instant download',
+        heroBadge3: 'PDF format',
+        step1: 'Choose brochures',
+        step2: 'Your details',
+        selectBrochures: 'Select your brochures',
+        selectBrochuresHint: 'Check the brochures you want to download (you can select more than one).',
+        firstName: 'First name',
+        firstNamePlaceholder: 'Your first name',
+        lastName: 'Last name',
+        lastNamePlaceholder: 'Your last name',
+        email: 'Email',
+        emailPlaceholder: 'Your email address',
+        phone: 'Phone',
+        phonePlaceholder: 'Your phone number',
+        courseInterest: 'Course you are interested in',
+        submit: 'Download Brochures',
+        successTitle: 'Thank you!',
+        successMessage: 'You can download your selected brochures for free using the links below.',
+        downloadPdf: 'Download PDF',
+        privacyNote: 'Your information will only be used for your brochure request.',
+    },
+    es: {
+        title: 'Folletos - CampusGerman',
+        heroTitle: 'Nuestros folletos',
+        heroSub: 'Descarga gratuita',
+        heroDescription: 'Rellene el formulario para descargar gratuitamente nuestros folletos sobre cursos y servicios. Los folletos seleccionados estarán disponibles al instante.',
+        heroBadge1: 'Gratis',
+        heroBadge2: 'Descarga inmediata',
+        heroBadge3: 'Formato PDF',
+        step1: 'Elegir folletos',
+        step2: 'Sus datos',
+        selectBrochures: 'Seleccione sus folletos',
+        selectBrochuresHint: 'Marque los folletos que desea descargar (puede seleccionar más de uno).',
+        firstName: 'Nombre',
+        firstNamePlaceholder: 'Su nombre',
+        lastName: 'Apellidos',
+        lastNamePlaceholder: 'Sus apellidos',
+        email: 'Correo electrónico',
+        emailPlaceholder: 'Su correo electrónico',
+        phone: 'Teléfono',
+        phonePlaceholder: 'Su número de teléfono',
+        courseInterest: 'Curso que le interesa',
+        submit: 'Descargar folletos',
+        successTitle: '¡Gracias!',
+        successMessage: 'Puede descargar sus folletos seleccionados gratuitamente mediante los enlaces siguientes.',
+        downloadPdf: 'Descargar PDF',
+        privacyNote: 'Su información solo se utilizará para su solicitud de folletos.',
+    },
+};
+
+const translations = t[langKey];
+const courseOptions = courseOptionsByLang[langKey];
+---
+
+<MainLayout title={translations.title} lang={lang}>
+    <!-- Hero: tam genişlik, kompakt şerit -->
+    <section class="brochure-hero">
+        <div class="brochure-hero-inner">
+            <h1 class="brochure-hero-title">{translations.heroTitle} <span class="brochure-hero-accent">– {translations.heroSub}</span></h1>
+            <p class="brochure-hero-desc">{translations.heroDescription}</p>
+        </div>
+    </section>
+
+    <!-- Form: az yan boşluk, geniş kart -->
+    <section class="brochure-section" id="brochure-form-section">
+        <div class="brochure-section-inner">
+            <div class="brochure-form-wrapper">
+                <form id="brochureForm" class="brochure-form">
+                    <input type="text" name="website" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;tabindex:-1" autocomplete="off" aria-hidden="true" />
+
+                    <div class="form-block brochure-selection">
+                        <h2 class="form-block-title">{translations.selectBrochures}</h2>
+                        <p class="form-block-hint">{translations.selectBrochuresHint}</p>
+                        <div class="brochure-grid">
+                            {brochures.map((brochure) => (
+                                <label class="brochure-card">
+                                    <input type="checkbox" name="brochureIds" value={brochure.id} class="brochure-checkbox" />
+                                    <span class="brochure-card-inner">
+                                        <span class="brochure-check-overlay" aria-hidden="true"><i class="fas fa-check"></i></span>
+                                        <span class="brochure-image-wrap">
+                                            <img
+                                                src={brochure.image}
+                                                alt={brochure.title[langKey]}
+                                                class="brochure-image"
+                                                width="200"
+                                                height="280"
+                                                data-fallback="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='280' viewBox='0 0 200 280'%3E%3Crect fill='%23e2e8f0' width='200' height='280'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='14'%3EPDF%3C/text%3E%3C/svg%3E"
+                                            />
+                                        </span>
+                                        <span class="brochure-title">{brochure.title[langKey]}</span>
+                                    </span>
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div class="form-block form-fields">
+                        <h2 class="form-block-title">{translations.step2}</h2>
+                        <div class="form-row form-row-2">
+                            <div class="form-group">
+                                <label for="firstName" class="visually-hidden">{translations.firstName}</label>
+                                <input type="text" id="firstName" name="firstName" required placeholder={translations.firstNamePlaceholder} />
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" class="visually-hidden">{translations.lastName}</label>
+                                <input type="text" id="lastName" name="lastName" required placeholder={translations.lastNamePlaceholder} />
+                            </div>
+                        </div>
+                        <div class="form-row form-row-2">
+                            <div class="form-group">
+                                <label for="email" class="visually-hidden">{translations.email}</label>
+                                <input type="email" id="email" name="email" required placeholder={translations.emailPlaceholder} />
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="visually-hidden">{translations.phone}</label>
+                                <input type="tel" id="phone" name="phone" required placeholder={translations.phonePlaceholder} />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseInterest" class="visually-hidden">{translations.courseInterest}</label>
+                            <select id="courseInterest" name="courseInterest" required>
+                                {courseOptions.map((opt) => (
+                                    <option value={opt.value}>{opt.label}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <p class="privacy-note">{translations.privacyNote}</p>
+                        <div class="form-actions">
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-download"></i>
+                                <span>{translations.submit}</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div id="brochureSuccess" class="brochure-success" hidden>
+                    <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+                    <h2 class="success-title">{translations.successTitle}</h2>
+                    <p class="success-message">{translations.successMessage}</p>
+                    <div id="downloadLinks" class="download-links"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>
+
+<script define:vars={{ brochures: brochures, langKey }}>
+    document.querySelectorAll('.brochure-image').forEach((img) => {
+        img.addEventListener('error', function () {
+            const fallback = this.dataset.fallback;
+            if (fallback) this.src = fallback;
+        });
+    });
+
+    const form = document.getElementById('brochureForm');
+    const formSection = document.getElementById('brochure-form-section');
+    const successEl = document.getElementById('brochureSuccess');
+    const downloadLinksEl = document.getElementById('downloadLinks');
+
+    form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const brochureIds = Array.from(form.querySelectorAll('input[name="brochureIds"]:checked')).map((el) => el.value);
+        if (brochureIds.length === 0) {
+            alert(langKey === 'tr' ? 'Lütfen en az bir broşür seçin.' : langKey === 'de' ? 'Bitte wählen Sie mindestens eine Broschüre.' : langKey === 'en' ? 'Please select at least one brochure.' : 'Por favor seleccione al menos un folleto.');
+            return;
+        }
+
+        const selected = brochures.filter((b) => brochureIds.includes(b.id));
+        downloadLinksEl.innerHTML = '';
+        selected.forEach((brochure) => {
+            const a = document.createElement('a');
+            a.href = brochure.pdf;
+            a.download = brochure.pdf.split('/').pop() || 'brochure.pdf';
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.className = 'download-link-btn';
+            a.innerHTML = `<i class="fas fa-file-pdf"></i> <span>${brochure.title[langKey]}</span>`;
+            downloadLinksEl.appendChild(a);
+        });
+
+        form.hidden = true;
+        successEl.hidden = false;
+        successEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+</script>

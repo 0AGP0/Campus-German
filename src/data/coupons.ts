@@ -9,7 +9,7 @@ export interface Coupon {
 }
 
 export const VALID_COUPONS: Coupon[] = [
-  { code: 'CAMPUS10', discountPercent: 10 },
+  { code: 'HBCampusGerman', discountPercent: 10 },
 ];
 
 export function getCouponByCode(input: string): Coupon | null {

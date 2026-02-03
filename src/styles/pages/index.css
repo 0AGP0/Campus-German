@@ -6,6 +6,11 @@ main section + section {
     margin-top: 24px;
 }
 
+/* Şimdilik gizlenecek bölümler (Başarı Hikayelerimiz vb.) */
+.section-hidden {
+    display: none !important;
+}
+
 /* ===== LOGO SLIDER SECTION (University Partners) ===== */
 .logo-slider-section {
     padding: 24px 0 32px;
@@ -144,6 +149,39 @@ main section + section {
     line-height: 1.7;
 }
 
+/* Carousel wrapper – mobilde ok butonları ile birlikte */
+.why-campusgerman-carousel-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.why-campusgerman-carousel-btn {
+    display: none;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--color-primary);
+    background: white;
+    color: var(--color-primary);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.why-campusgerman-carousel-btn:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: scale(1.05);
+}
+.why-campusgerman-carousel-btn:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
 .why-campusgerman-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -250,6 +288,58 @@ main section + section {
     .why-campusgerman-section .section-subtitle {
         font-size: 1rem;
     }
+    /* Mobilde carousel: yatay kaydırma + ok butonları */
+    .why-campusgerman-carousel-btn {
+        display: flex;
+    }
+    .why-campusgerman-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        gap: 12px;
+        padding: 8px 0;
+        scrollbar-width: thin;
+    }
+    .why-campusgerman-grid::-webkit-scrollbar {
+        height: 6px;
+    }
+    .why-campusgerman-grid::-webkit-scrollbar-track {
+        background: var(--color-primary-light);
+        border-radius: 3px;
+    }
+    .why-campusgerman-grid::-webkit-scrollbar-thumb {
+        background: var(--color-primary);
+        border-radius: 3px;
+    }
+    .why-campusgerman-card {
+        flex: 0 0 min(82%, 300px);
+        min-width: 240px;
+        scroll-snap-align: start;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px 16px;
+        gap: 12px;
+    }
+    .why-campusgerman-card-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1rem;
+        border-radius: 12px;
+    }
+    .why-campusgerman-card-content {
+        width: 100%;
+    }
+    .why-campusgerman-card-title {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+    }
+    .why-campusgerman-card-desc {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
 }
 
 @media (max-width: 479px) {
@@ -259,8 +349,21 @@ main section + section {
     .why-campusgerman-section .section-title {
         font-size: 1.8rem;
     }
-    .why-campusgerman-grid {
-        grid-template-columns: 1fr;
+    .why-campusgerman-card {
+        flex: 0 0 min(88%, 280px);
+        min-width: 220px;
+        padding: 16px 14px;
+    }
+    .why-campusgerman-card-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+    .why-campusgerman-card-title {
+        font-size: 1rem;
+    }
+    .why-campusgerman-card-desc {
+        font-size: 0.85rem;
     }
 }
 
@@ -1116,33 +1219,39 @@ main section + section {
 }
 
 .index-courses-section .countdown-coupon-code {
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 12px 16px;
+    gap: 6px;
+    width: 100%;
+    margin: 0 auto 12px;
+    padding: 12px 14px;
     background: #fff;
     border-radius: 10px;
     border: 2px solid #0f766e;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
 }
 
 .index-courses-section .countdown-coupon-label {
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: #0c4a4e;
+    text-align: center;
 }
 
 .index-courses-section .countdown-coupon-value {
-    font-size: 1.25rem;
+    font-size: clamp(0.8rem, 4vw, 1rem);
     font-weight: 800;
     color: #0f766e;
-    letter-spacing: 0.08em;
-    background: none;
-    padding: 0;
+    letter-spacing: 0.02em;
+    text-align: center;
+    padding: 8px 12px;
+    background: rgba(15, 118, 110, 0.08);
+    border-radius: 6px;
+    font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+    white-space: nowrap;
+    line-height: 1.2;
 }
 
 .index-courses-section .countdown-discount-hint {

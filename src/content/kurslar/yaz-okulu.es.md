@@ -20,11 +20,12 @@ features:
   - icon: "fas fa-home"
     title: "Alojamiento"
     description: "Residencia Estudiantil Incluida"
+hasDemandForm: true
 heroButtons:
   primary:
-    text: "Aplicar Ahora"
+    text: "Enviar Solicitud"
     icon: "fas fa-arrow-right"
-    href: "/reservar"
+    href: "#demand-form"
   secondary:
     text: "Programa de Verano"
     icon: "fas fa-calendar-alt"
@@ -51,25 +52,6 @@ tabs:
       additionalInfo:
         title: "¡No Solo Idioma, Experiencia!"
         text: "La escuela de verano no se trata solo de aprender el idioma, sino también de vivir la cultura alemana, hacer nuevos amigos y recopilar recuerdos inolvidables. Estudia en clase por las mañanas y explora la ciudad por las tardes."
-  - id: "fechas-precios"
-    icon: "fas fa-calendar-alt"
-    title: "Fechas y Precios"
-    content:
-      title: "Períodos de Escuela de Verano 2024"
-      pricing:
-        - name: "Programa de 2 Semanas"
-          duration: "Junio - Julio"
-          schedule: "Clase + Alojamiento + Actividad"
-          price: "950 €"
-        - name: "Programa de 4 Semanas"
-          duration: "Julio - Agosto"
-          schedule: "Clase + Alojamiento + Actividad"
-          price: "1,750 €"
-        - name: "Programa de 8 Semanas"
-          duration: "Junio - Agosto"
-          schedule: "Clase + Alojamiento + Actividad"
-          price: "3,200 €"
-          highlighted: true
   - id: "lecciones"
     icon: "fas fa-book-open"
     title: "Programa Diario"

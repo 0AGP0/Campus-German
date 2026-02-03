@@ -675,27 +675,41 @@ section.mission-statement .container {
         justify-self: center;
     }
     
-    .hero-cta {
-        justify-content: center;
+    .hero-badge {
+        font-size: 12px;
+        padding: 8px 14px;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+    .badge-icon {
+        font-size: 14px;
     }
     
     .hero-cta {
-        flex-direction: column;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: center;
         align-items: center;
+        gap: 12px;
+        margin-bottom: 36px;
     }
     
     .cta-primary,
     .cta-secondary {
-        width: 100%;
-        max-width: 300px;
-        justify-content: center;
+        width: auto !important;
+        max-width: none !important;
+        min-width: 0;
+        padding: 12px 18px;
+        font-size: 13px;
+        flex: 0 0 auto;
+        display: inline-flex;
     }
     
-    /* Mobil: trust 2 sütun grid, ekrana sığar (2+1) */
+    /* Mobil: trust 3 item yan yana */
     .hero-trust {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
         max-width: 100%;
     }
     .hero-trust .trust-divider {
@@ -704,25 +718,20 @@ section.mission-statement .container {
     .hero-trust .trust-item {
         background: rgba(255, 255, 255, 0.85);
         border: 1px solid rgba(12, 192, 223, 0.15);
-        border-radius: 14px;
-        padding: 14px 8px;
+        border-radius: 12px;
+        padding: 10px 6px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
         min-width: 0;
     }
-    .hero-trust .trust-item:last-child {
-        grid-column: 1 / -1;
-        max-width: 50%;
-        justify-self: center;
-    }
     .hero-trust .trust-number {
-        font-size: 1.35rem;
+        font-size: 1.15rem;
         font-weight: 800;
         line-height: 1.2;
     }
     .hero-trust .trust-label {
-        font-size: 11px;
-        margin-top: 4px;
-        line-height: 1.25;
+        font-size: 9px;
+        margin-top: 2px;
+        line-height: 1.2;
         color: var(--color-text-muted);
     }
     
