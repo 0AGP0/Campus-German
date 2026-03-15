@@ -1,0 +1,6 @@
+# data klasörüne doğrudan erişim engelle (şifre ve .md dosyaları)
+<IfModule mod_authz_core.c>
+  Require all denied
+</IfModule>
+Order deny,allow
+Deny from all

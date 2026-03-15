@@ -20,6 +20,9 @@ lerna-debug.log*
 .env.production
 .env.*.local
 
+# Hostinger admin şifresi (sadece config.example.php repoda kalır)
+public/data/config.php
+
 # OS files
 .DS_Store
 .DS_Store?
