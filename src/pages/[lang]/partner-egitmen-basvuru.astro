@@ -3,12 +3,7 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import '../../styles/pages/kontakt.css';
 
 export async function getStaticPaths() {
-    return [
-        { params: { lang: 'tr' } },
-        { params: { lang: 'de' } },
-        { params: { lang: 'en' } },
-        { params: { lang: 'es' } },
-    ];
+    return [{ params: { lang: 'tr' } }];
 }
 
 const { lang } = Astro.params;
@@ -16,9 +11,9 @@ const { lang } = Astro.params;
 // Translations
 const t = {
     tr: {
-        title: "Partner veya Eğitmen Başvurusu - CampusGerman",
+        title: "Partner veya Eğitmen Başvurusu - Campus German",
         heroTitle: "Partner veya Eğitmen Ol",
-        heroDescription: "CampusGerman ailesine katılın. Eğitim kalitemize katkıda bulunun ve öğrencilerimizin başarısına ortak olun.",
+        heroDescription: "Campus German ailesine katılın. Eğitim kalitemize katkıda bulunun ve öğrencilerimizin başarısına ortak olun.",
         formTitle: "Başvuru Formu",
         formSubtitle: "Lütfen aşağıdaki formu doldurun, size en kısa sürede dönüş yapacağız.",
         formFields: {
@@ -40,9 +35,9 @@ const t = {
         submitButton: "Başvuruyu Gönder"
     },
     de: {
-        title: "Partner oder Lehrkraft Bewerbung - CampusGerman",
+        title: "Partner oder Lehrkraft Bewerbung - Campus German",
         heroTitle: "Partner oder Lehrkraft werden",
-        heroDescription: "Werden Sie Teil der CampusGerman-Familie. Tragen Sie zu unserer Bildungsqualität bei und werden Sie Teil des Erfolgs unserer Schüler.",
+        heroDescription: "Werden Sie Teil der Campus German-Familie. Tragen Sie zu unserer Bildungsqualität bei und werden Sie Teil des Erfolgs unserer Schüler.",
         formTitle: "Bewerbungsformular",
         formSubtitle: "Bitte füllen Sie das folgende Formular aus, wir werden uns so schnell wie möglich bei Ihnen melden.",
         formFields: {
@@ -64,9 +59,9 @@ const t = {
         submitButton: "Bewerbung absenden"
     },
     en: {
-        title: "Partner or Teacher Application - CampusGerman",
+        title: "Partner or Teacher Application - Campus German",
         heroTitle: "Become a Partner or Teacher",
-        heroDescription: "Join the CampusGerman family. Contribute to our education quality and share in our students' success.",
+        heroDescription: "Join the Campus German family. Contribute to our education quality and share in our students' success.",
         formTitle: "Application Form",
         formSubtitle: "Please fill out the form below, we will get back to you as soon as possible.",
         formFields: {
@@ -88,9 +83,9 @@ const t = {
         submitButton: "Submit Application"
     },
     es: {
-        title: "Solicitud de socio o profesor - CampusGerman",
+        title: "Solicitud de socio o profesor - Campus German",
         heroTitle: "Sea socio o profesor",
-        heroDescription: "Únase a la familia CampusGerman. Contribuya a nuestra calidad formativa y comparta el éxito de nuestros estudiantes.",
+        heroDescription: "Únase a la familia Campus German. Contribuya a nuestra calidad formativa y comparta el éxito de nuestros estudiantes.",
         formTitle: "Formulario de solicitud",
         formSubtitle: "Rellene el formulario, nos pondremos en contacto lo antes posible.",
         formFields: {

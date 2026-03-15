@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin – Danışmanlar</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+    h1 { font-size: 1.5rem; margin-bottom: 1rem; }
+    form { display: grid; gap: 0.75rem; margin-bottom: 1.5rem; }
+    label { display: block; font-weight: 600; }
+    input, textarea { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 6px; }
+    textarea { min-height: 80px; }
+    button { padding: 0.5rem 1rem; background: #0aa5c0; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+    button:hover { background: #088a9e; }
+    button.secondary { background: #666; }
+    .hidden { display: none !important; }
+    .bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li { padding: 0.75rem; border: 1px solid #eee; border-radius: 8px; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .msg { padding: 0.5rem; border-radius: 6px; margin-bottom: 1rem; }
+    .msg.err { background: #fee; color: #c00; }
+    .msg.ok { background: #efe; color: #060; }
+  </style>
+</head>
+<body>
+  <div id="loginBox">
+    <h1>Admin girişi</h1>
+    <form id="loginForm">
+      <label>Kullanıcı adı</label>
+      <input type="text" name="username" required autocomplete="username">
+      <label>Şifre</label>
+      <input type="password" name="password" required autocomplete="current-password">
+      <button type="submit">Giriş</button>
+    </form>
+    <p id="loginError" class="msg err hidden"></p>
+  </div>
+
+  <div id="appBox" class="hidden">
+    <div class="bar">
+      <h1>Kartvizit danışmanları</h1>
+      <button type="button" class="secondary" id="logoutBtn">Çıkış</button>
+    </div>
+    <p id="appMsg" class="msg hidden"></p>
+    <form id="editForm">
+      <input type="hidden" name="slug" id="editSlug">
+      <label>URL slug (örn. akif)</label>
+      <input type="text" name="slugDisplay" id="slugDisplay" placeholder="akif" pattern="[a-z0-9-]+">
+      <label>Ad Soyad</label>
+      <input type="text" name="name" required>
+      <label>Ünvan</label>
+      <input type="text" name="title" required>
+      <label>E-posta</label>
+      <input type="email" name="email" required>
+      <label>WhatsApp (sadece rakam, örn. 4915203823792)</label>
+      <input type="text" name="whatsapp" required placeholder="4915203823792">
+      <label>Fotoğraf URL (isteğe bağlı)</label>
+      <input type="text" name="photo" placeholder="/images/danismanlar/akif.jpg">
+      <label>Kısa metin (isteğe bağlı)</label>
+      <textarea name="body"></textarea>
+      <button type="submit" id="saveBtn">Kaydet</button>
+      <button type="button" class="secondary" id="newBtn">Yeni danışman</button>
+    </form>
+    <h2>Mevcut danışmanlar</h2>
+    <ul id="list"></ul>
+  </div>
+
+  <script>
+    const base = window.location.pathname.replace(/\/admin\/?$/, '') || '';
+    const api = (path) => base + (path.startsWith('/') ? path : '/api/' + path);
+
+    function showMsg(el, text, isErr) {
+      el.textContent = text;
+      el.className = 'msg ' + (isErr ? 'err' : 'ok');
+      el.classList.remove('hidden');
+    }
+    function hideMsg(el) {
+      el.classList.add('hidden');
+    }
+
+    async function checkAuth() {
+      const r = await fetch(api('admin-danismanlar'), { credentials: 'include' });
+      if (r.ok) {
+        document.getElementById('loginBox').classList.add('hidden');
+        document.getElementById('appBox').classList.remove('hidden');
+        return await r.json();
+      }
+      document.getElementById('loginBox').classList.remove('hidden');
+      document.getElementById('appBox').classList.add('hidden');
+      return null;
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errEl = document.getElementById('loginError');
+      hideMsg(errEl);
+      const fd = new FormData(e.target);
+      const r = await fetch(api('admin-login'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ username: fd.get('username'), password: fd.get('password') })
+      });
+      const data = await r.json().catch(() => ({}));
+      if (r.ok && data.ok) {
+        window.location.reload();
+      } else {
+        showMsg(errEl, data.error || 'Giriş başarısız', true);
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await fetch(api('admin-logout'), { method: 'POST', credentials: 'include' });
+      window.location.reload();
+    });
+
+    function renderList(items) {
+      const ul = document.getElementById('list');
+      ul.innerHTML = items.map(d => `
+        <li>
+          <span><strong>${escapeHtml(d.name)}</strong> – ${escapeHtml(d.slug)} (site.com/k/${escapeHtml(d.slug)})</span>
+          <button type="button" class="secondary" data-slug="${escapeHtml(d.slug)}">Düzenle</button>
+        </li>
+      `).join('');
+      ul.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => fillForm(items.find(x => x.slug === btn.dataset.slug)));
+      });
+    }
+    function escapeHtml(s) {
+      const div = document.createElement('div');
+      div.textContent = s ?? '';
+      return div.innerHTML;
+    }
+    function fillForm(d) {
+      if (!d) {
+        document.getElementById('editForm').reset();
+        document.getElementById('editSlug').value = '';
+        document.getElementById('slugDisplay').value = '';
+        document.getElementById('slugDisplay').readOnly = false;
+        document.getElementById('saveBtn').textContent = 'Kaydet';
+        return;
+      }
+      document.getElementById('editSlug').value = d.slug;
+      document.getElementById('slugDisplay').value = d.slug;
+      document.getElementById('slugDisplay').readOnly = true;
+      document.querySelector('[name="name"]').value = d.name || '';
+      document.querySelector('[name="title"]').value = d.title || '';
+      document.querySelector('[name="email"]').value = d.email || '';
+      document.querySelector('[name="whatsapp"]').value = d.whatsapp || '';
+      document.querySelector('[name="photo"]').value = d.photo || '';
+      document.querySelector('[name="body"]').value = d.body || '';
+      document.getElementById('saveBtn').textContent = 'Güncelle';
+    }
+
+    document.getElementById('editForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msgEl = document.getElementById('appMsg');
+      hideMsg(msgEl);
+      const slug = document.getElementById('editSlug').value || document.getElementById('slugDisplay').value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '') || 'danisman';
+      const payload = {
+        slug,
+        name: document.querySelector('[name="name"]').value.trim(),
+        title: document.querySelector('[name="title"]').value.trim(),
+        email: document.querySelector('[name="email"]').value.trim(),
+        whatsapp: document.querySelector('[name="whatsapp"]').value.trim(),
+        photo: document.querySelector('[name="photo"]').value.trim(),
+        body: document.querySelector('[name="body"]').value.trim()
+      };
+      const r = await fetch(api('admin-danismanlar'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(payload)
+      });
+      const data = await r.json().catch(() => ({}));
+      if (r.ok && data.ok) {
+        showMsg(msgEl, 'Kaydedildi. Deploy sonrası sitede görünür.', false);
+        loadList();
+        fillForm(null);
+      } else {
+        showMsg(msgEl, data.error || 'Kayıt başarısız', true);
+      }
+    });
+
+    document.getElementById('newBtn').addEventListener('click', () => fillForm(null));
+
+    async function loadList() {
+      const r = await fetch(api('admin-danismanlar'), { credentials: 'include' });
+      if (r.ok) renderList(await r.json());
+    }
+
+    (async () => {
+      const list = await checkAuth();
+      if (list !== null) {
+        renderList(list);
+        loadList();
+      }
+    })();
+  </script>
+</body>
+</html>

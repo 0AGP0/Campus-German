@@ -1,0 +1,216 @@
+---
+/**
+ * Yeni fiyat yapısı: Hafta sayısı ve Intensive / Intensive+ tipine göre.
+ * Intensive 20h/week: 1-4 → 190€, 5-8 → 150€, 9-16 → 130€, 17-24 → 120€, 25+ → 110€
+ * Intensive+ 25h/week: 1-4 → 230€, 5-8 → 180€, 9-16 → 160€, 17-24 → 150€, 25+ → 135€
+ */
+interface Props {
+  lang: string;
+  /** Bölüm başlığı gösterilsin mi (sayfa kendi başlığını kullanıyorsa false) */
+  showSectionTitle?: boolean;
+}
+
+const { lang, showSectionTitle = true } = Astro.props;
+
+const t = {
+  tr: {
+    sectionTitle: 'Kurs Fiyatları',
+    sectionSubtitle: 'Hafta sayısına göre haftalık ücret. Daha uzun süre, daha avantajlı fiyat.',
+    intensive20: 'Intensive 20 saat/hafta',
+    intensive25: 'Intensive+ 25 saat/hafta',
+    perWeek: 'Haftalık',
+    weeks: 'Hafta',
+    example: 'ör.',
+    courseCost: 'Kurs maliyeti',
+  },
+  de: {
+    sectionTitle: 'Kurspreise',
+    sectionSubtitle: 'Wochenpreis je nach Anzahl der Wochen. Länger buchen, günstiger pro Woche.',
+    intensive20: 'Intensiv 20 Std./Woche',
+    intensive25: 'Intensiv+ 25 Std./Woche',
+    perWeek: 'pro Woche',
+    weeks: 'Wochen',
+    example: 'z. B.',
+    courseCost: 'Kurskosten',
+  },
+  en: {
+    sectionTitle: 'Course Prices',
+    sectionSubtitle: 'Per week rate by number of weeks. Longer stays, better rate per week.',
+    intensive20: 'Intensive 20h/week',
+    intensive25: 'Intensive+ 25h/week',
+    perWeek: 'per Week',
+    weeks: 'Weeks',
+    example: 'e.g.',
+    courseCost: 'Course Cost',
+  },
+  es: {
+    sectionTitle: 'Precios de Cursos',
+    sectionSubtitle: 'Precio semanal según número de semanas. Estancias más largas, mejor precio por semana.',
+    intensive20: 'Intensivo 20h/semana',
+    intensive25: 'Intensivo+ 25h/semana',
+    perWeek: 'por semana',
+    weeks: 'semanas',
+    example: 'ej.',
+    courseCost: 'Coste del curso',
+  },
+};
+
+const msg = t[lang as keyof typeof t] ?? t.en;
+
+const intensive20 = [
+  { range: '1–4', perWeek: '190€', example: '2', total: '380€', note: null },
+  { range: '5–7', perWeek: '150€', example: '5', total: '750€', note: null },
+  { range: '8–16', perWeek: '120€', example: '8', total: '960€', note: '1' },
+  { range: '17–24', perWeek: '120€', example: '16', total: '1.920€', note: '2' },
+  { range: '25+', perWeek: '110€', example: '25', total: '2.750€', note: '2' },
+];
+
+const intensive25 = [
+  { range: '1–4', perWeek: '230€', example: '2', total: '460€', note: null },
+  { range: '5–7', perWeek: '180€', example: '5', total: '900€', note: null },
+  { range: '8–16', perWeek: '160€', example: '8', total: '1.280€', note: '1' },
+  { range: '17–24', perWeek: '150€', example: '16', total: '2.400€', note: '2' },
+  { range: '25+', perWeek: '135€', example: '25', total: '3.375€', note: '2' },
+];
+---
+
+<section class="intensive-pricing-section">
+  <div class="container">
+    {showSectionTitle && (
+      <div class="intensive-pricing-header">
+        <h2 class="intensive-pricing-title">{msg.sectionTitle}</h2>
+        <p class="intensive-pricing-subtitle">{msg.sectionSubtitle}</p>
+      </div>
+    )}
+
+    <div class="intensive-pricing-grid">
+      <!-- Intensive 20h -->
+      <div class="intensive-pricing-card">
+        <h3 class="intensive-pricing-card-title">{msg.intensive20}</h3>
+        <ul class="intensive-pricing-rows">
+          {intensive20.map((row) => (
+            <li class="intensive-pricing-row">
+              <span class="intensive-pricing-range">{row.range} {msg.weeks}</span>
+              <span class="intensive-pricing-per">{row.perWeek} {msg.perWeek}</span>
+              <span class="intensive-pricing-example">
+                {msg.example}: {row.example} {msg.weeks} = {row.total}
+                {row.note && <span class="intensive-pricing-note"> ({row.note} {msg.courseCost})</span>}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Intensive+ 25h -->
+      <div class="intensive-pricing-card intensive-pricing-card-plus">
+        <h3 class="intensive-pricing-card-title">{msg.intensive25}</h3>
+        <ul class="intensive-pricing-rows">
+          {intensive25.map((row) => (
+            <li class="intensive-pricing-row">
+              <span class="intensive-pricing-range">{row.range} {msg.weeks}</span>
+              <span class="intensive-pricing-per">{row.perWeek} {msg.perWeek}</span>
+              <span class="intensive-pricing-example">
+                {msg.example}: {row.example} {msg.weeks} = {row.total}
+                {row.note && <span class="intensive-pricing-note"> ({row.note} {msg.courseCost})</span>}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .intensive-pricing-section {
+    padding: 2.5rem 0;
+  }
+  .intensive-pricing-section:nth-child(even) {
+    background: #f8f9fa;
+  }
+  .intensive-pricing-header {
+    margin-bottom: 1.75rem;
+  }
+  .intensive-pricing-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary, #0B1220);
+    margin: 0 0 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--color-primary, #0B1220);
+  }
+  .intensive-pricing-subtitle {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary, #64748b);
+    margin: 0;
+    line-height: 1.5;
+  }
+  .intensive-pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 900px;
+    margin-inline: auto;
+  }
+  @media (max-width: 768px) {
+    .intensive-pricing-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .intensive-pricing-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .intensive-pricing-card-plus {
+    border-color: rgba(12, 192, 223, 0.4);
+    background: linear-gradient(180deg, rgba(12, 192, 223, 0.04) 0%, #fff 100%);
+  }
+  .intensive-pricing-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text-primary, #0B1220);
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .intensive-pricing-card-plus .intensive-pricing-card-title {
+    color: var(--color-primary, #0B1220);
+  }
+  .intensive-pricing-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .intensive-pricing-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 0.5rem 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  .intensive-pricing-row:last-child {
+    border-bottom: none;
+  }
+  .intensive-pricing-range {
+    font-weight: 600;
+    color: var(--color-text-primary, #0B1220);
+    white-space: nowrap;
+  }
+  .intensive-pricing-per {
+    font-weight: 600;
+    color: var(--color-primary, #0B1220);
+  }
+  .intensive-pricing-example {
+    grid-column: 1 / -1;
+    color: var(--color-text-secondary, #64748b);
+    font-size: 0.85rem;
+  }
+  .intensive-pricing-note {
+    font-style: italic;
+  }
+</style>

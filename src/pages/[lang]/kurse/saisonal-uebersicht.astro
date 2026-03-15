@@ -1,10 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
-import AkademikAlmancaSarmal from '../../../components/AkademikAlmancaSarmal.astro';
+import IntensivePricingSection from '../../../components/IntensivePricingSection.astro';
 import '../../../styles/pages/kurslar.css';
 import { coursePricing } from '../../../data/coursePricing';
-import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getSimpleCourseStartDates } from '../../../utils/coursePricingHelper';
+import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, getSimpleCourseStartDates } from '../../../utils/coursePricingHelper';
+import { getContactPath } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
     return [
@@ -13,6 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
+const contactPath = getContactPath(lang as 'tr' | 'de' | 'en' | 'es');
 const simpleStartDates = getSimpleCourseStartDates(lang as 'tr' | 'de' | 'en');
 
 // Slug'dan dil uzantısını temizle
@@ -54,7 +56,7 @@ const donemselKurslar = allKurslar.filter(kurs => {
 
 const t = {
     tr: {
-        title: "Dönemsel Almanca Kursları Genel Bakış - CampusGerman",
+        title: "Dönemsel Almanca Kursları Genel Bakış - Campus German",
         heroTitle: "Dönemsel Almanca Kursları",
         heroDescription1: "Yaz okulu, haftalık ve akşam kursları ile esnek öğrenme seçenekleri. Dönemsel programlarla Almanca öğrenin.",
         heroDescription2: "İhtiyacınıza uygun programı seçin ve kendi hızınızda öğrenin.",
@@ -77,7 +79,7 @@ const t = {
         courseDetail2: "Ek Modüler Yapı Desteği",
     },
     de: {
-        title: "Übersicht Saisonale Kurse - CampusGerman",
+        title: "Übersicht Saisonale Kurse - Campus German",
         heroTitle: "Saisonale Deutschkurse",
         heroDescription1: "Flexible Lernmöglichkeiten mit Sommerschule, wöchentlichen und Abendkursen. Lernen Sie Deutsch mit saisonalen Programmen.",
         heroDescription2: "Wählen Sie das Programm, das zu Ihnen passt, und lernen Sie in Ihrem eigenen Tempo.",
@@ -183,9 +185,6 @@ function shortenLabels(text: string): string {
         </div>
     </section>
     
-    <!-- Campus German Akademik Almanca Sarmalı -->
-    <AkademikAlmancaSarmal lang={lang} />
-    
     <!-- Kurs Kartları Section -->
     <section class="courses-section" id="kurs-kartlari">
         <div class="container">
@@ -198,7 +197,10 @@ function shortenLabels(text: string): string {
                 {donemselKurslar.map(kurs => {
                     const pricingData = getCoursePricingData(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
                     let priceText = translations.courseCardContactUs;
-                    if (pricingData?.pricing?.fullCourse) {
+                    const perWeekPrice = getCourseCardPerWeekPrice(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
+                    if (perWeekPrice) {
+                        priceText = perWeekPrice;
+                    } else if (pricingData?.pricing?.fullCourse) {
                         priceText = `${pricingData.pricing.fullCourse} ${translations.courseCardStartingPrices}`;
                     } else if (pricingData?.isWeeklyOnly && pricingData?.weeklyPricing) {
                         const courseInfo = extractCourseInfo(kurs.slug);
@@ -249,31 +251,7 @@ function shortenLabels(text: string): string {
             </div>
             
             <div class="pricing-content">
-                <!-- Haftalık Kurs Fiyatları -->
-                <div class="pricing-block">
-                    <h3 class="pricing-block-title">{lang === 'tr' ? 'Haftalık Kurs Fiyatları' : 'Wöchentliche Kursgebühren'}</h3>
-                    <p class="pricing-description">{lang === 'tr' ? 'Dönemsel kurslarımız için esnek ödeme seçenekleri. İstediğiniz süre boyunca devam edebilirsiniz.' : 'Flexible Zahlungsoptionen für unsere saisonalen Kurse. Sie können so lange fortfahren, wie Sie möchten.'}</p>
-                    <div class="weekly-pricing-grid">
-                        <div class="weekly-pricing-card">
-                            <h4>A1-A2</h4>
-                            <ul class="weekly-pricing-list">
-                                <li><span>2 {lang === 'tr' ? 'Hafta' : 'Wochen'}:</span> <strong>{coursePricing[lang as 'tr' | 'de'].weeklyPricing.a1a2['2']}</strong></li>
-                                <li><span>4 {lang === 'tr' ? 'Hafta' : 'Wochen'}:</span> <strong>{coursePricing[lang as 'tr' | 'de'].weeklyPricing.a1a2['4']}</strong></li>
-                                <li><span>8 {lang === 'tr' ? 'Hafta' : 'Wochen'}:</span> <strong>{coursePricing[lang as 'tr' | 'de'].weeklyPricing.a1a2['8']}</strong></li>
-                                <li><span>16 {lang === 'tr' ? 'Hafta' : 'Wochen'}:</span> <strong>{coursePricing[lang as 'tr' | 'de'].weeklyPricing.a1a2['16']}</strong></li>
-                            </ul>
-                        </div>
-                        <div class="weekly-pricing-card">
-                            <h4>B1-B2-C1</h4>
-                            <ul class="weekly-pricing-list">
-                                <li><span>2 {lang === 'tr' ? 'Hafta' : 'Wochen'}:</span> <strong>{coursePricing[lang as 'tr' | 'de'].weeklyPricing.b1b2c1['2']}</strong></li>
-                                <li><span>4 {lang === 'tr' ? 'Hafta' : 'Wochen'}:</span> <strong>{coursePricing[lang as 'tr' | 'de'].weeklyPricing.b1b2c1['4']}</strong></li>
-                                <li><span>8 {lang === 'tr' ? 'Hafta' : 'Wochen'}:</span> <strong>{coursePricing[lang as 'tr' | 'de'].weeklyPricing.b1b2c1['8']}</strong></li>
-                                <li><span>16 {lang === 'tr' ? 'Hafta' : 'Wochen'}:</span> <strong>{coursePricing[lang as 'tr' | 'de'].weeklyPricing.b1b2c1['16']}</strong></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <IntensivePricingSection lang={lang} showSectionTitle={false} />
                 
                 <!-- Kurs Zamanları -->
                 <div class="pricing-block">
@@ -450,11 +428,11 @@ function shortenLabels(text: string): string {
         </div>
     </section>
     
-    <!-- CampusGerman Hizmetleri Section -->
+    <!-- Campus German Hizmetleri Section -->
     <section class="campusgerman-services-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">{lang === 'tr' ? "CampusGerman Hizmetleri" : "CampusGerman Dienstleistungen"}</h2>
+                <h2 class="section-title">{lang === 'tr' ? "Campus German Hizmetleri" : "Campus German Dienstleistungen"}</h2>
                 <p class="section-subtitle">{lang === 'tr' ? "Almanca öğrenme yolculuğunuzda yanınızdayız" : "Wir sind an Ihrer Seite auf Ihrer Reise zum Deutschlernen"}</p>
             </div>
             
@@ -468,10 +446,10 @@ function shortenLabels(text: string): string {
                         <h3 class="service-title">{lang === 'tr' ? "Üniversite Yerleştirme Programı / Pathway" : "Universitätsvermittlung / Pathway"}</h3>
                         <p class="service-description">
                             {lang === 'tr'
-                                ? "Almanya'da üniversite eğitimi almak, doğru planlama ve profesyonel destek gerektiren çok aşamalı bir süreçtir. CampusGerman olarak sunduğumuz Üniversite Yerleştirme Programı / Pathway, öğrencilerin Almanya'daki üniversitelere güvenli, bilinçli ve eksiksiz şekilde yerleşmesini hedefleyen kapsamlı bir rehberlik hizmetidir."
+                                ? "Almanya'da üniversite eğitimi almak, doğru planlama ve profesyonel destek gerektiren çok aşamalı bir süreçtir. Campus German olarak sunduğumuz Üniversite Yerleştirme Programı / Pathway, öğrencilerin Almanya'daki üniversitelere güvenli, bilinçli ve eksiksiz şekilde yerleşmesini hedefleyen kapsamlı bir rehberlik hizmetidir."
                                 : "Ein Universitätsstudium in Deutschland zu absolvieren ist ein mehrstufiger Prozess, der eine sorgfältige Planung und professionelle Unterstützung erfordert. Unser Universitätsvermittlungsprogramm / Pathway zielt darauf ab, Studierenden eine sichere, fundierte und umfassende Platzierung an deutschen Universitäten zu ermöglichen."}
                         </p>
-                        <a href={`/${lang}/unsere-dienstleistungen/universite-yerlestirme`} class="service-cta">
+                        <a href={`/${lang}/unsere-dienstleistungen/universitaetsvermittlung`} class="service-cta">
                             <span>{lang === 'tr' ? "Detay" : "Details"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -487,10 +465,10 @@ function shortenLabels(text: string): string {
                         <h3 class="service-title">{lang === 'tr' ? "Vize Rehberliği" : "Visumsberatung"}</h3>
                         <p class="service-description">
                             {lang === 'tr'
-                                ? "Almanya'da eğitim almak isteyen öğrenciler için en kritik adımlardan biri öğrenci vizesi sürecidir. Eksik veya hatalı yapılan başvurular, sürecin uzamasına hatta retle sonuçlanmasına neden olabilir. CampusGerman olarak sunduğumuz Vize Rehberliği, başvurunun en başından sonuçlanmasına kadar öğrencileri profesyonel şekilde yönlendirmeyi amaçlar."
+                                ? "Almanya'da eğitim almak isteyen öğrenciler için en kritik adımlardan biri öğrenci vizesi sürecidir. Eksik veya hatalı yapılan başvurular, sürecin uzamasına hatta retle sonuçlanmasına neden olabilir. Campus German olarak sunduğumuz Vize Rehberliği, başvurunun en başından sonuçlanmasına kadar öğrencileri profesyonel şekilde yönlendirmeyi amaçlar."
                                 : "Einer der kritischsten Schritte für Studierende, die in Deutschland studieren möchten, ist der Prozess des Studentenvisums. Unvollständige oder fehlerhafte Anträge können zu Verzögerungen oder sogar Ablehnungen führen. Unsere Visumsberatung zielt darauf ab, Studierende professionell vom Beginn des Antragsverfahrens bis zu dessen Abschluss zu begleiten."}
                         </p>
-                        <a href={`/${lang}/unsere-dienstleistungen/vize-rehberligi`} class="service-cta">
+                        <a href={`/${lang}/unsere-dienstleistungen/visumsberatung`} class="service-cta">
                             <span>{lang === 'tr' ? "Detay" : "Details"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -506,10 +484,10 @@ function shortenLabels(text: string): string {
                         <h3 class="service-title">{lang === 'tr' ? "Bremen Konaklama ve Yurt Yerleştirmesi" : "Unterkunft und Wohnheim in Bremen"}</h3>
                         <p class="service-description">
                             {lang === 'tr'
-                                ? "Almanya'da eğitime başlarken en önemli konulardan biri güvenli ve uygun konaklama bulmaktır. Özellikle yurtdışından gelen öğrenciler için konaklama süreci karmaşık ve stresli olabilir. CampusGerman olarak sunduğumuz Bremen Konaklama ve Yurt Yerleştirmesi hizmeti, öğrencilerin bu süreci sorunsuz ve güvenli şekilde tamamlamasını hedefler."
+                                ? "Almanya'da eğitime başlarken en önemli konulardan biri güvenli ve uygun konaklama bulmaktır. Özellikle yurtdışından gelen öğrenciler için konaklama süreci karmaşık ve stresli olabilir. Campus German olarak sunduğumuz Bremen Konaklama ve Yurt Yerleştirmesi hizmeti, öğrencilerin bu süreci sorunsuz ve güvenli şekilde tamamlamasını hedefler."
                                 : "Eine der wichtigsten Fragen beim Beginn des Studiums in Deutschland ist die Suche nach einer sicheren und geeigneten Unterkunft. Besonders für Studierende aus dem Ausland kann der Prozess der Unterkunftssuche komplex und stressig sein. Unser Service für Unterkunft und Wohnheim in Bremen zielt darauf ab, Studierenden diesen Prozess reibungslos und sicher zu ermöglichen."}
                         </p>
-                        <a href={`/${lang}/unsere-dienstleistungen/konaklama`} class="service-cta">
+                        <a href={`/${lang}/unsere-dienstleistungen/unterkunft`} class="service-cta">
                             <span>{lang === 'tr' ? "Detay" : "Details"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -525,10 +503,10 @@ function shortenLabels(text: string): string {
                         <h3 class="service-title">{lang === 'tr' ? "Havaalanı Karşılama" : "Flughafenabholung"}</h3>
                         <p class="service-description">
                             {lang === 'tr'
-                                ? "Yurtdışında eğitime başlamak, özellikle ilk kez Almanya'ya gelen öğrenciler için heyecan verici olduğu kadar zorlayıcı da olabilir. Uzun bir yolculuğun ardından bilinmeyen bir şehirde ulaşım ve yerleşim süreci stres yaratabilir. CampusGerman olarak sunduğumuz Havaalanı Karşılama Hizmeti, öğrencilerin Almanya'daki ilk günlerini güvenli, konforlu ve sorunsuz şekilde geçirmesini amaçlar."
+                                ? "Yurtdışında eğitime başlamak, özellikle ilk kez Almanya'ya gelen öğrenciler için heyecan verici olduğu kadar zorlayıcı da olabilir. Uzun bir yolculuğun ardından bilinmeyen bir şehirde ulaşım ve yerleşim süreci stres yaratabilir. Campus German olarak sunduğumuz Havaalanı Karşılama Hizmeti, öğrencilerin Almanya'daki ilk günlerini güvenli, konforlu ve sorunsuz şekilde geçirmesini amaçlar."
                                 : "Der Beginn eines Studiums im Ausland kann für Studierende, die zum ersten Mal nach Deutschland kommen, sowohl aufregend als auch herausfordernd sein. Nach einer langen Reise kann der Transport- und Ansiedlungsprozess in einer unbekannten Stadt stressig sein. Unser Flughafenabholservice zielt darauf ab, dass Studierende ihre ersten Tage in Deutschland sicher, komfortabel und reibungslos verbringen."}
                         </p>
-                        <a href={`/${lang}/unsere-dienstleistungen/havalimani-karsilama`} class="service-cta">
+                        <a href={`/${lang}/unsere-dienstleistungen/flughafenabholung`} class="service-cta">
                             <span>{lang === 'tr' ? "Detay" : "Details"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -647,7 +625,7 @@ function shortenLabels(text: string): string {
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>{lang === 'tr' ? "Evet, CampusGerman'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz." : "Ja, wir bieten Goethe-Zertifikatsvorbereitungskurse bei CampusGerman an. Wir bereiten Sie auf Prüfungen auf allen Niveaus von A1 bis C2 vor. Sie können die Zertifikatsprüfungen auf unserem Campus ablegen oder an nahegelegene Testzentren weitergeleitet werden."}</p>
+                        <p>{lang === 'tr' ? "Evet, Campus German'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz." : "Ja, wir bieten Goethe-Zertifikatsvorbereitungskurse bei Campus German an. Wir bereiten Sie auf Prüfungen auf allen Niveaus von A1 bis C2 vor. Sie können die Zertifikatsprüfungen auf unserem Campus ablegen oder an nahegelegene Testzentren weitergeleitet werden."}</p>
                     </div>
                 </div>
                 
@@ -676,7 +654,7 @@ function shortenLabels(text: string): string {
             
             <div class="faq-cta">
                 <p>{lang === 'tr' ? "Başka sorularınız mı var?" : "Haben Sie weitere Fragen?"}</p>
-                <a href={`/${lang}/kontakt`} class="faq-contact-btn">
+                <a href={`/${lang}/${contactPath}`} class="faq-contact-btn">
                     <i class="fas fa-envelope"></i>
                     <span>{lang === 'tr' ? "Bize Ulaşın" : "Kontaktieren Sie uns"}</span>
                 </a>

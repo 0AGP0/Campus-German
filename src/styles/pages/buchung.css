@@ -297,6 +297,11 @@
     animation: shake 0.5s ease;
 }
 
+.message-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
@@ -341,6 +346,43 @@
     user-select: none;
 }
 
+/* Kurs seçim butonları: daha kompakt, tek satırda kalabilsin */
+.course-options-inline .option-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.course-options-inline .option-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: 2px solid #dee2e6;
+    background: #f8f9fa;
+    color: var(--color-text-primary);
+    min-width: 0;
+    white-space: nowrap;
+}
+
+.course-options-inline .option-btn:hover {
+    border-color: var(--color-primary);
+    background: rgba(5, 150, 105, 0.08);
+    color: var(--color-primary);
+}
+
+.course-options-inline .option-btn:has(input:checked) {
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary) 0%, #047857 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+}
+
+.course-options-inline .option-btn:has(input:checked) .option-btn-sublabel {
+    color: rgba(255, 255, 255, 0.9);
+}
+
 .option-btn input {
     position: absolute;
     opacity: 0;
@@ -370,6 +412,23 @@
     margin-top: 8px;
 }
 
+.option-btn-with-weeks {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+.option-btn-with-weeks .option-btn-text { display: block; }
+.option-btn-sublabel {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--color-text-secondary);
+    margin-top: 2px;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
 .field-hint {
     font-size: 0.9rem;
     color: var(--color-primary);
@@ -379,6 +438,25 @@
     border-radius: 8px;
     border-left: 4px solid var(--color-primary);
 }
+
+.field-hint-under-label {
+    margin-top: 4px;
+    margin-bottom: 8px;
+}
+
+.form-infobox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-top: 8px;
+    padding: 12px 14px;
+    background: rgba(33, 150, 243, 0.08);
+    border-radius: 8px;
+    border-left: 4px solid #2196f3;
+}
+.form-infobox i { color: #2196f3; flex-shrink: 0; margin-top: 2px; }
 
 .mt-2 { margin-top: 1rem; }
 
@@ -557,6 +635,31 @@
 
 .btn-submit:hover {
     box-shadow: 0 12px 35px rgba(40, 167, 69, 0.5);
+}
+
+/* İki buton: Ücretsiz rezervasyon + Ödemeye geç */
+.form-navigation .btn-submit {
+    margin-left: 0;
+}
+.form-navigation .btn-submit-free {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: #fff;
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+}
+.form-navigation .btn-submit-free:hover {
+    box-shadow: 0 12px 35px rgba(40, 167, 69, 0.5);
+}
+.form-navigation .btn-submit-payment {
+    background: #1a1f36;
+    color: #fff;
+    box-shadow: 0 8px 25px rgba(26, 31, 54, 0.4);
+}
+.form-navigation .btn-submit-payment:hover {
+    background: #252b45;
+    box-shadow: 0 12px 35px rgba(26, 31, 54, 0.5);
+}
+.form-navigation .btn-submit + .btn-submit {
+    margin-left: 12px;
 }
 
 /* Booking Summary */
@@ -936,11 +1039,11 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .booking-hero {
-        padding: 30px 0 15px 0;
+        padding: 24px 0 10px 0;
     }
     
     .booking-hero .hero-content {
-        padding: 0 15px;
+        padding: 0 10px;
     }
     
     .booking-hero .hero-title {
@@ -955,16 +1058,21 @@
     
     .booking-hero .hero-description {
         font-size: 0.9rem;
-        margin: 6px 0 0 45px;
+        margin: 6px 0 0 40px;
     }
     
     .booking-form-section {
-        padding: 40px 0;
+        padding: 24px 0;
+    }
+    
+    .booking-form-section .container {
+        padding-left: 0;
+        padding-right: 0;
     }
     
     .booking-form-container {
-        margin: 0 15px;
-        border-radius: 15px;
+        margin: 0;
+        border-radius: 0;
     }
     
     .booking-content {
@@ -1013,6 +1121,46 @@
     .form-grid {
         grid-template-columns: 1fr;
         gap: 20px;
+    }
+    
+    /* Program butonları (Yoğun, Online, Yaz Kampı) mobilde tek satırda yan yana */
+    .program-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        flex-wrap: nowrap;
+    }
+    .program-options .option-btn {
+        padding: 10px 6px;
+        font-size: 12px;
+        min-width: 0;
+        white-space: nowrap;
+    }
+    .program-options .option-btn-text {
+        white-space: normal;
+        line-height: 1.2;
+        text-align: center;
+    }
+    
+    /* Saat butonları (Sabah, Öğle, Akşam) mobilde tek satırda yan yana */
+    .timezone-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        flex-wrap: nowrap;
+    }
+    .timezone-options .option-btn {
+        padding: 10px 6px;
+        font-size: 11px;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .timezone-options .option-btn-text {
+        white-space: normal;
+        line-height: 1.25;
     }
     
     .accommodation-details,

@@ -12,10 +12,58 @@
     margin-bottom: 12px;
 }
 
-.fiyatlar-hero .page-subtitle {
-    font-size: 1.05rem;
+.fiyatlar-hero-intro {
+    font-size: 1rem;
     color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 0 20px;
     max-width: 640px;
+}
+
+.fiyatlar-coupon-block {
+    margin-top: 24px;
+    padding: 20px 24px;
+    background: rgba(12, 192, 223, 0.08);
+    border: 1px solid rgba(12, 192, 223, 0.25);
+    border-radius: 12px;
+    max-width: 560px;
+}
+.fiyatlar-coupon-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 10px;
+}
+.fiyatlar-coupon-code {
+    margin: 0;
+    font-size: 1.1rem;
+}
+.fiyatlar-coupon-code code {
+    background: rgba(11, 18, 32, 0.08);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+.fiyatlar-coupon-intro {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 14px;
+    line-height: 1.5;
+}
+.fiyatlar-coupon-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.95rem;
+    color: var(--color-text-primary);
+}
+.fiyatlar-coupon-list li {
+    margin-bottom: 6px;
+}
+.fiyatlar-coupon-list code {
+    background: rgba(11, 18, 32, 0.08);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
 }
 
 .fiyatlar-section {
@@ -184,6 +232,39 @@
     font-weight: 600;
     color: var(--color-primary);
     font-size: 0.95rem;
+}
+
+/* Açıklama kutusu: Başlangıç tarihleri (mavi gradient, resimdeki gibi) */
+.fiyatlar-starting-dates-box {
+    margin-top: 28px;
+    padding: 24px 28px;
+    background: linear-gradient(180deg, #cff5fc 0%, #a5f3fc 30%, #67e8f9 70%, #22d3ee 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(12, 192, 223, 0.35);
+    max-width: 720px;
+}
+
+.fiyatlar-starting-dates-box-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 12px;
+    letter-spacing: 0.02em;
+}
+
+.fiyatlar-starting-dates-box-intro {
+    font-size: 0.95rem;
+    color: var(--color-text-primary);
+    margin: 0 0 10px;
+    line-height: 1.5;
+}
+
+.fiyatlar-starting-dates-box-dates {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+    line-height: 1.6;
 }
 
 .fiyatlar-cta {

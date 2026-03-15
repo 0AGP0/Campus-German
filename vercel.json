@@ -2,6 +2,13 @@
   "redirects": [
     { "source": "/tr/ueber-uns", "destination": "/tr/hakkimizda", "permanent": true },
     { "source": "/tr/ueber-uns/", "destination": "/tr/hakkimizda/", "permanent": true },
-    { "source": "/tr/ueber-uns/:path*", "destination": "/tr/hakkimizda/:path*", "permanent": true }
+    { "source": "/tr/ueber-uns/:path*", "destination": "/tr/hakkimizda/:path*", "permanent": true },
+    { "source": "/favicon.ico", "destination": "/Campusgerman.png", "permanent": true }
+  ],
+  "headers": [
+    { "source": "/sitemap.xml", "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }] },
+    { "source": "/sitemap-index.xml", "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }] },
+    { "source": "/sitemap-0.xml", "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }] },
+    { "source": "/sitemap-1.xml", "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }] }
   ]
 }

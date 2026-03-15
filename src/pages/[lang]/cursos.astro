@@ -1,11 +1,10 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-import AkademikAlmancaSarmal from '../../components/AkademikAlmancaSarmal.astro';
 import '../../styles/pages/kurslar.css';
 import { getCollection } from 'astro:content';
 import { coursePricing } from '../../data/coursePricing';
 import { cleanSlug, isOverviewPage, getSectionPath, getContactPath, isValidLang } from '../../utils/pathHelpers';
-import { getSimpleCourseStartDates } from '../../utils/coursePricingHelper';
+import { getSimpleCourseStartDates, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
 
 export async function getStaticPaths() {
     return [
@@ -149,9 +148,6 @@ const simpleStartDates = getSimpleCourseStartDates(pricingLang as 'tr' | 'de' | 
             </div>
         </div>
     </section>
-    
-    <!-- Campus German Akademik Almanca Sarmalı -->
-    <AkademikAlmancaSarmal lang={lang} />
     
     <!-- Kurs Kartları Section -->
     <section class="courses-section" id="kurs-kartlari">
@@ -455,11 +451,11 @@ const simpleStartDates = getSimpleCourseStartDates(pricingLang as 'tr' | 'de' | 
                         ))}
                     </div>
                     <div class="course-dates-info">
-                        <p><strong>A1 · 8 semanas · 20+ 4 clases</strong></p>
-                        <p><strong>A2 · 8 semanas · 20+ 4 clases</strong></p>
-                        <p><strong>B1 · 8 semanas · 25+ 4 clases</strong></p>
-                        <p><strong>B2 · 8 semanas · 25+ 4 clases</strong></p>
-                        <p><strong>C1 · 8 semanas · 25+ 4 clases</strong></p>
+                        <p><strong>A1 · 8 semanas · {LESSONS_UP_TO_200.es}</strong></p>
+                        <p><strong>A2 · 8 semanas · {LESSONS_UP_TO_200.es}</strong></p>
+                        <p><strong>B1 · 8 semanas · {LESSONS_UP_TO_200.es}</strong></p>
+                        <p><strong>B2 · 8 semanas · {LESSONS_UP_TO_200.es}</strong></p>
+                        <p><strong>C1 · 8 semanas · {LESSONS_UP_TO_200.es}</strong></p>
                     </div>
                 </div>
                 

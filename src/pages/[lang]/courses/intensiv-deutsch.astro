@@ -1,10 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
-import AkademikAlmancaSarmal from '../../../components/AkademikAlmancaSarmal.astro';
+import IntensivePricingSection from '../../../components/IntensivePricingSection.astro';
 import '../../../styles/pages/kurslar.css';
 import { coursePricing } from '../../../data/coursePricing';
 import { getSimpleCourseStartDates } from '../../../utils/coursePricingHelper';
+import { getContactPath } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
     return [
@@ -13,6 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
+const contactPath = getContactPath(lang as 'tr' | 'de' | 'en' | 'es');
 const simpleStartDates = getSimpleCourseStartDates(lang as 'tr' | 'de' | 'en' | 'es');
 
 // Slug'dan dil uzantısını temizle
@@ -46,10 +48,10 @@ const yogunKurslar = allKurslar.filter(kurs => {
 
 const t = {
     tr: {
-        title: "Yoğun Almanca Kursları Genel Bakış - CampusGerman",
+        title: "Yoğun Almanca Kursları Genel Bakış - Campus German",
         heroTitle: "Yoğun Almanca Kursları",
         heroDescription1: "Almanya'da üniversite eğitimi veya kariyer hedeflerinize en kısa sürede ulaşın. Yoğun Almanca kurslarımız ile hızlı ilerleme sağlayın.",
-        heroDescription2: "Haftada 24 ders saati ile iletişim odaklı, akademik standartlarda eğitim alın.",
+        heroDescription2: "Haftada 25 ders saati ile iletişim odaklı, akademik standartlarda eğitim alın.",
         buttonText1: "Kursları İncele",
         buttonText2: "İletişime Geç",
         ctaCardTitle: "Yoğun Kurslarımızı Keşfedin",
@@ -67,7 +69,7 @@ const t = {
         courseDetail2: "Ek Modüler Yapı Desteği",
     },
     de: {
-        title: "Übersicht Intensivkurse - CampusGerman",
+        title: "Übersicht Intensivkurse - Campus German",
         heroTitle: "Intensiv Deutschkurse",
         heroDescription1: "Erreichen Sie Ihre Ziele für Universitätsbildung oder Karriere in Deutschland in kürzester Zeit. Machen Sie schnelle Fortschritte mit unseren Intensivkursen.",
         heroDescription2: "Erhalten Sie eine kommunikationsorientierte, akademische Ausbildung mit 24 Unterrichtsstunden pro Woche.",
@@ -88,10 +90,10 @@ const t = {
         courseDetail2: "und modulare Strukturunterstützung",
     },
     en: {
-        title: "Intensive German Courses Overview - CampusGerman",
+        title: "Intensive German Courses Overview - Campus German",
         heroTitle: "Intensive German Courses",
         heroDescription1: "Reach your university or career goals in Germany in the shortest time possible. Make rapid progress with our intensive courses.",
-        heroDescription2: "Receive communication-focused, academically standardized training with 24 lesson hours per week.",
+        heroDescription2: "Receive communication-focused, academically standardized training with 25 lesson hours per week.",
         buttonText1: "Browse Courses",
         buttonText2: "Contact Us",
         ctaCardTitle: "Discover Our Intensive Courses",
@@ -178,9 +180,6 @@ const translations = t[lang as keyof typeof t];
         </div>
     </section>
     
-    <!-- Campus German Akademik Almanca Sarmalı -->
-    <AkademikAlmancaSarmal lang={lang} />
-    
     <!-- Kurs Kartları Section -->
     <section class="courses-section" id="kurs-kartlari">
         <div class="container">
@@ -230,35 +229,7 @@ const translations = t[lang as keyof typeof t];
             </div>
             
             <div class="pricing-content">
-                <!-- Akademik Almanca Kursları Fiyatları -->
-                <div class="pricing-block">
-                    <h3 class="pricing-block-title">{lang === 'tr' ? 'Akademik Almanca Kursları Fiyatları' : lang === 'de' ? 'Preise für Akademische Deutschkurse' : 'Academic German Courses Prices'}</h3>
-                    <div class="pricing-table-wrapper">
-                        <table class="pricing-table">
-                            <thead>
-                                <tr>
-                                    <th>{lang === 'tr' ? 'Seviye' : lang === 'de' ? 'Niveau' : 'Level'}</th>
-                                    <th>{lang === 'tr' ? 'Ders Sayısı' : lang === 'de' ? 'Unterrichtsstunden' : 'Lessons'}</th>
-                                    <th>{lang === 'tr' ? 'Süre' : lang === 'de' ? 'Dauer' : 'Duration'}</th>
-                                    <th>{lang === 'tr' ? 'Fiyat' : lang === 'de' ? 'Preis' : 'Price'}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {(['a1', 'a2', 'b1', 'b2', 'c1'] as const).map(level => {
-                                    const pricing = coursePricing[lang as 'tr' | 'de' | 'en'].intensive[level];
-                                    return (
-                                        <tr>
-                                            <td><strong>{level.toUpperCase()}</strong></td>
-                                            <td>{pricing.lessons}</td>
-                                            <td>{pricing.duration}</td>
-                                            <td><strong>{pricing.fullCourse}</strong></td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <IntensivePricingSection lang={lang} showSectionTitle={false} />
                 
                 <!-- Kurs Zamanları -->
                 <div class="pricing-block">
@@ -443,11 +414,11 @@ const translations = t[lang as keyof typeof t];
         </div>
     </section>
     
-    <!-- CampusGerman Hizmetleri Section -->
+    <!-- Campus German Hizmetleri Section -->
     <section class="campusgerman-services-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">{lang === 'tr' ? "CampusGerman Hizmetleri" : lang === 'de' ? "CampusGerman Dienstleistungen" : "CampusGerman Services"}</h2>
+                <h2 class="section-title">{lang === 'tr' ? "Campus German Hizmetleri" : lang === 'de' ? "Campus German Dienstleistungen" : "Campus German Services"}</h2>
                 <p class="section-subtitle">{lang === 'tr' ? "Almanca öğrenme yolculuğunuzda yanınızdayız" : lang === 'de' ? "Wir sind an Ihrer Seite auf Ihrer Reise zum Deutschlernen" : "We are by your side on your German learning journey"}</p>
             </div>
             
@@ -461,9 +432,9 @@ const translations = t[lang as keyof typeof t];
                         <h3 class="service-title">{lang === 'tr' ? "Üniversite Yerleştirme Programı / Pathway" : lang === 'de' ? "Universitätsvermittlung / Pathway" : "University Placement Program / Pathway"}</h3>
                         <p class="service-description">
                             {lang === 'tr'
-                                ? "Almanya'da üniversite eğitimi almak, doğru planlama ve profesyonel destek gerektiren çok aşamalı bir süreçtir. CampusGerman olarak sunduğumuz Üniversite Yerleştirme Programı / Pathway, öğrencilerin Almanya'daki üniversitelere güvenli, bilinçli ve eksiksiz şekilde yerleşmesini hedefleyen kapsamlı bir rehberlik hizmetidir."
+                                ? "Almanya'da üniversite eğitimi almak, doğru planlama ve profesyonel destek gerektiren çok aşamalı bir süreçtir. Campus German olarak sunduğumuz Üniversite Yerleştirme Programı / Pathway, öğrencilerin Almanya'daki üniversitelere güvenli, bilinçli ve eksiksiz şekilde yerleşmesini hedefleyen kapsamlı bir rehberlik hizmetidir."
                                 : lang === 'de' ? "Ein Universitätsstudium in Deutschland zu absolvieren ist ein mehrstufiger Prozess, der eine sorgfältige Planung und professionelle Unterstützung erfordert. Unser Universitätsvermittlungsprogramm / Pathway zielt darauf ab, Studierenden eine sichere, fundierte und umfassende Platzierung an deutschen Universitäten zu ermöglichen."
-                                : "Studying at a university in Germany is a multi-stage process that requires proper planning and professional support. The University Placement Program / Pathway we offer as CampusGerman is a comprehensive guidance service that aims to place students safely, consciously and completely at universities in Germany."}
+                                : "Studying at a university in Germany is a multi-stage process that requires proper planning and professional support. The University Placement Program / Pathway we offer as Campus German is a comprehensive guidance service that aims to place students safely, consciously and completely at universities in Germany."}
                         </p>
                         <a href={`/${lang}/${lang === 'tr' ? 'sunduklarimiz' : lang === 'de' ? 'unsere-dienstleistungen' : 'our-services'}/${lang === 'tr' ? 'universite-yerlestirme' : lang === 'de' ? 'universitaetsvermittlung' : 'university-placement'}`} class="service-cta">
                             <span>{lang === 'tr' ? "Detayları Gör" : lang === 'de' ? "Details ansehen" : "View Details"}</span>
@@ -481,9 +452,9 @@ const translations = t[lang as keyof typeof t];
                         <h3 class="service-title">{lang === 'tr' ? "Vize Rehberliği" : lang === 'de' ? "Visumsberatung" : "Visa Guidance"}</h3>
                         <p class="service-description">
                             {lang === 'tr'
-                                ? "Almanya'da eğitim almak isteyen öğrenciler için en kritik adımlardan biri öğrenci vizesi sürecidir. Eksik veya hatalı yapılan başvurular, sürecin uzamasına hatta retle sonuçlanmasına neden olabilir. CampusGerman olarak sunduğumuz Vize Rehberliği, başvurunun en başından sonuçlanmasına kadar öğrencileri profesyonel şekilde yönlendirmeyi amaçlar."
+                                ? "Almanya'da eğitim almak isteyen öğrenciler için en kritik adımlardan biri öğrenci vizesi sürecidir. Eksik veya hatalı yapılan başvurular, sürecin uzamasına hatta retle sonuçlanmasına neden olabilir. Campus German olarak sunduğumuz Vize Rehberliği, başvurunun en başından sonuçlanmasına kadar öğrencileri profesyonel şekilde yönlendirmeyi amaçlar."
                                 : lang === 'de' ? "Einer der kritischsten Schritte für Studierende, die in Deutschland studieren möchten, ist der Prozess des Studentenvisums. Unvollständige oder fehlerhafte Anträge können zu Verzögerungen oder sogar Ablehnungen führen. Unsere Visumsberatung zielt darauf ab, Studierende professionell vom Beginn des Antragsverfahrens bis zu dessen Abschluss zu begleiten."
-                                : "One of the most critical steps for students who want to study in Germany is the student visa process. Incomplete or incorrectly made applications can cause the process to be prolonged or even result in rejection. The Visa Guidance we offer as CampusGerman aims to guide students professionally from the very beginning of the application until its conclusion."}
+                                : "One of the most critical steps for students who want to study in Germany is the student visa process. Incomplete or incorrectly made applications can cause the process to be prolonged or even result in rejection. The Visa Guidance we offer as Campus German aims to guide students professionally from the very beginning of the application until its conclusion."}
                         </p>
                         <a href={`/${lang}/${lang === 'tr' ? 'sunduklarimiz' : lang === 'de' ? 'unsere-dienstleistungen' : 'our-services'}/${lang === 'tr' ? 'vize-rehberligi' : lang === 'de' ? 'visumsberatung' : 'visa-guidance'}`} class="service-cta">
                             <span>{lang === 'tr' ? "Detayları Gör" : lang === 'de' ? "Details ansehen" : "View Details"}</span>
@@ -501,9 +472,9 @@ const translations = t[lang as keyof typeof t];
                         <h3 class="service-title">{lang === 'tr' ? "Bremen Konaklama ve Yurt Yerleştirmesi" : lang === 'de' ? "Unterkunft und Wohnheim in Bremen" : "Bremen Accommodation and Dormitory Placement"}</h3>
                         <p class="service-description">
                             {lang === 'tr'
-                                ? "Almanya'da eğitime başlarken en önemli konulardan biri güvenli ve uygun konaklama bulmaktır. Özellikle yurtdışından gelen öğrenciler için konaklama süreci karmaşık ve stresli olabilir. CampusGerman olarak sunduğumuz Bremen Konaklama ve Yurt Yerleştirmesi hizmeti, öğrencilerin bu süreci sorunsuz ve güvenli şekilde tamamlamasını hedefler."
+                                ? "Almanya'da eğitime başlarken en önemli konulardan biri güvenli ve uygun konaklama bulmaktır. Özellikle yurtdışından gelen öğrenciler için konaklama süreci karmaşık ve stresli olabilir. Campus German olarak sunduğumuz Bremen Konaklama ve Yurt Yerleştirmesi hizmeti, öğrencilerin bu süreci sorunsuz ve güvenli şekilde tamamlamasını hedefler."
                                 : lang === 'de' ? "Eine der wichtigsten Fragen beim Beginn des Studiums in Deutschland ist die Suche nach einer sicheren und geeigneten Unterkunft. Besonders für Studierende aus dem Ausland kann der Prozess der Unterkunftssuche komplex und stressig sein. Unser Service für Unterkunft und Wohnheim in Bremen zielt darauf ab, Studierenden diesen Prozess reibungslos und sicher zu ermöglichen."
-                                : "One of the most important issues when starting education in Germany is finding safe and suitable accommodation. The accommodation process can be complex and stressful, especially for students coming from abroad. The Bremen Accommodation and Dormitory Placement service we offer as CampusGerman aims for students to complete this process smoothly and safely."}
+                                : "One of the most important issues when starting education in Germany is finding safe and suitable accommodation. The accommodation process can be complex and stressful, especially for students coming from abroad. The Bremen Accommodation and Dormitory Placement service we offer as Campus German aims for students to complete this process smoothly and safely."}
                         </p>
                         <a href={`/${lang}/${lang === 'tr' ? 'sunduklarimiz' : lang === 'de' ? 'unsere-dienstleistungen' : 'our-services'}/${lang === 'tr' ? 'konaklama' : lang === 'de' ? 'unterkunft' : 'accommodation'}`} class="service-cta">
                             <span>{lang === 'tr' ? "Detayları Gör" : lang === 'de' ? "Details ansehen" : "View Details"}</span>
@@ -521,9 +492,9 @@ const translations = t[lang as keyof typeof t];
                         <h3 class="service-title">{lang === 'tr' ? "Havaalanı Karşılama" : lang === 'de' ? "Flughafenabholung" : "Airport Pickup"}</h3>
                         <p class="service-description">
                             {lang === 'tr'
-                                ? "Yurtdışında eğitime başlamak, özellikle ilk kez Almanya'ya gelen öğrenciler için heyecan verici olduğu kadar zorlayıcı da olabilir. Uzun bir yolculuğun ardından bilinmeyen bir şehirde ulaşım ve yerleşim süreci stres yaratabilir. CampusGerman olarak sunduğumuz Havaalanı Karşılama Hizmeti, öğrencilerin Almanya'daki ilk günlerini güvenli, konforlu ve sorunsuz şekilde geçirmesini amaçlar."
+                                ? "Yurtdışında eğitime başlamak, özellikle ilk kez Almanya'ya gelen öğrenciler için heyecan verici olduğu kadar zorlayıcı da olabilir. Uzun bir yolculuğun ardından bilinmeyen bir şehirde ulaşım ve yerleşim süreci stres yaratabilir. Campus German olarak sunduğumuz Havaalanı Karşılama Hizmeti, öğrencilerin Almanya'daki ilk günlerini güvenli, konforlu ve sorunsuz şekilde geçirmesini amaçlar."
                                 : lang === 'de' ? "Der Beginn eines Studiums im Ausland kann für Studierende, die zum ersten Mal nach Deutschland kommen, sowohl aufregend als auch herausfordernd sein. Nach einer langen Reise kann der Transport- und Ansiedlungsprozess in einer unbekannten Stadt stressig sein. Unser Flughafenabholservice zielt darauf ab, dass Studierende ihre ersten Tage in Deutschland sicher, komfortabel und reibungslos verbringen."
-                                : "Starting education abroad can be both exciting and challenging for students coming to Germany for the first time. After a long journey, the transportation and settlement process in an unknown city can be stressful. The Airport Pickup Service we offer as CampusGerman aims for students to spend their first days in Germany safely, comfortably and smoothly."}
+                                : "Starting education abroad can be both exciting and challenging for students coming to Germany for the first time. After a long journey, the transportation and settlement process in an unknown city can be stressful. The Airport Pickup Service we offer as Campus German aims for students to spend their first days in Germany safely, comfortably and smoothly."}
                         </p>
                         <a href={`/${lang}/${lang === 'tr' ? 'sunduklarimiz' : lang === 'de' ? 'unsere-dienstleistungen' : 'our-services'}/${lang === 'tr' ? 'havalimani-karsilama' : lang === 'de' ? 'flughafenabholung' : 'airport-pickup'}`} class="service-cta">
                             <span>{lang === 'tr' ? "Detayları Gör" : lang === 'de' ? "Details ansehen" : "View Details"}</span>
@@ -644,7 +615,7 @@ const translations = t[lang as keyof typeof t];
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>{lang === 'tr' ? "Evet, CampusGerman'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz." : lang === 'de' ? "Ja, wir bieten Goethe-Zertifikatsvorbereitungskurse bei CampusGerman an. Wir bereiten Sie auf Prüfungen auf allen Niveaus von A1 bis C2 vor. Sie können die Zertifikatsprüfungen auf unserem Campus ablegen oder an nahegelegene Testzentren weitergeleitet werden." : "Yes, we offer Goethe certificate preparation courses at CampusGerman. We provide exam preparation at all levels from A1 to C2. You can take certificate exams on our campus or be directed to nearby test centers."}</p>
+                        <p>{lang === 'tr' ? "Evet, Campus German'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz." : lang === 'de' ? "Ja, wir bieten Goethe-Zertifikatsvorbereitungskurse bei Campus German an. Wir bereiten Sie auf Prüfungen auf allen Niveaus von A1 bis C2 vor. Sie können die Zertifikatsprüfungen auf unserem Campus ablegen oder an nahegelegene Testzentren weitergeleitet werden." : "Yes, we offer Goethe certificate preparation courses at Campus German. We provide exam preparation at all levels from A1 to C2. You can take certificate exams on our campus or be directed to nearby test centers."}</p>
                     </div>
                 </div>
                 
@@ -673,7 +644,7 @@ const translations = t[lang as keyof typeof t];
             
             <div class="faq-cta">
                 <p>{lang === 'tr' ? "Başka sorularınız mı var?" : lang === 'de' ? "Haben Sie weitere Fragen?" : "Do you have other questions?"}</p>
-                <a href={`/${lang}/${lang === 'tr' ? 'iletisim' : lang === 'de' ? 'kontakt' : 'contact'}`} class="faq-contact-btn">
+                <a href={`/${lang}/${contactPath}`} class="faq-contact-btn">
                     <i class="fas fa-envelope"></i>
                     <span>{lang === 'tr' ? "Bize Ulaşın" : lang === 'de' ? "Kontaktieren Sie uns" : "Contact Us"}</span>
                 </a>

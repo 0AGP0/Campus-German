@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Haftalık Ders"
-    description: "24 Ders (UE)"
+    description: "25 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
     description: "10 Hafta"
@@ -37,7 +37,7 @@ tabs:
       title: "Goethe/TELC C1 Hazırlık Kursu"
       paragraphs:
         - heading: "Kursa Genel Bakış"
-          text: "Goethe/TELC C1 Hazırlık Kursu, Goethe C1 ve TELC C1 Hochschule sınavlarına hazırlanmak isteyen öğrenciler için tasarlanmış, üniversite seviyesi sınav odaklı kapsamlı bir programdır. Bu kurs, öğrencilerin C1 sınav formatına özel hazırlık yapmalarını, akademik yazma becerilerini geliştirmelerini ve başarılı olmalarını sağlamayı hedefler. Haftada 24 ders saati ile yoğun bir hazırlık deneyimi sunan program, 10 hafta sürmektedir ve yaklaşık 240 ders saatinden oluşmaktadır."
+          text: "Goethe/TELC C1 Hazırlık Kursu, Goethe C1 ve TELC C1 Hochschule sınavlarına hazırlanmak isteyen öğrenciler için tasarlanmış, üniversite seviyesi sınav odaklı kapsamlı bir programdır. Bu kurs, öğrencilerin C1 sınav formatına özel hazırlık yapmalarını, akademik yazma becerilerini geliştirmelerini ve başarılı olmalarını sağlamayı hedefler. Haftada 25 ders saati ile yoğun bir hazırlık deneyimi sunan program, 10 hafta sürmektedir ve yaklaşık 240 ders saatinden oluşmaktadır."
         - heading: "Hedef Sınavlar ve Ön Koşullar"
           text: "Bu kurs, Goethe C1 ve TELC C1 Hochschule sınavlarına hazırlık yapmaktadır. C1 seviyesini tamamlamış öğrenciler için uygundur. Goethe C1 sınavı, dünya çapında tanınan bir Almanca dil sertifikasıdır ve ileri seviye Almanca bilgisini belgeler. TELC C1 Hochschule sınavı ise özellikle üniversite eğitimi için tasarlanmış bir sınavdır ve Alman üniversiteleri tarafından kabul edilir. Her iki sınav da C1 seviyesindeki dil becerilerini ölçer ve üniversite eğitimi için yeterli kabul edilir."
         - heading: "Kurs İçeriği ve Hazırlık Yöntemleri"

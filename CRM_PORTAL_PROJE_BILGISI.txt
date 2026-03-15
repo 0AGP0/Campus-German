@@ -1,0 +1,135 @@
+================================================================================
+  CAMPUS GERMAN CRM PORTAL – PROJE BİLGİSİ VE MVP KAPSAMI
+  (Bu dosyayı portal projesinin kök klasörüne koyun; Cursor bağlamı için.)
+================================================================================
+
+1. PROJE NEDİR?
+--------------------------------------------------------------------------------
+Campus German (campusgerman.com) için bir iç portal / CRM sistemidir. Ana site
+statik/rezervasyon sitesi; bu portal ise admin, danışman ve öğrencilerin
+kullandığı panel yapısıdır. CRM gibi kullanılacak: öğrenci kayıtları, aşama
+takibi, belge yönetimi ve şablondan PDF üretimi.
+
+
+2. KİMLER KULLANACAK? (ROLLER)
+--------------------------------------------------------------------------------
+
+• ADMIN
+  - CRM alanlarını tanımlar (hangi alanlar olacak, zorunlu mu vb.).
+  - Kullanıcı ve rol yönetimi (danışman ekleme, yetkiler).
+  - Sistem ayarları, gerekirse raporlama.
+
+• DANIŞMAN (Consultant)
+  - Kendine atanmış öğrencileri görür.
+  - Öğrencilerin CRM alanlarını takip eder, aşamalarını günceller.
+  - Öğrenciler için belge yükler (tek tek veya toplu).
+  - Template belgelerden, öğrenci verisini kullanarak PDF oluşturur.
+
+• ÖĞRENCİ (Student)
+  - Giriş yapar (e-posta/şifre veya verilen link).
+  - Admin tarafından belirlenmiş CRM alanlarını doldurur (kişisel bilgiler,
+    program tercihi, belge yükleme vb.).
+  - Belgeler bölümünde: danışmanın yüklediği belgeleri ve kendi yüklediklerini
+    görür.
+  - İzin verilmiş template belgelerden kendi verisiyle PDF oluşturabilir.
+
+
+3. ÖNEMLİ ÖZELLİKLER (MVP DAHİL OLSUN)
+--------------------------------------------------------------------------------
+
+• Giriş / yetkilendirme
+  - Admin, Danışman, Öğrenci rolleri.
+  - Rol bazlı menü ve sayfa erişimi.
+
+• Öğrenci / CRM tarafı
+  - Öğrenci kaydı (portalda veya admin tarafından eklenen).
+  - CRM alanları: admin panelde tanımlanabilir (alan adı, tip, zorunlu mu).
+  - Öğrenci kendi profilinde bu alanları doldurur; danışman görür ve
+    gerekirse düzenler.
+
+• Aşama takibi
+  - Her öğrenci için bir “aşama” veya “durum” (örn. Başvuru, Belgeler Tamam,
+    Ödeme Bekliyor, Kayıt Tamam). Danışman bu aşamayı günceller.
+
+• Belgeler
+  - Öğrenci bazlı belge depolama: danışman yükler, öğrenci de yükleyebilir.
+  - Her belge: dosya + hangi öğrenciye ait + isteğe bağlı etiket/tür.
+
+• Belge üretim otomasyonu (template → PDF)
+  - Sık kullanılan belgeler için şablon (template) tanımı.
+  - Şablon, CRM alanlarındaki verilerle doldurulur (örn. ad, soyad, program,
+    tarih).
+  - Hem danışman panelinde (“bu öğrenci için oluştur”) hem öğrenci panelinde
+    (kendi kaydı için) tek tıkla PDF oluşturulur.
+  - Teknik: Template (HTML veya Word) + placeholder’lar; sunucuda bir PDF
+    motoru (Puppeteer, react-pdf veya harici API) ile birleştirilip PDF
+    üretilir.
+
+
+4. ANA SİTE İLE İLİŞKİ
+--------------------------------------------------------------------------------
+
+• Ana site: campusgerman.com (Astro, şu an statik; Vercel’de veya benzeri).
+• Rezervasyon / ödeme: Sitede booking formu var; Stripe ile ödeme alınıyor
+  (Make.com veya backend ile Checkout Session). Ödeme tamamlanınca “ödendi”
+  bilgisi bir yerde tutulmalı; ileride bu portalda “rezervasyon / ödeme durumu”
+  ile eşleştirilebilir (öğrenci kaydı veya rezervasyon tablosu).
+
+• Portal adresi: portal.campusgerman.com veya campusgerman.com/portal gibi
+  ayrı bir adres. Portal ayrı uygulama; ana siteden link ile yönlendirme.
+
+
+5. HOSTING VE ORTAM
+--------------------------------------------------------------------------------
+
+• Portal, mevcut Hostinger VPS üzerinde çalışacak.
+• VPS özellikleri: 2 CPU, 8 GB RAM, 100 GB disk; şu an kullanım düşük.
+• Aynı VPS’te başka bir portal zaten var; bu CRM portalı da aynı sunucuya
+  kurulacak (farklı domain/port veya reverse proxy ile ayrıştırılır).
+
+• Veritabanı: VPS üzerinde PostgreSQL (veya proje tercihine göre MySQL/SQLite
+  MVP için). İleride ayrı managed DB de düşünülebilir.
+
+• Dosya depolama: Yüklenen belgeler ve üretilen PDF’ler VPS diskinde veya
+  object storage (S3 uyumlu) ile saklanabilir; MVP için yerel disk yeterli.
+
+
+6. MVP KAPSAMI (İLK SÜRÜMDE OLMASI GEREKENLER)
+--------------------------------------------------------------------------------
+
+• Kullanıcı girişi ve rol yönetimi (Admin / Danışman / Öğrenci).
+• Admin: basit CRM alan tanımı (birkaç sabit alan ile başlanabilir).
+• Danışman: öğrenci listesi, öğrenci detayı, CRM alanlarını görme/düzenleme,
+  aşama güncelleme, belge yükleme.
+• Öğrenci: kendi profil sayfası, CRM alanlarını doldurma, belgeleri listeleme
+  ve kendi belge yükleme.
+• En az bir template ile “PDF oluştur”: öğrenci verisini alıp tek PDF
+  üretip indirme veya kaydetme.
+• Basit, sade arayüz; mobil uyumlu olması iyi olur ama öncelik masaüstü.
+
+
+7. TEKNİK TERCİHLER (YÖNLENDİRME)
+--------------------------------------------------------------------------------
+
+• Backend: Node.js (Express/Fastify) veya Next.js API Routes. VPS’te
+  sürekli çalışan bir process.
+• Veritabanı: PostgreSQL tercih edilir; migration’lar ile şema yönetimi.
+• Auth: Oturum tabanlı (session) veya JWT; rol bilgisi token veya veritabanında.
+• Frontend: React veya Next.js ile panel sayfaları; veya Vue/Svelte tercih
+  edilebilir. Tutarlı bir UI kütüphanesi (Tailwind, shadcn/ui vb.) kullanılabilir.
+• PDF: Node’da Puppeteer (HTML→PDF) veya react-pdf / jsPDF; template için
+  HTML + placeholder veya Docxtpl (Word) düşünülebilir.
+
+
+8. BU DOSYANIN AMACI
+--------------------------------------------------------------------------------
+
+Bu metin, Cursor’da portal projesini açtığınızda projenin ne olduğunu, kimi
+hedeflediğini, MVP’nin ne içerdiğini ve hosting/teknik tercihleri özetler.
+Yeni bir chat’te veya yeni klasörde “CRM portal MVP yap” dediğinizde bu dosyayı
+referans göstererek veya dosyayı proje kökünde tutarak bağlamın anlaşılmasını
+kolaylaştırın.
+
+================================================================================
+  Son güncelleme: Proje başlangıç brief’i.
+================================================================================

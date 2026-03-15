@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
+import BilgiAlForm from '../../../components/BilgiAlForm.astro';
 import { cleanSlug, getServicesPath, getContactPath, getBookingPath, isValidLang } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
@@ -203,28 +204,7 @@ const relatedServices = [
                         </div>
                     </div>
                     <div class="cta-form">
-                        <div class="form-header">
-                            <h3>{lang === 'tr' ? 'Ücretsiz Bilgi Alın' : lang === 'de' ? 'Kostenlose Informationen' : lang === 'es' ? 'Obtener Información Gratuita' : 'Get Free Information'}</h3>
-                            <p>{lang === 'tr' ? 'Size en uygun programı bulalım' : lang === 'de' ? 'Lassen Sie uns das richtige Programm für Sie finden' : lang === 'es' ? 'Encontremos el programa adecuado para usted' : 'Let us find the right program for you'}</p>
-                        </div>
-                        <form class="contact-form">
-                            <div class="form-group">
-                                <input type="text" id="name" name="name" placeholder={lang === 'tr' ? 'Adınız Soyadınız' : lang === 'de' ? 'Ihr Name' : lang === 'es' ? 'Su Nombre Completo' : 'Your Name'} required>
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" id="email" name="email" placeholder={lang === 'tr' ? 'E-posta Adresiniz' : lang === 'de' ? 'Ihre E-Mail' : lang === 'es' ? 'Su Correo Electrónico' : 'Your Email'} required>
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="form-group">
-                                <input type="tel" id="phone" name="phone" placeholder={lang === 'tr' ? 'Telefon Numaranız' : lang === 'de' ? 'Ihre Telefonnummer' : lang === 'es' ? 'Su Número de Teléfono' : 'Your Phone Number'} required>
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <button type="submit" class="submit-btn">
-                                <i class="fas fa-paper-plane"></i>
-                                <span>{lang === 'tr' ? 'Ücretsiz Bilgi Al' : lang === 'de' ? 'Kostenlose Informationen anfordern' : lang === 'es' ? 'Obtener Información Gratuita' : 'Get Free Info'}</span>
-                            </button>
-                        </form>
+                        <BilgiAlForm lang={lang} />
                     </div>
                 </div>
             </div>

@@ -22,22 +22,22 @@ const advantagesPath = getAdvantagesPath(lang);
 // Translations
 const t = {
     tr: {
-        title: "Avantajlarımız - CampusGerman",
-        heroTitle: "CampusGerman Avantajları",
+        title: "Avantajlarımız - Campus German",
+        heroTitle: "Campus German Avantajları",
         heroDescription: "Almanca öğrenme yolculuğunuzda size sunduğumuz özel avantajlar ve hizmetler. Hibrit eğitim modelinden ücretsiz konuşma kulübüne, şehir gezilerinden eğitim koçluğuna kadar geniş bir yelpazede hizmetlerimiz bulunmaktadır.",
         sectionTitle: "Avantajlarımız",
         sectionSubtitle: "Her ihtiyaca uygun özel hazırlanmış avantajlar",
     },
     de: {
-        title: "Unsere Vorteile - CampusGerman",
-        heroTitle: "CampusGerman Vorteile",
+        title: "Unsere Vorteile - Campus German",
+        heroTitle: "Campus German Vorteile",
         heroDescription: "Besondere Vorteile und Dienstleistungen, die wir Ihnen auf Ihrer Deutschlernreise bieten. Von hybriden Lernmodellen bis hin zu kostenlosen Sprachclubs, von Stadttouren bis hin zu Lerncoaching - wir bieten eine breite Palette von Dienstleistungen.",
         sectionTitle: "Unsere Vorteile",
         sectionSubtitle: "Speziell entwickelte Vorteile für jeden Bedarf",
     },
     en: {
-        title: "Our Advantages - CampusGerman",
-        heroTitle: "CampusGerman Advantages",
+        title: "Our Advantages - Campus German",
+        heroTitle: "Campus German Advantages",
         heroDescription: "Special advantages and services we offer you on your German learning journey. From hybrid learning models to free conversation clubs, from city tours to learning coaching - we offer a wide range of services.",
         sectionTitle: "Our Advantages",
         sectionSubtitle: "Specially designed advantages for every need",
@@ -287,47 +287,7 @@ const translations = t[lang as keyof typeof t];
                     </div>
                 </div>
 
-                <!-- Garanti -->
-                <div class="service-card" id="garanti">
-                    <div class="service-header">
-                        <div class="service-icon-wrapper">
-                            <div class="service-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                        </div>
-                        <div class="service-header-text">
-                            <h3 class="service-title">{lang === 'tr' ? 'Para İade veya Kurs Tekrar Garantisi' : 'Geld-zurück- oder Kurswiederholungsgarantie'}</h3>
-                            <p class="service-subtitle">{lang === 'tr' ? 'Güvenli öğrenme' : 'Sicheres Lernen'}</p>
-                        </div>
-                    </div>
-                    <div class="service-body">
-                        <p class="service-description">
-                            {lang === 'tr' 
-                                ? 'Memnun kalmazsanız para iadesi veya kurs tekrar garantisi. Başarı odaklı eğitim anlayışımızın bir göstergesi.'
-                                : 'Geld-zurück-Garantie oder Kurswiederholung, wenn Sie nicht zufrieden sind. Ein Zeichen unseres erfolgsorientierten Bildungsansatzes.'}
-                        </p>
-                        <ul class="service-features">
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                <span>{lang === 'tr' ? 'Para iadesi' : 'Geld-zurück'}</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                <span>{lang === 'tr' ? 'Kurs tekrarı' : 'Kurswiederholung'}</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                <span>{lang === 'tr' ? 'Başarı garantisi' : 'Erfolgsgarantie'}</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="service-footer">
-                        <a href={`/${lang}/unsere-vorteile/geld-zurueck-garantie`} class="service-link">
-                            <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
+                <!-- Garanti kartı kaldırıldı - iade sayfası artık yayında değil -->
             </div>
         </div>
     </section>

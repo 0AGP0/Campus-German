@@ -99,6 +99,86 @@ export function getSuccessStoriesPath(lang: SupportedLang): string {
   return mapping[lang] || 'success-stories';
 }
 
+/** Dil bazlı ücretsiz deneme / free trial path'ini döndürür */
+export function getTrialPath(lang: SupportedLang): string {
+  const mapping: Record<SupportedLang, string> = {
+    tr: 'ucretsiz-deneme',
+    de: 'kostenlose-probestunde',
+    en: 'free-trial',
+    es: 'clase-prueba-gratis',
+  };
+  return mapping[lang] || 'free-trial';
+}
+
+/** Dil bazlı partner/eğitmen başvuru path'ini döndürür */
+export function getPartnerApplicationPath(lang: SupportedLang): string {
+  const mapping: Record<SupportedLang, string> = {
+    tr: 'partner-egitmen-basvuru',
+    de: 'partner-lehrkraft-bewerbung',
+    en: 'partner-teacher-application',
+    es: 'solicitud-socio-profesor',
+  };
+  return mapping[lang] || 'partner-teacher-application';
+}
+
+/** Dil bazlı fiyatlar & tarihler path'ini döndürür */
+export function getPricesDatesPath(lang: SupportedLang): string {
+  const mapping: Record<SupportedLang, string> = {
+    tr: 'fiyatlar-tarihler',
+    de: 'preise-termine',
+    en: 'prices-dates',
+    es: 'precios-fechas',
+  };
+  return mapping[lang] || 'prices-dates';
+}
+
+/** Yasal sayfa slug'ları (Datenschutz / Gizlilik) */
+export function getDatenschutzPath(lang: SupportedLang): string {
+  const mapping: Record<SupportedLang, string> = {
+    tr: 'gizlilik-politikasi',
+    de: 'datenschutz',
+    en: 'privacy-policy',
+    es: 'politica-privacidad'
+  };
+  return mapping[lang] || 'privacy-policy';
+}
+
+/** Yasal sayfa slug'ları (Impressum / Yasal Uyarı) */
+export function getImpressumPath(lang: SupportedLang): string {
+  const mapping: Record<SupportedLang, string> = {
+    tr: 'yasal-uyari',
+    de: 'impressum',
+    en: 'imprint',
+    es: 'aviso-legal'
+  };
+  return mapping[lang] || 'imprint';
+}
+
+/** Yasal sayfa slug'ları (Informationsauskunft / Bilgi Talebi) */
+export function getInformationsauskunftPath(lang: SupportedLang): string {
+  const mapping: Record<SupportedLang, string> = {
+    tr: 'bilgi-talebi',
+    de: 'informationsauskunft',
+    en: 'information-request',
+    es: 'solicitud-informacion'
+  };
+  return mapping[lang] || 'information-request';
+}
+
+/**
+ * legalSlug'dan sayfa tipini döndürür (datenschutz | impressum | informationsauskunft)
+ */
+export function getLegalPageType(legalSlug: string): 'datenschutz' | 'impressum' | 'informationsauskunft' | null {
+  const slugs = {
+    datenschutz: ['gizlilik-politikasi', 'datenschutz', 'privacy-policy', 'politica-privacidad'],
+    impressum: ['yasal-uyari', 'impressum', 'imprint', 'aviso-legal'],
+    informationsauskunft: ['bilgi-talebi', 'informationsauskunft', 'information-request', 'solicitud-informacion'],
+  };
+  for (const [type, list] of Object.entries(slugs))
+    if (list.includes(legalSlug)) return type as 'datenschutz' | 'impressum' | 'informationsauskunft';
+  return null;
+}
+
 /**
  * Kurs slug'ından dil uzantısını temizler
  * Örnek: "intensiv-a1.de" -> "intensiv-a1"

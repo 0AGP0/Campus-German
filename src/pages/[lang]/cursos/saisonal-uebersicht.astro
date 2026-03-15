@@ -1,10 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
-import AkademikAlmancaSarmal from '../../../components/AkademikAlmancaSarmal.astro';
+import IntensivePricingSection from '../../../components/IntensivePricingSection.astro';
 import '../../../styles/pages/kurslar.css';
 import { coursePricing } from '../../../data/coursePricing';
 import { getSimpleCourseStartDates } from '../../../utils/coursePricingHelper';
+import { getContactPath } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
     return [
@@ -13,6 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
+const contactPath = getContactPath(lang as 'tr' | 'de' | 'en' | 'es');
 const simpleStartDates = getSimpleCourseStartDates(lang as 'tr' | 'de' | 'en' | 'es');
 
 // Slug'dan dil uzantısını temizle
@@ -67,7 +69,7 @@ const pricingLang = lang === 'es' ? 'de' : lang;
 
 const t = {
     es: {
-        title: "Resumen de Cursos Estacionales de Alemán - CampusGerman",
+        title: "Resumen de Cursos Estacionales de Alemán - Campus German",
         heroTitle: "Cursos Estacionales de Alemán",
         heroDescription1: "Opciones de aprendizaje flexibles con escuela de verano, cursos semanales y nocturnos. Aprenda alemán con programas estacionales.",
         heroDescription2: "Elija el programa que mejor se adapte a usted y aprenda a su propio ritmo.",
@@ -157,9 +159,6 @@ const translations = t[lang as keyof typeof t];
         </div>
     </section>
     
-    <!-- Campus German Akademik Almanca Sarmalı -->
-    <AkademikAlmancaSarmal lang={lang} />
-    
     <!-- Tarjetas de Cursos Section -->
     <section class="courses-section" id="cursos-tarjetas">
         <div class="container">
@@ -209,31 +208,7 @@ const translations = t[lang as keyof typeof t];
             </div>
             
             <div class="pricing-content">
-                <!-- Precios de Cursos Semanales -->
-                <div class="pricing-block">
-                    <h3 class="pricing-block-title">Precios de Cursos Semanales</h3>
-                    <p class="pricing-description">Opciones de pago flexibles para nuestros cursos estacionales. Puede continuar durante el tiempo que desee.</p>
-                    <div class="weekly-pricing-grid">
-                        <div class="weekly-pricing-card">
-                            <h4>A1-A2</h4>
-                            <ul class="weekly-pricing-list">
-                                <li><span>2 Semanas:</span> <strong>{coursePricing[pricingLang as 'tr' | 'de' | 'en'].weeklyPricing.a1a2['2']}</strong></li>
-                                <li><span>4 Semanas:</span> <strong>{coursePricing[pricingLang as 'tr' | 'de' | 'en'].weeklyPricing.a1a2['4']}</strong></li>
-                                <li><span>8 Semanas:</span> <strong>{coursePricing[pricingLang as 'tr' | 'de' | 'en'].weeklyPricing.a1a2['8']}</strong></li>
-                                <li><span>16 Semanas:</span> <strong>{coursePricing[pricingLang as 'tr' | 'de' | 'en'].weeklyPricing.a1a2['16']}</strong></li>
-                            </ul>
-                        </div>
-                        <div class="weekly-pricing-card">
-                            <h4>B1-B2-C1</h4>
-                            <ul class="weekly-pricing-list">
-                                <li><span>2 Semanas:</span> <strong>{coursePricing[pricingLang as 'tr' | 'de' | 'en'].weeklyPricing.b1b2c1['2']}</strong></li>
-                                <li><span>4 Semanas:</span> <strong>{coursePricing[pricingLang as 'tr' | 'de' | 'en'].weeklyPricing.b1b2c1['4']}</strong></li>
-                                <li><span>8 Semanas:</span> <strong>{coursePricing[pricingLang as 'tr' | 'de' | 'en'].weeklyPricing.b1b2c1['8']}</strong></li>
-                                <li><span>16 Semanas:</span> <strong>{coursePricing[pricingLang as 'tr' | 'de' | 'en'].weeklyPricing.b1b2c1['16']}</strong></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <IntensivePricingSection lang={lang} showSectionTitle={false} />
                 
                 <!-- Horarios de Cursos -->
                 <div class="pricing-block">
@@ -401,11 +376,11 @@ const translations = t[lang as keyof typeof t];
         </div>
     </section>
     
-    <!-- Servicios de CampusGerman Section -->
+    <!-- Servicios de Campus German Section -->
     <section class="campusgerman-services-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Servicios de CampusGerman</h2>
+                <h2 class="section-title">Servicios de Campus German</h2>
                 <p class="section-subtitle">Estamos a su lado en su viaje de aprendizaje del alemán</p>
             </div>
             
@@ -418,7 +393,7 @@ const translations = t[lang as keyof typeof t];
                     <div class="service-content">
                         <h3 class="service-title">Programa de Colocación Universitaria / Pathway</h3>
                         <p class="service-description">
-                            Estudiar en una universidad en Alemania es un proceso de múltiples etapas que requiere planificación adecuada y apoyo profesional. El Programa de Colocación Universitaria / Pathway que ofrecemos como CampusGerman es un servicio de orientación integral que tiene como objetivo colocar a los estudiantes de manera segura, consciente y completa en universidades de Alemania.
+                            Estudiar en una universidad en Alemania es un proceso de múltiples etapas que requiere planificación adecuada y apoyo profesional. El Programa de Colocación Universitaria / Pathway que ofrecemos como Campus German es un servicio de orientación integral que tiene como objetivo colocar a los estudiantes de manera segura, consciente y completa en universidades de Alemania.
                         </p>
                         <a href={`/${lang}/nuestros-servicios/colocacion-universitaria`} class="service-cta">
                             <span>Ver Detalles</span>
@@ -435,7 +410,7 @@ const translations = t[lang as keyof typeof t];
                     <div class="service-content">
                         <h3 class="service-title">Orientación de Visa</h3>
                         <p class="service-description">
-                            Uno de los pasos más críticos para los estudiantes que desean estudiar en Alemania es el proceso de visa de estudiante. Las solicitudes incompletas o incorrectamente realizadas pueden hacer que el proceso se prolongue o incluso resulte en rechazo. La Orientación de Visa que ofrecemos como CampusGerman tiene como objetivo guiar a los estudiantes profesionalmente desde el principio de la solicitud hasta su conclusión.
+                            Uno de los pasos más críticos para los estudiantes que desean estudiar en Alemania es el proceso de visa de estudiante. Las solicitudes incompletas o incorrectamente realizadas pueden hacer que el proceso se prolongue o incluso resulte en rechazo. La Orientación de Visa que ofrecemos como Campus German tiene como objetivo guiar a los estudiantes profesionalmente desde el principio de la solicitud hasta su conclusión.
                         </p>
                         <a href={`/${lang}/nuestros-servicios/orientacion-visa`} class="service-cta">
                             <span>Ver Detalles</span>
@@ -452,7 +427,7 @@ const translations = t[lang as keyof typeof t];
                     <div class="service-content">
                         <h3 class="service-title">Alojamiento y Residencia Estudiantil en Bremen</h3>
                         <p class="service-description">
-                            Una de las cuestiones más importantes al comenzar la educación en Alemania es encontrar un alojamiento seguro y adecuado. El proceso de alojamiento puede ser complejo y estresante, especialmente para estudiantes que vienen del extranjero. El servicio de Alojamiento y Residencia Estudiantil en Bremen que ofrecemos como CampusGerman tiene como objetivo que los estudiantes completen este proceso sin problemas y de manera segura.
+                            Una de las cuestiones más importantes al comenzar la educación en Alemania es encontrar un alojamiento seguro y adecuado. El proceso de alojamiento puede ser complejo y estresante, especialmente para estudiantes que vienen del extranjero. El servicio de Alojamiento y Residencia Estudiantil en Bremen que ofrecemos como Campus German tiene como objetivo que los estudiantes completen este proceso sin problemas y de manera segura.
                         </p>
                         <a href={`/${lang}/nuestros-servicios/alojamiento`} class="service-cta">
                             <span>Ver Detalles</span>
@@ -469,7 +444,7 @@ const translations = t[lang as keyof typeof t];
                     <div class="service-content">
                         <h3 class="service-title">Recogida en el Aeropuerto</h3>
                         <p class="service-description">
-                            Comenzar la educación en el extranjero puede ser emocionante y desafiante para los estudiantes que vienen a Alemania por primera vez. Después de un viaje largo, el proceso de transporte y asentamiento en una ciudad desconocida puede ser estresante. El Servicio de Recogida en el Aeropuerto que ofrecemos como CampusGerman tiene como objetivo que los estudiantes pasen sus primeros días en Alemania de manera segura, cómoda y sin problemas.
+                            Comenzar la educación en el extranjero puede ser emocionante y desafiante para los estudiantes que vienen a Alemania por primera vez. Después de un viaje largo, el proceso de transporte y asentamiento en una ciudad desconocida puede ser estresante. El Servicio de Recogida en el Aeropuerto que ofrecemos como Campus German tiene como objetivo que los estudiantes pasen sus primeros días en Alemania de manera segura, cómoda y sin problemas.
                         </p>
                         <a href={`/${lang}/nuestros-servicios/recogida-aeropuerto`} class="service-cta">
                             <span>Ver Detalles</span>
@@ -590,7 +565,7 @@ const translations = t[lang as keyof typeof t];
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Sí, ofrecemos cursos de preparación para certificados de Goethe en CampusGerman. Proporcionamos preparación para exámenes en todos los niveles desde A1 hasta C2. Puede tomar exámenes de certificado en nuestro campus o ser dirigido a centros de prueba cercanos.</p>
+                        <p>Sí, ofrecemos cursos de preparación para certificados de Goethe en Campus German. Proporcionamos preparación para exámenes en todos los niveles desde A1 hasta C2. Puede tomar exámenes de certificado en nuestro campus o ser dirigido a centros de prueba cercanos.</p>
                     </div>
                 </div>
                 
@@ -619,7 +594,7 @@ const translations = t[lang as keyof typeof t];
             
             <div class="faq-cta">
                 <p>¿Tiene otras preguntas?</p>
-                <a href={`/${lang}/contacto`} class="faq-contact-btn">
+                <a href={`/${lang}/${contactPath}`} class="faq-contact-btn">
                     <i class="fas fa-envelope"></i>
                     <span>Contáctenos</span>
                 </a>

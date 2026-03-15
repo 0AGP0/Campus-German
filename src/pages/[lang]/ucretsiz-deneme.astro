@@ -3,12 +3,7 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import '../../styles/pages/kontakt.css';
 
 export async function getStaticPaths() {
-    return [
-        { params: { lang: 'tr' } },
-        { params: { lang: 'de' } },
-        { params: { lang: 'en' } },
-        { params: { lang: 'es' } },
-    ];
+    return [{ params: { lang: 'tr' } }];
 }
 
 const { lang } = Astro.params;
@@ -16,7 +11,7 @@ const { lang } = Astro.params;
 // Translations
 const t = {
     tr: {
-        title: "Ücretsiz Deneme Dersi - CampusGerman",
+        title: "Ücretsiz Deneme Dersi - Campus German",
         heroTitle: "Ücretsiz Deneme Dersi Al",
         heroDescription: "Almanca öğrenme yolculuğunuza başlamadan önce, eğitim kalitemizi deneyimleyin. Ücretsiz deneme dersimize katılın.",
         formTitle: "Deneme Dersi Başvurusu",
@@ -40,7 +35,7 @@ const t = {
         submitButton: "Deneme Dersi Talep Et"
     },
     de: {
-        title: "Kostenlose Probestunde - CampusGerman",
+        title: "Kostenlose Probestunde - Campus German",
         heroTitle: "Kostenlose Probestunde nehmen",
         heroDescription: "Erleben Sie unsere Bildungsqualität, bevor Sie Ihre Deutschlernreise beginnen. Nehmen Sie an unserer kostenlosen Probestunde teil.",
         formTitle: "Probestunden-Anfrage",
@@ -64,7 +59,7 @@ const t = {
         submitButton: "Probestunde anfordern"
     },
     en: {
-        title: "Free Trial Lesson - CampusGerman",
+        title: "Free Trial Lesson - Campus German",
         heroTitle: "Get a Free Trial Lesson",
         heroDescription: "Experience our education quality before you start your German learning journey. Join our free trial lesson.",
         formTitle: "Trial Lesson Request",
@@ -88,7 +83,7 @@ const t = {
         submitButton: "Request Trial Lesson"
     },
     es: {
-        title: "Clase de prueba gratuita - CampusGerman",
+        title: "Clase de prueba gratuita - Campus German",
         heroTitle: "Solicite una clase de prueba gratuita",
         heroDescription: "Conozca nuestra calidad formativa antes de empezar su curso de alemán. Participe en nuestra clase de prueba gratuita.",
         formTitle: "Solicitud de clase de prueba",

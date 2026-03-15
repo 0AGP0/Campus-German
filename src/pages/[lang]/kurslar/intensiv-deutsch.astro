@@ -1,10 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
-import AkademikAlmancaSarmal from '../../../components/AkademikAlmancaSarmal.astro';
+import IntensivePricingSection from '../../../components/IntensivePricingSection.astro';
 import '../../../styles/pages/kurslar.css';
 import { coursePricing } from '../../../data/coursePricing';
-import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getSimpleCourseStartDates } from '../../../utils/coursePricingHelper';
+import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, getSimpleCourseStartDates } from '../../../utils/coursePricingHelper';
+import { getContactPath } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
     return [
@@ -13,6 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
+const contactPath = getContactPath(lang as 'tr' | 'de' | 'en' | 'es');
 const simpleStartDates = getSimpleCourseStartDates(lang as 'tr' | 'de' | 'en' | 'es');
 
 // Slug'dan dil uzantısını temizle
@@ -47,10 +49,10 @@ const yogunKurslar = allKurslar.filter(kurs => {
 
 const t = {
     tr: {
-        title: "Yoğun Almanca Kursları Genel Bakış - CampusGerman",
+        title: "Yoğun Almanca Kursları Genel Bakış - Campus German",
         heroTitle: "Yoğun Almanca Kursları",
         heroDescription1: "Almanya'da üniversite eğitimi veya kariyer hedeflerinize en kısa sürede ulaşın. Yoğun Almanca kurslarımız ile hızlı ilerleme sağlayın.",
-        heroDescription2: "Haftada 24 ders saati ile iletişim odaklı, akademik standartlarda eğitim alın.",
+        heroDescription2: "Haftada 25 ders saati ile iletişim odaklı, akademik standartlarda eğitim alın.",
         buttonText1: "Kursları İncele",
         buttonText2: "İletişime Geç",
         ctaCardTitle: "Yoğun Kurslarımızı Keşfedin",
@@ -70,7 +72,7 @@ const t = {
         courseDetail2: "Ek Modüler Yapı Desteği",
     },
     de: {
-        title: "Übersicht Intensivkurse - CampusGerman",
+        title: "Übersicht Intensivkurse - Campus German",
         heroTitle: "Intensiv Deutschkurse",
         heroDescription1: "Erreichen Sie Ihre Ziele für Universitätsbildung oder Karriere in Deutschland in kürzester Zeit. Machen Sie schnelle Fortschritte mit unseren Intensivkursen.",
         heroDescription2: "Erhalten Sie eine kommunikationsorientierte, akademische Ausbildung mit 24 Unterrichtsstunden pro Woche.",
@@ -162,9 +164,6 @@ const translations = t[lang as keyof typeof t];
         </div>
     </section>
     
-    <!-- Campus German Akademik Almanca Sarmalı -->
-    <AkademikAlmancaSarmal lang={lang} />
-    
     <!-- Kurs Kartları Section -->
     <section class="courses-section" id="kurs-kartlari">
         <div class="container">
@@ -177,7 +176,10 @@ const translations = t[lang as keyof typeof t];
                 {yogunKurslar.map(kurs => {
                     const pricingData = getCoursePricingData(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
                     let priceText = translations.courseCardContactUs;
-                    if (pricingData?.pricing?.fullCourse) {
+                    const perWeekPrice = getCourseCardPerWeekPrice(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
+                    if (perWeekPrice) {
+                        priceText = perWeekPrice;
+                    } else if (pricingData?.pricing?.fullCourse) {
                         priceText = `${pricingData.pricing.fullCourse} ${translations.courseCardStartingPrices}`;
                     } else if (pricingData?.isWeeklyOnly && pricingData?.weeklyPricing) {
                         const courseInfo = extractCourseInfo(kurs.slug);
@@ -228,35 +230,7 @@ const translations = t[lang as keyof typeof t];
             </div>
             
             <div class="pricing-content">
-                <!-- Akademik Almanca Kursları Fiyatları -->
-                <div class="pricing-block">
-                    <h3 class="pricing-block-title">{lang === 'tr' ? 'Akademik Almanca Kursları Fiyatları' : 'Preise für Akademische Deutschkurse'}</h3>
-                    <div class="pricing-table-wrapper">
-                        <table class="pricing-table">
-                            <thead>
-                                <tr>
-                                    <th>{lang === 'tr' ? 'Seviye' : 'Niveau'}</th>
-                                    <th>{lang === 'tr' ? 'Ders' : 'UStd'}</th>
-                                    <th>{lang === 'tr' ? 'Süre' : 'Dauer'}</th>
-                                    <th>{lang === 'tr' ? 'Fiyat' : 'Preis'}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {(['a1', 'a2', 'b1', 'b2', 'c1'] as const).map(level => {
-                                    const pricing = coursePricing[lang as 'tr' | 'de'].intensive[level];
-                                    return (
-                                        <tr>
-                                            <td><strong>{level.toUpperCase()}</strong></td>
-                                            <td>{pricing.lessons}</td>
-                                            <td>{pricing.duration}</td>
-                                            <td><strong>{pricing.fullCourse}</strong></td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <IntensivePricingSection lang={lang} showSectionTitle={false} />
                 
                 <!-- Kurs Zamanları -->
                 <div class="pricing-block">
@@ -437,11 +411,11 @@ const translations = t[lang as keyof typeof t];
         </div>
     </section>
     
-    <!-- CampusGerman Hizmetleri Section -->
+    <!-- Campus German Hizmetleri Section -->
     <section class="campusgerman-services-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">{lang === 'tr' ? "CampusGerman Hizmetleri" : "CampusGerman Dienstleistungen"}</h2>
+                <h2 class="section-title">{lang === 'tr' ? "Campus German Hizmetleri" : "Campus German Dienstleistungen"}</h2>
                 <p class="section-subtitle">{lang === 'tr' ? "Almanca öğrenme yolculuğunuzda yanınızdayız" : "Wir sind an Ihrer Seite auf Ihrer Reise zum Deutschlernen"}</p>
             </div>
             
@@ -455,10 +429,10 @@ const translations = t[lang as keyof typeof t];
                         <h3 class="service-title">{lang === 'tr' ? "Üniversite Yerleştirme Programı / Pathway" : "Universitätsvermittlung / Pathway"}</h3>
                         <p class="service-description">
                             {lang === 'tr'
-                                ? "Almanya'da üniversite eğitimi almak, doğru planlama ve profesyonel destek gerektiren çok aşamalı bir süreçtir. CampusGerman olarak sunduğumuz Üniversite Yerleştirme Programı / Pathway, öğrencilerin Almanya'daki üniversitelere güvenli, bilinçli ve eksiksiz şekilde yerleşmesini hedefleyen kapsamlı bir rehberlik hizmetidir."
+                                ? "Almanya'da üniversite eğitimi almak, doğru planlama ve profesyonel destek gerektiren çok aşamalı bir süreçtir. Campus German olarak sunduğumuz Üniversite Yerleştirme Programı / Pathway, öğrencilerin Almanya'daki üniversitelere güvenli, bilinçli ve eksiksiz şekilde yerleşmesini hedefleyen kapsamlı bir rehberlik hizmetidir."
                                 : "Ein Universitätsstudium in Deutschland zu absolvieren ist ein mehrstufiger Prozess, der eine sorgfältige Planung und professionelle Unterstützung erfordert. Unser Universitätsvermittlungsprogramm / Pathway zielt darauf ab, Studierenden eine sichere, fundierte und umfassende Platzierung an deutschen Universitäten zu ermöglichen."}
                         </p>
-                        <a href={`/${lang}/unsere-dienstleistungen/universite-yerlestirme`} class="service-cta">
+                        <a href={`/${lang}/sunduklarimiz/universite-yerlestirme`} class="service-cta">
                             <span>{lang === 'tr' ? "Detayları Gör" : "Details ansehen"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -474,10 +448,10 @@ const translations = t[lang as keyof typeof t];
                         <h3 class="service-title">{lang === 'tr' ? "Vize Rehberliği" : "Visumsberatung"}</h3>
                         <p class="service-description">
                             {lang === 'tr'
-                                ? "Almanya'da eğitim almak isteyen öğrenciler için en kritik adımlardan biri öğrenci vizesi sürecidir. Eksik veya hatalı yapılan başvurular, sürecin uzamasına hatta retle sonuçlanmasına neden olabilir. CampusGerman olarak sunduğumuz Vize Rehberliği, başvurunun en başından sonuçlanmasına kadar öğrencileri profesyonel şekilde yönlendirmeyi amaçlar."
+                                ? "Almanya'da eğitim almak isteyen öğrenciler için en kritik adımlardan biri öğrenci vizesi sürecidir. Eksik veya hatalı yapılan başvurular, sürecin uzamasına hatta retle sonuçlanmasına neden olabilir. Campus German olarak sunduğumuz Vize Rehberliği, başvurunun en başından sonuçlanmasına kadar öğrencileri profesyonel şekilde yönlendirmeyi amaçlar."
                                 : "Einer der kritischsten Schritte für Studierende, die in Deutschland studieren möchten, ist der Prozess des Studentenvisums. Unvollständige oder fehlerhafte Anträge können zu Verzögerungen oder sogar Ablehnungen führen. Unsere Visumsberatung zielt darauf ab, Studierende professionell vom Beginn des Antragsverfahrens bis zu dessen Abschluss zu begleiten."}
                         </p>
-                        <a href={`/${lang}/unsere-dienstleistungen/vize-rehberligi`} class="service-cta">
+                        <a href={`/${lang}/sunduklarimiz/vize-rehberligi`} class="service-cta">
                             <span>{lang === 'tr' ? "Detayları Gör" : "Details ansehen"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -493,10 +467,10 @@ const translations = t[lang as keyof typeof t];
                         <h3 class="service-title">{lang === 'tr' ? "Bremen Konaklama ve Yurt Yerleştirmesi" : "Unterkunft und Wohnheim in Bremen"}</h3>
                         <p class="service-description">
                             {lang === 'tr'
-                                ? "Almanya'da eğitime başlarken en önemli konulardan biri güvenli ve uygun konaklama bulmaktır. Özellikle yurtdışından gelen öğrenciler için konaklama süreci karmaşık ve stresli olabilir. CampusGerman olarak sunduğumuz Bremen Konaklama ve Yurt Yerleştirmesi hizmeti, öğrencilerin bu süreci sorunsuz ve güvenli şekilde tamamlamasını hedefler."
+                                ? "Almanya'da eğitime başlarken en önemli konulardan biri güvenli ve uygun konaklama bulmaktır. Özellikle yurtdışından gelen öğrenciler için konaklama süreci karmaşık ve stresli olabilir. Campus German olarak sunduğumuz Bremen Konaklama ve Yurt Yerleştirmesi hizmeti, öğrencilerin bu süreci sorunsuz ve güvenli şekilde tamamlamasını hedefler."
                                 : "Eine der wichtigsten Fragen beim Beginn des Studiums in Deutschland ist die Suche nach einer sicheren und geeigneten Unterkunft. Besonders für Studierende aus dem Ausland kann der Prozess der Unterkunftssuche komplex und stressig sein. Unser Service für Unterkunft und Wohnheim in Bremen zielt darauf ab, Studierenden diesen Prozess reibungslos und sicher zu ermöglichen."}
                         </p>
-                        <a href={`/${lang}/unsere-dienstleistungen/konaklama`} class="service-cta">
+                        <a href={`/${lang}/sunduklarimiz/konaklama`} class="service-cta">
                             <span>{lang === 'tr' ? "Detayları Gör" : "Details ansehen"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -512,10 +486,10 @@ const translations = t[lang as keyof typeof t];
                         <h3 class="service-title">{lang === 'tr' ? "Havaalanı Karşılama" : "Flughafenabholung"}</h3>
                         <p class="service-description">
                             {lang === 'tr'
-                                ? "Yurtdışında eğitime başlamak, özellikle ilk kez Almanya'ya gelen öğrenciler için heyecan verici olduğu kadar zorlayıcı da olabilir. Uzun bir yolculuğun ardından bilinmeyen bir şehirde ulaşım ve yerleşim süreci stres yaratabilir. CampusGerman olarak sunduğumuz Havaalanı Karşılama Hizmeti, öğrencilerin Almanya'daki ilk günlerini güvenli, konforlu ve sorunsuz şekilde geçirmesini amaçlar."
+                                ? "Yurtdışında eğitime başlamak, özellikle ilk kez Almanya'ya gelen öğrenciler için heyecan verici olduğu kadar zorlayıcı da olabilir. Uzun bir yolculuğun ardından bilinmeyen bir şehirde ulaşım ve yerleşim süreci stres yaratabilir. Campus German olarak sunduğumuz Havaalanı Karşılama Hizmeti, öğrencilerin Almanya'daki ilk günlerini güvenli, konforlu ve sorunsuz şekilde geçirmesini amaçlar."
                                 : "Der Beginn eines Studiums im Ausland kann für Studierende, die zum ersten Mal nach Deutschland kommen, sowohl aufregend als auch herausfordernd sein. Nach einer langen Reise kann der Transport- und Ansiedlungsprozess in einer unbekannten Stadt stressig sein. Unser Flughafenabholservice zielt darauf ab, dass Studierende ihre ersten Tage in Deutschland sicher, komfortabel und reibungslos verbringen."}
                         </p>
-                        <a href={`/${lang}/unsere-dienstleistungen/havalimani-karsilama`} class="service-cta">
+                        <a href={`/${lang}/sunduklarimiz/havalimani-karsilama`} class="service-cta">
                             <span>{lang === 'tr' ? "Detayları Gör" : "Details ansehen"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -634,7 +608,7 @@ const translations = t[lang as keyof typeof t];
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>{lang === 'tr' ? "Evet, CampusGerman'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz." : "Ja, wir bieten Goethe-Zertifikatsvorbereitungskurse bei CampusGerman an. Wir bereiten Sie auf Prüfungen auf allen Niveaus von A1 bis C2 vor. Sie können die Zertifikatsprüfungen auf unserem Campus ablegen oder an nahegelegene Testzentren weitergeleitet werden."}</p>
+                        <p>{lang === 'tr' ? "Evet, Campus German'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz." : "Ja, wir bieten Goethe-Zertifikatsvorbereitungskurse bei Campus German an. Wir bereiten Sie auf Prüfungen auf allen Niveaus von A1 bis C2 vor. Sie können die Zertifikatsprüfungen auf unserem Campus ablegen oder an nahegelegene Testzentren weitergeleitet werden."}</p>
                     </div>
                 </div>
                 
@@ -663,7 +637,7 @@ const translations = t[lang as keyof typeof t];
             
             <div class="faq-cta">
                 <p>{lang === 'tr' ? "Başka sorularınız mı var?" : "Haben Sie weitere Fragen?"}</p>
-                <a href={`/${lang}/kontakt`} class="faq-contact-btn">
+                <a href={`/${lang}/${contactPath}`} class="faq-contact-btn">
                     <i class="fas fa-envelope"></i>
                     <span>{lang === 'tr' ? "Bize Ulaşın" : "Kontaktieren Sie uns"}</span>
                 </a>

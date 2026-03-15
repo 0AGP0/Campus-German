@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1523050854058-8df90110c9e1?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Weekly Lessons"
-    description: "24 Lessons (UE)"
+    description: "25 Lessons (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
     description: "12 Weeks"
@@ -37,7 +37,7 @@ tabs:
       title: "TestDaF/DSH Preparation Course"
       paragraphs:
         - heading: "Course Overview"
-          text: "The TestDaF/DSH Preparation Course is a special preparation program for university entrance exams designed for students planning university education in Germany. This course aims to ensure that students make specific preparation for TestDaF and DSH exam formats, develop their academic writing skills, and succeed. The program, which offers an intensive preparation experience with 24 lesson hours per week, lasts 12 weeks and consists of approximately 220-250 lesson hours."
+          text: "The TestDaF/DSH Preparation Course is a special preparation program for university entrance exams designed for students planning university education in Germany. This course aims to ensure that students make specific preparation for TestDaF and DSH exam formats, develop their academic writing skills, and succeed. The program, which offers an intensive preparation experience with 25 lesson hours per week, lasts 12 weeks and consists of approximately 220-250 lesson hours."
         - heading: "Target Exams and Prerequisites"
           text: "This course prepares for TestDaF and DSH exams. It is suitable for students who have completed at least B2 level, but C1 level is recommended. TestDaF (Test Deutsch als Fremdsprache) is a national exam valid for all German universities and is conducted worldwide. DSH (Deutsche Sprachprüfung für den Hochschulzugang) is an exam conducted by each university itself and is valid only for that university. Both exams measure the language level required for university education."
         - heading: "Course Content and Preparation Methods"

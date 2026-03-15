@@ -1,9 +1,10 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import BilgiAlForm from '../../components/BilgiAlForm.astro';
 import '../../styles/pages/index.css';
 import { getCollection } from 'astro:content';
-import { isOverviewPage, getSectionPath, cleanSlug } from '../../utils/pathHelpers';
-import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo } from '../../utils/coursePricingHelper';
+import { isOverviewPage, getSectionPath, cleanSlug, getContactPath } from '../../utils/pathHelpers';
+import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
 import { getNavbarCourseSlugs, navbarCourseSlugsByLang } from '../../data/navbarCourseSlugs';
 
 export async function getStaticPaths() {
@@ -23,6 +24,7 @@ const courseBasePath = `/${lang}/${courseBase}`;
 // Form/başvuru sayfası path (hero ve CTA butonları için)
 const bookingSlug = lang === 'tr' || lang === 'de' ? 'buchung' : lang === 'en' ? 'booking' : 'reservar';
 const bookingPath = `/${lang}/${bookingSlug}`;
+const contactPath = getContactPath(lang);
 
 // Kursları çek (ana sayfa filtre bölümü) – sadece navbar'da olan kurslar, navbar sırasına göre
 const allKurslar = await getCollection('kurslar');
@@ -45,14 +47,14 @@ const anaKurslar = [...filtered].sort((a, b) => {
 // Translations
 const t = {
     tr: {
-        title: "CampusGerman - Almanca Dil Kursu",
+        title: "Campus German - Almanca Dil Kursu",
         heroBadge: "Premium Almanca Eğitimi",
         heroTitle: {
             main: "Almanca'yı",
             highlight: "Konuşarak",
             sub: "Öğrenin"
         },
-        heroDescription: "CampusGerman ile Almanca öğrenmek artık çok kolay! Konuşma odaklı eğitim, native speaker öğretmenler ve kişiselleştirilmiş programlarla hedeflerinize ulaşın.",
+        heroDescription: "Campus German ile Almanca öğrenmek artık çok kolay! Konuşma odaklı eğitim, native speaker öğretmenler ve kişiselleştirilmiş programlarla hedeflerinize ulaşın.",
         heroFeatures: ["Sınırlı Kontenjan", "Kültür Programları", "Goethe-Telc-Test Daf-FSP"],
         heroCta1: "Hemen Başvur",
         heroCta2: "Whatsapptan Bilgi Al",
@@ -100,7 +102,7 @@ const t = {
         courseFilterNext: "Sonraki",
         courseCardStartingPrices: "başlayan fiyatlarla",
         courseCardContactUs: "İletişime geç",
-        courseCardLessons: "20+4 ders",
+        courseCardLessons: "200 derse kadar",
         coursesTitle: "En Çok Tercih Edilen Kurslar",
         coursesSubtitle: "Bremen'de 10 öğrenciden 9unun ilk tercihi Campus German oldu. Sınırlı kontenjandan yararlanmak için yerini şimdiden ayırt, Almancayı kusursuz öğren!",
         courseBookButton: "Yer Ayırt",
@@ -110,7 +112,7 @@ const t = {
         countdownGrabCta: "İndirimi Kap",
         countdownEndsIn: "Bitiş",
         // Hero video section
-        videoTitle: "CampusGerman Tanıtım",
+        videoTitle: "Campus German Tanıtım",
         floatingInfo1Title: "A1-C1 Seviye",
         floatingInfo1Subtitle: "Sınav Hazırlık",
         floatingInfo2Title: "Şehir-Uni",
@@ -123,7 +125,7 @@ const t = {
         bremenMiniDesc: "Öğrenci dostu şehir, sosyal yaşam, Hochdeutsch avantajı ve deneyim odaklı öğrenme için ideal bir ortam.",
         marketRealitiesTitle: "Piyasa Gerçekleri & Çözümler",
         marketRealitiesDesc: "Memnuniyetsizlik ve kur tekrarı döngüsünü eğitmen standardı, müfredat tutarlılığı, konuşma odaklı yapı ve hibrit süreklilik ile kırıyoruz.",
-        whyCampusGerman: "Neden CampusGerman?",
+        whyCampusGerman: "Neden Campus German?",
         whyCampusGermanText: "Almanya'nın en güzel üniversite şehirlerinden birinde, 50,000'den fazla öğrenciye ev sahipliği yapan bu tarihi şehirde, Almanca öğrenirken aynı zamanda Alman kültürünü de keşfedebilirsiniz.",
         methodologyTitle: "Eğitim Metodolojimiz",
         methodologyText: "Konuşma odaklı eğitim yaklaşımımızla, sadece gramer kurallarını öğrenmez, aynı zamanda günlük hayatta Almanca konuşmayı da öğrenirsiniz.",
@@ -200,38 +202,38 @@ const t = {
         video1Desc: "Maria, A1 seviyesinden başlayarak sadece 8 ayda B2 seviyesine ulaştı. Şimdi Almanya'da bir üniversitede İşletme okuyor.",
         video1Link: "Hikayeyi Oku",
         video2Title: "Ahmet'in Yolculuğu",
-        video2Desc: "Ahmet, Türkiye'den gelerek CampusGerman'da eğitim aldı. Şimdi Almanya'da bir şirkette çalışıyor.",
+        video2Desc: "Ahmet, Türkiye'den gelerek Campus German'da eğitim aldı. Şimdi Almanya'da bir şirkette çalışıyor.",
         video2Link: "Hikayeyi Oku",
         video1Alt: "Öğrenci Deneyimi 1",
         video2Alt: "Öğrenci Deneyimi 2",
         // CTA section
         ctaTitle: "Almanca Öğrenmeye Başlayın",
-        ctaDescription: "CampusGerman'da Almanca öğrenin ve Almanya'da yeni bir gelecek kurun. Ücretsiz danışmanlık için hemen iletişime geçin!",
+        ctaDescription: "Campus German'da Almanca öğrenin ve Almanya'da yeni bir gelecek kurun. Ücretsiz danışmanlık için hemen iletişime geçin!",
         ctaFeature1: "Ücretsiz Seviye Belirleme",
         ctaFeature2: "Esnek Program Seçenekleri",
         ctaFeature3: "Native Speaker Öğretmenler",
-        ctaFormTitle: "Ücretsiz Bilgi Alın",
+        ctaFormTitle: "Bilgi Al",
         ctaFormSubtitle: "Size en uygun programı bulalım",
         formNamePlaceholder: "Adınız Soyadınız",
         formEmailPlaceholder: "E-posta Adresiniz",
         formPhonePlaceholder: "Telefon Numaranız",
-        formInterestPlaceholder: "İlgi Alanınız",
-        formInterestOption1: "A1-A2 Başlangıç",
-        formInterestOption2: "B1-B2 Orta Seviye",
-        formInterestOption3: "C1-C2 İleri Seviye",
-        formInterestOption4: "Üniversite Hazırlık",
-        formInterestOption5: "Mesleki Eğitim",
-        formInterestOption6: "Online Kurs",
+        formCityPlaceholder: "Bulunduğunuz şehir",
         formMessagePlaceholder: "Mesajınız (Opsiyonel)",
-        formSubmit: "Ücretsiz Bilgi Al",
+        formDatePlaceholder: "Tercih ettiğiniz tarih",
+        formSubmit: "Bilgi Al",
         formFooter: "Bilgileriniz güvenle korunur",
+        formSending: "Gönderiliyor...",
+        formRequiredFields: "Lütfen tüm gerekli alanları doldurun.",
+        formEmailInvalid: "Lütfen geçerli bir e-posta adresi girin.",
+        formSuccess: "Formunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.",
+        formError: "Bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.",
         // Reviews section
         reviewsTitle: "Öğrenci Yorumları",
         reviewsSubtitle: "Başarı hikayelerimizi dinleyin",
-        review1Text: "\"CampusGerman'da öğrendiğim Almanca ile Almanya'da bir üniversitede İşletme okuyorum. Öğretmenlerim çok sabırlıydı ve konuşma odaklı eğitim sayesinde hızlı ilerledim.\"",
-        review2Text: "\"Türkiye'den gelerek CampusGerman'da eğitim aldım. Şimdi Almanya'da bir şirkette çalışıyorum. Program çok kapsamlıydı ve iş bulmamda büyük yardımı oldu.\"",
-        review3Text: "\"İş için Almanca öğrenmek istiyordum. CampusGerman'da aldığım eğitim sayesinde şirketimde terfi aldım. Özellikle iş Almancası konusunda çok faydalı oldu.\"",
-        review4Text: "\"İspanya'dan Almanya'ya geldim ve CampusGerman'da üniversite hazırlık kursu aldım. Şimdi Almanya'da bir üniversitede Mühendislik okuyorum. Çok teşekkürler!\"",
+        review1Text: "\"Campus German'da öğrendiğim Almanca ile Almanya'da bir üniversitede İşletme okuyorum. Öğretmenlerim çok sabırlıydı ve konuşma odaklı eğitim sayesinde hızlı ilerledim.\"",
+        review2Text: "\"Türkiye'den gelerek Campus German'da eğitim aldım. Şimdi Almanya'da bir şirkette çalışıyorum. Program çok kapsamlıydı ve iş bulmamda büyük yardımı oldu.\"",
+        review3Text: "\"İş için Almanca öğrenmek istiyordum. Campus German'da aldığım eğitim sayesinde şirketimde terfi aldım. Özellikle iş Almancası konusunda çok faydalı oldu.\"",
+        review4Text: "\"İspanya'dan Almanya'ya geldim ve Campus German'da üniversite hazırlık kursu aldım. Şimdi Almanya'da bir üniversitede Mühendislik okuyorum. Çok teşekkürler!\"",
         // FAQ section
         faqTitle: "Sık Sorulan Sorular",
         faqSubtitle: "Merak ettiğiniz konular hakkında bilgi alın",
@@ -279,21 +281,21 @@ const t = {
         faq11Question: "Ödeme planları ve indirimler mevcut mu?",
         faq11Answer: "Evet, esnek ödeme planları sunuyoruz. Aylık, 3 aylık ve 6 aylık ödeme seçenekleri mevcuttur. Erken kayıt, grup kayıtları ve uzun dönem programlar için indirimler bulunmaktadır. Detaylı bilgi için bizimle iletişime geçin.",
         faq9Question: "Goethe sertifikası alabilir miyim?",
-        faq9Answer: "Evet, CampusGerman'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz.",
+        faq9Answer: "Evet, Campus German'da Goethe sertifikası hazırlık kursları sunuyoruz. A1'den C2'ye kadar tüm seviyelerde sınav hazırlığı yapıyoruz. Sertifika sınavlarına kampüsümüzde girebilir veya yakındaki test merkezlerine yönlendirilebilirsiniz.",
         faq10Question: "Konaklama seçenekleri mevcut mu?",
         faq10Answer: "Evet, Almanya'da konaklama seçenekleri sunuyoruz. Öğrenci yurtları, aile yanı konaklama ve paylaşımlı daireler mevcuttur. Konaklama hizmetimiz kurs ücretine dahil değildir ancak size en uygun seçenekleri bulmanızda yardımcı oluyoruz.",
         faq11Question: "Ödeme planları ve indirimler mevcut mu?",
         faq11Answer: "Evet, esnek ödeme planları sunuyoruz. Aylık, 3 aylık ve 6 aylık ödeme seçenekleri mevcuttur. Erken kayıt, grup kayıtları ve uzun dönem programlar için indirimler bulunmaktadır. Detaylı bilgi için bizimle iletişime geçin.",
     },
     en: {
-        title: "CampusGerman - German Language Course",
+        title: "Campus German - German Language Course",
         heroBadge: "Premium German Education",
         heroTitle: {
             main: "Learn German",
             highlight: "by Speaking",
             sub: ""
         },
-        heroDescription: "Learning German is easy with CampusGerman! Reach your goals with conversation-focused education, native speaker teachers, and personalized programs.",
+        heroDescription: "Learning German is easy with Campus German! Reach your goals with conversation-focused education, native speaker teachers, and personalized programs.",
         heroFeatures: ["Limited Quota", "Cultural Programs", "Goethe-Telc-TestDaF-FSP"],
         heroCta1: "Apply Now",
         heroCta2: "Get Info via WhatsApp",
@@ -341,7 +343,7 @@ const t = {
         courseFilterNext: "Next",
         courseCardStartingPrices: "starting at",
         courseCardContactUs: "Contact us",
-        courseCardLessons: "20+4 lessons",
+        courseCardLessons: "up to 200 lessons",
         coursesTitle: "Most Popular Courses",
         coursesSubtitle: "9 out of 10 students in Bremen chose Campus German as their first choice. Reserve your spot now to learn German perfectly from limited quota!",
         courseBookButton: "Reserve Spot",
@@ -350,7 +352,7 @@ const t = {
         countdownDiscountDesc: "Enter coupon on booking form",
         countdownGrabCta: "Grab Discount",
         countdownEndsIn: "Ends in",
-        videoTitle: "CampusGerman Introduction",
+        videoTitle: "Campus German Introduction",
         floatingInfo1Title: "A1-C1 Levels",
         floatingInfo1Subtitle: "Exam Prep",
         floatingInfo2Title: "City-Uni",
@@ -362,7 +364,7 @@ const t = {
         bremenMiniDesc: "Student-friendly city, social life, Hochdeutsch advantage, and an ideal environment for experience-oriented learning.",
         marketRealitiesTitle: "Market Realities & Solutions",
         marketRealitiesDesc: "We break the cycle of dissatisfaction and course repetition with teacher standards, curriculum consistency, speaking-oriented structure, and hybrid continuity.",
-        whyCampusGerman: "Why CampusGerman?",
+        whyCampusGerman: "Why Campus German?",
         whyCampusGermanText: "In one of Germany's most beautiful university cities, this historic city that hosts more than 50,000 students, you can not only learn German but also discover German culture.",
         methodologyTitle: "Our Teaching Methodology",
         methodologyText: "With our conversation-focused teaching approach, you not only learn grammar rules, but also learn to speak German in everyday life.",
@@ -407,7 +409,7 @@ const t = {
         freeTrialDesc: "Experience our quality before starting the course. Join our conversation club for free!",
         freeTrialButton: "Book Free Trial",
         advantagesTitle: "Our Advantages",
-        advantagesSubtitle: "Why should you choose CampusGerman?",
+        advantagesSubtitle: "Why should you choose Campus German?",
         advantage1Title: "Hybrid Learning Model",
         advantage1Desc: "Flexible learning with combined online and face-to-face education",
         advantage1Link: "Learn More",
@@ -454,36 +456,36 @@ const t = {
         video1Desc: "Maria reached B2 level in just 8 months starting from A1 level. She now studies Business Administration at a university in Germany.",
         video1Link: "Read Story",
         video2Title: "Ahmet's Journey",
-        video2Desc: "Ahmet came from Turkey and studied at CampusGerman. He now works at a company in Germany.",
+        video2Desc: "Ahmet came from Turkey and studied at Campus German. He now works at a company in Germany.",
         video2Link: "Read Story",
         video1Alt: "Student Experience 1",
         video2Alt: "Student Experience 2",
         ctaTitle: "Start Learning German",
-        ctaDescription: "Learn German at CampusGerman and build a new future in Germany. Contact us now for free consultation!",
+        ctaDescription: "Learn German at Campus German and build a new future in Germany. Contact us now for free consultation!",
         ctaFeature1: "Free Placement Test",
         ctaFeature2: "Flexible Program Options",
         ctaFeature3: "Native Speaker Teachers",
-        ctaFormTitle: "Get Free Information",
+        ctaFormTitle: "Get Information",
         ctaFormSubtitle: "Let us find the most suitable program for you",
         formNamePlaceholder: "Your Name",
         formEmailPlaceholder: "Your Email",
         formPhonePlaceholder: "Your Phone Number",
-        formInterestPlaceholder: "Your Interest",
-        formInterestOption1: "A1-A2 Beginner",
-        formInterestOption2: "B1-B2 Intermediate",
-        formInterestOption3: "C1-C2 Advanced",
-        formInterestOption4: "University Preparation",
-        formInterestOption5: "Professional Training",
-        formInterestOption6: "Online Course",
+        formCityPlaceholder: "Your city",
         formMessagePlaceholder: "Your Message (Optional)",
-        formSubmit: "Get Free Info",
+        formDatePlaceholder: "Preferred date",
+        formSubmit: "Get Information",
         formFooter: "Your information is securely protected",
+        formSending: "Sending...",
+        formRequiredFields: "Please fill in all required fields.",
+        formEmailInvalid: "Please enter a valid email address.",
+        formSuccess: "Your form has been submitted successfully! We will get back to you as soon as possible.",
+        formError: "An error occurred. Please try again or contact us.",
         reviewsTitle: "Student Reviews",
         reviewsSubtitle: "Listen to our success stories",
-        review1Text: "\"With the German I learned at CampusGerman, I study Business Administration at a university in Germany. My teachers were very patient and I progressed quickly thanks to the conversation-focused education.\"",
-        review2Text: "\"I came from Turkey and studied at CampusGerman. I now work at a company in Germany. The program was very comprehensive and greatly helped me find a job.\"",
-        review3Text: "\"I wanted to learn German for work. Thanks to the education I received at CampusGerman, I got promoted at my company. It was especially useful for business German.\"",
-        review4Text: "\"I came from Spain to Germany and took the university preparation course at CampusGerman. I now study Engineering at a university in Germany. Thank you so much!\"",
+        review1Text: "\"With the German I learned at Campus German, I study Business Administration at a university in Germany. My teachers were very patient and I progressed quickly thanks to the conversation-focused education.\"",
+        review2Text: "\"I came from Turkey and studied at Campus German. I now work at a company in Germany. The program was very comprehensive and greatly helped me find a job.\"",
+        review3Text: "\"I wanted to learn German for work. Thanks to the education I received at Campus German, I got promoted at my company. It was especially useful for business German.\"",
+        review4Text: "\"I came from Spain to Germany and took the university preparation course at Campus German. I now study Engineering at a university in Germany. Thank you so much!\"",
         faqTitle: "Frequently Asked Questions",
         faqSubtitle: "Get information about topics you're curious about",
         faqCtaText: "Have other questions?",
@@ -528,21 +530,21 @@ const t = {
         faq8Question: "How long does it take to learn German?",
         faq8Answer: "German learning time depends on your goal and current level. You can complete the basic levels from A1 to B2 in 6-8 months. Advanced levels such as C1 and C2 may require an additional 4-6 months. You can shorten this time with our intensive courses.",
         faq9Question: "Can I get a Goethe certificate?",
-        faq9Answer: "Yes, we offer Goethe certificate preparation courses at CampusGerman. We provide exam preparation at all levels from A1 to C2. You can take certificate exams at our campus or be directed to nearby test centers.",
+        faq9Answer: "Yes, we offer Goethe certificate preparation courses at Campus German. We provide exam preparation at all levels from A1 to C2. You can take certificate exams at our campus or be directed to nearby test centers.",
         faq10Question: "Are accommodation options available?",
         faq10Answer: "Yes, we offer accommodation options in Germany. Student dormitories, homestay accommodation, and shared apartments are available. Our accommodation service is not included in the course fee, but we help you find the most suitable options.",
         faq11Question: "Are payment plans and discounts available?",
         faq11Answer: "Yes, we offer flexible payment plans. Monthly, 3-month, and 6-month payment options are available. There are discounts for early registration, group registrations, and long-term programs. Contact us for detailed information.",
     },
     de: {
-        title: "CampusGerman - Deutschkurs",
+        title: "Campus German - Deutsch Sprachschule in Bremen",
         heroBadge: "Premium Deutsch",
         heroTitle: {
             main: "Deutsch lernen",
             highlight: "durch Sprechen",
             sub: ""
         },
-        heroDescription: "Mit CampusGerman Deutsch lernen – konversationsorientiert, muttersprachliche Lehrer, passende Programme.",
+        heroDescription: "Mit Campus German Deutsch lernen – konversationsorientiert, muttersprachliche Lehrer, passende Programme.",
         heroFeatures: ["Kleine Gruppen", "Flexibel", "Goethe-Zertifikat"],
         heroCta1: "Jetzt bewerben",
         heroCta2: "Infos per WhatsApp",
@@ -590,7 +592,7 @@ const t = {
         courseFilterNext: "Weiter",
         courseCardStartingPrices: "ab",
         courseCardContactUs: "Kontakt",
-        courseCardLessons: "20+4 UE",
+        courseCardLessons: "bis zu 200 UStd",
         coursesTitle: "Bevorzugte Kurse",
         coursesSubtitle: "Passendes Programm wählen, Deutsch lernen.",
         courseBookButton: "Kurs Buchen",
@@ -600,7 +602,7 @@ const t = {
         countdownGrabCta: "Rabatt sichern",
         countdownEndsIn: "Endet in",
         // Hero video section
-        videoTitle: "CampusGerman Vorstellung",
+        videoTitle: "Campus German Vorstellung",
         floatingInfo1Title: "A1-C1",
         floatingInfo1Subtitle: "Prüfungsvorbereit.",
         floatingInfo2Title: "Stadt-Uni",
@@ -613,7 +615,7 @@ const t = {
         bremenMiniDesc: "Studierendenfreundlich, Hochdeutsch, ideale Lernumgebung.",
         marketRealitiesTitle: "Markt & Lösungen",
         marketRealitiesDesc: "Wir durchbrechen den Zyklus von Unzufriedenheit und Kurswiederholung durch Lehrerstandard, Lehrplankonsistenz, sprechorientierte Struktur und hybride Kontinuität.",
-        whyCampusGerman: "Warum CampusGerman?",
+        whyCampusGerman: "Warum Campus German?",
         whyCampusGermanText: "In einer der schönsten Uni-Städte Deutschlands, mit über 50.000 Studierenden, Deutsch lernen und deutsche Kultur entdecken.",
         methodologyTitle: "Unser Unterricht",
         methodologyText: "Konversationsorientiert: Grammatik und Alltagsdeutsch.",
@@ -690,38 +692,38 @@ const t = {
         video1Desc: "Maria: A1 → B2 in 8 Monaten. Studiert jetzt BWL in Deutschland.",
         video1Link: "Geschichte lesen",
         video2Title: "Ahmets Reise",
-        video2Desc: "Ahmet aus der Türkei, CampusGerman. Arbeitet jetzt in Deutschland.",
+        video2Desc: "Ahmet aus der Türkei, Campus German. Arbeitet jetzt in Deutschland.",
         video2Link: "Geschichte lesen",
         video1Alt: "Studentenerfahrung 1",
         video2Alt: "Studentenerfahrung 2",
         // CTA section
         ctaTitle: "Deutsch lernen",
-        ctaDescription: "Deutsch bei CampusGerman – neue Zukunft in Deutschland. Jetzt kostenlose Beratung!",
+        ctaDescription: "Deutsch bei Campus German – neue Zukunft in Deutschland. Jetzt kostenlose Beratung!",
         ctaFeature1: "Kostenlose Niveaubestimmung",
         ctaFeature2: "Flexible Programme",
         ctaFeature3: "Muttersprachler",
-        ctaFormTitle: "Kostenlose Infos",
+        ctaFormTitle: "Information anfragen",
         ctaFormSubtitle: "Passendes Programm für Sie finden",
         formNamePlaceholder: "Name",
         formEmailPlaceholder: "E-Mail",
         formPhonePlaceholder: "Telefon",
-        formInterestPlaceholder: "Interesse",
-        formInterestOption1: "A1-A2 Anfänger",
-        formInterestOption2: "B1-B2 Mittelstufe",
-        formInterestOption3: "C1-C2 Fortgeschritten",
-        formInterestOption4: "Uni-Vorbereitung",
-        formInterestOption5: "Berufsausbildung",
-        formInterestOption6: "Online-Kurs",
+        formCityPlaceholder: "Ihre Stadt",
         formMessagePlaceholder: "Nachricht (optional)",
-        formSubmit: "Infos anfordern",
+        formDatePlaceholder: "Bevorzugtes Datum",
+        formSubmit: "Information anfragen",
         formFooter: "Daten sicher geschützt",
+        formSending: "Wird gesendet...",
+        formRequiredFields: "Bitte füllen Sie alle Pflichtfelder aus.",
+        formEmailInvalid: "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+        formSuccess: "Ihr Formular wurde erfolgreich gesendet! Wir melden uns so schnell wie möglich.",
+        formError: "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns.",
         // Reviews section
         reviewsTitle: "Bewertungen",
         reviewsSubtitle: "Erfolgsgeschichten",
-        review1Text: "\"Mit dem Deutsch, das ich bei CampusGerman gelernt habe, studiere ich jetzt Betriebswirtschaft an einer Universität in Deutschland. Meine Lehrer waren sehr geduldig und dank des konversationsorientierten Unterrichts habe ich mich schnell verbessert.\"",
-        review2Text: "\"Ich kam aus der Türkei und nahm an CampusGerman teil. Jetzt arbeite ich in einem Unternehmen in Deutschland. Das Programm war sehr umfassend und half mir sehr, einen Job zu finden.\"",
-        review3Text: "\"Ich wollte Deutsch für die Arbeit lernen. Dank der Ausbildung, die ich bei CampusGerman erhalten habe, wurde ich in meinem Unternehmen befördert. Besonders das Geschäftsdeutsch war sehr nützlich.\"",
-        review4Text: "\"Ich kam aus Spanien nach Deutschland und nahm an einem Universitätsvorbereitungskurs bei CampusGerman teil. Jetzt studiere ich Ingenieurwesen an einer Universität in Deutschland. Vielen Dank!\"",
+        review1Text: "\"Mit dem Deutsch, das ich bei Campus German gelernt habe, studiere ich jetzt Betriebswirtschaft an einer Universität in Deutschland. Meine Lehrer waren sehr geduldig und dank des konversationsorientierten Unterrichts habe ich mich schnell verbessert.\"",
+        review2Text: "\"Ich kam aus der Türkei und nahm an Campus German teil. Jetzt arbeite ich in einem Unternehmen in Deutschland. Das Programm war sehr umfassend und half mir sehr, einen Job zu finden.\"",
+        review3Text: "\"Ich wollte Deutsch für die Arbeit lernen. Dank der Ausbildung, die ich bei Campus German erhalten habe, wurde ich in meinem Unternehmen befördert. Besonders das Geschäftsdeutsch war sehr nützlich.\"",
+        review4Text: "\"Ich kam aus Spanien nach Deutschland und nahm an einem Universitätsvorbereitungskurs bei Campus German teil. Jetzt studiere ich Ingenieurwesen an einer Universität in Deutschland. Vielen Dank!\"",
         // FAQ section
         faqTitle: "Häufige Fragen",
         faqSubtitle: "Infos zu Themen, die Sie interessieren",
@@ -767,21 +769,21 @@ const t = {
         faq8Question: "Wie lange dauert es, Deutsch zu lernen?",
         faq8Answer: "Die Dauer des Deutschlernens hängt von Ihrem Ziel und Ihrem aktuellen Niveau ab. Sie können die Grundstufen von A1 bis B2 in 6-8 Monaten abschließen. Für fortgeschrittene Stufen wie C1 und C2 können zusätzliche 4-6 Monate erforderlich sein. Mit unseren Intensivkursen können Sie diese Zeit verkürzen.",
         faq9Question: "Kann ich ein Goethe-Zertifikat erhalten?",
-        faq9Answer: "Ja, wir bieten Goethe-Zertifikatsvorbereitungskurse bei CampusGerman an. Wir bereiten Sie auf alle Niveaus von A1 bis C2 vor. Sie können die Zertifikatsprüfungen auf unserem Campus ablegen oder an nahegelegene Testzentren weitergeleitet werden.",
+        faq9Answer: "Ja, wir bieten Goethe-Zertifikatsvorbereitungskurse bei Campus German an. Wir bereiten Sie auf alle Niveaus von A1 bis C2 vor. Sie können die Zertifikatsprüfungen auf unserem Campus ablegen oder an nahegelegene Testzentren weitergeleitet werden.",
         faq10Question: "Gibt es Unterkunftsmöglichkeiten?",
         faq10Answer: "Ja, wir bieten Unterkunftsmöglichkeiten in Deutschland an. Es gibt Studentenwohnheime, Gastfamilien und Wohngemeinschaften. Unser Unterkunftsservice ist nicht im Kursgeld enthalten, aber wir helfen Ihnen, die beste Option für Sie zu finden.",
         faq11Question: "Gibt es Zahlungspläne und Rabatte?",
         faq11Answer: "Ja, wir bieten flexible Zahlungspläne an. Es gibt monatliche, 3-monatige und 6-monatige Zahlungsoptionen. Es gibt Rabatte für frühe Anmeldungen, Gruppenanmeldungen und Langzeitprogramme. Kontaktieren Sie uns für weitere Informationen.",
     },
     es: {
-        title: "CampusGerman - Curso de Alemán",
+        title: "Campus German - Curso de Alemán",
         heroBadge: "Educación Premium en Alemán",
         heroTitle: {
             main: "Aprende Alemán",
             highlight: "Hablando",
             sub: ""
         },
-        heroDescription: "¡Aprender alemán es fácil con CampusGerman! Alcanza tus objetivos con educación centrada en la conversación, profesores nativos y programas personalizados.",
+        heroDescription: "¡Aprender alemán es fácil con Campus German! Alcanza tus objetivos con educación centrada en la conversación, profesores nativos y programas personalizados.",
         heroFeatures: ["Cupo Limitado", "Programas Culturales", "Goethe-Telc-TestDaF-FSP"],
         heroCta1: "Aplicar ahora",
         heroCta2: "Obtén Información por WhatsApp",
@@ -829,7 +831,7 @@ const t = {
         courseFilterNext: "Siguiente",
         courseCardStartingPrices: "a partir de",
         courseCardContactUs: "Contáctenos",
-        courseCardLessons: "20+4 clases",
+        courseCardLessons: "hasta 200 clases",
         coursesTitle: "Cursos Más Populares",
         coursesSubtitle: "9 de cada 10 estudiantes en Bremen eligieron Campus German como su primera opción. ¡Reserva tu lugar ahora para aprender alemán perfectamente del cupo limitado!",
         courseBookButton: "Reservar Lugar",
@@ -838,7 +840,7 @@ const t = {
         countdownDiscountDesc: "Introduce el cupón en el formulario de reserva",
         countdownGrabCta: "Obtener descuento",
         countdownEndsIn: "Termina en",
-        videoTitle: "Introducción CampusGerman",
+        videoTitle: "Introducción Campus German",
         floatingInfo1Title: "Niveles A1-C1",
         floatingInfo1Subtitle: "Preparación de Exámenes",
         floatingInfo2Title: "Ciudad-Uni",
@@ -850,7 +852,7 @@ const t = {
         bremenMiniDesc: "Ciudad amigable para estudiantes, vida social, ventaja del alemán estándar y un ambiente ideal para el aprendizaje orientado a la experiencia.",
         marketRealitiesTitle: "Realidades del Mercado y Soluciones",
         marketRealitiesDesc: "Rompemos el ciclo de insatisfacción y repetición de cursos con estándares de profesores, consistencia del currículo, estructura orientada al habla y continuidad híbrida.",
-        whyCampusGerman: "¿Por qué CampusGerman?",
+        whyCampusGerman: "¿Por qué Campus German?",
         whyCampusGermanText: "En una de las ciudades universitarias más bellas de Alemania, esta ciudad histórica que alberga a más de 50,000 estudiantes, puedes no solo aprender alemán sino también descubrir la cultura alemana.",
         methodologyTitle: "Nuestra Metodología de Enseñanza",
         methodologyText: "Con nuestro enfoque de enseñanza centrado en la conversación, no solo aprendes reglas gramaticales, sino que también aprendes a hablar alemán en la vida cotidiana.",
@@ -895,7 +897,7 @@ const t = {
         freeTrialDesc: "Experimenta nuestra calidad antes de comenzar el curso. ¡Únete a nuestro club de conversación gratis!",
         freeTrialButton: "Reservar Clase Gratuita",
         advantagesTitle: "Nuestras Ventajas",
-        advantagesSubtitle: "¿Por qué deberías elegir CampusGerman?",
+        advantagesSubtitle: "¿Por qué deberías elegir Campus German?",
         advantage1Title: "Modelo de Aprendizaje Híbrido",
         advantage1Desc: "Aprendizaje flexible con educación combinada online y presencial",
         advantage1Link: "Saber Más",
@@ -942,36 +944,36 @@ const t = {
         video1Desc: "María alcanzó el nivel B2 en solo 8 meses comenzando desde el nivel A1. Ahora estudia Administración de Empresas en una universidad en Alemania.",
         video1Link: "Leer Historia",
         video2Title: "El Viaje de Ahmet",
-        video2Desc: "Ahmet vino de Turquía y estudió en CampusGerman. Ahora trabaja en una empresa en Alemania.",
+        video2Desc: "Ahmet vino de Turquía y estudió en Campus German. Ahora trabaja en una empresa en Alemania.",
         video2Link: "Leer Historia",
         video1Alt: "Experiencia Estudiantil 1",
         video2Alt: "Experiencia Estudiantil 2",
         ctaTitle: "Comienza a Aprender Alemán",
-        ctaDescription: "Aprende alemán en CampusGerman y construye un nuevo futuro en Alemania. ¡Contáctanos ahora para una consulta gratuita!",
+        ctaDescription: "Aprende alemán en Campus German y construye un nuevo futuro en Alemania. ¡Contáctanos ahora para una consulta gratuita!",
         ctaFeature1: "Prueba de Nivel Gratuita",
         ctaFeature2: "Opciones de Programa Flexibles",
         ctaFeature3: "Profesores Nativos",
-        ctaFormTitle: "Obtén Información Gratuita",
+        ctaFormTitle: "Solicitar información",
         ctaFormSubtitle: "Déjanos encontrar el programa más adecuado para ti",
         formNamePlaceholder: "Tu Nombre",
         formEmailPlaceholder: "Tu Correo Electrónico",
         formPhonePlaceholder: "Tu Número de Teléfono",
-        formInterestPlaceholder: "Tu Interés",
-        formInterestOption1: "A1-A2 Principiante",
-        formInterestOption2: "B1-B2 Intermedio",
-        formInterestOption3: "C1-C2 Avanzado",
-        formInterestOption4: "Preparación Universitaria",
-        formInterestOption5: "Entrenamiento Profesional",
-        formInterestOption6: "Curso Online",
+        formCityPlaceholder: "Tu ciudad",
         formMessagePlaceholder: "Tu Mensaje (Opcional)",
-        formSubmit: "Obtener Información Gratuita",
+        formDatePlaceholder: "Fecha preferida",
+        formSubmit: "Solicitar información",
         formFooter: "Tu información está protegida de forma segura",
+        formSending: "Enviando...",
+        formRequiredFields: "Por favor complete todos los campos obligatorios.",
+        formEmailInvalid: "Por favor introduzca un correo electrónico válido.",
+        formSuccess: "¡Tu formulario se ha enviado correctamente! Nos pondremos en contacto lo antes posible.",
+        formError: "Ha ocurrido un error. Inténtelo de nuevo o contáctenos.",
         reviewsTitle: "Reseñas de Estudiantes",
         reviewsSubtitle: "Escucha nuestras historias de éxito",
-        review1Text: "\"Con el alemán que aprendí en CampusGerman, estudio Administración de Empresas en una universidad en Alemania. Mis profesores fueron muy pacientes y progresé rápidamente gracias a la educación centrada en la conversación.\"",
-        review2Text: "\"Vine de Turquía y estudié en CampusGerman. Ahora trabajo en una empresa en Alemania. El programa fue muy completo y me ayudó mucho a encontrar trabajo.\"",
-        review3Text: "\"Quería aprender alemán para el trabajo. Gracias a la educación que recibí en CampusGerman, obtuve un ascenso en mi empresa. Fue especialmente útil para el alemán empresarial.\"",
-        review4Text: "\"Vine de España a Alemania y tomé el curso de preparación universitaria en CampusGerman. Ahora estudio Ingeniería en una universidad en Alemania. ¡Muchas gracias!\"",
+        review1Text: "\"Con el alemán que aprendí en Campus German, estudio Administración de Empresas en una universidad en Alemania. Mis profesores fueron muy pacientes y progresé rápidamente gracias a la educación centrada en la conversación.\"",
+        review2Text: "\"Vine de Turquía y estudié en Campus German. Ahora trabajo en una empresa en Alemania. El programa fue muy completo y me ayudó mucho a encontrar trabajo.\"",
+        review3Text: "\"Quería aprender alemán para el trabajo. Gracias a la educación que recibí en Campus German, obtuve un ascenso en mi empresa. Fue especialmente útil para el alemán empresarial.\"",
+        review4Text: "\"Vine de España a Alemania y tomé el curso de preparación universitaria en Campus German. Ahora estudio Ingeniería en una universidad en Alemania. ¡Muchas gracias!\"",
         faqTitle: "Preguntas Frecuentes",
         faqSubtitle: "Obtén información sobre temas que te interesan",
         faqCtaText: "¿Tienes otras preguntas?",
@@ -1016,7 +1018,7 @@ const t = {
         faq8Question: "¿Cuánto tiempo se tarda en aprender alemán?",
         faq8Answer: "El tiempo de aprendizaje del alemán depende de tu objetivo y nivel actual. Puedes completar los niveles básicos de A1 a B2 en 6-8 meses. Los niveles avanzados como C1 y C2 pueden requerir 4-6 meses adicionales. Puedes acortar este tiempo con nuestros cursos intensivos.",
         faq9Question: "¿Puedo obtener un certificado Goethe?",
-        faq9Answer: "Sí, ofrecemos cursos de preparación para certificados Goethe en CampusGerman. Proporcionamos preparación para exámenes en todos los niveles de A1 a C2. Puedes tomar los exámenes de certificación en nuestro campus o ser dirigido a centros de prueba cercanos.",
+        faq9Answer: "Sí, ofrecemos cursos de preparación para certificados Goethe en Campus German. Proporcionamos preparación para exámenes en todos los niveles de A1 a C2. Puedes tomar los exámenes de certificación en nuestro campus o ser dirigido a centros de prueba cercanos.",
         faq10Question: "¿Hay opciones de alojamiento disponibles?",
         faq10Answer: "Sí, ofrecemos opciones de alojamiento en Alemania. Hay residencias estudiantiles, alojamiento en familias de acogida y apartamentos compartidos. Nuestro servicio de alojamiento no está incluido en la tarifa del curso, pero te ayudamos a encontrar las opciones más adecuadas.",
         faq11Question: "¿Hay planes de pago y descuentos disponibles?",
@@ -1069,7 +1071,7 @@ const translations = t[lang as keyof typeof t];
                             <div class="cta-arrow">→</div>
                         </a>
                         <a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="cta-secondary">
-                            <i class="fas fa-info-circle"></i>
+                            <i class="fab fa-whatsapp"></i>
                             <span set:html={translations.heroCta2}></span>
                         </a>
                     </div>
@@ -1338,7 +1340,10 @@ const translations = t[lang as keyof typeof t];
                             const features = (kurs.data.features || []).slice(0, 2);
                             const pricingData = getCoursePricingData(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
                             let priceText = translations.courseCardContactUs;
-                            if (pricingData?.pricing?.fullCourse) {
+                            const perWeekPrice = getCourseCardPerWeekPrice(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
+                            if (perWeekPrice) {
+                                priceText = perWeekPrice;
+                            } else if (pricingData?.pricing?.fullCourse) {
                                 priceText = `${pricingData.pricing.fullCourse} ${translations.courseCardStartingPrices}`;
                             } else if (pricingData?.isWeeklyOnly && pricingData?.weeklyPricing) {
                                 const courseInfo = extractCourseInfo(kurs.slug);
@@ -1583,7 +1588,7 @@ const translations = t[lang as keyof typeof t];
                                             <i class="fas fa-star"></i>
                                         </div>
                                     </div>
-                                    <p class="review-text">{lang === 'tr' ? "\"CampusGerman'da öğrendiğim Almanca ile Almanya'da bir üniversitede İşletme okuyorum. Öğretmenlerim çok sabırlıydı ve konuşma odaklı eğitim sayesinde hızlı ilerledim.\"" : translations.review1Text}</p>
+                                    <p class="review-text">{lang === 'tr' ? "\"Campus German'da öğrendiğim Almanca ile Almanya'da bir üniversitede İşletme okuyorum. Öğretmenlerim çok sabırlıydı ve konuşma odaklı eğitim sayesinde hızlı ilerledim.\"" : translations.review1Text}</p>
                                 </div>
                                 <div class="review-card">
                                     <div class="review-top">
@@ -1604,7 +1609,7 @@ const translations = t[lang as keyof typeof t];
                                             <i class="fas fa-star"></i>
                                         </div>
                                     </div>
-                                    <p class="review-text">{lang === 'tr' ? "\"Türkiye'den gelerek CampusGerman'da eğitim aldım. Şimdi Almanya'da bir şirkette çalışıyorum. Program çok kapsamlıydı ve iş bulmamda büyük yardımı oldu.\"" : translations.review2Text}</p>
+                                    <p class="review-text">{lang === 'tr' ? "\"Türkiye'den gelerek Campus German'da eğitim aldım. Şimdi Almanya'da bir şirkette çalışıyorum. Program çok kapsamlıydı ve iş bulmamda büyük yardımı oldu.\"" : translations.review2Text}</p>
                                 </div>
                                 <div class="review-card">
                                     <div class="review-top">
@@ -1625,7 +1630,7 @@ const translations = t[lang as keyof typeof t];
                                             <i class="fas fa-star"></i>
                                         </div>
                                     </div>
-                                    <p class="review-text">{lang === 'tr' ? "\"İş için Almanca öğrenmek istiyordum. CampusGerman'da aldığım eğitim sayesinde şirketimde terfi aldım. Özellikle iş Almancası konusunda çok faydalı oldu.\"" : translations.review3Text}</p>
+                                    <p class="review-text">{lang === 'tr' ? "\"İş için Almanca öğrenmek istiyordum. Campus German'da aldığım eğitim sayesinde şirketimde terfi aldım. Özellikle iş Almancası konusunda çok faydalı oldu.\"" : translations.review3Text}</p>
                                 </div>
                                 <div class="review-card">
                                     <div class="review-top">
@@ -1646,7 +1651,7 @@ const translations = t[lang as keyof typeof t];
                                             <i class="fas fa-star"></i>
                                         </div>
                                     </div>
-                                    <p class="review-text">{lang === 'tr' ? "\"İspanya'dan Almanya'ya geldim ve CampusGerman'da üniversite hazırlık kursu aldım. Şimdi Almanya'da bir üniversitede Mühendislik okuyorum. Çok teşekkürler!\"" : translations.review4Text}</p>
+                                    <p class="review-text">{lang === 'tr' ? "\"İspanya'dan Almanya'ya geldim ve Campus German'da üniversite hazırlık kursu aldım. Şimdi Almanya'da bir üniversitede Mühendislik okuyorum. Çok teşekkürler!\"" : translations.review4Text}</p>
                                 </div>
                             </div>
                             <div class="slider-controls">
@@ -1665,48 +1670,7 @@ const translations = t[lang as keyof typeof t];
                 <!-- Right Side: Form -->
                 <div class="cta-right">
                     <div class="cta-form-container">
-                        <div class="form-title-block">
-                            <h3>{translations.ctaFormTitle}</h3>
-                            <p>{translations.ctaFormSubtitle}</p>
-                        </div>
-                        <form class="cta-contact-form">
-                            <div class="form-field">
-                                <i class="fas fa-user"></i>
-                                <input type="text" id="name" name="name" placeholder={translations.formNamePlaceholder} required>
-                            </div>
-                            <div class="form-field">
-                                <i class="fas fa-envelope"></i>
-                                <input type="email" id="email" name="email" placeholder={translations.formEmailPlaceholder} required>
-                            </div>
-                            <div class="form-field">
-                                <i class="fas fa-phone"></i>
-                                <input type="tel" id="phone" name="phone" placeholder={translations.formPhonePlaceholder} required>
-                            </div>
-                            <div class="form-field">
-                                <i class="fas fa-graduation-cap"></i>
-                                <select id="interest" name="interest" required>
-                                    <option value="">{translations.formInterestPlaceholder}</option>
-                                    <option value="a1-a2">{translations.formInterestOption1}</option>
-                                    <option value="b1-b2">{translations.formInterestOption2}</option>
-                                    <option value="c1-c2">{translations.formInterestOption3}</option>
-                                    <option value="universite">{translations.formInterestOption4}</option>
-                                    <option value="meslek">{translations.formInterestOption5}</option>
-                                    <option value="online">{translations.formInterestOption6}</option>
-                                </select>
-                            </div>
-                            <div class="form-field">
-                                <i class="fas fa-comment"></i>
-                                <textarea id="message" name="message" placeholder={translations.formMessagePlaceholder} rows="3"></textarea>
-                            </div>
-                            <button type="submit" class="form-submit-btn">
-                                <i class="fas fa-paper-plane"></i>
-                                <span>{translations.formSubmit}</span>
-                            </button>
-                        </form>
-                        <div class="form-security-note">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>{translations.formFooter}</span>
-                        </div>
+                        <BilgiAlForm lang={lang} formTitle={translations.ctaFormTitle} formSubtitle={translations.ctaFormSubtitle} />
                     </div>
                 </div>
             </div>
@@ -1846,7 +1810,7 @@ const translations = t[lang as keyof typeof t];
             </div>
             <div class="faq-cta">
                 <p>{translations.faqCtaText}</p>
-                <a href={`/${lang}/kontakt`} class="faq-contact-btn">
+                <a href={`/${lang}/${contactPath}`} class="faq-contact-btn">
                     <i class="fas fa-envelope"></i>
                     <span>{translations.faqCtaButton}</span>
                 </a>
@@ -2198,106 +2162,6 @@ const translations = t[lang as keyof typeof t];
         // Initialize
         updateButtons();
     })();
-    
-    // ===== CTA CONTACT FORM HANDLER =====
-    const ctaContactForm = document.querySelector('.cta-contact-form');
-    if (ctaContactForm) {
-        ctaContactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            console.log('CTA form submitted');
-            
-            const submitButton = ctaContactForm.querySelector('.form-submit-btn');
-            const originalContent = submitButton ? submitButton.innerHTML : '';
-            
-            if (submitButton) {
-                submitButton.disabled = true;
-                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Gönderiliyor...</span>';
-            }
-            
-            const formData = new FormData(ctaContactForm);
-            const data = {};
-            for (let [key, value] of formData.entries()) {
-                data[key] = value;
-            }
-            
-            console.log('Form data:', data);
-            
-            // Basic validation
-            if (!data.email || !data.name || !data.phone) {
-                if (window.showSuccessModal) {
-                    window.showSuccessModal('error', 'Lütfen tüm gerekli alanları doldurun.');
-                } else {
-                    alert('Lütfen tüm gerekli alanları doldurun.');
-                }
-                if (submitButton) {
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = originalContent;
-                }
-                return;
-            }
-            
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(data.email)) {
-                if (window.showSuccessModal) {
-                    window.showSuccessModal('error', 'Lütfen geçerli bir e-posta adresi girin.');
-                } else {
-                    alert('Lütfen geçerli bir e-posta adresi girin.');
-                }
-                if (submitButton) {
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = originalContent;
-                }
-                return;
-            }
-            
-            // Send to webhook
-            try {
-                const response = await fetch('https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        formType: 'cta-contact',
-                        sourcePage: window.location.pathname,
-                        lang: '{lang}',
-                        name: data.name,
-                        email: data.email,
-                        phone: data.phone,
-                        interest: data.interest,
-                        message: data.message || ''
-                    })
-                });
-                
-                if (response.ok) {
-                    if (window.showSuccessModal) {
-                        window.showSuccessModal('success', 'Formunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
-                    } else {
-                        alert('Formunuz başarıyla gönderildi!');
-                    }
-                    ctaContactForm.reset();
-                } else {
-                    throw new Error('Form submission failed');
-                }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                if (window.showSuccessModal) {
-                    window.showSuccessModal('error', 'Bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.');
-                } else {
-                    alert('Bir hata oluştu. Lütfen tekrar deneyin.');
-                }
-            } finally {
-                if (submitButton) {
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = originalContent;
-                }
-            }
-        });
-        console.log('CTA contact form handler initialized');
-    } else {
-        console.warn('CTA contact form not found');
-    }
     
     }); // End DOMContentLoaded
 </script>

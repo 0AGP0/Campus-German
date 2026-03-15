@@ -6,8 +6,11 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "postbuild": "node scripts/verify-sitemap.js",
+    "sitemap:copy": "node scripts/copy-sitemap-for-vercel.js",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",
@@ -15,6 +18,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.3.0",
+    "patch-package": "^8.0.0",
     "typescript": "^5.3.0"
   }
 }

@@ -1,0 +1,156 @@
+---
+/**
+ * Bilgi Al formu – Sitede booking harici tüm "bilgi al" formları bu bileşeni kullanır.
+ * Ana sayfa formu template alınarak tek tip form.
+ */
+
+interface Props {
+  lang: string;
+  formTitle?: string | false;
+  formSubtitle?: string | false;
+  showFooter?: boolean;
+  formId?: string;
+}
+
+const { lang, formTitle, formSubtitle, showFooter = true, formId } = Astro.props;
+
+const id = formId || 'bilgi-al-form';
+
+const t: Record<string, {
+  name: string;
+  email: string;
+  phone: string;
+  date: string;
+  city: string;
+  message: string;
+  submit: string;
+  footer: string;
+  sending: string;
+  required: string;
+  emailInvalid: string;
+  success: string;
+  error: string;
+}> = {
+  tr: {
+    name: 'Adınız Soyadınız',
+    email: 'E-posta Adresiniz',
+    phone: 'Telefon Numaranız',
+    date: 'Tercih ettiğiniz tarih',
+    city: 'Bulunduğunuz şehir',
+    message: 'Mesajınız (Opsiyonel)',
+    submit: 'Bilgi Al',
+    footer: 'Bilgileriniz güvenle korunur',
+    sending: 'Gönderiliyor...',
+    required: 'Lütfen tüm gerekli alanları doldurun.',
+    emailInvalid: 'Lütfen geçerli bir e-posta adresi girin.',
+    success: 'Formunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.',
+    error: 'Bir hata oluştu. Lütfen tekrar deneyin veya bizimle iletişime geçin.',
+  },
+  de: {
+    name: 'Name, Nachname',
+    email: 'E-Mail',
+    phone: 'Telefon',
+    date: 'Bevorzugtes Datum',
+    city: 'Ihre Stadt',
+    message: 'Nachricht (optional)',
+    submit: 'Information anfragen',
+    footer: 'Daten sicher geschützt',
+    sending: 'Wird gesendet...',
+    required: 'Bitte füllen Sie alle Pflichtfelder aus.',
+    emailInvalid: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
+    success: 'Ihr Formular wurde erfolgreich gesendet! Wir melden uns schnellstmöglich.',
+    error: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns.',
+  },
+  en: {
+    name: 'Your Name',
+    email: 'Your Email',
+    phone: 'Your Phone Number',
+    date: 'Preferred date',
+    city: 'Your city',
+    message: 'Your Message (Optional)',
+    submit: 'Get Information',
+    footer: 'Your information is securely protected',
+    sending: 'Sending...',
+    required: 'Please fill in all required fields.',
+    emailInvalid: 'Please enter a valid email address.',
+    success: 'Your form has been submitted successfully! We will get back to you as soon as possible.',
+    error: 'An error occurred. Please try again or contact us.',
+  },
+  es: {
+    name: 'Tu Nombre',
+    email: 'Tu Correo Electrónico',
+    phone: 'Tu Número de Teléfono',
+    date: 'Fecha preferida',
+    city: 'Tu ciudad',
+    message: 'Tu Mensaje (Opcional)',
+    submit: 'Solicitar información',
+    footer: 'Tu información está protegida de forma segura',
+    sending: 'Enviando...',
+    required: 'Por favor complete todos los campos obligatorios.',
+    emailInvalid: 'Por favor introduzca un correo electrónico válido.',
+    success: '¡Tu formulario se ha enviado correctamente! Nos pondremos en contacto lo antes posible.',
+    error: 'Ha ocurrido un error. Inténtelo de nuevo o contáctenos.',
+  },
+};
+
+const msg = t[lang] ?? t.tr;
+const title = formTitle ?? msg.submit;
+const subtitle = formSubtitle ?? (lang === 'tr' ? 'Size en uygun programı bulalım' : lang === 'de' ? 'Lassen Sie uns das richtige Programm für Sie finden' : lang === 'es' ? 'Encontremos el programa adecuado para ti' : 'Let us find the right program for you');
+const minDate = new Date().toISOString().split('T')[0];
+---
+
+<div class="bilgi-al-form-wrapper">
+  {formTitle !== false && (
+    <div class="form-title-block">
+      <h3>{title}</h3>
+      {formSubtitle !== false && <p>{subtitle}</p>}
+    </div>
+  )}
+  <form
+    id={id}
+    class="cta-contact-form bilgi-al-form"
+    data-lang={lang}
+    data-msg-sending={msg.sending}
+    data-msg-required={msg.required}
+    data-msg-email={msg.emailInvalid}
+    data-msg-success={msg.success}
+    data-msg-error={msg.error}
+    method="post"
+  >
+    <input type="hidden" name="formType" value="cta-contact" />
+    <div class="form-field">
+      <i class="fas fa-user"></i>
+      <input type="text" name="name" placeholder={msg.name} required autocomplete="name" />
+    </div>
+    <div class="form-field">
+      <i class="fas fa-envelope"></i>
+      <input type="email" name="email" placeholder={msg.email} required autocomplete="email" />
+    </div>
+    <div class="form-field">
+      <i class="fas fa-phone"></i>
+      <input type="tel" name="phone" placeholder={msg.phone} required autocomplete="tel" />
+    </div>
+    <div class="form-field">
+      <i class="fas fa-calendar-alt"></i>
+      <input type="date" name="preferredDate" required min={minDate} aria-label={msg.date} />
+    </div>
+    <div class="form-field">
+      <i class="fas fa-map-marker-alt"></i>
+      <input type="text" name="city" placeholder={msg.city} required autocomplete="address-level2" />
+    </div>
+    <div class="form-field">
+      <i class="fas fa-comment"></i>
+      <textarea name="message" placeholder={msg.message} rows="3"></textarea>
+    </div>
+    <button type="submit" class="form-submit-btn">
+      <i class="fas fa-paper-plane"></i>
+      <span>{msg.submit}</span>
+    </button>
+  </form>
+  {showFooter && (
+    <div class="form-security-note">
+      <i class="fas fa-shield-alt"></i>
+      <span>{msg.footer}</span>
+    </div>
+  )}
+</div>

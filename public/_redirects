@@ -3,5 +3,22 @@
 /tr/ueber-uns/     /tr/hakkimizda/     301!
 /tr/ueber-uns/*    /tr/hakkimizda/:splat   301!
 
+# Eski form sayfası URL'leri -> dile özel slug'lara (EN, DE, ES)
+/en/ucretsiz-deneme    /en/free-trial    301!
+/en/ucretsiz-deneme/   /en/free-trial/   301!
+/en/partner-egitmen-basvuru    /en/partner-teacher-application    301!
+/en/partner-egitmen-basvuru/   /en/partner-teacher-application/   301!
+/de/ucretsiz-deneme    /de/kostenlose-probestunde    301!
+/de/ucretsiz-deneme/   /de/kostenlose-probestunde/   301!
+/de/partner-egitmen-basvuru    /de/partner-lehrkraft-bewerbung    301!
+/de/partner-egitmen-basvuru/   /de/partner-lehrkraft-bewerbung/   301!
+/es/ucretsiz-deneme    /es/clase-prueba-gratis    301!
+/es/ucretsiz-deneme/   /es/clase-prueba-gratis/   301!
+/es/partner-egitmen-basvuru   /es/solicitud-socio-profesor   301!
+/es/partner-egitmen-basvuru/   /es/solicitud-socio-profesor/   301!
+
+# Google aramada site simgesi: /favicon.ico isteği logoya yönlendir
+/favicon.ico    /Campusgerman.png     301!
+
 # www -> non-www (isteğe bağlı; host'ta da yapılabilir)
 # https://www.campusgerman.com/*  https://campusgerman.com/:splat  301!

@@ -1,6 +1,7 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import '../../styles/pages/erfolgsgeschichten.css';
+import { getContactPath } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
     return [
@@ -9,36 +10,37 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
+const contactPath = getContactPath(lang as 'tr' | 'de' | 'en' | 'es');
 
 const translations = {
-    title: "Historias de éxito - CampusGerman",
+    title: "Historias de éxito - Campus German",
     sectionTitle: "Historias de éxito de nuestros estudiantes",
-    sectionSubtitle: "Descubra las historias inspiradoras de quienes aprendieron alemán en CampusGerman",
+    sectionSubtitle: "Descubra las historias inspiradoras de quienes aprendieron alemán en Campus German",
     stories: [
         {
             name: "Ayşe Yılmaz",
             role: "Éxito TestDaF - Nivel C1",
             badge: "TestDaF: 20/20",
-            quote: "Gracias a la formación en CampusGerman obtuve la puntuación máxima en el TestDaF. Avancé mucho sobre todo en expresión oral y escrita. Gracias al enfoque paciente y profesional de los profesores, alcancé mi objetivo.",
+            quote: "Gracias a la formación en Campus German obtuve la puntuación máxima en el TestDaF. Avancé mucho sobre todo en expresión oral y escrita. Gracias al enfoque paciente y profesional de los profesores, alcancé mi objetivo.",
             details: ["6 meses de formación", "De B1 a C1", "Admisión universitaria en Alemania"]
         },
         {
             name: "Mehmet Demir",
             role: "Alemán en el trabajo - Nivel B2",
             badge: "Empezó a trabajar en Alemania",
-            quote: "Necesitaba aprender alemán para trabajar en Alemania. Gracias al programa orientado al negocio de CampusGerman, llegué al B2 en solo 4 meses. Ahora trabajo como jefe de proyectos en una empresa alemana.",
+            quote: "Necesitaba aprender alemán para trabajar en Alemania. Gracias al programa orientado al negocio de Campus German, llegué al B2 en solo 4 meses. Ahora trabajo como jefe de proyectos en una empresa alemana.",
             details: ["4 meses de programa intensivo", "De A2 a B2", "Empezó a trabajar en Berlín"]
         },
         {
             name: "Zeynep Kaya",
             role: "Certificado Telc C1 - Éxito académico",
             badge: "Telc C1: Sehr Gut",
-            quote: "Quería venir a Alemania para el máster. Gracias al programa de alemán académico de CampusGerman aprobé el Telc C1. Actualmente estudio Administración de Empresas en una universidad alemana.",
+            quote: "Quería venir a Alemania para el máster. Gracias al programa de alemán académico de Campus German aprobé el Telc C1. Actualmente estudio Administración de Empresas en una universidad alemana.",
             details: ["8 meses de programa", "De B2 a C1", "Estudiante de máster"]
         }
     ],
     ctaTitle: "Escriba también su historia de éxito",
-    ctaDescription: "Alcanza tus objetivos aprendiendo alemán en CampusGerman. ¡Logra el éxito con nuestros profesores experimentados y programas personalizados!",
+    ctaDescription: "Alcanza tus objetivos aprendiendo alemán en Campus German. ¡Logra el éxito con nuestros profesores experimentados y programas personalizados!",
     ctaButton1: "Solicitar ahora",
     ctaButton2: "Contactar"
 };
@@ -100,7 +102,7 @@ const translations = {
                         <span>{translations.ctaButton1}</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
-                    <a href={`/${lang}/contacto`} class="cta-button-secondary">
+                    <a href={`/${lang}/${contactPath}`} class="cta-button-secondary">
                         <span>{translations.ctaButton2}</span>
                         <i class="fas fa-envelope"></i>
                     </a>

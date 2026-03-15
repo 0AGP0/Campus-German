@@ -1,11 +1,11 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-import AkademikAlmancaSarmal from '../../components/AkademikAlmancaSarmal.astro';
+import IntensivePricingSection from '../../components/IntensivePricingSection.astro';
 import '../../styles/pages/kurslar.css';
 import { getCollection } from 'astro:content';
 import { coursePricing } from '../../data/coursePricing';
 import { cleanSlug, isOverviewPage, getSectionPath, getContactPath, isValidLang } from '../../utils/pathHelpers';
-import { getSimpleCourseStartDates } from '../../utils/coursePricingHelper';
+import { getSimpleCourseStartDates, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
 
 export async function getStaticPaths() {
     return [
@@ -149,9 +149,6 @@ const kurumsalKurslar = anaKurslar.filter(kurs =>
             </div>
         </div>
     </section>
-    
-    <!-- Campus German Akademik Almanca Sarmalı -->
-    <AkademikAlmancaSarmal lang={lang} />
     
     <!-- Kurs Kartları Section -->
     <section class="courses-section" id="kurs-kartlari">
@@ -317,101 +314,7 @@ const kurumsalKurslar = anaKurslar.filter(kurs =>
             </div>
             
             <div class="pricing-content">
-                <!-- Akademik Almanca Kursları Fiyatları -->
-                <div class="pricing-block">
-                    <h3 class="pricing-block-title">{lang === 'tr' ? 'Akademik Almanca Kursları Fiyatları' : 'Preise für Akademische Deutschkurse'}</h3>
-                    <div class="pricing-table-wrapper">
-                        <table class="pricing-table">
-                            <thead>
-                                <tr>
-                                    <th>{lang === 'tr' ? 'Seviye' : 'Niveau'}</th>
-                                    <th>{lang === 'tr' ? 'Ders' : 'UStd'}</th>
-                                    <th>{lang === 'tr' ? 'Süre' : 'Dauer'}</th>
-                                    <th>{lang === 'tr' ? 'Fiyat' : 'Preis'}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {(['a1', 'a2', 'b1', 'b2', 'c1'] as const).map(level => {
-                                    const pricing = coursePricing[lang as 'tr' | 'de'].intensive[level];
-                                    return (
-                                        <tr>
-                                            <td><strong>{level.toUpperCase()}</strong></td>
-                                            <td>{pricing.lessons}</td>
-                                            <td>{pricing.duration}</td>
-                                            <td><strong>{pricing.fullCourse}</strong></td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                <!-- Online Kurs Fiyatları -->
-                <div class="pricing-block">
-                    <h3 class="pricing-block-title">{lang === 'tr' ? 'Online Almanca Kursları Fiyatları' : 'Preise für Online Deutschkurse'}</h3>
-                    <div class="pricing-table-wrapper">
-                        <table class="pricing-table">
-                            <thead>
-                                <tr>
-                                    <th>{lang === 'tr' ? 'Seviye' : 'Niveau'}</th>
-                                    <th>{lang === 'tr' ? 'Ders' : 'UStd'}</th>
-                                    <th>{lang === 'tr' ? 'Süre' : 'Dauer'}</th>
-                                    <th>{lang === 'tr' ? 'Fiyat' : 'Preis'}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {(['a1', 'a2', 'b1', 'b2', 'c1'] as const).map(level => {
-                                    const pricing = coursePricing[lang as 'tr' | 'de'].online[level];
-                                    return (
-                                        <tr>
-                                            <td><strong>{level.toUpperCase()}</strong></td>
-                                            <td>{pricing.lessons}</td>
-                                            <td>{pricing.duration}</td>
-                                            <td><strong>{pricing.fullCourse}</strong></td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                <!-- Sınav Hazırlık Kursları Fiyatları -->
-                <div class="pricing-block">
-                    <h3 class="pricing-block-title">{lang === 'tr' ? 'Sınav Hazırlık Kursları Fiyatları' : 'Preise für Prüfungsvorbereitungskurse'}</h3>
-                    <div class="pricing-table-wrapper">
-                        <table class="pricing-table">
-                            <thead>
-                                <tr>
-                                    <th>{lang === 'tr' ? 'Sınav Tipi' : 'Prüfungstyp'}</th>
-                                    <th>{lang === 'tr' ? 'Ders' : 'UStd'}</th>
-                                    <th>{lang === 'tr' ? 'Süre' : 'Dauer'}</th>
-                                    <th>{lang === 'tr' ? 'Fiyat' : 'Preis'}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {(['a1', 'a2', 'b1', 'b2', 'c1'] as const).map(level => {
-                                    const pricing = coursePricing[lang as 'tr' | 'de'].examPrep.goetheTelc[level];
-                                    return (
-                                        <tr>
-                                            <td><strong>Goethe/TELC {level.toUpperCase()}</strong></td>
-                                            <td>{pricing.lessons}</td>
-                                            <td>{pricing.duration}</td>
-                                            <td><strong>{pricing.fullCourse}</strong></td>
-                                        </tr>
-                                    );
-                                })}
-                                <tr>
-                                    <td><strong>TestDaF/DSH</strong></td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].examPrep.testdafDsh.lessons}</td>
-                                    <td>{coursePricing[lang as 'tr' | 'de'].examPrep.testdafDsh.duration}</td>
-                                    <td><strong>{coursePricing[lang as 'tr' | 'de'].examPrep.testdafDsh.fullCourse}</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <IntensivePricingSection lang={lang} showSectionTitle={false} />
                 
                 <!-- Kurs Zamanları -->
                 <div class="pricing-block">
@@ -455,11 +358,11 @@ const kurumsalKurslar = anaKurslar.filter(kurs =>
                         ))}
                     </div>
                     <div class="course-dates-info">
-                        <p><strong>{lang === 'tr' ? 'A1 · 8 hft · 20+4 ders' : lang === 'de' ? 'A1 · 8 Wo. · 20+4 UStd' : 'A1 · 8 weeks · 20+ 4 lessons'}</strong></p>
-                        <p><strong>{lang === 'tr' ? 'A2 · 8 hft · 20+4 ders' : lang === 'de' ? 'A2 · 8 Wo. · 20+4 UStd' : 'A2 · 8 weeks · 20+ 4 lessons'}</strong></p>
-                        <p><strong>{lang === 'tr' ? 'B1 · 8 hft · 25+4 ders' : lang === 'de' ? 'B1 · 8 Wo. · 25+4 UStd' : 'B1 · 8 weeks · 25+ 4 lessons'}</strong></p>
-                        <p><strong>{lang === 'tr' ? 'B2 · 8 hft · 25+4 ders' : lang === 'de' ? 'B2 · 8 Wo. · 25+4 UStd' : 'B2 · 8 weeks · 25+ 4 lessons'}</strong></p>
-                        <p><strong>{lang === 'tr' ? 'C1 · 8 hft · 25+4 ders' : lang === 'de' ? 'C1 · 8 Wo. · 25+4 UStd' : 'C1 · 8 weeks · 25+ 4 lessons'}</strong></p>
+                        <p><strong>{lang === 'tr' ? 'A1 · 8 hft · ' : lang === 'de' ? 'A1 · 8 Wo. · ' : 'A1 · 8 weeks · '}{LESSONS_UP_TO_200[lang as keyof typeof LESSONS_UP_TO_200]}</strong></p>
+                        <p><strong>{lang === 'tr' ? 'A2 · 8 hft · ' : lang === 'de' ? 'A2 · 8 Wo. · ' : 'A2 · 8 weeks · '}{LESSONS_UP_TO_200[lang as keyof typeof LESSONS_UP_TO_200]}</strong></p>
+                        <p><strong>{lang === 'tr' ? 'B1 · 8 hft · ' : lang === 'de' ? 'B1 · 8 Wo. · ' : 'B1 · 8 weeks · '}{LESSONS_UP_TO_200[lang as keyof typeof LESSONS_UP_TO_200]}</strong></p>
+                        <p><strong>{lang === 'tr' ? 'B2 · 8 hft · ' : lang === 'de' ? 'B2 · 8 Wo. · ' : 'B2 · 8 weeks · '}{LESSONS_UP_TO_200[lang as keyof typeof LESSONS_UP_TO_200]}</strong></p>
+                        <p><strong>{lang === 'tr' ? 'C1 · 8 hft · ' : lang === 'de' ? 'C1 · 8 Wo. · ' : 'C1 · 8 weeks · '}{LESSONS_UP_TO_200[lang as keyof typeof LESSONS_UP_TO_200]}</strong></p>
                     </div>
                 </div>
                 

@@ -461,3 +461,145 @@ if (document.readyState === 'loading') {
 } else {
     initCourseTabs();
 }
+
+// ===== BILGI AL FORM (CTA / course pages – submit to webhook) =====
+function initBilgiAlForm() {
+    document.addEventListener('submit', async function(e) {
+        var form = e.target;
+        if (!form || !form.classList || !form.classList.contains('bilgi-al-form')) return;
+        e.preventDefault();
+        var submitBtn = form.querySelector('.form-submit-btn');
+        var originalContent = submitBtn ? submitBtn.innerHTML : '';
+        var lang = form.getAttribute('data-lang') || 'tr';
+        var msg = {
+            sending: form.getAttribute('data-msg-sending') || 'Sending...',
+            required: form.getAttribute('data-msg-required') || 'Please fill in all required fields.',
+            emailInvalid: form.getAttribute('data-msg-email') || 'Please enter a valid email address.',
+            success: form.getAttribute('data-msg-success') || 'Form submitted successfully!',
+            error: form.getAttribute('data-msg-error') || 'An error occurred. Please try again.'
+        };
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>' + msg.sending + '</span>'; }
+        var fd = new FormData(form);
+        var data = {};
+        for (var p of fd.entries()) data[p[0]] = p[1];
+        if (!data.email || !data.name || !data.phone || !data.preferredDate) {
+            if (window.showSuccessModal) window.showSuccessModal('error', msg.required); else alert(msg.required);
+            if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalContent; }
+            return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+            if (window.showSuccessModal) window.showSuccessModal('error', msg.emailInvalid); else alert(msg.emailInvalid);
+            if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalContent; }
+            return;
+        }
+        try {
+            var res = await fetch('https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    formType: 'cta-contact',
+                    sourcePage: window.location.pathname,
+                    lang: lang,
+                    name: data.name,
+                    email: data.email,
+                    phone: data.phone,
+                    preferredDate: data.preferredDate || '',
+                    city: data.city || '',
+                    message: data.message || ''
+                })
+            });
+            if (res.ok) {
+                if (window.showSuccessModal) window.showSuccessModal('success', msg.success); else alert(msg.success);
+                form.reset();
+            } else throw new Error('Submit failed');
+        } catch (err) {
+            if (window.showSuccessModal) window.showSuccessModal('error', msg.error); else alert(msg.error);
+        }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalContent; }
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBilgiAlForm);
+} else {
+    initBilgiAlForm();
+}
+
+// ===== VISIT POPUP (WhatsApp CTA) =====
+function initVisitPopup() {
+    var popup = document.getElementById('visit-popup');
+    if (!popup) return;
+
+    // Sadece bir kez göster (oturum bazlı)
+    try {
+        if (window.sessionStorage && sessionStorage.getItem('visit_popup_shown') === '1') {
+            return;
+        }
+    } catch (e) {
+        // sessionStorage yoksa sessizce devam et
+    }
+
+    var closeBtn = popup.querySelector('.visit-popup-close');
+    var closeSecondaryBtn = popup.querySelector('.visit-popup-close-secondary');
+    var whatsappBtn = popup.querySelector('.visit-popup-btn-primary');
+
+    function closePopup() {
+        popup.classList.remove('visit-popup--visible');
+        popup.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        try {
+            if (window.sessionStorage) {
+                sessionStorage.setItem('visit_popup_shown', '1');
+            }
+        } catch (e) {}
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+            closePopup();
+        });
+    }
+    if (closeSecondaryBtn) {
+        closeSecondaryBtn.addEventListener('click', function () {
+            closePopup();
+        });
+    }
+
+    // Arka plana (backdrop) tıklanınca kapat
+    popup.addEventListener('click', function (e) {
+        if (e.target === popup || e.target.classList.contains('visit-popup-backdrop')) {
+            closePopup();
+        }
+    });
+
+    // WhatsApp'a tıklayınca da oturumda tekrar göstermeyelim
+    if (whatsappBtn) {
+        whatsappBtn.addEventListener('click', function () {
+            try {
+                if (window.sessionStorage) {
+                    sessionStorage.setItem('visit_popup_shown', '1');
+                }
+            } catch (e) {}
+        });
+    }
+
+    // 5 saniye sonra göster
+    setTimeout(function () {
+        // Tekrar kontrol et (bu arada başka sayfada gösterilmiş olabilir)
+        try {
+            if (window.sessionStorage && sessionStorage.getItem('visit_popup_shown') === '1') {
+                return;
+            }
+        } catch (e) {}
+
+        popup.classList.add('visit-popup--visible');
+        popup.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }, 5000);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVisitPopup);
+} else {
+    initVisitPopup();
+}

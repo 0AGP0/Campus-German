@@ -1,0 +1,37 @@
+# Sitemap + robots: rate-limit (Retry-After) muafiyeti — GSC için önbellek kapalı (makale: exclude from caching)
+<IfModule mod_headers.c>
+  <Files "sitemap.xml">
+    Header always unset Retry-After
+    Header always set Cache-Control "no-cache, no-store, must-revalidate"
+    Header always set Content-Type "application/xml; charset=utf-8"
+  </Files>
+  <FilesMatch "sitemap(-index|\-[0-9]+)?\.xml$">
+    Header always unset Retry-After
+    Header always set Cache-Control "no-cache, no-store, must-revalidate"
+    Header always set Content-Type "application/xml; charset=utf-8"
+  </FilesMatch>
+  <Files "robots.txt">
+    Header always unset Retry-After
+    Header always set Cache-Control "public, max-age=86400"
+  </Files>
+</IfModule>
+
+# Sitemap ve robots.txt asla yönlendirilmesin (GSC 301'de "okunamadı" diyor)
+# John Mueller trick: ?sitemap=1 ile sitemap sun (GSC'de "Add sitemap" -> https://campusgerman.com/?sitemap=1)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{QUERY_STRING} ^sitemap=1$
+  RewriteRule ^/?$ /sitemap.xml [L]
+  RewriteRule ^sitemap(-index|\-[0-9]+)?\.xml$ - [L]
+  RewriteRule ^robots\.txt$ - [L]
+</IfModule>
+
+# Hostinger / Apache: XML sitemap dosyaları için doğru Content-Type
+<IfModule mod_mime.c>
+  AddType application/xml .xml
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.(xml)$">
+    Header set Content-Type "application/xml; charset=utf-8"
+  </FilesMatch>
+</IfModule>

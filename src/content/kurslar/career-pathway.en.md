@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Weekly Lessons"
-    description: "24 Lessons (UE)"
+    description: "25 Lessons (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Program Duration"
     description: "12-24 Weeks"
@@ -54,11 +54,11 @@ tabs:
       pricing:
         - name: "12 Weeks Career Pathway"
           duration: "12 Weeks"
-          schedule: "24 Lessons/Week"
+          schedule: "25 Lessons/Week"
           price: "Special Pricing"
         - name: "24 Weeks Career Pathway"
           duration: "24 Weeks"
-          schedule: "24 Lessons/Week"
+          schedule: "25 Lessons/Week"
           price: "Special Pricing"
           highlighted: true
   - id: "program-details"

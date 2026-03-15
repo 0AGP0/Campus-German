@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
-import { cleanSlug, getServicesPath, isValidLang } from '../../../utils/pathHelpers';
+import BilgiAlForm from '../../../components/BilgiAlForm.astro';
+import { cleanSlug, getServicesPath, getContactPath, isValidLang } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
   const allSunduklarimiz = await getCollection('unsere-dienstleistungen');
@@ -45,6 +46,7 @@ if (!isValidLang(lang)) {
 
 // Path helper'ları
 const servicesPath = getServicesPath(lang);
+const contactPath = getContactPath(lang);
 ---
 
 <MainLayout title={`${hizmet.data.title} - CampusGerman`} lang={lang} includeHizmetCSS={true}>
@@ -117,7 +119,7 @@ const servicesPath = getServicesPath(lang);
                             </h3>
                             <div class="widget-content">
                                 <p>{lang === 'tr' ? 'Hizmetlerimiz hakkında daha fazla bilgi almak için bizimle iletişime geçin.' : 'Kontaktieren Sie uns für weitere Informationen zu unseren Dienstleistungen.'}</p>
-                                <a href={`/${lang}/kontakt`} class="widget-button">
+                                <a href={`/${lang}/${contactPath}`} class="widget-button">
                                     <i class="fas fa-envelope"></i>
                                     {lang === 'tr' ? 'İletişime Geç' : lang === 'de' ? 'Kontakt aufnehmen' : 'Contact Us'}
                                 </a>
@@ -213,35 +215,14 @@ const servicesPath = getServicesPath(lang);
                                 <i class="fas fa-arrow-right"></i>
                                 {lang === 'tr' ? 'Hemen Başvur Yap' : 'Jetzt bewerben'}
                             </a>
-                            <a href={`/${lang}/kontakt`} class="cta-secondary">
+                            <a href={`/${lang}/${contactPath}`} class="cta-secondary">
                                 <i class="fas fa-envelope"></i>
                                 {lang === 'tr' ? 'İletişime Geç' : 'Kontakt aufnehmen'}
                             </a>
                         </div>
                     </div>
                     <div class="cta-form">
-                        <div class="form-header">
-                            <h3>{lang === 'tr' ? 'Ücretsiz Bilgi Alın' : lang === 'de' ? 'Kostenlose Informationen' : 'Get Free Information'}</h3>
-                            <p>{lang === 'tr' ? 'Size en uygun programı bulalım' : lang === 'de' ? 'Lassen Sie uns das richtige Programm für Sie finden' : 'Let us find the right program for you'}</p>
-                        </div>
-                        <form class="contact-form">
-                            <div class="form-group">
-                                <input type="text" id="name" name="name" placeholder={lang === 'tr' ? 'Adınız Soyadınız' : lang === 'de' ? 'Ihr Name' : 'Your Name'} required>
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" id="email" name="email" placeholder={lang === 'tr' ? 'E-posta Adresiniz' : lang === 'de' ? 'Ihre E-Mail' : 'Your Email'} required>
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="form-group">
-                                <input type="tel" id="phone" name="phone" placeholder={lang === 'tr' ? 'Telefon Numaranız' : lang === 'de' ? 'Ihre Telefonnummer' : 'Your Phone Number'} required>
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <button type="submit" class="submit-btn">
-                                <i class="fas fa-paper-plane"></i>
-                                <span>{lang === 'tr' ? 'Ücretsiz Bilgi Al' : lang === 'de' ? 'Kostenlose Informationen anfordern' : 'Get Free Info'}</span>
-                            </button>
-                        </form>
+                        <BilgiAlForm lang={lang} />
                     </div>
                 </div>
             </div>

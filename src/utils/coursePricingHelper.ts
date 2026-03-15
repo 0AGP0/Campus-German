@@ -243,6 +243,34 @@ export function getWeeklyPricingCategory(level: CourseLevel | null): 'a1a2' | 'b
   return null;
 }
 
+/** Verilen yılda, aynı ay içindeki en yakın Pazartesi gününü döndürür. ddmm "gg.aa" formatında. */
+export function getNearestMondayDdmm(ddmm: string, year: number): string {
+  if (!ddmm || !ddmm.includes('.')) return ddmm;
+  const parts = ddmm.trim().split('.');
+  const day = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10);
+  if (isNaN(day) || isNaN(month) || month < 1 || month > 12) return ddmm;
+  const date = new Date(year, month - 1, day);
+  const weekday = date.getDay(); // 0 Pazar, 1 Pazartesi, ...
+  if (weekday === 1) return ddmm;
+  const lastDay = new Date(year, month, 0).getDate();
+  const daysToPrevMonday = weekday === 0 ? 6 : weekday - 1;
+  const daysToNextMonday = weekday === 0 ? 1 : 8 - weekday;
+  const prevMonday = day - daysToPrevMonday;
+  const nextMonday = day + daysToNextMonday;
+  let mondayDay: number;
+  if (prevMonday >= 1 && nextMonday <= lastDay) {
+    mondayDay = day - prevMonday <= nextMonday - day ? prevMonday : nextMonday;
+  } else if (prevMonday >= 1) {
+    mondayDay = prevMonday;
+  } else {
+    mondayDay = nextMonday;
+  }
+  const d = String(mondayDay).padStart(2, '0');
+  const m = String(month).padStart(2, '0');
+  return `${d}.${m}`;
+}
+
 /** DD.MM formatındaki kurs tarihini "2 Mart" gibi dile göre metne çevirir */
 const MONTH_NAMES: Record<string, Record<number, string>> = {
   tr: { 1: 'Ocak', 2: 'Şubat', 3: 'Mart', 4: 'Nisan', 5: 'Mayıs', 6: 'Haziran', 7: 'Temmuz', 8: 'Ağustos', 9: 'Eylül', 10: 'Ekim', 11: 'Kasım', 12: 'Aralık' },
@@ -287,6 +315,31 @@ export function getSimpleCourseStartDates(lang: 'tr' | 'de' | 'en' | 'es'): stri
   return unique.map((d) => formatCourseDate(d, lang));
 }
 
+/** Kayıt tarihleri: value = "dd.mm", label = "Mart 2026" (sadece ay-yıl, gün yok). Aynı ay birden fazla tarih olsa bile tek seçenek. */
+export function getStartDateOptionsMonthYear(lang: 'tr' | 'de' | 'en' | 'es', year = 2026): { value: string; label: string }[] {
+  const pricingLang = lang === 'es' ? 'de' : lang;
+  const raw = coursePricing[pricingLang].startDates;
+  const allRaw = [...raw.a1.a1_1, ...raw.a1.a1_2];
+  const unique = [...new Set(allRaw)];
+  unique.sort((a, b) => {
+    const [d1, m1] = a.split('.').map(Number);
+    const [d2, m2] = b.split('.').map(Number);
+    return (m1 * 100 + d1) - (m2 * 100 + d2);
+  });
+  const monthNames = (MONTH_NAMES[lang] || MONTH_NAMES.en) as Record<number, string>;
+  const byMonth = new Map<number, string>();
+  for (const ddmm of unique) {
+    const month = parseInt(ddmm.split('.')[1], 10);
+    if (!byMonth.has(month)) byMonth.set(month, ddmm);
+  }
+  return Array.from(byMonth.entries())
+    .sort(([a], [b]) => a - b)
+    .map(([month, value]) => ({
+      value,
+      label: `${monthNames[month]} ${year}`,
+    }));
+}
+
 /** Kayıt tarihleri: value = "dd.mm", label = "2 Mart 2026" formatında seçenekler (form dropdown için). */
 export function getStartDateOptions(lang: 'tr' | 'de' | 'en' | 'es', year = 2026): { value: string; label: string }[] {
   const formatted = getSimpleCourseStartDates(lang);
@@ -303,4 +356,28 @@ export function getStartDateOptions(lang: 'tr' | 'de' | 'en' | 'es', year = 2026
     value: ddmm,
     label: (formatCourseDate(ddmm, lang)) + ' ' + year,
   }));
+}
+
+/** Kart ve detay sayfalarında ders saati yerine kullanılacak ibare: "200 derse kadar" / "bis zu 200 UStd" vb. */
+export const LESSONS_UP_TO_200: Record<'tr' | 'de' | 'en' | 'es', string> = {
+  tr: '200 derse kadar',
+  de: 'bis zu 200 UStd',
+  en: 'up to 200 lessons',
+  es: 'hasta 200 clases',
+};
+
+/** Yoğun/online kurs kartlarında gösterilecek haftalık fiyat metni. Hep Intensive (110€) olarak gösterilir. */
+export function getCourseCardPerWeekPrice(lang: 'tr' | 'de' | 'en' | 'es', slug: string): string | null {
+  const info = extractCourseInfo(slug);
+  if (info.type !== 'intensive' && info.type !== 'online') return null;
+  const slugLower = slug.toLowerCase();
+  if (slugLower === 'online-sinav-hazirlik') return null;
+  const perWeekEuro = 110;
+  const t: Record<string, string> = {
+    tr: `ab ${perWeekEuro}€/hafta`,
+    de: `ab ${perWeekEuro}€/Woche`,
+    en: `from ${perWeekEuro}€/week`,
+    es: `desde ${perWeekEuro}€/semana`,
+  };
+  return t[lang] ?? t.en;
 }

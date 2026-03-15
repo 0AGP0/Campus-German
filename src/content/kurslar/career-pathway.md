@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Haftalık Ders"
-    description: "24 Ders (UE)"
+    description: "25 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Program Süresi"
     description: "12-24 Hafta"
@@ -54,11 +54,11 @@ tabs:
       pricing:
         - name: "12 Hafta Career Pathway"
           duration: "12 Hafta"
-          schedule: "24 Ders/Hafta"
+          schedule: "25 Ders/Hafta"
           price: "Özel Fiyatlandırma"
         - name: "24 Hafta Career Pathway"
           duration: "24 Hafta"
-          schedule: "24 Ders/Hafta"
+          schedule: "25 Ders/Hafta"
           price: "Özel Fiyatlandırma"
           highlighted: true
   - id: "program-detaylari"

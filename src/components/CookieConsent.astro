@@ -1,0 +1,235 @@
+---
+/**
+ * GDPR-style cookie consent banner.
+ * Shows on first visit; stores choice in localStorage (campusgerman_cookie_consent).
+ * Values: "accepted" | "essential"
+ */
+import { getDatenschutzPath } from '../utils/pathHelpers';
+
+interface Props {
+  lang?: 'tr' | 'de' | 'en' | 'es';
+}
+
+const { lang = 'tr' } = Astro.props;
+const privacyPath = getDatenschutzPath(lang);
+const privacyHref = `/${lang}/${privacyPath}`;
+
+const t = {
+  tr: {
+    title: 'Çerezler',
+    message: 'Web sitemizde deneyiminizi iyileştirmek ve trafiği analiz etmek için çerezler kullanıyoruz. Gizlilik politikamızda detayları inceleyebilirsiniz.',
+    acceptAll: 'Tümünü kabul et',
+    essentialOnly: 'Yalnızca gerekli',
+    privacyLink: 'Gizlilik politikası',
+  },
+  de: {
+    title: 'Cookies',
+    message: 'Wir verwenden Cookies, um Ihre Erfahrung auf unserer Website zu verbessern und den Verkehr zu analysieren. Details finden Sie in unserer Datenschutzerklärung.',
+    acceptAll: 'Alle akzeptieren',
+    essentialOnly: 'Nur notwendige',
+    privacyLink: 'Datenschutzerklärung',
+  },
+  en: {
+    title: 'Cookies',
+    message: 'We use cookies to improve your experience on our site and to analyse traffic. You can find details in our privacy policy.',
+    acceptAll: 'Accept all',
+    essentialOnly: 'Essential only',
+    privacyLink: 'Privacy policy',
+  },
+  es: {
+    title: 'Cookies',
+    message: 'Utilizamos cookies para mejorar su experiencia en nuestro sitio y analizar el tráfico. Puede encontrar los detalles en nuestra política de privacidad.',
+    acceptAll: 'Aceptar todo',
+    essentialOnly: 'Solo esenciales',
+    privacyLink: 'Política de privacidad',
+  },
+};
+
+const text = t[lang] ?? t.en;
+---
+
+<div
+  id="cookie-consent-banner"
+  class="cookie-consent"
+  data-privacy-href={privacyHref}
+  role="dialog"
+  aria-label={text.title}
+  aria-live="polite"
+  hidden
+>
+  <div class="cookie-consent-inner">
+    <div class="cookie-consent-text">
+      <strong class="cookie-consent-title">{text.title}</strong>
+      <p class="cookie-consent-message">
+        {text.message}
+        <a href={privacyHref} class="cookie-consent-link">{text.privacyLink}</a>.
+      </p>
+    </div>
+    <div class="cookie-consent-actions">
+      <button type="button" class="cookie-consent-btn cookie-consent-btn--secondary" data-action="essential">
+        {text.essentialOnly}
+      </button>
+      <button type="button" class="cookie-consent-btn cookie-consent-btn--primary" data-action="accepted">
+        {text.acceptAll}
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const STORAGE_KEY = 'campusgerman_cookie_consent';
+    const banner = document.getElementById('cookie-consent-banner');
+    if (!banner) return;
+
+    try {
+      if (localStorage.getItem(STORAGE_KEY)) {
+        return; // already decided, keep banner hidden
+      }
+      banner.hidden = false;
+      banner.classList.add('cookie-consent--visible');
+    } catch (e) {
+      // localStorage not available (e.g. private mode), show banner anyway
+      banner.hidden = false;
+      banner.classList.add('cookie-consent--visible');
+    }
+
+    function saveAndHide(value) {
+      try {
+        localStorage.setItem(STORAGE_KEY, value);
+      } catch (_) {}
+      banner.classList.remove('cookie-consent--visible');
+      setTimeout(function () {
+        banner.hidden = true;
+      }, 300);
+      // Optional: dispatch event for analytics (e.g. enable GA only when value === 'accepted')
+      window.dispatchEvent(new CustomEvent('cookie-consent-updated', { detail: { value } }));
+    }
+
+    banner.querySelectorAll('[data-action]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var action = this.getAttribute('data-action');
+        if (action === 'accepted' || action === 'essential') {
+          saveAndHide(action);
+        }
+      });
+    });
+  })();
+</script>
+
+<style>
+  .cookie-consent {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    padding: 1rem 1.5rem;
+    background: var(--color-secondary, #2c363f);
+    color: #fff;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .cookie-consent[hidden] {
+    display: block !important;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .cookie-consent--visible {
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .cookie-consent-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+
+  .cookie-consent-text {
+    flex: 1 1 280px;
+  }
+
+  .cookie-consent-title {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .cookie-consent-message {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    opacity: 0.95;
+  }
+
+  .cookie-consent-link {
+    color: var(--color-primary, #0cc0df);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .cookie-consent-link:hover {
+    color: #fff;
+  }
+
+  .cookie-consent-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .cookie-consent-btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .cookie-consent-btn:focus {
+    outline: 2px solid var(--color-primary, #0cc0df);
+    outline-offset: 2px;
+  }
+
+  .cookie-consent-btn--primary {
+    background: var(--color-primary, #0cc0df);
+    color: var(--color-secondary, #2c363f);
+  }
+
+  .cookie-consent-btn--primary:hover {
+    background: var(--color-primary-dark, #0aa5c0);
+  }
+
+  .cookie-consent-btn--secondary {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .cookie-consent-btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  @media (max-width: 540px) {
+    .cookie-consent-inner {
+      flex-direction: column;
+      align-items: stretch;
+      text-align: center;
+    }
+    .cookie-consent-actions {
+      justify-content: center;
+    }
+  }
+</style>

@@ -307,6 +307,35 @@
     overflow: hidden;
 }
 
+/* Eğitmenler CTA: arka plan koyu, yazılar okunaklı */
+.cta-section.instructors-cta {
+    background: linear-gradient(135deg, #059669 0%, #047857 50%, #065f46 100%);
+}
+.cta-section.instructors-cta .cta-title,
+.cta-section.instructors-cta .cta-description {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.cta-section.instructors-cta .cta-button {
+    background: #fff;
+    color: #047857;
+}
+.cta-section.instructors-cta .cta-button:hover {
+    background: #f0fdf4;
+    color: #065f46;
+}
+.cta-section.instructors-cta .cta-button-secondary {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+}
+.cta-section.instructors-cta .cta-button-secondary:hover {
+    background: #fff;
+    color: #047857;
+    border-color: #fff;
+}
+
 .cta-content {
     display: block !important;
     text-align: center;
@@ -319,26 +348,27 @@
 /* CTA Elements Spacing */
 .cta-section .cta-icon {
     font-size: 70px;
-    color: white;
+    color: #ffffff;
     margin-bottom: 30px;
 }
 
 .cta-section .cta-title {
     font-size: 3rem;
     font-weight: 800;
-    color: white !important;
+    color: #ffffff !important;
     background: none !important;
-    -webkit-text-fill-color: white !important;
+    -webkit-text-fill-color: #ffffff !important;
     margin-bottom: 25px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .cta-section .cta-description {
     font-size: 1.2rem;
     line-height: 1.8;
-    color: rgba(255, 255, 255, 1) !important;
+    color: #ffffff !important;
     margin-bottom: 40px;
     font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .cta-section .cta-actions {

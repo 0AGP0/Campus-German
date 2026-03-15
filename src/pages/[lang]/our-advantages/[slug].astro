@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
+import BilgiAlForm from '../../../components/BilgiAlForm.astro';
 import { cleanSlug, getAdvantagesPath, getContactPath, getBookingPath, isValidLang } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
@@ -54,7 +55,6 @@ const relatedAdvantages = [
   { slug: { tr: 'sehir-gezileri', de: 'stadttouren', en: 'city-tours' }, icon: 'fas fa-map-marked-alt', tr: 'Şehir ve Üniversite Gezileri', de: 'Stadt- und Universitätstouren', en: 'City and University Tours' },
   { slug: { tr: 'konusma-kulubu', de: 'sprachclub', en: 'speaking-club' }, icon: 'fas fa-comments', tr: 'Konuşma Kulübü', de: 'Sprachclub', en: 'Speaking Club' },
   { slug: { tr: 'egitim-koclugu', de: 'lerncoaching', en: 'learning-coaching' }, icon: 'fas fa-user-graduate', tr: 'Eğitim Koçluğu', de: 'Lerncoaching', en: 'Learning Coaching' },
-  { slug: { tr: 'para-iade-garantisi', de: 'geld-zurueck-garantie', en: 'money-back-guarantee' }, icon: 'fas fa-shield-alt', tr: 'Garanti', de: 'Garantie', en: 'Money-Back Guarantee' },
 ];
 ---
 
@@ -199,28 +199,7 @@ const relatedAdvantages = [
                         </div>
                     </div>
                     <div class="cta-form">
-                        <div class="form-header">
-                            <h3>{lang === 'tr' ? 'Ücretsiz Bilgi Alın' : lang === 'de' ? 'Kostenlose Informationen' : 'Get Free Information'}</h3>
-                            <p>{lang === 'tr' ? 'Size en uygun programı bulalım' : lang === 'de' ? 'Lassen Sie uns das richtige Programm für Sie finden' : 'Let us find the right program for you'}</p>
-                        </div>
-                        <form class="contact-form">
-                            <div class="form-group">
-                                <input type="text" id="name" name="name" placeholder={lang === 'tr' ? 'Adınız Soyadınız' : lang === 'de' ? 'Ihr Name' : 'Your Name'} required>
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" id="email" name="email" placeholder={lang === 'tr' ? 'E-posta Adresiniz' : lang === 'de' ? 'Ihre E-Mail' : 'Your Email'} required>
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="form-group">
-                                <input type="tel" id="phone" name="phone" placeholder={lang === 'tr' ? 'Telefon Numaranız' : lang === 'de' ? 'Ihre Telefonnummer' : 'Your Phone Number'} required>
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <button type="submit" class="submit-btn">
-                                <i class="fas fa-paper-plane"></i>
-                                <span>{lang === 'tr' ? 'Ücretsiz Bilgi Al' : lang === 'de' ? 'Kostenlose Informationen anfordern' : 'Get Free Info'}</span>
-                            </button>
-                        </form>
+                        <BilgiAlForm lang={lang} />
                     </div>
                 </div>
             </div>

@@ -1,0 +1,72 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+import '../../styles/pages/kartvizit.css';
+
+export async function getStaticPaths() {
+  const danismanlar = await getCollection('danismanlar');
+  return danismanlar.map((d) => ({
+    params: { slug: d.id.replace(/\.md$/, '') },
+  }));
+}
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect('/de/');
+const entry = await getEntry('danismanlar', slug) ?? await getEntry('danismanlar', `${slug}.md`);
+if (!entry) return Astro.redirect('/de/');
+const { data, body } = entry;
+const waNumber = data.whatsapp.replace(/\D/g, '');
+const waHref = `https://wa.me/${waNumber}`;
+const mailHref = `mailto:${data.email}`;
+const siteLang = 'de';
+const { Content } = await entry.render();
+---
+
+<MainLayout title={`${data.name} – Campus German`} lang={siteLang}>
+  <div class="kartvizit-page">
+    <article class="kartvizit-card">
+      {data.photo ? (
+        <div class="kartvizit-card__image-wrap">
+          <img
+            src={data.photo}
+            alt=""
+            class="kartvizit-card__image"
+            width="160"
+            height="160"
+          />
+        </div>
+      ) : (
+        <div class="kartvizit-card__image-wrap kartvizit-card__image-wrap--placeholder" aria-hidden="true">
+          <i class="fas fa-user" aria-hidden="true"></i>
+        </div>
+      )}
+      <div class="kartvizit-card__body">
+        <h1 class="kartvizit-card__name">{data.name}</h1>
+        <p class="kartvizit-card__title">{data.title}</p>
+        {body && (
+          <div class="kartvizit-card__bio">
+            <Content />
+          </div>
+        )}
+        <div class="kartvizit-card__actions">
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="kartvizit-btn kartvizit-btn--wa"
+          >
+            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+            <span>WhatsApp</span>
+          </a>
+          <a href={mailHref} class="kartvizit-btn kartvizit-btn--email">
+            <i class="fas fa-envelope" aria-hidden="true"></i>
+            <span>E-Mail</span>
+          </a>
+        </div>
+      </div>
+    </article>
+    <p class="kartvizit-back">
+      <a href="/de/">← Campus German</a>
+    </p>
+  </div>
+</MainLayout>

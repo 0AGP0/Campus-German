@@ -117,10 +117,33 @@ const ueberUnsCollection = defineCollection({
   }),
 });
 
+const legalCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    type: z.enum(['datenschutz', 'impressum', 'informationsauskunft']),
+  }),
+});
+
+/** Kartvizit QR ile açılan danışman kişi sayfaları. Admin panelden düzenlenir. */
+const danismanlarCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    urlSlug: z.string().optional(), // Decap CMS dosya adı için; sayfa slug = dosya adı (id)
+    name: z.string(),
+    title: z.string(),
+    email: z.string(),
+    whatsapp: z.string(),
+    photo: z.string().optional(),
+  }),
+});
+
 export const collections = {
   'kurslar': kurslarCollection,
   'unsere-vorteile': unsereVorteileCollection,
   'unsere-dienstleistungen': unsereDienstleistungenCollection,
   'ueber-uns': ueberUnsCollection,
+  'legal': legalCollection,
+  'danismanlar': danismanlarCollection,
 };
 

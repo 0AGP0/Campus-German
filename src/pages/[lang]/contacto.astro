@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import BilgiAlForm from '../../components/BilgiAlForm.astro';
 import '../../styles/pages/kontakt.css';
 
 export async function getStaticPaths() {
@@ -10,45 +11,51 @@ export async function getStaticPaths() {
 
 const { lang } = Astro.params;
 
+const MAP_EMBED_URL = 'https://www.openstreetmap.org/export/embed.html?bbox=8.800%2C53.073%2C8.814%2C53.081&layer=mapnik&marker=53.077%2C8.806';
+const MAP_LINK_URL = 'https://www.google.com/maps/search/?api=1&query=B%C3%BCrgermeister+Smidt+Stra%C3%9Fe+80%2C+28195+Bremen';
+
 const translations = {
-    title: "Contacto - CampusGerman",
-    heroTitle: { main: "Contacto", highlight: "e información" },
-    heroDescription: "Póngase en contacto con CampusGerman. Nuestros asesores expertos están listos para ayudarle.",
+    title: "Contacto - Campus German",
+    heroTitleMain: "Contacto",
+    heroTitleHighlight: "e información",
+    heroDescription: "Póngase en contacto con Campus German. Nuestros asesores están listos para ayudarle.",
+    mapTitle: "Nuestra ubicación",
+    mapLinkText: "Abrir en mapa",
     addressTitle: "Dirección",
     addressLine: "Bürgermeister Smidt Straße 80, 28195 Bremen",
     fromGermany: "Desde Alemania",
     fromOtherCountries: "Desde otros países",
-    karabagName: "Herr Karabag",
+    nameCihan: "Herr Karabag",
     karabagLangs: "Inglés y alemán",
-    karabagRole: "Matrícula, gestión de cursos y recursos humanos",
-    akmanName: "Herr Akman",
+    karabagRole: "Matrícula, gestión de cursos y RR. HH.",
+    nameUser: "Herr Akman",
     akmanLangs: "Inglés, español, francés, coreano, turco",
-    akmanRole: "Estudiantes internacionales, alojamiento y relaciones con socios",
-    chatWhatsApp: "Escribir por WhatsApp",
-    phoneTitle: "Teléfono",
+    akmanRole: "Estudiantes internacionales, alojamiento y asociaciones",
+    chatWhatsApp: "Por WhatsApp",
     emailTitle: "Email",
-    emailForInfo: "Para información",
-    emailForPartner: "Para asociaciones",
+    emailForInfo: "Información",
+    emailForPartner: "Asociaciones",
     workingHoursTitle: "Horario",
     workingHours: {
         weekdays: "Entre semana: 09:00 – 21:00",
         saturday: "Sábado: 09:00 – 18:00",
         sunday: "Domingo: Cerrado"
     },
-    socialTitle: "Síguenos en redes sociales",
-    formTitle: "Consulta gratuita",
-    formSubtitle: "Consulta gratuita con nuestros asesores expertos",
+    socialTitle: "Redes sociales",
+    formTitle: "Solicitar información",
+    formSubtitle: "Rellene el formulario y le responderemos lo antes posible.",
     formFields: {
         name: "Nombre completo",
         email: "Email",
         phone: "Teléfono",
         city: "Ciudad",
-        service: "Seleccione el programa que le interesa",
-        message: "Notas que desee añadir...",
+        preferredDate: "Fecha preferida para la cita",
+        service: "Programa que le interesa",
+        message: "Mensaje (opcional)",
         kvkk: "Acepto la Política de Privacidad y Cookies."
     },
     serviceOptions: {
-        placeholder: "Seleccione el programa que le interesa",
+        placeholder: "Seleccione programa",
         courses: "Cursos de alemán",
         university: "Preparación universitaria",
         test: "Preparación de exámenes (TestDaF, DSH)",
@@ -58,284 +65,132 @@ const translations = {
         visa: "Apoyo con visado",
         general: "Información general"
     },
-    submitButton: "Enviar solicitud"
+    submitButton: "Enviar"
 };
 ---
 
 <MainLayout title={translations.title} lang={lang}>
-    <section class="contact-hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="title-main">{translations.heroTitle.main}</span>
-                    <span class="title-highlight">{translations.heroTitle.highlight}</span>
+    <div class="contact-page">
+        <header class="contact-hero">
+            <div class="contact-hero__inner">
+                <h1 class="contact-hero__title">
+                    <span class="contact-hero__title-main">{translations.heroTitleMain}</span>
+                    <span class="contact-hero__title-accent">{translations.heroTitleHighlight}</span>
                 </h1>
-                <p class="hero-description">{translations.heroDescription}</p>
+                <p class="contact-hero__desc">{translations.heroDescription}</p>
             </div>
-        </div>
-    </section>
+        </header>
 
-    <section class="contact-section">
-        <div class="container">
-            <div class="contact-content">
-                <div class="contact-info-section">
-                    <div class="contact-info-card">
-                        <div class="contact-method">
-                            <div class="method-icon"><i class="fas fa-map-marker-alt"></i></div>
-                            <div class="method-content">
-                                <h4>{translations.addressTitle}</h4>
-                                <div class="address-info">
-                                    <p><strong>{translations.addressLine}</strong></p>
+        <main class="contact-main">
+            <div class="contact-main__inner">
+                <div class="contact-main__grid">
+                    <aside class="contact-aside">
+                        <div class="contact-card">
+                            <dl class="contact-list">
+                                <div class="contact-list__row">
+                                    <dt class="contact-list__term">{translations.addressTitle}</dt>
+                                    <dd class="contact-list__value">
+                                        <p>{translations.addressLine}</p>
+                                        <a href={MAP_LINK_URL} target="_blank" rel="noopener noreferrer" class="contact-list__link">{translations.mapLinkText}</a>
+                                    </dd>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="contact-method contact-phone-block">
-                            <h4 class="contact-phone-label">{translations.fromGermany}</h4>
-                            <div class="contact-phone-row">
-                                <div class="contact-phone-detail">
-                                    <a href="tel:+491636927842" class="contact-phone-number">+49 163 6927842</a>
-                                    <span class="contact-phone-name">{translations.karabagName}</span>
-                                    <div class="contact-lang-flags" aria-label={translations.karabagLangs}>
-                                        <img src="https://flagcdn.com/gb.svg" alt="EN" width="22" height="16" class="contact-lang-flag" />
-                                        <img src="https://flagcdn.com/de.svg" alt="DE" width="22" height="16" class="contact-lang-flag" />
+                                <div class="contact-list__phones">
+                                    <div class="contact-list__row contact-list__row--phone">
+                                        <dt class="contact-list__term">{translations.fromGermany}</dt>
+                                        <dd class="contact-list__value">
+                                            <a href="tel:+4915225227769" class="contact-list__tel">+49 1522 5227769</a>
+                                            <span class="contact-list__name">{translations.nameCihan}</span>
+                                            <p class="contact-list__role">{translations.karabagRole}</p>
+                                            <div class="contact-list__lang-row">
+                                                <span class="contact-list__flags" aria-hidden="true">
+                                                    <img src="https://flagcdn.com/w40/gb.png" alt="" width="20" height="14" loading="lazy" />
+                                                    <img src="https://flagcdn.com/w40/de.png" alt="" width="20" height="14" loading="lazy" />
+                                                </span>
+                                                <span class="contact-list__meta">{translations.karabagLangs}</span>
+                                            </div>
+                                            <div class="contact-list__actions">
+                                                <a href="tel:+4915225227769" class="contact-btn contact-btn--call" aria-label="Llamar"><i class="fas fa-phone-alt"></i></a>
+                                                <a href="https://wa.me/4915225227769" target="_blank" rel="noopener noreferrer" class="contact-btn contact-btn--wa"><i class="fab fa-whatsapp"></i><span>{translations.chatWhatsApp}</span></a>
+                                            </div>
+                                        </dd>
                                     </div>
-                                    <span class="contact-phone-langs visually-hidden">{translations.karabagLangs}</span>
-                                    <p class="contact-phone-role">{translations.karabagRole}</p>
-                                    <div class="contact-phone-actions">
-                                        <a href="tel:+491636927842" class="contact-btn-call" aria-label="Llamar"><i class="fas fa-phone-alt"></i></a>
-                                        <a href="https://wa.me/491636927842" target="_blank" rel="noopener noreferrer" class="contact-btn-whatsapp">{translations.chatWhatsApp} <i class="fab fa-whatsapp"></i></a>
+                                    <div class="contact-list__row contact-list__row--phone">
+                                        <dt class="contact-list__term">{translations.fromOtherCountries}</dt>
+                                        <dd class="contact-list__value">
+                                            <a href="tel:+4915203823792" class="contact-list__tel">+49 1520 382 3792</a>
+                                            <span class="contact-list__name">{translations.nameUser}</span>
+                                            <p class="contact-list__role">{translations.akmanRole}</p>
+                                            <div class="contact-list__lang-row">
+                                                <span class="contact-list__flags" aria-hidden="true">
+                                                    <img src="https://flagcdn.com/w40/gb.png" alt="" width="20" height="14" loading="lazy" />
+                                                    <img src="https://flagcdn.com/w40/es.png" alt="" width="20" height="14" loading="lazy" />
+                                                    <img src="https://flagcdn.com/w40/fr.png" alt="" width="20" height="14" loading="lazy" />
+                                                    <img src="https://flagcdn.com/w40/kr.png" alt="" width="20" height="14" loading="lazy" />
+                                                    <img src="https://flagcdn.com/w40/tr.png" alt="" width="20" height="14" loading="lazy" />
+                                                </span>
+                                                <span class="contact-list__meta">{translations.akmanLangs}</span>
+                                            </div>
+                                            <div class="contact-list__actions">
+                                                <a href="tel:+4915203823792" class="contact-btn contact-btn--call" aria-label="Llamar"><i class="fas fa-phone-alt"></i></a>
+                                                <a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="contact-btn contact-btn--wa"><i class="fab fa-whatsapp"></i><span>{translations.chatWhatsApp}</span></a>
+                                            </div>
+                                        </dd>
                                     </div>
                                 </div>
+                                <div class="contact-list__row">
+                                    <dt class="contact-list__term">{translations.emailTitle}</dt>
+                                    <dd class="contact-list__value">
+                                        <p><a href="mailto:info@campusgerman.com">info@campusgerman.com</a> <span class="contact-list__muted">({translations.emailForInfo})</span></p>
+                                        <p><a href="mailto:partner@campusgerman.com">partner@campusgerman.com</a> <span class="contact-list__muted">({translations.emailForPartner})</span></p>
+                                    </dd>
+                                </div>
+                                <div class="contact-list__row">
+                                    <dt class="contact-list__term">{translations.workingHoursTitle}</dt>
+                                    <dd class="contact-list__value">
+                                        <p>{translations.workingHours.weekdays}</p>
+                                        <p>{translations.workingHours.saturday}</p>
+                                        <p>{translations.workingHours.sunday}</p>
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                        <div class="contact-social">
+                            <p class="contact-social__title">{translations.socialTitle}</p>
+                            <div class="contact-social__list">
+                                <a href="#" class="contact-social__item" aria-label="Facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></a>
+                                <a href="#" class="contact-social__item" aria-label="Instagram"><i class="fab fa-instagram"></i><span>Instagram</span></a>
+                                <a href="#" class="contact-social__item" aria-label="YouTube"><i class="fab fa-youtube"></i><span>YouTube</span></a>
+                                <a href="#" class="contact-social__item" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i><span>LinkedIn</span></a>
+                                <a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="contact-social__item" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
                             </div>
                         </div>
-                        <div class="contact-method contact-phone-block">
-                            <h4 class="contact-phone-label">{translations.fromOtherCountries}</h4>
-                            <div class="contact-phone-row">
-                                <div class="contact-phone-detail">
-                                    <a href="tel:+4915203823792" class="contact-phone-number">+49 1520 3823792</a>
-                                    <span class="contact-phone-name">{translations.akmanName}</span>
-                                    <div class="contact-lang-flags" aria-label={translations.akmanLangs}>
-                                        <img src="https://flagcdn.com/gb.svg" alt="EN" width="22" height="16" class="contact-lang-flag" />
-                                        <img src="https://flagcdn.com/es.svg" alt="ES" width="22" height="16" class="contact-lang-flag" />
-                                        <img src="https://flagcdn.com/fr.svg" alt="FR" width="22" height="16" class="contact-lang-flag" />
-                                        <img src="https://flagcdn.com/kr.svg" alt="KR" width="22" height="16" class="contact-lang-flag" />
-                                        <img src="https://flagcdn.com/tr.svg" alt="TR" width="22" height="16" class="contact-lang-flag" />
-                                    </div>
-                                    <span class="contact-phone-langs visually-hidden">{translations.akmanLangs}</span>
-                                    <p class="contact-phone-role">{translations.akmanRole}</p>
-                                    <div class="contact-phone-actions">
-                                        <a href="tel:+4915203823792" class="contact-btn-call" aria-label="Llamar"><i class="fas fa-phone-alt"></i></a>
-                                        <a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="contact-btn-whatsapp">{translations.chatWhatsApp} <i class="fab fa-whatsapp"></i></a>
-                                    </div>
-                                </div>
-                            </div>
+                    </aside>
+
+                    <div class="contact-form-area">
+                        <div class="contact-form-box">
+                            <h2 class="contact-form-box__title">{translations.formTitle}</h2>
+                            <p class="contact-form-box__subtitle">{translations.formSubtitle}</p>
+                            <BilgiAlForm lang={lang} formTitle={false} formSubtitle={false} />
                         </div>
-                        <div class="contact-method">
-                            <div class="method-icon"><i class="fas fa-envelope"></i></div>
-                            <div class="method-content">
-                                <h4>{translations.emailTitle}</h4>
-                                <div class="email-addresses">
-                                    <div class="email-row"><span class="email-label">{translations.emailForInfo}:</span> <a href="mailto:info@campusgerman.com">info@campusgerman.com</a></div>
-                                    <div class="email-row"><span class="email-label">{translations.emailForPartner}:</span> <a href="mailto:partner@campusgerman.com">partner@campusgerman.com</a></div>
-                                </div>
+
+                        <section class="contact-map" aria-label={translations.mapTitle}>
+                            <h2 class="contact-map__title">{translations.mapTitle}</h2>
+                            <div class="contact-map__frame">
+                                <iframe
+                                    title={translations.mapTitle}
+                                    src={MAP_EMBED_URL}
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                />
                             </div>
-                        </div>
-                        <div class="contact-method">
-                            <div class="method-icon"><i class="fas fa-clock"></i></div>
-                            <div class="method-content">
-                                <h4>{translations.workingHoursTitle}</h4>
-                                <div class="working-hours">
-                                    <p><strong>{translations.workingHours.weekdays.split(':')[0]}:</strong> {translations.workingHours.weekdays.split(':').slice(1).join(':')}</p>
-                                    <p><strong>{translations.workingHours.saturday.split(':')[0]}:</strong> {translations.workingHours.saturday.split(':').slice(1).join(':')}</p>
-                                    <p><strong>{translations.workingHours.sunday.split(':')[0]}:</strong> {translations.workingHours.sunday.split(':').slice(1).join(':')}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="social-section">
-                        <h3>{translations.socialTitle}</h3>
-                        <div class="social-links">
-                            <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></a>
-                            <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i><span>Instagram</span></a>
-                            <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i><span>YouTube</span></a>
-                            <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i><span>LinkedIn</span></a>
-                            <a href="#" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-form-section">
-                    <div class="form-card">
-                        <div class="form-header">
-                            <div class="form-icon"><i class="fas fa-comments"></i></div>
-                            <h2>{translations.formTitle}</h2>
-                            <p>{translations.formSubtitle}</p>
-                        </div>
-                        <form id="contactForm" class="contact-form">
-                            <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
-                            <input type="text" name="website" style="position: absolute; left: -9999px; opacity: 0; pointer-events: none; tabindex: -1;" autocomplete="off" aria-hidden="true" />
-                            <div class="form-group">
-                                <input type="text" id="fullname" name="fullname" required placeholder={translations.formFields.name}>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" id="email" name="email" required placeholder={translations.formFields.email}>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <input type="tel" id="phone" name="phone" required placeholder={translations.formFields.phone}>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" id="city" name="city" required placeholder={translations.formFields.city}>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <select id="service" name="service" required>
-                                    <option value="">{translations.serviceOptions.placeholder}</option>
-                                    <option value="almanca-kurslari">{translations.serviceOptions.courses}</option>
-                                    <option value="universite-hazirlik">{translations.serviceOptions.university}</option>
-                                    <option value="test-hazirlik">{translations.serviceOptions.test}</option>
-                                    <option value="ozel-ders">{translations.serviceOptions.private}</option>
-                                    <option value="online-kurs">{translations.serviceOptions.online}</option>
-                                    <option value="konaklama">{translations.serviceOptions.accommodation}</option>
-                                    <option value="vize-destegi">{translations.serviceOptions.visa}</option>
-                                    <option value="genel-bilgi">{translations.serviceOptions.general}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <textarea id="notes" name="notes" placeholder={translations.formFields.message}></textarea>
-                            </div>
-                            <div class="form-group">
-                                <div class="kvkk-checkbox">
-                                    <input type="checkbox" id="kvkk" name="kvkk" required checked>
-                                    <label for="kvkk"><a href="#gizlilik" target="_blank">{translations.formFields.kvkk}</a></label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="submit-btn">
-                                    <span>{translations.submitButton}</span>
-                                    <i class="fas fa-paper-plane"></i>
-                                </button>
-                            </div>
-                        </form>
+                            <a href={MAP_LINK_URL} target="_blank" rel="noopener noreferrer" class="contact-map__link">
+                                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                {translations.mapLinkText}
+                            </a>
+                        </section>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </main>
+    </div>
 </MainLayout>
-
-<script is:inline>
-(function() {
-    const { checkRateLimit, sanitizeObject, validateEmail, validatePhone, checkHoneypot } = (() => {
-        function checkRateLimit(formType, maxRequests, windowMinutes) {
-            const key = 'form_rate_limit_' + formType;
-            const now = Date.now();
-            const windowMs = windowMinutes * 60 * 1000;
-            const stored = localStorage.getItem(key);
-            if (!stored) { localStorage.setItem(key, JSON.stringify([now])); return true; }
-            const requests = JSON.parse(stored);
-            const recent = requests.filter(t => now - t < windowMs);
-            if (recent.length >= maxRequests) return false;
-            recent.push(now);
-            localStorage.setItem(key, JSON.stringify(recent));
-            return true;
-        }
-        function sanitizeInput(input) {
-            if (typeof input !== 'string') return '';
-            const div = document.createElement('div');
-            div.textContent = input;
-            return div.innerHTML.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
-        }
-        function sanitizeObject(obj) {
-            if (typeof obj === 'string') return sanitizeInput(obj);
-            if (Array.isArray(obj)) return obj.map(sanitizeObject);
-            if (obj && typeof obj === 'object') {
-                const out = {};
-                for (const k in obj) out[k] = sanitizeObject(obj[k]);
-                return out;
-            }
-            return obj;
-        }
-        function validateEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
-        function validatePhone(p) { return /^[\d\s\-\+\(\)]+$/.test(p) && p.replace(/\D/g, '').length >= 8; }
-        function checkHoneypot(form, name) {
-            const el = form.querySelector('[name="' + name + '"]');
-            return !(el && el.value);
-        }
-        return { checkRateLimit, sanitizeObject, validateEmail, validatePhone, checkHoneypot };
-    })();
-    const msg = {
-        sending: 'Enviando...',
-        submit: 'Enviar solicitud',
-        rateLimit: 'Demasiadas solicitudes. Espere un minuto.',
-        emailError: 'Introduzca un email válido.',
-        phoneError: 'Introduzca un número de teléfono válido.',
-        success: '¡Mensaje enviado! Nos pondremos en contacto lo antes posible.',
-        error: 'Ha ocurrido un error. Inténtelo de nuevo o contáctenos.'
-    };
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('contactForm');
-        if (!form) return;
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const btn = form.querySelector('button[type="submit"]');
-            if (btn) { btn.disabled = true; btn.innerHTML = '<span>' + msg.sending + '</span><i class="fas fa-spinner fa-spin"></i>'; }
-            if (!checkRateLimit('contact', 5, 1)) {
-                if (window.showSuccessModal) window.showSuccessModal('error', msg.rateLimit);
-                else alert(msg.rateLimit);
-                if (btn) { btn.disabled = false; btn.innerHTML = '<span>' + msg.submit + '</span><i class="fas fa-paper-plane"></i>'; }
-                return;
-            }
-            if (!checkHoneypot(form, 'website')) {
-                if (btn) { btn.disabled = false; btn.innerHTML = '<span>' + msg.submit + '</span><i class="fas fa-paper-plane"></i>'; }
-                return;
-            }
-            const fd = new FormData(form);
-            const data = {};
-            for (const [k, v] of fd.entries()) data[k] = v;
-            if (!validateEmail(data.email || '')) {
-                if (window.showSuccessModal) window.showSuccessModal('error', msg.emailError);
-                else alert(msg.emailError);
-                if (btn) { btn.disabled = false; btn.innerHTML = '<span>' + msg.submit + '</span><i class="fas fa-paper-plane"></i>'; }
-                return;
-            }
-            if (!validatePhone(data.phone || '')) {
-                if (window.showSuccessModal) window.showSuccessModal('error', msg.phoneError);
-                else alert(msg.phoneError);
-                if (btn) { btn.disabled = false; btn.innerHTML = '<span>' + msg.submit + '</span><i class="fas fa-paper-plane"></i>'; }
-                return;
-            }
-            let payload = {
-                formType: 'contact',
-                sourcePage: window.location.pathname,
-                lang: 'es',
-                name: data.fullname || '',
-                tel: data.phone || '',
-                email: data.email || '',
-                city: data.city || '',
-                service: data.service || '',
-                notes: data.notes || '',
-                kvkk: data.kvkk || false,
-                timestamp: new Date().toISOString()
-            };
-            payload = sanitizeObject(payload);
-            try {
-                const res = await fetch('https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (res.ok) {
-                    if (window.showSuccessModal) window.showSuccessModal('success', msg.success);
-                    else alert(msg.success);
-                    form.reset();
-                } else throw new Error('Webhook failed');
-            } catch (err) {
-                if (window.showSuccessModal) window.showSuccessModal('error', msg.error);
-                else alert(msg.error);
-            } finally {
-                if (btn) { btn.disabled = false; btn.innerHTML = '<span>' + msg.submit + '</span><i class="fas fa-paper-plane"></i>'; }
-            }
-        });
-    });
-})();
-</script>

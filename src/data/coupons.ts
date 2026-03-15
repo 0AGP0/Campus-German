@@ -10,6 +10,12 @@ export interface Coupon {
 
 export const VALID_COUPONS: Coupon[] = [
   { code: 'HBCampusGerman', discountPercent: 10 },
+  { code: 'Bremen20', discountPercent: 20 },
+  { code: 'ELT10', discountPercent: 10 },
+  { code: 'Unioku10', discountPercent: 10 },
+  { code: 'Globalvizyon10', discountPercent: 10 },
+  { code: 'EDZ10', discountPercent: 10 },
+  { code: 'Avrupagoc10', discountPercent: 10 },
 ];
 
 export function getCouponByCode(input: string): Coupon | null {

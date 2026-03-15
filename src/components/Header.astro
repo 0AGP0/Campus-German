@@ -1,8 +1,11 @@
 ---
 // Header Component - Orijinal Yapı
 import '../styles/header.css';
+import { getTrialPath, getPartnerApplicationPath } from '../utils/pathHelpers';
 
 const { lang = 'tr' } = Astro.props;
+const trialSlug = getTrialPath(lang as 'tr'|'de'|'en'|'es');
+const partnerSlug = getPartnerApplicationPath(lang as 'tr'|'de'|'en'|'es');
 
 // Translations
 const navTranslations = {
@@ -14,13 +17,15 @@ const navTranslations = {
         services: 'Sunduklarımız',
         winners: 'Kazananlar',
         contact: 'İletişim',
+        contactCta: 'İletişime geç',
         cta: 'Hemen Başvur',
         // Top Header
         getQuote: 'Fiyat Teklifi Al',
-        contactUs: 'İletişim',
+        contactUs: 'WhatsApp',
+        email: 'E-posta',
         brochure: 'Broşür',
         pricesDates: 'Fiyatlar ve Tarihler',
-        register: 'Hemen Başvur',
+        register: 'Ücretsiz Rezervasyon',
         phone: '+49 163 6927842',
         // Tab labels
         tabIntensive: 'Yoğun Akademik',
@@ -106,7 +111,7 @@ const navTranslations = {
         bureaucracy: 'Almanya Bürokrasi Desteği',
         freeResources: 'Ücretsiz Almanca Kaynaklar',
         servicesCta: 'Ücretsiz Danışma Randevusu Al',
-        promoBannerText: 'Bremen için sadece mart ayı kurslarına özel indirim için ',
+        promoBannerText: 'Bremen için sadece nisan ayı kurslarına özel indirim için ',
         promoBannerLink: "WhatsApp'tan ulaşın"
     },
     de: {
@@ -117,13 +122,15 @@ const navTranslations = {
         services: 'Dienstleistungen',
         winners: 'Erfolgsgeschichten',
         contact: 'Kontakt',
+        contactCta: 'Kontakt',
         cta: 'Jetzt bewerben',
         // Top Header
         getQuote: 'Angebot',
-        contactUs: 'Kontakt',
+        contactUs: 'WhatsApp',
+        email: 'E-Mail',
         brochure: 'Broschüre',
         pricesDates: 'Preise & Termine',
-        register: 'Jetzt bewerben',
+        register: 'Kostenlose Buchung',
         phone: '+49 163 6927842',
         tabIntensive: 'Intensiv',
         tabSeasonal: 'Saisonal',
@@ -205,7 +212,7 @@ const navTranslations = {
         bureaucracy: 'Bürokratie-Support',
         freeResources: 'Deutsch-Ressourcen',
         servicesCta: 'Beratungstermin',
-        promoBannerText: 'Sonderrabatt nur für März-Kurse in Bremen – ',
+        promoBannerText: 'Sonderrabatt nur für April-Kurse in Bremen – ',
         promoBannerLink: 'Per WhatsApp kontaktieren'
     },
     en: {
@@ -216,13 +223,15 @@ const navTranslations = {
         services: 'Our Services',
         winners: 'Success Stories',
         contact: 'Contact',
+        contactCta: 'Get in touch',
         cta: 'Apply Now',
         // Top Header
         getQuote: 'Get a Quote',
-        contactUs: 'Contact',
+        contactUs: 'WhatsApp',
+        email: 'Email',
         brochure: 'Brochure',
         pricesDates: 'Prices & Dates',
-        register: 'Apply Now',
+        register: 'Free Booking',
         phone: '+49 163 6927842',
         tabIntensive: 'Intensive Academic',
         tabSeasonal: 'Seasonal',
@@ -307,7 +316,7 @@ const navTranslations = {
         bureaucracy: 'Germany Bureaucracy Support',
         freeResources: 'Free German Resources',
         servicesCta: 'Schedule Free Consultation',
-        promoBannerText: 'Special discount for March courses in Bremen only – ',
+        promoBannerText: 'Special discount for April courses in Bremen only – ',
         promoBannerLink: 'Contact via WhatsApp'
     },
     es: {
@@ -318,13 +327,15 @@ const navTranslations = {
         services: 'Nuestros Servicios',
         winners: 'Historias de Éxito',
         contact: 'Contacto',
+        contactCta: 'Contacto',
         cta: 'Aplicar ahora',
         // Top Header
         getQuote: 'Solicitar Cotización',
-        contactUs: 'Contacto',
+        contactUs: 'WhatsApp',
+        email: 'Email',
         brochure: 'Folleto',
         pricesDates: 'Precios y Fechas',
-        register: 'Aplicar ahora',
+        register: 'Reserva gratuita',
         phone: '+49 163 6927842',
         tabIntensive: 'Intensivo Académico',
         tabSeasonal: 'Estacional',
@@ -409,7 +420,7 @@ const navTranslations = {
         bureaucracy: 'Apoyo Burocrático en Alemania',
         freeResources: 'Recursos Gratuitos de Alemán',
         servicesCta: 'Programar Consulta Gratuita',
-        promoBannerText: 'Descuento especial solo para cursos de marzo en Bremen – ',
+        promoBannerText: 'Descuento especial solo para cursos de abril en Bremen – ',
         promoBannerLink: 'Contáctenos por WhatsApp'
     }
 };
@@ -505,8 +516,7 @@ const sectionMapping = {
         contact: 'iletisim',
         winners: 'basari-hikayeleri',
         booking: 'buchung',
-        brochure: 'brosur',
-        pricesDates: 'fiyatlar-tarihler'
+        brochure: 'brosur'
     },
     de: {
         about: 'ueber-uns',
@@ -516,8 +526,7 @@ const sectionMapping = {
         contact: 'kontakt',
         winners: 'erfolgsgeschichten',
         booking: 'buchung',
-        brochure: 'brosur',
-        pricesDates: 'fiyatlar-tarihler'
+        brochure: 'brosur'
     },
     en: {
         about: 'about-us',
@@ -527,8 +536,7 @@ const sectionMapping = {
         contact: 'contact',
         winners: 'success-stories',
         booking: 'booking',
-        brochure: 'brosur',
-        pricesDates: 'fiyatlar-tarihler'
+        brochure: 'brosur'
     },
     es: {
         about: 'sobre-nosotros',
@@ -538,8 +546,7 @@ const sectionMapping = {
         contact: 'contacto',
         winners: 'historias-exito',
         booking: 'reservar',
-        brochure: 'brosur',
-        pricesDates: 'fiyatlar-tarihler'
+        brochure: 'brosur'
     }
 };
 
@@ -552,7 +559,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
     <!-- Promo Banner (Bremen Mart indirim - kapatılabilir) -->
     <div class="promo-banner" id="promo-banner" role="region" aria-label="Kampanya">
         <div class="promo-banner-inner">
-            <span class="promo-banner-text"><i class="fas fa-tag promo-banner-icon" aria-hidden="true"></i> {t.promoBannerText}<a href="https://wa.me/491636927842" target="_blank" rel="noopener noreferrer" class="promo-banner-link"><i class="fab fa-whatsapp"></i> {t.promoBannerLink}</a></span>
+            <span class="promo-banner-text"><i class="fas fa-tag promo-banner-icon" aria-hidden="true"></i> {t.promoBannerText}<a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="promo-banner-link"><i class="fab fa-whatsapp"></i> {t.promoBannerLink}</a></span>
             <button type="button" class="promo-banner-close" id="promo-banner-close" aria-label={lang === 'tr' ? 'Bannerı kapat' : lang === 'de' ? 'Banner schließen' : lang === 'es' ? 'Cerrar banner' : 'Close banner'}>
                 <i class="fas fa-times"></i>
             </button>
@@ -561,37 +568,32 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
     <!-- Top Header Bar -->
     <div class="top-header">
         <div class="top-header-container">
-            <!-- Sol: Telefon -->
+            <!-- Sol: boş spacer (ortayı dengelemek için) -->
             <div class="top-header-left">
-                <a href="tel:+491636927842" class="top-header-phone">
-                    <i class="fas fa-phone-alt"></i>
-                    <span>{t.phone}</span>
-                </a>
+                <span class="top-header-spacer" aria-hidden="true"></span>
             </div>
-            
-            <!-- Orta: Linkler -->
+            <!-- Orta: Fiyat Teklifi, Email (mailto), WhatsApp, Fiyat ve Tarihler - ortada -->
             <div class="top-header-center">
                 <a href={`/${lang}/${sections.booking}`} class="top-header-link">
                     <i class="fas fa-file-alt"></i>
                     <span>{t.getQuote}</span>
                 </a>
                 <span class="top-header-divider"></span>
-                <a href="https://wa.me/491636927842" target="_blank" rel="noopener noreferrer" class="top-header-link">
+                <a href="mailto:info@campusgerman.com" class="top-header-link top-header-email">
+                    <i class="fas fa-envelope"></i>
+                    <span>{t.email}</span>
+                </a>
+                <span class="top-header-divider"></span>
+                <a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="top-header-link">
                     <i class="fab fa-whatsapp"></i>
                     <span>{t.contactUs}</span>
                 </a>
                 <span class="top-header-divider"></span>
-                <a href={`/${lang}/${sections.brochure}`} class="top-header-link">
-                    <i class="fas fa-download"></i>
-                    <span>{t.brochure}</span>
-                </a>
-                <span class="top-header-divider"></span>
-                <a href={`/${lang}/${sections.pricesDates}`} class="top-header-link">
+                <a href={`/${lang}/${lang === 'tr' ? 'fiyatlar-tarihler' : lang === 'de' ? 'preise-termine' : lang === 'en' ? 'prices-dates' : 'precios-fechas'}`} class="top-header-link">
                     <i class="fas fa-euro-sign"></i>
                     <span>{t.pricesDates}</span>
                 </a>
             </div>
-            
             <!-- Sağ: Kayıt + Dil -->
             <div class="top-header-right">
                 <a href={`/${lang}/${sections.booking}`} class="top-header-register">
@@ -606,10 +608,6 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="top-lang-dropdown" id="topLangDropdown">
-                        <a href="/tr/" class="top-lang-option">
-                            <img src="https://flagcdn.com/tr.svg" alt="Türkçe" class="flag-img">
-                            <span>Türkçe</span>
-                        </a>
                         <a href="/de/" class="top-lang-option">
                             <img src="https://flagcdn.com/de.svg" alt="Deutsch" class="flag-img">
                             <span>Deutsch</span>
@@ -621,6 +619,10 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                         <a href="/es/" class="top-lang-option">
                             <img src="https://flagcdn.com/es.svg" alt="Español" class="flag-img">
                             <span>Español</span>
+                        </a>
+                        <a href="/tr/" class="top-lang-option">
+                            <img src="https://flagcdn.com/tr.svg" alt="Türkçe" class="flag-img">
+                            <span>Türkçe</span>
                         </a>
                     </div>
                 </div>
@@ -736,9 +738,8 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                             <a href={`/${lang}/${sections.about}/${slugs.partnership[lang]}`} class="dropdown-link">{t.partnership}</a>
                             <a href={`/${lang}/${sections.about}/${slugs.whatWeDont[lang]}`} class="dropdown-link">{t.whatWeDont}</a>
                             <a href={`/${lang}/lehrkraefte`} class="dropdown-link">{t.teachers}</a>
-                            <a href={`/${lang}/${sections.about}/${slugs.media[lang]}`} class="dropdown-link">{t.media}</a>
                             <div class="dropdown-cta">
-                                <a href={`/${lang}/partner-egitmen-basvuru`} class="dropdown-cta-btn">{t.aboutCta}</a>
+                                <a href={`/${lang}/${partnerSlug}`} class="dropdown-cta-btn">{t.aboutCta}</a>
                             </div>
                         </div>
                     </li>
@@ -754,9 +755,8 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                             <a href={`/${lang}/${sections.advantages}/${slugs.cityTours[lang]}`} class="dropdown-link">{t.cityTours}</a>
                             <a href={`/${lang}/${sections.advantages}/${slugs.speakingClub[lang]}`} class="dropdown-link">{t.speakingClub}</a>
                             <a href={`/${lang}/${sections.advantages}/${slugs.coaching[lang]}`} class="dropdown-link">{t.coaching}</a>
-                            <a href={`/${lang}/${sections.advantages}/${slugs.guarantee[lang]}`} class="dropdown-link">{t.guarantee}</a>
                             <div class="dropdown-cta">
-                                <a href={`/${lang}/ucretsiz-deneme`} class="dropdown-cta-btn">{t.advantagesCta}</a>
+                                <a href={`/${lang}/${trialSlug}`} class="dropdown-cta-btn">{t.advantagesCta}</a>
                             </div>
                         </div>
                     </li>
@@ -781,17 +781,10 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                         </div>
                     </li>
 
-                    <!-- 5. Kazananlar - Direct Link -->
+                    <!-- 5. İletişime geç - CTA Link (mavi çerçeve) -->
                     <li class="nav-item">
-                        <a href={`/${lang}/${sections.winners}`} class="nav-link">
-                            <span>{t.winners}</span>
-                        </a>
-                    </li>
-
-                    <!-- 6. İletişim - Direct Link -->
-                    <li class="nav-item">
-                        <a href={`/${lang}/${sections.contact}`} class="nav-link">
-                            <span>{t.contact}</span>
+                        <a href={`/${lang}/${sections.contact}`} class="nav-link nav-link-cta">
+                            <span>{t.contactCta}</span>
                         </a>
                     </li>
                 </ul>
@@ -1025,9 +1018,6 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                         <li class="mobile-submenu-item">
                             <a href={`/${lang}/lehrkraefte`} class="mobile-submenu-link">{t.teachers}</a>
                         </li>
-                        <li class="mobile-submenu-item">
-                            <a href={`/${lang}/${sections.about}/${slugs.media[lang]}`} class="mobile-submenu-link">{t.media}</a>
-                        </li>
                     </ul>
                 </li>
                 
@@ -1053,9 +1043,6 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                         </li>
                         <li class="mobile-submenu-item">
                             <a href={`/${lang}/${sections.advantages}/${slugs.coaching[lang]}`} class="mobile-submenu-link">{t.coaching}</a>
-                        </li>
-                        <li class="mobile-submenu-item">
-                            <a href={`/${lang}/${sections.advantages}/${slugs.guarantee[lang]}`} class="mobile-submenu-link">{t.guarantee}</a>
                         </li>
                     </ul>
                 </li>
@@ -1096,11 +1083,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                 </li>
                 
                 <li class="mobile-menu-item">
-                    <a href={`/${lang}/${sections.winners}`} class="mobile-menu-link">{t.winners}</a>
-                </li>
-                
-                <li class="mobile-menu-item">
-                    <a href={`/${lang}/${sections.contact}`} class="mobile-menu-link">{t.contact}</a>
+                    <a href={`/${lang}/${sections.contact}`} class="mobile-menu-link mobile-menu-link-cta">{t.contactCta}</a>
                 </li>
             </ul>
         </nav>
@@ -1113,10 +1096,6 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="top-lang-dropdown mobile-menu-lang-dropdown" id="mobileLangDropdown">
-                    <a href="/tr/" class="top-lang-option">
-                        <img src="https://flagcdn.com/tr.svg" alt="Türkçe" class="flag-img">
-                        <span>Türkçe</span>
-                    </a>
                     <a href="/de/" class="top-lang-option">
                         <img src="https://flagcdn.com/de.svg" alt="Deutsch" class="flag-img">
                         <span>Deutsch</span>
@@ -1128,6 +1107,10 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                     <a href="/es/" class="top-lang-option">
                         <img src="https://flagcdn.com/es.svg" alt="Español" class="flag-img">
                         <span>Español</span>
+                    </a>
+                    <a href="/tr/" class="top-lang-option">
+                        <img src="https://flagcdn.com/tr.svg" alt="Türkçe" class="flag-img">
+                        <span>Türkçe</span>
                     </a>
                 </div>
             </div>

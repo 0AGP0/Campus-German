@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3
 features:
   - icon: "fas fa-clock"
     title: "Haftalık Ders"
-    description: "24 Ders (UE)"
+    description: "25 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
     description: "12 Hafta"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "12 Hafta FSP Hazırlık"
           duration: "12 Hafta"
-          schedule: "24 Ders/Hafta"
+          schedule: "25 Ders/Hafta"
           price: "Özel Fiyatlandırma"
           highlighted: true
   - id: "fsp-bilgisi"

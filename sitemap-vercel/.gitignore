@@ -1,0 +1,2 @@
+# Vercel xml'i yüklesin diye *.xml ignore YOK (kopyalanan sitemap.xml dahil edilsin)
+.vercel

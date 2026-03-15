@@ -1,6 +1,6 @@
 ---
 interface Props {
-    lang?: 'tr' | 'de';
+    lang?: 'tr' | 'de' | 'en' | 'es';
 }
 
 const { lang = 'tr' } = Astro.props;
@@ -27,6 +27,28 @@ const translations = {
         rateLimitError: 'Zu viele Anfragen. Bitte warten Sie eine Minute.',
         emailError: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
         phoneError: 'Bitte geben Sie eine gültige Telefonnummer ein.'
+    },
+    en: {
+        success: 'Success!',
+        error: 'Error!',
+        close: 'Close',
+        bookingSuccess: 'Your booking has been successfully submitted! We will get back to you as soon as possible.',
+        messageSuccess: 'Your message has been sent successfully! We will get back to you as soon as possible.',
+        errorMessage: 'An error occurred. Please try again or contact us.',
+        rateLimitError: 'Too many requests. Please wait a minute.',
+        emailError: 'Please enter a valid email address.',
+        phoneError: 'Please enter a valid phone number.'
+    },
+    es: {
+        success: '¡Éxito!',
+        error: '¡Error!',
+        close: 'Cerrar',
+        bookingSuccess: '¡Su reserva se ha enviado correctamente! Nos pondremos en contacto lo antes posible.',
+        messageSuccess: '¡Su mensaje se ha enviado correctamente! Nos pondremos en contacto lo antes posible.',
+        errorMessage: 'Ha ocurrido un error. Inténtelo de nuevo o contáctenos.',
+        rateLimitError: 'Demasiadas solicitudes. Espere un minuto.',
+        emailError: 'Por favor introduzca un correo electrónico válido.',
+        phoneError: 'Por favor introduzca un número de teléfono válido.'
     }
 };
 

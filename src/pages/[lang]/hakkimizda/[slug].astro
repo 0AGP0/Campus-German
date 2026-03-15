@@ -12,6 +12,8 @@ export async function getStaticPaths() {
   // Sadece Türkçe sayfalar için
   const turkceSayfalar = allUeberUns.filter(page => page.data.lang === 'tr');
   
+  const EXCLUDED_SLUGS = new Set(['medyada-biz']);
+  
   for (const page of turkceSayfalar) {
     const langCode = 'tr';
     
@@ -22,6 +24,8 @@ export async function getStaticPaths() {
     } else {
       finalSlug = cleanSlug(page.slug);
     }
+    
+    if (EXCLUDED_SLUGS.has(finalSlug)) continue;
     
     paths.push({
       params: { 

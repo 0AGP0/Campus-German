@@ -34,18 +34,18 @@ tabs:
     icon: "fas fa-info-circle"
     title: "Kurs Hakkında"
     content:
-      title: "Üniversite Hazırlık Programı – CampusGerman"
+      title: "Üniversite Hazırlık Programı – Campus German"
       paragraphs:
         - heading: "Kursa Genel Bakış"
-          text: "CampusGerman Üniversite Hazırlık Programı, Almanya'da üniversite eğitimi planlayan öğrenciler için özel olarak tasarlanmış kapsamlı bir eğitim ve rehberlik programıdır. Bu program, sadece Almanca dil seviyenizi yükseltmeyi değil aynı zamanda Almanya'da üniversiteye geçiş sürecini tam anlamıyla yönetmenizi sağlayacak becerileri de kazandırır. Program, öğrencileri dil seviyesinden başlayarak üniversite başvurusuna, Studienkolleg hazırlığına ve doğrudan lisans eğitimine kadar uzanan bir yol haritasına göre hazırlar. Almanya'nın çeşitli üniversiteleriyle iş birliği içinde yürütülen bu süreçte, katılımcılar Almanca dil becerilerini akademik seviyeye taşırken aynı zamanda resmi süreçler, başvuru belgeleri ve konaklama gibi tüm adımlar konusunda profesyonel destek alır. CampusGerman Üniversite Hazırlık Programı, Almanca dil eğitimi ile üniversite yerleştirme hizmetini bir araya getirerek öğrencilere bütünsel bir hazırlanış sağlar. Bu sayede öğrenciler Almanya'daki eğitim yolculuklarına güvenle ve bilinçli bir şekilde adım atarlar."
+          text: "Campus German Üniversite Hazırlık Programı, Almanya'da üniversite eğitimi planlayan öğrenciler için özel olarak tasarlanmış kapsamlı bir eğitim ve rehberlik programıdır. Bu program, sadece Almanca dil seviyenizi yükseltmeyi değil aynı zamanda Almanya'da üniversiteye geçiş sürecini tam anlamıyla yönetmenizi sağlayacak becerileri de kazandırır. Program, öğrencileri dil seviyesinden başlayarak üniversite başvurusuna, Studienkolleg hazırlığına ve doğrudan lisans eğitimine kadar uzanan bir yol haritasına göre hazırlar. Almanya'nın çeşitli üniversiteleriyle iş birliği içinde yürütülen bu süreçte, katılımcılar Almanca dil becerilerini akademik seviyeye taşırken aynı zamanda resmi süreçler, başvuru belgeleri ve konaklama gibi tüm adımlar konusunda profesyonel destek alır. Campus German Üniversite Hazırlık Programı, Almanca dil eğitimi ile üniversite yerleştirme hizmetini bir araya getirerek öğrencilere bütünsel bir hazırlanış sağlar. Bu sayede öğrenciler Almanya'daki eğitim yolculuklarına güvenle ve bilinçli bir şekilde adım atarlar."
         - heading: "Hedef Kitle ve Ön Koşullar"
-          text: "Bu program, Almanya'da üniversite eğitimi almak isteyen öğrencilere yönelik olup aşağıdaki gruplara hitap eder: Lise diplomasına sahip olup Almanya'da lisans eğitimi hedefleyenler, yazılı ve sözlü Almanca seviyesini akademik düzeye taşımak isteyenler, Studienkolleg'e hazırlanan veya doğrudan üniversiteye başvurmayı planlayanlar, Almanya'daki resmi başvuru süreçleri, vizeler ve akademik gereklilikler hakkında profesyonel rehberlik arayan öğrenciler. Program kapsamında genellikle A1'den C1'e kadar seviyelerle başlayan bir Almanca eğitim planı uygulanır. Bu öğrenme sürecine ek olarak, öğrencilerin mevcut eğitim belgeleri, motivasyon mektupları ve Almanya üniversitelerinin gereksinimlerine uygun hazırlık yapmaları beklenir. CampusGerman, öğrencilerin mevcut Almanca seviyesini değerlendirip onları en uygun seviyeden programa başlatır."
+          text: "Bu program, Almanya'da üniversite eğitimi almak isteyen öğrencilere yönelik olup aşağıdaki gruplara hitap eder: Lise diplomasına sahip olup Almanya'da lisans eğitimi hedefleyenler, yazılı ve sözlü Almanca seviyesini akademik düzeye taşımak isteyenler, Studienkolleg'e hazırlanan veya doğrudan üniversiteye başvurmayı planlayanlar, Almanya'daki resmi başvuru süreçleri, vizeler ve akademik gereklilikler hakkında profesyonel rehberlik arayan öğrenciler. Program kapsamında genellikle A1'den C1'e kadar seviyelerle başlayan bir Almanca eğitim planı uygulanır. Bu öğrenme sürecine ek olarak, öğrencilerin mevcut eğitim belgeleri, motivasyon mektupları ve Almanya üniversitelerinin gereksinimlerine uygun hazırlık yapmaları beklenir. Campus German, öğrencilerin mevcut Almanca seviyesini değerlendirip onları en uygun seviyeden programa başlatır."
         - heading: "Kurs İçeriği ve Öğrenme Hedefleri"
           text: "Üniversite Hazırlık Programı, Almanca dil eğitiminin ötesinde akademik ve başvuru odaklı geniş kapsamlı içerikler sunar: Almanca Dil Eğitimi: A1–C1 seviyelerine kadar okuma, yazma, dinleme ve konuşma becerileri geliştirilir. Akademik Almanca: Üniversite derslerini takip etmek için gerekli seviyeye ulaşma, akademik metin okuma ve rapor yazma. Başvuru Hazırlığı: CV hazırlama, motivasyon mektubu yazma, belgelerin Almanca'ya çevrilmesi ve tamamlanması. Üniversite Yerleştirme Danışmanlığı: Belge kontrolü, üniversite seçimleri, Studienkolleg veya doğrudan başvuru stratejileri. Resmî Süreç Rehberliği: Bloke hesap açılışı, vize türü belirleme, başvuru takvimi ve resmi prosedürler. Bu kapsamlı içerikler sayesinde öğrenciler, Almanya'daki üniversite eğitimlerinde dilsel, akademik ve bürokratik gereklilikleri başarıyla karşılayacak şekilde hazırlanır."
         - heading: "Öğretim Metodu ve Sınıf Ortamı"
-          text: "CampusGerman Üniversite Hazırlık Programı, öğrenci merkezli, etkileşimli ve hedef odaklı bir öğretim yöntemiyle yürütülür: Etkileşimli Dil Eğitimi: Grup çalışmaları, rol canlandırmaları ve günlük iletişim odaklı aktiviteler. Akademik Hazırlık: Üniversite dersleri için okuma, sunum ve yazma atölyeleri. Danışmanlık ve Koçluk: Başvuru belgeleri, motivasyon mektupları ve portföy geliştirme desteği. Küçük Sınıf Mevcudu: Yüksek etkileşim ve kişisel geri bildirim fırsatı. Öğrenciler, derslerin yanı sıra birebir danışmanlık ve proje çalışmalarıyla desteklenir. Bu sayede Almanca öğrenme süreci, sadece dil bilgisiyle sınırlı kalmayıp akademik ve profesyonel hedeflere yönelik olacak şekilde genişletilir."
+          text: "Campus German Üniversite Hazırlık Programı, öğrenci merkezli, etkileşimli ve hedef odaklı bir öğretim yöntemiyle yürütülür: Etkileşimli Dil Eğitimi: Grup çalışmaları, rol canlandırmaları ve günlük iletişim odaklı aktiviteler. Akademik Hazırlık: Üniversite dersleri için okuma, sunum ve yazma atölyeleri. Danışmanlık ve Koçluk: Başvuru belgeleri, motivasyon mektupları ve portföy geliştirme desteği. Küçük Sınıf Mevcudu: Yüksek etkileşim ve kişisel geri bildirim fırsatı. Öğrenciler, derslerin yanı sıra birebir danışmanlık ve proje çalışmalarıyla desteklenir. Bu sayede Almanca öğrenme süreci, sadece dil bilgisiyle sınırlı kalmayıp akademik ve profesyonel hedeflere yönelik olacak şekilde genişletilir."
         - heading: "Kurs Sonrası İlerleme"
-          text: "Üniversite Hazırlık Programı'nı başarıyla tamamlayan öğrenciler: Almanya'daki üniversitelere başvuru yapmaya hazır hale gelir, Studienkolleg'e gereksinim varsa, bu programa sorunsuz geçiş yapabilir, doğrudan üniversite eğitimi için gerekli dil ve akademik yeterliliklerini kazanır, vize süreci, blok hesap, sağlık sigortası gibi resmi süreçler için gerekli belgeleri düzenler, üniversite yaşamına adaptasyon, eğitim planlama ve kariyer hedefleri konusunda destek alır. Program sonrası öğrenciler, Almanya'daki akademik kariyerlerini güvenle ve sağlam bir temelle sürdürmeye hazır olurlar. CampusGerman, mezun olduktan sonra da öğrenciye akademik ve kariyer planlamasında danışmanlık desteği sunar."
+          text: "Üniversite Hazırlık Programı'nı başarıyla tamamlayan öğrenciler: Almanya'daki üniversitelere başvuru yapmaya hazır hale gelir, Studienkolleg'e gereksinim varsa, bu programa sorunsuz geçiş yapabilir, doğrudan üniversite eğitimi için gerekli dil ve akademik yeterliliklerini kazanır, vize süreci, blok hesap, sağlık sigortası gibi resmi süreçler için gerekli belgeleri düzenler, üniversite yaşamına adaptasyon, eğitim planlama ve kariyer hedefleri konusunda destek alır. Program sonrası öğrenciler, Almanya'daki akademik kariyerlerini güvenle ve sağlam bir temelle sürdürmeye hazır olurlar. Campus German, mezun olduktan sonra da öğrenciye akademik ve kariyer planlamasında danışmanlık desteği sunar."
   - id: "tarihler-fiyatlar"
     icon: "fas fa-calendar-alt"
     title: "Program ve Fiyatlar"
@@ -119,11 +119,11 @@ faqs:
 
 ## Kursa Genel Bakış
 
-CampusGerman Üniversite Hazırlık Programı, Almanya'da üniversite eğitimi planlayan öğrenciler için özel olarak tasarlanmış kapsamlı bir eğitim ve rehberlik programıdır. Bu program, sadece Almanca dil seviyenizi yükseltmeyi değil aynı zamanda Almanya'da üniversiteye geçiş sürecini tam anlamıyla yönetmenizi sağlayacak becerileri de kazandırır.
+Campus German Üniversite Hazırlık Programı, Almanya'da üniversite eğitimi planlayan öğrenciler için özel olarak tasarlanmış kapsamlı bir eğitim ve rehberlik programıdır. Bu program, sadece Almanca dil seviyenizi yükseltmeyi değil aynı zamanda Almanya'da üniversiteye geçiş sürecini tam anlamıyla yönetmenizi sağlayacak becerileri de kazandırır.
 
 Program, öğrencileri dil seviyesinden başlayarak üniversite başvurusuna, Studienkolleg hazırlığına ve doğrudan lisans eğitimine kadar uzanan bir yol haritasına göre hazırlar. Almanya'nın çeşitli üniversiteleriyle iş birliği içinde yürütülen bu süreçte, katılımcılar Almanca dil becerilerini akademik seviyeye taşırken aynı zamanda resmi süreçler, başvuru belgeleri ve konaklama gibi tüm adımlar konusunda profesyonel destek alır.
 
-CampusGerman Üniversite Hazırlık Programı, Almanca dil eğitimi ile üniversite yerleştirme hizmetini bir araya getirerek öğrencilere bütünsel bir hazırlanış sağlar. Bu sayede öğrenciler Almanya'daki eğitim yolculuklarına güvenle ve bilinçli bir şekilde adım atarlar.
+Campus German Üniversite Hazırlık Programı, Almanca dil eğitimi ile üniversite yerleştirme hizmetini bir araya getirerek öğrencilere bütünsel bir hazırlanış sağlar. Bu sayede öğrenciler Almanya'daki eğitim yolculuklarına güvenle ve bilinçli bir şekilde adım atarlar.
 
 ## Hedef Kitle ve Ön Koşullar
 
@@ -134,7 +134,7 @@ Bu program, Almanya'da üniversite eğitimi almak isteyen öğrencilere yönelik
 - Studienkolleg'e hazırlanan veya doğrudan üniversiteye başvurmayı planlayanlar
 - Almanya'daki resmi başvuru süreçleri, vizeler ve akademik gereklilikler hakkında profesyonel rehberlik arayan öğrenciler
 
-Program kapsamında genellikle A1'den C1'e kadar seviyelerle başlayan bir Almanca eğitim planı uygulanır. Bu öğrenme sürecine ek olarak, öğrencilerin mevcut eğitim belgeleri, motivasyon mektupları ve Almanya üniversitelerinin gereksinimlerine uygun hazırlık yapmaları beklenir. CampusGerman, öğrencilerin mevcut Almanca seviyesini değerlendirip onları en uygun seviyeden programa başlatır.
+Program kapsamında genellikle A1'den C1'e kadar seviyelerle başlayan bir Almanca eğitim planı uygulanır. Bu öğrenme sürecine ek olarak, öğrencilerin mevcut eğitim belgeleri, motivasyon mektupları ve Almanya üniversitelerinin gereksinimlerine uygun hazırlık yapmaları beklenir. Campus German, öğrencilerin mevcut Almanca seviyesini değerlendirip onları en uygun seviyeden programa başlatır.
 
 ## Kurs İçeriği ve Öğrenme Hedefleri
 
@@ -150,7 +150,7 @@ Bu kapsamlı içerikler sayesinde öğrenciler, Almanya'daki üniversite eğitim
 
 ## Öğretim Metodu ve Sınıf Ortamı
 
-CampusGerman Üniversite Hazırlık Programı, öğrenci merkezli, etkileşimli ve hedef odaklı bir öğretim yöntemiyle yürütülür:
+Campus German Üniversite Hazırlık Programı, öğrenci merkezli, etkileşimli ve hedef odaklı bir öğretim yöntemiyle yürütülür:
 
 - **Etkileşimli Dil Eğitimi:** Grup çalışmaları, rol canlandırmaları ve günlük iletişim odaklı aktiviteler.
 - **Akademik Hazırlık:** Üniversite dersleri için okuma, sunum ve yazma atölyeleri.
@@ -169,5 +169,5 @@ CampusGerman Üniversite Hazırlık Programı, öğrenci merkezli, etkileşimli 
 - Vize süreci, blok hesap, sağlık sigortası gibi resmi süreçler için gerekli belgeleri düzenler.
 - Üniversite yaşamına adaptasyon, eğitim planlama ve kariyer hedefleri konusunda destek alır.
 
-Program sonrası öğrenciler, Almanya'daki akademik kariyerlerini güvenle ve sağlam bir temelle sürdürmeye hazır olurlar. CampusGerman, mezun olduktan sonra da öğrenciye akademik ve kariyer planlamasında danışmanlık desteği sunar.
+Program sonrası öğrenciler, Almanya'daki akademik kariyerlerini güvenle ve sağlam bir temelle sürdürmeye hazır olurlar. Campus German, mezun olduktan sonra da öğrenciye akademik ve kariyer planlamasında danışmanlık desteği sunar.
 

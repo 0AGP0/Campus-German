@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Weekly Lessons"
-    description: "24 Lessons (UE)"
+    description: "25 Lessons (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
     description: "8 Weeks"
@@ -37,7 +37,7 @@ tabs:
       title: "Goethe/TELC B2 Preparation Course"
       paragraphs:
         - heading: "Course Overview"
-          text: "The Goethe/TELC B2 Preparation Course is a comprehensive, exam-focused program designed for students who want to prepare for Goethe and TELC B2 exams. This course aims to ensure that students make specific preparation for the B2 exam format, learn exam techniques, and succeed. The program, which offers an intensive preparation experience with 24 lesson hours per week, lasts 8 weeks and consists of approximately 200 lesson hours."
+          text: "The Goethe/TELC B2 Preparation Course is a comprehensive, exam-focused program designed for students who want to prepare for Goethe and TELC B2 exams. This course aims to ensure that students make specific preparation for the B2 exam format, learn exam techniques, and succeed. The program, which offers an intensive preparation experience with 25 lesson hours per week, lasts 8 weeks and consists of approximately 200 lesson hours."
         - heading: "Target Exams and Prerequisites"
           text: "This course prepares for Goethe B2 and TELC B2 exams. It is suitable for students who have completed B2 level. The Goethe B2 exam is a globally recognized German language certificate and documents upper-intermediate level German knowledge. The TELC B2 exam is a language certificate widely used throughout Europe and is accepted by some universities and employers. Both exams measure language skills at B2 level."
         - heading: "Course Content and Preparation Methods"

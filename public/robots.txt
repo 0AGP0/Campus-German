@@ -1,8 +1,9 @@
 # robots.txt for CampusGerman
 User-agent: *
 Allow: /
+Allow: /sitemap.xml
 
-# Sitemap
+# Sitemap (Hostinger'da çalışsın diye tek dosya)
 Sitemap: https://campusgerman.com/sitemap.xml
 
 # Disallow admin or private areas if any

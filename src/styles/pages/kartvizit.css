@@ -1,0 +1,137 @@
+/* Kartvizit QR landing – danışman kişi sayfası */
+
+.kartvizit-page {
+  min-height: 60vh;
+  padding: 2rem 1rem 3rem;
+  background: var(--color-primary-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.kartvizit-card {
+  max-width: 420px;
+  width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(31, 58, 95, 0.12);
+  border: 1px solid rgba(31, 58, 95, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.kartvizit-card__image-wrap {
+  aspect-ratio: 1;
+  max-height: 200px;
+  object-fit: cover;
+  background: var(--color-primary-light);
+}
+
+.kartvizit-card__image-wrap--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  font-size: 3rem;
+}
+
+.kartvizit-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.kartvizit-card__body {
+  padding: 1.5rem 1.5rem 1.75rem;
+}
+
+.kartvizit-card__name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 0.25rem;
+  line-height: 1.2;
+}
+
+.kartvizit-card__title {
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin: 0 0 1rem;
+  font-weight: 500;
+}
+
+.kartvizit-card__bio {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.kartvizit-card__bio :first-child {
+  margin-top: 0;
+}
+
+.kartvizit-card__bio :last-child {
+  margin-bottom: 0;
+}
+
+.kartvizit-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.kartvizit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kartvizit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.kartvizit-btn--wa {
+  background: #25d366;
+  color: #fff;
+}
+
+.kartvizit-btn--wa:hover {
+  background: #20bd5a;
+  color: #fff;
+}
+
+.kartvizit-btn--email {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.kartvizit-btn--email:hover {
+  background: var(--color-primary-dark);
+  color: #fff;
+}
+
+.kartvizit-back {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.kartvizit-back a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.kartvizit-back a:hover {
+  text-decoration: underline;
+}

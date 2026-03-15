@@ -1,0 +1,101 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+import { getLegalPageType, getDatenschutzPath, getImpressumPath, getInformationsauskunftPath } from '../../utils/pathHelpers';
+
+export async function getStaticPaths() {
+  const legalSlugs = [
+    { lang: 'tr', slug: 'gizlilik-politikasi' },
+    { lang: 'de', slug: 'datenschutz' },
+    { lang: 'en', slug: 'privacy-policy' },
+    { lang: 'es', slug: 'politica-privacidad' },
+    { lang: 'tr', slug: 'yasal-uyari' },
+    { lang: 'de', slug: 'impressum' },
+    { lang: 'en', slug: 'imprint' },
+    { lang: 'es', slug: 'aviso-legal' },
+    { lang: 'tr', slug: 'bilgi-talebi' },
+    { lang: 'de', slug: 'informationsauskunft' },
+    { lang: 'en', slug: 'information-request' },
+    { lang: 'es', slug: 'solicitud-informacion' },
+  ];
+  return legalSlugs.map(({ lang, slug }) => ({
+    params: { lang, legalSlug: slug },
+  }));
+}
+
+const { lang, legalSlug } = Astro.params;
+const pageType = getLegalPageType(legalSlug || '');
+
+if (!pageType) {
+  return Astro.redirect(302, `/${lang}/`);
+}
+
+const legalCollection = await getCollection('legal');
+const entry = legalCollection.find((e) => e.data.type === pageType);
+if (!entry) {
+  return Astro.redirect(302, `/${lang}/`);
+}
+
+const rendered = await entry.render();
+const { Content } = rendered;
+const titles: Record<string, Record<string, string>> = {
+  datenschutz: {
+    tr: 'Gizlilik Politikası - CampusGerman',
+    de: 'Datenschutzerklärung - CampusGerman',
+    en: 'Privacy Policy - CampusGerman',
+    es: 'Política de Privacidad - CampusGerman',
+  },
+  impressum: {
+    tr: 'Yasal Uyarı - CampusGerman',
+    de: 'Impressum - CampusGerman',
+    en: 'Imprint - CampusGerman',
+    es: 'Aviso Legal - CampusGerman',
+  },
+  informationsauskunft: {
+    tr: 'Bilgi Talebi - CampusGerman',
+    de: 'Informationsauskunft - CampusGerman',
+    en: 'Information Request - CampusGerman',
+    es: 'Solicitud de Información - CampusGerman',
+  },
+};
+const pageTitle = titles[pageType]?.[lang || 'de'] ?? entry.data.title;
+---
+
+<MainLayout title={pageTitle} lang={lang}>
+  <section class="legal-page section-padding">
+    <div class="container">
+      <article class="legal-content prose">
+        <h1 class="legal-page-title">{entry.data.title}</h1>
+        <Content />
+      </article>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .legal-page { padding: 3rem 0; }
+  .legal-content { max-width: 800px; margin: 0 auto; }
+  .legal-page-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--color-text-primary, #1a1a1a);
+  }
+  .legal-content :global(h2) {
+    font-size: 1.35rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-text-primary, #1a1a1a);
+  }
+  .legal-content :global(p),
+  .legal-content :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary, #444);
+  }
+  .legal-content :global(ul) {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .legal-content :global(strong) { color: var(--color-text-primary, #1a1a1a); }
+  .legal-content :global(a) { color: var(--color-primary, #059669); }
+</style>

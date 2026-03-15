@@ -3,12 +3,71 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SuccessModal from '../components/SuccessModal.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 import '../styles/global.css';
 import '../styles/header.css';
 import '../styles/footer.css';
 import '../styles/sticky-sidebar.css';
 
-const { title = 'CampusGerman - Almanca Dil Kursu', lang = 'tr', includeHizmetCSS = false } = Astro.props;
+const { title = 'Campus German - Almanca Dil Kursu', lang = 'tr', includeHizmetCSS = false } = Astro.props;
+
+const popupLang = (lang as 'tr' | 'de' | 'en' | 'es') || 'tr';
+
+const popupCopyMap: Record<
+  'tr' | 'de' | 'en' | 'es',
+  {
+    title: string;
+    description: string;
+    waText: string;
+    primaryLabel: string;
+    secondaryLabel: string;
+    closeAria: string;
+  }
+> = {
+  tr: {
+    title: 'Kursta bizi ziyaret et',
+    description:
+      'Kursta bizi ziyaret et ve sana özel kayıt indirimi kazan. WhatsApp üzerinden hemen yaz, detayları birlikte planlayalım.',
+    waText:
+      'Merhaba Campus German, kursta sizi ziyaret etmek ve indirimi öğrenmek istiyorum.',
+    primaryLabel: 'WhatsApp’tan yaz',
+    secondaryLabel: 'Daha sonra',
+    closeAria: 'Kapat',
+  },
+  de: {
+    title: 'Besuche uns im Kurs',
+    description:
+      'Besuche uns in der Sprachschule und erhalte einen speziellen Rabatt auf deine Anmeldung. Schreib uns direkt über WhatsApp, dann planen wir gemeinsam alle Details.',
+    waText:
+      'Hallo Campus German, ich möchte euch im Kurs besuchen und den Rabatt erfahren.',
+    primaryLabel: 'Über WhatsApp schreiben',
+    secondaryLabel: 'Später',
+    closeAria: 'Schließen',
+  },
+  en: {
+    title: 'Visit us at the school',
+    description:
+      'Come and visit us at the course center and get a special discount on your registration. Send us a message on WhatsApp and we will plan all details together.',
+    waText:
+      'Hi Campus German, I would like to visit you at the school and ask about the discount.',
+    primaryLabel: 'Message on WhatsApp',
+    secondaryLabel: 'Later',
+    closeAria: 'Close',
+  },
+  es: {
+    title: 'Visítanos en la escuela',
+    description:
+      'Ven a visitarnos en el centro de cursos y obtén un descuento especial en tu matrícula. Escríbenos por WhatsApp y planificamos todos los detalles contigo.',
+    waText:
+      'Hola Campus German, quiero visitarlos en la escuela y saber más sobre el descuento.',
+    primaryLabel: 'Escribir por WhatsApp',
+    secondaryLabel: 'Más tarde',
+    closeAria: 'Cerrar',
+  },
+};
+
+const popupCopy = popupCopyMap[popupLang] || popupCopyMap.tr;
+const popupWhatsAppHref = `https://wa.me/4915203823792?text=${encodeURIComponent(popupCopy.waText)}`;
 ---
 
 <!DOCTYPE html>
@@ -17,11 +76,13 @@ const { title = 'CampusGerman - Almanca Dil Kursu', lang = 'tr', includeHizmetCS
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
+    <meta property="og:title" content={title}>
     
-    <!-- Favicon / Google site icon (Campus German logo) -->
-    <link rel="icon" type="image/png" href="/Campusgerman.png">
-    <link rel="shortcut icon" type="image/png" href="/Campusgerman.png">
-    <link rel="apple-touch-icon" href="/Campusgerman.png">
+    <!-- Favicon / Google site icon (Campus German logo) – mutlak URL Google aramada simge için gerekli -->
+    <link rel="icon" href="https://campusgerman.com/favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/png" href="https://campusgerman.com/Campusgerman.png" sizes="48x48">
+    <link rel="shortcut icon" href="https://campusgerman.com/favicon.ico">
+    <link rel="apple-touch-icon" href="https://campusgerman.com/Campusgerman.png">
     <meta property="og:image" content="https://campusgerman.com/Campusgerman.png">
     
     <!-- CSS: hizmet.css (koşullu) - global.css ve header.css import ediliyor -->
@@ -41,7 +102,7 @@ const { title = 'CampusGerman - Almanca Dil Kursu', lang = 'tr', includeHizmetCS
         document.documentElement.style.setProperty('--header-height', '156px');
     </script>
     <!-- Script early so header dropdown works as soon as DOM is ready (defer = after parse, before paint) -->
-    <script src="/script.js?v=2" defer></script>
+    <script src="/script.js?v=3" defer></script>
 </head>
 <body>
     <!-- Header Component (fixed) -->
@@ -59,6 +120,53 @@ const { title = 'CampusGerman - Almanca Dil Kursu', lang = 'tr', includeHizmetCS
     
     <!-- Success Modal -->
     <SuccessModal lang={lang} />
+
+    <!-- GDPR Cookie Consent Banner (first visit) -->
+    <CookieConsent lang={lang} />
+
+    <!-- 5 sn sonra görünen WhatsApp popup – tasarımcı modal: mobilde üstte görsel bandı, masaüstü 2 sütun -->
+    <div id="visit-popup" class="visit-popup" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="visit-popup-title">
+        <div class="visit-popup-backdrop"></div>
+        <div class="visit-popup-card">
+            <div class="visit-popup-inner">
+                <!-- Mobilde önce görsel (üstte kompakt band), masaüstünde sağda -->
+                <div class="visit-popup-image-wrap">
+                    <img
+                        src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80"
+                        alt="Campus German – dil eğitimi"
+                        class="visit-popup-image"
+                        width="800"
+                        height="480"
+                    />
+                </div>
+                <div class="visit-popup-content">
+                    <button class="visit-popup-close" type="button" aria-label={popupCopy.closeAria}>
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <h1 id="visit-popup-title" class="visit-popup-title">
+                        {popupCopy.title}
+                    </h1>
+                    <p class="visit-popup-description">
+                        {popupCopy.description}
+                    </p>
+                    <div class="visit-popup-actions">
+                        <a
+                            href={popupWhatsAppHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="visit-popup-btn visit-popup-btn-primary"
+                        >
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                            <span>{popupCopy.primaryLabel}</span>
+                        </a>
+                        <button type="button" class="visit-popup-btn visit-popup-btn-outline visit-popup-close-secondary">
+                            {popupCopy.secondaryLabel}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 

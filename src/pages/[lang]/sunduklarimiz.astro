@@ -22,22 +22,22 @@ const servicesPath = getServicesPath(lang);
 // Translations
 const t = {
     tr: {
-        title: "Sunduklarımız - CampusGerman",
-        heroTitle: "CampusGerman Sunduklarımız",
+        title: "Sunduklarımız - Campus German",
+        heroTitle: "Campus German Sunduklarımız",
         heroDescription: "Almanca öğrenme yolculuğunuzda size sunduğumuz kapsamlı hizmetler. Üniversite yerleştirmeden vize rehberliğine, konaklamadan havaalanı karşılamaya kadar geniş bir yelpazede hizmetlerimiz bulunmaktadır.",
         sectionTitle: "Sunduklarımız",
         sectionSubtitle: "Her ihtiyaca uygun özel hazırlanmış hizmetler",
     },
     de: {
-        title: "Unsere Dienstleistungen - CampusGerman",
-        heroTitle: "CampusGerman Dienstleistungen",
+        title: "Unsere Dienstleistungen - Campus German",
+        heroTitle: "Campus German Dienstleistungen",
         heroDescription: "Umfassende Dienstleistungen, die wir Ihnen auf Ihrer Deutschlernreise bieten. Von Universitätsvermittlung bis hin zu Visumsberatung, von Unterkunft bis hin zu Flughafenabholung - wir bieten eine breite Palette von Dienstleistungen.",
         sectionTitle: "Unsere Dienstleistungen",
         sectionSubtitle: "Speziell entwickelte Dienstleistungen für jeden Bedarf",
     },
     en: {
-        title: "Our Services - CampusGerman",
-        heroTitle: "CampusGerman Services",
+        title: "Our Services - Campus German",
+        heroTitle: "Campus German Services",
         heroDescription: "Comprehensive services we offer you on your German learning journey. From university placement to visa guidance, from accommodation to airport pickup - we offer a wide range of services.",
         sectionTitle: "Our Services",
         sectionSubtitle: "Specially designed services for every need",
@@ -154,7 +154,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/${servicesPath}/universitaetsvermittlung`} class="service-link">
+                        <a href={`/${lang}/${servicesPath}/universite-yerlestirme`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -196,7 +196,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-dienstleistungen/visumsberatung`} class="service-link">
+                        <a href={`/${lang}/${servicesPath}/vize-rehberligi`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -238,7 +238,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-dienstleistungen/unterkunft`} class="service-link">
+                        <a href={`/${lang}/${servicesPath}/konaklama`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -280,7 +280,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-dienstleistungen/flughafenabholung`} class="service-link">
+                        <a href={`/${lang}/${servicesPath}/havalimani-karsilama`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -322,7 +322,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-dienstleistungen/krankenversicherung-und-bank`} class="service-link">
+                        <a href={`/${lang}/${servicesPath}/sigorta-banka`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -364,7 +364,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-dienstleistungen/buerokratische-unterstuetzung`} class="service-link">
+                        <a href={`/${lang}/${servicesPath}/burokrasi-destegi`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -406,7 +406,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/unsere-dienstleistungen/kostenlose-ressourcen`} class="service-link">
+                        <a href={`/${lang}/${servicesPath}/ucretsiz-kaynaklar`} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>

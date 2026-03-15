@@ -1,0 +1,317 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import IntensivePricingSection from '../../components/IntensivePricingSection.astro';
+import '../../styles/pages/fiyatlar-tarihler.css';
+import { coursePricing } from '../../data/coursePricing';
+import { VALID_COUPONS } from '../../data/coupons';
+import { isValidLang, getPricesDatesPath } from '../../utils/pathHelpers';
+import { LESSONS_UP_TO_200, formatCourseDate, getNearestMondayDdmm } from '../../utils/coursePricingHelper';
+
+export async function getStaticPaths() {
+  const priceSlugs = [
+    { lang: 'tr', slug: getPricesDatesPath('tr') },
+    { lang: 'de', slug: getPricesDatesPath('de') },
+    { lang: 'en', slug: getPricesDatesPath('en') },
+    { lang: 'es', slug: getPricesDatesPath('es') },
+  ] as const;
+
+  return priceSlugs.map(({ lang, slug }) => ({
+    params: { lang, pricesSlug: slug },
+  }));
+}
+
+const { lang, pricesSlug } = Astro.params;
+
+if (!isValidLang(lang)) {
+  throw new Error(`Invalid language: ${lang}`);
+}
+
+// Eğer slug dil ile uyumlu değilse ana sayfaya yönlendir
+const expectedSlug = getPricesDatesPath(lang);
+if (pricesSlug !== expectedSlug) {
+  return Astro.redirect(302, `/${lang}/`);
+}
+
+const pricingLang = lang === 'es' ? 'de' : lang;
+const data = coursePricing[pricingLang as keyof typeof coursePricing];
+
+const t = {
+  tr: {
+    title: 'Fiyatlar ve Tarihler',
+    heroIntro:
+      "Campus German sadece fiyat odaklı değil: Bremen'in en iyi dil okulu olma misyonuyla kaliteli eğitim ve öğrenci deneyimini ön planda tutuyoruz.",
+    couponTitle: 'İndirim Kuponu',
+    couponCode: 'HBCampusGerman',
+    intensive: 'Yoğun Almanca Kursları (Yüz Yüze)',
+    online: 'Online Almanca Kursları',
+    weekly: 'Haftalık Kurs Fiyatları',
+    weeklyNote: 'Hafta sayısına göre haftalık ücret. A1-A2 ve B1-C1 farklı fiyatlandırılır.',
+    examPrep: 'Sınav Hazırlık Kursları',
+    goetheTelc: 'Goethe / TELC Seviye Kursları',
+    testdafDsh: 'TestDaF / DSH Hazırlık',
+    schedule: 'Kurs Saatleri',
+    scheduleNote: 'Pazartesi–Cuma. Sabah, öğleden sonra ve akşam grupları.',
+    morning: 'Sabah',
+    afternoon: 'Öğleden Sonra',
+    evening: 'Akşam',
+    startDates: 'Kurs Başlangıç Tarihleri 2026',
+    startDatesSubtitle: 'Kurslara kayıt aşağıdaki tarihlerde açılır.',
+    holidays: 'Tatil Günleri 2026',
+    visaInfo: 'Vize bilgisi',
+    lessonInfo: 'Ders bilgisi',
+    bookCta: 'Kursa Kayıt Ol',
+    level: 'Seviye',
+    price: 'Fiyat',
+    lessons: 'Ders',
+    duration: 'Süre',
+    weekly: 'Haftalık',
+    weeks: 'Hafta',
+    startNote: '(Tüm seviyeler A1–C1 aynı tarih setlerinde başlar.)',
+    startingDatesBoxTitle: 'Başlangıç Tarihleri',
+    startingDatesBoxIntro: 'Her Pazartesi (hiç Almanca bilmeyenler hariç). Hiç Almanca bilmeyenler için başlangıç tarihleri:',
+  },
+  de: {
+    title: 'Preise & Termine',
+    heroIntro:
+      'Campus German steht nicht nur für Preise: Als Bremens beste Sprachschule stehen qualitativ hochwertiger Unterricht und das Lernerlebnis im Mittelpunkt.',
+    couponTitle: 'Rabattgutschein',
+    couponCode: 'HBCampusGerman',
+    intensive: 'Intensiv-Deutschkurse (Präsenz)',
+    online: 'Online-Deutschkurse',
+    weekly: 'Wöchentliche Kursgebühren',
+    weeklyNote: 'Wochenpreis je nach Anzahl der Wochen. A1-A2 und B1-C1 unterschiedlich.',
+    examPrep: 'Prüfungsvorbereitungskurse',
+    goetheTelc: 'Goethe-/TELC-Niveaukurse',
+    testdafDsh: 'TestDaF-/DSH-Vorbereitung',
+    schedule: 'Kurszeiten',
+    scheduleNote: 'Montag–Freitag. Vormittags-, Nachmittags- und Abendgruppen.',
+    morning: 'Vormittag',
+    afternoon: 'Nachmittag',
+    evening: 'Abend',
+    startDates: 'Kursstarttermine 2026',
+    startDatesSubtitle: 'Die Kursanmeldung öffnet an den folgenden Terminen.',
+    holidays: 'Feiertage 2026',
+    visaInfo: 'Visumshinweis',
+    lessonInfo: 'Unterrichtsinfo',
+    bookCta: 'Kurs buchen',
+    level: 'Niveau',
+    price: 'Preis',
+    lessons: 'Unterricht',
+    duration: 'Dauer',
+    weekly: 'Wöchentlich',
+    weeks: 'Wochen',
+    startNote: '(Alle Niveaus A1–C1 starten zu denselben Terminblöcken.)',
+    startingDatesBoxTitle: 'Starttermine',
+    startingDatesBoxIntro: 'Jeden Montag (außer für absolute Anfänger). Starttermine für absolute Anfänger:',
+  },
+  en: {
+    title: 'Prices & Dates',
+    heroIntro:
+      "Campus German is not only about price: as Bremen's leading language school, we focus on quality teaching and student experience.",
+    couponTitle: 'Discount coupon',
+    couponCode: 'HBCampusGerman',
+    intensive: 'Intensive German Courses (On-site)',
+    online: 'Online German Courses',
+    weekly: 'Weekly Course Fees',
+    weeklyNote: 'Weekly rate depending on number of weeks. A1-A2 and B1-C1 priced differently.',
+    examPrep: 'Exam Preparation Courses',
+    goetheTelc: 'Goethe / TELC Level Courses',
+    testdafDsh: 'TestDaF / DSH Preparation',
+    schedule: 'Course Schedule',
+    scheduleNote: 'Monday–Friday. Morning, afternoon and evening groups.',
+    morning: 'Morning',
+    afternoon: 'Afternoon',
+    evening: 'Evening',
+    startDates: 'Course Start Dates 2026',
+    startDatesSubtitle: 'Course registration opens on the following dates.',
+    holidays: 'Holidays 2026',
+    visaInfo: 'Visa information',
+    lessonInfo: 'Lesson information',
+    bookCta: 'Book Course',
+    level: 'Level',
+    price: 'Price',
+    lessons: 'Lessons',
+    duration: 'Duration',
+    weekly: 'Weekly',
+    weeks: 'Weeks',
+    startNote: '(All levels A1–C1 start on the same date sets.)',
+    startingDatesBoxTitle: 'Starting dates',
+    startingDatesBoxIntro: 'Every Monday (except for absolute beginners). Starting dates for absolute beginners:',
+  },
+  es: {
+    title: 'Precios y Fechas',
+    heroIntro:
+      'Campus German no es solo precios: como la mejor escuela de idiomas de Bremen, priorizamos la calidad y la experiencia del estudiante.',
+    couponTitle: 'Cupón de descuento',
+    couponCode: 'HBCampusGerman',
+    intensive: 'Cursos Intensivos de Alemán (Presencial)',
+    online: 'Cursos de Alemán Online',
+    weekly: 'Tarifas Semanales',
+    weeklyNote: 'Precio semanal según número de semanas. A1-A2 y B1-C1 con precios distintos.',
+    examPrep: 'Cursos de Preparación de Exámenes',
+    goetheTelc: 'Cursos Goethe / TELC por Nivel',
+    testdafDsh: 'Preparación TestDaF / DSH',
+    schedule: 'Horarios de Cursos',
+    scheduleNote: 'Lunes–Viernes. Grupos de mañana, tarde y noche.',
+    morning: 'Mañana',
+    afternoon: 'Tarde',
+    evening: 'Noche',
+    startDates: 'Fechas de Inicio 2026',
+    startDatesSubtitle: 'La inscripción a los cursos se abre en las siguientes fechas.',
+    holidays: 'Días Festivos 2026',
+    visaInfo: 'Información de visado',
+    lessonInfo: 'Información de lección',
+    bookCta: 'Reservar Curso',
+    level: 'Nivel',
+    price: 'Precio',
+    lessons: 'Lecciones',
+    duration: 'Duración',
+    weekly: 'Semanal',
+    weeks: 'Semanas',
+    startNote: '(Todos los niveles A1–C1 comienzan en los mismos bloques de fechas.)',
+    startingDatesBoxTitle: 'Fechas de inicio',
+    startingDatesBoxIntro: 'Cada lunes (excepto para principiantes absolutos). Fechas de inicio para principiantes absolutos:',
+  },
+}[lang];
+
+const levels = ['a1', 'a2', 'b1', 'b2', 'c1'] as const;
+const levelLabels = { a1: 'A1', a2: 'A2', b1: 'B1', b2: 'B2', c1: 'C1' };
+const bookingSlug =
+  lang === 'tr' || lang === 'de' ? 'buchung' : lang === 'en' ? 'booking' : 'reservar';
+
+const year = 2026;
+// Ham tarihleri al, kronolojik sırala, her birini o ay içindeki en yakın Pazartesiye çevir
+const rawA1 = data.startDates.a1;
+const allDdMm = [...(rawA1.a1_1 || []), ...(rawA1.a1_2 || [])];
+const uniqueDdMm = [...new Set(allDdMm)].sort((a, b) => {
+  const [da, ma] = a.split('.').map(Number);
+  const [db, mb] = b.split('.').map(Number);
+  return (ma * 100 + da) - (mb * 100 + db);
+});
+const uniqueDdMmMonday = uniqueDdMm.map((ddmm) => getNearestMondayDdmm(ddmm, year));
+
+// Rozetler ve kutu için formatlanmış tarih listesi (Pazartesi tarihleri)
+const simpleStartDates = uniqueDdMmMonday.map((ddmm) =>
+  formatCourseDate(ddmm, lang as 'tr' | 'de' | 'en' | 'es')
+);
+const formattedAbsBeginnerDates =
+  uniqueDdMmMonday
+    .map((ddmm) => formatCourseDate(ddmm, lang as 'tr' | 'de' | 'en' | 'es'))
+    .join(' / ') + ' ' + year;
+---
+
+<MainLayout title={`${t.title} - CampusGerman`} lang={lang}>
+  <section class="fiyatlar-hero">
+    <div class="container">
+      <h1 class="page-title">{t.title}</h1>
+      <p class="fiyatlar-hero-intro">{t.heroIntro}</p>
+      <div class="fiyatlar-coupon-block">
+        <h2 class="fiyatlar-coupon-title">{t.couponTitle}</h2>
+        <p class="fiyatlar-coupon-code">
+          <code>{t.couponCode}</code>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Yeni fiyat yapısı: Intensive 20h / Intensive+ 25h -->
+  <IntensivePricingSection lang={lang} showSectionTitle={true} />
+
+  <!-- Kurs Saatleri -->
+  <section class="fiyatlar-section">
+    <div class="container">
+      <h2 class="fiyatlar-section-title">{t.schedule}</h2>
+      <p class="fiyatlar-note">
+        {t.scheduleNote} {data.schedule.days}
+      </p>
+      <div class="fiyatlar-schedule-grid">
+        <div class="fiyatlar-schedule-card">
+          <h4>{t.morning}</h4>
+          <p>
+            <strong>{data.schedule.morning.all.time}</strong>
+          </p>
+          <p>{data.schedule.morning.all.lessons}</p>
+          <p>{data.schedule.morning.all.break}</p>
+        </div>
+        <div class="fiyatlar-schedule-card">
+          <h4>{t.afternoon}</h4>
+          <p>
+            <strong>{data.schedule.afternoon.all.time}</strong>
+          </p>
+          <p>{data.schedule.afternoon.all.lessons}</p>
+          <p>{data.schedule.afternoon.all.break}</p>
+        </div>
+        <div class="fiyatlar-schedule-card">
+          <h4>{t.evening}</h4>
+          <p>
+            <strong>{data.schedule.evening.all.time}</strong>
+          </p>
+          <p>{data.schedule.evening.all.lessons}</p>
+          <p>{data.schedule.evening.all.break}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Başlangıç Tarihleri -->
+  <section class="fiyatlar-section">
+    <div class="container">
+      <h2 class="fiyatlar-section-title">{t.startDates}</h2>
+      <p class="fiyatlar-dates-subtitle">{t.startDatesSubtitle}</p>
+      <div class="fiyatlar-dates-badges">
+        {simpleStartDates.map((dateStr) => (
+          <span class="fiyatlar-date-badge">{dateStr} 2026</span>
+        ))}
+      </div>
+      <p class="fiyatlar-lessons-note">
+        <strong>{LESSONS_UP_TO_200[lang as keyof typeof LESSONS_UP_TO_200]}</strong>{' '}
+        {lang === 'tr'
+          ? '(kurs başına)'
+          : lang === 'de'
+          ? '(pro Kurs)'
+          : lang === 'es'
+          ? '(por curso)'
+          : '(per course)'}
+      </p>
+      <div class="fiyatlar-starting-dates-box">
+        <h3 class="fiyatlar-starting-dates-box-title">{t.startingDatesBoxTitle}</h3>
+        <p class="fiyatlar-starting-dates-box-intro">{t.startingDatesBoxIntro}</p>
+        <p class="fiyatlar-starting-dates-box-dates">{formattedAbsBeginnerDates}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tatiller -->
+  <section class="fiyatlar-section">
+    <div class="container">
+      <h2 class="fiyatlar-section-title">{t.holidays}</h2>
+      <ul class="fiyatlar-holidays-list">
+        {data.holidays.map((h: { name: string; date: string }) => (
+          <li>
+            <span>{h.name}</span>
+            <span>{h.date}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Vize Bilgisi -->
+  <section class="fiyatlar-section">
+    <div class="container">
+      <h2 class="fiyatlar-section-title">{t.visaInfo}</h2>
+      <div class="fiyatlar-info-box">{data.visaInfo}</div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="fiyatlar-cta">
+    <div class="container">
+      <a href={`/${lang}/${bookingSlug}`} class="btn-buchung">
+        <i class="fas fa-calendar-check"></i>
+        {t.bookCta}
+      </a>
+    </div>
+  </section>
+</MainLayout>
+

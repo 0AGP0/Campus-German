@@ -2,8 +2,11 @@
 import { getCollection } from 'astro:content';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
+import BilgiAlForm from '../../../components/BilgiAlForm.astro';
 import '../../../styles/global.css';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo } from '../../../utils/coursePricingHelper';
+import IntensivePricingSection from '../../../components/IntensivePricingSection.astro';
+import SuccessModal from '../../../components/SuccessModal.astro';
 
 export async function getStaticPaths() {
   const allKurslar = await getCollection('kurslar');
@@ -85,6 +88,8 @@ const hasPricingTab = kurs.data.tabs?.some(tab =>
 const bookingPath = 'reservar';
 const contactPath = 'contacto';
 const sectionPath = 'cursos';
+// Kişi sayısı: 10-16 máx. (ES)
+const groupSizeDisplay = '10-16 máx.';
 ---
 
 <!DOCTYPE html>
@@ -142,21 +147,36 @@ const sectionPath = 'cursos';
                                     </div>
                                     <div class="feature-content">
                                         <h4>{feature.title}</h4>
-                                        <p>{feature.description}</p>
+                                        <p>{feature.icon === 'fas fa-users' ? groupSizeDisplay : feature.description}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
                         
                         <div class="hero-actions">
-                            <a href={kurs.data.heroButtons.secondary.href} class="hero-secondary-button">
-                                <i class={kurs.data.heroButtons.secondary.icon}></i>
-                                <span>{kurs.data.heroButtons.secondary.text}</span>
-                            </a>
-                            <a href={kurs.data.hasDemandForm ? "#demand-form" : `/${lang}/${bookingPath}`} class="hero-cta-button">
-                                <span>{kurs.data.heroButtons.primary.text}</span>
-                                <i class={kurs.data.heroButtons.primary.icon}></i>
-                            </a>
+                            {kurs.data.hasDemandForm ? (
+                                <>
+                                    <a href={kurs.data.heroButtons.secondary.href} class="hero-secondary-button">
+                                        <i class={kurs.data.heroButtons.secondary.icon}></i>
+                                        <span>{kurs.data.heroButtons.secondary.text}</span>
+                                    </a>
+                                    <a href="#bilgi-al-form" class="hero-cta-button">
+                                        <span>{kurs.data.heroButtons.primary.text}</span>
+                                        <i class={kurs.data.heroButtons.primary.icon}></i>
+                                    </a>
+                                </>
+                            ) : (
+                                <>
+                                    <a href={`/${lang}/${contactPath}`} class="hero-secondary-button">
+                                        <i class="fas fa-envelope"></i>
+                                        <span>{lang === 'tr' ? 'Ücretsiz bilgi al' : lang === 'de' ? 'Information anfragen' : lang === 'es' ? 'Solicitar información' : 'Get Information'}</span>
+                                    </a>
+                                    <a href={`/${lang}/${bookingPath}`} class="hero-cta-button">
+                                        <span>{lang === 'tr' ? 'Hemen kayıt ol' : lang === 'de' ? 'Jetzt anmelden' : lang === 'es' ? 'Registrarse' : 'Register'}</span>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -178,7 +198,6 @@ const sectionPath = 'cursos';
                             <span>{tab.title}</span>
                         </button>
                     ))}
-                    {/* Eğer pricingData var ama tabs'da fiyat tab'ı yoksa, yeni tab butonu ekle */}
                     {pricingData && !hasPricingTab && (
                         <button class="tab-btn" data-tab="precios-fechas">
                             <i class="fas fa-euro-sign"></i>
@@ -203,82 +222,8 @@ const sectionPath = 'cursos';
                                     </div>
                                     <div class="card-content">
                                         {isPricingTab ? (
-                                            <!-- Dinamik Fiyat ve Tarihler İçeriği -->
                                             <div class="dynamic-pricing-content">
-                                                <h4>Información de Precios</h4>
-                                                
-                                                {/* Haftalık kurslar için sadece haftalık fiyatlar göster */}
-                                                {pricingData.isWeeklyOnly ? (
-                                                    <div class="pricing-block">
-                                                        <h5>Precios de Cursos Semanales</h5>
-                                                        <p class="pricing-description">Opciones de pago flexibles para nuestros cursos semanales. Puede continuar durante el tiempo que desee.</p>
-                                                        {weeklyCategory && (
-                                                            <div class="weekly-pricing-list">
-                                                                {Object.entries(pricingData.weeklyPricing[weeklyCategory]).map(([weeks, price]) => (
-                                                                    <div class="weekly-pricing-item">
-                                                                        <span>{weeks} Semanas</span>
-                                                                        <strong>{price}</strong>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                ) : (
-                                                    <>
-                                                        {/* Tam Kurs Fiyatı - Sadece yoğun ve online kurslar için */}
-                                                        {pricingData.pricing && (
-                                                            <div class="pricing-block">
-                                                                <h5>Precio del Curso Completo</h5>
-                                                                <div class="pricing-card-modern">
-                                                                    <div class="pricing-card-header">
-                                                                        <div class="pricing-card-icon">
-                                                                            <i class="fas fa-graduation-cap"></i>
-                                                                        </div>
-                                                                        <div class="pricing-card-title">
-                                                                            <h6>{courseInfo.level?.toUpperCase()}</h6>
-                                                                            <span class="pricing-card-subtitle">Curso Completo</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="pricing-card-body">
-                                                                        <div class="pricing-info-item">
-                                                                            <div class="pricing-info-icon">
-                                                                                <i class="fas fa-book-open"></i>
-                                                                            </div>
-                                                                            <div class="pricing-info-content">
-                                                                                <span class="pricing-info-label">Horas de Clase</span>
-                                                                                <span class="pricing-info-value">{pricingData.pricing.lessons}</span>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="pricing-info-item">
-                                                                            <div class="pricing-info-icon">
-                                                                                <i class="fas fa-calendar-alt"></i>
-                                                                            </div>
-                                                                            <div class="pricing-info-content">
-                                                                                <span class="pricing-info-label">Duración</span>
-                                                                                <span class="pricing-info-value">{pricingData.pricing.duration}</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="pricing-card-footer">
-                                                                        <div class="pricing-price">
-                                                                            <span class="pricing-price-label">Precio</span>
-                                                                            <span class="pricing-price-value">{pricingData.pricing.fullCourse}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        )}
-                                                        
-                                                        {/* Online Kurs Notu */}
-                                                        {courseInfo.type === 'online' && (
-                                                            <div class="pricing-info-box" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);">
-                                                                <p><i class="fas fa-info-circle"></i> <strong>{pricingData.lessonInfo}</strong> - {pricingData.onlineNote}</p>
-                                                            </div>
-                                                        )}
-                                                    </>
-                                                )}
-                                                
-                                                {/* Kurs Zamanları - Tüm kurslar için */}
+                                                <IntensivePricingSection lang={lang} showSectionTitle={false} />
                                                 {pricingData.schedule && (
                                                     <div class="pricing-block">
                                                         <h5>Horarios del Curso</h5>
@@ -300,8 +245,6 @@ const sectionPath = 'cursos';
                                                         </div>
                                                     </div>
                                                 )}
-                                                
-                                                {/* Başlangıç Tarihleri - Yoğun, online ve sınav hazırlık kursları için */}
                                                 {pricingData.dates && (
                                                     <div class="pricing-block">
                                                         <h5>Fechas de Inicio del Curso 2026</h5>
@@ -312,8 +255,6 @@ const sectionPath = 'cursos';
                                                         </div>
                                                     </div>
                                                 )}
-                                                
-                                                {/* Tatiller - Tüm kurslar için */}
                                                 {pricingData.holidays && (
                                                     <div class="pricing-block">
                                                         <h5>Días Festivos 2026</h5>
@@ -327,8 +268,6 @@ const sectionPath = 'cursos';
                                                         </div>
                                                     </div>
                                                 )}
-                                                
-                                                {/* Vize Bilgisi - Sadece yoğun ve online kurslar için */}
                                                 {pricingData.visaInfo && !pricingData.isWeeklyOnly && (
                                                     <div class="pricing-info-box">
                                                         <p><i class="fas fa-info-circle"></i> {pricingData.visaInfo}</p>
@@ -414,152 +353,71 @@ const sectionPath = 'cursos';
                             </div>
                         );
                     })}
-                    
-                    {/* Eğer pricingData var ama tabs'da fiyat tab'ı yoksa, yeni tab içeriği ekle */}
                     {pricingData && !hasPricingTab && (
                         <div class="tab-content" id="precios-fechas">
-                                <div class="course-card">
-                                    <div class="card-header">
-                                        <div class="card-icon">
-                                            <i class="fas fa-euro-sign"></i>
-                                        </div>
-                                        <h3>Precios y Fechas</h3>
+                            <div class="course-card">
+                                <div class="card-header">
+                                    <div class="card-icon">
+                                        <i class="fas fa-euro-sign"></i>
                                     </div>
-                                    <div class="card-content">
-                                        <div class="dynamic-pricing-content">
-                                            <h4>Información de Precios</h4>
-                                            
-                                            {/* Haftalık kurslar için sadece haftalık fiyatlar göster */}
-                                            {pricingData.isWeeklyOnly ? (
-                                                <div class="pricing-block">
-                                                    <h5>Precios de Cursos Semanales</h5>
-                                                    <p class="pricing-description">Opciones de pago flexibles para nuestros cursos semanales. Puede continuar durante el tiempo que desee.</p>
-                                                    {weeklyCategory && (
-                                                        <div class="weekly-pricing-list">
-                                                            {Object.entries(pricingData.weeklyPricing[weeklyCategory]).map(([weeks, price]) => (
-                                                                <div class="weekly-pricing-item">
-                                                                    <span>{weeks} Semanas</span>
-                                                                    <strong>{price}</strong>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            ) : (
-                                                <>
-                                                    {/* Tam Kurs Fiyatı - Yoğun, online ve sınav hazırlık kursları için */}
-                                                    {pricingData.pricing && (
-                                                        <div class="pricing-block">
-                                                            <h5>{pricingData.isExamPrep ? 'Precio del Curso de Preparación para Exámenes' : 'Precio del Curso Completo'}</h5>
-                                                            <div class="pricing-card-modern">
-                                                                <div class="pricing-card-header">
-                                                                    <div class="pricing-card-icon">
-                                                                        <i class="fas fa-certificate"></i>
-                                                                    </div>
-                                                                    <div class="pricing-card-title">
-                                                                        <h6>{pricingData.isExamPrep ? (kurs.slug.includes('testdaf') || kurs.slug.includes('dsh') ? 'TestDaF/DSH' : (courseInfo.level ? courseInfo.level.toUpperCase() : 'Goethe/TELC')) : courseInfo.level?.toUpperCase()}</h6>
-                                                                        <span class="pricing-card-subtitle">{pricingData.isExamPrep ? 'Preparación para Exámenes' : 'Curso Completo'}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="pricing-card-body">
-                                                                    <div class="pricing-info-item">
-                                                                        <div class="pricing-info-icon">
-                                                                            <i class="fas fa-book-open"></i>
-                                                                        </div>
-                                                                        <div class="pricing-info-content">
-                                                                            <span class="pricing-info-label">Horas de Clase</span>
-                                                                            <span class="pricing-info-value">{pricingData.pricing.lessons}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="pricing-info-item">
-                                                                        <div class="pricing-info-icon">
-                                                                            <i class="fas fa-calendar-alt"></i>
-                                                                        </div>
-                                                                        <div class="pricing-info-content">
-                                                                            <span class="pricing-info-label">Duración</span>
-                                                                            <span class="pricing-info-value">{pricingData.pricing.duration}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="pricing-card-footer">
-                                                                    <div class="pricing-price">
-                                                                        <span class="pricing-price-label">Precio</span>
-                                                                        <span class="pricing-price-value">{pricingData.pricing.fullCourse}</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                    
-                                                    {/* Online Kurs Notu */}
-                                                    {courseInfo.type === 'online' && (
-                                                        <div class="pricing-info-box" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);">
-                                                            <p><i class="fas fa-info-circle"></i> <strong>{pricingData.lessonInfo}</strong> - {pricingData.onlineNote}</p>
-                                                        </div>
-                                                    )}
-                                                </>
-                                            )}
-                                            
-                                            {/* Kurs Zamanları - Tüm kurslar için */}
-                                            {pricingData.schedule && (
-                                                <div class="pricing-block">
-                                                    <h5>Horarios del Curso</h5>
-                                                    <p class="lesson-duration-note"><strong>{pricingData.lessonInfo}</strong></p>
-                                                    <div class="schedule-info">
-                                                        <div class="schedule-item">
-                                                            <h6><i class="fas fa-sun"></i> Cursos de Mañana</h6>
-                                                            <p>{pricingData.schedule.morning.all.time}</p>
-                                                            <p class="schedule-break">{pricingData.schedule.morning.all.break}</p>
-                                                            <p class="schedule-lessons">{pricingData.schedule.morning.all.lessons}</p>
-                                                        </div>
-                                                        <div class="schedule-item">
-                                                            <h6><i class="fas fa-moon"></i> Cursos de Tarde</h6>
-                                                            <p>{pricingData.schedule.afternoon.all.time}</p>
-                                                            <p class="schedule-break">{pricingData.schedule.afternoon.all.break}</p>
-                                                            <p class="schedule-lessons">{pricingData.schedule.afternoon.all.lessons}</p>
-                                                        </div>
-                                                        <p class="schedule-days"><i class="fas fa-calendar-week"></i> {pricingData.schedule.days}</p>
+                                    <h3>Precios y Fechas</h3>
+                                </div>
+                                <div class="card-content">
+                                    <div class="dynamic-pricing-content">
+                                        <IntensivePricingSection lang={lang} showSectionTitle={false} />
+                                        {pricingData.schedule && (
+                                            <div class="pricing-block">
+                                                <h5>Horarios del Curso</h5>
+                                                <p class="lesson-duration-note"><strong>{pricingData.lessonInfo}</strong></p>
+                                                <div class="schedule-info">
+                                                    <div class="schedule-item">
+                                                        <h6><i class="fas fa-sun"></i> Cursos de Mañana</h6>
+                                                        <p>{pricingData.schedule.morning.all.time}</p>
+                                                        <p class="schedule-break">{pricingData.schedule.morning.all.break}</p>
+                                                        <p class="schedule-lessons">{pricingData.schedule.morning.all.lessons}</p>
                                                     </div>
-                                                </div>
-                                            )}
-                                            
-                                            {/* Başlangıç Tarihleri - Sadece yoğun ve online kurslar için */}
-                                            {pricingData.dates && (
-                                                <div class="pricing-block">
-                                                    <h5>Fechas de Inicio del Curso 2026</h5>
-                                                    <div class="dates-list">
-                                                        {(pricingData.dates.all ? pricingData.dates.all : Object.values(pricingData.dates).flat()).map(date => (
-                                                            <span class="date-badge">{date}</span>
-                                                        ))}
+                                                    <div class="schedule-item">
+                                                        <h6><i class="fas fa-moon"></i> Cursos de Tarde</h6>
+                                                        <p>{pricingData.schedule.afternoon.all.time}</p>
+                                                        <p class="schedule-break">{pricingData.schedule.afternoon.all.break}</p>
+                                                        <p class="schedule-lessons">{pricingData.schedule.afternoon.all.lessons}</p>
                                                     </div>
+                                                    <p class="schedule-days"><i class="fas fa-calendar-week"></i> {pricingData.schedule.days}</p>
                                                 </div>
-                                            )}
-                                            
-                                            {/* Tatiller - Tüm kurslar için */}
-                                            {pricingData.holidays && (
-                                                <div class="pricing-block">
-                                                    <h5>Días Festivos 2026</h5>
-                                                    <div class="holidays-list">
-                                                        {pricingData.holidays.map(holiday => (
-                                                            <div class="holiday-item">
-                                                                <span class="holiday-name">{holiday.name}</span>
-                                                                <span class="holiday-date">{holiday.date}</span>
-                                                            </div>
-                                                        ))}
-                                                    </div>
+                                            </div>
+                                        )}
+                                        {pricingData.dates && (
+                                            <div class="pricing-block">
+                                                <h5>Fechas de Inicio del Curso 2026</h5>
+                                                <div class="dates-list">
+                                                    {(pricingData.dates.all ? pricingData.dates.all : Object.values(pricingData.dates).flat()).map(date => (
+                                                        <span class="date-badge">{date}</span>
+                                                    ))}
                                                 </div>
-                                            )}
-                                            
-                                            {/* Vize Bilgisi - Sadece yoğun ve online kurslar için */}
-                                            {pricingData.visaInfo && !pricingData.isWeeklyOnly && (
-                                                <div class="pricing-info-box">
-                                                    <p><i class="fas fa-info-circle"></i> {pricingData.visaInfo}</p>
+                                            </div>
+                                        )}
+                                        {pricingData.holidays && (
+                                            <div class="pricing-block">
+                                                <h5>Días Festivos 2026</h5>
+                                                <div class="holidays-list">
+                                                    {pricingData.holidays.map(holiday => (
+                                                        <div class="holiday-item">
+                                                            <span class="holiday-name">{holiday.name}</span>
+                                                            <span class="holiday-date">{holiday.date}</span>
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                            )}
-                                        </div>
+                                            </div>
+                                        )}
+                                        {pricingData.visaInfo && !pricingData.isWeeklyOnly && (
+                                            <div class="pricing-info-box">
+                                                <p><i class="fas fa-info-circle"></i> {pricingData.visaInfo}</p>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     )}
                 </div>
             </div>
@@ -568,7 +426,7 @@ const sectionPath = 'cursos';
         <!-- FAQ and Form Section -->
         <section class="faq-form-section">
             <div class="container">
-                <div class={`faq-form-layout ${kurs.data.hasDemandForm ? 'has-form' : 'no-form'}`}>
+                <div class="faq-form-layout has-form">
                     <section class="faq-section-inline">
                         <div class="faq-section-header">
                             <h2 class="faq-section-title">Preguntas Frecuentes</h2>
@@ -586,63 +444,11 @@ const sectionPath = 'cursos';
                                     </div>
                                 </div>
                             ))}
-                            {!kurs.data.hasDemandForm && (
-                                <div class="faq-cta">
-                                    <p>¿Tiene más preguntas?</p>
-                                    <a href={`/${lang}/${contactPath}`} class="faq-contact-btn">
-                                        <i class="fas fa-envelope"></i>
-                                        <span>Contáctenos</span>
-                                    </a>
-                                </div>
-                            )}
                         </div>
                     </section>
-                    {kurs.data.hasDemandForm && (
-                        <section class="demand-form-section-inline" id="demand-form">
-                            <div class="demand-form-header">
-                                <div class="form-header-icon"><i class="fas fa-clipboard-list"></i></div>
-                                <h2 class="demand-form-title">Aplicar Ahora</h2>
-                                <p class="demand-form-subtitle">Complete el formulario para registrarse en este curso, y nos pondremos en contacto con usted lo antes posible.</p>
-                            </div>
-                            <form id="demandForm" class="demand-form" data-lang="es">
-                                <input type="hidden" name="courseName" value={kurs.data.title} />
-                                <input type="hidden" name="courseSlug" value={kurs.slug} />
-                                <input type="hidden" name="sourcePage" value={`/${kurs.data.lang}/${sectionPath}/${kurs.data.customSlug ?? kurs.slug}`} />
-                                <input type="hidden" name="formLang" value="es" />
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <input type="text" id="demandFullname" name="fullname" required placeholder="Nombre Completo" />
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="email" id="demandEmail" name="email" required placeholder="Correo Electrónico" />
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <input type="tel" id="demandPhone" name="phone" required placeholder="Teléfono" />
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" id="demandCity" name="city" placeholder="Ciudad" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <textarea id="demandMessage" name="message" rows="4" placeholder="Notas adicionales o preguntas sobre este curso..."></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <div class="kvkk-checkbox">
-                                        <input type="checkbox" id="demandKvkk" name="kvkk" required />
-                                        <label for="demandKvkk">Acepto la Política de Privacidad y Cookies.</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="demand-submit-btn">
-                                        <span>Aplicar Ahora</span>
-                                        <i class="fas fa-paper-plane"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </section>
-                    )}
+                    <section class="demand-form-section-inline" id="bilgi-al-form">
+                        <BilgiAlForm lang={lang} />
+                    </section>
                 </div>
             </div>
         </section>
@@ -650,46 +456,68 @@ const sectionPath = 'cursos';
 
     <Footer lang={lang} />
 
+    <SuccessModal lang={lang} />
+
+    <script is:inline>
+(function() {
+  function handleBilgiAlSubmit(e) {
+    var form = e.target;
+    if (!form || typeof form.classList === 'undefined' || !form.classList.contains('bilgi-al-form')) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var submitBtn = form.querySelector('.form-submit-btn');
+    var originalContent = submitBtn ? submitBtn.innerHTML : '';
+    var lang = form.getAttribute('data-lang') || 'tr';
+    var msg = {
+      sending: form.getAttribute('data-msg-sending') || 'Sending...',
+      required: form.getAttribute('data-msg-required') || 'Please fill in all required fields.',
+      emailInvalid: form.getAttribute('data-msg-email') || 'Please enter a valid email address.',
+      success: form.getAttribute('data-msg-success') || 'Form submitted successfully!',
+      error: form.getAttribute('data-msg-error') || 'An error occurred. Please try again.'
+    };
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>' + msg.sending + '</span>'; }
+    var fd = new FormData(form);
+    var data = {};
+    for (var p of fd.entries()) data[p[0]] = p[1];
+    if (!data.email || !data.name || !data.phone || !data.preferredDate) {
+      if (window.showSuccessModal) window.showSuccessModal('error', msg.required); else alert(msg.required);
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalContent; }
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      if (window.showSuccessModal) window.showSuccessModal('error', msg.emailInvalid); else alert(msg.emailInvalid);
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalContent; }
+      return;
+    }
+    fetch('https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        formType: 'cta-contact',
+        sourcePage: window.location.pathname,
+        lang: lang,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        preferredDate: data.preferredDate || '',
+        city: data.city || '',
+        message: data.message || ''
+      })
+    }).then(function(res) {
+      if (res.ok) {
+        if (window.showSuccessModal) window.showSuccessModal('success', msg.success); else alert(msg.success);
+        form.reset();
+      } else throw new Error('Submit failed');
+    }).catch(function() {
+      if (window.showSuccessModal) window.showSuccessModal('error', msg.error); else alert(msg.error);
+    }).finally(function() {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalContent; }
+    });
+  }
+  document.addEventListener('submit', handleBilgiAlSubmit, true);
+})();
+    </script>
     <script is:inline src="/script.js"></script>
     <script is:inline src="/kurs-detay.js"></script>
-    {kurs.data.hasDemandForm && (
-        <script is:inline>
-            document.addEventListener('DOMContentLoaded', function() {
-                const demandForm = document.getElementById('demandForm');
-                const lang = demandForm?.getAttribute('data-lang') || 'es';
-                const msg = { es: { success: '¡Su solicitud ha sido enviada con éxito! Nos pondremos en contacto con usted lo antes posible.', error: 'Ocurrió un error. Por favor, inténtelo de nuevo o contáctenos.' } };
-                const m = msg[lang] || msg.es;
-                const demandFormLinks = document.querySelectorAll('a[href="#demand-form"]');
-                demandFormLinks.forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const target = document.getElementById('demand-form');
-                        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    });
-                });
-                if (demandForm) {
-                    demandForm.addEventListener('submit', async function(e) {
-                        e.preventDefault();
-                        const formData = new FormData(demandForm);
-                        const data = {};
-                        for (let [k, v] of formData.entries()) data[k] = v;
-                        const standardizedData = { formType: 'demand', sourcePage: data.sourcePage || window.location.pathname, lang: data.formLang || lang, name: data.fullname || '', tel: data.phone || '', email: data.email || '', courseName: data.courseName || '', courseSlug: data.courseSlug || '', city: data.city || '', message: data.message || '', kvkk: data.kvkk || false };
-                        try {
-                            const res = await fetch('https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(standardizedData) });
-                            if (res.ok) {
-                                if (window.showSuccessModal) window.showSuccessModal('success', window.successModalTranslations?.messageSuccess || m.success);
-                                else alert(m.success);
-                                demandForm.reset();
-                            } else throw new Error('Webhook request failed');
-                        } catch (err) {
-                            console.error('Error submitting form:', err);
-                            if (window.showSuccessModal) window.showSuccessModal('error', window.successModalTranslations?.errorMessage || m.error);
-                            else alert(m.error);
-                        }
-                    });
-                }
-            });
-        </script>
-    )}
 </body>
 </html>

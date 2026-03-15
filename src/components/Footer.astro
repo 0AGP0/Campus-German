@@ -1,6 +1,7 @@
 ---
 // Footer Component - Yeni navbar yapısına göre güncellendi
 import '../styles/footer.css';
+import { getDatenschutzPath, getImpressumPath, getInformationsauskunftPath } from '../utils/pathHelpers';
 
 const { lang = 'tr' } = Astro.props;
 
@@ -26,6 +27,8 @@ const t = {
         allRightsReserved: "Tüm hakları saklıdır.",
         privacyPolicy: "Gizlilik Politikası",
         termsOfUse: "Kullanım Koşulları",
+        impressum: "Yasal Uyarı",
+        informationsauskunft: "Bilgi Talebi",
         cookiePolicy: "Çerez Politikası",
         description: "Almanya'da Almanca öğrenmek için premium eğitim hizmetleri. Konuşma odaklı eğitim ve kişiselleştirilmiş programlarla hedeflerinize ulaşın.",
         // Kurs kategorileri
@@ -112,6 +115,8 @@ const t = {
         allRightsReserved: "Alle Rechte vorbehalten.",
         privacyPolicy: "Datenschutzerklärung",
         termsOfUse: "Nutzungsbedingungen",
+        impressum: "Impressum",
+        informationsauskunft: "Informationsauskunft",
         cookiePolicy: "Cookie-Richtlinie",
         description: "Premium-Bildungsdienstleistungen für Deutschlernen in Deutschland. Erreichen Sie Ihre Ziele mit gesprächsorientiertem Unterricht und personalisierten Programmen.",
         // Kurs kategorileri
@@ -198,6 +203,8 @@ const t = {
         allRightsReserved: "All rights reserved.",
         privacyPolicy: "Privacy Policy",
         termsOfUse: "Terms of Use",
+        impressum: "Imprint",
+        informationsauskunft: "Information Request",
         cookiePolicy: "Cookie Policy",
         description: "Premium educational services for learning German in Germany. Achieve your goals with conversation-focused teaching and personalized programs.",
         // Kurs kategorileri
@@ -284,6 +291,8 @@ const t = {
         allRightsReserved: "Todos los derechos reservados.",
         privacyPolicy: "Política de Privacidad",
         termsOfUse: "Términos de Uso",
+        impressum: "Aviso Legal",
+        informationsauskunft: "Solicitud de Información",
         cookiePolicy: "Política de Cookies",
         description: "Servicios educativos premium para aprender alemán en Alemania. Alcanza tus objetivos con enseñanza centrada en la conversación y programas personalizados.",
         // Kurs kategorileri
@@ -422,7 +431,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionM
                         <a href="#" class="social-link" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a href="#" class="social-link" aria-label="WhatsApp">
+                        <a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
@@ -437,7 +446,6 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionM
                         <li><a href={`/${lang}/${sections.about}`}>{currentLang.about}</a></li>
                         <li><a href={`/${lang}/${sections.advantages}`}>{currentLang.advantages}</a></li>
                         <li><a href={`/${lang}/${sections.services}`}>{currentLang.services}</a></li>
-                        <li><a href={`/${lang}/${sections.winners}`}>{currentLang.successStories}</a></li>
                         <li><a href={`/${lang}/${sections.contact}`}>{currentLang.contact}</a></li>
                     </ul>
                 </div>
@@ -480,7 +488,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionM
                             <i class="fas fa-phone"></i>
                             <div>
                                 <strong>{currentLang.phone}</strong>
-                                <span>+49 163 6927842</span>
+                                <span>+49 1520 382 3792</span>
                             </div>
                         </div>
                         <div class="contact-item">
@@ -509,9 +517,9 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionM
                     <p>&copy; {currentYear} CampusGerman. {currentLang.allRightsReserved}</p>
                 </div>
                 <div class="footer-legal">
-                    <a href="#gizlilik">{currentLang.privacyPolicy}</a>
-                    <a href="#kullanim-kosullari">{currentLang.termsOfUse}</a>
-                    <a href="#cerez-politikasi">{currentLang.cookiePolicy}</a>
+                    <a href={`/${lang}/${getDatenschutzPath(lang as 'tr' | 'de' | 'en' | 'es')}`}>{currentLang.privacyPolicy}</a>
+                    <a href={`/${lang}/${getImpressumPath(lang as 'tr' | 'de' | 'en' | 'es')}`}>{currentLang.impressum}</a>
+                    <a href={`/${lang}/${getInformationsauskunftPath(lang as 'tr' | 'de' | 'en' | 'es')}`}>{currentLang.informationsauskunft}</a>
                 </div>
             </div>
         </div>

@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Weekly Lessons"
-    description: "24 Lessons (UE)"
+    description: "25 Lessons (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
     description: "8 Weeks"
@@ -37,7 +37,7 @@ tabs:
       title: "Intensive German A1 Course"
       paragraphs:
         - heading: "Course Overview"
-          text: "The Intensive German A1 Course is a comprehensive program designed for those starting to learn German from scratch. This course is prepared in accordance with the Common European Framework of Reference for Languages (CEFR) standards and aims to provide students with basic German language skills. The program, which offers an intensive learning experience with 24 lesson hours per week, lasts 8 weeks and consists of approximately 160 lesson hours."
+          text: "The Intensive German A1 Course is a comprehensive program designed for those starting to learn German from scratch. This course is prepared in accordance with the Common European Framework of Reference for Languages (CEFR) standards and aims to provide students with basic German language skills. The program, which offers an intensive learning experience with 25 lesson hours per week, lasts 8 weeks and consists of approximately 160 lesson hours."
         - heading: "Target Audience and Prerequisites"
           text: "This course is ideal for students who have no German knowledge or very basic knowledge. It does not require any prerequisites and is completely designed for beginners. Students planning university education in Germany, professionals who want to use German in business life, or anyone who wants to learn German for personal development can participate in this course."
         - heading: "Course Content and Learning Goals"

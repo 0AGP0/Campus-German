@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3
 features:
   - icon: "fas fa-clock"
     title: "Weekly Lessons"
-    description: "24 Lessons (UE)"
+    description: "25 Lessons (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
     description: "12 Weeks"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "12 Weeks FSP Preparation"
           duration: "12 Weeks"
-          schedule: "24 Lessons/Week"
+          schedule: "25 Lessons/Week"
           price: "Special Pricing"
           highlighted: true
   - id: "fsp-info"

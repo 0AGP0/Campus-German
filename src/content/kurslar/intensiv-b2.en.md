@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Weekly Lessons"
-    description: "24 Lessons (UE)"
+    description: "25 Lessons (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
     description: "12 Weeks"
@@ -37,7 +37,7 @@ tabs:
       title: "Intensive German B2 Course"
       paragraphs:
         - heading: "Course Overview"
-          text: "The Intensive German B2 Course is a comprehensive program designed for students who have completed B1 level, focused on developing upper-intermediate German skills. This course aims to provide students with language skills that will enable them to communicate at a professional level in business life and academic environments. The program, which offers an intensive learning experience with 24 lesson hours per week, lasts 12 weeks and consists of approximately 200 lesson hours."
+          text: "The Intensive German B2 Course is a comprehensive program designed for students who have completed B1 level, focused on developing upper-intermediate German skills. This course aims to provide students with language skills that will enable them to communicate at a professional level in business life and academic environments. The program, which offers an intensive learning experience with 25 lesson hours per week, lasts 12 weeks and consists of approximately 200 lesson hours."
         - heading: "Target Audience and Prerequisites"
           text: "This course is suitable for students who have successfully completed B1 level. The B2 level is a critical stage in learning German because at this level students become able to understand complex texts and speak fluently on abstract topics. Students planning university education in Germany, professionals wanting to use German at a professional level in business life, or anyone planning academic studies can participate in this course."
         - heading: "Course Content and Learning Goals"
