@@ -16,7 +16,7 @@ features:
     description: "Almanca + Temel Konular"
   - icon: "fas fa-calendar-week"
     title: "Süre"
-    description: "8-12 Hafta"
+    description: "8 Hafta"
   - icon: "fas fa-level-up-alt"
     title: "Seviye"
     description: "B1 - B2"

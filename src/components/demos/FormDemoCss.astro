@@ -1,0 +1,64 @@
+---
+---
+
+<div class="fd-shell fd-css" id="form-demo-css">
+  <h3>1 — Sadece CSS</h3>
+  <p class="fd-meta">Keyframe’li geçiş, ek JS kütüphanesi yok.</p>
+  <div class="fd-progress"><i data-progress></i></div>
+  <div class="fd-panel" data-panel-wrap>
+    <div class="fd-panel-inner" data-step-content></div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var root = document.getElementById('form-demo-css');
+    if (!root) return;
+    var step = 1;
+    var progress = root.querySelector('[data-progress]');
+    var wrap = root.querySelector('[data-step-content]');
+
+    function render() {
+      progress.style.width = ((step - 1) / 2) * 100 + '%';
+      wrap.className = 'fd-panel-inner';
+      void wrap.offsetWidth;
+      wrap.classList.add('fd-panel-inner');
+
+      if (step === 1) {
+        wrap.innerHTML =
+          '<h4>Hangi program?</h4><div class="fd-options"><button type="button" data-pick>A</button><button type="button" data-pick>B</button></div>';
+      } else if (step === 2) {
+        wrap.innerHTML =
+          '<h4>Deneme: süre</h4><div class="fd-options"><button type="button" data-next>2 ay</button><button type="button" data-next>4 ay</button></div>';
+      } else {
+        wrap.innerHTML =
+          '<h4>İletişim (demo)</h4><div class="fd-field"><label>Email</label><input type="email" placeholder="ornek@mail.com" data-email /></div><button type="button" class="fd-submit" data-send>Tamam</button>';
+      }
+
+      wrap.querySelectorAll('[data-pick]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          root.querySelectorAll('[data-pick]').forEach(function (x) {
+            x.classList.remove('picked');
+          });
+          b.classList.add('picked');
+          step = 2;
+          render();
+        });
+      });
+      wrap.querySelectorAll('[data-next]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          step = 3;
+          render();
+        });
+      });
+      var send = wrap.querySelector('[data-send]');
+      if (send)
+        send.addEventListener('click', function () {
+          alert('Demo bitti (CSS).');
+          step = 1;
+          render();
+        });
+    }
+    render();
+  })();
+</script>

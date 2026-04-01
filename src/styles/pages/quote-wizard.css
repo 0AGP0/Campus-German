@@ -1,0 +1,1383 @@
+/*
+  Quote flow — layout: sol dikey adım rayı + sağda tek sahne.
+  Önceki sürümlerden bilinçli olarak farklı (kart+bant+2x2 grid yok).
+*/
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,550&display=swap");
+
+/* Header/footer kapalı teklif sayfalarında formu görünür alanda ortala */
+main:has(#pwRoot) {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 2rem);
+  box-sizing: border-box;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+main:has(#pwRoot) .qx-page-bg {
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main:has(#pwRoot) #pwRoot {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Fiyatlar sayfası hero benzeri yan çizgiler */
+.qx-page-bg::before,
+.qx-page-bg::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: min(320px, 28vw);
+  max-width: 100%;
+  pointer-events: none;
+  opacity: 0.48;
+  z-index: 0;
+}
+
+.qx-page-bg::before {
+  left: 0;
+  background: repeating-linear-gradient(
+    125deg,
+    rgba(37, 99, 235, 0.16) 0 2px,
+    transparent 2px 16px
+  );
+}
+
+.qx-page-bg::after {
+  right: 0;
+  background: repeating-linear-gradient(
+    55deg,
+    rgba(16, 185, 129, 0.16) 0 2px,
+    transparent 2px 16px
+  );
+}
+
+.qx {
+  --qx-navy: #0f172a;
+  --qx-navy-mid: #1e293b;
+  --qx-muted: #64748b;
+  --qx-line: #e2e8f0;
+  --qx-accent: #3b82f6;
+  --qx-accent-glow: rgba(59, 130, 246, 0.22);
+  display: grid;
+  grid-template-columns: minmax(88px, 108px) 1fr;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  min-height: min(82vh, 760px);
+  border-radius: 0;
+  overflow: hidden;
+  border: 1px solid var(--qx-line);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--qx-navy);
+  background: #fff;
+}
+
+.qx-aside {
+  position: relative;
+  background: linear-gradient(165deg, #0a1628 0%, var(--qx-navy) 38%, var(--qx-navy-mid) 100%);
+  color: #f8fafc;
+  padding: 0.85rem 0.45rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  overflow: hidden;
+}
+
+/* Masaüstü: sarmalayıcı layout’a karışmaz (çocuklar doğrudan aside flex’te) */
+.qx-aside-progress {
+  display: contents;
+}
+
+.qx-aside-ornament {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(59, 130, 246, 0.22) 0%, transparent 55%),
+    repeating-linear-gradient(
+      -18deg,
+      rgba(255, 255, 255, 0.03) 0 1px,
+      transparent 1px 10px
+    );
+  pointer-events: none;
+}
+
+.qx-aside-title {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  opacity: 0.92;
+  max-height: 200px;
+  line-height: 1.35;
+  text-shadow: 0 1px 12px rgba(15, 23, 42, 0.45);
+}
+
+.qx-aside-meta {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: rgba(226, 232, 240, 0.72);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  max-height: 5rem;
+}
+
+/* Adım göstergesi: tek sütun, çizgi tam ortada (asimetrik line|dots yok) */
+.qx-aside-connector {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.qx-aside-track {
+  position: relative;
+  width: 100%;
+  max-width: 2.75rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 4.5rem;
+  padding: 0.35rem 0;
+  box-sizing: border-box;
+}
+
+.qx-aside-track-line {
+  position: absolute;
+  left: 50%;
+  top: 0.45rem;
+  bottom: 0.45rem;
+  width: 3px;
+  margin-left: -1.5px;
+  border-radius: 999px;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(59, 130, 246, 0.95) 0%,
+    rgba(59, 130, 246, 0.35) 45%,
+    rgba(148, 163, 184, 0.45) 100%
+  );
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.25);
+}
+
+.qx-dots {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.qx-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid rgba(248, 250, 252, 0.35);
+  background: transparent;
+  padding: 0;
+  cursor: default;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.qx-dot.is-past,
+.qx-dot.is-on {
+  background: var(--qx-accent);
+  border-color: var(--qx-accent);
+}
+
+.qx-dot.is-on {
+  box-shadow: 0 0 0 4px var(--qx-accent-glow);
+}
+
+.qx-aside-counter {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  max-width: min(5.75rem, 100%);
+  margin-inline: auto;
+  padding: 0.55rem 0.5rem 0.5rem;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 8px 24px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.qx-aside-step {
+  margin: 0 0 0.2rem;
+  font-size: clamp(0.85rem, 2.2vw, 0.98rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  color: #f8fafc;
+  line-height: 1.2;
+}
+
+.qx-aside-stephint {
+  display: block;
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.95);
+}
+
+.qx-aside-brand {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  line-height: 0;
+}
+
+.qx-aside-brand img {
+  display: block;
+  width: 2.45rem;
+  height: auto;
+  max-height: 2.6rem;
+  object-fit: contain;
+  object-position: center;
+}
+
+.qx-body {
+  padding: 1.2rem 1.35rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.qx-lead {
+  margin: 0 0 0.7rem;
+  max-width: 38rem;
+}
+
+.qx-lead-kicker {
+  margin: 0 0 0.55rem;
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  font-optical-sizing: auto;
+  font-size: clamp(1.28rem, 3.4vw, 1.72rem);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: -0.025em;
+  line-height: 1.22;
+  color: var(--qx-navy);
+  text-wrap: balance;
+}
+
+.qx-lead-body {
+  margin: 0;
+  font-size: clamp(0.88rem, 2.1vw, 0.98rem);
+  line-height: 1.58;
+  color: var(--qx-muted);
+  font-weight: 400;
+  padding-left: 0.65rem;
+  border-left: 3px solid rgba(59, 130, 246, 0.45);
+}
+
+.qx-line {
+  height: 2px;
+  background: var(--qx-line);
+  border-radius: 1px;
+  margin-bottom: 0.85rem;
+  overflow: hidden;
+}
+
+.qx-line-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--qx-accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.qx-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.pw-viewport {
+  position: relative;
+  flex: 1;
+  min-height: min(64vh, 640px);
+}
+
+.pw-panel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  box-sizing: border-box;
+  padding: 0.25rem 0;
+}
+
+.pw-panel.is-current {
+  pointer-events: auto;
+}
+
+/* 2. aşama uzun içerik — üstten başlasın; mümkün olduğunca tek ekranda */
+.pw-panel.qx-scene--plan {
+  justify-content: flex-start;
+  padding-bottom: 0.35rem;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.pw-panel .qx-stage-shell {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.qx-question {
+  margin: 0;
+  font-size: clamp(1.35rem, 3.6vw, 1.85rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+  max-width: 36rem;
+}
+
+.qx-scene-head {
+  margin-bottom: 0.8rem;
+}
+
+.qx-scene-kicker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-bottom: 0.5rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1;
+  background: var(--qx-line);
+  color: var(--qx-navy-mid);
+}
+
+/* Tüm adımlarda aynı arka plan / çerçeve (önceden yalnızca 4. adımda) */
+.qx-stage-shell {
+  background: #f1f5f9;
+  border-radius: 20px;
+  padding: 1.22rem 1.12rem 1.38rem;
+  border: 2px dashed #cbd5e1;
+}
+
+.qx-stage-shell .qx-scene-kicker {
+  background: var(--qx-navy);
+  color: #fff;
+}
+
+/* Alt köşe ileri / geri — tüm adımlar */
+.qx-stage-shell--with-nav {
+  position: relative;
+  padding-bottom: 3.85rem;
+}
+
+.qx-stage-shell--with-nav .qx-stage-nav {
+  position: absolute;
+  left: 0.35rem;
+  right: 0.35rem;
+  bottom: 0.45rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.qx-stage-shell--with-nav .qx-nav-arrow {
+  pointer-events: auto;
+  width: 2.85rem;
+  height: 2.85rem;
+  padding: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.02rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.14);
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+}
+
+.qx-scene--stay .qx-stage-nav,
+.qx-scene--send .qx-stage-nav {
+  justify-content: flex-start;
+}
+
+.qx-scene--send .qx-send {
+  margin-top: 0.85rem;
+}
+
+.qx-nav-arrow--back {
+  background: #fff;
+  color: var(--qx-navy);
+  border: 1px solid var(--qx-line);
+}
+
+.qx-nav-arrow--next {
+  border: none;
+  background: linear-gradient(145deg, #2563eb 0%, #1d4ed8 100%);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35);
+}
+
+.qx-nav-arrow:hover {
+  transform: scale(1.07);
+  filter: brightness(1.04);
+}
+
+.qx-nav-arrow:active {
+  transform: scale(0.94);
+}
+
+/* Çift slider + cetvel (üzerinde maddeler) */
+.qx-range-stack {
+  margin-top: 0.2rem;
+}
+
+.qx-ruler {
+  --segments: 1;
+  position: relative;
+  height: 2.55rem;
+  margin: 0 0 0.1rem;
+  border-bottom: 2px solid #64748b;
+  box-sizing: border-box;
+}
+
+.qx-ruler-tick {
+  position: absolute;
+  left: calc(var(--i) / var(--segments) * 100%);
+  bottom: -2px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.qx-ruler-mark {
+  width: 2px;
+  flex: 0 0 16px;
+  height: 16px;
+  background: #334155;
+  border-radius: 1px;
+}
+
+.qx-ruler-cap {
+  font-size: clamp(0.48rem, 1.9vw, 0.62rem);
+  font-weight: 800;
+  color: #475569;
+  line-height: 1.05;
+  text-align: center;
+  max-width: 2.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.qx-ruler--months .qx-ruler-cap {
+  max-width: 2.15rem;
+  font-size: clamp(0.45rem, 1.65vw, 0.55rem);
+}
+
+/* ========== Sahne 1 — Bento ızgara (program) ========== */
+.qx-scene--pick .qx-scene-head--pick {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.qx-scene--pick .qx-strip {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(4, minmax(168px, 1fr));
+  overflow: visible;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 540px) {
+  .qx-scene--pick .qx-strip {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: minmax(178px, 1fr) minmax(178px, 1fr);
+  }
+
+  .qx-scene--pick .qx-card--1 {
+    grid-column: 1 / 4;
+    grid-row: 1;
+  }
+  .qx-scene--pick .qx-card--2 {
+    grid-column: 4 / 7;
+    grid-row: 1;
+  }
+  .qx-scene--pick .qx-card--3 {
+    grid-column: 1 / 4;
+    grid-row: 2;
+  }
+  .qx-scene--pick .qx-card--4 {
+    grid-column: 4 / 7;
+    grid-row: 2;
+  }
+}
+
+.qx-scene--pick .qx-card {
+  position: relative;
+  min-height: 168px;
+  height: 100%;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  background: #1e293b;
+  text-align: left;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.qx-scene--pick .qx-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
+}
+
+.qx-scene--pick .qx-card-num {
+  position: absolute;
+  top: 0.65rem;
+  left: 0.65rem;
+  z-index: 2;
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(6px);
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+}
+
+.qx-scene--pick .qx-card-bg {
+  position: absolute;
+  inset: 0;
+  background-image: var(--qx-img);
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.45s ease;
+}
+
+.qx-scene--pick .qx-card:hover .qx-card-bg {
+  transform: scale(1.05);
+}
+
+.qx-scene--pick .qx-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(15, 23, 42, 0.15) 0%, rgba(15, 23, 42, 0.82) 100%);
+  pointer-events: none;
+}
+
+.qx-scene--pick .qx-card strong {
+  position: absolute;
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 0.85rem;
+  z-index: 1;
+  font-size: clamp(1rem, 2.6vw, 1.12rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.qx-scene--pick .qx-card.is-picked {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+}
+
+/* ========== Sahne 2 — Plan (açık zemin + cetvel) ========== */
+.qx-scene--plan .qx-scene-head--plan {
+  margin-bottom: 0.65rem;
+}
+
+.qx-scene--plan .qx-question {
+  color: var(--qx-navy);
+}
+
+.qx-scene--plan .qx-plan-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.qx-scene--plan .qx-plan-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 0.85rem 0.85rem 0.75rem;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+
+.qx-scene--plan .qx-plan-label {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.qx-scene--plan .qx-range {
+  --qx-thumb-half: 11.5px;
+  height: 40px;
+  margin-top: 0;
+}
+
+.qx-scene--plan .qx-rail {
+  top: 16px;
+  height: 4px;
+  border-radius: 3px;
+}
+
+.qx-scene--plan .qx-range input[type="range"]::-webkit-slider-thumb {
+  width: 19px;
+  height: 19px;
+}
+
+.qx-scene--plan .qx-range input[type="range"]::-moz-range-thumb {
+  width: 19px;
+  height: 19px;
+}
+
+.qx-scene--plan .qx-readout {
+  margin-top: 0.5rem;
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--qx-navy);
+  background: #fff;
+  border: 1px solid #cbd5e1;
+}
+
+.qx-scene--plan .qx-hint {
+  margin: 0.65rem 0 0;
+  padding: 0.5rem 0.65rem;
+  border-radius: 10px;
+  border-left: 4px solid var(--qx-accent);
+  background: #fff;
+  font-size: 0.74rem;
+  line-height: 1.45;
+  color: var(--qx-muted);
+  border-top: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* ========== Sahne 3 — Vize + konaklama ========== */
+.qx-scene--stay .qx-question {
+  color: var(--qx-navy);
+}
+
+.qx-scene--stay .qx-stay-cols {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.qx-scene--stay .qx-stay-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 1rem 1rem 1.05rem;
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.07), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+.qx-scene--stay .qx-subq {
+  margin: 0 0 0.65rem;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #334155;
+}
+
+.qx-scene--stay .qx-split:not(.qx-split--acc) {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  margin-bottom: 0;
+}
+
+.qx-scene--stay .qx-split--acc {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+  margin-bottom: 0;
+}
+
+@media (min-width: 520px) {
+  .qx-scene--stay .qx-split--acc {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.qx-scene--stay .qx-split label span {
+  min-height: 4.15rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 14px;
+  border: 2px solid #e2e8f0;
+  background: linear-gradient(180deg, #fff, #f8fafc);
+  font-size: 1.05rem;
+}
+
+.qx-scene--stay .qx-split label input:checked + span {
+  background: linear-gradient(180deg, #0f172a, #1e293b);
+  border-color: #0f172a;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+}
+
+/* ========== Sahne 4 — İletişim (iki sütun: ad+e-posta | telefon+duyum) ========== */
+.qx-scene--send .qx-scene-head--send {
+  margin-bottom: 1.1rem;
+}
+
+.qx-scene--send .qx-fields {
+  max-width: none;
+  gap: 0.85rem 1rem;
+}
+
+.qx-scene--send .qx-fields--grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+}
+
+.qx-scene--send .qx-fields label {
+  padding: 0;
+  border: none;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.qx-scene--send .qx-fields label span {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #475569;
+}
+
+.qx-scene--send .qx-fields input,
+.qx-scene--send .qx-fields select {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #fff;
+  padding: 0.7rem 0.85rem;
+  font-size: 0.95rem;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.qx-scene--send .qx-fields input:focus,
+.qx-scene--send .qx-fields select:focus {
+  border-color: var(--qx-accent);
+  box-shadow: 0 0 0 3px var(--qx-accent-glow);
+}
+
+@media (max-width: 560px) {
+  .qx-scene--send .qx-fields--grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.qx-scene--send .qx-send {
+  margin-top: 1.25rem;
+  width: 100%;
+  max-width: none;
+  align-self: stretch;
+  border-radius: 12px;
+  padding: 0.95rem 1.25rem;
+  font-size: 1rem;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35);
+}
+
+.qx-scene--send .qx-send:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.qx-subq {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--qx-navy-mid);
+}
+
+.qx-subq:not(:first-child) {
+  margin-top: 1.15rem;
+}
+
+.qx-range {
+  --qx-thumb-half: 11px;
+  position: relative;
+  height: 40px;
+  margin-top: 0.2rem;
+}
+
+.qx-rail {
+  --a: 0%;
+  --b: 33%;
+  position: absolute;
+  left: var(--qx-thumb-half);
+  right: var(--qx-thumb-half);
+  top: 16px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--qx-line) var(--a),
+    var(--qx-accent) var(--a),
+    var(--qx-accent) var(--b),
+    var(--qx-line) var(--b)
+  );
+}
+
+.qx-range input[type="range"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 40px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+}
+
+.qx-range input.qx-rmin {
+  z-index: 1;
+}
+
+.qx-range input.qx-rmax {
+  z-index: 2;
+}
+
+.qx-range input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: all;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: var(--qx-navy);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.2);
+  cursor: grab;
+}
+
+.qx-range input[type="range"]::-moz-range-thumb {
+  pointer-events: all;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: var(--qx-navy);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.2);
+  cursor: grab;
+}
+
+.qx-range input[type="range"]::-moz-range-track {
+  background: transparent;
+}
+
+.qx-readout {
+  margin: 0.3rem 0 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--qx-navy-mid);
+}
+
+.qx-hint {
+  margin: 1rem 0 0;
+  padding: 0 0 0 0.75rem;
+  border-left: 3px solid var(--qx-accent);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--qx-muted);
+}
+
+/* Tercihler: büyük iki sütun + alt satır */
+.qx-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.qx-split label {
+  position: relative;
+}
+
+.qx-split label input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.qx-split label span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.1rem;
+  border: 1px solid var(--qx-line);
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: #f8fafc;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.qx-split label input:checked + span {
+  background: var(--qx-navy);
+  border-color: var(--qx-navy);
+  color: #fff;
+}
+
+.qx-acc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.qx-acc label {
+  position: relative;
+}
+
+.qx-acc label input {
+  position: absolute;
+  opacity: 0;
+}
+
+.qx-acc label span {
+  display: inline-flex;
+  padding: 0.52rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--qx-line);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: #fff;
+}
+
+.qx-acc label input:checked + span {
+  background: #eff6ff;
+  border-color: var(--qx-accent);
+  color: var(--qx-navy);
+}
+
+/* İletişim: tek sütun, alt çizgi */
+.qx-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-width: 22rem;
+}
+
+.qx-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--qx-line);
+}
+
+.qx-fields label span {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--qx-muted);
+}
+
+.qx-fields input,
+.qx-fields select {
+  border: none;
+  background: transparent;
+  padding: 0.35rem 0;
+  font: inherit;
+  font-size: 1rem;
+}
+
+.qx-fields input:focus,
+.qx-fields select:focus {
+  outline: none;
+}
+
+.qx-send {
+  margin-top: 1.35rem;
+  align-self: flex-start;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.78rem 1.6rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #fff;
+  background: var(--qx-navy);
+  cursor: pointer;
+}
+
+.qx-send:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.pw-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.52);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 1.75rem);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.pw-overlay.is-open {
+  pointer-events: auto;
+}
+
+.pw-dialog--done {
+  position: relative;
+  width: min(440px, 100%);
+  background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 22px;
+  padding: 2rem 1.65rem 1.6rem;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow:
+    0 4px 6px rgba(15, 23, 42, 0.04),
+    0 24px 48px rgba(15, 23, 42, 0.14),
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+  text-align: center;
+}
+
+.pw-dialog-dismiss {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  width: 2.35rem;
+  height: 2.35rem;
+  border: none;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  color: var(--qx-muted);
+  background: rgba(241, 245, 249, 0.9);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.pw-dialog-dismiss:hover {
+  background: #e2e8f0;
+  color: var(--qx-navy);
+}
+
+.pw-dialog-dismiss:active {
+  transform: scale(0.94);
+}
+
+.pw-dialog-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0 auto 1.1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  color: #fff;
+  background: linear-gradient(145deg, #22c55e 0%, #16a34a 100%);
+  box-shadow: 0 10px 28px rgba(22, 163, 74, 0.35);
+}
+
+.pw-dialog-title {
+  margin: 0 0 0.65rem;
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  font-size: clamp(1.45rem, 4vw, 1.75rem);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--qx-navy);
+}
+
+.pw-dialog-text {
+  margin: 0;
+  color: var(--qx-muted);
+  line-height: 1.62;
+  font-size: 0.95rem;
+  max-width: 32rem;
+  margin-inline: auto;
+}
+
+.pw-dialog-cta-wrap {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.85rem;
+}
+
+.pw-dialog-cta {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.98rem;
+  letter-spacing: 0.02em;
+  padding: 0.95rem 1.25rem;
+  border-radius: 14px;
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.pw-dialog-cta:hover {
+  filter: brightness(1.06);
+}
+
+.pw-dialog-cta:active {
+  transform: scale(0.98);
+}
+
+.pw-dialog-home {
+  border: none;
+  background: transparent;
+  padding: 0.55rem 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--qx-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  transition: color 0.15s ease;
+}
+
+.pw-dialog-home:hover {
+  color: var(--qx-navy);
+}
+
+@media (max-width: 640px) {
+  /* Sadece yatay taşmayı kes; geri kalan layout önceki (daha stabil) sürümle aynı */
+  main:has(#pwRoot) {
+    overflow-x: clip;
+  }
+
+  main:has(#pwRoot) #pwRoot {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .qx {
+    grid-template-columns: 1fr;
+    min-height: min(82dvh, 720px);
+    min-width: 0;
+  }
+
+  /* Form içeriğe göre uzasın; sayfa (main) kaydırılsın — yükseklik JS ile aktif panele göre */
+  .qx-form {
+    flex: 0 1 auto;
+  }
+
+  .pw-viewport {
+    flex: 0 0 auto;
+    min-height: 0;
+    min-width: 0;
+  }
+
+  /* stable: dikey scrollbar için rezerv — birkaç px taşma / iç kaydırma yapıyordu */
+  .pw-panel.qx-scene--plan {
+    scrollbar-gutter: auto;
+  }
+
+  /*
+    .pw-panel varsayılan justify-content: center — içerik viewport'tan uzun olunca
+    sahne dikey ortalanır ve üst (ilk program kartı) kırpılır / qx-lead ile hizası bozulur.
+    Plan adımı gibi üstten başlasın.
+  */
+  .pw-panel.qx-scene--pick,
+  .pw-panel.qx-scene--stay,
+  .pw-panel.qx-scene--send {
+    justify-content: flex-start;
+  }
+
+  .qx-scene--plan .qx-plan-card {
+    min-width: 0;
+  }
+
+  .qx-ruler {
+    max-width: 100%;
+  }
+
+  .qx-fields {
+    max-width: 100%;
+  }
+
+  /* Yalnızca ilerleme (noktalar + adım / İlerleme); ortada — bağlayıcı çizgi yok */
+  .qx-aside-title,
+  .qx-aside-meta,
+  .qx-aside-brand {
+    display: none;
+  }
+
+  /* Tek blok (.qx-aside-progress) — aside tam genişlikte flex ile gerçekten ortada */
+  .qx-aside {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0.65rem 1rem;
+    gap: 0;
+  }
+
+  .qx-aside-progress {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 0 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .qx-aside-connector {
+    width: auto;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .qx-aside-counter {
+    max-width: none;
+    width: auto;
+    margin: 0;
+    padding: 0.4rem 0.55rem;
+  }
+
+  .qx-aside-track {
+    min-height: auto;
+    width: min(200px, 58vw);
+    max-width: 100%;
+    margin-inline: 0;
+    padding: 0.4rem 0.5rem;
+  }
+
+  .qx-aside-track-line {
+    display: none;
+  }
+
+  .qx-dots {
+    flex-direction: row;
+    gap: 0.45rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .qx-aside-step {
+    font-size: 0.78rem;
+  }
+
+  .qx-lead-body {
+    padding-left: 0.5rem;
+  }
+
+  .qx-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tek sütun (varsayılan <540px): 1fr satırlar yüksek viewport’ta şişer; 540–640 2x2’ye dokunma */
+@media (max-width: 539px) {
+  .qx-scene--pick .qx-strip {
+    grid-template-rows: repeat(4, minmax(168px, auto));
+  }
+
+  .qx-scene--pick .qx-card {
+    height: auto;
+    min-height: 168px;
+  }
+}

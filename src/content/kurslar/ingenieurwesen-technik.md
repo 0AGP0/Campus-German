@@ -13,7 +13,7 @@ features:
     description: "20-24 Ders"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
-    description: "12-24 Hafta"
+    description: "8 Hafta"
   - icon: "fas fa-users"
     title: "Sınıf Mevcudu"
     description: "Maksimum 10 Kişi"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "Fiyat Bilgileri"
       pricing:
-        - name: "12 Hafta Mühendislik/Teknik"
-          duration: "12 Hafta"
+        - name: "8 Hafta Mühendislik/Teknik"
+          duration: "8 Hafta"
           schedule: "20-24 Ders/Hafta"
           price: "Özel Fiyatlandırma"
           highlighted: true

@@ -1,9 +1,9 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import BundleOffersSection from '../../components/BundleOffersSection.astro';
 import IntensivePricingSection from '../../components/IntensivePricingSection.astro';
 import '../../styles/pages/fiyatlar-tarihler.css';
 import { coursePricing } from '../../data/coursePricing';
-import { VALID_COUPONS } from '../../data/coupons';
 import { isValidLang, getPricesDatesPath } from '../../utils/pathHelpers';
 import { LESSONS_UP_TO_200, formatCourseDate, getNearestMondayDdmm } from '../../utils/coursePricingHelper';
 
@@ -38,10 +38,6 @@ const data = coursePricing[pricingLang as keyof typeof coursePricing];
 const t = {
   tr: {
     title: 'Fiyatlar ve Tarihler',
-    heroIntro:
-      "Campus German sadece fiyat odaklı değil: Bremen'in en iyi dil okulu olma misyonuyla kaliteli eğitim ve öğrenci deneyimini ön planda tutuyoruz.",
-    couponTitle: 'İndirim Kuponu',
-    couponCode: 'HBCampusGerman',
     intensive: 'Yoğun Almanca Kursları (Yüz Yüze)',
     online: 'Online Almanca Kursları',
     weekly: 'Haftalık Kurs Fiyatları',
@@ -67,15 +63,25 @@ const t = {
     weekly: 'Haftalık',
     weeks: 'Hafta',
     startNote: '(Tüm seviyeler A1–C1 aynı tarih setlerinde başlar.)',
-    startingDatesBoxTitle: 'Başlangıç Tarihleri',
-    startingDatesBoxIntro: 'Her Pazartesi (hiç Almanca bilmeyenler hariç). Hiç Almanca bilmeyenler için başlangıç tarihleri:',
+    heroTitle: 'Campus German ile Bremen’de hedefe odaklı Almanca',
+    heroText:
+      'Akıllı tahta destekli sınıflar, yapılandırılmış seviye takibi ve vize uyumlu eğitim planı ile sürecini netleştiriyoruz.',
+    heroText2: 'Yoğun program, güçlü akademik altyapı ve düzenli danışmanlıkla seni bir üst seviyeye taşıyoruz.',
+    officeCardTitle: "Arkadaşınla gel, haftaları birleştir, bonusları kap",
+    officeCardText:
+      'İki kişi birlikte kayıt olduğunuzda toplam hafta planını birleştirip ek avantajlardan faydalanın.',
+    officeCardCta: 'Detaylı bilgi al',
+    bremenCardTitle: "Bremen'de yaşayanlara özel ofis indirimi",
+    bremenCardText: '%30’a varan ofis indirimi fırsatını hemen değerlendirin.',
+    bremenCardCta: 'Şimdi ofis rezervasyonu yap',
+    heroPoint1: 'Akıllı tahta destekli modern sınıflar',
+    heroPoint2: 'A1–C1 arası planlı seviye takibi',
+    heroPoint3: 'Vize ve akademik hedefe uygun eğitim akışı',
+    heroBadge: 'Campus German Bremen',
+    heroSecondaryCta: 'WhatsApp ile bilgi al',
   },
   de: {
     title: 'Preise & Termine',
-    heroIntro:
-      'Campus German steht nicht nur für Preise: Als Bremens beste Sprachschule stehen qualitativ hochwertiger Unterricht und das Lernerlebnis im Mittelpunkt.',
-    couponTitle: 'Rabattgutschein',
-    couponCode: 'HBCampusGerman',
     intensive: 'Intensiv-Deutschkurse (Präsenz)',
     online: 'Online-Deutschkurse',
     weekly: 'Wöchentliche Kursgebühren',
@@ -101,15 +107,25 @@ const t = {
     weekly: 'Wöchentlich',
     weeks: 'Wochen',
     startNote: '(Alle Niveaus A1–C1 starten zu denselben Terminblöcken.)',
-    startingDatesBoxTitle: 'Starttermine',
-    startingDatesBoxIntro: 'Jeden Montag (außer für absolute Anfänger). Starttermine für absolute Anfänger:',
+    heroTitle: 'Campus German: zielgerichtetes Deutsch in Bremen',
+    heroText:
+      'Mit Smartboard-Unterricht, klarer Niveaustruktur und visakonformer Planung halten wir Ihren Lernweg transparent.',
+    heroText2: 'Intensives Programm, starke akademische Basis und laufende Beratung aus einer Hand.',
+    officeCardTitle: 'Mit Freund*in kommen, Wochen kombinieren, Bonus sichern',
+    officeCardText:
+      'Wenn Sie zu zweit buchen, bündeln wir die Wochenplanung und prüfen zusätzliche Vorteile für Sie.',
+    officeCardCta: 'Mehr Infos',
+    bremenCardTitle: 'Sonderrabatt für Menschen in Bremen',
+    bremenCardText: 'Bis zu 30 % Office-Rabatt - jetzt Platz anfragen.',
+    bremenCardCta: 'Jetzt Office-Reservierung',
+    heroPoint1: 'Moderne Klassen mit Smartboard-Unterstützung',
+    heroPoint2: 'Geplanter Fortschritt von A1 bis C1',
+    heroPoint3: 'Visa- und studienorientierte Kursstruktur',
+    heroBadge: 'Campus German Bremen',
+    heroSecondaryCta: 'Infos via WhatsApp',
   },
   en: {
     title: 'Prices & Dates',
-    heroIntro:
-      "Campus German is not only about price: as Bremen's leading language school, we focus on quality teaching and student experience.",
-    couponTitle: 'Discount coupon',
-    couponCode: 'HBCampusGerman',
     intensive: 'Intensive German Courses (On-site)',
     online: 'Online German Courses',
     weekly: 'Weekly Course Fees',
@@ -135,15 +151,25 @@ const t = {
     weekly: 'Weekly',
     weeks: 'Weeks',
     startNote: '(All levels A1–C1 start on the same date sets.)',
-    startingDatesBoxTitle: 'Starting dates',
-    startingDatesBoxIntro: 'Every Monday (except for absolute beginners). Starting dates for absolute beginners:',
+    heroTitle: 'Campus German for focused progress in Bremen',
+    heroText:
+      'With smart-board supported classes, clear level tracking, and visa-friendly planning, your path stays transparent.',
+    heroText2: 'An intensive structure with strong academic support and continuous guidance.',
+    officeCardTitle: 'Come with a friend, combine weeks, unlock bonuses',
+    officeCardText:
+      'When two students book together, we combine the week plan and unlock extra benefits.',
+    officeCardCta: 'Get details',
+    bremenCardTitle: 'Special office discount for residents in Bremen',
+    bremenCardText: 'Get up to 30% office discount and secure your spot now.',
+    bremenCardCta: 'Reserve office now',
+    heroPoint1: 'Smart-board supported modern classrooms',
+    heroPoint2: 'Structured A1 to C1 level progression',
+    heroPoint3: 'Visa and academic goal aligned planning',
+    heroBadge: 'Campus German Bremen',
+    heroSecondaryCta: 'Get info via WhatsApp',
   },
   es: {
     title: 'Precios y Fechas',
-    heroIntro:
-      'Campus German no es solo precios: como la mejor escuela de idiomas de Bremen, priorizamos la calidad y la experiencia del estudiante.',
-    couponTitle: 'Cupón de descuento',
-    couponCode: 'HBCampusGerman',
     intensive: 'Cursos Intensivos de Alemán (Presencial)',
     online: 'Cursos de Alemán Online',
     weekly: 'Tarifas Semanales',
@@ -169,8 +195,22 @@ const t = {
     weekly: 'Semanal',
     weeks: 'Semanas',
     startNote: '(Todos los niveles A1–C1 comienzan en los mismos bloques de fechas.)',
-    startingDatesBoxTitle: 'Fechas de inicio',
-    startingDatesBoxIntro: 'Cada lunes (excepto para principiantes absolutos). Fechas de inicio para principiantes absolutos:',
+    heroTitle: 'Campus German para avanzar con enfoque en Bremen',
+    heroText:
+      'Con aulas apoyadas por pizarra inteligente, seguimiento claro por nivel y planificación compatible con visado.',
+    heroText2: 'Programa intensivo, base académica sólida y acompañamiento continuo.',
+    officeCardTitle: 'Ven con un amigo, combina semanas y consigue bonus',
+    officeCardText:
+      'Si reservan dos personas, unificamos el plan de semanas y activamos ventajas adicionales.',
+    officeCardCta: 'Más información',
+    bremenCardTitle: 'Descuento especial de oficina para residentes en Bremen',
+    bremenCardText: 'Hasta un 30% de descuento de oficina. Reserva ahora.',
+    bremenCardCta: 'Reservar oficina ahora',
+    heroPoint1: 'Aulas modernas con pizarra inteligente',
+    heroPoint2: 'Progresión estructurada de A1 a C1',
+    heroPoint3: 'Planificación alineada con visa y objetivo académico',
+    heroBadge: 'Campus German Bremen',
+    heroSecondaryCta: 'Info por WhatsApp',
   },
 }[lang];
 
@@ -194,27 +234,47 @@ const uniqueDdMmMonday = uniqueDdMm.map((ddmm) => getNearestMondayDdmm(ddmm, yea
 const simpleStartDates = uniqueDdMmMonday.map((ddmm) =>
   formatCourseDate(ddmm, lang as 'tr' | 'de' | 'en' | 'es')
 );
-const formattedAbsBeginnerDates =
-  uniqueDdMmMonday
-    .map((ddmm) => formatCourseDate(ddmm, lang as 'tr' | 'de' | 'en' | 'es'))
-    .join(' / ') + ' ' + year;
 ---
 
 <MainLayout title={`${t.title} - CampusGerman`} lang={lang}>
-  <section class="fiyatlar-hero">
+  <section class="fiyatlar-intro">
     <div class="container">
-      <h1 class="page-title">{t.title}</h1>
-      <p class="fiyatlar-hero-intro">{t.heroIntro}</p>
-      <div class="fiyatlar-coupon-block">
-        <h2 class="fiyatlar-coupon-title">{t.couponTitle}</h2>
-        <p class="fiyatlar-coupon-code">
-          <code>{t.couponCode}</code>
-        </p>
+      <div class="fiyatlar-intro-headline">
+        <h1>{t.heroTitle}</h1>
+        <p>{t.heroText}</p>
+      </div>
+
+      <div class="fiyatlar-promo-grid">
+        <article class="fiyatlar-promo-card fiyatlar-promo-card--hero">
+          <h3>{t.officeCardTitle}</h3>
+          <p>{t.officeCardText}</p>
+          <div class="fiyatlar-promo-tags">
+            <span>{t.heroPoint1}</span>
+            <span>{t.heroPoint2}</span>
+          </div>
+          <a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="fiyatlar-wa-btn">
+            <i class="fab fa-whatsapp"></i>
+            {t.officeCardCta}
+          </a>
+        </article>
+        <article class="fiyatlar-promo-card fiyatlar-promo-card--hero fiyatlar-promo-card--highlight">
+          <h3>{t.bremenCardTitle}</h3>
+          <p>{t.bremenCardText}</p>
+          <div class="fiyatlar-promo-tags">
+            <span>{t.heroPoint3}</span>
+          </div>
+          <a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="fiyatlar-wa-btn">
+            <i class="fab fa-whatsapp"></i>
+            {t.bremenCardCta}
+          </a>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- Yeni fiyat yapısı: Intensive 20h / Intensive+ 25h -->
+  <BundleOffersSection lang={lang} />
+
+  <!-- Yeni fiyat yapısı: Intensive 20h / Intensive 25h -->
   <IntensivePricingSection lang={lang} showSectionTitle={true} />
 
   <!-- Kurs Saatleri -->
@@ -273,11 +333,6 @@ const formattedAbsBeginnerDates =
           ? '(por curso)'
           : '(per course)'}
       </p>
-      <div class="fiyatlar-starting-dates-box">
-        <h3 class="fiyatlar-starting-dates-box-title">{t.startingDatesBoxTitle}</h3>
-        <p class="fiyatlar-starting-dates-box-intro">{t.startingDatesBoxIntro}</p>
-        <p class="fiyatlar-starting-dates-box-dates">{formattedAbsBeginnerDates}</p>
-      </div>
     </div>
   </section>
 

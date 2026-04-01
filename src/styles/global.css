@@ -398,6 +398,13 @@ section.mission-statement .container {
     overflow: hidden;
 }
 
+button.cta-primary {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    appearance: none;
+}
+
 /* Bu sınıf CSS hover ile çalışıyor */
 
 .cta-arrow {
@@ -2898,6 +2905,152 @@ section.mission-statement .container {
     -webkit-backdrop-filter: blur(8px);
 }
 
+/* Ücretsiz ders popup: kompakt form + görsel (mobilde üstte, masaüstünde sağda) */
+.visit-popup-card--form {
+    max-width: min(640px, calc(100vw - 24px));
+}
+
+.visit-popup-content--form {
+    padding: 1rem 1.15rem 1.15rem;
+    overflow-x: hidden;
+}
+
+@media (min-width: 900px) {
+    .visit-popup-content--form {
+        padding: 1.2rem 1.35rem 1.35rem;
+        overflow-y: auto;
+        max-height: min(90vh, 540px);
+        align-self: start;
+    }
+}
+
+.visit-popup-card--form .visit-popup-title {
+    font-size: 1.2rem;
+    margin: 0 2.25rem 0.25rem 0;
+    line-height: 1.25;
+    max-width: none;
+}
+
+@media (min-width: 900px) {
+    .visit-popup-card--form .visit-popup-title {
+        font-size: 1.35rem;
+    }
+}
+
+.visit-popup-description--compact {
+    font-size: 0.8125rem !important;
+    line-height: 1.4 !important;
+    margin: 0 0 0.6rem !important;
+    max-width: none !important;
+}
+
+.visit-popup-form {
+    width: 100%;
+    margin: 0;
+}
+
+.visit-popup-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.4rem 0.65rem;
+    width: 100%;
+}
+
+@media (min-width: 520px) {
+    .visit-popup-form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .visit-popup-field--full {
+        grid-column: 1 / -1;
+    }
+}
+
+.visit-popup-honey {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.visit-popup-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    width: 100%;
+    margin: 0;
+    min-width: 0;
+}
+
+.visit-popup-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.visit-popup-input,
+.visit-popup-select {
+    width: 100%;
+    padding: 0.42rem 0.55rem;
+    border: 1px solid var(--color-border-medium, #e2e8f0);
+    border-radius: 8px;
+    font-size: 0.8125rem;
+    background: var(--color-bg-white);
+    color: var(--color-text-primary);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    box-sizing: border-box;
+}
+
+.visit-popup-input:focus,
+.visit-popup-select:focus {
+    outline: none;
+    border-color: #22c55e;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+}
+
+.visit-popup-select {
+    cursor: pointer;
+}
+
+.visit-popup-actions--form {
+    margin-top: 0.15rem;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    align-items: center;
+}
+
+.visit-popup-actions--form .visit-popup-btn {
+    min-height: 40px;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.8125rem;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+@media (min-width: 900px) {
+    .visit-popup-card--form .visit-popup-image-wrap {
+        min-height: 0 !important;
+        max-height: none !important;
+        height: auto;
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .visit-popup-card--form .visit-popup-image {
+        flex: 1 1 auto;
+        min-height: 240px;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 0 20px 20px 0;
+    }
+}
+
 .visit-popup-card {
     position: relative;
     width: 100%;
@@ -2928,6 +3081,10 @@ section.mission-statement .container {
 @media (min-width: 900px) {
     .visit-popup-card {
         max-width: 720px;
+    }
+
+    .visit-popup-card.visit-popup-card--form {
+        max-width: min(760px, calc(100vw - 32px));
     }
 
     .visit-popup-inner {
@@ -3105,6 +3262,13 @@ section.mission-statement .container {
     border-color: var(--color-border-medium);
 }
 
+@media (max-width: 899px) {
+    .visit-popup-card--form .visit-popup-image-wrap {
+        min-height: 110px;
+        max-height: 140px;
+    }
+}
+
 @media (max-width: 480px) {
     .visit-popup {
         padding: 12px;
@@ -3122,13 +3286,27 @@ section.mission-statement .container {
         max-height: 180px;
     }
 
+    .visit-popup-card--form .visit-popup-image-wrap {
+        min-height: 100px;
+        max-height: 120px;
+    }
+
     .visit-popup-content {
         padding: 1.5rem 1.25rem 1.5rem;
+    }
+
+    .visit-popup-content--form {
+        padding: 0.95rem 1rem 1.1rem !important;
     }
 
     .visit-popup-title {
         font-size: 1.5rem;
         margin-right: 2.5rem;
+    }
+
+    .visit-popup-card--form .visit-popup-title {
+        font-size: 1.12rem;
+        margin-right: 2.25rem;
     }
 
     .visit-popup-actions {
@@ -3139,5 +3317,9 @@ section.mission-statement .container {
     .visit-popup-btn {
         width: 100%;
         justify-content: center;
+    }
+
+    .visit-popup-actions--form {
+        flex-direction: column;
     }
 }

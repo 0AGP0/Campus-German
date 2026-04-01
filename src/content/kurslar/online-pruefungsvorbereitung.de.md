@@ -13,7 +13,7 @@ features:
     description: "20 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
-    description: "8–12 Wochen"
+    description: "8 Wochen"
   - icon: "fas fa-users"
     title: "Klassengröße"
     description: "Maximal 8 Teilnehmende"
@@ -37,7 +37,7 @@ tabs:
       title: "Online Goethe/telc Prüfungsvorbereitung"
       paragraphs:
         - heading: "Kursüberblick"
-          text: "Der Online Goethe/telc Prüfungsvorbereitungskurs ist ein umfassendes, prüfungsorientiertes Online-Programm für Lernende, die sich gezielt auf die Goethe- und telc-Prüfungen vorbereiten möchten. Ziel des Kurses ist es, die Teilnehmenden optimal mit dem Prüfungsformat vertraut zu machen, effektive Prüfungstechniken zu vermitteln und sie sicher zum Erfolg zu führen. Mit 20 Unterrichtseinheiten pro Woche bietet der Kurs eine intensive Vorbereitung und dauert je nach Zielniveau 8 bis 12 Wochen."
+          text: "Der Online Goethe/telc Prüfungsvorbereitungskurs ist ein umfassendes, prüfungsorientiertes Online-Programm für Lernende, die sich gezielt auf die Goethe- und telc-Prüfungen vorbereiten möchten. Ziel des Kurses ist es, die Teilnehmenden optimal mit dem Prüfungsformat vertraut zu machen, effektive Prüfungstechniken zu vermitteln und sie sicher zum Erfolg zu führen. Mit 20 Unterrichtseinheiten pro Woche bietet der Kurs eine intensive Vorbereitung über 8 Wochen und kann je nach Zielniveau angepasst werden."
         - heading: "Vorteile des Online-Unterrichts"
           text: "Das Online-Format bietet maximale zeitliche und räumliche Flexibilität. Sie können von zu Hause oder jedem beliebigen Ort aus teilnehmen und erhalten hochwertige Prüfungsvorbereitung ohne Reiseaufwand. Alle Unterrichtseinheiten werden aufgezeichnet und stehen rund um die Uhr zur Verfügung, sodass Sie verpasste Stunden nachholen oder Inhalte wiederholen können. Digitale Prüfungsunterlagen und interaktive Probetests sorgen für eine besonders effektive Vorbereitung."
         - heading: "Zielprüfungen und Niveaustufen"

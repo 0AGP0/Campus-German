@@ -13,7 +13,7 @@ features:
     description: "25 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
-    description: "12 Hafta"
+    description: "8 Hafta"
   - icon: "fas fa-users"
     title: "Sınıf Mevcudu"
     description: "Maksimum 12 Kişi"
@@ -37,7 +37,7 @@ tabs:
       title: "Yoğun Almanca C1 Kursu"
       paragraphs:
         - heading: "Kursa Genel Bakış"
-          text: "Yoğun Almanca C1 Kursu, B2 seviyesini tamamlamış öğrenciler için tasarlanmış, ileri seviye Almanca becerilerini geliştirmeye odaklı kapsamlı bir programdır. Bu kurs, öğrencilerin üniversite seviyesinde akademik çalışmalar yapabilmelerini ve profesyonel ortamlarda akıcı bir şekilde iletişim kurabilmelerini sağlayacak dil becerilerini kazandırmayı hedefler. Haftada 25 ders saati ile yoğun bir öğrenme deneyimi sunan program, 12 hafta sürmektedir ve yaklaşık 200 ders saatinden oluşmaktadır."
+          text: "Yoğun Almanca C1 Kursu, B2 seviyesini tamamlamış öğrenciler için tasarlanmış, ileri seviye Almanca becerilerini geliştirmeye odaklı kapsamlı bir programdır. Bu kurs, öğrencilerin üniversite seviyesinde akademik çalışmalar yapabilmelerini ve profesyonel ortamlarda akıcı bir şekilde iletişim kurabilmelerini sağlayacak dil becerilerini kazandırmayı hedefler. Haftada 25 ders saati ile yoğun bir öğrenme deneyimi sunan program, 8 hafta sürmektedir ve yaklaşık 200 ders saatinden oluşmaktadır."
         - heading: "Hedef Kitle ve Ön Koşullar"
           text: "Bu kurs, B2 seviyesini başarıyla tamamlamış öğrenciler için uygundur. C1 seviyesi, Almanca öğrenmede en üst seviyelerden biridir ve bu seviyede öğrenciler artık neredeyse ana dil seviyesinde iletişim kurabilir hale gelirler. Almanya'da üniversite eğitimi almayı planlayan öğrenciler, akademik araştırmalar yapmayı düşünenler, iş hayatında üst düzey pozisyonlarda çalışmak isteyenler veya Almanca konuşulan ülkelerde profesyonel kariyer yapmayı planlayan herkes bu kursa katılabilir."
         - heading: "Kurs İçeriği ve Öğrenme Hedefleri"

@@ -13,7 +13,7 @@ features:
     description: "24 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
-    description: "12 Wochen"
+    description: "8 Wochen"
   - icon: "fas fa-users"
     title: "Klassengröße"
     description: "Maximal 12 Personen"
@@ -37,7 +37,7 @@ tabs:
       title: "Intensiv-Deutschkurs C1"
       paragraphs:
         - heading: "Kursüberblick"
-          text: "Der Intensiv-Deutschkurs C1 ist ein umfassendes Programm für Lernende, die das Niveau B2 abgeschlossen haben und darauf ausgerichtet sind, ihre fortgeschrittenen Deutschkenntnisse zu entwickeln. Dieser Kurs zielt darauf ab, den Teilnehmenden Sprachkenntnisse zu vermitteln, die es ihnen ermöglichen, auf Universitätsniveau akademische Arbeiten durchzuführen und in professionellen Umgebungen fließend zu kommunizieren. Mit 24 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Lernerfahrung über 12 Wochen und umfasst insgesamt etwa 200 Unterrichtseinheiten."
+          text: "Der Intensiv-Deutschkurs C1 ist ein umfassendes Programm für Lernende, die das Niveau B2 abgeschlossen haben und darauf ausgerichtet sind, ihre fortgeschrittenen Deutschkenntnisse zu entwickeln. Dieser Kurs zielt darauf ab, den Teilnehmenden Sprachkenntnisse zu vermitteln, die es ihnen ermöglichen, auf Universitätsniveau akademische Arbeiten durchzuführen und in professionellen Umgebungen fließend zu kommunizieren. Mit 24 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Lernerfahrung über 8 Wochen und umfasst insgesamt etwa 200 Unterrichtseinheiten."
         - heading: "Zielgruppe und Voraussetzungen"
           text: "Dieser Kurs eignet sich für Lernende, die das Niveau B2 erfolgreich abgeschlossen haben. Das C1-Niveau ist eines der höchsten Niveaus beim Deutschlernen, und auf dieser Stufe können Lernende nun fast auf Muttersprachlerniveau kommunizieren. Alle, die ein Universitätsstudium in Deutschland planen, akademische Forschungen durchführen möchten, in Führungspositionen im Berufsleben arbeiten möchten oder eine professionelle Karriere in deutschsprachigen Ländern planen, können an diesem Kurs teilnehmen."
         - heading: "Kursinhalte und Lernziele"

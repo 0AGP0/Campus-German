@@ -13,7 +13,7 @@ features:
     description: "25 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
-    description: "12 Hafta"
+    description: "8 Hafta"
   - icon: "fas fa-users"
     title: "Sınıf Mevcudu"
     description: "Maksimum 8 Kişi"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "Fiyat Bilgileri"
       pricing:
-        - name: "12 Hafta FSP Hazırlık"
-          duration: "12 Hafta"
+        - name: "8 Hafta FSP Hazırlık"
+          duration: "8 Hafta"
           schedule: "25 Ders/Hafta"
           price: "Özel Fiyatlandırma"
           highlighted: true

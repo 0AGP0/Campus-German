@@ -13,7 +13,7 @@ features:
     description: "24 Clases (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Curso"
-    description: "12 Semanas"
+    description: "8 Semanas"
   - icon: "fas fa-users"
     title: "Tamaño de Clase"
     description: "Máximo 12 Personas"
@@ -37,7 +37,7 @@ tabs:
       title: "Curso Intensivo de Alemán B2"
       paragraphs:
         - heading: "Resumen del Curso"
-          text: "El Curso Intensivo de Alemán B2 es un programa integral diseñado para estudiantes que han completado el nivel B1, enfocado en desarrollar habilidades de alemán de nivel intermedio-alto. Este curso tiene como objetivo proporcionar a los estudiantes habilidades lingüísticas que les permitirán comunicarse a nivel profesional en la vida empresarial y entornos académicos. El programa, que ofrece una experiencia de aprendizaje intensiva con 24 horas de clase por semana, dura 12 semanas y consta de aproximadamente 200 horas de clase."
+          text: "El Curso Intensivo de Alemán B2 es un programa integral diseñado para estudiantes que han completado el nivel B1, enfocado en desarrollar habilidades de alemán de nivel intermedio-alto. Este curso tiene como objetivo proporcionar a los estudiantes habilidades lingüísticas que les permitirán comunicarse a nivel profesional en la vida empresarial y entornos académicos. El programa, que ofrece una experiencia de aprendizaje intensiva con 24 horas de clase por semana, dura 8 semanas y consta de aproximadamente 200 horas de clase."
         - heading: "Audiencia Objetivo y Prerrequisitos"
           text: "Este curso es adecuado para estudiantes que han completado exitosamente el nivel B1. El nivel B2 es una etapa crítica en el aprendizaje de alemán porque en este nivel los estudiantes se vuelven capaces de entender textos complejos y hablar con fluidez sobre temas abstractos. Estudiantes que planean educación universitaria en Alemania, profesionales que quieren usar alemán a nivel profesional en la vida empresarial, o cualquier persona que planea estudios académicos puede participar en este curso."
         - heading: "Contenido del Curso y Objetivos de Aprendizaje"

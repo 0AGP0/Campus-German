@@ -21,6 +21,9 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+  # Eski TR "Über uns" path'i -> hakkimizda (Netlify _redirects ile aynı; HTML meta-refresh sayfası yok)
+  RewriteRule ^tr/ueber-uns/?$ /tr/hakkimizda/ [R=301,L]
+  RewriteRule ^tr/ueber-uns/(.+)$ /tr/hakkimizda/$1 [R=301,L,QSA]
   # Eski kartvizit URL'leri: /k/slug -> /slug (301)
   RewriteRule ^k/([a-z0-9-]+)/?$ /$1 [R=301,L]
   # Tek segment (dosya/klasör değilse) danışman sayfası: /slug -> k.php

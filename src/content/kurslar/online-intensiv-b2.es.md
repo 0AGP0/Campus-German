@@ -13,7 +13,7 @@ features:
     description: "20 Clases (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Curso"
-    description: "12 Semanas"
+    description: "8 Semanas"
   - icon: "fas fa-users"
     title: "Tamaño de Clase"
     description: "Máximo 10 Personas"
@@ -37,7 +37,7 @@ tabs:
       title: "Curso Intensivo de Alemán Online B2"
       paragraphs:
         - heading: "Resumen del Curso"
-          text: "El Curso Intensivo de Alemán Online B2 es un programa online integral diseñado para estudiantes que han completado el nivel B1, enfocado en desarrollar habilidades de alemán de nivel intermedio-alto. Este curso tiene como objetivo proporcionar a los estudiantes habilidades lingüísticas que les permitirán comunicarse a nivel profesional en la vida empresarial y entornos académicos. El programa, que ofrece una experiencia de aprendizaje intensiva con 20 horas de clase por semana, dura 12 semanas y consta de aproximadamente 200 horas de clase."
+          text: "El Curso Intensivo de Alemán Online B2 es un programa online integral diseñado para estudiantes que han completado el nivel B1, enfocado en desarrollar habilidades de alemán de nivel intermedio-alto. Este curso tiene como objetivo proporcionar a los estudiantes habilidades lingüísticas que les permitirán comunicarse a nivel profesional en la vida empresarial y entornos académicos. El programa, que ofrece una experiencia de aprendizaje intensiva con 20 horas de clase por semana, dura 8 semanas y consta de aproximadamente 160 horas de clase."
         - heading: "Ventajas de la Educación Online"
           text: "El formato de educación online proporciona a los estudiantes flexibilidad de tiempo y lugar. Puede asistir a clases desde casa o desde cualquier lugar que desee, recibir educación de calidad sin tener que viajar. Todas las clases se graban y están disponibles 24/7, por lo que puede ver clases perdidas nuevamente o reforzar temas. Además, se ofrece una experiencia de aprendizaje enriquecida con materiales digitales y ejercicios interactivos."
         - heading: "Audiencia Objetivo y Prerrequisitos"

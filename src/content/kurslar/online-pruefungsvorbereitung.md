@@ -13,7 +13,7 @@ features:
     description: "20 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
-    description: "8-12 Hafta"
+    description: "8 Hafta"
   - icon: "fas fa-users"
     title: "Sınıf Mevcudu"
     description: "Maksimum 8 Kişi"
@@ -37,7 +37,7 @@ tabs:
       title: "Online Goethe/TELC Sınav Hazırlık Kursu"
       paragraphs:
         - heading: "Kursa Genel Bakış"
-          text: "Online Goethe/TELC Sınav Hazırlık Kursu, Goethe ve TELC sınavlarına hazırlanmak isteyen öğrenciler için tasarlanmış, sınav odaklı kapsamlı bir online programdır. Bu kurs, öğrencilerin sınav formatına özel hazırlık yapmalarını, sınav tekniklerini öğrenmelerini ve başarılı olmalarını sağlamayı hedefler. Haftada 20 ders saati ile yoğun bir hazırlık deneyimi sunan program, 8-12 hafta sürmektedir ve öğrencinin hedeflediği sınav seviyesine göre özelleştirilebilir."
+          text: "Online Goethe/TELC Sınav Hazırlık Kursu, Goethe ve TELC sınavlarına hazırlanmak isteyen öğrenciler için tasarlanmış, sınav odaklı kapsamlı bir online programdır. Bu kurs, öğrencilerin sınav formatına özel hazırlık yapmalarını, sınav tekniklerini öğrenmelerini ve başarılı olmalarını sağlamayı hedefler. Haftada 20 ders saati ile yoğun bir hazırlık deneyimi sunan program, 8 hafta sürmektedir ve öğrencinin hedeflediği sınav seviyesine göre özelleştirilebilir."
         - heading: "Online Eğitimin Avantajları"
           text: "Online eğitim formatı, öğrencilere zaman ve mekan esnekliği sağlar. Evden veya istediğiniz herhangi bir yerden derslere katılabilir, seyahat etmek zorunda kalmadan kaliteli hazırlık eğitimi alabilirsiniz. Tüm dersler kaydedilir ve 7/24 erişim imkanı sunulur, böylece kaçırdığınız dersleri tekrar izleyebilir veya konuları pekiştirebilirsiniz. Ayrıca, dijital sınav materyalleri ve interaktif deneme sınavları ile zenginleştirilmiş bir hazırlık deneyimi sunulur."
         - heading: "Hedef Sınavlar ve Seviyeler"

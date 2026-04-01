@@ -13,7 +13,7 @@ features:
     description: "25 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Program Süresi"
-    description: "12-24 Hafta"
+    description: "8 Hafta"
   - icon: "fas fa-users"
     title: "Sınıf Mevcudu"
     description: "Maksimum 10 Kişi"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "Fiyat Bilgileri"
       pricing:
-        - name: "12 Hafta Career Pathway"
-          duration: "12 Hafta"
+        - name: "8 Hafta Career Pathway"
+          duration: "8 Hafta"
           schedule: "25 Ders/Hafta"
           price: "Özel Fiyatlandırma"
         - name: "24 Hafta Career Pathway"

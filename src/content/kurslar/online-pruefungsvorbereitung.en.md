@@ -13,7 +13,7 @@ features:
     description: "20 Lessons (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
-    description: "8-12 Weeks"
+    description: "8 Weeks"
   - icon: "fas fa-users"
     title: "Class Size"
     description: "Maximum 8 People"
@@ -37,7 +37,7 @@ tabs:
       title: "Online Goethe/TELC Exam Preparation Course"
       paragraphs:
         - heading: "Course Overview"
-          text: "The Online Goethe/TELC Exam Preparation Course is a comprehensive, exam-focused online program designed for students who want to prepare for Goethe and TELC exams. This course aims to ensure that students make specific preparation for the exam format, learn exam techniques, and succeed. The program, which offers an intensive preparation experience with 20 lesson hours per week, lasts 8-12 weeks and can be customized according to the exam level targeted by the student."
+          text: "The Online Goethe/TELC Exam Preparation Course is a comprehensive, exam-focused online program designed for students who want to prepare for Goethe and TELC exams. This course aims to ensure that students make specific preparation for the exam format, learn exam techniques, and succeed. The program, which offers an intensive preparation experience with 20 lesson hours per week, lasts 8 weeks and can be customized according to the exam level targeted by the student."
         - heading: "Advantages of Online Education"
           text: "Online education format provides students with time and place flexibility. You can attend classes from home or anywhere you want, receive quality preparation education without having to travel. All classes are recorded and available 24/7, so you can watch missed classes again or reinforce topics. Additionally, an enriched preparation experience is offered with digital exam materials and interactive mock exams."
         - heading: "Target Exams and Levels"

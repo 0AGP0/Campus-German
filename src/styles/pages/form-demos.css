@@ -1,0 +1,167 @@
+/* Form library comparison — page chrome only */
+.fd-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.fd-page h1 {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  color: #0f172a;
+}
+
+.fd-page > p.lead {
+  margin: 0 0 1.5rem;
+  color: #64748b;
+  max-width: 720px;
+  line-height: 1.5;
+}
+
+.fd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.fd-shell {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1rem;
+  background: #fff;
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+}
+
+.fd-shell > h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.fd-shell > .fd-meta {
+  margin: 0 0 0.9rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.fd-shell .fd-progress {
+  height: 3px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+
+.fd-shell .fd-progress > i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: #0f172a;
+  transition: width 0.35s ease;
+}
+
+.fd-panel {
+  min-height: 200px;
+}
+
+.fd-panel h4 {
+  margin: 0 0 0.65rem;
+  font-size: 0.95rem;
+  color: #334155;
+}
+
+.fd-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.fd-options button {
+  flex: 1 1 100px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 0.65rem;
+  background: #f8fafc;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.fd-options button:hover {
+  border-color: #64748b;
+}
+
+.fd-options button.picked {
+  background: #0f172a;
+  color: #fff;
+  border-color: #0f172a;
+}
+
+.fd-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.fd-field label {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.fd-field input {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 0.6rem;
+  font: inherit;
+}
+
+.fd-submit {
+  margin-top: 0.65rem;
+  border: 0;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  background: #0f172a;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* CSS-only step transitions */
+.fd-css .fd-panel-inner {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fd-css-in 0.38s ease forwards;
+}
+
+@keyframes fd-css-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Motion / GSAP panels start hidden; JS reveals */
+.fd-motion .fd-panel-inner.is-hidden,
+.fd-gsap .fd-panel-inner.is-hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+.fd-motion .fd-panel,
+.fd-gsap .fd-panel {
+  position: relative;
+  min-height: 200px;
+}
+
+.fd-motion .fd-panel-inner:not(.is-hidden),
+.fd-gsap .fd-panel-inner:not(.is-hidden) {
+  position: relative;
+  opacity: 1;
+  transform: none;
+}

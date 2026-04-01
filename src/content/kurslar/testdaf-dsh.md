@@ -13,7 +13,7 @@ features:
     description: "25 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
-    description: "12 Hafta"
+    description: "8 Hafta"
   - icon: "fas fa-users"
     title: "Sınıf Mevcudu"
     description: "Maksimum 6 Kişi"
@@ -37,7 +37,7 @@ tabs:
       title: "TestDaF/DSH Hazırlık Kursu"
       paragraphs:
         - heading: "Kursa Genel Bakış"
-          text: "TestDaF/DSH Hazırlık Kursu, Almanya'da üniversite eğitimi almayı planlayan öğrenciler için tasarlanmış, üniversite giriş sınavlarına özel hazırlık programıdır. Bu kurs, öğrencilerin TestDaF ve DSH sınav formatına özel hazırlık yapmalarını, akademik yazma becerilerini geliştirmelerini ve başarılı olmalarını sağlamayı hedefler. Haftada 25 ders saati ile yoğun bir hazırlık deneyimi sunan program, 12 hafta sürmektedir ve yaklaşık 220-250 ders saatinden oluşmaktadır."
+          text: "TestDaF/DSH Hazırlık Kursu, Almanya'da üniversite eğitimi almayı planlayan öğrenciler için tasarlanmış, üniversite giriş sınavlarına özel hazırlık programıdır. Bu kurs, öğrencilerin TestDaF ve DSH sınav formatına özel hazırlık yapmalarını, akademik yazma becerilerini geliştirmelerini ve başarılı olmalarını sağlamayı hedefler. Haftada 25 ders saati ile yoğun bir hazırlık deneyimi sunan program, 8 hafta sürmektedir ve yaklaşık 200 ders saatinden oluşmaktadır."
         - heading: "Hedef Sınavlar ve Ön Koşullar"
           text: "Bu kurs, TestDaF ve DSH sınavlarına hazırlık yapmaktadır. En az B2 seviyesini tamamlamış öğrenciler için uygundur, ancak C1 seviyesi önerilir. TestDaF (Test Deutsch als Fremdsprache), tüm Alman üniversiteleri için geçerli ulusal bir sınavdır ve dünya çapında yapılır. DSH (Deutsche Sprachprüfung für den Hochschulzugang) ise her üniversitenin kendi yaptığı sınavdır ve sadece o üniversite için geçerlidir. Her iki sınav da üniversite eğitimi için gerekli dil seviyesini ölçer."
         - heading: "Kurs İçeriği ve Hazırlık Yöntemleri"

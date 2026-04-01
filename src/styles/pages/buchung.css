@@ -383,6 +383,98 @@
     color: rgba(255, 255, 255, 0.9);
 }
 
+/* Çoklu kurs: FLIP sırası + 2+ seçimde tüm seçili chip’ler tek “segment” blok (data-merge-pos, JS) */
+#course-selection-group,
+#course-levels-block {
+    overflow: visible;
+}
+#course-levels-buttons {
+    position: relative;
+    overflow: visible;
+    --course-chip-glow: rgba(16, 185, 129, 0.28);
+}
+#course-levels-buttons label.option-btn {
+    position: relative;
+    overflow: visible;
+    transition:
+        box-shadow 0.35s ease,
+        border-color 0.25s ease,
+        border-radius 0.2s ease,
+        margin 0.2s ease,
+        background 0.45s ease;
+}
+/* Seçili kurs sayısı: ferah yeşil–zümrüt, en fazla orta koyulukta (JS: data-selection-count) */
+#course-levels-buttons[data-selection-count='1'] {
+    --course-chip-glow: rgba(52, 211, 153, 0.32);
+}
+#course-levels-buttons[data-selection-count='1'] label.option-btn:has(input:checked) {
+    background: linear-gradient(145deg, #4ade80 0%, #34d399 42%, #10b981 100%);
+    color: #fff;
+}
+#course-levels-buttons[data-selection-count='2'] {
+    --course-chip-glow: rgba(45, 212, 191, 0.3);
+}
+#course-levels-buttons[data-selection-count='2'] label.option-btn:has(input:checked) {
+    background: linear-gradient(145deg, #34d399 0%, #2dd4bf 38%, #14b8a6 100%);
+    color: #fff;
+}
+#course-levels-buttons[data-selection-count='3'] {
+    --course-chip-glow: rgba(20, 184, 166, 0.32);
+}
+#course-levels-buttons[data-selection-count='3'] label.option-btn:has(input:checked) {
+    background: linear-gradient(145deg, #2dd4bf 0%, #14b8a6 45%, #0d9488 100%);
+    color: #fff;
+}
+#course-levels-buttons[data-selection-count='4'] {
+    --course-chip-glow: rgba(16, 185, 129, 0.34);
+}
+#course-levels-buttons[data-selection-count='4'] label.option-btn:has(input:checked) {
+    background: linear-gradient(145deg, #10b981 0%, #059669 48%, #047857 100%);
+    color: #fff;
+}
+#course-levels-buttons[data-selection-count='5'],
+#course-levels-buttons[data-selection-count='6'],
+#course-levels-buttons[data-selection-count='7'] {
+    --course-chip-glow: rgba(13, 148, 136, 0.36);
+}
+#course-levels-buttons[data-selection-count='5'] label.option-btn:has(input:checked),
+#course-levels-buttons[data-selection-count='6'] label.option-btn:has(input:checked),
+#course-levels-buttons[data-selection-count='7'] label.option-btn:has(input:checked) {
+    background: linear-gradient(145deg, #14b8a6 0%, #0d9488 45%, #0f766e 100%);
+    color: #fff;
+}
+#course-levels-buttons.course-selection-bundle {
+    column-gap: 0;
+    row-gap: 8px;
+}
+#course-levels-buttons.course-selection-bundle label.option-btn:has(input:checked) {
+    box-shadow: none;
+    z-index: 1;
+}
+#course-levels-buttons.course-selection-bundle label.option-btn:has(input:checked)[data-merge-pos='first'] {
+    margin-left: 0;
+    border-radius: 10px 0 0 10px;
+    box-shadow:
+        0 3px 14px var(--course-chip-glow),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+#course-levels-buttons.course-selection-bundle label.option-btn:has(input:checked)[data-merge-pos='middle'] {
+    margin-left: -2px;
+    border-radius: 0;
+    border-left-width: 1px;
+    border-left-color: rgba(255, 255, 255, 0.45);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+#course-levels-buttons.course-selection-bundle label.option-btn:has(input:checked)[data-merge-pos='last'] {
+    margin-left: -2px;
+    border-radius: 0 10px 10px 0;
+    border-left-width: 1px;
+    border-left-color: rgba(255, 255, 255, 0.45);
+    box-shadow:
+        0 3px 14px var(--course-chip-glow),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
 .option-btn input {
     position: absolute;
     opacity: 0;
@@ -457,6 +549,16 @@
     border-left: 4px solid #2196f3;
 }
 .form-infobox i { color: #2196f3; flex-shrink: 0; margin-top: 2px; }
+
+/* Çoklu seviye (bundle seyri) seçildiğinde bilgi kutusu */
+.form-infobox.form-infobox--bundle {
+    background: rgba(5, 150, 105, 0.1);
+    border-left-color: var(--color-primary, #059669);
+    color: var(--color-text-primary, #0b1220);
+}
+.form-infobox.form-infobox--bundle i {
+    color: var(--color-primary, #059669);
+}
 
 .mt-2 { margin-top: 1rem; }
 
@@ -1191,5 +1293,54 @@
     .btn-submit {
         width: 100%;
         justify-content: center;
+    }
+}
+
+/* Short Term: hafta sayısı sayı girişi (1–24) */
+.weeks-control-wrap {
+    margin-bottom: 0;
+}
+.weeks-short-term-control .field-hint {
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+.weeks-number-input-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.weeks-number-input-wrap input[type="number"] {
+    width: 80px;
+    min-width: 80px;
+    padding: 12px 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    border: 2px solid var(--color-border-light);
+    border-radius: 12px;
+    background: #fff;
+    -moz-appearance: textfield;
+}
+.weeks-number-input-wrap input[type="number"]::-webkit-outer-spin-button,
+.weeks-number-input-wrap input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.weeks-number-input-wrap input[type="number"]:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+.weeks-number-unit {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+@media (max-width: 480px) {
+    .weeks-number-input-wrap input[type="number"] {
+        width: 72px;
+        min-width: 72px;
+        padding: 10px 12px;
     }
 }

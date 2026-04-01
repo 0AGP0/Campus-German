@@ -13,7 +13,7 @@ features:
     description: "20–24 Unterrichtseinheiten"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
-    description: "8–12 Wochen"
+    description: "8 Wochen"
   - icon: "fas fa-users"
     title: "Klassengröße"
     description: "Maximal 12 Teilnehmende"

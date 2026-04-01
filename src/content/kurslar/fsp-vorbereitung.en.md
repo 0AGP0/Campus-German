@@ -13,7 +13,7 @@ features:
     description: "25 Lessons (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
-    description: "12 Weeks"
+    description: "8 Weeks"
   - icon: "fas fa-users"
     title: "Class Size"
     description: "Maximum 8 People"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "Price Information"
       pricing:
-        - name: "12 Weeks FSP Preparation"
-          duration: "12 Weeks"
+        - name: "8 Weeks FSP Preparation"
+          duration: "8 Weeks"
           schedule: "25 Lessons/Week"
           price: "Special Pricing"
           highlighted: true

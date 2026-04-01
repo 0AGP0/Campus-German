@@ -13,7 +13,7 @@ features:
     description: "20-24 Lessons"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
-    description: "12-24 Weeks"
+    description: "8 Weeks"
   - icon: "fas fa-users"
     title: "Class Size"
     description: "Maximum 10 People"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "Price Information"
       pricing:
-        - name: "12 Weeks Medicine/Health"
-          duration: "12 Weeks"
+        - name: "8 Weeks Medicine/Health"
+          duration: "8 Weeks"
           schedule: "20-24 Lessons/Week"
           price: "Special Pricing"
           highlighted: true

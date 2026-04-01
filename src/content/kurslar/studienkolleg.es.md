@@ -16,7 +16,7 @@ features:
     description: "Alemán + Materias Básicas"
   - icon: "fas fa-calendar-week"
     title: "Duración"
-    description: "8-12 Semanas"
+    description: "8 Semanas"
   - icon: "fas fa-level-up-alt"
     title: "Nivel"
     description: "B1 - B2"

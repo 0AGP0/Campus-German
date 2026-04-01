@@ -13,7 +13,7 @@ features:
     description: "24 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
-    description: "12 Wochen"
+    description: "8 Wochen"
   - icon: "fas fa-users"
     title: "Klassengröße"
     description: "Maximal 8 Personen"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "Preisinformationen"
       pricing:
-        - name: "12 Wochen FSP-Vorbereitung"
-          duration: "12 Wochen"
+        - name: "8 Wochen FSP-Vorbereitung"
+          duration: "8 Wochen"
           schedule: "24 Unterrichtseinheiten/Woche"
           price: "Sonderkonditionen"
           highlighted: true

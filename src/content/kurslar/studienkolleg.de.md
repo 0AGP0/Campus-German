@@ -16,7 +16,7 @@ features:
     description: "Deutsch + Grundlagenfächer"
   - icon: "fas fa-calendar-week"
     title: "Dauer"
-    description: "8-12 Wochen"
+    description: "8 Wochen"
   - icon: "fas fa-level-up-alt"
     title: "Niveau"
     description: "B1 - B2"

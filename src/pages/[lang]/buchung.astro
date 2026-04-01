@@ -36,10 +36,24 @@ const t = {
         levelLabel: "Seviye",
         levelPlaceholder: "Seviye seçiniz",
         courseSelectionLabel: "Katılmak istediğiniz kurs (çoklu seçim)",
-        intensiveTypeLabel: "Intensive mi Intensive Plus mu?",
+        intensiveTypeLabel: "Intensive programı — haftalık süre *",
         intensive20: "Intensive 20h/hafta",
-        intensivePlus25: "Intensive+ 25h/hafta",
+        intensivePlus25: "+ Intensive 25h/hafta",
         bundleInfobox: "Bundle indiriminden yararlanmak isterseniz birden fazla kurs seçebilirsiniz.",
+        bundleTrackInfo:
+            "Çoklu seviye seçtiniz: toplam hafta sayısı tek bir kademeli fiyat dilimine göre hesaplanır. Kampanyalı bundle teklifleri için bizimle iletişime geçebilirsiniz.",
+        bundleNearHintA2C1:
+            "{levels} seviyelerini de seçerek A2–C1 kampanya paketine ulaşabilirsiniz.",
+        bundleNearHintB1C1:
+            "{levels} seviyelerini de seçerek B1–C1 kampanya paketine ulaşabilirsiniz.",
+        bundleMultiFallback:
+            "Fiyat, toplam hafta sayısına göre tek bir dilimden hesaplanır. Uygun kampanya paketi için bizimle iletişime geçebilirsiniz.",
+        bundlePromoInfoA2C1:
+            "A2–C1 kampanya paketi seçildi: Kurs ücreti, yoğun program tipiniz ve toplam haftaya göre kademeli fiyat tablosundan hesaplanır (sabit paket tutarı yerine).",
+        bundlePromoInfoB1C1:
+            "B1–C1 kampanya paketi seçildi: Kurs ücreti, yoğun program tipiniz ve toplam haftaya göre kademeli fiyat tablosundan hesaplanır (sabit paket tutarı yerine).",
+        bundlePromoInfoPathway:
+            "University Pathway kampanya paketi: özel toplam 5.990 €.",
         bundleDiscountApplied: " bundle indirimi uygulandı",
         bundleDiscountLabel: "Bundle indirimi",
         totalWeeksInfo: "Toplam {n} hafta",
@@ -55,10 +69,9 @@ const t = {
         weeksOption40: "40 - 5 Seviye Kursu",
         weeksOption48: "48 - 6 Seviye Kursu",
         timezoneLabel: "Tercih ettiğiniz ders saati (çoklu seçim)",
-        timezoneHint: "Sabah, öğle veya akşam gruplarından birini veya birkaçını seçin",
+        timezoneHint: "Sabah veya öğleden sonra gruplarından birini veya ikisini seçin",
         timeMorning: "Sabah",
         timeAfternoon: "Öğle",
-        timeEvening: "Akşam",
         campBerlin: "Berlin Camp",
         campMuenchen: "Münster Camp",
         campBremen: "Bremen Camp",
@@ -68,10 +81,10 @@ const t = {
         examTestdaf: "TestDaF",
         telcPrepLabel: "+ Telc-Prep",
         shortTermLabel: "Short Term",
-        shortTermSublabel: "1-6 hafta",
+        shortTermSublabel: "1–24 hafta (6 aya kadar)",
         weeksLabel: "Kaç hafta almak istiyorsunuz?",
         weeksPlaceholder: "Hafta seçiniz",
-        weeksMax: "Maksimum 6 hafta",
+        weeksMax: "1–24 hafta (6 aya kadar seçebilirsiniz)",
         intensiveWarning: "6 haftadan fazla için yoğun kursu öneriyoruz.",
         examTypeLabel: "Hangi sınava hazırlanmak istiyorsunuz?",
         examTypeTelcA1A2: "Telc A1/A2",
@@ -211,10 +224,24 @@ const t = {
         levelLabel: "Niveau",
         levelPlaceholder: "Niveau wählen",
         courseSelectionLabel: "Gewünschte Kurse (Mehrfachauswahl)",
-        intensiveTypeLabel: "Intensive oder Intensive+?",
+        intensiveTypeLabel: "Intensivkurs — Stunden pro Woche *",
         intensive20: "Intensive 20h/Woche",
-        intensivePlus25: "Intensive+ 25h/Woche",
+        intensivePlus25: "+ Intensive 25h/Woche",
         bundleInfobox: "Für den Bundle-Rabatt können Sie mehrere Kurse wählen.",
+        bundleTrackInfo:
+            "Mehrere Niveaus gewählt: Die Gesamtwochen werden in einer Preisstaffel berechnet. Für Aktions-Bundles kontaktieren Sie uns bitte.",
+        bundleNearHintA2C1:
+            "Wenn Sie außerdem {levels} wählen, erreichen Sie das Aktionspaket A2–C1.",
+        bundleNearHintB1C1:
+            "Wenn Sie außerdem {levels} wählen, erreichen Sie das Aktionspaket B1–C1.",
+        bundleMultiFallback:
+            "Der Preis richtet sich nach einer Staffel über die Gesamtwochen. Für passende Aktionspakete kontaktieren Sie uns.",
+        bundlePromoInfoA2C1:
+            "Aktionspaket A2–C1: Der Kursbetrag wird nach Intensivtyp und Gesamtwochen gestaffelt berechnet (kein fester Pauschalpreis).",
+        bundlePromoInfoB1C1:
+            "Aktionspaket B1–C1: Der Kursbetrag wird nach Intensivtyp und Gesamtwochen gestaffelt berechnet (kein fester Pauschalpreis).",
+        bundlePromoInfoPathway:
+            "University Pathway Aktionspaket: Gesamt 5.990 €.",
         bundleDiscountApplied: " Bundle-Rabatt angewendet",
         bundleDiscountLabel: "Bundle-Rabatt",
         totalWeeksInfo: "Gesamt {n} Wochen",
@@ -230,10 +257,9 @@ const t = {
         weeksOption40: "40 - 5 Level-Kurs",
         weeksOption48: "48 - 6 Level-Kurs",
         timezoneLabel: "Bevorzugte Kurszeit (Mehrfachauswahl)",
-        timezoneHint: "Wählen Sie eine oder mehrere Gruppen: Vormittag, Nachmittag oder Abend",
+        timezoneHint: "Wählen Sie eine oder mehrere Gruppen: Vormittag oder Nachmittag",
         timeMorning: "Vormittag",
         timeAfternoon: "Nachmittag",
-        timeEvening: "Abend",
         campBerlin: "Berlin Camp",
         campMuenchen: "Münster Camp",
         campBremen: "Bremen Camp",
@@ -243,10 +269,10 @@ const t = {
         examTestdaf: "TestDaF",
         telcPrepLabel: "+ Telc-Prep",
         shortTermLabel: "Short Term",
-        shortTermSublabel: "1-6 Wochen",
+        shortTermSublabel: "1–24 Wochen (bis zu 6 Monaten)",
         weeksLabel: "Wie viele Wochen möchten Sie?",
         weeksPlaceholder: "Wochen wählen",
-        weeksMax: "Max. 6 Wochen",
+        weeksMax: "1–24 Wochen (bis zu 6 Monaten wählbar)",
         intensiveWarning: "Für mehr als 6 Wochen empfehlen wir den Intensivkurs.",
         examTypeLabel: "Für welche Prüfung möchten Sie sich vorbereiten?",
         examTypeTelcA1A2: "Telc A1/A2",
@@ -396,10 +422,24 @@ const t = {
         levelLabel: "Level",
         levelPlaceholder: "Select level",
         courseSelectionLabel: "Course(s) you want to join (multiple selection)",
-        intensiveTypeLabel: "Intensive or Intensive+?",
+        intensiveTypeLabel: "Intensive course — hours per week *",
         intensive20: "Intensive 20h/week",
-        intensivePlus25: "Intensive+ 25h/week",
+        intensivePlus25: "+ Intensive 25h/week",
         bundleInfobox: "To benefit from the bundle discount, you can select multiple courses.",
+        bundleTrackInfo:
+            "Multiple levels selected: total weeks are priced in one tier. Contact us for promotional bundle offers.",
+        bundleNearHintA2C1:
+            "Add {levels} to qualify for the promotional A2–C1 package.",
+        bundleNearHintB1C1:
+            "Add {levels} to qualify for the promotional B1–C1 package.",
+        bundleMultiFallback:
+            "Pricing uses one tier based on total weeks. Contact us for a matching promotional package.",
+        bundlePromoInfoA2C1:
+            "Promotional A2–C1 track: the course fee is calculated from the tiered price table using your intensive type and total weeks (not a fixed package lump sum).",
+        bundlePromoInfoB1C1:
+            "Promotional B1–C1 track: the course fee is calculated from the tiered price table using your intensive type and total weeks (not a fixed package lump sum).",
+        bundlePromoInfoPathway:
+            "University Pathway promotional package: total €5,990.",
         bundleDiscountApplied: " bundle discount applied",
         bundleDiscountLabel: "Bundle discount",
         totalWeeksInfo: "Total {n} weeks",
@@ -415,10 +455,9 @@ const t = {
         weeksOption40: "40 - 5 Level Course",
         weeksOption48: "48 - 6 Level Course",
         timezoneLabel: "Preferred course time(s) (multiple selection)",
-        timezoneHint: "Select one or more: morning, afternoon or evening group",
+        timezoneHint: "Select one or more: morning and/or afternoon group",
         timeMorning: "Morning",
         timeAfternoon: "Afternoon",
-        timeEvening: "Evening",
         campBerlin: "Berlin Camp",
         campMuenchen: "Münster Camp",
         campBremen: "Bremen Camp",
@@ -428,10 +467,10 @@ const t = {
         examTestdaf: "TestDaF",
         telcPrepLabel: "+ Telc-Prep",
         shortTermLabel: "Short Term",
-        shortTermSublabel: "1-6 weeks",
+        shortTermSublabel: "1–24 weeks (up to 6 months)",
         weeksLabel: "How many weeks do you want?",
         weeksPlaceholder: "Select weeks",
-        weeksMax: "Maximum 6 weeks",
+        weeksMax: "1–24 weeks (up to 6 months)",
         intensiveWarning: "For more than 6 weeks we recommend the intensive course.",
         examTypeLabel: "Which exam do you want to prepare for?",
         examTypeTelcA1A2: "Telc A1/A2",
@@ -581,10 +620,24 @@ const t = {
         levelLabel: "Nivel",
         levelPlaceholder: "Seleccione nivel",
         courseSelectionLabel: "Curso(s) al que desea unirse (selección múltiple)",
-        intensiveTypeLabel: "¿Intensive o Intensive+?",
+        intensiveTypeLabel: "Curso intensivo — horas por semana *",
         intensive20: "Intensive 20h/semana",
-        intensivePlus25: "Intensive+ 25h/semana",
+        intensivePlus25: "+ Intensive 25h/semana",
         bundleInfobox: "Para beneficiarse del descuento bundle, puede seleccionar varios cursos.",
+        bundleTrackInfo:
+            "Varios niveles: las semanas totales se calculan en un solo tramo de precios. Consúltenos por ofertas bundle promocionales.",
+        bundleNearHintA2C1:
+            "Si también selecciona {levels}, accederá al paquete promocional A2–C1.",
+        bundleNearHintB1C1:
+            "Si también selecciona {levels}, accederá al paquete promocional B1–C1.",
+        bundleMultiFallback:
+            "El precio se calcula por un solo tramo según las semanas totales. Consúltenos para un paquete promocional adecuado.",
+        bundlePromoInfoA2C1:
+            "Paquete promocional A2–C1: la cuota del curso se calcula por tramos según el tipo intensivo y las semanas totales (no un precio fijo de paquete).",
+        bundlePromoInfoB1C1:
+            "Paquete promocional B1–C1: la cuota del curso se calcula por tramos según el tipo intensivo y las semanas totales (no un precio fijo de paquete).",
+        bundlePromoInfoPathway:
+            "Paquete University Pathway: total 5.990 €.",
         bundleDiscountApplied: " descuento bundle aplicado",
         bundleDiscountLabel: "Descuento bundle",
         totalWeeksInfo: "Total {n} semanas",
@@ -600,10 +653,9 @@ const t = {
         weeksOption40: "40 - Curso 5 niveles",
         weeksOption48: "48 - Curso 6 niveles",
         timezoneLabel: "Horario de curso preferido (selección múltiple)",
-        timezoneHint: "Seleccione uno o más: grupo de mañana, tarde o noche",
+        timezoneHint: "Seleccione uno o más: grupo de mañana y/o tarde",
         timeMorning: "Mañana",
         timeAfternoon: "Tarde",
-        timeEvening: "Noche",
         campBerlin: "Berlin Camp",
         campMuenchen: "Münster Camp",
         campBremen: "Bremen Camp",
@@ -613,10 +665,10 @@ const t = {
         examTestdaf: "TestDaF",
         telcPrepLabel: "+ Telc-Prep",
         shortTermLabel: "Short Term",
-        shortTermSublabel: "1-6 semanas",
+        shortTermSublabel: "1–24 semanas (hasta 6 meses)",
         weeksLabel: "¿Cuántas semanas desea?",
         weeksPlaceholder: "Seleccione semanas",
-        weeksMax: "Máximo 6 semanas",
+        weeksMax: "1–24 semanas (hasta 6 meses)",
         intensiveWarning: "Para más de 6 semanas recomendamos el curso intensivo.",
         examTypeLabel: "¿Para qué examen desea prepararse?",
         examTypeTelcA1A2: "Telc A1/A2",
@@ -753,7 +805,44 @@ const t = {
     }
 };
 
+const pathwayBundlePrefillMap = {
+    tr: 'Merhaba, Academic University Pathway (Bremen Bundle) kampanya paketi ile ilgileniyorum (5.990 €).',
+    de: 'Hallo, ich interessiere mich für das Academic University Pathway (Bremen-Bundle) Aktionspaket (5.990 €).',
+    en: 'Hello, I am interested in the Academic University Pathway (Bremen Bundle) promotional package (€5,990).',
+    es: 'Hola, me interesa el paquete promocional Academic University Pathway (Bremen Bundle) (5.990 €).',
+};
+const pathwayBundleCourseLabelMap = {
+    tr: 'Academic University Pathway (kampanya paketi)',
+    de: 'Academic University Pathway (Aktionspaket)',
+    en: 'Academic University Pathway (promotional package)',
+    es: 'Academic University Pathway (paquete promocional)',
+};
+const pathwayBundlePrefill = pathwayBundlePrefillMap[lang as keyof typeof pathwayBundlePrefillMap] ?? pathwayBundlePrefillMap.en;
+const pathwayBundleCourseLabel = pathwayBundleCourseLabelMap[lang as keyof typeof pathwayBundleCourseLabelMap] ?? pathwayBundleCourseLabelMap.en;
+
+const bookingBundlePromoLabelsMap = {
+    tr: { a2c1: 'Kampanya · A2–C1', b1c1: 'Kampanya · B1–C1' },
+    de: { a2c1: 'Aktionspaket A2–C1', b1c1: 'Aktionspaket B1–C1' },
+    en: { a2c1: 'Promo · A2–C1', b1c1: 'Promo · B1–C1' },
+    es: { a2c1: 'Promo · A2–C1', b1c1: 'Promo · B1–C1' },
+};
+const bookingBundlePromoLabels =
+    bookingBundlePromoLabelsMap[lang as keyof typeof bookingBundlePromoLabelsMap] ?? bookingBundlePromoLabelsMap.en;
+
 const translations = t[lang as keyof typeof t];
+
+const bundlePromoInfoboxTexts = {
+    a2c1: translations.bundlePromoInfoA2C1,
+    b1c1: translations.bundlePromoInfoB1C1,
+    pathway: translations.bundlePromoInfoPathway,
+};
+const bundleNearHintAndWord: Record<string, string> = { tr: 've', de: 'und', en: 'and', es: 'y' };
+const bundleNearHintCopy = {
+    andWord: bundleNearHintAndWord[lang] ?? bundleNearHintAndWord.en,
+    a2c1: translations.bundleNearHintA2C1,
+    b1c1: translations.bundleNearHintB1C1,
+    multiFallback: translations.bundleMultiFallback,
+};
 ---
 
 <MainLayout title={`${translations.title} - CampusGerman`} lang={lang}>
@@ -807,6 +896,7 @@ const translations = t[lang as keyof typeof t];
                             <form id="booking-form" class="booking-form" data-coupon-success={translations.couponSuccess} data-coupon-invalid={translations.couponInvalid} data-checkout-api={import.meta.env.PUBLIC_MAKE_STRIPE_CHECKOUT_WEBHOOK ?? ''}>
                                 <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
                                 <input type="hidden" name="amountInCents" id="amount-in-cents" value="0" />
+                                <input type="hidden" name="promo-bundle" id="promo-bundle-input" value="" />
                                 <!-- Honeypot field for spam protection -->
                                 <input type="text" name="website" style="position: absolute; left: -9999px; opacity: 0; pointer-events: none; tabindex: -1;" autocomplete="off" aria-hidden="true" />
                                 <!-- Step 1: Program -->
@@ -820,7 +910,7 @@ const translations = t[lang as keyof typeof t];
                                             <label>{translations.programLabel} *</label>
                                             <div class="option-buttons program-options" role="group" aria-label={translations.programLabel}>
                                                 <label class="option-btn">
-                                                    <input type="radio" name="program" value="intensive" required>
+                                                    <input type="radio" name="program" value="intensive">
                                                     <span class="option-btn-text">🎓 {translations.intensiveAcademic}</span>
                                                 </label>
                                                 <label class="option-btn">
@@ -848,12 +938,12 @@ const translations = t[lang as keyof typeof t];
                                         </div>
                                         <div class="form-group full-width" id="course-selection-group" style="display: none;">
                                             <label>{translations.courseSelectionLabel} *</label>
-                                            <div id="course-bundle-infobox" class="form-infobox" style="display: none;" role="status" data-msg-applied={translations.bundleDiscountApplied} data-msg-invite={translations.bundleInfobox} data-msg-total-weeks={translations.totalWeeksInfo} data-msg-total-week-one={translations.totalWeekOne}>
+                                            <div id="course-bundle-infobox" class="form-infobox" style="display: none;" role="status" data-msg-applied={translations.bundleDiscountApplied} data-msg-invite={translations.bundleInfobox} data-msg-bundle={translations.bundleTrackInfo} data-msg-total-weeks={translations.totalWeeksInfo} data-msg-total-week-one={translations.totalWeekOne}>
                                                 <i class="fas fa-info-circle" aria-hidden="true"></i>
                                                 <span id="course-bundle-infobox-text">{translations.bundleInfobox}</span>
                                             </div>
                                             <div id="course-levels-block" class="course-options-group course-options-inline" style="display: none;">
-                                                <div class="option-buttons option-buttons-checkboxes" role="group">
+                                                <div id="course-levels-buttons" class="option-buttons option-buttons-checkboxes" role="group">
                                                     <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="a1"><span class="option-btn-text">A1</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
                                                     <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="a2"><span class="option-btn-text">A2</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
                                                     <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="b1"><span class="option-btn-text">B1</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
@@ -861,6 +951,10 @@ const translations = t[lang as keyof typeof t];
                                                     <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="c1"><span class="option-btn-text">C1</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
                                                     <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="telc-prep"><span class="option-btn-text">{translations.telcPrepLabel}</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
                                                     <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="short-term"><span class="option-btn-text">{translations.shortTermLabel}</span><span class="option-btn-sublabel">{translations.shortTermSublabel}</span></label>
+                                                    <label class="option-btn">
+                                                        <input type="checkbox" id="pathway-bundle-quick-toggle" name="pathway-bundle-quick-toggle" value="pathway">
+                                                        <span class="option-btn-text">University Pathway</span>
+                                                    </label>
                                                 </div>
                                             </div>
                                             <div id="course-camps-block" class="course-options-group" style="display: none;">
@@ -872,28 +966,34 @@ const translations = t[lang as keyof typeof t];
                                             </div>
                                         </div>
                                         <div class="form-group full-width" id="weeks-block" style="display: none;">
-                                            <label for="weeks">{translations.weeksLabel} *</label>
-                                            <select id="weeks" name="weeks">
-                                                <option value="">{translations.weeksPlaceholder}</option>
-                                                <option value="1">{translations.weeksOption1}</option>
-                                                <option value="2">{translations.weeksOption2}</option>
-                                                <option value="3">3</option>
-                                                <option value="4">{translations.weeksOption4}</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="8" class="weeks-non-short">{translations.weeksOption8}</option>
-                                                <option value="16" class="weeks-non-short">{translations.weeksOption16}</option>
-                                                <option value="24" class="weeks-non-short">{translations.weeksOption24}</option>
-                                                <option value="32" class="weeks-non-short">{translations.weeksOption32}</option>
-                                                <option value="40" class="weeks-non-short">{translations.weeksOption40}</option>
-                                                <option value="48" class="weeks-non-short">{translations.weeksOption48}</option>
-                                            </select>
-                                            <p class="field-hint" id="weeks-short-term-hint" style="display: none;">{translations.weeksMax}</p>
+                                            <input type="hidden" id="weeks-value" name="weeks" value="" />
+                                            <label for="weeks" id="weeks-label">{translations.weeksLabel} *</label>
+                                            <div id="weeks-select-wrap" class="weeks-control-wrap">
+                                                <select id="weeks" aria-label={translations.weeksLabel}>
+                                                    <option value="">{translations.weeksPlaceholder}</option>
+                                                    <option value="1">{translations.weeksOption1}</option>
+                                                    <option value="2">{translations.weeksOption2}</option>
+                                                    <option value="4">{translations.weeksOption4}</option>
+                                                    <option value="8">{translations.weeksOption8}</option>
+                                                    <option value="16">{translations.weeksOption16}</option>
+                                                    <option value="24">{translations.weeksOption24}</option>
+                                                    <option value="32">{translations.weeksOption32}</option>
+                                                    <option value="40">{translations.weeksOption40}</option>
+                                                    <option value="48">{translations.weeksOption48}</option>
+                                                </select>
+                                            </div>
+                                            <div id="weeks-short-term-wrap" class="weeks-control-wrap weeks-short-term-control" style="display: none;">
+                                                <div class="weeks-number-input-wrap">
+                                                    <input type="number" id="weeks-short-term" min="1" max="24" value="1" step="1" aria-label={translations.weeksLabel} />
+                                                    <span class="weeks-number-unit">{lang === 'tr' ? 'hafta' : lang === 'de' ? 'Wochen' : lang === 'es' ? 'semanas' : 'weeks'}</span>
+                                                </div>
+                                                <p class="field-hint" id="weeks-short-term-hint">{translations.weeksMax}</p>
+                                            </div>
                                         </div>
                                         <div class="form-group full-width">
                                             <label for="start-date">{translations.startDate} *</label>
                                             <p class="field-hint field-hint-under-label">{translations.startDateHint}</p>
-                                            <select id="start-date" name="start-date" required>
+                                            <select id="start-date" name="start-date">
                                                 <option value="">{translations.startDatePlaceholder}</option>
                                                 {startDateOptions.map((opt) => (
                                                     <option value={opt.value}>{opt.label}</option>
@@ -906,7 +1006,6 @@ const translations = t[lang as keyof typeof t];
                                             <div class="option-buttons option-buttons-checkboxes timezone-options" role="group">
                                                 <label class="option-btn"><input type="checkbox" name="timezone" value="morning"><span class="option-btn-text">{translations.timeMorning} ({pricingData?.schedule?.morning?.all?.time ?? '09:00 – 12:30'})</span></label>
                                                 <label class="option-btn"><input type="checkbox" name="timezone" value="afternoon"><span class="option-btn-text">{translations.timeAfternoon} ({pricingData?.schedule?.afternoon?.all?.time ?? '13:00 – 16:30'})</span></label>
-                                                <label class="option-btn"><input type="checkbox" name="timezone" value="evening"><span class="option-btn-text">{translations.timeEvening} ({pricingData?.schedule?.evening?.all?.time ?? '18:30 – 22:00'})</span></label>
                                             </div>
                                         </div>
                                     </div>
@@ -1108,7 +1207,7 @@ const translations = t[lang as keyof typeof t];
         </div>
     </section>
 
-    <script define:vars={{ pricingData, lang, validCoupons: VALID_COUPONS }}>
+    <script define:vars={{ pricingData, lang, validCoupons: VALID_COUPONS, pathwayBundlePrefill, pathwayBundleCourseLabel, bookingBundlePromoLabels, bundlePromoInfoboxTexts, bundleNearHintCopy }}>
         // Import security utilities
         const { checkRateLimit, sanitizeObject, validateEmail, validatePhone, checkHoneypot } = (() => {
             // Rate limiting
@@ -1208,6 +1307,42 @@ const translations = t[lang as keyof typeof t];
             const courseBundleInfobox = document.getElementById('course-bundle-infobox');
             const accommodationTypeRadios = document.querySelectorAll('[name="accommodation-type"]');
 
+            let promoBundleId = null;
+            let bundlePresetPending = false;
+            /** Sadece University Pathway: sabit 5.990 €. A2–C1 / B1–C1 izleri kademeli fiyatla hesaplanır; promo-bundle alanı yine CRM için a2c1|b1c1 yazılır. */
+            function resolvePromoBundlePrice() {
+                const program = document.querySelector('[name="program"]:checked')?.value;
+                const checked = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(c => c.value);
+                const levels = checked.filter(c => ['a1', 'a2', 'b1', 'b2', 'c1'].includes(c));
+                const hasTelc = checked.includes('telc-prep');
+                const hasShort = checked.includes('short-term');
+                const pathwayToggle = document.getElementById('pathway-bundle-quick-toggle');
+                if (program !== 'intensive' && program !== 'online') return null;
+                if (pathwayToggle?.checked && levels.length === 0 && !hasTelc && !hasShort) return 5990;
+                return null;
+            }
+            /** Gizli alan + etiket: pathway yalnızca geçerli pathway modunda; aksi halde tam A2–C1 / B1–C1 eşleşmesi. */
+            function currentPromoBundleSlug() {
+                const program = document.querySelector('[name="program"]:checked')?.value;
+                if (program !== 'intensive' && program !== 'online') return '';
+                const pathwayToggle = document.getElementById('pathway-bundle-quick-toggle');
+                const checked = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(c => c.value);
+                const hasTelc = checked.includes('telc-prep');
+                const hasShort = checked.includes('short-term');
+                const levels = checked.filter(c => ['a1', 'a2', 'b1', 'b2', 'c1'].includes(c));
+                if (pathwayToggle?.checked && levels.length === 0 && !hasTelc && !hasShort) return 'pathway';
+                if (hasTelc || hasShort) return '';
+                const set = new Set(levels);
+                if (set.size === 4 && ['a2', 'b1', 'b2', 'c1'].every(x => set.has(x))) return 'a2c1';
+                if (set.size === 3 && ['b1', 'b2', 'c1'].every(x => set.has(x))) return 'b1c1';
+                return '';
+            }
+            function syncPromoBundleHidden() {
+                const el = document.getElementById('promo-bundle-input');
+                if (!el) return;
+                el.value = currentPromoBundleSlug();
+            }
+
             function toggleProgramExtras() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
                 if (courseSelectionGroup) courseSelectionGroup.style.display = program ? 'block' : 'none';
@@ -1219,48 +1354,103 @@ const translations = t[lang as keyof typeof t];
                 }
                 if (courseLevelsBlock) courseLevelsBlock.style.display = (program === 'intensive' || program === 'online') ? 'block' : 'none';
                 if (courseCampsBlock) courseCampsBlock.style.display = program === 'youth-camp' ? 'block' : 'none';
-                document.querySelectorAll('[name="course-selection"]').forEach(cb => { cb.checked = false; });
+                if (!bundlePresetPending) {
+                    document.querySelectorAll('[name="course-selection"]').forEach(cb => { cb.checked = false; });
+                }
                 if (program !== 'intensive' && program !== 'online') {
                     document.querySelectorAll('[name="intensive-type"]').forEach(r => { r.checked = false; });
+                    const pathwayToggle = document.getElementById('pathway-bundle-quick-toggle');
+                    if (pathwayToggle) pathwayToggle.checked = false;
+                    promoBundleId = null;
+                    syncPromoBundleHidden();
                 }
                 toggleWeeksBlockForShortTerm();
                 toggleBundleInfobox();
                 filterWeeksByLevelCourses();
                 enforceShortTermExclusion();
+                reorderCourseSelectionChain();
                 updatePrice();
             }
-            // Hafta seçimi sadece Short Term seçiliyken gösterilir (intensive/online). Youth-camp’te her zaman gösterilir.
+            const weeksValueInput = document.getElementById('weeks-value');
+            const weeksSelectWrap = document.getElementById('weeks-select-wrap');
+            const weeksShortTermWrap = document.getElementById('weeks-short-term-wrap');
+            const weeksShortTermInput = document.getElementById('weeks-short-term');
+            function getWeeksValue() { return (weeksValueInput && weeksValueInput.value) || ''; }
+            function setWeeksValue(v) { if (weeksValueInput) weeksValueInput.value = String(v || ''); }
+            function syncWeeksFromControl() {
+                if (weeksShortTermWrap && weeksShortTermWrap.style.display !== 'none') {
+                    const v = weeksShortTermInput ? parseInt(weeksShortTermInput.value, 10) : 0;
+                    setWeeksValue((v >= 1 && v <= 24) ? v : '');
+                } else if (weeksSelectWrap && weeksSelectWrap.style.display !== 'none' && weeksSelect) {
+                    setWeeksValue(weeksSelect.value || '');
+                }
+            }
+            // Hafta seçimi: Short Term’de sayı girişi (1–24), youth-camp’te dropdown.
             function toggleWeeksBlockForShortTerm() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
                 const shortTermChecked = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).some(c => c.value === 'short-term');
-                const weeksHint = document.getElementById('weeks-short-term-hint');
+                const weeksLabel = document.getElementById('weeks-label');
                 if (program === 'youth-camp') {
                     if (weeksBlock) weeksBlock.style.display = 'block';
+                    if (weeksSelectWrap) weeksSelectWrap.style.display = 'block';
+                    if (weeksShortTermWrap) weeksShortTermWrap.style.display = 'none';
+                    if (weeksLabel) weeksLabel.setAttribute('for', 'weeks');
                     if (weeksSelect) { weeksSelect.removeAttribute('required'); weeksSelect.setAttribute('required', 'required'); }
                     Array.from(weeksSelect?.options || []).forEach(opt => { opt.disabled = false; opt.style.display = ''; });
-                    if (weeksHint) weeksHint.style.display = 'none';
+                    syncWeeksFromControl();
                     return;
                 }
                 if (program === 'intensive' || program === 'online') {
                     if (shortTermChecked) {
                         if (weeksBlock) weeksBlock.style.display = 'block';
-                        if (weeksSelect) weeksSelect.setAttribute('required', 'required');
-                        if (weeksHint) weeksHint.style.display = 'block';
-                        Array.from(weeksSelect?.options || []).forEach(opt => {
-                            const v = parseInt(opt.value, 10);
-                            const isShortTermOpt = (v >= 1 && v <= 6) || opt.value === '';
-                            opt.style.display = isShortTermOpt ? '' : 'none';
-                            opt.disabled = !isShortTermOpt && opt.value !== '';
-                        });
-                        const cur = parseInt(weeksSelect?.value, 10);
-                        if (cur < 1 || cur > 6) weeksSelect.value = '';
+                        if (weeksSelectWrap) weeksSelectWrap.style.display = 'none';
+                        if (weeksShortTermWrap) weeksShortTermWrap.style.display = 'block';
+                        if (weeksLabel) weeksLabel.setAttribute('for', 'weeks-short-term');
+                        if (weeksShortTermInput) {
+                            weeksShortTermInput.setAttribute('required', 'required');
+                            const cur = parseInt(weeksShortTermInput.value, 10);
+                            if (cur < 1 || cur > 24) weeksShortTermInput.value = '1';
+                        }
+                        setWeeksValue(weeksShortTermInput ? (weeksShortTermInput.value || '1') : '');
                     } else {
                         if (weeksBlock) weeksBlock.style.display = 'none';
+                        if (weeksSelectWrap) weeksSelectWrap.style.display = 'block';
+                        if (weeksShortTermWrap) weeksShortTermWrap.style.display = 'none';
                         if (weeksSelect) { weeksSelect.removeAttribute('required'); weeksSelect.value = ''; }
-                        if (weeksHint) weeksHint.style.display = 'none';
-                        Array.from(weeksSelect?.options || []).forEach(opt => { opt.style.display = ''; opt.disabled = false; });
+                        if (weeksShortTermInput) { weeksShortTermInput.removeAttribute('required'); weeksShortTermInput.value = '1'; }
+                        setWeeksValue('');
                     }
                 }
+            }
+            const BUNDLE_LEVEL_ORDER_A2C1 = ['a2', 'b1', 'b2', 'c1'];
+            const BUNDLE_LEVEL_ORDER_B1C1 = ['b1', 'b2', 'c1'];
+            function formatBundleHintLevels(ids, andW) {
+                const labels = ids.map(id => String(id).toUpperCase());
+                if (labels.length === 1) return labels[0];
+                if (labels.length === 2) return `${labels[0]} ${andW} ${labels[1]}`;
+                return `${labels.slice(0, -1).join(', ')} ${andW} ${labels[labels.length - 1]}`;
+            }
+            /** En az ek seviye ile tamamlanabilen kampanya paketini seçer; yoksa null. */
+            function getNearestPromoBundleHint(levelValues) {
+                const set = new Set(levelValues);
+                const cands = [];
+                const a2c1 = new Set(BUNDLE_LEVEL_ORDER_A2C1);
+                const b1c1 = new Set(BUNDLE_LEVEL_ORDER_B1C1);
+                const okA2 = [...set].every(l => a2c1.has(l));
+                const okB1 = [...set].every(l => b1c1.has(l));
+                if (okA2 && set.size > 0) {
+                    const missing = BUNDLE_LEVEL_ORDER_A2C1.filter(l => !set.has(l));
+                    if (missing.length > 0 && missing.length < 4)
+                        cands.push({ id: 'a2c1', missing, n: missing.length });
+                }
+                if (okB1 && set.size > 0) {
+                    const missing = BUNDLE_LEVEL_ORDER_B1C1.filter(l => !set.has(l));
+                    if (missing.length > 0 && missing.length < 3)
+                        cands.push({ id: 'b1c1', missing, n: missing.length });
+                }
+                if (!cands.length) return null;
+                cands.sort((a, b) => a.n - b.n || (a.id === 'a2c1' ? -1 : 1));
+                return cands[0];
             }
             function toggleBundleInfobox() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
@@ -1269,21 +1459,55 @@ const translations = t[lang as keyof typeof t];
                 const levelCount = levelCourses.length;
                 const hasTelcPrep = checked.some(c => c.value === 'telc-prep');
                 const hasShortTerm = checked.some(c => c.value === 'short-term');
-                const weeksVal = document.getElementById('weeks')?.value;
+                const weeksVal = getWeeksValue();
                 const shortTermWeeks = hasShortTerm ? (parseInt(weeksVal, 10) || 0) : 0;
                 const totalWeeks = (program === 'intensive' || program === 'online') ? (levelCount * 8) + (hasTelcPrep ? 8 : 0) + shortTermWeeks : parseInt(weeksVal, 10) || 0;
                 const box = courseBundleInfobox;
                 const textEl = document.getElementById('course-bundle-infobox-text');
                 if (!box || !textEl) return;
-                const show = (program === 'intensive' || program === 'online') && checked.length > 0;
+                const pathwayToggleEl = document.getElementById('pathway-bundle-quick-toggle');
+                const rp = resolvePromoBundlePrice();
+                const bundleSlug = currentPromoBundleSlug();
+                const show =
+                    (program === 'intensive' || program === 'online') &&
+                    (checked.length > 0 || pathwayToggleEl?.checked);
                 box.style.display = show ? 'flex' : 'none';
-                if (!show) return;
+                if (!show) {
+                    box.classList.remove('form-infobox--bundle');
+                    return;
+                }
                 const msgInvite = box.dataset.msgInvite || '';
                 const displayWeeks = hasShortTerm ? shortTermWeeks : totalWeeks;
                 const msgTotalWeeks = displayWeeks === 1 ? (box.dataset.msgTotalWeekOne || 'Total 1 week') : (box.dataset.msgTotalWeeks || 'Total {n} weeks').replace('{n}', String(displayWeeks));
-                textEl.textContent = displayWeeks > 0 ? msgInvite + ' — ' + msgTotalWeeks : msgInvite;
+                let baseMsg = msgInvite;
+                let useBundleStyle = false;
+                if (rp === 5990) {
+                    baseMsg = bundlePromoInfoboxTexts.pathway || '';
+                    useBundleStyle = true;
+                } else if (bundleSlug === 'a2c1') {
+                    baseMsg = bundlePromoInfoboxTexts.a2c1 || '';
+                    useBundleStyle = true;
+                } else if (bundleSlug === 'b1c1') {
+                    baseMsg = bundlePromoInfoboxTexts.b1c1 || '';
+                    useBundleStyle = true;
+                } else if (levelCount >= 2) {
+                    useBundleStyle = true;
+                    const andW = bundleNearHintCopy?.andWord || 'and';
+                    let hint = null;
+                    if (!hasTelcPrep && !hasShortTerm)
+                        hint = getNearestPromoBundleHint(levelCourses.map(c => c.value));
+                    if (hint) {
+                        const levelsStr = formatBundleHintLevels(hint.missing, andW);
+                        const tpl = hint.id === 'a2c1' ? bundleNearHintCopy?.a2c1 : bundleNearHintCopy?.b1c1;
+                        baseMsg = (tpl || '').replace(/\{levels\}/g, levelsStr);
+                    } else {
+                        baseMsg = bundleNearHintCopy?.multiFallback || msgInvite;
+                    }
+                }
+                box.classList.toggle('form-infobox--bundle', useBundleStyle);
+                textEl.textContent = displayWeeks > 0 ? baseMsg + ' — ' + msgTotalWeeks : baseMsg;
             }
-            // Seçilen seviye kursu sayısına göre hafta seçeneklerini filtrele (sadece youth-camp; intensive/online’da hafta sadece Short Term için 1-6)
+            // Seçilen seviye kursu sayısına göre hafta seçeneklerini filtrele (sadece youth-camp)
             function filterWeeksByLevelCourses() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
                 if (program === 'intensive' || program === 'online') return;
@@ -1301,7 +1525,10 @@ const translations = t[lang as keyof typeof t];
                 });
                 if (currentVal && parseInt(currentVal, 10) < minWeeks) {
                     sel.value = '';
+                    setWeeksValue('');
                     updatePrice();
+                } else {
+                    syncWeeksFromControl();
                 }
             }
             programRadios.forEach(r => r.addEventListener('change', toggleProgramExtras));
@@ -1321,6 +1548,91 @@ const translations = t[lang as keyof typeof t];
                     const anyOtherChecked = otherCbs.some(cb => cb.checked);
                     if (anyOtherChecked) shortTermCb.checked = false;
                 }
+            }
+
+            const COURSE_LEVEL_CHAIN_ORDER = ['a1', 'a2', 'b1', 'b2', 'c1', 'telc-prep', 'short-term'];
+            /* Kısa, net FLIP: gecikmeyi azalt (önceki ~560ms → ~300ms) */
+            const FLIP_EASING = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            const FLIP_DURATION_MS = 260;
+            function updateCourseMergeAttributes(container) {
+                if (!container) return;
+                var labels = Array.from(container.querySelectorAll('label.option-btn'));
+                labels.forEach(function (l) {
+                    l.removeAttribute('data-merge-pos');
+                });
+                var checked = labels.filter(function (l) {
+                    var i = l.querySelector('input');
+                    return i && i.checked;
+                });
+                if (checked.length < 2) return;
+                checked.forEach(function (l, idx) {
+                    if (idx === 0) l.setAttribute('data-merge-pos', 'first');
+                    else if (idx === checked.length - 1) l.setAttribute('data-merge-pos', 'last');
+                    else l.setAttribute('data-merge-pos', 'middle');
+                });
+            }
+            function reorderCourseSelectionChain() {
+                const container = document.getElementById('course-levels-buttons');
+                if (!container) return;
+                const labels = Array.from(container.querySelectorAll('label.option-btn'));
+                const reduceMotion = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                const prevRects = new Map();
+                if (!reduceMotion) {
+                    labels.forEach(function (el) {
+                        const r = el.getBoundingClientRect();
+                        prevRects.set(el, { left: r.left, top: r.top });
+                    });
+                }
+                labels.sort(function (a, b) {
+                    const ia = a.querySelector('input');
+                    const ib = b.querySelector('input');
+                    const va = ia ? ia.value : '';
+                    const vb = ib ? ib.value : '';
+                    const aCh = !!(ia && ia.checked);
+                    const bCh = !!(ib && ib.checked);
+                    if (aCh !== bCh) return aCh ? -1 : 1;
+                    return COURSE_LEVEL_CHAIN_ORDER.indexOf(va) - COURSE_LEVEL_CHAIN_ORDER.indexOf(vb);
+                });
+                labels.forEach(function (l) {
+                    container.appendChild(l);
+                });
+                const checked = labels.filter(function (l) {
+                    const i = l.querySelector('input');
+                    return i && i.checked;
+                });
+                const n = checked.length;
+                container.setAttribute('data-selection-count', String(n));
+                container.classList.toggle('course-selection-bundle', n >= 2);
+                updateCourseMergeAttributes(container);
+                if (reduceMotion) return;
+                let moved = false;
+                labels.forEach(function (el) {
+                    const prev = prevRects.get(el);
+                    if (!prev) return;
+                    const r = el.getBoundingClientRect();
+                    const dx = prev.left - r.left;
+                    const dy = prev.top - r.top;
+                    if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+                    moved = true;
+                    el.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)';
+                    el.style.transition = 'transform 0s';
+                });
+                if (!moved) return;
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        labels.forEach(function (el) {
+                            if (!el.style.transform) return;
+                            el.style.transition = 'transform ' + FLIP_DURATION_MS + 'ms ' + FLIP_EASING;
+                            el.style.transform = 'translate(0, 0)';
+                        });
+                    });
+                });
+                window.setTimeout(function () {
+                    labels.forEach(function (el) {
+                        el.style.transition = '';
+                        el.style.transform = '';
+                    });
+                }, FLIP_DURATION_MS + 40);
             }
 
             function toggleAccommodationMonths() {
@@ -1351,26 +1663,25 @@ const translations = t[lang as keyof typeof t];
             const VISA_GUARANTEE = 50;
             const AIRPORT_PICKUP = 100;
 
-            // Tiered pricing per week: Intensive 20h vs Intensive+ 25h
-            // 8 hafta (tek kurs) = 120€/hafta → 960€
+            // Tiered pricing per week: Intensive 20 vs 25 UE/Woche (Fiyatlar ve Tarihler tablosu ile aynı)
             const TIERS_20H = [
                 { min: 1, max: 4, perWeek: 190 },
-                { min: 5, max: 7, perWeek: 150 },
-                { min: 8, max: 16, perWeek: 120 },
+                { min: 5, max: 8, perWeek: 150 },
+                { min: 9, max: 16, perWeek: 130 },
                 { min: 17, max: 24, perWeek: 120 },
                 { min: 25, max: 999, perWeek: 110 }
             ];
-            const TIERS_24H = [
+            const TIERS_25H = [
                 { min: 1, max: 4, perWeek: 230 },
-                { min: 5, max: 7, perWeek: 180 },
-                { min: 8, max: 16, perWeek: 160 },
+                { min: 5, max: 8, perWeek: 180 },
+                { min: 9, max: 16, perWeek: 160 },
                 { min: 17, max: 24, perWeek: 150 },
                 { min: 25, max: 999, perWeek: 135 }
             ];
             function getTieredPrice(weeks, isIntensivePlus) {
                 const w = parseInt(weeks, 10) || 0;
                 if (w < 1) return 0;
-                const tiers = isIntensivePlus ? TIERS_24H : TIERS_20H;
+                const tiers = isIntensivePlus ? TIERS_25H : TIERS_20H;
                 const tier = tiers.find(t => w >= t.min && w <= t.max);
                 return tier ? w * tier.perWeek : 0;
             }
@@ -1662,16 +1973,17 @@ const translations = t[lang as keyof typeof t];
                     const checkedCourses = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(c => c.value);
                     const courseLevelsBlock = document.getElementById('course-levels-block');
                     const courseCampsBlock = document.getElementById('course-camps-block');
-                    const hasVisibleCourseSelection = (program === 'intensive' || program === 'online') ? (courseLevelsBlock?.offsetParent && checkedCourses.length > 0) :
+                    const pathwayBundleOk = (program === 'intensive' || program === 'online') && resolvePromoBundlePrice() === 5990;
+                    const hasVisibleCourseSelection = (program === 'intensive' || program === 'online') ? (courseLevelsBlock?.offsetParent && (checkedCourses.length > 0 || pathwayBundleOk)) :
                         (program === 'youth-camp') ? (courseCampsBlock?.offsetParent && checkedCourses.length > 0) : false;
                     if (!program) { document.querySelector('[name="program"]')?.closest('.form-group')?.classList.add('error'); isValid = false; } else { document.querySelector('[name="program"]')?.closest('.form-group')?.classList.remove('error'); }
                     if ((program === 'intensive' || program === 'online') && !intensiveType) { const g = document.getElementById('intensive-type-group'); if (g) g.classList.add('error'); isValid = false; } else { const g = document.getElementById('intensive-type-group'); if (g) g.classList.remove('error'); }
                     if (!startDate) { document.getElementById('start-date')?.classList.add('error'); isValid = false; } else { document.getElementById('start-date')?.classList.remove('error'); }
                     if (program && !hasVisibleCourseSelection) { if (courseSelectionGroup) courseSelectionGroup.classList.add('error'); isValid = false; } else { if (courseSelectionGroup) courseSelectionGroup.classList.remove('error'); }
                     if (program === 'intensive' || program === 'online' || program === 'youth-camp') {
-                        const weeks = document.getElementById('weeks')?.value;
+                        const weeks = getWeeksValue();
                         const needWeeks = (program === 'youth-camp') || (checkedCourses.includes('short-term'));
-                        if (needWeeks && !weeks) { document.getElementById('weeks')?.classList.add('error'); isValid = false; } else { document.getElementById('weeks')?.classList.remove('error'); }
+                        if (needWeeks && !weeks) { weeksBlock?.classList.add('error'); isValid = false; } else { weeksBlock?.classList.remove('error'); }
                     }
                     return isValid;
                 }
@@ -1711,9 +2023,35 @@ const translations = t[lang as keyof typeof t];
             });
 
             // Program, course-selection, weeks, extras → update price
-            document.querySelectorAll('[name="course-selection"]').forEach(el => el.addEventListener('change', function() { enforceShortTermExclusion(); toggleWeeksBlockForShortTerm(); toggleBundleInfobox(); filterWeeksByLevelCourses(); updatePrice(); }));
+            document.querySelectorAll('[name="course-selection"]').forEach(function (el) {
+                el.addEventListener('change', function () {
+                    const pathwayToggle = document.getElementById('pathway-bundle-quick-toggle');
+                    if (pathwayToggle?.checked) {
+                        pathwayToggle.checked = false;
+                        if (promoBundleId === 'pathway') {
+                            promoBundleId = null;
+                            syncPromoBundleHidden();
+                        }
+                    }
+                    enforceShortTermExclusion();
+                    toggleWeeksBlockForShortTerm();
+                    toggleBundleInfobox();
+                    filterWeeksByLevelCourses();
+                    updatePrice();
+                    reorderCourseSelectionChain();
+                });
+            });
+            reorderCourseSelectionChain();
             document.querySelectorAll('[name="intensive-type"]').forEach(el => el.addEventListener('change', function() { toggleBundleInfobox(); updatePrice(); }));
-            document.getElementById('weeks')?.addEventListener('change', function() { toggleBundleInfobox(); updatePrice(); });
+            weeksSelect?.addEventListener('change', function() { setWeeksValue(this.value); toggleBundleInfobox(); updatePrice(); });
+            if (weeksShortTermInput) {
+                weeksShortTermInput.addEventListener('input', function() { setWeeksValue(this.value); toggleBundleInfobox(); updatePrice(); });
+                weeksShortTermInput.addEventListener('change', function() {
+                    let v = parseInt(this.value, 10);
+                    if (v < 1) this.value = 1; else if (v > 24) this.value = 24;
+                    setWeeksValue(this.value); toggleBundleInfobox(); updatePrice();
+                });
+            }
             document.querySelectorAll('[name="visa-needed"]').forEach(el => el.addEventListener('change', updatePrice));
             document.querySelectorAll('[name="accommodation-type"]').forEach(el => el.addEventListener('change', updatePrice));
             document.querySelectorAll('[name="airport-pickup"]').forEach(el => el.addEventListener('change', updatePrice));
@@ -1777,13 +2115,15 @@ const translations = t[lang as keyof typeof t];
                 const program = document.querySelector('[name="program"]:checked')?.value;
                 const intensiveType = document.querySelector('[name="intensive-type"]:checked')?.value;
                 const checkedCourses = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(c => c.value);
-                const weeks = document.getElementById('weeks')?.value;
+                const weeks = getWeeksValue();
                 const currentLang = lang || 'tr';
                 const t = programLabels[currentLang] || programLabels.tr;
 
                 if (!courseTypePrice) return;
 
-                if (program && checkedCourses.length > 0) {
+                const promoCoursePrice = resolvePromoBundlePrice();
+                const activeBundleSlug = currentPromoBundleSlug();
+                if (program && (checkedCourses.length > 0 || promoCoursePrice != null)) {
                     let coursePrice = 0;
                     let totalWeeksNoShort = 0;
                     const levelCourses = checkedCourses.filter(c => ['a1','a2','b1','b2','c1'].includes(c));
@@ -1791,12 +2131,16 @@ const translations = t[lang as keyof typeof t];
                     const hasShortTerm = checkedCourses.includes('short-term');
 
                     if (program === 'intensive' || program === 'online') {
-                        const shortTermWeeks = hasShortTerm ? (parseInt(weeks, 10) || 0) : 0;
-                        totalWeeksNoShort = (levelCourses.length * 8) + (hasTelcPrep ? 8 : 0);
-                        if (hasShortTerm && shortTermWeeks > 0) {
-                            coursePrice += getTieredPrice(shortTermWeeks, intensiveType === 'intensive-plus');
-                        } else if (totalWeeksNoShort > 0) {
-                            coursePrice += getTieredPrice(totalWeeksNoShort, intensiveType === 'intensive-plus');
+                        if (promoCoursePrice != null) {
+                            coursePrice = promoCoursePrice;
+                        } else {
+                            const shortTermWeeks = hasShortTerm ? (parseInt(weeks, 10) || 0) : 0;
+                            totalWeeksNoShort = (levelCourses.length * 8) + (hasTelcPrep ? 8 : 0);
+                            if (hasShortTerm && shortTermWeeks > 0) {
+                                coursePrice += getTieredPrice(shortTermWeeks, intensiveType === 'intensive-plus');
+                            } else if (totalWeeksNoShort > 0) {
+                                coursePrice += getTieredPrice(totalWeeksNoShort, intensiveType === 'intensive-plus');
+                            }
                         }
                     } else if (program === 'youth-camp') {
                         for (const courseValue of checkedCourses) {
@@ -1809,13 +2153,31 @@ const translations = t[lang as keyof typeof t];
                     const programLabel = t[program] || program;
                     let labelSuffix = checkedCourses.length ? ' (' + checkedCourses.map(c => c.toUpperCase().replace(/-/g, ' ')).join(', ') + ')' : '';
                     if (program === 'intensive' || program === 'online') {
-                        const shortTermWeeks = hasShortTerm ? (parseInt(weeks, 10) || 0) : 0;
-                        const dispWeeks = hasShortTerm ? shortTermWeeks : ((levelCourses.length * 8) + (hasTelcPrep ? 8 : 0));
-                        if (dispWeeks) {
+                        if (activeBundleSlug === 'pathway' && promoCoursePrice === 5990) {
+                            labelSuffix = ' — ' + pathwayBundleCourseLabel;
+                        } else if (activeBundleSlug === 'a2c1') {
+                            const shortTermWeeks = hasShortTerm ? (parseInt(weeks, 10) || 0) : 0;
+                            const dispWeeks = hasShortTerm ? shortTermWeeks : ((levelCourses.length * 8) + (hasTelcPrep ? 8 : 0));
                             const weekWord = dispWeeks === 1
                                 ? (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Woche' : currentLang === 'es' ? 'semana' : 'week')
                                 : (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Wochen' : currentLang === 'es' ? 'semanas' : 'weeks');
-                            labelSuffix = ' ' + dispWeeks + ' ' + weekWord + labelSuffix;
+                            labelSuffix = ' ' + dispWeeks + ' ' + weekWord + labelSuffix + ' — ' + bookingBundlePromoLabels.a2c1;
+                        } else if (activeBundleSlug === 'b1c1') {
+                            const shortTermWeeks = hasShortTerm ? (parseInt(weeks, 10) || 0) : 0;
+                            const dispWeeks = hasShortTerm ? shortTermWeeks : ((levelCourses.length * 8) + (hasTelcPrep ? 8 : 0));
+                            const weekWord = dispWeeks === 1
+                                ? (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Woche' : currentLang === 'es' ? 'semana' : 'week')
+                                : (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Wochen' : currentLang === 'es' ? 'semanas' : 'weeks');
+                            labelSuffix = ' ' + dispWeeks + ' ' + weekWord + labelSuffix + ' — ' + bookingBundlePromoLabels.b1c1;
+                        } else {
+                            const shortTermWeeks = hasShortTerm ? (parseInt(weeks, 10) || 0) : 0;
+                            const dispWeeks = hasShortTerm ? shortTermWeeks : ((levelCourses.length * 8) + (hasTelcPrep ? 8 : 0));
+                            if (dispWeeks) {
+                                const weekWord = dispWeeks === 1
+                                    ? (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Woche' : currentLang === 'es' ? 'semana' : 'week')
+                                    : (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Wochen' : currentLang === 'es' ? 'semanas' : 'weeks');
+                                labelSuffix = ' ' + dispWeeks + ' ' + weekWord + labelSuffix;
+                            }
                         }
                     } else if (program === 'youth-camp' && weeks) {
                         const w = parseInt(weeks, 10) || 0;
@@ -1884,6 +2246,8 @@ const translations = t[lang as keyof typeof t];
                 if (totalPriceElement) totalPriceElement.textContent = finalTotal + ' €';
                 const amountCentsEl = document.getElementById('amount-in-cents');
                 if (amountCentsEl) amountCentsEl.value = String(Math.round(finalTotal * 100));
+
+                syncPromoBundleHidden();
             }
 
             // ===== FORM SUBMISSION =====
@@ -1999,6 +2363,7 @@ const translations = t[lang as keyof typeof t];
                         formType: 'booking',
                         sourcePage: data.sourcePage || window.location.pathname,
                         lang: typeof lang !== 'undefined' ? lang : 'tr',
+                        promoBundle: (document.getElementById('promo-bundle-input')?.value || '').trim(),
                         name: data['full-name'] || '',
                         city: data.city || '',
                         country: data.country || '',
@@ -2085,6 +2450,8 @@ const translations = t[lang as keyof typeof t];
                                 alert(successMsg);
                             }
                             bookingForm.reset();
+                            promoBundleId = null;
+                            syncPromoBundleHidden();
                             showStep(1);
                             if (typeof toggleProgramExtras === 'function') toggleProgramExtras();
                             if (typeof toggleAccommodationMonths === 'function') toggleAccommodationMonths();
@@ -2107,7 +2474,63 @@ const translations = t[lang as keyof typeof t];
                 });
             }
 
+            function applyBundleFromQuery(bundleKey) {
+                if (!['a2c1', 'b1c1', 'pathway'].includes(bundleKey)) return;
+                promoBundleId = bundleKey;
+                bundlePresetPending = true;
+                document.querySelectorAll('[name="course-selection"]').forEach(cb => { cb.checked = false; });
+                const intensiveRadio = document.querySelector('[name="program"][value="intensive"]');
+                if (intensiveRadio) intensiveRadio.checked = true;
+                const intensive20h = document.querySelector('[name="intensive-type"][value="intensive"]');
+                if (intensive20h) intensive20h.checked = true;
+                if (bundleKey === 'a2c1') {
+                    ['a2', 'b1', 'b2', 'c1'].forEach(function (v) {
+                        const cb = document.querySelector('[name="course-selection"][value="' + v + '"]');
+                        if (cb) cb.checked = true;
+                    });
+                } else if (bundleKey === 'b1c1') {
+                    ['b1', 'b2', 'c1'].forEach(function (v) {
+                        const cb = document.querySelector('[name="course-selection"][value="' + v + '"]');
+                        if (cb) cb.checked = true;
+                    });
+                }
+                toggleProgramExtras();
+                bundlePresetPending = false;
+                if (bundleKey === 'pathway') {
+                    const msgEl = document.getElementById('message');
+                    if (msgEl && typeof pathwayBundlePrefill !== 'undefined') msgEl.value = pathwayBundlePrefill;
+                }
+                const pathwayToggle = document.getElementById('pathway-bundle-quick-toggle');
+                if (pathwayToggle) pathwayToggle.checked = bundleKey === 'pathway';
+                enforceShortTermExclusion();
+                reorderCourseSelectionChain();
+                toggleWeeksBlockForShortTerm();
+                toggleBundleInfobox();
+                updatePrice();
+            }
+            const pathwayQuickToggle = document.getElementById('pathway-bundle-quick-toggle');
+            pathwayQuickToggle?.addEventListener('change', function () {
+                if (this.checked) {
+                    applyBundleFromQuery('pathway');
+                } else if (promoBundleId === 'pathway') {
+                    promoBundleId = null;
+                    syncPromoBundleHidden();
+                    toggleBundleInfobox();
+                    updatePrice();
+                }
+            });
+
             // Initialize
+            const bundleParam = new URLSearchParams(window.location.search).get('bundle');
+            if (bundleParam) {
+                applyBundleFromQuery(bundleParam);
+                const u = new URL(window.location.href);
+                u.searchParams.delete('bundle');
+                const next = u.searchParams.toString() ? u.pathname + '?' + u.searchParams.toString() : u.pathname;
+                history.replaceState(null, '', next);
+                const bookingFormEl = document.getElementById('booking-form');
+                if (bookingFormEl) bookingFormEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
             updateProgress();
             updatePrice();
         });

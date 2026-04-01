@@ -132,6 +132,17 @@ export function getPricesDatesPath(lang: SupportedLang): string {
   return mapping[lang] || 'prices-dates';
 }
 
+/** Dil bazlı fiyat teklifi form path'ini döndürür */
+export function getQuoteFormPath(lang: SupportedLang): string {
+  const mapping: Record<SupportedLang, string> = {
+    tr: 'fiyat-teklifi-al',
+    de: 'preisangebot-anfordern',
+    en: 'get-a-quote',
+    es: 'solicitar-cotizacion',
+  };
+  return mapping[lang] || 'get-a-quote';
+}
+
 /** Yasal sayfa slug'ları (Datenschutz / Gizlilik) */
 export function getDatenschutzPath(lang: SupportedLang): string {
   const mapping: Record<SupportedLang, string> = {

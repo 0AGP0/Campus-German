@@ -1,11 +1,13 @@
 ---
 // Header Component - Orijinal Yapı
 import '../styles/header.css';
-import { getTrialPath, getPartnerApplicationPath } from '../utils/pathHelpers';
+import { getTrialPath, getPartnerApplicationPath, getQuoteFormPath, getBookingPath } from '../utils/pathHelpers';
 
 const { lang = 'tr' } = Astro.props;
 const trialSlug = getTrialPath(lang as 'tr'|'de'|'en'|'es');
 const partnerSlug = getPartnerApplicationPath(lang as 'tr'|'de'|'en'|'es');
+const quoteFormSlug = getQuoteFormPath(lang as 'tr'|'de'|'en'|'es');
+const bookingPathSegment = getBookingPath(lang as 'tr'|'de'|'en'|'es');
 
 // Translations
 const navTranslations = {
@@ -25,7 +27,7 @@ const navTranslations = {
         email: 'E-posta',
         brochure: 'Broşür',
         pricesDates: 'Fiyatlar ve Tarihler',
-        register: 'Ücretsiz Rezervasyon',
+        register: 'Kayıt / Ödeme',
         phone: '+49 163 6927842',
         // Tab labels
         tabIntensive: 'Yoğun Akademik',
@@ -130,7 +132,7 @@ const navTranslations = {
         email: 'E-Mail',
         brochure: 'Broschüre',
         pricesDates: 'Preise & Termine',
-        register: 'Kostenlose Buchung',
+        register: 'Buchung / Zahlung',
         phone: '+49 163 6927842',
         tabIntensive: 'Intensiv',
         tabSeasonal: 'Saisonal',
@@ -231,7 +233,7 @@ const navTranslations = {
         email: 'Email',
         brochure: 'Brochure',
         pricesDates: 'Prices & Dates',
-        register: 'Free Booking',
+        register: 'Book / Pay',
         phone: '+49 163 6927842',
         tabIntensive: 'Intensive Academic',
         tabSeasonal: 'Seasonal',
@@ -335,7 +337,7 @@ const navTranslations = {
         email: 'Email',
         brochure: 'Folleto',
         pricesDates: 'Precios y Fechas',
-        register: 'Reserva gratuita',
+        register: 'Reserva / Pago',
         phone: '+49 163 6927842',
         tabIntensive: 'Intensivo Académico',
         tabSeasonal: 'Estacional',
@@ -572,11 +574,11 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
             <div class="top-header-left">
                 <span class="top-header-spacer" aria-hidden="true"></span>
             </div>
-            <!-- Orta: Fiyat Teklifi, Email (mailto), WhatsApp, Fiyat ve Tarihler - ortada -->
+            <!-- Orta: Kayıt/Ödeme (booking), Email, WhatsApp, Fiyat ve Tarihler -->
             <div class="top-header-center">
-                <a href={`/${lang}/${sections.booking}`} class="top-header-link">
-                    <i class="fas fa-file-alt"></i>
-                    <span>{t.getQuote}</span>
+                <a href={`/${lang}/${bookingPathSegment}`} class="top-header-link">
+                    <i class="fas fa-credit-card"></i>
+                    <span>{t.register}</span>
                 </a>
                 <span class="top-header-divider"></span>
                 <a href="mailto:info@campusgerman.com" class="top-header-link top-header-email">
@@ -594,11 +596,11 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                     <span>{t.pricesDates}</span>
                 </a>
             </div>
-            <!-- Sağ: Kayıt + Dil -->
+            <!-- Sağ: Fiyat teklifi (quote) + Dil -->
             <div class="top-header-right">
-                <a href={`/${lang}/${sections.booking}`} class="top-header-register">
-                    <i class="fas fa-user-plus"></i>
-                    <span>{t.register}</span>
+                <a href={`/${lang}/${quoteFormSlug}`} class="top-header-register">
+                    <i class="fas fa-file-alt"></i>
+                    <span>{t.getQuote}</span>
                     <i class="fas fa-arrow-right register-arrow"></i>
                 </a>
                 <div class="top-header-lang">

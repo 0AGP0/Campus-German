@@ -4,10 +4,8 @@ import '../../styles/pages/ueber-uns.css';
 import { getContactPath, getSectionPath, isValidLang } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
-    return [
-        { params: { lang: 'tr' } },
-        { params: { lang: 'de' } },
-    ];
+    // Sadece Almanca: /de/ueber-uns/ — Türkçe içerik /tr/hakkimizda/ altında; eski /tr/ueber-uns* URL'leri .htaccess + _redirects ile 301
+    return [{ params: { lang: 'de' } }];
 }
 
 const { lang } = Astro.params;
@@ -15,11 +13,6 @@ const { lang } = Astro.params;
 if (!isValidLang(lang)) {
     throw new Error(`Invalid language: ${lang}`);
 }
-
-// TR için /tr/ueber-uns/ -> /tr/hakkimizda/ (eski URL redirect; template'te gösterilecek)
-const isRedirectTr = lang === 'tr';
-const redirectToTr = '/tr/hakkimizda/';
-const canonicalUrlTr = 'https://campusgerman.com' + redirectToTr;
 
 const contactPath = getContactPath(lang);
 
@@ -146,20 +139,6 @@ const translations = {
 const t = translations[lang as 'tr' | 'de'];
 ---
 
-{isRedirectTr ? (
-  <html lang="tr">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta http-equiv="refresh" content={`0;url=${redirectToTr}`} />
-      <link rel="canonical" href={canonicalUrlTr} />
-      <title>Yönlendiriliyor - Campus German</title>
-    </head>
-    <body>
-      <p>Doğru sayfaya yönlendiriliyorsunuz: <a href={redirectToTr}>tıklayın</a>.</p>
-    </body>
-  </html>
-) : (
 <MainLayout title={t.title} lang={lang}>
     <!-- Mission Section -->
     <section class="mission-section">
@@ -405,4 +384,3 @@ const t = translations[lang as 'tr' | 'de'];
         </div>
     </section>
 </MainLayout>
-)}

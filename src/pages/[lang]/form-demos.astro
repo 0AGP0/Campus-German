@@ -1,0 +1,49 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import FormDemoCss from '../../components/demos/FormDemoCss.astro';
+import FormDemoMotion from '../../components/demos/FormDemoMotion.astro';
+import FormDemoGsap from '../../components/demos/FormDemoGsap.astro';
+import '../../styles/pages/form-demos.css';
+import { getQuoteFormPath } from '../../utils/pathHelpers';
+
+export async function getStaticPaths() {
+  return [{ params: { lang: 'tr' } }, { params: { lang: 'de' } }, { params: { lang: 'en' } }, { params: { lang: 'es' } }];
+}
+
+const { lang } = Astro.params;
+const titles: Record<string, { title: string; lead: string }> = {
+  tr: {
+    title: 'Form animasyon demoları',
+    lead: 'Aynı 3 adımlı mini akış; animasyon katmanı farklı. Beğendiğinizi seçip asıl teklif formuna uygularız.',
+  },
+  de: {
+    title: 'Form-Animations- Demos',
+    lead: 'Gleicher 3-Schritte-Mini-Flow, unterschiedliche Animations-Schicht. Gewünschte Variante übernehmen wir im Angebotsformular.',
+  },
+  en: {
+    title: 'Form animation demos',
+    lead: 'Same 3-step mini flow; pick a motion style and we apply it to the quote form.',
+  },
+  es: {
+    title: 'Demos de animación',
+    lead: 'Mismo flujo corto de 3 pasos; elige el estilo y lo aplicamos al formulario de cotización.',
+  },
+};
+const t = titles[lang as string] ?? titles.en;
+const quotePath = `/${lang}/${getQuoteFormPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
+---
+
+<MainLayout title={`${t.title} - Campus German`} lang={lang}>
+  <div class="fd-page">
+    <h1>{t.title}</h1>
+    <p class="lead">{t.lead}</p>
+    <p class="lead" style="font-size: 0.85rem; margin-top: -0.5rem;">
+      URL: /{lang}/form-demos · <a href={quotePath}>Teklif formuna git</a>
+    </p>
+    <div class="fd-grid">
+      <FormDemoCss />
+      <FormDemoMotion />
+      <FormDemoGsap />
+    </div>
+  </div>
+</MainLayout>

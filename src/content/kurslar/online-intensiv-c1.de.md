@@ -13,7 +13,7 @@ features:
     description: "20 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
-    description: "12 Wochen"
+    description: "8 Wochen"
   - icon: "fas fa-users"
     title: "Klassengröße"
     description: "Maximal 10 Teilnehmende"
@@ -37,7 +37,7 @@ tabs:
       title: "Online Intensiv-Deutschkurs C1"
       paragraphs:
         - heading: "Kursüberblick"
-          text: "Der Online Intensiv-Deutschkurs C1 ist ein umfassendes Online-Programm für Lernende, die das Niveau B2 abgeschlossen haben und ihre Deutschkenntnisse auf fortgeschrittenem Niveau weiterentwickeln möchten. Ziel des Kurses ist es, die Teilnehmenden sprachlich so zu stärken, dass sie universitäre akademische Arbeiten durchführen und sich in professionellen Umgebungen fließend ausdrücken können. Der Kurs umfasst 20 Unterrichtseinheiten pro Woche, dauert 12 Wochen und besteht aus insgesamt ca. 200 Unterrichtseinheiten."
+          text: "Der Online Intensiv-Deutschkurs C1 ist ein umfassendes Online-Programm für Lernende, die das Niveau B2 abgeschlossen haben und ihre Deutschkenntnisse auf fortgeschrittenem Niveau weiterentwickeln möchten. Ziel des Kurses ist es, die Teilnehmenden sprachlich so zu stärken, dass sie universitäre akademische Arbeiten durchführen und sich in professionellen Umgebungen fließend ausdrücken können. Der Kurs umfasst 20 Unterrichtseinheiten pro Woche, dauert 8 Wochen und besteht aus insgesamt ca. 160 Unterrichtseinheiten."
         - heading: "Vorteile des Online-Unterrichts"
           text: "Das Online-Format bietet maximale zeitliche und räumliche Flexibilität. Sie können von zu Hause oder von jedem beliebigen Ort aus am Unterricht teilnehmen und hochwertige Bildung ohne Reiseaufwand erhalten. Alle Unterrichtseinheiten werden aufgezeichnet und stehen Ihnen rund um die Uhr zur Verfügung, sodass Sie Inhalte wiederholen oder verpasste Stunden nachholen können. Digitale Materialien und interaktive Übungen sorgen für ein effektives und nachhaltiges Lernen."
         - heading: "Zielgruppe und Voraussetzungen"

@@ -13,7 +13,7 @@ features:
     description: "20-24 Clases"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Curso"
-    description: "8-12 Semanas"
+    description: "8 Semanas"
   - icon: "fas fa-users"
     title: "Tamaño de Clase"
     description: "Máximo 12 Personas"

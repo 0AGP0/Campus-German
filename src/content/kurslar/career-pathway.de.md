@@ -13,7 +13,7 @@ features:
     description: "24 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Programmdauer"
-    description: "12–24 Wochen"
+    description: "8 Wochen"
   - icon: "fas fa-users"
     title: "Klassengröße"
     description: "Maximal 10 Personen"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "Preisübersicht"
       pricing:
-        - name: "Career Pathway (12 Wochen)"
-          duration: "12 Wochen"
+        - name: "Career Pathway (8 Wochen)"
+          duration: "8 Wochen"
           schedule: "24 UE/Woche"
           price: "Individuelle Preisgestaltung"
         - name: "Career Pathway (24 Wochen)"

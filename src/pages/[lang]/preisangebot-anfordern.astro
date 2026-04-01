@@ -1,0 +1,17 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import QuoteWizardForm from '../../components/QuoteWizardForm.astro';
+import '../../styles/pages/quote-wizard.css';
+import { getBookingPath } from '../../utils/pathHelpers';
+
+export async function getStaticPaths() {
+  return [{ params: { lang: 'de' } }];
+}
+
+const { lang } = Astro.params;
+const bookingPath = `/${lang}/${getBookingPath(lang as 'tr'|'de'|'en'|'es')}`;
+---
+
+<MainLayout title="Preisangebot anfordern - Campus German" lang={lang} hideHeader hideFooter>
+  <QuoteWizardForm lang={lang} bookingPath={bookingPath} homePath={`/${lang}`} />
+</MainLayout>

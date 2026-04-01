@@ -13,7 +13,7 @@ features:
     description: "20 Clases (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Curso"
-    description: "8-12 Semanas"
+    description: "8 Semanas"
   - icon: "fas fa-users"
     title: "Tamaño de Clase"
     description: "Máximo 8 Personas"
@@ -37,7 +37,7 @@ tabs:
       title: "Curso de Preparación para Exámenes Goethe/TELC Online"
       paragraphs:
         - heading: "Resumen del Curso"
-          text: "El Curso de Preparación para Exámenes Goethe/TELC Online es un programa online integral centrado en exámenes diseñado para estudiantes que quieren prepararse para exámenes Goethe y TELC. Este curso tiene como objetivo asegurar que los estudiantes hagan preparación específica para el formato del examen, aprendan técnicas de examen y tengan éxito. El programa, que ofrece una experiencia de preparación intensiva con 20 horas de clase por semana, dura 8-12 semanas y puede personalizarse según el nivel de examen que el estudiante tenga como objetivo."
+          text: "El Curso de Preparación para Exámenes Goethe/TELC Online es un programa online integral centrado en exámenes diseñado para estudiantes que quieren prepararse para exámenes Goethe y TELC. Este curso tiene como objetivo asegurar que los estudiantes hagan preparación específica para el formato del examen, aprendan técnicas de examen y tengan éxito. El programa, que ofrece una experiencia de preparación intensiva con 20 horas de clase por semana, dura 8 semanas y puede personalizarse según el nivel de examen que el estudiante tenga como objetivo."
         - heading: "Ventajas de la Educación Online"
           text: "El formato de educación online proporciona a los estudiantes flexibilidad de tiempo y lugar. Puede asistir a clases desde casa o desde cualquier lugar que desee, recibir educación de preparación de calidad sin tener que viajar. Todas las clases se graban y están disponibles 24/7, por lo que puede ver clases perdidas nuevamente o reforzar temas. Además, se ofrece una experiencia de preparación enriquecida con materiales de examen digitales y exámenes simulados interactivos."
         - heading: "Exámenes Objetivo y Niveles"

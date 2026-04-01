@@ -529,7 +529,8 @@ const displayBadgeText = shortenLabels(kurs.data.badge?.text ?? '');
     var fd = new FormData(form);
     var data = {};
     for (var p of fd.entries()) data[p[0]] = p[1];
-    if (!data.email || !data.name || !data.phone || !data.preferredDate) {
+    var startDateVal = data['start-date'] || '';
+    if (!data.email || !data.name || !data.phone || !startDateVal) {
       if (window.showSuccessModal) window.showSuccessModal('error', msg.required); else alert(msg.required);
       if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalContent; }
       return;
@@ -548,10 +549,12 @@ const displayBadgeText = shortenLabels(kurs.data.badge?.text ?? '');
         lang: lang,
         name: data.name,
         email: data.email,
-        phone: data.phone,
-        preferredDate: data.preferredDate || '',
+        tel: data.phone,
         city: data.city || '',
-        message: data.message || ''
+        country: '',
+        startDate: startDateVal,
+        message: data.message || '',
+        timestamp: new Date().toISOString()
       })
     }).then(function(res) {
       if (res.ok) {

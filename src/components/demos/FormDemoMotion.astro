@@ -1,0 +1,76 @@
+---
+---
+
+<div class="fd-shell fd-motion" id="form-demo-motion">
+  <h3>2 — Motion</h3>
+  <p class="fd-meta">motion — spring / stagger için uygun (npm).</p>
+  <div class="fd-progress"><i data-progress></i></div>
+  <div class="fd-panel">
+    <div class="fd-panel-inner" data-step-content></div>
+  </div>
+</div>
+
+<script>
+  import { animate } from 'motion';
+
+  const root = document.getElementById('form-demo-motion');
+  if (root) {
+    const progress = root.querySelector('[data-progress]');
+    const wrap = root.querySelector('[data-step-content]');
+    let step = 1;
+
+    function bind() {
+      wrap.querySelectorAll("[data-pick]").forEach((b) => {
+        b.addEventListener("click", () => {
+          wrap.querySelectorAll("[data-pick]").forEach((x) => x.classList.remove("picked"));
+          b.classList.add("picked");
+          animate(b, { scale: [1, 0.97, 1] }, { duration: 0.22 });
+          step = 2;
+          render();
+        });
+      });
+      wrap.querySelectorAll("[data-next]").forEach((b) => {
+        b.addEventListener("click", () => {
+          animate(b, { scale: [1, 0.96, 1] }, { duration: 0.2 });
+          step = 3;
+          render();
+        });
+      });
+      const send = wrap.querySelector("[data-send]");
+      if (send)
+        send.addEventListener("click", () => {
+          alert("Demo bitti (Motion).");
+          step = 1;
+          render();
+        });
+    }
+
+    function render() {
+      if (!progress || !wrap) return;
+      progress.style.width = `${((step - 1) / 2) * 100}%`;
+
+      const enter = () => {
+        animate(
+          wrap,
+          { opacity: [0, 1], y: [14, 0] },
+          { duration: 0.38, easing: [0.16, 1, 0.3, 1] }
+        );
+      };
+
+      if (step === 1) {
+        wrap.innerHTML =
+          '<h4>Hangi program?</h4><div class="fd-options"><button type="button" data-pick>A</button><button type="button" data-pick>B</button></div>';
+      } else if (step === 2) {
+        wrap.innerHTML =
+          '<h4>Deneme: süre</h4><div class="fd-options"><button type="button" data-next>2 ay</button><button type="button" data-next>4 ay</button></div>';
+      } else {
+        wrap.innerHTML =
+          '<h4>İletişim (demo)</h4><div class="fd-field"><label>Email</label><input type="email" placeholder="ornek@mail.com" /></div><button type="button" class="fd-submit" data-send>Tamam</button>';
+      }
+      bind();
+      enter();
+    }
+
+    render();
+  }
+</script>

@@ -13,7 +13,7 @@ features:
     description: "20-24 Ders"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
-    description: "8-12 Hafta"
+    description: "8 Hafta"
   - icon: "fas fa-users"
     title: "Sınıf Mevcudu"
     description: "Maksimum 12 Kişi"

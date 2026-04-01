@@ -13,7 +13,7 @@ features:
     description: "24 Clases (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Curso"
-    description: "12 Semanas"
+    description: "8 Semanas"
   - icon: "fas fa-users"
     title: "Tamaño de Clase"
     description: "Máximo 8 Personas"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "Información de Precios"
       pricing:
-        - name: "Preparación FSP 12 Semanas"
-          duration: "12 Semanas"
+        - name: "Preparación FSP 8 Semanas"
+          duration: "8 Semanas"
           schedule: "24 Clases/Semana"
           price: "Precio Especial"
           highlighted: true

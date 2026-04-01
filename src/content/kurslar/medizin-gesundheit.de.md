@@ -13,7 +13,7 @@ features:
     description: "20-24 Unterrichtseinheiten"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
-    description: "12-24 Wochen"
+    description: "8 Wochen"
   - icon: "fas fa-users"
     title: "Klassengröße"
     description: "Maximal 10 Teilnehmende"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "Preisinformationen"
       pricing:
-        - name: "12 Wochen Medizin/Gesundheit"
-          duration: "12 Wochen"
+        - name: "8 Wochen Medizin/Gesundheit"
+          duration: "8 Wochen"
           schedule: "20-24 Unterrichtseinheiten/Woche"
           price: "Individuelle Preisgestaltung"
           highlighted: true

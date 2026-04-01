@@ -13,7 +13,7 @@ features:
     description: "20 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
-    description: "12 Hafta"
+    description: "8 Hafta"
   - icon: "fas fa-users"
     title: "Sınıf Mevcudu"
     description: "Maksimum 10 Kişi"
@@ -37,7 +37,7 @@ tabs:
       title: "Online Yoğun Almanca C1 Kursu"
       paragraphs:
         - heading: "Kursa Genel Bakış"
-          text: "Online Yoğun Almanca C1 Kursu, B2 seviyesini tamamlamış öğrenciler için tasarlanmış, ileri seviye Almanca becerilerini geliştirmeye odaklı kapsamlı bir online programdır. Bu kurs, öğrencilerin üniversite seviyesinde akademik çalışmalar yapabilmelerini ve profesyonel ortamlarda akıcı bir şekilde iletişim kurabilmelerini sağlayacak dil becerilerini kazandırmayı hedefler. Haftada 20 ders saati ile yoğun bir öğrenme deneyimi sunan program, 12 hafta sürmektedir ve yaklaşık 200 ders saatinden oluşmaktadır."
+          text: "Online Yoğun Almanca C1 Kursu, B2 seviyesini tamamlamış öğrenciler için tasarlanmış, ileri seviye Almanca becerilerini geliştirmeye odaklı kapsamlı bir online programdır. Bu kurs, öğrencilerin üniversite seviyesinde akademik çalışmalar yapabilmelerini ve profesyonel ortamlarda akıcı bir şekilde iletişim kurabilmelerini sağlayacak dil becerilerini kazandırmayı hedefler. Haftada 20 ders saati ile yoğun bir öğrenme deneyimi sunan program, 8 hafta sürmektedir ve yaklaşık 160 ders saatinden oluşmaktadır."
         - heading: "Online Eğitimin Avantajları"
           text: "Online eğitim formatı, öğrencilere zaman ve mekan esnekliği sağlar. Evden veya istediğiniz herhangi bir yerden derslere katılabilir, seyahat etmek zorunda kalmadan kaliteli eğitim alabilirsiniz. Tüm dersler kaydedilir ve 7/24 erişim imkanı sunulur, böylece kaçırdığınız dersleri tekrar izleyebilir veya konuları pekiştirebilirsiniz. Ayrıca, dijital materyaller ve interaktif alıştırmalar ile zenginleştirilmiş bir öğrenme deneyimi sunulur."
         - heading: "Hedef Kitle ve Ön Koşullar"

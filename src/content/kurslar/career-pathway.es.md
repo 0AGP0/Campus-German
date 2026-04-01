@@ -13,7 +13,7 @@ features:
     description: "24 Clases (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Programa"
-    description: "12-24 Semanas"
+    description: "8 Semanas"
   - icon: "fas fa-users"
     title: "Tamaño de Clase"
     description: "Máximo 10 Personas"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "Información de Precios"
       pricing:
-        - name: "12 Semanas Trayectoria Profesional"
-          duration: "12 Semanas"
+        - name: "8 Semanas Trayectoria Profesional"
+          duration: "8 Semanas"
           schedule: "24 Clases/Semana"
           price: "Precio Especial"
         - name: "24 Semanas Trayectoria Profesional"

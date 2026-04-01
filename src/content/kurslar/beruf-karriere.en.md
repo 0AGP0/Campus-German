@@ -13,7 +13,7 @@ features:
     description: "20-24 Lessons"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
-    description: "8-12 Weeks"
+    description: "8 Weeks"
   - icon: "fas fa-users"
     title: "Class Size"
     description: "Maximum 12 People"

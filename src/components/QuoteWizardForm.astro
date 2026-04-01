@@ -1,0 +1,801 @@
+---
+const { lang = 'tr', bookingPath = '/tr/buchung', homePath: homePathProp } = Astro.props;
+const homePath = homePathProp ?? `/${lang}`;
+/** Booking ücretsiz gönderim ile aynı Make senaryosu (PUBLIC_MAKE_QUOTE_WEBHOOK ile override edilebilir) */
+const BOOKING_FREE_WEBHOOK = 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
+const quoteWebhook = import.meta.env.PUBLIC_MAKE_QUOTE_WEBHOOK || BOOKING_FREE_WEBHOOK;
+
+const copy = {
+  tr: {
+    asideMark: 'Teklif',
+    title: 'Fiyat teklifi',
+    subtitleEm: 'Size ozel, net bir teklif',
+    subtitle:
+      'Program, seviye ve tarih tercihlerinizi birkac kisa soruda topluyoruz; fiyat teklifiniz hedeflerinize gore hesaplanir.',
+    asideSteps: '4 adim',
+    asideStepHint: 'Ilerleme',
+    programs: [
+      { label: 'Dil Kursu', program: 'intensive', quoteTrack: 'language-course', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Yaz Okulu', program: 'youth-camp', quoteTrack: 'summer-school', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Sınava Hazırlık', program: 'intensive', quoteTrack: 'exam-prep', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Online Kurs', program: 'online', quoteTrack: 'online-course', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
+    ],
+    programQ: 'Hangi programa daha yakin hissediyorsunuz?',
+    levelQ: 'Hangi seviye araliginda hedefliyorsunuz?',
+    planLevelCaption: 'Seviye araligi',
+    planMonthCaption: 'Baslangic aylari',
+    monthQ: 'Hangi aylar arasinda baslamak istersiniz?',
+    levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
+    months: ['Ocak', 'Subat', 'Mart', 'Nisan', 'Mayis', 'Haziran', 'Temmuz', 'Agustos', 'Eylul', 'Ekim', 'Kasim', 'Aralik'],
+    note: 'Kurs süresi: Her tam seviye iki modüle ayrılır (ör. A1 = A1.1 + A1.2). Tam seviye başına yaklaşık 2 ay planlayın.',
+    visaQ: 'Vizeye ihtiyacınız var mı?',
+    accQ: 'Konaklama ister misiniz?',
+    yes: 'Evet',
+    no: 'Hayır',
+    acc: [
+      { label: 'Tek kişilik oda', value: 'single' },
+      { label: 'Çift kişilik oda', value: 'double' },
+      { label: 'İstemiyorum', value: 'no' }
+    ],
+    step3lead: 'Son iki tercih',
+    step4lead: 'Iletisim',
+    name: 'Ad Soyad',
+    email: 'E-posta',
+    phone: 'Telefon',
+    heard: 'Bizi nereden duydunuz?',
+    heardOpts: ['Instagram', 'Google', 'Arkadas Tavsiyesi', 'YouTube', 'Diger'],
+    submit: 'Teklif Al',
+    doneTitle: 'Teşekkürler',
+    doneText:
+      'Danışmanlarımız en yakın zamanda sizinle iletişime geçecekler. İsterseniz rezervasyon yapıp ödemeye geçebilirsiniz.',
+    doneBtn: 'Rezervasyon ve ödemeye geç',
+    doneClose: 'Ana sayfaya dön',
+    close: 'Kapat',
+    error: 'Form gönderilemedi. Lütfen tekrar deneyin.',
+    planContinue: 'Devam',
+    planBack: 'Geri'
+  },
+  de: {
+    asideMark: 'Angebot',
+    title: 'Preisangebot',
+    subtitleEm: 'Ihr individuelles Angebot',
+    subtitle:
+      'Wir fassen Kurs, Niveau und Zeitraum in wenigen Schritten zusammen – so wird Ihr Preis passend berechnet.',
+    asideSteps: '4 Schritte',
+    asideStepHint: 'Fortschritt',
+    programs: [
+      { label: 'Sprachkurs', program: 'intensive', quoteTrack: 'language-course', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Sommerschule', program: 'youth-camp', quoteTrack: 'summer-school', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Prüfungsvorbereitung', program: 'intensive', quoteTrack: 'exam-prep', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Online Kurs', program: 'online', quoteTrack: 'online-course', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
+    ],
+    programQ: 'Welches Programm passt am ehesten zu Ihnen?',
+    levelQ: 'Welchen Niveau-Bereich streben Sie an?',
+    planLevelCaption: 'Niveau-Spanne',
+    planMonthCaption: 'Monatsfenster',
+    monthQ: 'Zwischen welchen Monaten moechten Sie starten?',
+    levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
+    months: ['Jan', 'Feb', 'Maerz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+    note: 'Kursdauer: Jede vollständige Niveaustufe ist in zwei Module aufgeteilt (z. B. A1 = A1.1 + A1.2). Rechnen Sie mit etwa 2 Monaten pro vollständiger Stufe.',
+    visaQ: 'Brauchen Sie ein Visum?',
+    accQ: 'Benötigen Sie eine Unterkunft?',
+    yes: 'Ja',
+    no: 'Nein',
+    acc: [
+      { label: 'Einzelzimmer', value: 'single' },
+      { label: 'Doppelzimmer', value: 'double' },
+      { label: 'Nein', value: 'no' }
+    ],
+    step3lead: 'Zwei Angaben',
+    step4lead: 'Kontakt',
+    name: 'Vorname Nachname',
+    email: 'E-Mail',
+    phone: 'Telefon',
+    heard: 'Wie haben Sie uns gefunden?',
+    heardOpts: ['Instagram', 'Google', 'Empfehlung', 'YouTube', 'Andere'],
+    submit: 'Angebot anfordern',
+    doneTitle: 'Vielen Dank',
+    doneText:
+      'Unsere Beraterinnen und Berater melden sich schnellstmöglich bei Ihnen. Wenn Sie möchten, können Sie anschließend zur Reservierung und Zahlung wechseln.',
+    doneBtn: 'Zur Reservierung und Zahlung',
+    doneClose: 'Zur Startseite',
+    close: 'Schließen',
+    error: 'Formular konnte nicht gesendet werden.',
+    planContinue: 'Weiter',
+    planBack: 'Zurück'
+  },
+  en: {
+    asideMark: 'Quote',
+    title: 'Request a quote',
+    subtitleEm: 'A quote shaped around you',
+    subtitle:
+      'We gather your course, level, and timing preferences in a short flow—then your quote reflects what you actually need.',
+    asideSteps: '4 steps',
+    asideStepHint: 'Progress',
+    programs: [
+      { label: 'Language course', program: 'intensive', quoteTrack: 'language-course', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Summer school', program: 'youth-camp', quoteTrack: 'summer-school', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Exam prep', program: 'intensive', quoteTrack: 'exam-prep', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Online course', program: 'online', quoteTrack: 'online-course', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
+    ],
+    programQ: 'Which track feels closest to what you need?',
+    levelQ: 'What level range are you aiming for?',
+    planLevelCaption: 'Level span',
+    planMonthCaption: 'Month window',
+    monthQ: 'Between which months would you like to start?',
+    levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
+    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    note: 'Course duration: Each full level has two modules (e.g. A1 = A1.1 + A1.2). Plan about 2 months per full level.',
+    visaQ: 'Do you need a visa?',
+    accQ: 'Do you want accommodation?',
+    yes: 'Yes',
+    no: 'No',
+    acc: [
+      { label: 'Single room', value: 'single' },
+      { label: 'Double room', value: 'double' },
+      { label: 'No', value: 'no' }
+    ],
+    step3lead: 'Two preferences',
+    step4lead: 'Your details',
+    name: 'Full name',
+    email: 'Email',
+    phone: 'Phone',
+    heard: 'Where did you hear about us?',
+    heardOpts: ['Instagram', 'Google', 'Friend referral', 'YouTube', 'Other'],
+    submit: 'Request quote',
+    doneTitle: 'Thank you',
+    doneText:
+      'Our advisors will contact you as soon as possible. You can also continue to reservation and payment if you wish.',
+    doneBtn: 'Continue to reservation & payment',
+    doneClose: 'Back to home',
+    close: 'Close',
+    error: 'Something went wrong. Please try again.',
+    planContinue: 'Continue',
+    planBack: 'Back'
+  },
+  es: {
+    asideMark: 'Cotiz.',
+    title: 'Pedir cotizacion',
+    subtitleEm: 'Una cotizacion a tu medida',
+    subtitle:
+      'Reunimos curso, nivel y fechas en unos pasos breves; asi el precio refleja lo que buscas.',
+    asideSteps: '4 pasos',
+    asideStepHint: 'Avance',
+    programs: [
+      { label: 'Curso de idioma', program: 'intensive', quoteTrack: 'language-course', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Escuela de verano', program: 'youth-camp', quoteTrack: 'summer-school', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Preparación de examen', program: 'intensive', quoteTrack: 'exam-prep', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Curso online', program: 'online', quoteTrack: 'online-course', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
+    ],
+    programQ: 'Que opcion se parece mas a lo que buscas?',
+    levelQ: 'Que rango de nivel es tu objetivo?',
+    planLevelCaption: 'Rango de nivel',
+    planMonthCaption: 'Ventana de meses',
+    monthQ: 'Entre que meses te gustaria empezar?',
+    levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
+    months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+    note: 'Duracion: Cada nivel completo tiene dos modulos (ej. A1 = A1.1 + A1.2). Cuenta unos 2 meses por nivel completo.',
+    visaQ: 'Necesitas visa?',
+    accQ: '¿Necesitas alojamiento?',
+    yes: 'Sí',
+    no: 'No',
+    acc: [
+      { label: 'Habitación individual', value: 'single' },
+      { label: 'Habitación doble', value: 'double' },
+      { label: 'No, gracias', value: 'no' }
+    ],
+    step3lead: 'Dos preferencias',
+    step4lead: 'Contacto',
+    name: 'Nombre completo',
+    email: 'Email',
+    phone: 'Telefono',
+    heard: 'Donde nos conociste?',
+    heardOpts: ['Instagram', 'Google', 'Recomendacion', 'YouTube', 'Otro'],
+    submit: 'Solicitar cotizacion',
+    doneTitle: 'Gracias',
+    doneText:
+      'Nuestros asesores se pondrán en contacto contigo lo antes posible. Si lo deseas, puedes pasar a la reserva y al pago.',
+    doneBtn: 'Ir a reserva y pago',
+    doneClose: 'Volver al inicio',
+    close: 'Cerrar',
+    error: 'No se pudo enviar. Intentalo de nuevo.',
+    planContinue: 'Continuar',
+    planBack: 'Atras'
+  }
+};
+
+const t = copy[lang as keyof typeof copy] ?? copy.tr;
+---
+
+<div class="qx-page-bg">
+<section class="qx" id="pwRoot">
+  <aside class="qx-aside" aria-hidden="true">
+    <div class="qx-aside-ornament" aria-hidden="true"></div>
+    <p class="qx-aside-title">{t.asideMark}</p>
+    <p class="qx-aside-meta">{t.asideSteps}</p>
+    <div class="qx-aside-progress">
+      <div class="qx-aside-connector">
+        <div class="qx-aside-track">
+          <span class="qx-aside-track-line" aria-hidden="true"></span>
+          <div class="qx-dots">
+            {[1, 2, 3, 4].map((n) => <span class="qx-dot" data-qx-dot={n}></span>)}
+          </div>
+        </div>
+      </div>
+      <div class="qx-aside-counter">
+        <p class="qx-aside-step" data-pw-eyebrow>01 / 04</p>
+        <span class="qx-aside-stephint">{t.asideStepHint}</span>
+      </div>
+    </div>
+    <div class="qx-aside-brand" aria-hidden="true">
+      <img src="/Campusgerman.png" alt="" width="80" height="80" loading="lazy" decoding="async" />
+    </div>
+  </aside>
+
+  <div class="qx-body">
+    <div class="qx-lead">
+      <p class="qx-lead-kicker">{t.subtitleEm}</p>
+      <p class="qx-lead-body">{t.subtitle}</p>
+    </div>
+    <div class="qx-line" aria-hidden="true">
+      <span class="qx-line-fill" data-pw-bar></span>
+    </div>
+
+    <form id="pwForm" class="qx-form" data-webhook={quoteWebhook} data-booking={bookingPath} data-levels={t.levels.join('|')} data-months={t.months.join('|')} data-error={t.error}>
+      <input type="hidden" name="formType" value="price-quote" />
+      <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
+      <input type="hidden" name="lang" value={lang} />
+      <input type="hidden" name="program" id="pwProgram" value="" />
+      <input type="hidden" name="quote-track" id="pwQuoteTrack" value="" />
+      <input type="hidden" name="quote-program-label" id="pwProgramLabel" value="" />
+      <input type="hidden" name="quote-level-start" id="pwLevelA" value="" />
+      <input type="hidden" name="quote-level-end" id="pwLevelB" value="" />
+      <input type="hidden" name="quote-month-start" id="pwMonthA" value="" />
+      <input type="hidden" name="quote-month-end" id="pwMonthB" value="" />
+
+      <div class="pw-viewport">
+        <div class="pw-panel is-current qx-scene qx-scene--pick" data-panel="1">
+          <div class="qx-stage-shell">
+            <header class="qx-scene-head qx-scene-head--pick">
+              <span class="qx-scene-kicker">1</span>
+              <h2 class="qx-question">{t.programQ}</h2>
+            </header>
+            <div class="qx-strip">
+              {t.programs.map((p, i) => (
+                <button
+                  type="button"
+                  class={`qx-card qx-card--${i + 1}`}
+                  data-program={p.program}
+                  data-quote-track={p.quoteTrack}
+                  data-program-label={p.label}
+                >
+                  <span class="qx-card-num">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="qx-card-bg" style={`--qx-img:url('${p.image}')`} />
+                  <strong>{p.label}</strong>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div class="pw-panel qx-scene qx-scene--plan" data-panel="2">
+          <div class="qx-stage-shell qx-stage-shell--with-nav">
+            <header class="qx-scene-head qx-scene-head--plan">
+              <span class="qx-scene-kicker">2</span>
+              <h2 class="qx-question">{t.levelQ}</h2>
+            </header>
+            <div class="qx-plan-grid">
+              <div class="qx-plan-card">
+                <p class="qx-plan-label">{t.planLevelCaption}</p>
+                <div class="qx-range-stack">
+                  <div class="qx-ruler" style={`--segments: ${t.levels.length - 1}`} aria-hidden="true">
+                    {t.levels.map((lv, i) => (
+                      <span class="qx-ruler-tick" style={`--i: ${i}`}>
+                        <span class="qx-ruler-cap">{lv}</span>
+                        <span class="qx-ruler-mark" />
+                      </span>
+                    ))}
+                  </div>
+                  <div class="qx-range" data-range="level" data-max="9">
+                    <div class="qx-rail" data-rail></div>
+                    <input class="qx-rmin" type="range" min="0" max="9" value="0" />
+                    <input class="qx-rmax" type="range" min="0" max="9" value="3" />
+                  </div>
+                </div>
+                <p class="qx-readout" data-out="level"></p>
+              </div>
+              <div class="qx-plan-card">
+                <p class="qx-plan-label">{t.planMonthCaption}</p>
+                <div class="qx-range-stack">
+                  <div class="qx-ruler qx-ruler--months" style={`--segments: ${t.months.length - 1}`} aria-hidden="true">
+                    {t.months.map((mv, i) => (
+                      <span class="qx-ruler-tick" style={`--i: ${i}`}>
+                        <span class="qx-ruler-cap">{mv}</span>
+                        <span class="qx-ruler-mark" />
+                      </span>
+                    ))}
+                  </div>
+                  <div class="qx-range" data-range="month" data-max="11">
+                    <div class="qx-rail" data-rail></div>
+                    <input class="qx-rmin" type="range" min="0" max="11" value="1" />
+                    <input class="qx-rmax" type="range" min="0" max="11" value="4" />
+                  </div>
+                </div>
+                <p class="qx-readout" data-out="month"></p>
+              </div>
+            </div>
+            <p class="qx-hint">{t.note}</p>
+            <div class="qx-stage-nav" role="group" aria-label={t.planBack + ' / ' + t.planContinue}>
+              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}>
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+              </button>
+              <button type="button" class="qx-nav-arrow qx-nav-arrow--next" data-pw-nav-next aria-label={t.planContinue}>
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pw-panel qx-scene qx-scene--stay" data-panel="3">
+          <div class="qx-stage-shell qx-stage-shell--with-nav">
+            <header class="qx-scene-head qx-scene-head--stay">
+              <span class="qx-scene-kicker">3</span>
+              <h2 class="qx-question">{t.step3lead}</h2>
+            </header>
+            <div class="qx-stay-cols">
+              <div class="qx-stay-card">
+                <p class="qx-subq">{t.visaQ}</p>
+                <div class="qx-split">
+                  <label><input type="radio" name="visa-needed" value="yes" required /><span>{t.yes}</span></label>
+                  <label><input type="radio" name="visa-needed" value="no" required /><span>{t.no}</span></label>
+                </div>
+              </div>
+              <div class="qx-stay-card">
+                <p class="qx-subq">{t.accQ}</p>
+                <div class="qx-split qx-split--acc">
+                  {t.acc.map((opt, idx) => (
+                    <label>
+                      <input type="radio" name="accommodation-type" value={opt.value} required={idx === 0} />
+                      <span>{opt.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div class="qx-stage-nav" role="group" aria-label={t.planBack}>
+              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}>
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pw-panel qx-scene qx-scene--send" data-panel="4">
+          <div class="qx-stage-shell qx-stage-shell--with-nav">
+            <header class="qx-scene-head qx-scene-head--send">
+              <span class="qx-scene-kicker">4</span>
+              <h2 class="qx-question">{t.step4lead}</h2>
+            </header>
+            <div class="qx-fields qx-fields--grid">
+              <label>
+                <span>{t.name}</span>
+                <input type="text" name="full-name" required autocomplete="name" />
+              </label>
+              <label>
+                <span>{t.email}</span>
+                <input type="email" name="email" required autocomplete="email" />
+              </label>
+              <label>
+                <span>{t.phone}</span>
+                <input type="tel" name="phone" required autocomplete="tel" />
+              </label>
+              <label>
+                <span>{t.heard}</span>
+                <select name="heard-from" required>
+                  <option value="" selected disabled></option>
+                  {t.heardOpts.map((h) => (
+                    <option value={h}>{h}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <div class="qx-stage-nav" role="group" aria-label={t.planBack}>
+              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}>
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+              </button>
+            </div>
+            <button class="qx-send" type="submit">{t.submit}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+</div>
+
+<div class="pw-overlay" id="pwOverlay" data-home={homePath} aria-hidden="true">
+  <div class="pw-dialog pw-dialog--done" data-pw-dialog role="dialog" aria-modal="true" aria-labelledby="pwDoneTitle">
+    <button type="button" class="pw-dialog-dismiss" data-pw-close aria-label={t.doneClose}>
+      <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+    <div class="pw-dialog-icon" aria-hidden="true">
+      <i class="fas fa-check"></i>
+    </div>
+    <h3 id="pwDoneTitle" class="pw-dialog-title">{t.doneTitle}</h3>
+    <p class="pw-dialog-text">{t.doneText}</p>
+    <div class="pw-dialog-cta-wrap">
+      <a href={bookingPath} class="pw-dialog-cta" data-pw-book>{t.doneBtn}</a>
+      <button type="button" class="pw-dialog-home" data-pw-close>{t.doneClose}</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  import gsap from 'gsap';
+
+  function pad2(n: number) {
+    return String(n).padStart(2, '0');
+  }
+
+  function start() {
+    const form = document.getElementById('pwForm') as HTMLFormElement | null;
+    const root = document.getElementById('pwRoot');
+    if (!form || !root) return;
+
+    const total = 4;
+    let step = 1;
+    const rangeRepaints: Array<() => void> = [];
+    const panels = [...form.querySelectorAll<HTMLElement>('.pw-panel')];
+    const viewport = form.querySelector<HTMLElement>('.pw-viewport');
+    const mqlMobile = window.matchMedia('(max-width: 640px)');
+
+    /** Mobilde .pw-viewport absolute paneller yüzünden yükseklik almıyor; aktif sahneye göre ayarla */
+    function syncPwViewportHeight() {
+      if (!viewport) return;
+      if (!mqlMobile.matches) {
+        viewport.style.removeProperty('height');
+        return;
+      }
+      const current = form.querySelector<HTMLElement>('.pw-panel.is-current');
+      if (!current) return;
+
+      const apply = () => {
+        const shell = current.querySelector<HTMLElement>('.qx-stage-shell');
+        if (!shell) return;
+        /*
+          panel.scrollHeight taşma yokken clientHeight ile aynı kalır; önceki adımdaki
+          uzun viewport küçülmez → altta dev boşluk. İçeriği .qx-stage-shell ile ölç.
+        */
+        const cs = getComputedStyle(current);
+        const padY = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+        const inner = Math.max(shell.scrollHeight, shell.offsetHeight);
+        const need = Math.ceil(inner + padY) + 8;
+        viewport!.style.height = `${Math.max(need, 120)}px`;
+        const gap = current.scrollHeight - current.clientHeight;
+        if (gap > 2) {
+          viewport!.style.height = `${Math.ceil(viewport.offsetHeight + gap)}px`;
+        }
+      };
+
+      apply();
+      requestAnimationFrame(() => {
+        apply();
+      });
+    }
+
+    const eyebrow = document.querySelector<HTMLElement>('[data-pw-eyebrow]');
+    const bar = document.querySelector<HTMLElement>('[data-pw-bar]');
+    const dots = [...document.querySelectorAll<HTMLElement>('[data-qx-dot]')];
+
+    const levels = (form.dataset.levels || '').split('|');
+    const months = (form.dataset.months || '').split('|');
+
+    const overlay = document.getElementById('pwOverlay') as HTMLElement | null;
+    const dialog = document.querySelector<HTMLElement>('[data-pw-dialog]');
+    const bookLink = document.querySelector<HTMLAnchorElement>('[data-pw-book]');
+
+    if (bookLink) bookLink.href = form.dataset.booking || '/tr/buchung';
+
+    function syncDots(n: number) {
+      dots.forEach((d, i) => {
+        const idx = i + 1;
+        d.classList.toggle('is-on', idx === n);
+        d.classList.toggle('is-past', idx < n);
+      });
+    }
+
+    function setStepChrome(n: number) {
+      if (eyebrow) eyebrow.textContent = `${pad2(n)} / ${pad2(total)}`;
+      syncDots(n);
+      if (bar) gsap.to(bar, { scaleX: (n - 1) / (total - 1 || 1), duration: 0.55, ease: 'power2.inOut' });
+    }
+
+    function goTo(next: number) {
+      if (next === step || next < 1 || next > total) return;
+      const prevEl = panels[step - 1];
+      const nextEl = panels[next - 1];
+      const tl = gsap.timeline({
+        onComplete: () => {
+          requestAnimationFrame(() => requestAnimationFrame(syncPwViewportHeight));
+        }
+      });
+      tl.to(prevEl, { autoAlpha: 0, x: -32, duration: 0.24, ease: 'power2.in' })
+        .add(() => {
+          prevEl.classList.remove('is-current');
+          nextEl.classList.add('is-current');
+          gsap.set(nextEl, { x: 40 });
+        })
+        .to(nextEl, { autoAlpha: 1, x: 0, duration: 0.42, ease: 'power3.out' });
+
+      if (next === 1) {
+        tl.from(
+          nextEl.querySelectorAll('.qx-card'),
+          { y: 40, autoAlpha: 0, duration: 0.4, stagger: 0.07, ease: 'back.out(1.05)' },
+          '-=0.28'
+        );
+      }
+      if (next === 2) {
+        tl.from(
+          nextEl.querySelectorAll('.qx-plan-card'),
+          { y: 22, autoAlpha: 0, duration: 0.38, stagger: 0.1, ease: 'power3.out' },
+          '-=0.22'
+        );
+        tl.from(nextEl.querySelector('.qx-hint'), { autoAlpha: 0, y: 8, duration: 0.28 }, '-=0.12');
+        tl.call(() => {
+          requestAnimationFrame(() => rangeRepaints.forEach((fn) => fn()));
+        });
+      }
+      if (next === 3) {
+        tl.from(
+          nextEl.querySelectorAll('.qx-stay-card'),
+          { x: 24, autoAlpha: 0, duration: 0.36, stagger: 0.12, ease: 'power3.out' },
+          '-=0.2'
+        );
+      }
+      if (next === 4) {
+        tl.from(nextEl.querySelectorAll('.qx-fields label'), { autoAlpha: 0, y: 14, stagger: 0.06, duration: 0.3 }, '-=0.2');
+        tl.from(nextEl.querySelector('.qx-send'), { scale: 0.92, autoAlpha: 0, duration: 0.28, ease: 'back.out(1.2)' }, '-=0.15');
+      }
+      step = next;
+      setStepChrome(step);
+    }
+
+    gsap.set(panels, { autoAlpha: 0, x: 28 });
+    gsap.set(panels[0], { autoAlpha: 1, x: 0 });
+    if (bar) gsap.set(bar, { scaleX: 0, transformOrigin: 'left center' });
+    syncDots(1);
+
+    const intro = gsap.timeline({
+      defaults: { ease: 'power2.out' },
+      onComplete: () => {
+        requestAnimationFrame(() => requestAnimationFrame(syncPwViewportHeight));
+      }
+    });
+    intro.from(root, { autoAlpha: 0, y: 20, duration: 0.5 }, 0);
+    intro.from('.qx-lead-kicker', { autoAlpha: 0, y: 10, duration: 0.38 }, 0.12);
+    intro.from('.qx-lead-body', { autoAlpha: 0, y: 8, duration: 0.32 }, 0.18);
+    if (bar) intro.to(bar, { scaleX: 0, duration: 0.35, ease: 'power2.inOut' }, 0.18);
+    intro.from(dots, { scale: 0, autoAlpha: 0, stagger: 0.06, duration: 0.32, ease: 'back.out(1.3)' }, 0.28);
+    intro.from('.qx-aside-step', { autoAlpha: 0, duration: 0.25 }, 0.35);
+    intro.from(
+      panels[0].querySelectorAll('.qx-card'),
+      { rotateY: -12, autoAlpha: 0, stagger: 0.06, duration: 0.5, ease: 'power3.out' },
+      0.4
+    );
+
+    setStepChrome(1);
+
+    requestAnimationFrame(() => requestAnimationFrame(syncPwViewportHeight));
+
+    let resizeTimer = 0;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(syncPwViewportHeight, 120);
+    });
+    mqlMobile.addEventListener('change', syncPwViewportHeight);
+
+    const pEl = document.getElementById('pwProgram') as HTMLInputElement | null;
+    const pLabelEl = document.getElementById('pwProgramLabel') as HTMLInputElement | null;
+    const pTrackEl = document.getElementById('pwQuoteTrack') as HTMLInputElement | null;
+    form.querySelectorAll<HTMLButtonElement>('.qx-card').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        form.querySelectorAll('.qx-card').forEach((b) => b.classList.remove('is-picked'));
+        btn.classList.add('is-picked');
+        if (pEl) pEl.value = btn.dataset.program || '';
+        if (pLabelEl) pLabelEl.value = btn.dataset.programLabel || '';
+        if (pTrackEl) pTrackEl.value = btn.dataset.quoteTrack || '';
+        gsap.fromTo(btn.querySelector('.qx-card-bg'), { scale: 1 }, { scale: 1.08, duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.inOut' });
+        window.setTimeout(() => goTo(2), 200);
+      });
+    });
+
+    function wireRange(wrap: Element, labels: string[], outSel: string, a: HTMLInputElement | null, b: HTMLInputElement | null) {
+      const min = wrap.querySelector<HTMLInputElement>('.qx-rmin');
+      const max = wrap.querySelector<HTMLInputElement>('.qx-rmax');
+      const rail = wrap.querySelector<HTMLElement>('[data-rail]');
+      const out = form.querySelector(`[data-out="${outSel}"]`);
+      const minAttr = Number(min?.getAttribute('min') ?? '0');
+      const maxAttr = Number(max?.getAttribute('max') ?? (wrap as HTMLElement).dataset.max ?? '1');
+      const span = Math.max(1, maxAttr - minAttr);
+      function paint() {
+        if (!min || !max || !rail || !out || !a || !b) return;
+        let x = Number(min.value);
+        let y = Number(max.value);
+        if (x > y) {
+          const t = x;
+          x = y;
+          y = t;
+          min.value = String(x);
+          max.value = String(y);
+        }
+        const ap = ((x - minAttr) / span) * 100;
+        const bp = ((y - minAttr) / span) * 100;
+        rail.style.setProperty('--a', `${ap}%`);
+        rail.style.setProperty('--b', `${bp}%`);
+        out.textContent = `${labels[x]} - ${labels[y]}`;
+        a.value = labels[x];
+        b.value = labels[y];
+      }
+      rangeRepaints.push(paint);
+      min?.addEventListener('input', () => {
+        paint();
+      });
+      max?.addEventListener('input', () => {
+        paint();
+      });
+      paint();
+    }
+
+    wireRange(
+      form.querySelector('[data-range="level"]')!,
+      levels,
+      'level',
+      document.getElementById('pwLevelA') as HTMLInputElement | null,
+      document.getElementById('pwLevelB') as HTMLInputElement | null
+    );
+    wireRange(
+      form.querySelector('[data-range="month"]')!,
+      months,
+      'month',
+      document.getElementById('pwMonthA') as HTMLInputElement | null,
+      document.getElementById('pwMonthB') as HTMLInputElement | null
+    );
+
+    form.querySelectorAll<HTMLButtonElement>('[data-pw-nav-next]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (step === 2) goTo(3);
+      });
+    });
+
+    form.querySelectorAll('input[name="visa-needed"], input[name="accommodation-type"]').forEach((el) => {
+      el.addEventListener('change', () => {
+        const v = form.querySelector<HTMLInputElement>('input[name="visa-needed"]:checked');
+        const ac = form.querySelector<HTMLInputElement>('input[name="accommodation-type"]:checked');
+        if (v && ac && step === 3) window.setTimeout(() => goTo(4), 160);
+      });
+    });
+
+    form.querySelectorAll<HTMLButtonElement>('[data-pw-nav-back]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (step === 2) goTo(1);
+        else if (step === 3) goTo(2);
+        else if (step === 4) goTo(3);
+      });
+    });
+
+    function openOverlay() {
+      if (!overlay || !dialog) return;
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      gsap.fromTo(overlay, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.28 });
+      gsap.fromTo(dialog, { y: 36, scale: 0.92, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, duration: 0.48, ease: 'power3.out', delay: 0.05 });
+    }
+
+    function dismissToHome() {
+      let target = (overlay?.dataset.home || '/').trim();
+      if (!target.startsWith('/')) target = `/${target}`;
+      if (target.length > 1 && target.endsWith('/')) target = target.slice(0, -1);
+      if (!overlay || !dialog) {
+        window.location.href = target;
+        return;
+      }
+      gsap.to(dialog, { y: 18, scale: 0.97, autoAlpha: 0, duration: 0.22, ease: 'power2.in' });
+      gsap.to(overlay, {
+        autoAlpha: 0,
+        duration: 0.22,
+        onComplete: () => {
+          overlay.classList.remove('is-open');
+          overlay.setAttribute('aria-hidden', 'true');
+          gsap.set(dialog, { clearProps: 'all' });
+          window.location.href = target;
+        }
+      });
+    }
+
+    document.querySelectorAll<HTMLButtonElement>('[data-pw-close]').forEach((btn) => {
+      btn.addEventListener('click', dismissToHome);
+    });
+    overlay?.addEventListener('click', (e) => {
+      if (e.target === overlay) dismissToHome();
+    });
+
+    const DEFAULT_MAKE_WEBHOOK = 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
+
+    function buildPriceQuotePayload(fd: FormData) {
+      const data = Object.fromEntries(fd.entries()) as Record<string, string>;
+      const heard = (data['heard-from'] || '').trim();
+      const qls = (data['quote-level-start'] || '').trim();
+      const qle = (data['quote-level-end'] || '').trim();
+      const qms = (data['quote-month-start'] || '').trim();
+      const qme = (data['quote-month-end'] || '').trim();
+      const qtrack = (data['quote-track'] || '').trim();
+      const qlabel = (data['quote-program-label'] || '').trim();
+      const lines: string[] = [];
+      if (qlabel) lines.push(`Program choice: ${qlabel}`);
+      if (qtrack) lines.push(`Quote track: ${qtrack}`);
+      if (qls || qle) lines.push(`Level range: ${qls} – ${qle}`);
+      if (qms || qme) lines.push(`Start months: ${qms} – ${qme}`);
+      if (heard) lines.push(`Heard from: ${heard}`);
+      const message = lines.join('\n');
+      return {
+        formType: 'price-quote',
+        sourcePage: data.sourcePage || '',
+        lang: data.lang || '',
+        name: data['full-name'] || '',
+        city: '',
+        country: '',
+        tel: data.phone || '',
+        email: data.email || '',
+        program: data.program || '',
+        intensiveType: '',
+        level: '',
+        courseSelection: [] as string[],
+        startDate: '',
+        timezone: [] as string[],
+        weeks: '',
+        examType: '',
+        visaNeeded: data['visa-needed'] || 'no',
+        accommodationType: data['accommodation-type'] || 'no',
+        airportPickup: 'no',
+        coupon: '',
+        couponDiscountPercent: '',
+        message,
+        termsAccepted: false,
+        privacyAccepted: false,
+        totalPrice: '',
+        timestamp: new Date().toISOString(),
+        heardFrom: heard,
+        quoteTrack: qtrack,
+        quoteProgramLabel: qlabel,
+        quoteLevelStart: qls,
+        quoteLevelEnd: qle,
+        quoteMonthStart: qms,
+        quoteMonthEnd: qme
+      };
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector<HTMLButtonElement>('.qx-send');
+      if (btn) btn.disabled = true;
+      const fd = new FormData(form);
+      const payload = buildPriceQuotePayload(fd);
+      try {
+        const wh = (form.dataset.webhook || '').trim() || DEFAULT_MAKE_WEBHOOK;
+        const res = await fetch(wh, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        if (!res.ok) throw new Error('webhook');
+        openOverlay();
+      } catch {
+        const msg = form.dataset.error || 'Error';
+        if ((window as unknown as { showSuccessModal?: (t: string, m: string) => void }).showSuccessModal)
+          (window as unknown as { showSuccessModal: (t: string, m: string) => void }).showSuccessModal('error', msg);
+        else alert(msg);
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+</script>

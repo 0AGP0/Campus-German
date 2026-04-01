@@ -8,39 +8,24 @@ export async function getStaticPaths() {
   const allUeberUns = await getCollection('ueber-uns');
   const paths = [];
 
-  // Almanca: normal sayfa (path /de/ueber-uns/...)
-  const almancaSayfalar = allUeberUns.filter(page => page.data.lang === 'de');
+  // Almanca: normal sayfa (path /de/ueber-uns/...) — TR alt sayfalar /tr/hakkimizda/...; eski /tr/ueber-uns/* sunucu 301
+  const almancaSayfalar = allUeberUns.filter((p) => p.data.lang === 'de');
   for (const page of almancaSayfalar) {
     const finalSlug = page.data.customSlug ?? cleanSlug(page.slug);
     paths.push({
       params: { lang: 'de', slug: finalSlug },
-      props: { page, redirectTo: null },
-    });
-  }
-
-  // Türkçe: redirect sayfası (path /tr/ueber-uns/... -> /tr/hakkimizda/...) — Google eski URL'yi açınca 301 yerine sayfa olsun
-  const turkceSayfalar = allUeberUns.filter(page => page.data.lang === 'tr');
-  for (const page of turkceSayfalar) {
-    const finalSlug = page.data.customSlug ?? cleanSlug(page.slug);
-    paths.push({
-      params: { lang: 'tr', slug: finalSlug },
-      props: { page: null, redirectTo: `/tr/hakkimizda/${finalSlug}/` },
+      props: { page },
     });
   }
 
   return paths;
 }
 
-const { page, redirectTo } = Astro.props;
+const { page } = Astro.props;
 const { lang } = Astro.params;
-const isRedirectSlug = !!redirectTo;
-const canonicalUrlSlug = redirectTo ? `https://campusgerman.com${redirectTo}` : '';
 
-let Content: import('astro').ContentComponent | null = null;
-if (page) {
-  const rendered = await page.render();
-  Content = rendered.Content;
-}
+const rendered = await page.render();
+const { Content } = rendered;
 
 // Lang tip kontrolü
 if (!isValidLang(lang)) {
@@ -54,9 +39,7 @@ const contactPath = getContactPath(lang);
 
 // Get all related pages for sidebar (sadece sayfa varsa)
 const allUeberUns = await getCollection('ueber-uns');
-const relatedPages = page
-  ? allUeberUns.filter(p => p.data.lang === lang && p.slug !== page.slug).slice(0, 5)
-  : [];
+const relatedPages = allUeberUns.filter((p) => p.data.lang === lang && p.slug !== page.slug).slice(0, 5);
 
 // Translations
 const t = {
@@ -89,21 +72,7 @@ const t = {
 const translations = t[lang as keyof typeof t] || t.tr;
 ---
 
-{isRedirectSlug ? (
-  <html lang="tr">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />
-      <link rel="canonical" href={canonicalUrlSlug} />
-      <title>Yönlendiriliyor - Campus German</title>
-    </head>
-    <body>
-      <p>Doğru sayfaya yönlendiriliyorsunuz: <a href={redirectTo}>tıklayın</a>.</p>
-    </body>
-  </html>
-) : (
-<MainLayout title={`${page!.data.title} - CampusGerman`} lang={lang}>
+<MainLayout title={`${page.data.title} - CampusGerman`} lang={lang}>
     <!-- 1. Hero Section -->
     <section class="mission-hero">
         <div class="mission-container">
@@ -377,4 +346,3 @@ const translations = t[lang as keyof typeof t] || t.tr;
         </div>
     </section>
 </MainLayout>
-)}

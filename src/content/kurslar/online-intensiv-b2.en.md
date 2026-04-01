@@ -13,7 +13,7 @@ features:
     description: "20 Lessons (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
-    description: "12 Weeks"
+    description: "8 Weeks"
   - icon: "fas fa-users"
     title: "Class Size"
     description: "Maximum 10 People"
@@ -37,7 +37,7 @@ tabs:
       title: "Online Intensive German B2 Course"
       paragraphs:
         - heading: "Course Overview"
-          text: "The Online Intensive German B2 Course is a comprehensive online program designed for students who have completed B1 level, focused on developing upper-intermediate German skills. This course aims to provide students with language skills that will enable them to communicate at a professional level in business life and academic environments. The program, which offers an intensive learning experience with 20 lesson hours per week, lasts 12 weeks and consists of approximately 200 lesson hours."
+          text: "The Online Intensive German B2 Course is a comprehensive online program designed for students who have completed B1 level, focused on developing upper-intermediate German skills. This course aims to provide students with language skills that will enable them to communicate at a professional level in business life and academic environments. The program, which offers an intensive learning experience with 20 lesson hours per week, lasts 8 weeks and consists of approximately 160 lesson hours."
         - heading: "Advantages of Online Education"
           text: "Online education format provides students with time and place flexibility. You can attend classes from home or anywhere you want, receive quality education without having to travel. All classes are recorded and available 24/7, so you can watch missed classes again or reinforce topics. Additionally, an enriched learning experience is offered with digital materials and interactive exercises."
         - heading: "Target Audience and Prerequisites"

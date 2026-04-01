@@ -1,0 +1,596 @@
+---
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+
+const t = {
+  tr: {
+    sectionTitle: 'Bundle paketler ve teklifler',
+    badge: 'Bundle',
+    popularBadge: 'En Cok Tercih Edilen',
+    normalLabel: 'Normal fiyat',
+    bundleLabel: 'Bundle fiyat',
+    saveLabel: 'Kazanc',
+    standardRefLabel: 'Standart liste (tablo = rezervasyon)',
+    card1Title: 'A2 → C1',
+    card1Subtitle: 'Level Track',
+    card1Desc:
+      'Dört seviye (A2, B1, B2, C1): rezervasyonda 4×8 = 32 hafta Intensive olarak hesaplanır.',
+    card1RowMain: '32 hafta Intensive (tek toplam süre)',
+    card1RowSub: '110 € × 32 hf. (25+ hafta dilimi, 20h Intensive)',
+    card1Total: '3.520 €',
+    card1ListStrikeTotal: '6.080 €',
+    card1DiscountedTotal: '3.520 €',
+    bundleLabel1: 'Kampanyalı paket A2–C1',
+    card2Title: 'B1 → C1',
+    card2Subtitle: 'Level Track',
+    card2Desc:
+      'Üç seviye (B1, B2, C1): rezervasyonda 3×8 = 24 hafta Intensive olarak hesaplanır.',
+    card2RowMain: '24 hafta Intensive (tek toplam süre)',
+    card2RowSub: '120 € × 24 hf. (17–24 hafta dilimi, 20h Intensive)',
+    card2Total: '2.880 €',
+    card2ListStrikeTotal: '4.560 €',
+    card2DiscountedTotal: '2.880 €',
+    bundleLabel2: 'Kampanyalı paket B1–C1',
+    card3Title: 'Academic University Pathway',
+    card3Subtitle: 'Bremen Bundle',
+    card3Intro:
+      'Uluslararası öğrenciler için vize uyumlu, Almanya’da lisans veya yüksek lisans hedefleyenler için kapsamlı paket.',
+    sem1: 'Dönem 1 (A1–B1)',
+    sem1Detail: '24 hafta Intensive (25 UE/hafta)',
+    sem2: 'Dönem 2 (B2–C1 + hazırlık)',
+    sem2Detail: '20 hafta Intensive (25 UE/hafta)',
+    listPrice: 'Liste fiyatı',
+    rowExam: 'Akademik sınav ve yerleştirme',
+    rowTelc: 'TELC C1 Hochschule sınav ücreti',
+    rowConditional: 'Uni Bremen / Hochschule Bremen koşullu kabul desteği',
+    totalValue: 'Toplam değer',
+    bundlePrice: 'Bundle fiyatı',
+    discountListLabelCard1: 'Liste, indirimsiz (4 kur × 1.520 €)',
+    discountListLabelCard2: 'Liste, indirimsiz (3 kur × 1.520 €)',
+    discountPromoLabel: 'Kampanyalı toplam (20h Intensive, kademeli)',
+    perKurListLabel: 'İndirimsiz kur başına (8 hf.)',
+    perKurListValue: '1.520 €',
+    perKurPromoLabel: 'Kampanyalı kur başına (8 hf.)',
+    card1PerKurPromoValue: '880 €',
+    card2PerKurPromoValue: '960 €',
+    pathwayName: 'Tam akademik yol haritası',
+    cta: 'Kayıt / bilgi',
+    ctaBuyNow: 'Hemen al',
+  },
+  de: {
+    sectionTitle: 'Bundle-Pakete und Angebote',
+    badge: 'Bundle',
+    popularBadge: 'Am meisten gewaehlt',
+    normalLabel: 'Normalpreis',
+    bundleLabel: 'Bundle-Preis',
+    saveLabel: 'Ersparnis',
+    standardRefLabel: 'Standard-Listenpreis (Tabelle = Buchung)',
+    card1Title: 'A2 → C1',
+    card1Subtitle: 'Level Track',
+    card1Desc:
+      'Vier Niveaus (A2, B1, B2, C1): In der Buchung 4×8 = 32 Wochen Intensive.',
+    card1RowMain: '32 Wochen Intensive (eine Gesamtdauer)',
+    card1RowSub: '110 € × 32 Wo. (Staffel 25+ Wochen, 20h Intensiv)',
+    card1Total: '3.520 €',
+    card1ListStrikeTotal: '6.080 €',
+    card1DiscountedTotal: '3.520 €',
+    bundleLabel1: 'Aktionspaket A2–C1',
+    card2Title: 'B1 → C1',
+    card2Subtitle: 'Level Track',
+    card2Desc:
+      'Drei Niveaus (B1, B2, C1): In der Buchung 3×8 = 24 Wochen Intensive.',
+    card2RowMain: '24 Wochen Intensive (eine Gesamtdauer)',
+    card2RowSub: '120 € × 24 Wo. (Staffel 17–24 Wochen, 20h Intensiv)',
+    card2Total: '2.880 €',
+    card2ListStrikeTotal: '4.560 €',
+    card2DiscountedTotal: '2.880 €',
+    bundleLabel2: 'Aktionspaket B1–C1',
+    card3Title: 'Academic University Pathway',
+    card3Subtitle: 'Bremen Bundle',
+    card3Intro:
+      'Visakonformes Gesamtpaket für internationale Studierende mit Bachelor- oder Masterziel an deutschen Hochschulen.',
+    sem1: 'Semester 1 (A1–B1)',
+    sem1Detail: '24 Wochen Intensive (25 UE/Woche)',
+    sem2: 'Semester 2 (B2–C1 + Vorb.)',
+    sem2Detail: '20 Wochen Intensive (25 UE/Woche)',
+    listPrice: 'Listenpreis',
+    rowExam: 'Akademische Prüfung & Placement',
+    rowTelc: 'TELC C1 Hochschule Prüfungsgebühr',
+    rowConditional: 'Bedingte Zulassung Uni Bremen / HS Bremen',
+    totalValue: 'Gesamtwert',
+    bundlePrice: 'Bundle-Preis',
+    discountListLabelCard1: 'Liste ohne Rabatt (4 Kurse × 1.520 €)',
+    discountListLabelCard2: 'Liste ohne Rabatt (3 Kurse × 1.520 €)',
+    discountPromoLabel: 'Aktionspreis (20h Intensiv, gestaffelt)',
+    perKurListLabel: 'Listenpreis pro Kurs (8 Wo.)',
+    perKurListValue: '1.520 €',
+    perKurPromoLabel: 'Aktionspreis pro Kurs (8 Wo.)',
+    card1PerKurPromoValue: '880 €',
+    card2PerKurPromoValue: '960 €',
+    pathwayName: 'Der komplette akademische Pfad',
+    cta: 'Anfrage / Buchung',
+    ctaBuyNow: 'Jetzt buchen',
+  },
+  en: {
+    sectionTitle: 'Bundle packages and offers',
+    badge: 'Bundle',
+    popularBadge: 'Most preferred',
+    normalLabel: 'Normal price',
+    bundleLabel: 'Bundle price',
+    saveLabel: 'You save',
+    standardRefLabel: 'Standard list (table = booking)',
+    card1Title: 'A2 → C1',
+    card1Subtitle: 'Level Track',
+    card1Desc:
+      'Four levels (A2, B1, B2, C1): in booking this is 4×8 = 32 weeks Intensive.',
+    card1RowMain: '32 weeks Intensive (single total)',
+    card1RowSub: '€110 × 32 weeks (25+ weeks tier, 20h Intensive)',
+    card1Total: '3.520 €',
+    card1ListStrikeTotal: '6.080 €',
+    card1DiscountedTotal: '3.520 €',
+    bundleLabel1: 'Promotional A2–C1 package',
+    card2Title: 'B1 → C1',
+    card2Subtitle: 'Level Track',
+    card2Desc:
+      'Three levels (B1, B2, C1): in booking this is 3×8 = 24 weeks Intensive.',
+    card2RowMain: '24 weeks Intensive (single total)',
+    card2RowSub: '€120 × 24 weeks (17–24 weeks tier, 20h Intensive)',
+    card2Total: '2.880 €',
+    card2ListStrikeTotal: '4.560 €',
+    card2DiscountedTotal: '2.880 €',
+    bundleLabel2: 'Promotional B1–C1 package',
+    card3Title: 'Academic University Pathway',
+    card3Subtitle: 'The “Bremen Bundle”',
+    card3Intro:
+      'A comprehensive, visa-compliant package for international students targeting undergraduate or graduate degrees at German universities.',
+    sem1: 'Semester 1 (A1–B1)',
+    sem1Detail: '24 weeks of Intensive (25 teaching units/week)',
+    sem2: 'Semester 2 (B2–C1 + prep.)',
+    sem2Detail: '20 weeks of Intensive (25 teaching units/week)',
+    listPrice: 'List price',
+    rowExam: 'Academic exam & uni placement service',
+    rowTelc: 'TELC C1 Hochschule examination fee',
+    rowConditional: 'Conditional admission support (Uni Bremen / Hochschule Bremen)',
+    totalValue: 'Total value',
+    bundlePrice: 'Bundle price',
+    discountListLabelCard1: 'List without discount (4 courses × €1,520)',
+    discountListLabelCard2: 'List without discount (3 courses × €1,520)',
+    discountPromoLabel: 'Promotional total (20h Intensive, tiered)',
+    perKurListLabel: 'List price per course (8 weeks)',
+    perKurListValue: '€1,520',
+    perKurPromoLabel: 'Promotional per course (8 weeks)',
+    card1PerKurPromoValue: '€880',
+    card2PerKurPromoValue: '€960',
+    pathwayName: 'The complete academic pathway',
+    cta: 'Book / enquire',
+    ctaBuyNow: 'Buy now',
+  },
+  es: {
+    sectionTitle: 'Paquetes bundle y ofertas',
+    badge: 'Bundle',
+    popularBadge: 'Mas elegido',
+    normalLabel: 'Precio normal',
+    bundleLabel: 'Precio bundle',
+    saveLabel: 'Ahorro',
+    standardRefLabel: 'Lista estándar (tabla = reserva)',
+    card1Title: 'A2 → C1',
+    card1Subtitle: 'Level Track',
+    card1Desc:
+      'Cuatro niveles (A2, B1, B2, C1): en la reserva son 4×8 = 32 semanas Intensive.',
+    card1RowMain: '32 semanas Intensive (total único)',
+    card1RowSub: '110 € × 32 sem. (tramo 25+ semanas, 20h Intensive)',
+    card1Total: '3.520 €',
+    card1ListStrikeTotal: '6.080 €',
+    card1DiscountedTotal: '3.520 €',
+    bundleLabel1: 'Paquete promocional A2–C1',
+    card2Title: 'B1 → C1',
+    card2Subtitle: 'Level Track',
+    card2Desc:
+      'Tres niveles (B1, B2, C1): en la reserva son 3×8 = 24 semanas Intensive.',
+    card2RowMain: '24 semanas Intensive (total único)',
+    card2RowSub: '120 € × 24 sem. (tramo 17–24 semanas, 20h Intensive)',
+    card2Total: '2.880 €',
+    card2ListStrikeTotal: '4.560 €',
+    card2DiscountedTotal: '2.880 €',
+    bundleLabel2: 'Paquete promocional B1–C1',
+    card3Title: 'Academic University Pathway',
+    card3Subtitle: 'Bremen Bundle',
+    card3Intro:
+      'Paquete integral y compatible con visado para estudiantes internacionales que buscan grado o posgrado en universidades alemanas.',
+    sem1: 'Semestre 1 (A1–B1)',
+    sem1Detail: '24 semanas Intensive (25 UE/semana)',
+    sem2: 'Semestre 2 (B2–C1 + prep.)',
+    sem2Detail: '20 semanas Intensive (25 UE/semana)',
+    listPrice: 'Precio de lista',
+    rowExam: 'Examen académico y colocación universitaria',
+    rowTelc: 'Tasa examen TELC C1 Hochschule',
+    rowConditional: 'Apoyo admisión condicional Uni Bremen / Hochschule Bremen',
+    totalValue: 'Valor total',
+    bundlePrice: 'Precio bundle',
+    discountListLabelCard1: 'Lista sin descuento (4 cursos × 1.520 €)',
+    discountListLabelCard2: 'Lista sin descuento (3 cursos × 1.520 €)',
+    discountPromoLabel: 'Total promocional (20h intensivo, por tramos)',
+    perKurListLabel: 'Lista por curso (8 sem.)',
+    perKurListValue: '1.520 €',
+    perKurPromoLabel: 'Promocional por curso (8 sem.)',
+    card1PerKurPromoValue: '880 €',
+    card2PerKurPromoValue: '960 €',
+    pathwayName: 'La vía académica completa',
+    cta: 'Reservar / información',
+    ctaBuyNow: 'Comprar ahora',
+  },
+};
+
+const m = t[lang as keyof typeof t] ?? t.en;
+
+const bookingSlug =
+  lang === 'tr' || lang === 'de' ? 'buchung' : lang === 'en' ? 'booking' : 'reservar';
+---
+
+<section class="bundle-offers-section" aria-labelledby="bundle-offers-heading">
+  <div class="container">
+    <div class="bundle-offers-header">
+      <h2 id="bundle-offers-heading" class="bundle-offers-title">{m.sectionTitle}</h2>
+    </div>
+
+    <div class="bundle-offers-grid">
+      <article class="bundle-card bundle-card--mint">
+        <div class="bundle-card-badges">
+          <span class="bundle-card-badge">{m.badge}</span>
+          <span class="bundle-card-badge bundle-card-badge--popular">{m.popularBadge}</span>
+        </div>
+        <h3 class="bundle-card-heading">{m.card1Title}</h3>
+        <p class="bundle-card-tagline">{m.card1Subtitle}</p>
+        <p class="bundle-card-text bundle-card-text--compact">{m.card1Desc}</p>
+
+        <div class="bundle-simple-prices">
+          <p><span>{m.normalLabel}</span><s>{m.card1ListStrikeTotal}</s></p>
+          <p><span>{m.bundleLabel}</span><strong>{m.card1DiscountedTotal}</strong></p>
+          <p class="bundle-simple-save">{m.perKurPromoLabel}: {m.card1PerKurPromoValue}</p>
+        </div>
+
+        <a href={`/${lang}/${bookingSlug}?bundle=a2c1`} class="bundle-card-cta bundle-card-cta--buy">{m.ctaBuyNow}</a>
+      </article>
+
+      <article class="bundle-card bundle-card--ocean">
+        <span class="bundle-card-badge">{m.badge}</span>
+        <h3 class="bundle-card-heading">{m.card2Title}</h3>
+        <p class="bundle-card-tagline">{m.card2Subtitle}</p>
+        <p class="bundle-card-text bundle-card-text--compact">{m.card2Desc}</p>
+
+        <div class="bundle-simple-prices">
+          <p><span>{m.normalLabel}</span><s>{m.card2ListStrikeTotal}</s></p>
+          <p><span>{m.bundleLabel}</span><strong>{m.card2DiscountedTotal}</strong></p>
+          <p class="bundle-simple-save">{m.perKurPromoLabel}: {m.card2PerKurPromoValue}</p>
+        </div>
+
+        <a href={`/${lang}/${bookingSlug}?bundle=b1c1`} class="bundle-card-cta bundle-card-cta--buy">{m.ctaBuyNow}</a>
+      </article>
+
+      <article class="bundle-card bundle-card--pathway">
+        <span class="bundle-card-badge bundle-card-badge--light">{m.badge}</span>
+        <h3 class="bundle-card-heading">{m.card3Title}</h3>
+        <p class="bundle-card-tagline">{m.card3Subtitle}</p>
+        <p class="bundle-card-text bundle-card-text--compact">{m.card3Intro}</p>
+
+        <div class="bundle-simple-prices">
+          <p><span>{m.normalLabel}</span><s>6.990 €</s></p>
+          <p><span>{m.bundleLabel}</span><strong>5.990 €</strong></p>
+        </div>
+
+        <a href={`/${lang}/${bookingSlug}?bundle=pathway`} class="bundle-card-cta bundle-card-cta--light bundle-card-cta--buy">{m.ctaBuyNow}</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .bundle-offers-section {
+    padding: 2.75rem 0 1.5rem;
+    background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+  }
+  .bundle-offers-header {
+    margin-bottom: 1.25rem;
+    max-width: 720px;
+  }
+  .bundle-offers-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary, #0b1220);
+    margin: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--color-primary, #059669);
+  }
+  .bundle-ref-caption {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    opacity: 0.9;
+    margin: 0 0 0.35rem;
+  }
+  .bundle-card .bundle-ref-caption {
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .bundle-simple-prices {
+    margin: 0.35rem 0 0.9rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .bundle-simple-prices p {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 0;
+    gap: 0.75rem;
+    padding: 0.25rem 0;
+    font-size: 0.86rem;
+  }
+  .bundle-simple-prices p span {
+    font-weight: 600;
+    opacity: 0.95;
+  }
+  .bundle-simple-prices p s {
+    font-weight: 600;
+    opacity: 0.9;
+  }
+  .bundle-simple-prices p strong {
+    font-size: 1.08rem;
+  }
+  .bundle-simple-save {
+    margin-top: 0.25rem !important;
+    border-top: 1px dashed rgba(255, 255, 255, 0.28);
+    padding-top: 0.42rem !important;
+    font-weight: 800;
+    color: #fde68a;
+  }
+  .bundle-offers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+  @media (max-width: 1024px) {
+    .bundle-offers-grid {
+      grid-template-columns: 1fr;
+      max-width: 520px;
+      margin-inline: auto;
+    }
+  }
+  .bundle-card {
+    position: relative;
+    height: 100%;
+    min-height: 100%;
+    border-radius: 16px;
+    padding: 1.35rem 1.35rem 1.5rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 28px rgba(15, 23, 42, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .bundle-card--mint {
+    background: linear-gradient(145deg, #0d9488 0%, #0f766e 55%, #115e59 100%);
+  }
+  .bundle-card--ocean {
+    background: linear-gradient(145deg, #2563eb 0%, #1d4ed8 50%, #1e3a8a 100%);
+  }
+  .bundle-card--pathway {
+    background: linear-gradient(145deg, #5b21b6 0%, #6d28d9 40%, #4c1d95 100%);
+  }
+  .bundle-card-badge {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    margin-bottom: 0.75rem;
+  }
+  .bundle-card-badges {
+    display: flex;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+  }
+  .bundle-card-badges .bundle-card-badge {
+    margin-bottom: 0;
+  }
+  .bundle-card-badge--popular {
+    background: #facc15;
+    color: #1f2937;
+    font-weight: 800;
+  }
+  .bundle-card-badge--light {
+    background: rgba(255, 255, 255, 0.25);
+  }
+  .bundle-card-heading {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+    line-height: 1.2;
+  }
+  .bundle-card-tagline {
+    font-size: 0.95rem;
+    font-weight: 600;
+    opacity: 0.95;
+    margin: 0 0 0.5rem;
+  }
+  .bundle-card-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    opacity: 0.95;
+    margin: 0 0 1rem;
+    flex: 1;
+  }
+  .bundle-card-text--compact {
+    font-size: 0.82rem;
+    margin-bottom: 0.85rem;
+  }
+  .bundle-card-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    padding: 0.65rem 1rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #0f766e;
+    background: #fff;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .bundle-card-cta--buy {
+    width: 100%;
+    align-self: stretch;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  }
+  .bundle-card-cta--buy:hover {
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  }
+  .bundle-card--ocean .bundle-card-cta {
+    color: #1d4ed8;
+  }
+  .bundle-card-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  }
+  .bundle-card-cta--light {
+    color: #4c1d95;
+  }
+  .bundle-pathway-table-wrap {
+    margin: 0 -0.25rem 0.75rem;
+    overflow-x: auto;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.12);
+  }
+  .bundle-pathway-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.72rem;
+    line-height: 1.35;
+  }
+  @media (min-width: 480px) {
+    .bundle-pathway-table {
+      font-size: 0.78rem;
+    }
+  }
+  .bundle-pathway-table th,
+  .bundle-pathway-table td {
+    padding: 0.45rem 0.5rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .bundle-pathway-table th {
+    font-weight: 700;
+    width: 32%;
+    color: #fff;
+  }
+  .bundle-pathway-table td {
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .bundle-pathway-num {
+    text-align: right;
+    white-space: nowrap;
+    font-weight: 700;
+  }
+  .bundle-pathway-sub th,
+  .bundle-pathway-sub td {
+    font-size: 0.68rem;
+    opacity: 0.92;
+  }
+  .bundle-pathway-totals {
+    margin-top: 0.25rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+  }
+  .bundle-pathway-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.35rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .bundle-pathway-row--highlight {
+    margin-top: 0.25rem;
+    padding: 0.55rem 0.65rem;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .bundle-highlight-main {
+    flex: 1 1 11rem;
+    min-width: 0;
+  }
+  .bundle-highlight-total,
+  .bundle-pathway-row--highlight > strong {
+    font-size: 1.15rem;
+  }
+  .bundle-highlight-total {
+    align-self: center;
+    white-space: nowrap;
+  }
+  .bundle-perkur-stack {
+    margin-top: 0.45rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+  .bundle-perkur-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    max-width: 18rem;
+  }
+  .bundle-perkur-label {
+    font-weight: 500;
+    opacity: 0.92;
+  }
+  .bundle-perkur-num,
+  .bundle-perkur-promo-num {
+    font-size: 0.92rem;
+  }
+  .bundle-perkur-line .bundle-price-strike {
+    font-weight: 700;
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    opacity: 0.88;
+  }
+  .bundle-pathway-row--strike-row .bundle-price-strike {
+    font-weight: 700;
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    opacity: 0.88;
+  }
+  .bundle-promo-line {
+    display: block;
+    font-weight: 600;
+    line-height: 1.35;
+    font-size: 0.8rem;
+  }
+  .bundle-promo-pack-name {
+    font-weight: 500;
+    opacity: 0.92;
+  }
+</style>

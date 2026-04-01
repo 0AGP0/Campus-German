@@ -16,7 +16,7 @@ features:
     description: "German + Core Subjects"
   - icon: "fas fa-calendar-week"
     title: "Duration"
-    description: "8-12 Weeks"
+    description: "8 Weeks"
   - icon: "fas fa-level-up-alt"
     title: "Level"
     description: "B1 - B2"

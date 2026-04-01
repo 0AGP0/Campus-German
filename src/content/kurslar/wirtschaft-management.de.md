@@ -13,7 +13,7 @@ features:
     description: "20–24 Unterrichtseinheiten"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
-    description: "12–24 Wochen"
+    description: "8 Wochen"
   - icon: "fas fa-users"
     title: "Klassengröße"
     description: "Maximal 10 Personen"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "Preisinformationen"
       pricing:
-        - name: "12 Wochen Wirtschaft/Management"
-          duration: "12 Wochen"
+        - name: "8 Wochen Wirtschaft/Management"
+          duration: "8 Wochen"
           schedule: "20–24 Unterrichtseinheiten/Woche"
           price: "Sonderkonditionen"
           highlighted: true
