@@ -3,7 +3,7 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import BilgiAlForm from '../../components/BilgiAlForm.astro';
 import '../../styles/pages/index.css';
 import { getCollection } from 'astro:content';
-import { isOverviewPage, getSectionPath, cleanSlug, getContactPath } from '../../utils/pathHelpers';
+import { isOverviewPage, getSectionPath, cleanSlug, getContactPath, getBookingPath } from '../../utils/pathHelpers';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
 import { getNavbarCourseSlugs, navbarCourseSlugsByLang } from '../../data/navbarCourseSlugs';
 
@@ -22,8 +22,7 @@ const { lang } = Astro.params;
 const courseBase = getSectionPath(lang);
 const courseBasePath = `/${lang}/${courseBase}`;
 // Form/başvuru sayfası path (hero ve CTA butonları için)
-const bookingSlug = lang === 'tr' || lang === 'de' ? 'buchung' : lang === 'en' ? 'booking' : 'reservar';
-const bookingPath = `/${lang}/${bookingSlug}`;
+const bookingPath = `/${lang}/${getBookingPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
 const contactPath = getContactPath(lang);
 
 // Kursları çek (ana sayfa filtre bölümü) – sadece navbar'da olan kurslar, navbar sırasına göre

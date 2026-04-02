@@ -24,7 +24,7 @@ heroButtons:
   primary:
     text: "Aplicar Ahora"
     icon: "fas fa-arrow-right"
-    href: "/reservar"
+    href: "/es/buchung"
   secondary:
     text: "Detalles del Programa"
     icon: "fas fa-info-circle"

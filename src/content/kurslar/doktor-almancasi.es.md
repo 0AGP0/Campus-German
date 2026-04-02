@@ -24,7 +24,7 @@ heroButtons:
   primary:
     text: "Aplicar Ahora"
     icon: "fas fa-arrow-right"
-    href: "/reservar"
+    href: "/es/buchung"
   secondary:
     text: "Acerca de FSP"
     icon: "fas fa-info-circle"

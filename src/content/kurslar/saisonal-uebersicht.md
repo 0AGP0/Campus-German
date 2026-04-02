@@ -24,7 +24,7 @@ heroButtons:
   primary:
     text: "Hemen Başvur"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "/tr/buchung"
   secondary:
     text: "Programları İncele"
     icon: "fas fa-list"

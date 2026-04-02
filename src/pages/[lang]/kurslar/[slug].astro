@@ -7,6 +7,7 @@ import IntensivePricingSection from '../../../components/IntensivePricingSection
 import SuccessModal from '../../../components/SuccessModal.astro';
 import '../../../styles/global.css';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, formatCourseDate } from '../../../utils/coursePricingHelper';
+import { getBookingPath, getContactPath, getSectionPath } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
   const allKurslar = await getCollection('kurslar');
@@ -21,8 +22,8 @@ export async function getStaticPaths() {
   
   const paths = [];
   
-  // Desteklenen diller (İspanyolca için cursos klasörü kullanılıyor)
-  const supportedLangs = ['tr', 'de', 'en'];
+  // Yalnızca TR: DE/EN kurs URL'leri kurse/ ve courses/ altında; burada da üretmek duplicate sayfa ve GSC sorunlarına yol açıyordu
+  const supportedLangs = ['tr'];
   
   // Her dil için kursları filtrele ve route oluştur
   for (const langCode of supportedLangs) {
@@ -98,9 +99,9 @@ const hasPricingTab = kurs.data.tabs?.some(tab =>
 ) || false;
 
 // Booking ve contact path'leri dil bazlı (talep formu yoksa CTA booking'e)
-const bookingPath = lang === 'es' ? 'reservar' : lang === 'en' ? 'booking' : 'buchung';
-const contactPath = lang === 'tr' ? 'iletisim' : lang === 'de' ? 'kontakt' : lang === 'es' ? 'contacto' : 'contact';
-const sectionPath = lang === 'es' ? 'cursos' : lang === 'de' ? 'kurse' : lang === 'en' ? 'courses' : 'kurslar';
+const bookingPath = getBookingPath(lang as 'tr' | 'de' | 'en' | 'es');
+const contactPath = getContactPath(lang as 'tr' | 'de' | 'en' | 'es');
+const sectionPath = getSectionPath(lang as 'tr' | 'de' | 'en' | 'es');
 
 // Uzun etiketleri tasarım için kısalt (Unterrichtseinheiten → UE, Unterrichtsstunden → UStd)
 function shortenLabels(text: string): string {

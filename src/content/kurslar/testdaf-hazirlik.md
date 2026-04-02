@@ -24,7 +24,7 @@ heroButtons:
   primary:
     text: "Seviyemi Ölç"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "/tr/buchung"
   secondary:
     text: "Sınav Takvimi"
     icon: "fas fa-calendar-alt"

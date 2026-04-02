@@ -24,7 +24,7 @@ heroButtons:
   primary:
     text: "Niveau testen"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "/de/buchung"
   secondary:
     text: "Prüfungskalender"
     icon: "fas fa-calendar-alt"

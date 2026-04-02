@@ -24,7 +24,7 @@ heroButtons:
   primary:
     text: "Jetzt bewerben"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "/de/buchung"
   secondary:
     text: "FSP-Infos"
     icon: "fas fa-info-circle"

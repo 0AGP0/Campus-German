@@ -24,7 +24,7 @@ heroButtons:
   primary:
     text: "Check My Level"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "/en/buchung"
   secondary:
     text: "Exam Calendar"
     icon: "fas fa-calendar-alt"

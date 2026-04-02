@@ -24,7 +24,7 @@ heroButtons:
   primary:
     text: "Jetzt anmelden"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "/de/buchung"
   secondary:
     text: "Stundenplan"
     icon: "fas fa-download"

@@ -28,10 +28,10 @@ export function getBookingPath(lang: SupportedLang): string {
   const mapping: Record<SupportedLang, string> = {
     tr: 'buchung',
     de: 'buchung',
-    en: 'booking',
-    es: 'reservar'
+    en: 'buchung',
+    es: 'buchung',
   };
-  return mapping[lang] || 'booking';
+  return mapping[lang] || 'buchung';
 }
 
 /**

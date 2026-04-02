@@ -4,7 +4,7 @@ import BundleOffersSection from '../../components/BundleOffersSection.astro';
 import IntensivePricingSection from '../../components/IntensivePricingSection.astro';
 import '../../styles/pages/fiyatlar-tarihler.css';
 import { coursePricing } from '../../data/coursePricing';
-import { isValidLang, getPricesDatesPath } from '../../utils/pathHelpers';
+import { isValidLang, getPricesDatesPath, getBookingPath } from '../../utils/pathHelpers';
 import { LESSONS_UP_TO_200, formatCourseDate, getNearestMondayDdmm } from '../../utils/coursePricingHelper';
 
 export async function getStaticPaths() {
@@ -216,8 +216,7 @@ const t = {
 
 const levels = ['a1', 'a2', 'b1', 'b2', 'c1'] as const;
 const levelLabels = { a1: 'A1', a2: 'A2', b1: 'B1', b2: 'B2', c1: 'C1' };
-const bookingSlug =
-  lang === 'tr' || lang === 'de' ? 'buchung' : lang === 'en' ? 'booking' : 'reservar';
+const bookingSlug = getBookingPath(lang as 'tr' | 'de' | 'en' | 'es');
 
 const year = 2026;
 // Ham tarihleri al, kronolojik sırala, her birini o ay içindeki en yakın Pazartesiye çevir

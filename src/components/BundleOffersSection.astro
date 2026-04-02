@@ -1,4 +1,6 @@
 ---
+import { getBookingPath, type SupportedLang } from '../utils/pathHelpers';
+
 interface Props {
   lang: string;
 }
@@ -226,8 +228,7 @@ const t = {
 
 const m = t[lang as keyof typeof t] ?? t.en;
 
-const bookingSlug =
-  lang === 'tr' || lang === 'de' ? 'buchung' : lang === 'en' ? 'booking' : 'reservar';
+const bookingSlug = getBookingPath(lang as SupportedLang);
 ---
 
 <section class="bundle-offers-section" aria-labelledby="bundle-offers-heading">

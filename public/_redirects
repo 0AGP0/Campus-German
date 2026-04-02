@@ -1,3 +1,27 @@
+# Eski kök URL'ler (GSC 404) -> gerçek sayfalar
+/online      /tr/kurslar/online-uebersicht/      301!
+/online/     /tr/kurslar/online-uebersicht/      301!
+/goethe      /tr/kurslar/pruefungsvorbereitung-uebersicht/      301!
+/goethe/     /tr/kurslar/pruefungsvorbereitung-uebersicht/      301!
+/kurslar     /tr/kurslar/      301!
+/kurslar/    /tr/kurslar/      301!
+/de-yaz-kampi    /tr/kurslar/yaz-okulu/      301!
+/de-yaz-kampi/   /tr/kurslar/yaz-okulu/      301!
+/egitmenler      /tr/lehrkraefte/      301!
+/egitmenler/     /tr/lehrkraefte/      301!
+/egitmenlerimiz      /tr/lehrkraefte/      301!
+/egitmenlerimiz/     /tr/lehrkraefte/      301!
+
+# Eski rezervasyon slug'ları -> kanonik buchung (tüm diller)
+/en/booking      /en/buchung/      301!
+/en/booking/     /en/buchung/      301!
+/es/reservar     /es/buchung/      301!
+/es/reservar/    /es/buchung/      301!
+
+# Eski yanlış path: kurslar yalnızca TR; DE/EN aynı içerik kurse/courses altında
+/en/kurslar/*    /en/courses/:splat    301!
+/de/kurslar/*    /de/kurse/:splat      301!
+
 # Yanlış Türkçe Hakkımızda path'i doğru path'e 301 yönlendir (Google index düzeltmesi)
 /tr/ueber-uns      /tr/hakkimizda      301!
 /tr/ueber-uns/     /tr/hakkimizda/     301!

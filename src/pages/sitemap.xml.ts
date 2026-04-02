@@ -104,9 +104,8 @@ async function getAllUrls(): Promise<string[]> {
   for (const lang of langs) {
     urls.push(`${siteUrl}/${lang}/${getTrialPath(lang)}/`);
     urls.push(`${siteUrl}/${lang}/${getPartnerApplicationPath(lang)}/`);
+    urls.push(`${siteUrl}/${lang}/lehrkraefte/`);
   }
-  urls.push(`${siteUrl}/tr/lehrkraefte/`);
-  urls.push(`${siteUrl}/de/lehrkraefte/`);
 
   return [...new Set(urls)].sort();
 }

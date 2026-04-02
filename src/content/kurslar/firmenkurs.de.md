@@ -24,7 +24,7 @@ heroButtons:
   primary:
     text: "Jetzt anfragen"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "/de/buchung"
   secondary:
     text: "Firmeninformationen"
     icon: "fas fa-info-circle"

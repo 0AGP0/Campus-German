@@ -24,7 +24,7 @@ heroButtons:
   primary:
     text: "Apply Now"
     icon: "fas fa-arrow-right"
-    href: "/booking"
+    href: "/en/buchung"
   secondary:
     text: "Download Course Schedule"
     icon: "fas fa-download"

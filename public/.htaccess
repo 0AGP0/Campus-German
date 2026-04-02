@@ -21,6 +21,19 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+  # Eski kök URL'ler (GSC 404) -> gerçek sayfalar
+  RewriteRule ^online/?$ /tr/kurslar/online-uebersicht/ [R=301,L]
+  RewriteRule ^goethe/?$ /tr/kurslar/pruefungsvorbereitung-uebersicht/ [R=301,L]
+  RewriteRule ^kurslar/?$ /tr/kurslar/ [R=301,L]
+  RewriteRule ^de-yaz-kampi/?$ /tr/kurslar/yaz-okulu/ [R=301,L]
+  RewriteRule ^egitmenler/?$ /tr/lehrkraefte/ [R=301,L]
+  RewriteRule ^egitmenlerimiz/?$ /tr/lehrkraefte/ [R=301,L]
+  # Eski rezervasyon slug'ları -> buchung
+  RewriteRule ^en/booking/?$ /en/buchung/ [R=301,L]
+  RewriteRule ^es/reservar/?$ /es/buchung/ [R=301,L]
+  # Eski yanlış URL: /en/kurslar/* ve /de/kurslar/* -> doğru dil klasörü (duplicate içerik önleme)
+  RewriteRule ^en/kurslar/(.*)$ /en/courses/$1 [R=301,L]
+  RewriteRule ^de/kurslar/(.*)$ /de/kurse/$1 [R=301,L]
   # Eski TR "Über uns" path'i -> hakkimizda (Netlify _redirects ile aynı; HTML meta-refresh sayfası yok)
   RewriteRule ^tr/ueber-uns/?$ /tr/hakkimizda/ [R=301,L]
   RewriteRule ^tr/ueber-uns/(.+)$ /tr/hakkimizda/$1 [R=301,L,QSA]

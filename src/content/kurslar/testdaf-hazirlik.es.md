@@ -24,7 +24,7 @@ heroButtons:
   primary:
     text: "Verificar Mi Nivel"
     icon: "fas fa-arrow-right"
-    href: "/reservar"
+    href: "/es/buchung"
   secondary:
     text: "Calendario de Exámenes"
     icon: "fas fa-calendar-alt"

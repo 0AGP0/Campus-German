@@ -1,7 +1,7 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import '../../styles/pages/erfolgsgeschichten.css';
-import { getContactPath } from '../../utils/pathHelpers';
+import { getContactPath, getBookingPath } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
     return [
@@ -11,6 +11,7 @@ export async function getStaticPaths() {
 
 const { lang } = Astro.params;
 const contactPath = getContactPath(lang as 'tr' | 'de' | 'en' | 'es');
+const bookingPath = getBookingPath(lang as 'tr' | 'de' | 'en' | 'es');
 
 const translations = {
     title: "Historias de éxito - Campus German",
@@ -98,7 +99,7 @@ const translations = {
                 <h2 class="cta-title">{translations.ctaTitle}</h2>
                 <p class="cta-description">{translations.ctaDescription}</p>
                 <div class="cta-actions">
-                    <a href={`/${lang}/reservar`} class="cta-button">
+                    <a href={`/${lang}/${bookingPath}`} class="cta-button">
                         <span>{translations.ctaButton1}</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
