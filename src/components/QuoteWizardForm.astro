@@ -15,10 +15,10 @@ const copy = {
     asideSteps: '4 adim',
     asideStepHint: 'Ilerleme',
     programs: [
-      { label: 'Dil Kursu', program: 'intensive', quoteTrack: 'language-course', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Yaz Okulu', program: 'youth-camp', quoteTrack: 'summer-school', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Sınava Hazırlık', program: 'intensive', quoteTrack: 'exam-prep', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Online Kurs', program: 'online', quoteTrack: 'online-course', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
+      { label: 'Intensive', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
+      { label: '+ Intensive', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'intensive-plus', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Summer Camp', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
     ],
     programQ: 'Hangi programa daha yakin hissediyorsunuz?',
     levelQ: 'Hangi seviye araliginda hedefliyorsunuz?',
@@ -26,7 +26,7 @@ const copy = {
     planMonthCaption: 'Baslangic aylari',
     monthQ: 'Hangi aylar arasinda baslamak istersiniz?',
     levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
-    months: ['Ocak', 'Subat', 'Mart', 'Nisan', 'Mayis', 'Haziran', 'Temmuz', 'Agustos', 'Eylul', 'Ekim', 'Kasim', 'Aralik'],
+    months: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '12+'],
     note: 'Kurs süresi: Her tam seviye iki modüle ayrılır (ör. A1 = A1.1 + A1.2). Tam seviye başına yaklaşık 2 ay planlayın.',
     visaQ: 'Vizeye ihtiyacınız var mı?',
     accQ: 'Konaklama ister misiniz?',
@@ -64,10 +64,10 @@ const copy = {
     asideSteps: '4 Schritte',
     asideStepHint: 'Fortschritt',
     programs: [
-      { label: 'Sprachkurs', program: 'intensive', quoteTrack: 'language-course', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Sommerschule', program: 'youth-camp', quoteTrack: 'summer-school', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Prüfungsvorbereitung', program: 'intensive', quoteTrack: 'exam-prep', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Online Kurs', program: 'online', quoteTrack: 'online-course', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
+      { label: 'Intensive', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
+      { label: '+ Intensive', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'intensive-plus', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Summer Camp', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
     ],
     programQ: 'Welches Programm passt am ehesten zu Ihnen?',
     levelQ: 'Welchen Niveau-Bereich streben Sie an?',
@@ -75,7 +75,7 @@ const copy = {
     planMonthCaption: 'Monatsfenster',
     monthQ: 'Zwischen welchen Monaten moechten Sie starten?',
     levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
-    months: ['Jan', 'Feb', 'Maerz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+    months: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '12+'],
     note: 'Kursdauer: Jede vollständige Niveaustufe ist in zwei Module aufgeteilt (z. B. A1 = A1.1 + A1.2). Rechnen Sie mit etwa 2 Monaten pro vollständiger Stufe.',
     visaQ: 'Brauchen Sie ein Visum?',
     accQ: 'Benötigen Sie eine Unterkunft?',
@@ -113,10 +113,10 @@ const copy = {
     asideSteps: '4 steps',
     asideStepHint: 'Progress',
     programs: [
-      { label: 'Language course', program: 'intensive', quoteTrack: 'language-course', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Summer school', program: 'youth-camp', quoteTrack: 'summer-school', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Exam prep', program: 'intensive', quoteTrack: 'exam-prep', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Online course', program: 'online', quoteTrack: 'online-course', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
+      { label: 'Intensive', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
+      { label: '+ Intensive', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'intensive-plus', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Summer Camp', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
     ],
     programQ: 'Which track feels closest to what you need?',
     levelQ: 'What level range are you aiming for?',
@@ -124,7 +124,7 @@ const copy = {
     planMonthCaption: 'Month window',
     monthQ: 'Between which months would you like to start?',
     levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
-    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    months: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '12+'],
     note: 'Course duration: Each full level has two modules (e.g. A1 = A1.1 + A1.2). Plan about 2 months per full level.',
     visaQ: 'Do you need a visa?',
     accQ: 'Do you want accommodation?',
@@ -162,10 +162,10 @@ const copy = {
     asideSteps: '4 pasos',
     asideStepHint: 'Avance',
     programs: [
-      { label: 'Curso de idioma', program: 'intensive', quoteTrack: 'language-course', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Escuela de verano', program: 'youth-camp', quoteTrack: 'summer-school', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Preparación de examen', program: 'intensive', quoteTrack: 'exam-prep', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Curso online', program: 'online', quoteTrack: 'online-course', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
+      { label: 'Intensive', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
+      { label: '+ Intensive', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'intensive-plus', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Summer Camp', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
+      { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
     ],
     programQ: 'Que opcion se parece mas a lo que buscas?',
     levelQ: 'Que rango de nivel es tu objetivo?',
@@ -173,7 +173,7 @@ const copy = {
     planMonthCaption: 'Ventana de meses',
     monthQ: 'Entre que meses te gustaria empezar?',
     levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
-    months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+    months: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '12+'],
     note: 'Duracion: Cada nivel completo tiene dos modulos (ej. A1 = A1.1 + A1.2). Cuenta unos 2 meses por nivel completo.',
     visaQ: 'Necesitas visa?',
     accQ: '¿Necesitas alojamiento?',
@@ -248,6 +248,7 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       <input type="hidden" name="program" id="pwProgram" value="" />
       <input type="hidden" name="quote-track" id="pwQuoteTrack" value="" />
       <input type="hidden" name="quote-program-label" id="pwProgramLabel" value="" />
+      <input type="hidden" name="quote-intensive-type" id="pwIntensiveType" value="" />
       <input type="hidden" name="quote-level-start" id="pwLevelA" value="" />
       <input type="hidden" name="quote-level-end" id="pwLevelB" value="" />
       <input type="hidden" name="quote-month-start" id="pwMonthA" value="" />
@@ -266,6 +267,7 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
                   type="button"
                   class={`qx-card qx-card--${i + 1}`}
                   data-program={p.program}
+                  data-intensive-type={p.intensiveType}
                   data-quote-track={p.quoteTrack}
                   data-program-label={p.label}
                 >
@@ -287,41 +289,17 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
             <div class="qx-plan-grid">
               <div class="qx-plan-card">
                 <p class="qx-plan-label">{t.planLevelCaption}</p>
-                <div class="qx-range-stack">
-                  <div class="qx-ruler" style={`--segments: ${t.levels.length - 1}`} aria-hidden="true">
-                    {t.levels.map((lv, i) => (
-                      <span class="qx-ruler-tick" style={`--i: ${i}`}>
-                        <span class="qx-ruler-cap">{lv}</span>
-                        <span class="qx-ruler-mark" />
-                      </span>
-                    ))}
-                  </div>
-                  <div class="qx-range" data-range="level" data-max="9">
-                    <div class="qx-rail" data-rail></div>
-                    <input class="qx-rmin" type="range" min="0" max="9" value="0" />
-                    <input class="qx-rmax" type="range" min="0" max="9" value="3" />
-                  </div>
+                <div class="qx-single-range" data-single-range="level">
+                  <input class="qx-rsingle" type="range" min="0" max="9" value="0" />
+                  <span class="qx-thumb-pop" data-pop></span>
                 </div>
-                <p class="qx-readout" data-out="level"></p>
               </div>
               <div class="qx-plan-card">
                 <p class="qx-plan-label">{t.planMonthCaption}</p>
-                <div class="qx-range-stack">
-                  <div class="qx-ruler qx-ruler--months" style={`--segments: ${t.months.length - 1}`} aria-hidden="true">
-                    {t.months.map((mv, i) => (
-                      <span class="qx-ruler-tick" style={`--i: ${i}`}>
-                        <span class="qx-ruler-cap">{mv}</span>
-                        <span class="qx-ruler-mark" />
-                      </span>
-                    ))}
-                  </div>
-                  <div class="qx-range" data-range="month" data-max="11">
-                    <div class="qx-rail" data-rail></div>
-                    <input class="qx-rmin" type="range" min="0" max="11" value="1" />
-                    <input class="qx-rmax" type="range" min="0" max="11" value="4" />
-                  </div>
+                <div class="qx-single-range" data-single-range="month">
+                  <input class="qx-rsingle" type="range" min="0" max="12" value="2" />
+                  <span class="qx-thumb-pop" data-pop></span>
                 </div>
-                <p class="qx-readout" data-out="month"></p>
               </div>
             </div>
             <p class="qx-hint">{t.note}</p>
@@ -423,6 +401,7 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
     </div>
     <h3 id="pwDoneTitle" class="pw-dialog-title">{t.doneTitle}</h3>
     <p class="pw-dialog-text">{t.doneText}</p>
+    <p class="pw-dialog-price" id="pwDonePrice" data-pw-price>~</p>
     <div class="pw-dialog-cta-wrap">
       <a href={bookingPath} class="pw-dialog-cta" data-pw-book>{t.doneBtn}</a>
       <button type="button" class="pw-dialog-home" data-pw-close>{t.doneClose}</button>
@@ -493,6 +472,7 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
     const overlay = document.getElementById('pwOverlay') as HTMLElement | null;
     const dialog = document.querySelector<HTMLElement>('[data-pw-dialog]');
     const bookLink = document.querySelector<HTMLAnchorElement>('[data-pw-book]');
+    const donePriceEl = document.getElementById('pwDonePrice') as HTMLElement | null;
 
     if (bookLink) bookLink.href = form.dataset.booking || '/tr/buchung';
 
@@ -597,6 +577,7 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
     const pEl = document.getElementById('pwProgram') as HTMLInputElement | null;
     const pLabelEl = document.getElementById('pwProgramLabel') as HTMLInputElement | null;
     const pTrackEl = document.getElementById('pwQuoteTrack') as HTMLInputElement | null;
+    const pIntensiveTypeEl = document.getElementById('pwIntensiveType') as HTMLInputElement | null;
     form.querySelectorAll<HTMLButtonElement>('.qx-card').forEach((btn) => {
       btn.addEventListener('click', () => {
         form.querySelectorAll('.qx-card').forEach((b) => b.classList.remove('is-picked'));
@@ -604,59 +585,41 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         if (pEl) pEl.value = btn.dataset.program || '';
         if (pLabelEl) pLabelEl.value = btn.dataset.programLabel || '';
         if (pTrackEl) pTrackEl.value = btn.dataset.quoteTrack || '';
+        if (pIntensiveTypeEl) pIntensiveTypeEl.value = btn.dataset.intensiveType || '';
         gsap.fromTo(btn.querySelector('.qx-card-bg'), { scale: 1 }, { scale: 1.08, duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.inOut' });
         window.setTimeout(() => goTo(2), 200);
       });
     });
 
-    function wireRange(wrap: Element, labels: string[], outSel: string, a: HTMLInputElement | null, b: HTMLInputElement | null) {
-      const min = wrap.querySelector<HTMLInputElement>('.qx-rmin');
-      const max = wrap.querySelector<HTMLInputElement>('.qx-rmax');
-      const rail = wrap.querySelector<HTMLElement>('[data-rail]');
-      const out = form.querySelector(`[data-out="${outSel}"]`);
-      const minAttr = Number(min?.getAttribute('min') ?? '0');
-      const maxAttr = Number(max?.getAttribute('max') ?? (wrap as HTMLElement).dataset.max ?? '1');
-      const span = Math.max(1, maxAttr - minAttr);
+    function wireSingleRange(wrap: Element, labels: string[], a: HTMLInputElement | null, b: HTMLInputElement | null) {
+      const slider = wrap.querySelector<HTMLInputElement>('.qx-rsingle');
+      const pop = wrap.querySelector<HTMLElement>('[data-pop]');
       function paint() {
-        if (!min || !max || !rail || !out || !a || !b) return;
-        let x = Number(min.value);
-        let y = Number(max.value);
-        if (x > y) {
-          const t = x;
-          x = y;
-          y = t;
-          min.value = String(x);
-          max.value = String(y);
-        }
-        const ap = ((x - minAttr) / span) * 100;
-        const bp = ((y - minAttr) / span) * 100;
-        rail.style.setProperty('--a', `${ap}%`);
-        rail.style.setProperty('--b', `${bp}%`);
-        out.textContent = `${labels[x]} - ${labels[y]}`;
-        a.value = labels[x];
-        b.value = labels[y];
+        if (!slider || !pop || !a || !b) return;
+        const idx = Number(slider.value);
+        const label = labels[idx] ?? '';
+        const min = Number(slider.min || '0');
+        const max = Number(slider.max || '1');
+        const ratio = max > min ? (idx - min) / (max - min) : 0;
+        pop.textContent = label;
+        pop.style.left = `${ratio * 100}%`;
+        a.value = label;
+        b.value = label;
       }
       rangeRepaints.push(paint);
-      min?.addEventListener('input', () => {
-        paint();
-      });
-      max?.addEventListener('input', () => {
-        paint();
-      });
+      slider?.addEventListener('input', paint);
       paint();
     }
 
-    wireRange(
-      form.querySelector('[data-range="level"]')!,
+    wireSingleRange(
+      form.querySelector('[data-single-range="level"]')!,
       levels,
-      'level',
       document.getElementById('pwLevelA') as HTMLInputElement | null,
       document.getElementById('pwLevelB') as HTMLInputElement | null
     );
-    wireRange(
-      form.querySelector('[data-range="month"]')!,
+    wireSingleRange(
+      form.querySelector('[data-single-range="month"]')!,
       months,
-      'month',
       document.getElementById('pwMonthA') as HTMLInputElement | null,
       document.getElementById('pwMonthB') as HTMLInputElement | null
     );
@@ -721,6 +684,64 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
 
     const DEFAULT_MAKE_WEBHOOK = 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
 
+    const TIERS_20H = [
+      { min: 1, max: 4, perWeek: 190 },
+      { min: 5, max: 8, perWeek: 150 },
+      { min: 9, max: 16, perWeek: 130 },
+      { min: 17, max: 24, perWeek: 120 },
+      { min: 25, max: 999, perWeek: 110 }
+    ];
+    const TIERS_25H = [
+      { min: 1, max: 4, perWeek: 230 },
+      { min: 5, max: 8, perWeek: 180 },
+      { min: 9, max: 16, perWeek: 160 },
+      { min: 17, max: 24, perWeek: 150 },
+      { min: 25, max: 999, perWeek: 135 }
+    ];
+
+    function getTieredPrice(weeks: number, isIntensivePlus: boolean) {
+      const tiers = isIntensivePlus ? TIERS_25H : TIERS_20H;
+      const tier = tiers.find((t) => weeks >= t.min && weeks <= t.max);
+      return tier ? weeks * tier.perWeek : 0;
+    }
+
+    function parseMonthDuration(monthVal: string) {
+      const v = (monthVal || '').trim();
+      if (v === '12+') return 13;
+      const n = parseInt(v, 10);
+      return Number.isFinite(n) && n > 0 ? n : 2;
+    }
+
+    function getLevelWeeks(levelStart: string, levelEnd: string) {
+      const startIdx = levels.indexOf(levelStart);
+      const endIdx = levels.indexOf(levelEnd);
+      const a = startIdx >= 0 ? startIdx : 0;
+      const b = endIdx >= 0 ? endIdx : a;
+      const modules = Math.max(1, Math.abs(b - a) + 1);
+      return modules * 4;
+    }
+
+    function calculateQuoteTotal(data: Record<string, string>) {
+      const program = (data.program || '').trim();
+      const intensiveType = (data['quote-intensive-type'] || '').trim();
+      const monthStart = (data['quote-month-start'] || '').trim();
+      const levelStart = (data['quote-level-start'] || '').trim();
+      const levelEnd = (data['quote-level-end'] || '').trim();
+
+      if (program === 'youth-camp') {
+        return parseMonthDuration(monthStart) * 220;
+      }
+
+      if (program === 'intensive' || program === 'online') {
+        const levelWeeks = getLevelWeeks(levelStart, levelEnd);
+        const monthWeeks = parseMonthDuration(monthStart) * 4;
+        const weeks = Math.max(levelWeeks, monthWeeks, 4);
+        return getTieredPrice(weeks, intensiveType === 'intensive-plus');
+      }
+
+      return 0;
+    }
+
     function buildPriceQuotePayload(fd: FormData) {
       const data = Object.fromEntries(fd.entries()) as Record<string, string>;
       const heard = (data['heard-from'] || '').trim();
@@ -729,12 +750,16 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       const qms = (data['quote-month-start'] || '').trim();
       const qme = (data['quote-month-end'] || '').trim();
       const qtrack = (data['quote-track'] || '').trim();
+      const qit = (data['quote-intensive-type'] || '').trim();
       const qlabel = (data['quote-program-label'] || '').trim();
+      const totalPrice = calculateQuoteTotal(data);
       const lines: string[] = [];
       if (qlabel) lines.push(`Program choice: ${qlabel}`);
       if (qtrack) lines.push(`Quote track: ${qtrack}`);
+      if (qit) lines.push(`Intensive type: ${qit}`);
       if (qls || qle) lines.push(`Level range: ${qls} – ${qle}`);
       if (qms || qme) lines.push(`Start months: ${qms} – ${qme}`);
+      if (totalPrice > 0) lines.push(`Estimated total: ${totalPrice} EUR`);
       if (heard) lines.push(`Heard from: ${heard}`);
       const message = lines.join('\n');
       return {
@@ -747,7 +772,7 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         tel: data.phone || '',
         email: data.email || '',
         program: data.program || '',
-        intensiveType: '',
+        intensiveType: qit,
         level: '',
         courseSelection: [] as string[],
         startDate: '',
@@ -762,15 +787,17 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         message,
         termsAccepted: false,
         privacyAccepted: false,
-        totalPrice: '',
+        totalPrice: totalPrice > 0 ? String(totalPrice) : '',
         timestamp: new Date().toISOString(),
         heardFrom: heard,
         quoteTrack: qtrack,
+        quoteIntensiveType: qit,
         quoteProgramLabel: qlabel,
         quoteLevelStart: qls,
         quoteLevelEnd: qle,
         quoteMonthStart: qms,
-        quoteMonthEnd: qme
+        quoteMonthEnd: qme,
+        _computedTotalPrice: totalPrice
       };
     }
 
@@ -784,6 +811,10 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         const wh = (form.dataset.webhook || '').trim() || DEFAULT_MAKE_WEBHOOK;
         const res = await fetch(wh, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
         if (!res.ok) throw new Error('webhook');
+        if (donePriceEl) {
+          const total = Number((payload as unknown as { _computedTotalPrice?: number })._computedTotalPrice || 0);
+          donePriceEl.textContent = total > 0 ? `~ ${total} EUR` : '~';
+        }
         openOverlay();
       } catch {
         const msg = form.dataset.error || 'Error';

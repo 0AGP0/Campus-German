@@ -688,6 +688,60 @@ main:has(#pwRoot) #pwRoot {
   color: #64748b;
 }
 
+.qx-scene--plan .qx-single-range {
+  position: relative;
+  padding: 0.7rem 0 0.2rem;
+}
+
+.qx-scene--plan .qx-rsingle {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #cbd5e1, #94a3b8);
+  outline: none;
+}
+
+.qx-scene--plan .qx-rsingle::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: #0f172a;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.2);
+  cursor: pointer;
+}
+
+.qx-scene--plan .qx-rsingle::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: #0f172a;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.2);
+  cursor: pointer;
+}
+
+.qx-scene--plan .qx-thumb-pop {
+  position: absolute;
+  top: -0.25rem;
+  transform: translateX(-50%);
+  min-width: 2.4rem;
+  text-align: center;
+  padding: 0.24rem 0.44rem;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+}
+
 .qx-scene--plan .qx-range {
   --qx-thumb-half: 11.5px;
   height: 40px;
@@ -1185,6 +1239,13 @@ main:has(#pwRoot) #pwRoot {
   font-size: 0.95rem;
   max-width: 32rem;
   margin-inline: auto;
+}
+
+.pw-dialog-price {
+  margin: 0.8rem 0 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--qx-navy);
 }
 
 .pw-dialog-cta-wrap {

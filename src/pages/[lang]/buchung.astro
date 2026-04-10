@@ -28,6 +28,7 @@ const t = {
         step1: "Program",
         step2: "Extralar",
         step3: "Talep",
+        step4: "Son Adım",
         programLabel: "İlgilendiğiniz Program",
         programPlaceholder: "Program seçiniz",
         intensiveAcademic: "Yoğun",
@@ -123,7 +124,7 @@ const t = {
         no: "Hayır",
         courseInfoDesc: "Program ve seviye seçiniz",
         extrasDesc: "Vize, konaklama ve havaalanı seçenekleri",
-        requestDesc: "İletişim bilgilerinizi giriniz",
+        requestDesc: "Kişisel bilgilerinizi giriniz",
         back: "Geri",
         termsAccepted: "Genel Hüküm ve Koşullar'ı okudum ve kabul ediyorum",
         privacyAccepted: "Kişisel Verilerin Korunması bilgilendirmesini kabul ediyorum",
@@ -177,6 +178,12 @@ const t = {
         nationalityPlaceholder: "Uyruğunuzu giriniz",
         passportNumber: "Pasaport Numarası",
         passportPlaceholder: "Pasaport numaranızı giriniz",
+        birthPlace: "Doğum Yeri",
+        birthPlacePlaceholder: "Doğum yerinizi giriniz",
+        addressLine: "Adres Satiri",
+        addressLinePlaceholder: "Sokak / bina / daire",
+        postalCode: "Posta Kodu",
+        postalCodePlaceholder: "Posta kodu",
         germanLevel: "Almanca Seviyesi",
         germanLevelPlaceholder: "Seviye seçiniz",
         absoluteBeginner: "Hiç Bilmiyorum",
@@ -216,6 +223,7 @@ const t = {
         step1: "Programm",
         step2: "Extras",
         step3: "Anfrage",
+        step4: "Letzter Schritt",
         programLabel: "Programm Ihrer Wahl",
         programPlaceholder: "Programm wählen",
         intensiveAcademic: "Intensiv",
@@ -375,6 +383,12 @@ const t = {
         nationalityPlaceholder: "Geben Sie Ihre Nationalität ein",
         passportNumber: "Reisepassnummer",
         passportPlaceholder: "Geben Sie Ihre Reisepassnummer ein",
+        birthPlace: "Geburtsort",
+        birthPlacePlaceholder: "Geben Sie Ihren Geburtsort ein",
+        addressLine: "Adresszeile",
+        addressLinePlaceholder: "Straße / Haus / Wohnung",
+        postalCode: "Postleitzahl",
+        postalCodePlaceholder: "Postleitzahl",
         germanLevel: "Deutschniveau",
         germanLevelPlaceholder: "Niveau auswählen",
         absoluteBeginner: "Absoluter Anfänger",
@@ -414,6 +428,7 @@ const t = {
         step1: "Program",
         step2: "Extras",
         step3: "Request",
+        step4: "Final Step",
         programLabel: "Program of Interest",
         programPlaceholder: "Select program",
         intensiveAcademic: "Intensive",
@@ -573,6 +588,12 @@ const t = {
         nationalityPlaceholder: "Enter your nationality",
         passportNumber: "Passport Number",
         passportPlaceholder: "Enter your passport number",
+        birthPlace: "Birth Place",
+        birthPlacePlaceholder: "Enter your birth place",
+        addressLine: "Address Line",
+        addressLinePlaceholder: "Street / building / apartment",
+        postalCode: "Postal Code",
+        postalCodePlaceholder: "Postal code",
         germanLevel: "German Level",
         germanLevelPlaceholder: "Select level",
         absoluteBeginner: "Absolute Beginner",
@@ -612,6 +633,7 @@ const t = {
         step1: "Programa",
         step2: "Extras",
         step3: "Solicitud",
+        step4: "Último paso",
         programLabel: "Programa de interés",
         programPlaceholder: "Seleccione programa",
         intensiveAcademic: "Intensivo",
@@ -771,6 +793,12 @@ const t = {
         nationalityPlaceholder: "Introduzca su nacionalidad",
         passportNumber: "Número de pasaporte",
         passportPlaceholder: "Introduzca su número de pasaporte",
+        birthPlace: "Lugar de nacimiento",
+        birthPlacePlaceholder: "Introduzca su lugar de nacimiento",
+        addressLine: "Dirección",
+        addressLinePlaceholder: "Calle / edificio / piso",
+        postalCode: "Código postal",
+        postalCodePlaceholder: "Código postal",
         germanLevel: "Nivel de alemán",
         germanLevelPlaceholder: "Seleccione nivel",
         absoluteBeginner: "Principiante absoluto",
@@ -867,10 +895,10 @@ const bundleNearHintCopy = {
             <div class="booking-form-container">
                 <!-- Main Form Section -->
                 <div class="booking-form-main">
-                    <!-- Progress Steps (3 steps) -->
+                    <!-- Progress Steps (4 steps) -->
                     <div class="form-progress">
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 33.33%"></div>
+                            <div class="progress-fill" style="width: 25%"></div>
                         </div>
                         <div class="step-indicators">
                             <div class="step-indicator active" data-step="1">
@@ -883,7 +911,11 @@ const bundleNearHintCopy = {
                             </div>
                             <div class="step-indicator" data-step="3">
                                 <span class="step-number">3</span>
-                                <span class="step-label">{translations.step3}</span>
+                                <span class="step-label">{translations.personalInfo}</span>
+                            </div>
+                            <div class="step-indicator" data-step="4">
+                                <span class="step-number">4</span>
+                                <span class="step-label">{translations.step4}</span>
                             </div>
                         </div>
                     </div>
@@ -893,7 +925,7 @@ const bundleNearHintCopy = {
                         <!-- Form Section -->
                         <div class="form-section">
                             <!-- Booking Form -->
-                            <form id="booking-form" class="booking-form" data-coupon-success={translations.couponSuccess} data-coupon-invalid={translations.couponInvalid} data-checkout-api={import.meta.env.PUBLIC_MAKE_STRIPE_CHECKOUT_WEBHOOK ?? ''}>
+                            <form id="booking-form" class="booking-form" data-coupon-success={translations.couponSuccess} data-coupon-invalid={translations.couponInvalid} data-checkout-api={import.meta.env.PUBLIC_MAKE_STRIPE_CHECKOUT_WEBHOOK ?? 'https://hook.eu2.make.com/g8snedc3p010gub5i8r6vtmv7jkcj6ra'}>
                                 <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
                                 <input type="hidden" name="amountInCents" id="amount-in-cents" value="0" />
                                 <input type="hidden" name="promo-bundle" id="promo-bundle-input" value="" />
@@ -1075,32 +1107,80 @@ const bundleNearHintCopy = {
                                     </div>
                                 </div>
 
-                                <!-- Step 3: Talep -->
+                                <!-- Step 3: Personal -->
                                 <div class="form-step" data-step="3">
                                     <div class="step-header">
-                                        <h2>{translations.step3}</h2>
+                                        <h2>{translations.personalInfo}</h2>
+                                        <p>{translations.personalInfoDesc}</p>
+                                    </div>
+                                    <div class="compact-section-card">
+                                        <h3 class="compact-section-title">{translations.personalInfo}</h3>
+                                        <div class="form-grid compact-grid">
+                                            <div class="form-group">
+                                                <label for="birth-date">{translations.birthDate}</label>
+                                                <input type="date" id="birth-date" name="birth_date">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="nationality">{translations.nationality}</label>
+                                                <input type="text" id="nationality" name="nationality" placeholder={translations.nationalityPlaceholder}>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="first-name">{translations.firstName} *</label>
+                                                <input type="text" id="first-name" name="first_name" required placeholder={translations.firstNamePlaceholder}>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="last-name">{translations.lastName} *</label>
+                                                <input type="text" id="last-name" name="last_name" required placeholder={translations.lastNamePlaceholder}>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="birth-place">{translations.birthPlace}</label>
+                                                <input type="text" id="birth-place" name="birth_place" placeholder={translations.birthPlacePlaceholder}>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="passport-no">{translations.passportNumber}</label>
+                                                <input type="text" id="passport-no" name="passport_no" placeholder={translations.passportPlaceholder}>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-navigation">
+                                        <button type="button" class="btn-prev">{translations.back}</button>
+                                        <button type="button" class="btn-next">{translations.continueBtn}</button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 4: Final -->
+                                <div class="form-step" data-step="4">
+                                    <div class="step-header">
+                                        <h2>{translations.step4}</h2>
                                         <p>{translations.requestDesc}</p>
                                     </div>
-                                    <div class="form-grid">
-                                        <div class="form-group full-width">
-                                            <label for="full-name">{translations.nameLabel} *</label>
-                                            <input type="text" id="full-name" name="full-name" required placeholder={translations.namePlaceholder}>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="city">{translations.cityLabel} *</label>
-                                            <input type="text" id="city" name="city" required placeholder={translations.cityPlaceholder}>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="country">{translations.countryLabel} *</label>
-                                            <input type="text" id="country" name="country" required placeholder={translations.countryPlaceholder}>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="phone">{translations.phoneLabel} *</label>
-                                            <input type="tel" id="phone" name="phone" required placeholder={translations.phonePlaceholder}>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">{translations.emailLabel} *</label>
-                                            <input type="email" id="email" name="email" required placeholder={translations.emailPlaceholder}>
+                                    <div class="compact-section-card">
+                                        <h3 class="compact-section-title">{lang === 'tr' ? 'Adres' : translations.addressLine}</h3>
+                                        <div class="form-grid compact-grid">
+                                            <div class="form-group full-width">
+                                                <label for="address-line">{translations.addressLine}</label>
+                                                <input type="text" id="address-line" name="address_line" placeholder={translations.addressLinePlaceholder}>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="postal-code">{translations.postalCode}</label>
+                                                <input type="text" id="postal-code" name="postal_code" placeholder={translations.postalCodePlaceholder}>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="city">{translations.cityLabel} *</label>
+                                                <input type="text" id="city" name="city" required placeholder={translations.cityPlaceholder}>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="country">{translations.countryLabel} *</label>
+                                                <input type="text" id="country" name="country" required placeholder={translations.countryPlaceholder}>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="phone">{translations.phoneLabel} *</label>
+                                                <input type="tel" id="phone" name="phone" required placeholder={translations.phonePlaceholder}>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">{translations.emailLabel} *</label>
+                                                <input type="email" id="email" name="email" required placeholder={translations.emailPlaceholder}>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group full-width">
@@ -1126,11 +1206,9 @@ const bundleNearHintCopy = {
                                         <button type="submit" name="bookingAction" value="free" class="btn-submit btn-submit-free">
                                             <i class="fas fa-calendar-check" aria-hidden="true"></i> {translations.freeReservation}
                                         </button>
-                                        {import.meta.env.PUBLIC_MAKE_STRIPE_CHECKOUT_WEBHOOK && (
-                                            <button type="submit" name="bookingAction" value="payment" class="btn-submit btn-submit-payment">
-                                                <i class="fas fa-credit-card" aria-hidden="true"></i> {translations.proceedToPayment}
-                                            </button>
-                                        )}
+                                        <button type="submit" name="bookingAction" value="payment" class="btn-submit btn-submit-payment">
+                                            <i class="fas fa-credit-card" aria-hidden="true"></i> {translations.proceedToPayment}
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -1270,7 +1348,7 @@ const bundleNearHintCopy = {
         document.addEventListener('DOMContentLoaded', function() {
             // ===== STEP NAVIGATION =====
             let currentStep = 1;
-            const totalSteps = 3;
+            const totalSteps = 4;
             const formSteps = document.querySelectorAll('.form-step');
             const stepIndicators = document.querySelectorAll('.step-indicator');
             const progressFill = document.querySelector('.progress-fill');
@@ -2364,7 +2442,15 @@ const bundleNearHintCopy = {
                         sourcePage: data.sourcePage || window.location.pathname,
                         lang: typeof lang !== 'undefined' ? lang : 'tr',
                         promoBundle: (document.getElementById('promo-bundle-input')?.value || '').trim(),
-                        name: data['full-name'] || '',
+                        firstName: data.first_name || '',
+                        lastName: data.last_name || '',
+                        name: `${String(data.first_name || '').trim()} ${String(data.last_name || '').trim()}`.trim(),
+                        birthDate: data.birth_date || '',
+                        birthPlace: data.birth_place || '',
+                        nationality: data.nationality || '',
+                        passportNo: data.passport_no || '',
+                        addressLine: data.address_line || '',
+                        postalCode: data.postal_code || '',
                         city: data.city || '',
                         country: data.country || '',
                         tel: data.phone || '',

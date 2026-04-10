@@ -140,7 +140,7 @@ const translations = t[lang as keyof typeof t];
                     
                         <form id="partnerForm" class="contact-form" data-lang={lang}>
                             <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
-                            <input type="hidden" name="formType" value="partner-teacher" />
+                            <input type="hidden" name="formType" value="contact" />
                             <input type="hidden" name="formLang" value={lang} />
                             <!-- Honeypot field -->
                             <input type="text" name="website" style="position: absolute; left: -9999px; opacity: 0; pointer-events: none; tabindex: -1;" autocomplete="off" aria-hidden="true" />
@@ -307,7 +307,7 @@ const translations = t[lang as keyof typeof t];
                 }
                 
                 let standardizedData = {
-                    formType: 'partner-teacher',
+                    formType: 'contact',
                     sourcePage: window.location.pathname,
                     lang: data.formLang || lang,
                     // Common fields (same as contact form)
@@ -319,7 +319,10 @@ const translations = t[lang as keyof typeof t];
                     experience: data.experience || '',
                     education: data.education || '',
                     languages: data.languages || '',
-                    notes: data.message || '',
+                    message: data.message || '',
+                    city: '',
+                    country: '',
+                    startDate: '',
                     kvkk: data.kvkk || false,
                     timestamp: new Date().toISOString()
                 };

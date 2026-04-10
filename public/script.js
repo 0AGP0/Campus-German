@@ -498,7 +498,7 @@ function initBilgiAlForm() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    formType: 'cta-contact',
+                    formType: 'contact',
                     sourcePage: window.location.pathname,
                     lang: lang,
                     name: data.name,
@@ -623,7 +623,7 @@ function initVisitPopup() {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        formType: 'free-lesson-popup',
+                        formType: 'contact',
                         sourcePage: window.location.pathname,
                         lang: lang,
                         name: data.name,
