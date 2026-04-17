@@ -15,6 +15,7 @@ const {
   includeHizmetCSS = false,
   hideHeader = false,
   hideFooter = false,
+  robots = '',
 } = Astro.props;
 
 const popupLang = (lang as 'tr' | 'de' | 'en' | 'es') || 'tr';
@@ -153,6 +154,7 @@ const popupLevelOptions: { value: string; label: string }[] = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
     <meta property="og:title" content={title}>
+    {robots ? <meta name="robots" content={robots} /> : null}
     
     <!-- Favicon / Google site icon (Campus German logo) – mutlak URL Google aramada simge için gerekli -->
     <link rel="icon" href="https://campusgerman.com/favicon.ico" sizes="48x48">

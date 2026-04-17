@@ -1,0 +1,302 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { isValidLang, getDatenschutzPath, getImpressumPath } from '../../utils/pathHelpers';
+import '../../styles/pages/quote-wizard.css';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'tr' } },
+    { params: { lang: 'de' } },
+    { params: { lang: 'en' } },
+    { params: { lang: 'es' } },
+  ];
+}
+
+const { lang } = Astro.params;
+if (!isValidLang(lang)) throw new Error(`Invalid language: ${lang}`);
+
+const termsPath = `/${lang}/${getImpressumPath(lang)}`;
+const privacyPath = `/${lang}/${getDatenschutzPath(lang)}`;
+const webhook = import.meta.env.PUBLIC_MAKE_BOOKING_WEBHOOK || 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
+
+const copy = {
+  tr: {
+    title: 'Özel Evrak Formu',
+    heading: 'Evrak ve Dijital İmza Formu',
+    firstName: 'Ad',
+    lastName: 'Soyad',
+    birthDate: 'Doğum Tarihi',
+    nationality: 'Uyruk',
+    birthPlace: 'Doğum Yeri',
+    passportNo: 'Pasaport Numarası',
+    city: 'Şehir',
+    country: 'Ülke',
+    phone: 'Telefon',
+    email: 'E-posta',
+    message: 'Ek Not',
+    passportFile: 'Pasaport Fotokopisi (PDF/JPG/PNG)',
+    agbSign: "AGB'yi okudum, onaylıyorum (dijital imza)",
+    clearSign: 'İmzayı temizle',
+    submit: 'Gönder',
+    sending: 'Gönderiliyor...',
+    success: 'Form başarıyla gönderildi.',
+    error: 'Form gönderilirken hata oluştu.',
+    requiredSign: 'Lütfen AGB alanını imzalayın.',
+    termsLabelA: "Genel Hüküm ve Koşullar",
+    termsLabelB: "'ı okudum ve kabul ediyorum",
+    privacyLabelA: 'Kişisel Verilerin Korunması',
+    privacyLabelB: 'hakkındaki bilgilendirmeyi okudum ve kabul ediyorum',
+  },
+  de: {
+    title: 'Privates Dokumentenformular',
+    heading: 'Dokumenten- und digitale Signatur',
+    firstName: 'Vorname',
+    lastName: 'Nachname',
+    birthDate: 'Geburtsdatum',
+    nationality: 'Staatsangehörigkeit',
+    birthPlace: 'Geburtsort',
+    passportNo: 'Passnummer',
+    city: 'Stadt',
+    country: 'Land',
+    phone: 'Telefon',
+    email: 'E-Mail',
+    message: 'Zusätzliche Notiz',
+    passportFile: 'Passkopie (PDF/JPG/PNG)',
+    agbSign: 'Ich habe die AGB gelesen und bestätige sie (digitale Signatur)',
+    clearSign: 'Signatur löschen',
+    submit: 'Absenden',
+    sending: 'Wird gesendet...',
+    success: 'Formular erfolgreich gesendet.',
+    error: 'Fehler beim Senden des Formulars.',
+    requiredSign: 'Bitte unterschreiben Sie das AGB-Feld.',
+    termsLabelA: 'Allgemeinen Geschäftsbedingungen',
+    termsLabelB: ' gelesen und akzeptiere sie',
+    privacyLabelA: 'Datenschutz',
+    privacyLabelB: ' gelesen und akzeptiere die Informationen',
+  },
+  en: {
+    title: 'Private Document Form',
+    heading: 'Documents and Digital Signature',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    birthDate: 'Birth Date',
+    nationality: 'Nationality',
+    birthPlace: 'Birth Place',
+    passportNo: 'Passport Number',
+    city: 'City',
+    country: 'Country',
+    phone: 'Phone',
+    email: 'Email',
+    message: 'Additional Note',
+    passportFile: 'Passport Copy (PDF/JPG/PNG)',
+    agbSign: 'I read and approve the terms (digital signature)',
+    clearSign: 'Clear signature',
+    submit: 'Submit',
+    sending: 'Submitting...',
+    success: 'Form submitted successfully.',
+    error: 'Error while submitting form.',
+    requiredSign: 'Please sign the terms field.',
+    termsLabelA: 'General Terms and Conditions',
+    termsLabelB: ' have been read and accepted',
+    privacyLabelA: 'Personal Data Protection',
+    privacyLabelB: ' information has been read and accepted',
+  },
+  es: {
+    title: 'Formulario Privado de Documentos',
+    heading: 'Documentos y Firma Digital',
+    firstName: 'Nombre',
+    lastName: 'Apellido',
+    birthDate: 'Fecha de Nacimiento',
+    nationality: 'Nacionalidad',
+    birthPlace: 'Lugar de Nacimiento',
+    passportNo: 'Número de Pasaporte',
+    city: 'Ciudad',
+    country: 'País',
+    phone: 'Teléfono',
+    email: 'Correo',
+    message: 'Nota adicional',
+    passportFile: 'Copia de Pasaporte (PDF/JPG/PNG)',
+    agbSign: 'He leído y apruebo los términos (firma digital)',
+    clearSign: 'Borrar firma',
+    submit: 'Enviar',
+    sending: 'Enviando...',
+    success: 'Formulario enviado correctamente.',
+    error: 'Error al enviar el formulario.',
+    requiredSign: 'Firme el campo de términos.',
+    termsLabelA: 'Términos y Condiciones Generales',
+    termsLabelB: ' leídos y aceptados',
+    privacyLabelA: 'Protección de datos personales',
+    privacyLabelB: ' leída y aceptada',
+  },
+}[lang];
+---
+
+<MainLayout title={`${copy.title} - Campus German`} lang={lang} hideHeader={true} hideFooter={true} robots="noindex,nofollow,noarchive,nosnippet,noimageindex">
+  <div class="qx-page-bg">
+    <section class="qx" id="pwRoot">
+      <aside class="qx-aside" aria-hidden="true">
+        <div class="qx-aside-ornament" aria-hidden="true"></div>
+        <div class="qx-aside-brand" aria-hidden="true">
+          <img src="/Campusgerman.png" alt="" width="80" height="80" loading="lazy" decoding="async" />
+        </div>
+      </aside>
+
+      <div class="qx-body">
+        <div class="qx-lead">
+          <p class="qx-lead-kicker">{copy.heading}</p>
+        </div>
+        <div class="qx-line" aria-hidden="true"><span class="qx-line-fill" style="transform: scaleX(1);"></span></div>
+
+        <form id="private-doc-form" class="qx-form" data-webhook={webhook}>
+        <input type="hidden" name="formType" value="private-documents-form" />
+        <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
+        <input type="hidden" name="lang" value={lang} />
+        <input type="hidden" name="digitalSignature" id="digital-signature-data" />
+
+          <div class="pw-viewport">
+            <div class="pw-panel is-current qx-scene qx-scene--send" data-panel="1">
+              <div class="qx-stage-shell">
+                <div class="qx-fields qx-fields--grid private-grid">
+                  <label><span>{copy.firstName}</span><input type="text" name="first_name" required /></label>
+                  <label><span>{copy.lastName}</span><input type="text" name="last_name" required /></label>
+                  <label><span>{copy.birthDate}</span><input type="date" name="birth_date" required /></label>
+                  <label><span>{copy.nationality}</span><input type="text" name="nationality" required /></label>
+                  <label><span>{copy.birthPlace}</span><input type="text" name="birth_place" /></label>
+                  <label><span>{copy.passportNo}</span><input type="text" name="passport_no" required /></label>
+                  <label><span>{copy.city}</span><input type="text" name="city" required /></label>
+                  <label><span>{copy.country}</span><input type="text" name="country" required /></label>
+                  <label><span>{copy.phone}</span><input type="tel" name="phone" required /></label>
+                  <label><span>{copy.email}</span><input type="email" name="email" required /></label>
+                  <label class="private-full"><span>{copy.passportFile}</span><input type="file" name="passport_copy" id="passport-copy" accept=".pdf,.jpg,.jpeg,.png,.webp" required /></label>
+                  <label class="private-full"><span>{copy.message}</span><textarea name="message" rows="4"></textarea></label>
+                </div>
+
+                <div class="private-sign">
+                  <p>{copy.agbSign} *</p>
+                  <canvas id="signature-pad" width="900" height="220"></canvas>
+                  <button type="button" id="clear-signature">{copy.clearSign}</button>
+                </div>
+
+                <div class="private-checks">
+                  <label>
+                    <input type="checkbox" name="terms-accepted" required />
+                    <span><a href={termsPath} target="_blank" rel="noopener noreferrer">{copy.termsLabelA}</a>{copy.termsLabelB} *</span>
+                  </label>
+                  <label>
+                    <input type="checkbox" name="privacy-accepted" required />
+                    <span><a href={privacyPath} target="_blank" rel="noopener noreferrer">{copy.privacyLabelA}</a>{copy.privacyLabelB} *</span>
+                  </label>
+                </div>
+
+                <button type="submit" id="submit-private-form" class="qx-send">{copy.submit}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <style>
+    .qx-form { min-height: auto; }
+    .pw-viewport { min-height: 0; height: auto; }
+    .pw-panel {
+      position: static;
+      inset: auto;
+      overflow: visible;
+      padding: 0;
+    }
+    .pw-panel.is-current { opacity: 1; visibility: visible; }
+    .private-grid { gap: 0.85rem 1rem; max-width: none; }
+    .private-grid.private-grid label { min-width: 0; }
+    .private-full { grid-column: 1 / -1; }
+    .private-sign { margin-top: 0.9rem; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 12px; background: #fff; }
+    .private-sign p { margin: 0 0 0.55rem; font-size: 0.82rem; font-weight: 700; color: #334155; }
+    #signature-pad { width: 100%; height: 220px; border: 1px dashed #94a3b8; border-radius: 10px; background: #fff; touch-action: none; }
+    #clear-signature { margin-top: 0.5rem; border: 1px solid #cbd5e1; background: #fff; color: #334155; border-radius: 10px; padding: 0.45rem 0.75rem; font-weight: 700; cursor: pointer; }
+    .private-checks { margin-top: 0.8rem; display: grid; gap: 0.5rem; }
+    .private-checks label { display: flex; gap: 0.5rem; align-items: flex-start; font-size: 0.86rem; color: #334155; }
+    .private-checks a { color: #1d4ed8; text-decoration: none; }
+    .private-checks a:hover { text-decoration: underline; }
+    @media (max-width: 560px) { .private-grid { grid-template-columns: 1fr; } }
+  </style>
+
+  <script define:vars={{ copy }}>
+    const form = document.getElementById('private-doc-form');
+    const canvas = document.getElementById('signature-pad');
+    const clearBtn = document.getElementById('clear-signature');
+    const signData = document.getElementById('digital-signature-data');
+    const submitBtn = document.getElementById('submit-private-form');
+    if (!form || !canvas || !clearBtn || !signData || !submitBtn) {
+      throw new Error('Private form elements not found');
+    }
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('Canvas context unavailable');
+    let drawing = false;
+    let hasSignature = false;
+
+    function getPoint(e) {
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches?.[0];
+      const clientX = touch ? touch.clientX : e.clientX;
+      const clientY = touch ? touch.clientY : e.clientY;
+      return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+    function startDraw(e) {
+      drawing = true;
+      const p = getPoint(e);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      e.preventDefault();
+    }
+    function draw(e) {
+      if (!drawing) return;
+      const p = getPoint(e);
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      hasSignature = true;
+      e.preventDefault();
+    }
+    function endDraw() { drawing = false; }
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', endDraw);
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    window.addEventListener('touchend', endDraw);
+    clearBtn.addEventListener('click', () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hasSignature = false;
+      signData.value = '';
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!hasSignature) {
+        alert(copy.requiredSign);
+        return;
+      }
+      signData.value = canvas.toDataURL('image/png');
+      submitBtn.disabled = true;
+      submitBtn.textContent = copy.sending;
+      try {
+        const fd = new FormData(form);
+        const res = await fetch(form.dataset.webhook, { method: 'POST', body: fd });
+        if (!res.ok) throw new Error('request_failed');
+        alert(copy.success);
+        form.reset();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        hasSignature = false;
+      } catch {
+        alert(copy.error);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = copy.submit;
+      }
+    });
+  </script>
+</MainLayout>
+

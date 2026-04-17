@@ -4,6 +4,7 @@ import '../../styles/pages/buchung.css';
 import { coursePricing } from '../../data/coursePricing.ts';
 import { VALID_COUPONS } from '../../data/coupons.ts';
 import { getStartDateOptionsMonthYear } from '../../utils/coursePricingHelper';
+import { getDatenschutzPath, getImpressumPath } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
     return [
@@ -18,6 +19,8 @@ const { lang } = Astro.params;
 const pricingData = coursePricing[lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en')];
 const pricingLang = lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en');
 const startDateOptions = getStartDateOptionsMonthYear(lang as 'tr' | 'de' | 'en' | 'es');
+const termsPath = `/${lang}/${getImpressumPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
+const privacyPath = `/${lang}/${getDatenschutzPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
 
 // Translations
 const t = {
@@ -54,7 +57,7 @@ const t = {
         bundlePromoInfoB1C1:
             "B1–C1 kampanya paketi seçildi: Kurs ücreti, yoğun program tipiniz ve toplam haftaya göre kademeli fiyat tablosundan hesaplanır (sabit paket tutarı yerine).",
         bundlePromoInfoPathway:
-            "University Pathway kampanya paketi: özel toplam 5.990 €.",
+            "Bremenlilere özel teklif aktif: seçtiğiniz her 4 haftalık kur 440 € olarak hesaplanır.",
         bundleDiscountApplied: " bundle indirimi uygulandı",
         bundleDiscountLabel: "Bundle indirimi",
         totalWeeksInfo: "Toplam {n} hafta",
@@ -249,7 +252,7 @@ const t = {
         bundlePromoInfoB1C1:
             "Aktionspaket B1–C1: Der Kursbetrag wird nach Intensivtyp und Gesamtwochen gestaffelt berechnet (kein fester Pauschalpreis).",
         bundlePromoInfoPathway:
-            "University Pathway Aktionspaket: Gesamt 5.990 €.",
+            "Bremer Sonderangebot aktiv: Jede gewählte 4‑Wochen‑Stufe wird mit 440 € berechnet.",
         bundleDiscountApplied: " Bundle-Rabatt angewendet",
         bundleDiscountLabel: "Bundle-Rabatt",
         totalWeeksInfo: "Gesamt {n} Wochen",
@@ -454,7 +457,7 @@ const t = {
         bundlePromoInfoB1C1:
             "Promotional B1–C1 track: the course fee is calculated from the tiered price table using your intensive type and total weeks (not a fixed package lump sum).",
         bundlePromoInfoPathway:
-            "University Pathway promotional package: total €5,990.",
+            "Bremen special offer is active: each selected 4-week module is priced at €440.",
         bundleDiscountApplied: " bundle discount applied",
         bundleDiscountLabel: "Bundle discount",
         totalWeeksInfo: "Total {n} weeks",
@@ -659,7 +662,7 @@ const t = {
         bundlePromoInfoB1C1:
             "Paquete promocional B1–C1: la cuota del curso se calcula por tramos según el tipo intensivo y las semanas totales (no un precio fijo de paquete).",
         bundlePromoInfoPathway:
-            "Paquete University Pathway: total 5.990 €.",
+            "Oferta especial Bremen activa: cada módulo de 4 semanas seleccionado se calcula como 440 €.",
         bundleDiscountApplied: " descuento bundle aplicado",
         bundleDiscountLabel: "Descuento bundle",
         totalWeeksInfo: "Total {n} semanas",
@@ -834,16 +837,16 @@ const t = {
 };
 
 const pathwayBundlePrefillMap = {
-    tr: 'Merhaba, Academic University Pathway (Bremen Bundle) kampanya paketi ile ilgileniyorum (5.990 €).',
-    de: 'Hallo, ich interessiere mich für das Academic University Pathway (Bremen-Bundle) Aktionspaket (5.990 €).',
-    en: 'Hello, I am interested in the Academic University Pathway (Bremen Bundle) promotional package (€5,990).',
-    es: 'Hola, me interesa el paquete promocional Academic University Pathway (Bremen Bundle) (5.990 €).',
+    tr: 'Merhaba, Bremenlilere özel teklif ile ilgileniyorum (her 4 haftalık kur 440 €).',
+    de: 'Hallo, ich interessiere mich für das Bremer Sonderangebot (jede 4‑Wochen‑Stufe 440 €).',
+    en: 'Hello, I am interested in the Bremen special offer (every 4-week module €440).',
+    es: 'Hola, me interesa la oferta especial para Bremen (cada módulo de 4 semanas 440 €).',
 };
 const pathwayBundleCourseLabelMap = {
-    tr: 'Academic University Pathway (kampanya paketi)',
-    de: 'Academic University Pathway (Aktionspaket)',
-    en: 'Academic University Pathway (promotional package)',
-    es: 'Academic University Pathway (paquete promocional)',
+    tr: 'Bremenlilere özel teklif (4 hafta 440 €)',
+    de: 'Bremer Sonderangebot (4 Wochen 440 €)',
+    en: 'Bremen special offer (4 weeks €440)',
+    es: 'Oferta especial Bremen (4 semanas 440 €)',
 };
 const pathwayBundlePrefill = pathwayBundlePrefillMap[lang as keyof typeof pathwayBundlePrefillMap] ?? pathwayBundlePrefillMap.en;
 const pathwayBundleCourseLabel = pathwayBundleCourseLabelMap[lang as keyof typeof pathwayBundleCourseLabelMap] ?? pathwayBundleCourseLabelMap.en;
@@ -895,7 +898,7 @@ const bundleNearHintCopy = {
             <div class="booking-form-container">
                 <!-- Main Form Section -->
                 <div class="booking-form-main">
-                    <!-- Progress Steps (4 steps) -->
+                    <!-- Progress Steps (3 steps) -->
                     <div class="form-progress">
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: 25%"></div>
@@ -911,10 +914,6 @@ const bundleNearHintCopy = {
                             </div>
                             <div class="step-indicator" data-step="3">
                                 <span class="step-number">3</span>
-                                <span class="step-label">{translations.personalInfo}</span>
-                            </div>
-                            <div class="step-indicator" data-step="4">
-                                <span class="step-number">4</span>
                                 <span class="step-label">{translations.step4}</span>
                             </div>
                         </div>
@@ -983,10 +982,6 @@ const bundleNearHintCopy = {
                                                     <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="c1"><span class="option-btn-text">C1</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
                                                     <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="telc-prep"><span class="option-btn-text">{translations.telcPrepLabel}</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
                                                     <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="short-term"><span class="option-btn-text">{translations.shortTermLabel}</span><span class="option-btn-sublabel">{translations.shortTermSublabel}</span></label>
-                                                    <label class="option-btn">
-                                                        <input type="checkbox" id="pathway-bundle-quick-toggle" name="pathway-bundle-quick-toggle" value="pathway">
-                                                        <span class="option-btn-text">University Pathway</span>
-                                                    </label>
                                                 </div>
                                             </div>
                                             <div id="course-camps-block" class="course-options-group" style="display: none;">
@@ -1107,49 +1102,8 @@ const bundleNearHintCopy = {
                                     </div>
                                 </div>
 
-                                <!-- Step 3: Personal -->
+                                <!-- Step 3: Final -->
                                 <div class="form-step" data-step="3">
-                                    <div class="step-header">
-                                        <h2>{translations.personalInfo}</h2>
-                                        <p>{translations.personalInfoDesc}</p>
-                                    </div>
-                                    <div class="compact-section-card">
-                                        <h3 class="compact-section-title">{translations.personalInfo}</h3>
-                                        <div class="form-grid compact-grid">
-                                            <div class="form-group">
-                                                <label for="birth-date">{translations.birthDate}</label>
-                                                <input type="date" id="birth-date" name="birth_date">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="nationality">{translations.nationality}</label>
-                                                <input type="text" id="nationality" name="nationality" placeholder={translations.nationalityPlaceholder}>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="first-name">{translations.firstName} *</label>
-                                                <input type="text" id="first-name" name="first_name" required placeholder={translations.firstNamePlaceholder}>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="last-name">{translations.lastName} *</label>
-                                                <input type="text" id="last-name" name="last_name" required placeholder={translations.lastNamePlaceholder}>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="birth-place">{translations.birthPlace}</label>
-                                                <input type="text" id="birth-place" name="birth_place" placeholder={translations.birthPlacePlaceholder}>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="passport-no">{translations.passportNumber}</label>
-                                                <input type="text" id="passport-no" name="passport_no" placeholder={translations.passportPlaceholder}>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-navigation">
-                                        <button type="button" class="btn-prev">{translations.back}</button>
-                                        <button type="button" class="btn-next">{translations.continueBtn}</button>
-                                    </div>
-                                </div>
-
-                                <!-- Step 4: Final -->
-                                <div class="form-step" data-step="4">
                                     <div class="step-header">
                                         <h2>{translations.step4}</h2>
                                         <p>{translations.requestDesc}</p>
@@ -1157,13 +1111,13 @@ const bundleNearHintCopy = {
                                     <div class="compact-section-card">
                                         <h3 class="compact-section-title">{lang === 'tr' ? 'Adres' : translations.addressLine}</h3>
                                         <div class="form-grid compact-grid">
-                                            <div class="form-group full-width">
-                                                <label for="address-line">{translations.addressLine}</label>
-                                                <input type="text" id="address-line" name="address_line" placeholder={translations.addressLinePlaceholder}>
+                                            <div class="form-group">
+                                                <label for="first-name">{translations.firstName} *</label>
+                                                <input type="text" id="first-name" name="first_name" required placeholder={translations.firstNamePlaceholder}>
                                             </div>
                                             <div class="form-group">
-                                                <label for="postal-code">{translations.postalCode}</label>
-                                                <input type="text" id="postal-code" name="postal_code" placeholder={translations.postalCodePlaceholder}>
+                                                <label for="last-name">{translations.lastName} *</label>
+                                                <input type="text" id="last-name" name="last_name" required placeholder={translations.lastNamePlaceholder}>
                                             </div>
                                             <div class="form-group">
                                                 <label for="city">{translations.cityLabel} *</label>
@@ -1192,12 +1146,32 @@ const bundleNearHintCopy = {
                                             <label class="checkbox-label">
                                                 <input type="checkbox" name="terms-accepted" value="yes" required>
                                                 <span class="checkbox-custom"></span>
-                                                <span class="checkbox-text">{translations.termsAccepted} *</span>
+                                                <span class="checkbox-text">
+                                                    {lang === 'tr' ? (
+                                                        <><a href={termsPath} target="_blank" rel="noopener noreferrer">Genel Hüküm ve Koşullar</a>'ı okudum ve kabul ediyorum *</>
+                                                    ) : lang === 'de' ? (
+                                                        <>Ich habe die <a href={termsPath} target="_blank" rel="noopener noreferrer">Allgemeinen Geschäftsbedingungen</a> gelesen und akzeptiere sie *</>
+                                                    ) : lang === 'es' ? (
+                                                        <>He leído y acepto los <a href={termsPath} target="_blank" rel="noopener noreferrer">Términos y Condiciones Generales</a> *</>
+                                                    ) : (
+                                                        <>I have read and accept the <a href={termsPath} target="_blank" rel="noopener noreferrer">General Terms and Conditions</a> *</>
+                                                    )}
+                                                </span>
                                             </label>
                                             <label class="checkbox-label">
                                                 <input type="checkbox" name="privacy-accepted" value="yes" required>
                                                 <span class="checkbox-custom"></span>
-                                                <span class="checkbox-text">{translations.privacyAccepted} *</span>
+                                                <span class="checkbox-text">
+                                                    {lang === 'tr' ? (
+                                                        <><a href={privacyPath} target="_blank" rel="noopener noreferrer">Kişisel Verilerin Korunması</a> hakkındaki bilgilendirmeyi okudum ve kabul ediyorum *</>
+                                                    ) : lang === 'de' ? (
+                                                        <>Ich habe die Information zum <a href={privacyPath} target="_blank" rel="noopener noreferrer">Datenschutz</a> gelesen und akzeptiere sie *</>
+                                                    ) : lang === 'es' ? (
+                                                        <>He leído y acepto la información sobre <a href={privacyPath} target="_blank" rel="noopener noreferrer">Protección de datos personales</a> *</>
+                                                    ) : (
+                                                        <>I have read and accept the information about <a href={privacyPath} target="_blank" rel="noopener noreferrer">Personal Data Protection</a> *</>
+                                                    )}
+                                                </span>
                                             </label>
                                         </div>
                                     </div>
@@ -1348,7 +1322,7 @@ const bundleNearHintCopy = {
         document.addEventListener('DOMContentLoaded', function() {
             // ===== STEP NAVIGATION =====
             let currentStep = 1;
-            const totalSteps = 4;
+            const totalSteps = 3;
             const formSteps = document.querySelectorAll('.form-step');
             const stepIndicators = document.querySelectorAll('.step-indicator');
             const progressFill = document.querySelector('.progress-fill');
@@ -1387,6 +1361,7 @@ const bundleNearHintCopy = {
 
             let promoBundleId = null;
             let bundlePresetPending = false;
+            let bremenBundleFromQuery = false;
             /** Sadece University Pathway: sabit 5.990 €. A2–C1 / B1–C1 izleri kademeli fiyatla hesaplanır; promo-bundle alanı yine CRM için a2c1|b1c1 yazılır. */
             function resolvePromoBundlePrice() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
@@ -1394,21 +1369,41 @@ const bundleNearHintCopy = {
                 const levels = checked.filter(c => ['a1', 'a2', 'b1', 'b2', 'c1'].includes(c));
                 const hasTelc = checked.includes('telc-prep');
                 const hasShort = checked.includes('short-term');
-                const pathwayToggle = document.getElementById('pathway-bundle-quick-toggle');
                 if (program !== 'intensive' && program !== 'online') return null;
-                if (pathwayToggle?.checked && levels.length === 0 && !hasTelc && !hasShort) return 5990;
+                if (bremenBundleFromQuery && promoBundleId === 'bremen' && !hasTelc && !hasShort && levels.length > 0) {
+                    // Bremen kampanyası: her seçilen kur (8 hafta) sabit 880 €
+                    return levels.length * 880;
+                }
                 return null;
+            }
+            function enforceBremenBundleCourseRules() {
+                if (!(bremenBundleFromQuery && promoBundleId === 'bremen')) return;
+                const telcPrep = document.querySelector('[name="course-selection"][value="telc-prep"]');
+                const shortTerm = document.querySelector('[name="course-selection"][value="short-term"]');
+                if (telcPrep) {
+                    telcPrep.checked = false;
+                    telcPrep.disabled = true;
+                }
+                if (shortTerm) {
+                    shortTerm.checked = false;
+                    shortTerm.disabled = true;
+                }
+            }
+            function clearBremenBundleCourseRules() {
+                const telcPrep = document.querySelector('[name="course-selection"][value="telc-prep"]');
+                const shortTerm = document.querySelector('[name="course-selection"][value="short-term"]');
+                if (telcPrep) telcPrep.disabled = false;
+                if (shortTerm) shortTerm.disabled = false;
             }
             /** Gizli alan + etiket: pathway yalnızca geçerli pathway modunda; aksi halde tam A2–C1 / B1–C1 eşleşmesi. */
             function currentPromoBundleSlug() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
                 if (program !== 'intensive' && program !== 'online') return '';
-                const pathwayToggle = document.getElementById('pathway-bundle-quick-toggle');
                 const checked = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(c => c.value);
                 const hasTelc = checked.includes('telc-prep');
                 const hasShort = checked.includes('short-term');
                 const levels = checked.filter(c => ['a1', 'a2', 'b1', 'b2', 'c1'].includes(c));
-                if (pathwayToggle?.checked && levels.length === 0 && !hasTelc && !hasShort) return 'pathway';
+                if (bremenBundleFromQuery && promoBundleId === 'bremen' && !hasTelc && !hasShort && levels.length > 0) return 'bremen';
                 if (hasTelc || hasShort) return '';
                 const set = new Set(levels);
                 if (set.size === 4 && ['a2', 'b1', 'b2', 'c1'].every(x => set.has(x))) return 'a2c1';
@@ -1437,9 +1432,11 @@ const bundleNearHintCopy = {
                 }
                 if (program !== 'intensive' && program !== 'online') {
                     document.querySelectorAll('[name="intensive-type"]').forEach(r => { r.checked = false; });
-                    const pathwayToggle = document.getElementById('pathway-bundle-quick-toggle');
-                    if (pathwayToggle) pathwayToggle.checked = false;
+                    const cityInput = document.getElementById('city');
+                    if (cityInput) cityInput.removeAttribute('readonly');
                     promoBundleId = null;
+                    bremenBundleFromQuery = false;
+                    clearBremenBundleCourseRules();
                     syncPromoBundleHidden();
                 }
                 toggleWeeksBlockForShortTerm();
@@ -1543,12 +1540,11 @@ const bundleNearHintCopy = {
                 const box = courseBundleInfobox;
                 const textEl = document.getElementById('course-bundle-infobox-text');
                 if (!box || !textEl) return;
-                const pathwayToggleEl = document.getElementById('pathway-bundle-quick-toggle');
                 const rp = resolvePromoBundlePrice();
                 const bundleSlug = currentPromoBundleSlug();
                 const show =
                     (program === 'intensive' || program === 'online') &&
-                    (checked.length > 0 || pathwayToggleEl?.checked);
+                    checked.length > 0;
                 box.style.display = show ? 'flex' : 'none';
                 if (!show) {
                     box.classList.remove('form-infobox--bundle');
@@ -1559,7 +1555,7 @@ const bundleNearHintCopy = {
                 const msgTotalWeeks = displayWeeks === 1 ? (box.dataset.msgTotalWeekOne || 'Total 1 week') : (box.dataset.msgTotalWeeks || 'Total {n} weeks').replace('{n}', String(displayWeeks));
                 let baseMsg = msgInvite;
                 let useBundleStyle = false;
-                if (rp === 5990) {
+                if (bundleSlug === 'bremen') {
                     baseMsg = bundlePromoInfoboxTexts.pathway || '';
                     useBundleStyle = true;
                 } else if (bundleSlug === 'a2c1') {
@@ -2051,7 +2047,7 @@ const bundleNearHintCopy = {
                     const checkedCourses = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(c => c.value);
                     const courseLevelsBlock = document.getElementById('course-levels-block');
                     const courseCampsBlock = document.getElementById('course-camps-block');
-                    const pathwayBundleOk = (program === 'intensive' || program === 'online') && resolvePromoBundlePrice() === 5990;
+                    const pathwayBundleOk = (program === 'intensive' || program === 'online') && currentPromoBundleSlug() === 'bremen';
                     const hasVisibleCourseSelection = (program === 'intensive' || program === 'online') ? (courseLevelsBlock?.offsetParent && (checkedCourses.length > 0 || pathwayBundleOk)) :
                         (program === 'youth-camp') ? (courseCampsBlock?.offsetParent && checkedCourses.length > 0) : false;
                     if (!program) { document.querySelector('[name="program"]')?.closest('.form-group')?.classList.add('error'); isValid = false; } else { document.querySelector('[name="program"]')?.closest('.form-group')?.classList.remove('error'); }
@@ -2103,13 +2099,14 @@ const bundleNearHintCopy = {
             // Program, course-selection, weeks, extras → update price
             document.querySelectorAll('[name="course-selection"]').forEach(function (el) {
                 el.addEventListener('change', function () {
-                    const pathwayToggle = document.getElementById('pathway-bundle-quick-toggle');
-                    if (pathwayToggle?.checked) {
-                        pathwayToggle.checked = false;
-                        if (promoBundleId === 'pathway') {
-                            promoBundleId = null;
-                            syncPromoBundleHidden();
+                    if (promoBundleId === 'bremen' && bremenBundleFromQuery) {
+                        // Bremen bundle açıkken şehir kilidini koru
+                        const cityInput = document.getElementById('city');
+                        if (cityInput) {
+                            cityInput.value = 'Bremen';
+                            cityInput.setAttribute('readonly', 'readonly');
                         }
+                        enforceBremenBundleCourseRules();
                     }
                     enforceShortTermExclusion();
                     toggleWeeksBlockForShortTerm();
@@ -2231,7 +2228,7 @@ const bundleNearHintCopy = {
                     const programLabel = t[program] || program;
                     let labelSuffix = checkedCourses.length ? ' (' + checkedCourses.map(c => c.toUpperCase().replace(/-/g, ' ')).join(', ') + ')' : '';
                     if (program === 'intensive' || program === 'online') {
-                        if (activeBundleSlug === 'pathway' && promoCoursePrice === 5990) {
+                        if (activeBundleSlug === 'bremen' && promoCoursePrice != null) {
                             labelSuffix = ' — ' + pathwayBundleCourseLabel;
                         } else if (activeBundleSlug === 'a2c1') {
                             const shortTermWeeks = hasShortTerm ? (parseInt(weeks, 10) || 0) : 0;
@@ -2537,6 +2534,8 @@ const bundleNearHintCopy = {
                             }
                             bookingForm.reset();
                             promoBundleId = null;
+                            const cityInput = document.getElementById('city');
+                            if (cityInput) cityInput.removeAttribute('readonly');
                             syncPromoBundleHidden();
                             showStep(1);
                             if (typeof toggleProgramExtras === 'function') toggleProgramExtras();
@@ -2561,7 +2560,8 @@ const bundleNearHintCopy = {
             }
 
             function applyBundleFromQuery(bundleKey) {
-                if (!['a2c1', 'b1c1', 'pathway'].includes(bundleKey)) return;
+                if (!['a2c1', 'b1c1', 'bremen'].includes(bundleKey)) return;
+                bremenBundleFromQuery = bundleKey === 'bremen';
                 promoBundleId = bundleKey;
                 bundlePresetPending = true;
                 document.querySelectorAll('[name="course-selection"]').forEach(cb => { cb.checked = false; });
@@ -2579,32 +2579,34 @@ const bundleNearHintCopy = {
                         const cb = document.querySelector('[name="course-selection"][value="' + v + '"]');
                         if (cb) cb.checked = true;
                     });
+                } else if (bundleKey === 'bremen') {
+                    const cb = document.querySelector('[name="course-selection"][value="a1"]');
+                    if (cb) cb.checked = true;
+                    bremenBundleFromQuery = true;
                 }
                 toggleProgramExtras();
                 bundlePresetPending = false;
-                if (bundleKey === 'pathway') {
+                if (bundleKey === 'bremen') {
                     const msgEl = document.getElementById('message');
                     if (msgEl && typeof pathwayBundlePrefill !== 'undefined') msgEl.value = pathwayBundlePrefill;
                 }
-                const pathwayToggle = document.getElementById('pathway-bundle-quick-toggle');
-                if (pathwayToggle) pathwayToggle.checked = bundleKey === 'pathway';
+                const cityInput = document.getElementById('city');
+                if (cityInput) {
+                    if (bundleKey === 'bremen') {
+                        cityInput.value = 'Bremen';
+                        cityInput.setAttribute('readonly', 'readonly');
+                    } else {
+                        cityInput.removeAttribute('readonly');
+                    }
+                }
+                if (bundleKey === 'bremen') enforceBremenBundleCourseRules();
+                else clearBremenBundleCourseRules();
                 enforceShortTermExclusion();
                 reorderCourseSelectionChain();
                 toggleWeeksBlockForShortTerm();
                 toggleBundleInfobox();
                 updatePrice();
             }
-            const pathwayQuickToggle = document.getElementById('pathway-bundle-quick-toggle');
-            pathwayQuickToggle?.addEventListener('change', function () {
-                if (this.checked) {
-                    applyBundleFromQuery('pathway');
-                } else if (promoBundleId === 'pathway') {
-                    promoBundleId = null;
-                    syncPromoBundleHidden();
-                    toggleBundleInfobox();
-                    updatePrice();
-                }
-            });
 
             // Initialize
             const bundleParam = new URLSearchParams(window.location.search).get('bundle');

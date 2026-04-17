@@ -20,7 +20,6 @@ const t: Record<string, {
   name: string;
   email: string;
   phone: string;
-  date: string;
   city: string;
   message: string;
   submit: string;
@@ -35,7 +34,6 @@ const t: Record<string, {
     name: 'Adınız Soyadınız',
     email: 'E-posta Adresiniz',
     phone: 'Telefon Numaranız',
-    date: 'Tercih ettiğiniz tarih',
     city: 'Bulunduğunuz şehir',
     message: 'Mesajınız (Opsiyonel)',
     submit: 'Bilgi Al',
@@ -50,7 +48,6 @@ const t: Record<string, {
     name: 'Name, Nachname',
     email: 'E-Mail',
     phone: 'Telefon',
-    date: 'Bevorzugtes Datum',
     city: 'Ihre Stadt',
     message: 'Nachricht (optional)',
     submit: 'Information anfragen',
@@ -65,7 +62,6 @@ const t: Record<string, {
     name: 'Your Name',
     email: 'Your Email',
     phone: 'Your Phone Number',
-    date: 'Preferred date',
     city: 'Your city',
     message: 'Your Message (Optional)',
     submit: 'Get Information',
@@ -80,7 +76,6 @@ const t: Record<string, {
     name: 'Tu Nombre',
     email: 'Tu Correo Electrónico',
     phone: 'Tu Número de Teléfono',
-    date: 'Fecha preferida',
     city: 'Tu ciudad',
     message: 'Tu Mensaje (Opcional)',
     submit: 'Solicitar información',
@@ -96,7 +91,6 @@ const t: Record<string, {
 const msg = t[lang] ?? t.tr;
 const title = formTitle ?? msg.submit;
 const subtitle = formSubtitle ?? (lang === 'tr' ? 'Size en uygun programı bulalım' : lang === 'de' ? 'Lassen Sie uns das richtige Programm für Sie finden' : lang === 'es' ? 'Encontremos el programa adecuado para ti' : 'Let us find the right program for you');
-const minDate = new Date().toISOString().split('T')[0];
 ---
 
 <div class="bilgi-al-form-wrapper">
@@ -129,10 +123,6 @@ const minDate = new Date().toISOString().split('T')[0];
     <div class="form-field">
       <i class="fas fa-phone"></i>
       <input type="tel" name="phone" placeholder={msg.phone} required autocomplete="tel" />
-    </div>
-    <div class="form-field">
-      <i class="fas fa-calendar-alt"></i>
-      <input type="date" name="start-date" required min={minDate} aria-label={msg.date} />
     </div>
     <div class="form-field">
       <i class="fas fa-map-marker-alt"></i>

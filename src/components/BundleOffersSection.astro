@@ -36,10 +36,10 @@ const t = {
     card2ListStrikeTotal: '4.560 €',
     card2DiscountedTotal: '2.880 €',
     bundleLabel2: 'Kampanyalı paket B1–C1',
-    card3Title: 'Academic University Pathway',
-    card3Subtitle: 'Bremen Bundle',
+    card3Title: 'Bremenlilere Özel Teklif',
+    card3Subtitle: 'Yerel Kampanya',
     card3Intro:
-      'Uluslararası öğrenciler için vize uyumlu, Almanya’da lisans veya yüksek lisans hedefleyenler için kapsamlı paket.',
+      'Bremen şehrinde yaşayan öğrenciler için özel fiyat: her 4 haftalık kur sabit 440 €.',
     sem1: 'Dönem 1 (A1–B1)',
     sem1Detail: '24 hafta Intensive (25 UE/hafta)',
     sem2: 'Dönem 2 (B2–C1 + hazırlık)',
@@ -90,10 +90,10 @@ const t = {
     card2ListStrikeTotal: '4.560 €',
     card2DiscountedTotal: '2.880 €',
     bundleLabel2: 'Aktionspaket B1–C1',
-    card3Title: 'Academic University Pathway',
-    card3Subtitle: 'Bremen Bundle',
+    card3Title: 'Spezialangebot für Bremer',
+    card3Subtitle: 'Lokale Aktion',
     card3Intro:
-      'Visakonformes Gesamtpaket für internationale Studierende mit Bachelor- oder Masterziel an deutschen Hochschulen.',
+      'Sonderpreis für Teilnehmende mit Wohnsitz in Bremen: jede 4‑Wochen‑Stufe kostet pauschal 440 €.',
     sem1: 'Semester 1 (A1–B1)',
     sem1Detail: '24 Wochen Intensive (25 UE/Woche)',
     sem2: 'Semester 2 (B2–C1 + Vorb.)',
@@ -144,10 +144,10 @@ const t = {
     card2ListStrikeTotal: '4.560 €',
     card2DiscountedTotal: '2.880 €',
     bundleLabel2: 'Promotional B1–C1 package',
-    card3Title: 'Academic University Pathway',
-    card3Subtitle: 'The “Bremen Bundle”',
+    card3Title: 'Special Offer for Bremen Residents',
+    card3Subtitle: 'Local Campaign',
     card3Intro:
-      'A comprehensive, visa-compliant package for international students targeting undergraduate or graduate degrees at German universities.',
+      'Special local pricing for students living in Bremen: each 4-week course module is fixed at €440.',
     sem1: 'Semester 1 (A1–B1)',
     sem1Detail: '24 weeks of Intensive (25 teaching units/week)',
     sem2: 'Semester 2 (B2–C1 + prep.)',
@@ -198,10 +198,10 @@ const t = {
     card2ListStrikeTotal: '4.560 €',
     card2DiscountedTotal: '2.880 €',
     bundleLabel2: 'Paquete promocional B1–C1',
-    card3Title: 'Academic University Pathway',
-    card3Subtitle: 'Bremen Bundle',
+    card3Title: 'Oferta especial para residentes de Bremen',
+    card3Subtitle: 'Campaña local',
     card3Intro:
-      'Paquete integral y compatible con visado para estudiantes internacionales que buscan grado o posgrado en universidades alemanas.',
+      'Precio especial para estudiantes que viven en Bremen: cada módulo de 4 semanas cuesta 440 €.',
     sem1: 'Semestre 1 (A1–B1)',
     sem1Detail: '24 semanas Intensive (25 UE/semana)',
     sem2: 'Semestre 2 (B2–C1 + prep.)',
@@ -278,11 +278,11 @@ const bookingSlug = getBookingPath(lang as SupportedLang);
         <p class="bundle-card-text bundle-card-text--compact">{m.card3Intro}</p>
 
         <div class="bundle-simple-prices">
-          <p><span>{m.normalLabel}</span><s>6.990 €</s></p>
-          <p><span>{m.bundleLabel}</span><strong>5.990 €</strong></p>
+          <p><span>{m.normalLabel}</span><s>760 €</s></p>
+          <p><span>{m.bundleLabel}</span><strong>440 €</strong></p>
         </div>
 
-        <a href={`/${lang}/${bookingSlug}?bundle=pathway`} class="bundle-card-cta bundle-card-cta--light bundle-card-cta--buy">{m.ctaBuyNow}</a>
+        <a href={`/${lang}/${bookingSlug}?bundle=bremen`} class="bundle-card-cta bundle-card-cta--light bundle-card-cta--buy">{m.ctaBuyNow}</a>
       </article>
     </div>
   </div>

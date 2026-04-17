@@ -574,11 +574,11 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
             <div class="top-header-left">
                 <span class="top-header-spacer" aria-hidden="true"></span>
             </div>
-            <!-- Orta: Kayıt/Ödeme (booking), Email, WhatsApp, Fiyat ve Tarihler -->
+            <!-- Orta: Fiyat teklifi, Email, WhatsApp, Fiyat ve Tarihler -->
             <div class="top-header-center">
-                <a href={`/${lang}/${bookingPathSegment}`} class="top-header-link">
-                    <i class="fas fa-credit-card"></i>
-                    <span>{t.register}</span>
+                <a href={`/${lang}/${quoteFormSlug}`} class="top-header-link">
+                    <i class="fas fa-file-alt"></i>
+                    <span>{t.getQuote}</span>
                 </a>
                 <span class="top-header-divider"></span>
                 <a href="mailto:info@campusgerman.com" class="top-header-link top-header-email">
@@ -596,11 +596,11 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                     <span>{t.pricesDates}</span>
                 </a>
             </div>
-            <!-- Sağ: Fiyat teklifi (quote) + Dil -->
+            <!-- Sağ: Rezervasyon/Booking (gradient buton) + Dil -->
             <div class="top-header-right">
-                <a href={`/${lang}/${quoteFormSlug}`} class="top-header-register">
-                    <i class="fas fa-file-alt"></i>
-                    <span>{t.getQuote}</span>
+                <a href={`/${lang}/${bookingPathSegment}`} class="top-header-register">
+                    <i class="fas fa-credit-card"></i>
+                    <span>{t.register}</span>
                     <i class="fas fa-arrow-right register-arrow"></i>
                 </a>
                 <div class="top-header-lang">

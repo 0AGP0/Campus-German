@@ -9,3 +9,7 @@ Sitemap: https://campusgerman.com/sitemap.xml
 # Disallow admin or private areas if any
 # Disallow: /admin/
 # Disallow: /private/
+Disallow: /tr/ozel-evrak-formu/
+Disallow: /de/ozel-evrak-formu/
+Disallow: /en/ozel-evrak-formu/
+Disallow: /es/ozel-evrak-formu/
