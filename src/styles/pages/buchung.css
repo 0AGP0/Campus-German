@@ -1344,3 +1344,87 @@
         padding: 10px 12px;
     }
 }
+
+/* Başlangıç tarihi — butonlar */
+.start-date-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+.start-date-btn {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 2px solid var(--color-border-light, #e2e8f0);
+    background: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.start-date-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+.start-date-btn.is-selected {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light, rgba(12, 192, 223, 0.12));
+    color: var(--color-primary-dark, #0e7490);
+}
+.block-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.extras-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: start;
+}
+@media (max-width: 768px) {
+    .extras-two-col {
+        grid-template-columns: 1fr;
+    }
+}
+.option-buttons--stack {
+    flex-direction: column;
+    align-items: stretch;
+}
+.learning-purpose-options {
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+}
+.option-buttons--accommodation-2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 0.5rem 0.65rem;
+    width: 100%;
+}
+.option-buttons--accommodation-2x2 .option-btn {
+    margin: 0;
+    min-height: 2.75rem;
+    align-items: center;
+}
+.booking-select-input,
+.booking-text-input {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 2px solid var(--color-border-light);
+    font-size: 0.95rem;
+    margin-top: 6px;
+}
+.hear-about-extra {
+    margin-top: 12px;
+}
+.hear-about-extra label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}

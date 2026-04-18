@@ -3,7 +3,7 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import '../../styles/pages/buchung.css';
 import { coursePricing } from '../../data/coursePricing.ts';
 import { VALID_COUPONS } from '../../data/coupons.ts';
-import { getStartDateOptionsMonthYear } from '../../utils/coursePricingHelper';
+import { getStartDateOptions } from '../../utils/coursePricingHelper';
 import { getDatenschutzPath, getImpressumPath } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
@@ -18,7 +18,16 @@ export async function getStaticPaths() {
 const { lang } = Astro.params;
 const pricingData = coursePricing[lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en')];
 const pricingLang = lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en');
-const startDateOptions = getStartDateOptionsMonthYear(lang as 'tr' | 'de' | 'en' | 'es');
+const START_DATE_YEAR = 2026;
+const allStartDateOptions = getStartDateOptions(lang as 'tr' | 'de' | 'en' | 'es', START_DATE_YEAR);
+const _today = new Date();
+_today.setHours(0, 0, 0, 0);
+const startDateOptions = allStartDateOptions.filter((opt) => {
+    const [d, m] = opt.value.split('.').map(Number);
+    if (!d || !m) return false;
+    const dt = new Date(START_DATE_YEAR, m - 1, d);
+    return dt >= _today;
+});
 const termsPath = `/${lang}/${getImpressumPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
 const privacyPath = `/${lang}/${getDatenschutzPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
 
@@ -34,6 +43,15 @@ const t = {
         step4: "Son Adım",
         programLabel: "İlgilendiğiniz Program",
         programPlaceholder: "Program seçiniz",
+        learningPurposeLabel: "Dil öğrenmekteki amacınız nedir?",
+        learningPurposeVisa: "Vize için",
+        learningPurposeCareer: "Kariyer için",
+        learningPurposeUni: "Üniversite için",
+        learningPurposeComfort: "Günlük hayat",
+        programAkademik: "Akademik",
+        programPlusAkademik: "Plus akademik",
+        programOnlineLabel: "Online kurs",
+        programYouthCampLabel: "Yaz kampı",
         intensiveAcademic: "Yoğun",
         onlineCourse: "Online Kurs",
         youthCamp: "Yaz Kampı",
@@ -62,7 +80,8 @@ const t = {
         bundleDiscountLabel: "Bundle indirimi",
         totalWeeksInfo: "Toplam {n} hafta",
         totalWeekOne: "Toplam 1 hafta",
-        courseWeeksLabel: "8 hafta",
+        courseWeeksLabel: "4 hafta",
+        courseUnsureLabel: "Emin değilim",
         weeksOption1: "1 - 1 Hafta Demo Kursu",
         weeksOption2: "2 - 2 Hafta Taster Kursu",
         weeksOption4: "4 - Yarı Seviye Kursu",
@@ -83,6 +102,20 @@ const t = {
         examTelcB2: "Telc B2",
         examTelcC1HS: "Telc C1 HS",
         examTestdaf: "TestDaF",
+        opportunityLabel: "Hangi fırsattan yararlanmak istiyorsunuz?",
+        opportunityBremen: "Bremen’de öğrenci fırsatı",
+        opportunityFriend: "Arkadaş indirimi fırsatı",
+        opportunitySaturday: "Ücretsiz Cumartesi konuşma kulübü",
+        opportunityNone: "Yok / henüz bilmiyorum",
+        hearAboutLabel: "Bizi nereden duydunuz?",
+        hearAboutAgency: "Acenta",
+        hearAboutFriend: "Arkadaş",
+        hearAboutGoogle: "Google",
+        hearAboutInstagram: "Instagram / sosyal medya",
+        hearAboutOther: "Diğer",
+        agencyCouponPlaceholder: "Acenta kupon kodu",
+        friendNameLabel: "Arkadaşınızın adı soyadı",
+        friendNamePlaceholder: "Ad Soyad",
         telcPrepLabel: "+ Telc-Prep",
         shortTermLabel: "Short Term",
         shortTermSublabel: "1–24 hafta (6 aya kadar)",
@@ -97,15 +130,16 @@ const t = {
         examTypeTestdafA1A2: "TestDaF A1/A2",
         examTypeTestdafB1B2: "TestDaF B1/B2",
         examTypeTestdafC1C2: "TestDaF C1/C2",
-        visaLabel: "Vizeye ihtiyacınız var mı?",
+        visaLabel: "Vize garantisi ister misiniz?",
         visaYes: "Evet",
         visaNo: "Hayır",
-        visaGuaranteeLabel: "Davet mektubu",
+        visaGuaranteeLabel: "Vize garantisi (+50 €)",
         accommodationLabel: "Konaklama istiyor musunuz?",
-        accommodationSingle: "Tek oda",
-        accommodationDouble: "Çift oda",
+        accommodationSingle: "Tek kişilik yurt",
+        accommodationDouble: "Çift kişilik yurt",
+        accommodationStudio: "Studio daire",
         accommodationNo: "Hayır",
-        accommodationRoomPriceInfo: "Oda ücretleri 70 eurodan başlayan fiyatlar.",
+        accommodationRoomPriceInfo: "Yurt tek kişilik 580 €, çift kişilik 440 €, studio daire 880 € (bilgilendirme; ödeme kayıt sonrası netleşir).",
         airportLabel: "Havaalanı karşılama istiyor musunuz?",
         airportYes: "Evet",
         airportNo: "Hayır",
@@ -163,7 +197,7 @@ const t = {
         airportToStation: "Bremen Havaalanı → Bremen Merkez İstasyonu (100 €)",
         stationToAirport: "Bremen Merkez İstasyonu → Bremen Havaalanı (100 €)",
         visaSupport: "Vize Destek Belgeleri",
-        visaInvitation: "Vize Davet Mektubu (+50 €)",
+        visaInvitation: "Vize garantisi (+50 €)",
         optionalServices: "Ek Hizmetler",
         visaGuaranteePrice: "Davet mektubu (+50 €)",
         airportPickupPrice: "Havaalanı karşılama (100 €)",
@@ -229,6 +263,15 @@ const t = {
         step4: "Letzter Schritt",
         programLabel: "Programm Ihrer Wahl",
         programPlaceholder: "Programm wählen",
+        learningPurposeLabel: "Was ist Ihr Ziel beim Deutschlernen?",
+        learningPurposeVisa: "Fürs Visum",
+        learningPurposeCareer: "Für die Karriere",
+        learningPurposeUni: "Für die Universität",
+        learningPurposeComfort: "Alltag",
+        programAkademik: "Akademisch",
+        programPlusAkademik: "Plus akademisch",
+        programOnlineLabel: "Online-Kurs",
+        programYouthCampLabel: "Sommercamp",
         intensiveAcademic: "Intensiv",
         onlineCourse: "Online-Kurs",
         youthCamp: "Sommercamp",
@@ -257,7 +300,8 @@ const t = {
         bundleDiscountLabel: "Bundle-Rabatt",
         totalWeeksInfo: "Gesamt {n} Wochen",
         totalWeekOne: "Gesamt 1 Woche",
-        courseWeeksLabel: "8 Wochen",
+        courseWeeksLabel: "4 Wochen",
+        courseUnsureLabel: "Weiß ich noch nicht",
         weeksOption1: "1 - 1 Woche Demo-Kurs",
         weeksOption2: "2 - 2 Wochen Taster-Kurs",
         weeksOption4: "4 - Halb-Level-Kurs",
@@ -278,6 +322,20 @@ const t = {
         examTelcB2: "Telc B2",
         examTelcC1HS: "Telc C1 HS",
         examTestdaf: "TestDaF",
+        opportunityLabel: "Welches Angebot möchten Sie nutzen?",
+        opportunityBremen: "Studentenangebot Bremen",
+        opportunityFriend: "Freundes-Rabatt",
+        opportunitySaturday: "Kostenloser Samstag-Sprechclub",
+        opportunityNone: "Keines / weiß noch nicht",
+        hearAboutLabel: "Wo haben Sie von uns erfahren?",
+        hearAboutAgency: "Agentur",
+        hearAboutFriend: "Freund*in",
+        hearAboutGoogle: "Google",
+        hearAboutInstagram: "Instagram / soziale Medien",
+        hearAboutOther: "Sonstiges",
+        agencyCouponPlaceholder: "Agentur-Gutscheincode",
+        friendNameLabel: "Name der Person",
+        friendNamePlaceholder: "Vor- und Nachname",
         telcPrepLabel: "+ Telc-Prep",
         shortTermLabel: "Short Term",
         shortTermSublabel: "1–24 Wochen (bis zu 6 Monaten)",
@@ -292,15 +350,16 @@ const t = {
         examTypeTestdafA1A2: "TestDaF A1/A2",
         examTypeTestdafB1B2: "TestDaF B1/B2",
         examTypeTestdafC1C2: "TestDaF C1/C2",
-        visaLabel: "Benötigen Sie ein Visum?",
+        visaLabel: "Möchten Sie eine Visumsgarantie?",
         visaYes: "Ja",
         visaNo: "Nein",
-        visaGuaranteeLabel: "Einladungsschreiben",
+        visaGuaranteeLabel: "Visumsgarantie (+50 €)",
         accommodationLabel: "Möchten Sie Unterkunft?",
-        accommodationSingle: "Einzelzimmer",
-        accommodationDouble: "Doppelzimmer",
+        accommodationSingle: "Einzelzimmer (Wohnheim)",
+        accommodationDouble: "Doppelzimmer (Wohnheim)",
+        accommodationStudio: "Studio-Wohnung",
         accommodationNo: "Nein",
-        accommodationRoomPriceInfo: "Unterkunftspreise ab 70 Euro.",
+        accommodationRoomPriceInfo: "Orientierung: Einzelzimmer 580 €, Doppelzimmer 440 €, Studio 880 € (Details nach Anmeldung).",
         airportLabel: "Flughafenabholung gewünscht?",
         airportYes: "Ja",
         airportNo: "Nein",
@@ -434,6 +493,15 @@ const t = {
         step4: "Final Step",
         programLabel: "Program of Interest",
         programPlaceholder: "Select program",
+        learningPurposeLabel: "What is your goal in learning German?",
+        learningPurposeVisa: "For a visa",
+        learningPurposeCareer: "For my career",
+        learningPurposeUni: "For university",
+        learningPurposeComfort: "Daily life",
+        programAkademik: "Academic",
+        programPlusAkademik: "Plus academic",
+        programOnlineLabel: "Online course",
+        programYouthCampLabel: "Summer camp",
         intensiveAcademic: "Intensive",
         onlineCourse: "Online Course",
         youthCamp: "Summer Camp",
@@ -462,7 +530,8 @@ const t = {
         bundleDiscountLabel: "Bundle discount",
         totalWeeksInfo: "Total {n} weeks",
         totalWeekOne: "Total 1 week",
-        courseWeeksLabel: "8 weeks",
+        courseWeeksLabel: "4 weeks",
+        courseUnsureLabel: "Not sure yet",
         weeksOption1: "1 - 1 Week Demo Course",
         weeksOption2: "2 - 2 Week Taster Course",
         weeksOption4: "4 - Semi Level Course",
@@ -483,6 +552,20 @@ const t = {
         examTelcB2: "Telc B2",
         examTelcC1HS: "Telc C1 HS",
         examTestdaf: "TestDaF",
+        opportunityLabel: "Which offer would you like to use?",
+        opportunityBremen: "Bremen student offer",
+        opportunityFriend: "Friend discount offer",
+        opportunitySaturday: "Free Saturday conversation club",
+        opportunityNone: "None / not sure yet",
+        hearAboutLabel: "How did you hear about us?",
+        hearAboutAgency: "Agency",
+        hearAboutFriend: "Friend",
+        hearAboutGoogle: "Google",
+        hearAboutInstagram: "Instagram / social media",
+        hearAboutOther: "Other",
+        agencyCouponPlaceholder: "Agency coupon code",
+        friendNameLabel: "Friend's full name",
+        friendNamePlaceholder: "Full name",
         telcPrepLabel: "+ Telc-Prep",
         shortTermLabel: "Short Term",
         shortTermSublabel: "1–24 weeks (up to 6 months)",
@@ -497,15 +580,16 @@ const t = {
         examTypeTestdafA1A2: "TestDaF A1/A2",
         examTypeTestdafB1B2: "TestDaF B1/B2",
         examTypeTestdafC1C2: "TestDaF C1/C2",
-        visaLabel: "Do you need a visa?",
+        visaLabel: "Do you want a visa guarantee?",
         visaYes: "Yes",
         visaNo: "No",
-        visaGuaranteeLabel: "Letter of invitation",
+        visaGuaranteeLabel: "Visa guarantee (+50 €)",
         accommodationLabel: "Do you want accommodation?",
-        accommodationSingle: "Single room",
-        accommodationDouble: "Double room",
+        accommodationSingle: "Single dorm room",
+        accommodationDouble: "Twin dorm room",
+        accommodationStudio: "Studio apartment",
         accommodationNo: "No",
-        accommodationRoomPriceInfo: "Room prices starting from 70 euros.",
+        accommodationRoomPriceInfo: "Guide prices: single dorm €580, twin dorm €440, studio €880 (final details after registration).",
         airportLabel: "Do you want airport pickup?",
         airportYes: "Yes",
         airportNo: "No",
@@ -639,6 +723,15 @@ const t = {
         step4: "Último paso",
         programLabel: "Programa de interés",
         programPlaceholder: "Seleccione programa",
+        learningPurposeLabel: "¿Cuál es su objetivo al aprender alemán?",
+        learningPurposeVisa: "Para el visado",
+        learningPurposeCareer: "Para la carrera",
+        learningPurposeUni: "Para la universidad",
+        learningPurposeComfort: "Día a día",
+        programAkademik: "Académico",
+        programPlusAkademik: "Plus académico",
+        programOnlineLabel: "Curso online",
+        programYouthCampLabel: "Campamento de verano",
         intensiveAcademic: "Intensivo",
         onlineCourse: "Curso online",
         youthCamp: "Campamento de verano",
@@ -667,7 +760,8 @@ const t = {
         bundleDiscountLabel: "Descuento bundle",
         totalWeeksInfo: "Total {n} semanas",
         totalWeekOne: "Total 1 semana",
-        courseWeeksLabel: "8 semanas",
+        courseWeeksLabel: "4 semanas",
+        courseUnsureLabel: "Aún no lo sé",
         weeksOption1: "1 - Curso demo 1 semana",
         weeksOption2: "2 - Curso de prueba 2 semanas",
         weeksOption4: "4 - Curso medio nivel",
@@ -688,6 +782,20 @@ const t = {
         examTelcB2: "Telc B2",
         examTelcC1HS: "Telc C1 HS",
         examTestdaf: "TestDaF",
+        opportunityLabel: "¿De qué oferta quiere beneficiarse?",
+        opportunityBremen: "Oferta estudiante Bremen",
+        opportunityFriend: "Descuento por traer a un amigo",
+        opportunitySaturday: "Club de conversación gratis los sábados",
+        opportunityNone: "Ninguna / aún no lo sé",
+        hearAboutLabel: "¿Cómo nos conoció?",
+        hearAboutAgency: "Agencia",
+        hearAboutFriend: "Amigo/a",
+        hearAboutGoogle: "Google",
+        hearAboutInstagram: "Instagram / redes sociales",
+        hearAboutOther: "Otro",
+        agencyCouponPlaceholder: "Código de cupón de agencia",
+        friendNameLabel: "Nombre completo del amigo/a",
+        friendNamePlaceholder: "Nombre y apellidos",
         telcPrepLabel: "+ Telc-Prep",
         shortTermLabel: "Short Term",
         shortTermSublabel: "1–24 semanas (hasta 6 meses)",
@@ -702,15 +810,16 @@ const t = {
         examTypeTestdafA1A2: "TestDaF A1/A2",
         examTypeTestdafB1B2: "TestDaF B1/B2",
         examTypeTestdafC1C2: "TestDaF C1/C2",
-        visaLabel: "¿Necesita visado?",
+        visaLabel: "¿Quiere garantía de visado?",
         visaYes: "Sí",
         visaNo: "No",
-        visaGuaranteeLabel: "Carta de invitación",
+        visaGuaranteeLabel: "Garantía de visado (+50 €)",
         accommodationLabel: "¿Desea alojamiento?",
-        accommodationSingle: "Habitación individual",
-        accommodationDouble: "Habitación doble",
+        accommodationSingle: "Residencia individual",
+        accommodationDouble: "Residencia doble",
+        accommodationStudio: "Estudio",
         accommodationNo: "No",
-        accommodationRoomPriceInfo: "Precios de habitación desde 70 euros.",
+        accommodationRoomPriceInfo: "Referencia: residencia individual 580 €, doble 440 €, estudio 880 € (detalles tras la inscripción).",
         airportLabel: "¿Desea recogida en aeropuerto?",
         airportYes: "Sí",
         airportNo: "No",
@@ -942,31 +1051,32 @@ const bundleNearHintCopy = {
                                             <div class="option-buttons program-options" role="group" aria-label={translations.programLabel}>
                                                 <label class="option-btn">
                                                     <input type="radio" name="program" value="intensive">
-                                                    <span class="option-btn-text">🎓 {translations.intensiveAcademic}</span>
+                                                    <span class="option-btn-text">🎓 {translations.programAkademik}</span>
+                                                </label>
+                                                <label class="option-btn">
+                                                    <input type="radio" name="program" value="intensive-plus">
+                                                    <span class="option-btn-text">📚 {translations.programPlusAkademik}</span>
                                                 </label>
                                                 <label class="option-btn">
                                                     <input type="radio" name="program" value="online">
-                                                    <span class="option-btn-text">💻 {translations.onlineCourse}</span>
+                                                    <span class="option-btn-text">💻 {translations.programOnlineLabel}</span>
                                                 </label>
                                                 <label class="option-btn">
                                                     <input type="radio" name="program" value="youth-camp">
-                                                    <span class="option-btn-text">🏖️ {translations.youthCamp}</span>
+                                                    <span class="option-btn-text">🏖️ {translations.programYouthCampLabel}</span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="form-group full-width" id="intensive-type-group" style="display: none;">
-                                            <label>{translations.intensiveTypeLabel} *</label>
-                                            <div class="option-buttons" role="group">
-                                                <label class="option-btn">
-                                                    <input type="radio" name="intensive-type" value="intensive">
-                                                    <span class="option-btn-text">{translations.intensive20}</span>
-                                                </label>
-                                                <label class="option-btn">
-                                                    <input type="radio" name="intensive-type" value="intensive-plus">
-                                                    <span class="option-btn-text">{translations.intensivePlus25}</span>
-                                                </label>
+                                        <div class="form-group full-width">
+                                            <label>{translations.learningPurposeLabel} *</label>
+                                            <div class="option-buttons learning-purpose-options" role="group">
+                                                <label class="option-btn"><input type="radio" name="learning-purpose" value="visa" required><span class="option-btn-text">✈️ {translations.learningPurposeVisa}</span></label>
+                                                <label class="option-btn"><input type="radio" name="learning-purpose" value="career"><span class="option-btn-text">💼 {translations.learningPurposeCareer}</span></label>
+                                                <label class="option-btn"><input type="radio" name="learning-purpose" value="university"><span class="option-btn-text">🎓 {translations.learningPurposeUni}</span></label>
+                                                <label class="option-btn"><input type="radio" name="learning-purpose" value="comfort"><span class="option-btn-text">🏙️ {translations.learningPurposeComfort}</span></label>
                                             </div>
                                         </div>
+                                        <input type="hidden" name="intensive-type" id="intensive-type-hidden" value="" />
                                         <div class="form-group full-width" id="course-selection-group" style="display: none;">
                                             <label>{translations.courseSelectionLabel} *</label>
                                             <div id="course-bundle-infobox" class="form-infobox" style="display: none;" role="status" data-msg-applied={translations.bundleDiscountApplied} data-msg-invite={translations.bundleInfobox} data-msg-bundle={translations.bundleTrackInfo} data-msg-total-weeks={translations.totalWeeksInfo} data-msg-total-week-one={translations.totalWeekOne}>
@@ -975,13 +1085,17 @@ const bundleNearHintCopy = {
                                             </div>
                                             <div id="course-levels-block" class="course-options-group course-options-inline" style="display: none;">
                                                 <div id="course-levels-buttons" class="option-buttons option-buttons-checkboxes" role="group">
-                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="a1"><span class="option-btn-text">A1</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
-                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="a2"><span class="option-btn-text">A2</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
-                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="b1"><span class="option-btn-text">B1</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
-                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="b2"><span class="option-btn-text">B2</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
-                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="c1"><span class="option-btn-text">C1</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
-                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="telc-prep"><span class="option-btn-text">{translations.telcPrepLabel}</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
-                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="short-term"><span class="option-btn-text">{translations.shortTermLabel}</span><span class="option-btn-sublabel">{translations.shortTermSublabel}</span></label>
+                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="a1.1" class="course-level-cb"><span class="option-btn-text">A1.1</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
+                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="a1.2" class="course-level-cb"><span class="option-btn-text">A1.2</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
+                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="a2.1" class="course-level-cb"><span class="option-btn-text">A2.1</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
+                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="a2.2" class="course-level-cb"><span class="option-btn-text">A2.2</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
+                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="b1.1" class="course-level-cb"><span class="option-btn-text">B1.1</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
+                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="b1.2" class="course-level-cb"><span class="option-btn-text">B1.2</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
+                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="b2.1" class="course-level-cb"><span class="option-btn-text">B2.1</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
+                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="b2.2" class="course-level-cb"><span class="option-btn-text">B2.2</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
+                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="c1.1" class="course-level-cb"><span class="option-btn-text">C1.1</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
+                                                    <label class="option-btn option-btn-with-weeks"><input type="checkbox" name="course-selection" value="c1.2" class="course-level-cb"><span class="option-btn-text">C1.2</span><span class="option-btn-sublabel">{translations.courseWeeksLabel}</span></label>
+                                                    <label class="option-btn option-btn-unsure"><input type="checkbox" name="course-selection" value="unsure" id="course-unsure-cb"><span class="option-btn-text">{translations.courseUnsureLabel}</span></label>
                                                 </div>
                                             </div>
                                             <div id="course-camps-block" class="course-options-group" style="display: none;">
@@ -1009,23 +1123,16 @@ const bundleNearHintCopy = {
                                                     <option value="48">{translations.weeksOption48}</option>
                                                 </select>
                                             </div>
-                                            <div id="weeks-short-term-wrap" class="weeks-control-wrap weeks-short-term-control" style="display: none;">
-                                                <div class="weeks-number-input-wrap">
-                                                    <input type="number" id="weeks-short-term" min="1" max="24" value="1" step="1" aria-label={translations.weeksLabel} />
-                                                    <span class="weeks-number-unit">{lang === 'tr' ? 'hafta' : lang === 'de' ? 'Wochen' : lang === 'es' ? 'semanas' : 'weeks'}</span>
-                                                </div>
-                                                <p class="field-hint" id="weeks-short-term-hint">{translations.weeksMax}</p>
-                                            </div>
                                         </div>
                                         <div class="form-group full-width">
-                                            <label for="start-date">{translations.startDate} *</label>
+                                            <span id="start-date-label" class="block-label">{translations.startDate} *</span>
                                             <p class="field-hint field-hint-under-label">{translations.startDateHint}</p>
-                                            <select id="start-date" name="start-date">
-                                                <option value="">{translations.startDatePlaceholder}</option>
+                                            <input type="hidden" id="start-date" name="start-date" value="" />
+                                            <div class="start-date-buttons" id="start-date-buttons" role="group" aria-labelledby="start-date-label">
                                                 {startDateOptions.map((opt) => (
-                                                    <option value={opt.value}>{opt.label}</option>
+                                                    <button type="button" class="start-date-btn" data-value={opt.value}>{opt.label}</button>
                                                 ))}
-                                            </select>
+                                            </div>
                                         </div>
                                         <div class="form-group full-width">
                                             <label>{translations.timezoneLabel}</label>
@@ -1052,37 +1159,16 @@ const bundleNearHintCopy = {
                                             <label>{translations.visaLabel} *</label>
                                             <div class="option-buttons" role="group">
                                                 <label class="option-btn">
-                                                    <input type="radio" name="visa-needed" value="yes" required>
+                                                    <input type="radio" name="visa-guarantee" value="yes" required>
                                                     <span class="option-btn-text">{translations.visaYes}</span>
                                                 </label>
                                                 <label class="option-btn">
-                                                    <input type="radio" name="visa-needed" value="no" checked>
+                                                    <input type="radio" name="visa-guarantee" value="no" checked>
                                                     <span class="option-btn-text">{translations.visaNo}</span>
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label>{translations.accommodationLabel} *</label>
-                                            <div class="option-buttons" role="group">
-                                                <label class="option-btn">
-                                                    <input type="radio" name="accommodation-type" value="single" required>
-                                                    <span class="option-btn-text">{translations.accommodationSingle}</span>
-                                                </label>
-                                                <label class="option-btn">
-                                                    <input type="radio" name="accommodation-type" value="double">
-                                                    <span class="option-btn-text">{translations.accommodationDouble}</span>
-                                                </label>
-                                                <label class="option-btn">
-                                                    <input type="radio" name="accommodation-type" value="no" checked>
-                                                    <span class="option-btn-text">{translations.accommodationNo}</span>
-                                                </label>
-                                            </div>
-                                            <div id="accommodation-room-infobox" class="form-infobox mt-2" style="display: none;" role="status">
-                                                <i class="fas fa-info-circle" aria-hidden="true"></i>
-                                                <span>{translations.accommodationRoomPriceInfo}</span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group full-width">
                                             <label>{translations.airportLabel} *</label>
                                             <div class="option-buttons" role="group">
                                                 <label class="option-btn">
@@ -1093,6 +1179,42 @@ const bundleNearHintCopy = {
                                                     <input type="radio" name="airport-pickup" value="no" checked>
                                                     <span class="option-btn-text">{translations.airportNo}</span>
                                                 </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-grid extras-two-col form-group full-width">
+                                            <div class="form-group">
+                                                <label for="opportunity-select">{translations.opportunityLabel}</label>
+                                                <select id="opportunity-select" name="opportunity" class="booking-select-input">
+                                                    <option value="">{translations.opportunityNone}</option>
+                                                    <option value="bremen-student">{translations.opportunityBremen}</option>
+                                                    <option value="friend-discount">{translations.opportunityFriend}</option>
+                                                    <option value="saturday-club">{translations.opportunitySaturday}</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>{translations.accommodationLabel} *</label>
+                                                <div class="option-buttons option-buttons--accommodation-2x2" role="group">
+                                                    <label class="option-btn">
+                                                        <input type="radio" name="accommodation-type" value="single-dorm" required>
+                                                        <span class="option-btn-text">{translations.accommodationSingle}</span>
+                                                    </label>
+                                                    <label class="option-btn">
+                                                        <input type="radio" name="accommodation-type" value="double-dorm">
+                                                        <span class="option-btn-text">{translations.accommodationDouble}</span>
+                                                    </label>
+                                                    <label class="option-btn">
+                                                        <input type="radio" name="accommodation-type" value="studio">
+                                                        <span class="option-btn-text">{translations.accommodationStudio}</span>
+                                                    </label>
+                                                    <label class="option-btn">
+                                                        <input type="radio" name="accommodation-type" value="no" checked>
+                                                        <span class="option-btn-text">{translations.accommodationNo}</span>
+                                                    </label>
+                                                </div>
+                                                <div id="accommodation-room-infobox" class="form-infobox mt-2" style="display: none;" role="status">
+                                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                                    <span>{translations.accommodationRoomPriceInfo}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1107,6 +1229,25 @@ const bundleNearHintCopy = {
                                     <div class="step-header">
                                         <h2>{translations.step4}</h2>
                                         <p>{translations.requestDesc}</p>
+                                    </div>
+                                    <div class="form-group full-width hear-about-block">
+                                        <label for="hear-about-select">{translations.hearAboutLabel} *</label>
+                                        <select id="hear-about-select" name="hear-about" required class="booking-select-input">
+                                            <option value="">{lang === 'tr' ? 'Seçiniz' : lang === 'de' ? 'Bitte wählen' : lang === 'es' ? 'Seleccione' : 'Please select'}</option>
+                                            <option value="agency">{translations.hearAboutAgency}</option>
+                                            <option value="friend">{translations.hearAboutFriend}</option>
+                                            <option value="google">{translations.hearAboutGoogle}</option>
+                                            <option value="instagram">{translations.hearAboutInstagram}</option>
+                                            <option value="other">{translations.hearAboutOther}</option>
+                                        </select>
+                                        <div id="hear-about-agency-fields" class="hear-about-extra" style="display: none;">
+                                            <label for="agency-coupon-input">{translations.agencyCouponPlaceholder}</label>
+                                            <input type="text" id="agency-coupon-input" name="agency-coupon" class="booking-text-input" autocomplete="off" placeholder={translations.couponPlaceholder} />
+                                        </div>
+                                        <div id="hear-about-friend-fields" class="hear-about-extra" style="display: none;">
+                                            <label for="friend-referrer-name">{translations.friendNameLabel} *</label>
+                                            <input type="text" id="friend-referrer-name" name="friend-referrer-name" class="booking-text-input" placeholder={translations.friendNamePlaceholder} />
+                                        </div>
                                     </div>
                                     <div class="compact-section-card">
                                         <h3 class="compact-section-title">{lang === 'tr' ? 'Adres' : translations.addressLine}</h3>
@@ -1219,7 +1360,7 @@ const bundleNearHintCopy = {
                                     <div class="price-section" id="extras-prices">
                                         <h4 class="price-section-title">{translations.optionalServices}</h4>
                                         <div class="price-item" id="visa-price-row" style="display: none;">
-                                            <span class="price-item-label">{translations.visaGuaranteePrice}</span>
+                                            <span class="price-item-label">{translations.visaGuaranteeLabel}</span>
                                             <span class="price-item-value">50 €</span>
                                         </div>
                                         <div class="price-item" id="accommodation-price-row" style="display: none;">
@@ -1233,16 +1374,9 @@ const bundleNearHintCopy = {
                                     </div>
                                 </div>
 
-                                <!-- Coupon -->
-                                <div class="coupon-box">
-                                    <label for="coupon-input" class="coupon-label">{translations.couponLabel}</label>
-                                    <div class="coupon-row">
-                                        <input type="text" id="coupon-input" name="coupon" class="coupon-input" placeholder={translations.couponPlaceholder} autocomplete="off" value={Astro.url.searchParams.get('coupon') ?? ''} />
-                                        <button type="button" class="coupon-apply-btn" id="coupon-apply-btn">{translations.couponApply}</button>
-                                    </div>
-                                    <input type="hidden" name="couponDiscountPercent" id="coupon-discount-percent" value="" />
-                                    <p class="coupon-message" id="coupon-message" aria-live="polite" style="display: none;"></p>
-                                </div>
+                                <input type="hidden" id="coupon-input" name="coupon" value="" />
+                                <input type="hidden" name="couponDiscountPercent" id="coupon-discount-percent" value="" />
+                                <p class="coupon-message" id="coupon-message" aria-live="polite" style="display: none;"></p>
                                 
                                 <!-- Price Total Container -->
                                 <div class="price-total-container">
@@ -1352,59 +1486,56 @@ const bundleNearHintCopy = {
             const programRadios = document.querySelectorAll('[name="program"]');
             const weeksBlock = document.getElementById('weeks-block');
             const weeksSelect = document.getElementById('weeks');
-            const intensiveTypeGroup = document.getElementById('intensive-type-group');
             const courseLevelsBlock = document.getElementById('course-levels-block');
             const courseCampsBlock = document.getElementById('course-camps-block');
             const courseSelectionGroup = document.getElementById('course-selection-group');
             const courseBundleInfobox = document.getElementById('course-bundle-infobox');
             const accommodationTypeRadios = document.querySelectorAll('[name="accommodation-type"]');
+            const HALF_LEVEL_RE = /^(a1|a2|b1|b2|c1)\.[12]$/;
+            function mainLevelsFromCourseSelection(values) {
+                const mains = new Set();
+                for (const v of values) {
+                    if (v === 'unsure') continue;
+                    const m = String(v).split('.')[0];
+                    if (['a1', 'a2', 'b1', 'b2', 'c1'].includes(m)) mains.add(m);
+                }
+                return [...mains];
+            }
+            function halfModuleCount(values) {
+                return values.filter(function (v) { return HALF_LEVEL_RE.test(v); }).length;
+            }
+            function syncIntensiveTypeFromProgram() {
+                const program = document.querySelector('[name="program"]:checked')?.value;
+                const hid = document.getElementById('intensive-type-hidden');
+                if (!hid) return;
+                if (program === 'intensive') hid.value = 'intensive';
+                else if (program === 'intensive-plus') hid.value = 'intensive-plus';
+                else if (program === 'online') hid.value = 'intensive';
+                else hid.value = '';
+            }
 
             let promoBundleId = null;
             let bundlePresetPending = false;
             let bremenBundleFromQuery = false;
-            /** Sadece University Pathway: sabit 5.990 €. A2–C1 / B1–C1 izleri kademeli fiyatla hesaplanır; promo-bundle alanı yine CRM için a2c1|b1c1 yazılır. */
             function resolvePromoBundlePrice() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
                 const checked = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(c => c.value);
-                const levels = checked.filter(c => ['a1', 'a2', 'b1', 'b2', 'c1'].includes(c));
-                const hasTelc = checked.includes('telc-prep');
-                const hasShort = checked.includes('short-term');
-                if (program !== 'intensive' && program !== 'online') return null;
-                if (bremenBundleFromQuery && promoBundleId === 'bremen' && !hasTelc && !hasShort && levels.length > 0) {
-                    // Bremen kampanyası: her seçilen kur (8 hafta) sabit 880 €
-                    return levels.length * 880;
+                const nHalf = halfModuleCount(checked);
+                if (program !== 'intensive' && program !== 'intensive-plus' && program !== 'online') return null;
+                if (bremenBundleFromQuery && promoBundleId === 'bremen' && nHalf > 0 && !checked.includes('unsure')) {
+                    return nHalf * 440;
                 }
                 return null;
             }
-            function enforceBremenBundleCourseRules() {
-                if (!(bremenBundleFromQuery && promoBundleId === 'bremen')) return;
-                const telcPrep = document.querySelector('[name="course-selection"][value="telc-prep"]');
-                const shortTerm = document.querySelector('[name="course-selection"][value="short-term"]');
-                if (telcPrep) {
-                    telcPrep.checked = false;
-                    telcPrep.disabled = true;
-                }
-                if (shortTerm) {
-                    shortTerm.checked = false;
-                    shortTerm.disabled = true;
-                }
-            }
-            function clearBremenBundleCourseRules() {
-                const telcPrep = document.querySelector('[name="course-selection"][value="telc-prep"]');
-                const shortTerm = document.querySelector('[name="course-selection"][value="short-term"]');
-                if (telcPrep) telcPrep.disabled = false;
-                if (shortTerm) shortTerm.disabled = false;
-            }
-            /** Gizli alan + etiket: pathway yalnızca geçerli pathway modunda; aksi halde tam A2–C1 / B1–C1 eşleşmesi. */
+            function enforceBremenBundleCourseRules() {}
+            function clearBremenBundleCourseRules() {}
             function currentPromoBundleSlug() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
-                if (program !== 'intensive' && program !== 'online') return '';
+                if (program !== 'intensive' && program !== 'intensive-plus' && program !== 'online') return '';
                 const checked = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(c => c.value);
-                const hasTelc = checked.includes('telc-prep');
-                const hasShort = checked.includes('short-term');
-                const levels = checked.filter(c => ['a1', 'a2', 'b1', 'b2', 'c1'].includes(c));
-                if (bremenBundleFromQuery && promoBundleId === 'bremen' && !hasTelc && !hasShort && levels.length > 0) return 'bremen';
-                if (hasTelc || hasShort) return '';
+                if (checked.includes('unsure')) return '';
+                const levels = mainLevelsFromCourseSelection(checked);
+                if (bremenBundleFromQuery && promoBundleId === 'bremen' && levels.length > 0) return 'bremen';
                 const set = new Set(levels);
                 if (set.size === 4 && ['a2', 'b1', 'b2', 'c1'].every(x => set.has(x))) return 'a2c1';
                 if (set.size === 3 && ['b1', 'b2', 'c1'].every(x => set.has(x))) return 'b1c1';
@@ -1417,21 +1548,20 @@ const bundleNearHintCopy = {
             }
 
             function toggleProgramExtras() {
+                syncIntensiveTypeFromProgram();
                 const program = document.querySelector('[name="program"]:checked')?.value;
                 if (courseSelectionGroup) courseSelectionGroup.style.display = program ? 'block' : 'none';
-                if (intensiveTypeGroup) intensiveTypeGroup.style.display = (program === 'intensive' || program === 'online') ? 'block' : 'none';
                 if (weeksBlock) weeksBlock.style.display = program === 'youth-camp' ? 'block' : 'none';
                 if (weeksSelect) {
                     weeksSelect.removeAttribute('required');
                     if (program === 'youth-camp') weeksSelect.setAttribute('required', 'required');
                 }
-                if (courseLevelsBlock) courseLevelsBlock.style.display = (program === 'intensive' || program === 'online') ? 'block' : 'none';
+                if (courseLevelsBlock) courseLevelsBlock.style.display = (program === 'intensive' || program === 'intensive-plus' || program === 'online') ? 'block' : 'none';
                 if (courseCampsBlock) courseCampsBlock.style.display = program === 'youth-camp' ? 'block' : 'none';
                 if (!bundlePresetPending) {
-                    document.querySelectorAll('[name="course-selection"]').forEach(cb => { cb.checked = false; });
+                    document.querySelectorAll('[name="course-selection"]').forEach(cb => { cb.checked = false; cb.disabled = false; });
                 }
-                if (program !== 'intensive' && program !== 'online') {
-                    document.querySelectorAll('[name="intensive-type"]').forEach(r => { r.checked = false; });
+                if (program !== 'intensive' && program !== 'intensive-plus' && program !== 'online') {
                     const cityInput = document.getElementById('city');
                     if (cityInput) cityInput.removeAttribute('readonly');
                     promoBundleId = null;
@@ -1439,62 +1569,35 @@ const bundleNearHintCopy = {
                     clearBremenBundleCourseRules();
                     syncPromoBundleHidden();
                 }
-                toggleWeeksBlockForShortTerm();
+                toggleYouthCampWeeksOnly();
                 toggleBundleInfobox();
                 filterWeeksByLevelCourses();
-                enforceShortTermExclusion();
                 reorderCourseSelectionChain();
                 updatePrice();
             }
             const weeksValueInput = document.getElementById('weeks-value');
             const weeksSelectWrap = document.getElementById('weeks-select-wrap');
-            const weeksShortTermWrap = document.getElementById('weeks-short-term-wrap');
-            const weeksShortTermInput = document.getElementById('weeks-short-term');
             function getWeeksValue() { return (weeksValueInput && weeksValueInput.value) || ''; }
             function setWeeksValue(v) { if (weeksValueInput) weeksValueInput.value = String(v || ''); }
             function syncWeeksFromControl() {
-                if (weeksShortTermWrap && weeksShortTermWrap.style.display !== 'none') {
-                    const v = weeksShortTermInput ? parseInt(weeksShortTermInput.value, 10) : 0;
-                    setWeeksValue((v >= 1 && v <= 24) ? v : '');
-                } else if (weeksSelectWrap && weeksSelectWrap.style.display !== 'none' && weeksSelect) {
+                if (weeksSelectWrap && weeksSelectWrap.style.display !== 'none' && weeksSelect) {
                     setWeeksValue(weeksSelect.value || '');
                 }
             }
-            // Hafta seçimi: Short Term’de sayı girişi (1–24), youth-camp’te dropdown.
-            function toggleWeeksBlockForShortTerm() {
+            function toggleYouthCampWeeksOnly() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
-                const shortTermChecked = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).some(c => c.value === 'short-term');
                 const weeksLabel = document.getElementById('weeks-label');
                 if (program === 'youth-camp') {
                     if (weeksBlock) weeksBlock.style.display = 'block';
                     if (weeksSelectWrap) weeksSelectWrap.style.display = 'block';
-                    if (weeksShortTermWrap) weeksShortTermWrap.style.display = 'none';
                     if (weeksLabel) weeksLabel.setAttribute('for', 'weeks');
-                    if (weeksSelect) { weeksSelect.removeAttribute('required'); weeksSelect.setAttribute('required', 'required'); }
+                    if (weeksSelect) { weeksSelect.setAttribute('required', 'required'); }
                     Array.from(weeksSelect?.options || []).forEach(opt => { opt.disabled = false; opt.style.display = ''; });
                     syncWeeksFromControl();
-                    return;
-                }
-                if (program === 'intensive' || program === 'online') {
-                    if (shortTermChecked) {
-                        if (weeksBlock) weeksBlock.style.display = 'block';
-                        if (weeksSelectWrap) weeksSelectWrap.style.display = 'none';
-                        if (weeksShortTermWrap) weeksShortTermWrap.style.display = 'block';
-                        if (weeksLabel) weeksLabel.setAttribute('for', 'weeks-short-term');
-                        if (weeksShortTermInput) {
-                            weeksShortTermInput.setAttribute('required', 'required');
-                            const cur = parseInt(weeksShortTermInput.value, 10);
-                            if (cur < 1 || cur > 24) weeksShortTermInput.value = '1';
-                        }
-                        setWeeksValue(weeksShortTermInput ? (weeksShortTermInput.value || '1') : '');
-                    } else {
-                        if (weeksBlock) weeksBlock.style.display = 'none';
-                        if (weeksSelectWrap) weeksSelectWrap.style.display = 'block';
-                        if (weeksShortTermWrap) weeksShortTermWrap.style.display = 'none';
-                        if (weeksSelect) { weeksSelect.removeAttribute('required'); weeksSelect.value = ''; }
-                        if (weeksShortTermInput) { weeksShortTermInput.removeAttribute('required'); weeksShortTermInput.value = '1'; }
-                        setWeeksValue('');
-                    }
+                } else {
+                    if (weeksBlock) weeksBlock.style.display = 'none';
+                    if (weeksSelect) { weeksSelect.removeAttribute('required'); weeksSelect.value = ''; }
+                    setWeeksValue('');
                 }
             }
             const BUNDLE_LEVEL_ORDER_A2C1 = ['a2', 'b1', 'b2', 'c1'];
@@ -1530,20 +1633,18 @@ const bundleNearHintCopy = {
             function toggleBundleInfobox() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
                 const checked = Array.from(document.querySelectorAll('[name="course-selection"]:checked'));
-                const levelCourses = checked.filter(c => ['a1','a2','b1','b2','c1'].includes(c.value));
-                const levelCount = levelCourses.length;
-                const hasTelcPrep = checked.some(c => c.value === 'telc-prep');
-                const hasShortTerm = checked.some(c => c.value === 'short-term');
-                const weeksVal = getWeeksValue();
-                const shortTermWeeks = hasShortTerm ? (parseInt(weeksVal, 10) || 0) : 0;
-                const totalWeeks = (program === 'intensive' || program === 'online') ? (levelCount * 8) + (hasTelcPrep ? 8 : 0) + shortTermWeeks : parseInt(weeksVal, 10) || 0;
+                const vals = checked.map(c => c.value);
+                const mains = mainLevelsFromCourseSelection(vals);
+                const nHalf = halfModuleCount(vals);
+                const totalWeeks = (program === 'intensive' || program === 'intensive-plus' || program === 'online')
+                    ? (nHalf * 4)
+                    : (parseInt(getWeeksValue(), 10) || 0);
                 const box = courseBundleInfobox;
                 const textEl = document.getElementById('course-bundle-infobox-text');
                 if (!box || !textEl) return;
-                const rp = resolvePromoBundlePrice();
                 const bundleSlug = currentPromoBundleSlug();
                 const show =
-                    (program === 'intensive' || program === 'online') &&
+                    (program === 'intensive' || program === 'intensive-plus' || program === 'online') &&
                     checked.length > 0;
                 box.style.display = show ? 'flex' : 'none';
                 if (!show) {
@@ -1551,7 +1652,7 @@ const bundleNearHintCopy = {
                     return;
                 }
                 const msgInvite = box.dataset.msgInvite || '';
-                const displayWeeks = hasShortTerm ? shortTermWeeks : totalWeeks;
+                const displayWeeks = totalWeeks;
                 const msgTotalWeeks = displayWeeks === 1 ? (box.dataset.msgTotalWeekOne || 'Total 1 week') : (box.dataset.msgTotalWeeks || 'Total {n} weeks').replace('{n}', String(displayWeeks));
                 let baseMsg = msgInvite;
                 let useBundleStyle = false;
@@ -1564,12 +1665,10 @@ const bundleNearHintCopy = {
                 } else if (bundleSlug === 'b1c1') {
                     baseMsg = bundlePromoInfoboxTexts.b1c1 || '';
                     useBundleStyle = true;
-                } else if (levelCount >= 2) {
+                } else if (mains.length >= 2) {
                     useBundleStyle = true;
                     const andW = bundleNearHintCopy?.andWord || 'and';
-                    let hint = null;
-                    if (!hasTelcPrep && !hasShortTerm)
-                        hint = getNearestPromoBundleHint(levelCourses.map(c => c.value));
+                    let hint = getNearestPromoBundleHint(mains);
                     if (hint) {
                         const levelsStr = formatBundleHintLevels(hint.missing, andW);
                         const tpl = hint.id === 'a2c1' ? bundleNearHintCopy?.a2c1 : bundleNearHintCopy?.b1c1;
@@ -1581,14 +1680,14 @@ const bundleNearHintCopy = {
                 box.classList.toggle('form-infobox--bundle', useBundleStyle);
                 textEl.textContent = displayWeeks > 0 ? baseMsg + ' — ' + msgTotalWeeks : baseMsg;
             }
-            // Seçilen seviye kursu sayısına göre hafta seçeneklerini filtrele (sadece youth-camp)
+            // Seçilen kamp sayısına göre hafta seçeneklerini filtrele (sadece youth-camp)
             function filterWeeksByLevelCourses() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
-                if (program === 'intensive' || program === 'online') return;
+                if (program === 'intensive' || program === 'intensive-plus' || program === 'online') return;
                 if (program !== 'youth-camp') return;
-                const levelCourses = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).filter(c => ['a1','a2','b1','b2','c1'].includes(c.value));
-                const levelCount = levelCourses.length;
-                const minWeeks = levelCount >= 2 ? levelCount * 8 : 1;
+                const campValues = ['berlin-camp', 'muenster-camp', 'bremen-camp'];
+                const campCount = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).filter(c => campValues.includes(c.value)).length;
+                const minWeeks = campCount >= 2 ? campCount * 8 : 1;
                 const sel = document.getElementById('weeks');
                 if (!sel) return;
                 const currentVal = sel.value;
@@ -1608,23 +1707,31 @@ const bundleNearHintCopy = {
             programRadios.forEach(r => r.addEventListener('change', toggleProgramExtras));
 
             // Short term seçiliyken diğer kurslar (A1-C1, Telc-Prep) seçilemesin; diğerleri seçilince short term kaldırılsın
-            function enforceShortTermExclusion() {
-                const program = document.querySelector('[name="program"]:checked')?.value;
-                if (program !== 'intensive' && program !== 'online') return;
-                const shortTermCb = document.querySelector('[name="course-selection"][value="short-term"]');
-                const otherValues = ['a1','a2','b1','b2','c1','telc-prep'];
-                const otherCbs = otherValues.map(v => document.querySelector('[name="course-selection"][value="' + v + '"]')).filter(Boolean);
-                if (!shortTermCb) return;
-                if (shortTermCb.checked) {
-                    otherCbs.forEach(cb => { cb.checked = false; cb.disabled = true; });
+            function enforceShortTermExclusion() {}
+
+            function syncUnsureCourseSelection() {
+                const unsure = document.getElementById('course-unsure-cb');
+                const levelCbs = document.querySelectorAll('.course-level-cb');
+                if (!unsure) return;
+                if (unsure.checked) {
+                    levelCbs.forEach(function (cb) { cb.checked = false; cb.disabled = true; });
                 } else {
-                    otherCbs.forEach(cb => { cb.disabled = false; });
-                    const anyOtherChecked = otherCbs.some(cb => cb.checked);
-                    if (anyOtherChecked) shortTermCb.checked = false;
+                    levelCbs.forEach(function (cb) { cb.disabled = false; });
                 }
             }
+            document.querySelectorAll('.course-level-cb').forEach(function (cb) {
+                cb.addEventListener('change', function () {
+                    if (cb.checked) {
+                        const u = document.getElementById('course-unsure-cb');
+                        if (u) u.checked = false;
+                    }
+                    syncUnsureCourseSelection();
+                });
+            });
+            const unsureCb = document.getElementById('course-unsure-cb');
+            if (unsureCb) unsureCb.addEventListener('change', syncUnsureCourseSelection);
 
-            const COURSE_LEVEL_CHAIN_ORDER = ['a1', 'a2', 'b1', 'b2', 'c1', 'telc-prep', 'short-term'];
+            const COURSE_LEVEL_CHAIN_ORDER = ['a1.1','a1.2','a2.1','a2.2','b1.1','b1.2','b2.1','b2.2','c1.1','c1.2','unsure'];
             /* Kısa, net FLIP: gecikmeyi azalt (önceki ~560ms → ~300ms) */
             const FLIP_EASING = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
             const FLIP_DURATION_MS = 260;
@@ -1712,14 +1819,14 @@ const bundleNearHintCopy = {
             function toggleAccommodationMonths() {
                 const v = document.querySelector('[name="accommodation-type"]:checked')?.value;
                 const box = document.getElementById('accommodation-room-infobox');
-                if (box) box.style.display = (v === 'single' || v === 'double') ? 'flex' : 'none';
+                if (box) box.style.display = (v === 'single-dorm' || v === 'double-dorm' || v === 'studio') ? 'flex' : 'none';
                 updatePrice();
             }
             accommodationTypeRadios.forEach(r => r.addEventListener('change', toggleAccommodationMonths));
             (function showAccommodationRoomInfoboxOnLoad() {
                 const v = document.querySelector('[name="accommodation-type"]:checked')?.value;
                 const box = document.getElementById('accommodation-room-infobox');
-                if (box) box.style.display = (v === 'single' || v === 'double') ? 'flex' : 'none';
+                if (box) box.style.display = (v === 'single-dorm' || v === 'double-dorm' || v === 'studio') ? 'flex' : 'none';
             })();
 
             // Extract numeric price from string like "790€" -> 790
@@ -1765,7 +1872,7 @@ const bundleNearHintCopy = {
                 const mainLevel = (courseValue || '').toString().split('.')[0] || 'a1';
                 const isExamCourse = ['telc-b1','telc-b2','telc-c1hs','testdaf'].includes(mainLevel) || (courseValue && ['telc-b1','telc-b2','telc-c1hs','testdaf'].includes(courseValue.toString()));
                 if (isExamCourse) return EXAM_PRICE;
-                if (program === 'intensive' || program === 'online') {
+                if (program === 'intensive' || program === 'intensive-plus' || program === 'online') {
                     return getTieredPrice(weeks, intensiveType === 'intensive-plus');
                 }
                 if (program === 'youth-camp') {
@@ -2040,26 +2147,46 @@ const bundleNearHintCopy = {
                 let isValid = true;
 
                 if (step === 1) {
+                    const lp = document.querySelector('[name="learning-purpose"]:checked')?.value;
                     const program = document.querySelector('[name="program"]:checked')?.value;
                     const startDate = document.getElementById('start-date')?.value;
-                    const intensiveType = document.querySelector('[name="intensive-type"]:checked')?.value;
+                    const hidType = document.getElementById('intensive-type-hidden')?.value;
                     const courseSelectionGroup = document.getElementById('course-selection-group');
                     const checkedCourses = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(c => c.value);
                     const courseLevelsBlock = document.getElementById('course-levels-block');
                     const courseCampsBlock = document.getElementById('course-camps-block');
-                    const pathwayBundleOk = (program === 'intensive' || program === 'online') && currentPromoBundleSlug() === 'bremen';
-                    const hasVisibleCourseSelection = (program === 'intensive' || program === 'online') ? (courseLevelsBlock?.offsetParent && (checkedCourses.length > 0 || pathwayBundleOk)) :
-                        (program === 'youth-camp') ? (courseCampsBlock?.offsetParent && checkedCourses.length > 0) : false;
+                    const pathwayBundleOk = (program === 'intensive' || program === 'intensive-plus' || program === 'online') && currentPromoBundleSlug() === 'bremen';
+                    const hasLevelOrUnsure = checkedCourses.includes('unsure') || checkedCourses.some(c => HALF_LEVEL_RE.test(c));
+                    const hasVisibleCourseSelection =
+                        (program === 'intensive' || program === 'intensive-plus' || program === 'online')
+                            ? (courseLevelsBlock?.offsetParent && (hasLevelOrUnsure || pathwayBundleOk))
+                            : (program === 'youth-camp')
+                                ? (courseCampsBlock?.offsetParent && checkedCourses.length > 0)
+                                : false;
+                    document.querySelector('[name="learning-purpose"]')?.closest('.form-group')?.classList.toggle('error', !lp);
+                    if (!lp) isValid = false;
                     if (!program) { document.querySelector('[name="program"]')?.closest('.form-group')?.classList.add('error'); isValid = false; } else { document.querySelector('[name="program"]')?.closest('.form-group')?.classList.remove('error'); }
-                    if ((program === 'intensive' || program === 'online') && !intensiveType) { const g = document.getElementById('intensive-type-group'); if (g) g.classList.add('error'); isValid = false; } else { const g = document.getElementById('intensive-type-group'); if (g) g.classList.remove('error'); }
-                    if (!startDate) { document.getElementById('start-date')?.classList.add('error'); isValid = false; } else { document.getElementById('start-date')?.classList.remove('error'); }
+                    if ((program === 'intensive' || program === 'intensive-plus' || program === 'online') && !hidType) isValid = false;
+                    if (!startDate) { document.getElementById('start-date-buttons')?.classList.add('error'); isValid = false; } else { document.getElementById('start-date-buttons')?.classList.remove('error'); }
                     if (program && !hasVisibleCourseSelection) { if (courseSelectionGroup) courseSelectionGroup.classList.add('error'); isValid = false; } else { if (courseSelectionGroup) courseSelectionGroup.classList.remove('error'); }
-                    if (program === 'intensive' || program === 'online' || program === 'youth-camp') {
+                    if (program === 'youth-camp') {
                         const weeks = getWeeksValue();
-                        const needWeeks = (program === 'youth-camp') || (checkedCourses.includes('short-term'));
-                        if (needWeeks && !weeks) { weeksBlock?.classList.add('error'); isValid = false; } else { weeksBlock?.classList.remove('error'); }
+                        if (!weeks) { weeksBlock?.classList.add('error'); isValid = false; } else { weeksBlock?.classList.remove('error'); }
                     }
                     return isValid;
+                }
+
+                if (step === 3) {
+                    const hear = document.getElementById('hear-about-select')?.value;
+                    if (hear === 'friend') {
+                        const fn = document.getElementById('friend-referrer-name')?.value?.trim();
+                        if (!fn) {
+                            document.getElementById('friend-referrer-name')?.classList.add('error');
+                            isValid = false;
+                        } else {
+                            document.getElementById('friend-referrer-name')?.classList.remove('error');
+                        }
+                    }
                 }
 
                 const requiredFields = currentStepElement.querySelectorAll('[required]');
@@ -2109,7 +2236,7 @@ const bundleNearHintCopy = {
                         enforceBremenBundleCourseRules();
                     }
                     enforceShortTermExclusion();
-                    toggleWeeksBlockForShortTerm();
+                    syncUnsureCourseSelection();
                     toggleBundleInfobox();
                     filterWeeksByLevelCourses();
                     updatePrice();
@@ -2117,19 +2244,22 @@ const bundleNearHintCopy = {
                 });
             });
             reorderCourseSelectionChain();
-            document.querySelectorAll('[name="intensive-type"]').forEach(el => el.addEventListener('change', function() { toggleBundleInfobox(); updatePrice(); }));
             weeksSelect?.addEventListener('change', function() { setWeeksValue(this.value); toggleBundleInfobox(); updatePrice(); });
-            if (weeksShortTermInput) {
-                weeksShortTermInput.addEventListener('input', function() { setWeeksValue(this.value); toggleBundleInfobox(); updatePrice(); });
-                weeksShortTermInput.addEventListener('change', function() {
-                    let v = parseInt(this.value, 10);
-                    if (v < 1) this.value = 1; else if (v > 24) this.value = 24;
-                    setWeeksValue(this.value); toggleBundleInfobox(); updatePrice();
-                });
-            }
-            document.querySelectorAll('[name="visa-needed"]').forEach(el => el.addEventListener('change', updatePrice));
+            document.querySelectorAll('[name="visa-guarantee"]').forEach(el => el.addEventListener('change', updatePrice));
             document.querySelectorAll('[name="accommodation-type"]').forEach(el => el.addEventListener('change', updatePrice));
             document.querySelectorAll('[name="airport-pickup"]').forEach(el => el.addEventListener('change', updatePrice));
+
+            document.querySelectorAll('#start-date-buttons .start-date-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const val = btn.getAttribute('data-value') || '';
+                    const hid = document.getElementById('start-date');
+                    if (hid) hid.value = val;
+                    document.querySelectorAll('#start-date-buttons .start-date-btn').forEach(function (b) { b.classList.remove('is-selected'); });
+                    btn.classList.add('is-selected');
+                    document.getElementById('start-date-buttons')?.classList.remove('error');
+                    updatePrice();
+                });
+            });
 
             // ===== COUPON =====
             let appliedCoupon = null;
@@ -2173,12 +2303,45 @@ const bundleNearHintCopy = {
                 setTimeout(applyCoupon, 100);
             }
 
+            const hearAboutSelect = document.getElementById('hear-about-select');
+            function toggleHearAboutExtras() {
+                const v = hearAboutSelect?.value || '';
+                const ag = document.getElementById('hear-about-agency-fields');
+                const fr = document.getElementById('hear-about-friend-fields');
+                const fn = document.getElementById('friend-referrer-name');
+                if (ag) ag.style.display = v === 'agency' ? 'block' : 'none';
+                if (fr) fr.style.display = v === 'friend' ? 'block' : 'none';
+                if (fn) {
+                    if (v === 'friend') fn.setAttribute('required', 'required');
+                    else fn.removeAttribute('required');
+                }
+            }
+            if (hearAboutSelect) {
+                hearAboutSelect.addEventListener('change', toggleHearAboutExtras);
+                toggleHearAboutExtras();
+            }
+            const agencyCouponInput = document.getElementById('agency-coupon-input');
+            function syncAgencyCouponToHidden() {
+                if (!agencyCouponInput || !couponInput) return;
+                couponInput.value = agencyCouponInput.value.trim();
+                applyCoupon();
+            }
+            if (agencyCouponInput) {
+                agencyCouponInput.addEventListener('blur', syncAgencyCouponToHidden);
+                agencyCouponInput.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') { e.preventDefault(); syncAgencyCouponToHidden(); }
+                });
+            }
+
             // ===== PRICE CALCULATION =====
-            const programLabels = { tr: { intensive: 'Yoğun', online: 'Online', 'youth-camp': 'Yaz Kampı' }, de: { intensive: 'Intensiv', online: 'Online', 'youth-camp': 'Sommercamp' }, en: { intensive: 'Intensive', online: 'Online', 'youth-camp': 'Summer Camp' }, es: { intensive: 'Intensivo', online: 'Online', 'youth-camp': 'Campamento verano' } };
+            const programLabels = {
+                tr: { intensive: 'Akademik', 'intensive-plus': 'Plus akademik', online: 'Online', 'youth-camp': 'Yaz Kampı' },
+                de: { intensive: 'Akademisch', 'intensive-plus': 'Plus akademisch', online: 'Online', 'youth-camp': 'Sommercamp' },
+                en: { intensive: 'Academic', 'intensive-plus': 'Plus academic', online: 'Online', 'youth-camp': 'Summer Camp' },
+                es: { intensive: 'Académico', 'intensive-plus': 'Plus académico', online: 'Online', 'youth-camp': 'Campamento verano' }
+            };
+            const ACCOMMODATION_EUR = { 'single-dorm': 580, 'double-dorm': 440, 'studio': 880 };
             function updatePrice() {
-                let total = 0;
-                let courseTotal = 0;
-                let courseAmountAfterBundle = 0; // Kupon indirimi buna uygulanır (bundle sonrası kurs tutarı)
                 const courseTypePrice = document.getElementById('course-type-price');
                 const durationPrice = document.getElementById('duration-price');
                 const bundleDiscountRow = document.getElementById('bundle-discount-row');
@@ -2188,71 +2351,58 @@ const bundleNearHintCopy = {
                 const airportPriceRow = document.getElementById('airport-price-row');
                 const totalPriceElement = document.getElementById('total-price');
                 const program = document.querySelector('[name="program"]:checked')?.value;
-                const intensiveType = document.querySelector('[name="intensive-type"]:checked')?.value;
                 const checkedCourses = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(c => c.value);
                 const weeks = getWeeksValue();
                 const currentLang = lang || 'tr';
                 const t = programLabels[currentLang] || programLabels.tr;
+                const isPlusPricing = program === 'intensive-plus';
+                const hidType = document.getElementById('intensive-type-hidden')?.value;
+                const intensiveTypeParam = isPlusPricing ? 'intensive-plus' : (hidType === 'intensive-plus' ? 'intensive-plus' : 'intensive');
 
                 if (!courseTypePrice) return;
 
                 const promoCoursePrice = resolvePromoBundlePrice();
                 const activeBundleSlug = currentPromoBundleSlug();
+                const nHalf = halfModuleCount(checkedCourses);
+                const dispWeeksIntensive = nHalf * 4;
+
                 if (program && (checkedCourses.length > 0 || promoCoursePrice != null)) {
                     let coursePrice = 0;
-                    let totalWeeksNoShort = 0;
-                    const levelCourses = checkedCourses.filter(c => ['a1','a2','b1','b2','c1'].includes(c));
-                    const hasTelcPrep = checkedCourses.includes('telc-prep');
-                    const hasShortTerm = checkedCourses.includes('short-term');
 
-                    if (program === 'intensive' || program === 'online') {
+                    if (program === 'intensive' || program === 'intensive-plus' || program === 'online') {
                         if (promoCoursePrice != null) {
                             coursePrice = promoCoursePrice;
-                        } else {
-                            const shortTermWeeks = hasShortTerm ? (parseInt(weeks, 10) || 0) : 0;
-                            totalWeeksNoShort = (levelCourses.length * 8) + (hasTelcPrep ? 8 : 0);
-                            if (hasShortTerm && shortTermWeeks > 0) {
-                                coursePrice += getTieredPrice(shortTermWeeks, intensiveType === 'intensive-plus');
-                            } else if (totalWeeksNoShort > 0) {
-                                coursePrice += getTieredPrice(totalWeeksNoShort, intensiveType === 'intensive-plus');
-                            }
+                        } else if (checkedCourses.includes('unsure') && nHalf === 0) {
+                            coursePrice = 0;
+                        } else if (nHalf > 0) {
+                            coursePrice = getTieredPrice(dispWeeksIntensive, isPlusPricing);
                         }
                     } else if (program === 'youth-camp') {
                         for (const courseValue of checkedCourses) {
-                            const levelForCourse = ['berlin-camp','muenster-camp','bremen-camp'].includes(courseValue) ? 'a1' : courseValue;
-                            coursePrice += getCoursePrice(program, levelForCourse, weeks, intensiveType);
+                            const levelForCourse = ['berlin-camp', 'muenster-camp', 'bremen-camp'].includes(courseValue) ? 'a1' : courseValue;
+                            coursePrice += getCoursePrice(program, levelForCourse, weeks, intensiveTypeParam);
                         }
                     }
-                    courseTotal = coursePrice;
-                    courseAmountAfterBundle = coursePrice;
                     const programLabel = t[program] || program;
                     let labelSuffix = checkedCourses.length ? ' (' + checkedCourses.map(c => c.toUpperCase().replace(/-/g, ' ')).join(', ') + ')' : '';
-                    if (program === 'intensive' || program === 'online') {
+                    if (program === 'intensive' || program === 'intensive-plus' || program === 'online') {
                         if (activeBundleSlug === 'bremen' && promoCoursePrice != null) {
                             labelSuffix = ' — ' + pathwayBundleCourseLabel;
                         } else if (activeBundleSlug === 'a2c1') {
-                            const shortTermWeeks = hasShortTerm ? (parseInt(weeks, 10) || 0) : 0;
-                            const dispWeeks = hasShortTerm ? shortTermWeeks : ((levelCourses.length * 8) + (hasTelcPrep ? 8 : 0));
-                            const weekWord = dispWeeks === 1
+                            const weekWord = dispWeeksIntensive === 1
                                 ? (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Woche' : currentLang === 'es' ? 'semana' : 'week')
                                 : (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Wochen' : currentLang === 'es' ? 'semanas' : 'weeks');
-                            labelSuffix = ' ' + dispWeeks + ' ' + weekWord + labelSuffix + ' — ' + bookingBundlePromoLabels.a2c1;
+                            labelSuffix = ' ' + dispWeeksIntensive + ' ' + weekWord + labelSuffix + ' — ' + bookingBundlePromoLabels.a2c1;
                         } else if (activeBundleSlug === 'b1c1') {
-                            const shortTermWeeks = hasShortTerm ? (parseInt(weeks, 10) || 0) : 0;
-                            const dispWeeks = hasShortTerm ? shortTermWeeks : ((levelCourses.length * 8) + (hasTelcPrep ? 8 : 0));
-                            const weekWord = dispWeeks === 1
+                            const weekWord = dispWeeksIntensive === 1
                                 ? (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Woche' : currentLang === 'es' ? 'semana' : 'week')
                                 : (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Wochen' : currentLang === 'es' ? 'semanas' : 'weeks');
-                            labelSuffix = ' ' + dispWeeks + ' ' + weekWord + labelSuffix + ' — ' + bookingBundlePromoLabels.b1c1;
-                        } else {
-                            const shortTermWeeks = hasShortTerm ? (parseInt(weeks, 10) || 0) : 0;
-                            const dispWeeks = hasShortTerm ? shortTermWeeks : ((levelCourses.length * 8) + (hasTelcPrep ? 8 : 0));
-                            if (dispWeeks) {
-                                const weekWord = dispWeeks === 1
-                                    ? (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Woche' : currentLang === 'es' ? 'semana' : 'week')
-                                    : (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Wochen' : currentLang === 'es' ? 'semanas' : 'weeks');
-                                labelSuffix = ' ' + dispWeeks + ' ' + weekWord + labelSuffix;
-                            }
+                            labelSuffix = ' ' + dispWeeksIntensive + ' ' + weekWord + labelSuffix + ' — ' + bookingBundlePromoLabels.b1c1;
+                        } else if (dispWeeksIntensive > 0) {
+                            const weekWord = dispWeeksIntensive === 1
+                                ? (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Woche' : currentLang === 'es' ? 'semana' : 'week')
+                                : (currentLang === 'tr' ? 'hafta' : currentLang === 'de' ? 'Wochen' : currentLang === 'es' ? 'semanas' : 'weeks');
+                            labelSuffix = ' ' + dispWeeksIntensive + ' ' + weekWord + labelSuffix;
                         }
                     } else if (program === 'youth-camp' && weeks) {
                         const w = parseInt(weeks, 10) || 0;
@@ -2262,9 +2412,7 @@ const bundleNearHintCopy = {
                     courseTypePrice.querySelector('.price-item-label').textContent = (programLabel + labelSuffix).trim();
                     courseTypePrice.querySelector('.price-item-value').textContent = coursePrice > 0 ? coursePrice + ' €' : '-';
                     courseTypePrice.style.display = 'flex';
-                    if (coursePrice > 0) total += coursePrice;
                     if (durationPrice) durationPrice.style.display = 'none';
-                    // Bundle indirimi devre dışı: satırı her zaman gizle
                     if (bundleDiscountRow) {
                         bundleDiscountRow.style.display = 'none';
                         if (bundleDiscountValue) bundleDiscountValue.textContent = '-';
@@ -2273,13 +2421,12 @@ const bundleNearHintCopy = {
                     courseTypePrice.querySelector('.price-item-label').textContent = currentLang === 'tr' ? 'Kurs tipi seçiniz' : currentLang === 'de' ? 'Kurstyp wählen' : currentLang === 'es' ? 'Seleccione tipo' : 'Select course type';
                     courseTypePrice.querySelector('.price-item-value').textContent = '-';
                     if (durationPrice) durationPrice.style.display = 'none';
-                if (bundleDiscountRow) {
-                    bundleDiscountRow.style.display = 'none';
-                    if (bundleDiscountValue) bundleDiscountValue.textContent = '-';
-                }
+                    if (bundleDiscountRow) {
+                        bundleDiscountRow.style.display = 'none';
+                        if (bundleDiscountValue) bundleDiscountValue.textContent = '-';
+                    }
                 }
 
-                // Toplam tutarı MUTLAKA ekrandaki kurs ücretinden türet (DOM'dan oku – böylece her zaman tutarlı)
                 const courseFeeText = courseTypePrice?.querySelector('.price-item-value')?.textContent?.trim() || '';
                 const courseFeeDisplayed = parseInt(courseFeeText.replace(/[^0-9]/g, ''), 10) || 0;
                 let bundleDiscountDisplayed = 0;
@@ -2289,22 +2436,30 @@ const bundleNearHintCopy = {
                 }
                 const effectiveCourseFromDOM = Math.max(0, courseFeeDisplayed - bundleDiscountDisplayed);
 
-                const visaNeeded = document.querySelector('[name="visa-needed"]:checked')?.value === 'yes';
+                const visaNeeded = document.querySelector('[name="visa-guarantee"]:checked')?.value === 'yes';
                 if (visaPriceRow) {
                     visaPriceRow.style.display = visaNeeded ? 'flex' : 'none';
-                    if (visaNeeded) total += VISA_GUARANTEE;
                 }
 
-                // Konaklama fiyat yansıtılmaz (fiyatı olmasın)
-                if (accommodationPriceRow) accommodationPriceRow.style.display = 'none';
+                const accRadio = document.querySelector('[name="accommodation-type"]:checked');
+                const accVal = accRadio?.value;
+                const accAmount = accVal && ACCOMMODATION_EUR[accVal] != null ? ACCOMMODATION_EUR[accVal] : 0;
+                if (accommodationPriceRow) {
+                    if (accAmount > 0) {
+                        const accLabel = accRadio?.closest('label')?.querySelector('.option-btn-text')?.textContent?.trim() || '';
+                        accommodationPriceRow.querySelector('.price-item-label').textContent = accLabel;
+                        accommodationPriceRow.querySelector('.price-item-value').textContent = accAmount + ' €';
+                        accommodationPriceRow.style.display = 'flex';
+                    } else {
+                        accommodationPriceRow.style.display = 'none';
+                    }
+                }
 
                 const airportPickup = document.querySelector('[name="airport-pickup"]:checked')?.value === 'yes';
                 if (airportPriceRow) {
                     airportPriceRow.style.display = airportPickup ? 'flex' : 'none';
-                    if (airportPickup) total += AIRPORT_PICKUP;
                 }
 
-                // Kupon indirimi: ekrandaki efektif kurs tutarına (bundle sonrası) uygulanır
                 let couponDiscountAmount = 0;
                 if (appliedCoupon && appliedCoupon.discountPercent && effectiveCourseFromDOM > 0) {
                     couponDiscountAmount = Math.round(effectiveCourseFromDOM * appliedCoupon.discountPercent / 100);
@@ -2314,10 +2469,9 @@ const bundleNearHintCopy = {
                     if (couponDiscountRow) couponDiscountRow.style.display = 'none';
                 }
 
-                // Toplam = ekrandaki kurs (bundle sonrası) + vize + havaalanı - kupon
                 const visaAmount = visaNeeded ? VISA_GUARANTEE : 0;
                 const airportAmount = airportPickup ? AIRPORT_PICKUP : 0;
-                const finalTotal = Math.max(0, effectiveCourseFromDOM + visaAmount + airportAmount - couponDiscountAmount);
+                const finalTotal = Math.max(0, effectiveCourseFromDOM + visaAmount + airportAmount + accAmount - couponDiscountAmount);
                 if (totalPriceElement) totalPriceElement.textContent = finalTotal + ' €';
                 const amountCentsEl = document.getElementById('amount-in-cents');
                 if (amountCentsEl) amountCentsEl.value = String(Math.round(finalTotal * 100));
@@ -2426,19 +2580,17 @@ const bundleNearHintCopy = {
                     const courseSelectionArr = Array.isArray(data['course-selection']) ? data['course-selection'] : (data['course-selection'] ? [data['course-selection']] : []);
                     const timezoneArr = Array.isArray(data.timezone) ? data.timezone : (data.timezone ? [data.timezone] : []);
                     const program = data.program || '';
-                    const levelCount = courseSelectionArr.filter(c => ['a1','a2','b1','b2','c1'].includes(c)).length;
-                    const hasTelcPrep = courseSelectionArr.includes('telc-prep');
-                    const hasShortTerm = courseSelectionArr.includes('short-term');
+                    const halfModCount = courseSelectionArr.filter(function (c) { return /^(a1|a2|b1|b2|c1)\.[12]$/.test(c); }).length;
                     const submittedWeeks = data.weeks ? String(data.weeks) : '';
-                    const effectiveWeeks = (program === 'intensive' || program === 'online')
-                        ? (levelCount * 8) + (hasTelcPrep ? 8 : 0) + (hasShortTerm ? (parseInt(submittedWeeks, 10) || 0) : 0)
+                    const effectiveWeeks = (program === 'intensive' || program === 'intensive-plus' || program === 'online')
+                        ? String(halfModCount * 4)
                         : submittedWeeks;
-                    const examCoursesForType = courseSelectionArr.filter(c => ['telc-prep','short-term'].includes(c) ? false : c).filter(Boolean);
                     let standardizedData = {
                         formType: 'booking',
                         sourcePage: data.sourcePage || window.location.pathname,
                         lang: typeof lang !== 'undefined' ? lang : 'tr',
                         promoBundle: (document.getElementById('promo-bundle-input')?.value || '').trim(),
+                        learningPurpose: data['learning-purpose'] || '',
                         firstName: data.first_name || '',
                         lastName: data.last_name || '',
                         name: `${String(data.first_name || '').trim()} ${String(data.last_name || '').trim()}`.trim(),
@@ -2459,8 +2611,13 @@ const bundleNearHintCopy = {
                         startDate: data['start-date'] || '',
                         timezone: timezoneArr,
                         weeks: effectiveWeeks || data.weeks || '',
-                        examType: (hasTelcPrep ? 'Telc-Prep' : '') + (hasShortTerm ? (hasTelcPrep ? ', Short Term' : 'Short Term') : '') || (data['exam-type'] || ''),
-                        visaNeeded: data['visa-needed'] || 'no',
+                        examType: data['exam-type'] || '',
+                        visaGuarantee: data['visa-guarantee'] || 'no',
+                        visaNeeded: data['visa-guarantee'] || 'no',
+                        opportunity: data.opportunity || '',
+                        hearAbout: data['hear-about'] || '',
+                        agencyCoupon: (data['agency-coupon'] || '').trim(),
+                        friendReferrerName: (data['friend-referrer-name'] || '').trim(),
                         accommodationType: data['accommodation-type'] || 'no',
                         airportPickup: data['airport-pickup'] || 'no',
                         coupon: (document.getElementById('coupon-input')?.value || '').trim(),
@@ -2564,26 +2721,28 @@ const bundleNearHintCopy = {
                 bremenBundleFromQuery = bundleKey === 'bremen';
                 promoBundleId = bundleKey;
                 bundlePresetPending = true;
-                document.querySelectorAll('[name="course-selection"]').forEach(cb => { cb.checked = false; });
+                document.querySelectorAll('[name="course-selection"]').forEach(cb => { cb.checked = false; cb.disabled = false; });
                 const intensiveRadio = document.querySelector('[name="program"][value="intensive"]');
                 if (intensiveRadio) intensiveRadio.checked = true;
-                const intensive20h = document.querySelector('[name="intensive-type"][value="intensive"]');
-                if (intensive20h) intensive20h.checked = true;
+                syncIntensiveTypeFromProgram();
                 if (bundleKey === 'a2c1') {
-                    ['a2', 'b1', 'b2', 'c1'].forEach(function (v) {
+                    ['a2.1', 'a2.2', 'b1.1', 'b1.2', 'b2.1', 'b2.2', 'c1.1', 'c1.2'].forEach(function (v) {
                         const cb = document.querySelector('[name="course-selection"][value="' + v + '"]');
                         if (cb) cb.checked = true;
                     });
                 } else if (bundleKey === 'b1c1') {
-                    ['b1', 'b2', 'c1'].forEach(function (v) {
+                    ['b1.1', 'b1.2', 'b2.1', 'b2.2', 'c1.1', 'c1.2'].forEach(function (v) {
                         const cb = document.querySelector('[name="course-selection"][value="' + v + '"]');
                         if (cb) cb.checked = true;
                     });
                 } else if (bundleKey === 'bremen') {
-                    const cb = document.querySelector('[name="course-selection"][value="a1"]');
-                    if (cb) cb.checked = true;
+                    ['a1.1', 'a1.2'].forEach(function (v) {
+                        const cb = document.querySelector('[name="course-selection"][value="' + v + '"]');
+                        if (cb) cb.checked = true;
+                    });
                     bremenBundleFromQuery = true;
                 }
+                syncUnsureCourseSelection();
                 toggleProgramExtras();
                 bundlePresetPending = false;
                 if (bundleKey === 'bremen') {
@@ -2603,7 +2762,6 @@ const bundleNearHintCopy = {
                 else clearBremenBundleCourseRules();
                 enforceShortTermExclusion();
                 reorderCourseSelectionChain();
-                toggleWeeksBlockForShortTerm();
                 toggleBundleInfobox();
                 updatePrice();
             }
