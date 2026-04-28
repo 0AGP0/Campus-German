@@ -1,0 +1,1318 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import type { SupportedLang } from '../utils/pathHelpers';
+
+export interface Props {
+  lang: SupportedLang;
+}
+
+const { lang } = Astro.props;
+
+type HomeType = 'studio' | 'wg' | 'hostel' | 'yurt';
+type GenderVariant = 'female' | 'male' | 'mixed' | 'info';
+
+const pageTitles: Record<SupportedLang, string> = {
+  tr: 'Konaklama - Campus German',
+  de: 'Unterkunft - Campus German',
+  en: 'Housing - Campus German',
+  es: 'Alojamiento - Campus German'
+};
+
+/** Tip etiketi (görünen isimler) — içerik TR */
+const typeLabels: Record<HomeType, string> = {
+  studio: 'Studio',
+  wg: 'WG',
+  hostel: 'Hostel',
+  yurt: 'Yurt'
+};
+
+const homes: Array<{
+  id: string;
+  type: HomeType;
+  title: string;
+  subtitle?: string;
+  location: string;
+  locationExtra?: string;
+  price: string;
+  deposit: string;
+  utilities?: string;
+  available: string;
+  contract: string;
+  roomSize?: string;
+  floor?: string;
+  furnished?: string;
+  commute?: string;
+  details: string[];
+  perks: Array<{ icon: string; text: string }>;
+  wg?: {
+    residents: Array<{ variant: GenderVariant; text: string }>;
+    seeking: Array<{ variant: GenderVariant; text: string }>;
+    note?: string;
+  };
+  extraTags?: string[];
+  images: string[];
+}> = [
+  {
+    id: 'studio-mitte',
+    type: 'studio',
+    title: 'Studio Daire — Bremen Mitte',
+    subtitle: 'Merkezi konum • Tam donanımlı tek kişilik yaşam',
+    location: 'Bremen Mitte, Am Wall civarı',
+    locationExtra: 'Tram hat 8 · Ana istasyon 600 m',
+    price: '€890 / ay',
+    deposit: '€1.200',
+    utilities: 'Elektrik, ısınma, internet pakete dahil',
+    available: 'Hemen uygun',
+    contract: 'Min. 3 ay',
+    roomSize: '35 m²',
+    floor: '3. kat (asansör var)',
+    furnished: 'Full eşyalı',
+    commute: 'Kampus / dil okulu: toplu taşımayla ~12 dk',
+    perks: [
+      { icon: 'fa-route', text: 'Tram ile merkeze 8 dk' },
+      { icon: 'fa-wifi', text: 'Fiber internet (modem dahil)' },
+      { icon: 'fa-ban-smoking', text: 'Sigara içilmeyen bina' },
+      { icon: 'fa-paw', text: 'Küçük evcil hayvan: ev sahibinden onaya bağlı' }
+    ],
+    details: [
+      'Ayrı mutfak (seramik ocak), duş yerine küvet değil; duşa kabin',
+      'Dolap, çamaşır makinesi, buzdolabı, elektrik ocak dahil',
+      'Zemin parke • Balkon çıkışı (6 m² küçük balkon)',
+      'Aidat dahil olarak merdiven temizliği ayda 2 kez planlı'
+    ],
+    extraTags: ['Öğrenci uygunluğu yüksek', 'Anahtar teslim tarihi esnek'],
+    images: [
+      'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1493666438817-866a91353ca9?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1556020685-ae41abfc9365?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1560448075-bb485b067938?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=1200&q=80'
+    ]
+  },
+  {
+    id: 'studio-neustadt',
+    type: 'studio',
+    title: 'Studio Daire — Neustadt Gölet',
+    subtitle: 'Sessiz blok • Öğrenci yoğun semt',
+    location: 'Neustadt-Wolfenbüttel bağlantılı hattın üzeri',
+    locationExtra: 'Otobüs 24 · Süpermarket 3 dk yürüyüş',
+    price: '€820 / ay',
+    deposit: '€1.000',
+    utilities: 'Isınma dahil • Elektrik ayrı sayaç (~€45 ort.)',
+    available: '~15 gün içinde uygun',
+    contract: 'Min. 2 ay',
+    roomSize: '28 m²',
+    floor: 'Zemin kat (Bahçeye çıkış)',
+    furnished: 'Modern mobilya paketi',
+    commute: 'Dil okuluna otobüs hat direct: yaklaşık 18 dk',
+    perks: [
+      { icon: 'fa-person-biking', text: 'Bisiklet kileri güvenlikli kilitleme' },
+      { icon: 'fa-droplet', text: 'Yoğuşmalı doğalgaz kombi • Yalıtım yenilendi (2024)' },
+      { icon: 'fa-broom', text: 'İsteğe bağlı ortak koridor temizliği (komşu anlaşması)' }
+    ],
+    details: [
+      'Yatak alanı zeminden hafif yükseltilmiş; depolama çekmeceleri',
+      'Amerikan mutfak tezgâhında 2 gözlü ocak, mini fırın',
+      'Pencereler sıkı sıkıya kapatılabilir ses yalıtımlı doğrama',
+      'Uydu TV prizi hazır; internet anlaşmasını kiracı yönetebilir'
+    ],
+    extraTags: ['Hafif eşya kabul • Depozitosuz araç teslim seçeneği yok'],
+    images: [
+      'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1502005229762-cf1b431da591?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1572120360610-d971baca4fba?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80'
+    ]
+  },
+  {
+    id: 'wg-schwachhausen',
+    type: 'wg',
+    title: 'WG Oda — Schwachhausen Aile Mahallesi',
+    subtitle: '3+1 daire • Sosyalleşen ama işine saygılı ev arkadaşları',
+    location: 'Schwachhausen, Goethe Cad. yakını',
+    locationExtra: 'Tram 10 · Gece çıkışı güvenli, aydınlatmalı güzergâh',
+    price: '€520 / ay (oda bazlı Warmmiete)',
+    deposit: '€750',
+    utilities: 'Yaklaşım: internet + sıcak su ortak bölen',
+    available: 'Eylül çıkışı için rezervasyon açık',
+    contract: 'Min. 4 ay',
+    roomSize: 'Oda net 14 m² + ortak 48 m²',
+    floor: '2. kat (merdiven düşük, asansör yok)',
+    furnished: 'Oda için temel gardırop-yatak; masa isteğe bağlı önceki kiracıdan',
+    commute: 'Şehir merkezi kampüs bağlantılı ring 22 dk ort.',
+    wg: {
+      residents: [
+        { variant: 'female', text: '2 Kadın öğrenci (üniversite)' },
+        { variant: 'male', text: '1 Erkek (IT stajyeri)' }
+      ],
+      seeking: [{ variant: 'female', text: 'Aranan: Kadın ev arkadaşı (oda boşalması nedeniyle)' }],
+      note: 'Şu daire karma yaşam sürdürülüyor; ev arkadaşları sıklıkla birlikte yemek yazar, hafta sonu kahvaltı günleri olabilir. Gece sessizlik 22:30 sonrası tercih edilir.'
+    },
+    perks: [
+      { icon: 'fa-volume-off', text: 'Çalışma odası yok • odanız ara duvar ile kısmen sessiz paket' },
+      { icon: 'fa-sink', text: '2 banyolu Wohnung — sabah sırası yazılı tahtada takip ediliyor' },
+      { icon: 'fa-couch', text: 'Ortak oturma 24 m²; projeksiyon (Netflix diziler)' }
+    ],
+    details: [
+      'Mutfak ankastre fırın, bulaşık makinesi, buzlu kombi dolabı kullanılıyor',
+      'Haftada bir cumartesi ortak alan süpürme ve mutfak tezgâh sırası dönüşümlü',
+      'Balkon kullanımı sırayla tek tip — sigara içilebilir sadece Balkon kenarı küllükte',
+      'Misafir ağırlama: Önceden bildirim + hafta içi akşam 2 kişiyi aşmayan ziyaret kuralına uygun'
+    ],
+    extraTags: ['Karma WG', 'Uygun fiyat sıcak kirası Warmmiete yaklaşık'],
+    images: [
+      'https://images.unsplash.com/photo-1464890100898-a385f744067f?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1616594039964-3f2b4f4af9d3?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1575517111839-3a3843ee7f11?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600585154363-67ebadee75f9?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600566753376-12c38abebd17?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600047509358-9dc75507daeb?auto=format&fit=crop&w=1200&q=80'
+    ]
+  },
+  {
+    id: 'wg-findorff',
+    type: 'wg',
+    title: 'WG Odası — Findorff (Erkek ağırlıklı)',
+    subtitle: '4 kişilik erkek WG • Spor salonu üyeliği komşuda',
+    location: 'Findorff-West, doğrudan Stadtwald girişi',
+    locationExtra: 'Tram transfer 2 ile üniversite · Spor tesisi yürüyüş mesafeli',
+    price: '€490 / ay (oda sıcak kirası dahil yaklaşık)',
+    deposit: '€700',
+    utilities: 'Elektrik bölüşülmüş ~€42/kişi ay',
+    available: '1 Kasım itibarı boşalan oda',
+    contract: 'Min. 6 ay önerilir (kış dönemi depozitosu sıkı)',
+    roomSize: 'Oda net 13 m² (yüksek tavan 3 m)',
+    floor: 'Üst kat 4 (yük asansör mevcut)',
+    furnished: 'Full • özel eski kiracının çalışma köşesi bıraktı',
+    commute: 'Kampus bisiklet ile 14 dk düz güzergâh',
+    wg: {
+      residents: [
+        { variant: 'male', text: '3 Erkek öğrenci (Mühendislik & İlahiyat)' },
+        { variant: 'mixed', text: 'Beklenen karma değil: ev erkek WG kültürüne uygun olanlar için' }
+      ],
+      seeking: [
+        { variant: 'male', text: 'Tercih: Erkek ev arkadaşı' },
+        { variant: 'info', text: 'İstisnai kadın başvuru: yüz yüze uyum görüşmesi sonrası' }
+      ],
+      note: 'Evde düzenli halı saha günleri var — gece çıkışı erken uyuyanlar uyum sağlar. Sigara kullanılmıyor.'
+    },
+    perks: [
+      { icon: 'fa-dumbbell', text: 'Apartman yan binada FitX indirimi (komşuluk tarifesi)' },
+      { icon: 'fa-bicycle', text: 'Bisiklet kileri zeminde; şarj çıkışı ortak elektrik süreliği' },
+      { icon: 'fa-drumstick-bite', text: 'Buzdolabı raf sırası yapışkan etiketle organize' }
+    ],
+    details: [
+      'Çamaşır: ortak sıra + sıkma kurutma doğal hava balkonda',
+      'Ortak salon 32 m²; PlayStation bağlı konsol küçük raf kutusunda QR ile paylaşım',
+      'Tuvalet / banyo ayrımı klasik WG — sıra haftanın günleriyle dağıtılmış',
+      'Ev arkadaşları Almanca & İngilizce iletişimi tercih ediyorlar (Türkçe bilen arkadaşımız olabilir değil garanti)'
+    ],
+    extraTags: ['Erkek WG', 'Spor dostu yaşam ritmi'],
+    images: [
+      'https://images.unsplash.com/photo-1556020685-ae41abfc9365?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600566753376-12c38abebd17?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1540518615216-edb4e6e5c7c9?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80'
+    ]
+  },
+  {
+    id: 'hostel-city',
+    type: 'hostel',
+    title: 'Hostel Plus — City Center',
+    subtitle: 'Hızlı erişim • Kısa döneme uygun sıcak seçenek',
+    location: 'Alstadt ring içi, Hauptbahnhof 500 m',
+    locationExtra: 'Gece çıkışı ana cadde güvenlik kameralı güzergâh',
+    price: '€420 / ay (dörtyataklı oda kotasıyla)',
+    deposit: '€300',
+    utilities: 'Tüm faturalar resepsiyon üzerinden',
+    available: 'Yatak bazlı günlük uygunluk',
+    contract: 'Aylık otomatik uzama',
+    roomSize: 'Dört kişilik oda (~18 m²) veya iki kişilik (ek ücret)',
+    floor: '3–6. kat (resepsiyon asansör yönlendirir)',
+    furnished: 'Yatak + kilit dolap + nevresim yaz paketi',
+    commute: 'Dil okuluna yürüyüş 12 dk ya da elektrikli scooter kiralama nokta ön kapıda',
+    perks: [
+      { icon: 'fa-clock', text: 'Resepsiyon 24/7 • geç giriş barkod kartı' },
+      { icon: 'fa-mug-hot', text: 'Ortak mutfak: kahve 1€ sabah paketi' },
+      { icon: 'fa-shirt', text: 'Çamaşırhane jeton ile zemin −1 (jeton rezervasyonlu)' },
+      { icon: 'fa-lock', text: 'Her yatakta USB priz güvenlik çekmecesi' }
+    ],
+    details: [
+      'Dört kişilik odalar cinsiyet ayrılığı olmayan parti odaları olarak da seçilebilir (uyarı etiketi koyduk)',
+      'İki kişilik oda daha sessiz blokta — genelde kadın/erkek ayrılığı yoğundur müsaitliğe göre',
+      'Depozito çıkışta oda teslim görevlisi ile hasar cetveli yapılır (15 dk süre)'
+    ],
+    extraTags: ['Kısa döneme ideal', 'Sosyal yaşam güçlü'],
+    images: [
+      'https://images.unsplash.com/photo-1631049035182-249067d7618e?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1574643156921-ede4b5388cd8?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1551882547-ff40c63fe12e?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80'
+    ]
+  },
+  {
+    id: 'yurt-campus',
+    type: 'yurt',
+    title: 'Öğrenci Yurdu — Campus Residence',
+    subtitle: 'Kampüs hattına bağlantılı • akademik yaşam için etüt alanları',
+    location: 'Üniversite kampüs doğusuna doğru bağlı ring',
+    locationExtra: 'Ring otobüs 20 · kampüs güvenlik noktalı kesit',
+    price: '€580 / ay (tek kişilik standart oda)',
+    deposit: '€650',
+    utilities: 'Yemek kartı dahil paket değildir • kantinden indirim var',
+    available: 'Ekim başları kontenjan açığı',
+    contract: 'Min. iki dönem (12 ay yaklaşık)',
+    roomSize: 'Tek kişilik 12–14 m² (tip A/B blok)',
+    floor: '2–9. kat bloklar ortak güvenlik kartı ile',
+    furnished: 'Masa gövdesi ile birlikte yükseltilmiş yatak kutusu dolap kombinasyon',
+    commute: 'Ayak bağlantı kampüs içi güvenilir yolu 8 dk güvenilir',
+    perks: [
+      { icon: 'fa-book', text: 'Gece ·24 etüt salonu sıra yazılı masa tahsisi' },
+      { icon: 'fa-dumbbell', text: 'Küçük fitness + yoga odası sıra yazılı kullanıcı listesi haftalık yenileniyor' },
+      { icon: 'fa-earth-europe', text: 'Buddy program mentor eşlemesi kampüs arkadaşı (isteğe bağlı)' }
+    ],
+    details: [
+      'Yurt kuralında gece kartı çıkış saat uyarısı; haft içi ile haft sonu politikası farklı',
+      'Mutfak modülü blok başına iki ortak blok — buzdolabı raf numaralı',
+      'Oda sıcaklığı merkezi senkron kombi yaz-kış uyarı sistemi bildirilen uygulamadan',
+      'Misafir: Resepsiyonda kayıtlı günlük iki ziyaret hakkı (kimlik ibraz)'
+    ],
+    extraTags: ['Öğrenci kimlik zorunlu', 'Uzun dönem avantaj paketleri'],
+    images: [
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1560448075-bb485b067938?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1555854877-baab9996acd1?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600566753376-12c38abebd17?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=1200&q=80'
+    ]
+  },
+  {
+    id: 'yurt-riverside',
+    type: 'yurt',
+    title: 'Öğrenci Yurdu — Riverside Terrace',
+    subtitle: 'Weser manzarası • Yüksek blokta çift seçenek',
+    location: 'Weser yakını eski liman yapı yakın üst blok',
+    locationExtra: 'Tram doğrudan sıcak bağlantılı · bisiklet yolu ön sıra',
+    price: '€620 / ay (tek veya iki kişilik tip)',
+    deposit: '€700',
+    utilities: 'Isınma ve sıcak su daire blok ölçüsü dahil yaklaşık',
+    available: 'Kasım blok genişletilmiş kontenjan',
+    contract: 'Min. 5 ay + tatil sırasına göre blokaj',
+    roomSize: 'Tek 14 m² • çift 18 m² (çift daha az kontenjan)',
+    floor: 'Yüksek blok 14. kat panorama koridor güvenlik camı',
+    furnished: 'Mutfak blok köşeli mini tezgâh seçeneği dahil daha pahalı tip',
+    commute: 'Riverside lokanta hattı üzerinden kampus rotası doğrudan sık ring',
+    perks: [
+      { icon: 'fa-water', text: 'Çatı güneş güvertesi akşamları için rezerve edilebilir (45 dk blok)' },
+      { icon: 'fa-music', text: 'Grup kulüplerinde müzik kulüplerinde ses yalıtımlı küçük kulübecik' },
+      { icon: 'fa-bus', text: 'Gece minibüs sıcak bağlantılı hat numaralı harita duvar panosunda güncellenir' }
+    ],
+    details: [
+      'İki kişilik oda daha çift veya yakın arkadaş önceden kayıtta belirlenir',
+      'Kantin çok katlı — vejetaryen sıra blokta ayrı kuyruk',
+      'Sigara yurdun hiçbir genel alanında kullanılmaz (sadece dış sığınma sigara köşesi haritadedir)'
+    ],
+    extraTags: ['Manzara blok odaları sık bekler', 'Uzun sıra kampüs yakınlığı hissi güçlü'],
+    images: [
+      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1572120360610-d971baca4fba?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600585154912-087dd8d3cbf4?auto=format&fit=crop&w=1200&q=80'
+    ]
+  }
+];
+
+function chipClass(kind: GenderVariant): string {
+  const map: Record<GenderVariant, string> = {
+    female: 'housing-pill housing-pill--female',
+    male: 'housing-pill housing-pill--male',
+    mixed: 'housing-pill housing-pill--mixed',
+    info: 'housing-pill housing-pill--info'
+  };
+  return map[kind];
+}
+
+const titlePage = pageTitles[lang];
+
+const accentByType: Record<HomeType, string> = {
+  studio: 'housing-card--accent-studio',
+  wg: 'housing-card--accent-wg',
+  hostel: 'housing-card--accent-hostel',
+  yurt: 'housing-card--accent-yurt'
+};
+---
+
+<MainLayout title={titlePage} lang={lang}>
+  <main class="housing-page">
+    <section class="housing-hero-plain">
+      <div class="container">
+        <h1>Konaklama seçenekleri</h1>
+        <p>
+          Bremen için studio, WG (oda için kadın/erkek ev arkadaşı bilgileri kartlarda), hostel ve öğrenci yurtlarından seçenekleri süzün; güncelliği ve uygunluğu doğrudan görüşerek teyit edin.
+        </p>
+      </div>
+    </section>
+
+    <section class="housing-list-section">
+      <div class="container">
+        <div class="housing-filters" id="housing-filters" role="group" aria-label="Konaklama türü filtreleri">
+          <button class="housing-filter-btn is-active" data-type="all" type="button">Tümü</button>
+          <button class="housing-filter-btn" data-type="studio" type="button">Studio</button>
+          <button class="housing-filter-btn" data-type="wg" type="button">WG</button>
+          <button class="housing-filter-btn" data-type="hostel" type="button">Hostel</button>
+          <button class="housing-filter-btn" data-type="yurt" type="button">Yurt</button>
+        </div>
+
+        <div class="housing-cards" id="housing-cards">
+          {homes.map((home) => (
+            <article class:list={['housing-card', accentByType[home.type]]} data-type={home.type}>
+              <div class="housing-gallery-shell">
+                <span class:list={['housing-type-badge', `housing-type-badge--${home.type}`]}>{typeLabels[home.type]}</span>
+                {home.available && <span class="housing-status-pill">{home.available}</span>}
+                <div class="housing-gallery">
+                  <div class="housing-main-shot">
+                    <img class="housing-main-image" src={home.images[0]} alt={home.title} loading="lazy" />
+                  </div>
+                  <p class="housing-gallery-hint">{home.images.length} fotoğraf — ön izlemeye tıklayın</p>
+                  <div class="housing-thumbs">
+                    {home.images.map((img, idx) => (
+                      <button
+                        class:list={['housing-thumb', idx === 0 ? 'is-active' : undefined]}
+                        type="button"
+                        data-image={img}
+                        aria-label={`${home.title} görsel ${idx + 1}`}
+                      >
+                        <img src={img} alt="" loading="lazy" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div class="housing-gallery-spacer">
+                  <div class="housing-gallery-spacer-inner">
+                    <i class="fas fa-circle-info housing-gallery-spacer-ic" aria-hidden="true"></i>
+                    <p class="housing-gallery-spacer-text">
+                      Örnek ilan görselidir. Güncel uygunluk, fiyat ve sözleşme için iletişime geçin.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="housing-details">
+                <header class="housing-detail-head">
+                  <div>
+                    <h2>{home.title}</h2>
+                    {home.subtitle && <p class="housing-subtitle">{home.subtitle}</p>}
+                  </div>
+                </header>
+
+                <div class="housing-location-block">
+                  <p class="housing-location-main">
+                    <i class="fas fa-location-dot housing-inline-ic" aria-hidden="true"></i>
+                    {home.location}
+                  </p>
+                  {home.locationExtra && <p class="housing-location-extra">{home.locationExtra}</p>}
+                  {home.commute && (
+                    <p class="housing-commute">
+                      <i class="fas fa-person-walking housing-inline-ic" aria-hidden="true"></i>
+                      {home.commute}
+                    </p>
+                  )}
+                </div>
+
+                {home.wg && (
+                  <section class="housing-wg-banner" aria-label="WG ev arkadaşlığı özeti">
+                    <div class="housing-wg-title">
+                      <i class="fas fa-venus-mars housing-inline-ic" aria-hidden="true"></i>
+                      Ev arkadaşları · cinsiyet bilgisi
+                    </div>
+                    <div class="housing-wg-rows">
+                      <div class="housing-wg-block">
+                        <span class="housing-wg-label">Şu an kimlerle yaşanıyor?</span>
+                        <ul class="housing-pill-list">
+                          {home.wg.residents.map((r) => (
+                            <li>
+                              <span class={chipClass(r.variant)}>{r.text}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div class="housing-wg-block housing-wg-block--accent">
+                        <span class="housing-wg-label">Aranan profil</span>
+                        <ul class="housing-pill-list">
+                          {home.wg.seeking.map((s) => (
+                            <li>
+                              <span class={chipClass(s.variant)}>{s.text}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                    {home.wg.note && <p class="housing-wg-note">{home.wg.note}</p>}
+                  </section>
+                )}
+
+                <dl class="housing-spec-strip">
+                  {home.roomSize && (
+                    <div class="housing-spec-chip">
+                      <dt><i class="fas fa-expand" aria-hidden="true"></i> Alan</dt>
+                      <dd>{home.roomSize}</dd>
+                    </div>
+                  )}
+                  {home.floor && (
+                    <div class="housing-spec-chip">
+                      <dt><i class="fas fa-stairs" aria-hidden="true"></i> Kat / erişim</dt>
+                      <dd>{home.floor}</dd>
+                    </div>
+                  )}
+                  {home.furnished && (
+                    <div class="housing-spec-chip">
+                      <dt><i class="fas fa-couch" aria-hidden="true"></i> Eşya</dt>
+                      <dd>{home.furnished}</dd>
+                    </div>
+                  )}
+                  {home.utilities && (
+                    <div class="housing-spec-chip housing-spec-chip--wide">
+                      <dt><i class="fas fa-plug-circle-bolt" aria-hidden="true"></i> Faturalar</dt>
+                      <dd>{home.utilities}</dd>
+                    </div>
+                  )}
+                  <div class="housing-spec-chip">
+                    <dt><i class="fas fa-file-signature" aria-hidden="true"></i> Süre</dt>
+                    <dd>{home.contract}</dd>
+                  </div>
+                </dl>
+
+                <div class="housing-money-row">
+                  <div class="housing-price-box">
+                    <span class="housing-money-label">Aylık kira</span>
+                    <strong class="housing-price-main">{home.price}</strong>
+                  </div>
+                  <div class="housing-price-box housing-price-box--muted">
+                    <span class="housing-money-label">Depozito</span>
+                    <strong>{home.deposit}</strong>
+                  </div>
+                </div>
+
+                {home.extraTags && home.extraTags.length > 0 && (
+                  <div class="housing-tag-row">
+                    {home.extraTags.map((tag) => (
+                      <span class="housing-mini-tag">{tag}</span>
+                    ))}
+                  </div>
+                )}
+
+                {home.perks.length > 0 && (
+                  <ul class="housing-perks" aria-label="Öne çıkanlar">
+                    {home.perks.map((perk) => (
+                      <li>
+                        <span class="housing-perk-ic" aria-hidden="true">
+                          <i class:list={['fas', perk.icon]} />
+                        </span>
+                        <span>{perk.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <details class="housing-details-expand">
+                  <summary>Detaylı açıklama ve kurallar</summary>
+                  <ul class="housing-features">
+                    {home.details.map((detail) => (
+                      <li>{detail}</li>
+                    ))}
+                  </ul>
+                </details>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script is:inline>
+    (() => {
+      const filterWrap = document.getElementById('housing-filters');
+      const cardsWrap = document.getElementById('housing-cards');
+      if (!filterWrap || !cardsWrap) return;
+
+      const buttons = Array.from(filterWrap.querySelectorAll('.housing-filter-btn'));
+      const cards = Array.from(cardsWrap.querySelectorAll('.housing-card'));
+
+      function applyFilter(type) {
+        cards.forEach((card) => {
+          const match = type === 'all' || card.getAttribute('data-type') === type;
+          card.style.display = match ? '' : 'none';
+        });
+      }
+
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          buttons.forEach((b) => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          applyFilter(btn.getAttribute('data-type') || 'all');
+        });
+      });
+
+      cards.forEach((card) => {
+        const main = card.querySelector('.housing-main-image');
+        const thumbs = Array.from(card.querySelectorAll('.housing-thumb'));
+        thumbs.forEach((thumb) => {
+          thumb.addEventListener('click', () => {
+            thumbs.forEach((t) => t.classList.remove('is-active'));
+            thumb.classList.add('is-active');
+            const image = thumb.getAttribute('data-image');
+            if (main && image) main.setAttribute('src', image);
+          });
+        });
+      });
+    })();
+  </script>
+</MainLayout>
+
+<style is:global>
+  .housing-page {
+    padding-bottom: 3rem;
+    background: var(--color-bg-light);
+  }
+
+  /* Sunduklarımız / site diline yakın düz hero */
+  .housing-hero-plain {
+    padding: 3rem 0 2rem;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-border-light);
+    margin-bottom: 0.75rem;
+  }
+
+  .housing-hero-plain::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 320px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    opacity: 0.08;
+    transform: translate(28%, -40%);
+    pointer-events: none;
+  }
+
+  .housing-hero-plain .container {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+  }
+
+  .housing-hero-plain h1 {
+    margin: 0 0 1rem;
+    font-size: clamp(1.85rem, 3.8vw, 2.55rem);
+    font-weight: 700;
+    line-height: 1.22;
+    color: var(--color-text-primary);
+  }
+
+  .housing-hero-plain p {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.72;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    text-align: left;
+    max-width: 56ch;
+  }
+
+  .housing-list-section {
+    padding-top: 0;
+  }
+
+  .housing-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .housing-filter-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border-medium);
+    background: var(--color-bg-white);
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+
+  .housing-filter-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-bg-white);
+    color: var(--color-secondary);
+  }
+
+  .housing-filter-btn.is-active {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary);
+    color: var(--color-secondary);
+  }
+
+  .housing-cards {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .housing-card {
+    --gallery-fill-a: rgba(12, 192, 223, 0.1);
+    --gallery-fill-b: rgba(12, 192, 223, 0.22);
+    --card-accent: var(--color-primary);
+    display: grid;
+    grid-template-columns: minmax(260px, 38%) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--color-border-light);
+    border-left: 4px solid var(--card-accent);
+    background: var(--color-bg-white);
+    box-shadow: 0 4px 24px rgba(44, 54, 63, 0.07);
+    transition: box-shadow 0.22s ease;
+  }
+
+  .housing-card:hover {
+    box-shadow: 0 10px 36px rgba(44, 54, 63, 0.12), 0 0 0 1px color-mix(in srgb, var(--card-accent) 18%, transparent);
+  }
+
+  .housing-card--accent-studio {
+    --card-accent: #0ea5e9;
+    --gallery-fill-a: rgba(14, 165, 233, 0.14);
+    --gallery-fill-b: rgba(14, 165, 233, 0.32);
+  }
+
+  .housing-card--accent-wg {
+    --card-accent: #a855f7;
+    --gallery-fill-a: rgba(168, 85, 247, 0.13);
+    --gallery-fill-b: rgba(168, 85, 247, 0.32);
+  }
+
+  .housing-card--accent-hostel {
+    --card-accent: #ea580c;
+    --gallery-fill-a: rgba(234, 88, 12, 0.12);
+    --gallery-fill-b: rgba(234, 88, 12, 0.28);
+  }
+
+  .housing-card--accent-yurt {
+    --card-accent: #059669;
+    --gallery-fill-a: rgba(5, 150, 105, 0.12);
+    --gallery-fill-b: rgba(5, 150, 105, 0.3);
+  }
+
+  /*
+   * Sol sütun grid satırıyla aynı yükseklikte uzar; kalan alan .housing-gallery-spacer (flex-grow) ile dolar.
+   * Boş div + flex:1 bazı tarayıcılarda 0px kalabildiği için içerik + flex: 1 1 0 kullanılıyor.
+   */
+  .housing-gallery-shell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    min-height: 0;
+    width: 100%;
+    border-right: 1px solid color-mix(in srgb, var(--card-accent) 22%, var(--color-border-light));
+    background: linear-gradient(
+      165deg,
+      var(--gallery-fill-a) 0%,
+      color-mix(in srgb, var(--color-bg-white) 82%, var(--gallery-fill-b)) 52%,
+      var(--gallery-fill-b) 100%
+    );
+  }
+
+  .housing-gallery-spacer {
+    flex: 1 1 0;
+    min-height: 5.5rem;
+    width: 100%;
+    padding: 0.55rem 0.65rem 0.75rem;
+    border-radius: 0 0 0 11px;
+    border-top: 1px solid color-mix(in srgb, var(--card-accent) 35%, var(--color-border-light));
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-bg-white) 55%, var(--gallery-fill-b)) 0%,
+      color-mix(in srgb, var(--card-accent) 22%, #f1f5f9) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .housing-gallery-spacer-inner {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+    padding: 0.45rem 0.5rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid var(--color-border-light);
+    box-shadow: 0 2px 10px rgba(44, 54, 63, 0.06);
+  }
+
+  .housing-gallery-spacer-ic {
+    flex-shrink: 0;
+    margin-top: 0.12rem;
+    font-size: 1.05rem;
+    color: var(--card-accent);
+  }
+
+  .housing-gallery-spacer-text {
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+  }
+
+  .housing-type-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 2;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.38rem 0.65rem;
+    border-radius: 8px;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 4px 14px rgba(44, 54, 63, 0.12);
+  }
+
+  .housing-type-badge--studio {
+    background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+  }
+
+  .housing-type-badge--wg {
+    background: linear-gradient(135deg, #c084fc 0%, #9333ea 100%);
+  }
+
+  .housing-type-badge--hostel {
+    background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+  }
+
+  .housing-type-badge--yurt {
+    background: linear-gradient(135deg, #34d399 0%, #047857 100%);
+  }
+
+  .housing-status-pill {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 2;
+    max-width: 56%;
+    text-align: right;
+    padding: 0.32rem 0.62rem;
+    border-radius: 6px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    background: var(--color-bg-yellow-soft);
+    border: 1px solid rgba(255, 210, 31, 0.45);
+  }
+
+  .housing-gallery {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 auto;
+    display: grid;
+    gap: 0.55rem;
+    padding: 0.65rem 0.65rem 0.6rem;
+  }
+
+  .housing-main-shot {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--color-border-light);
+    background: var(--color-bg-white);
+    box-shadow: 0 2px 8px rgba(44, 54, 63, 0.06);
+  }
+
+  .housing-main-image {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    height: auto;
+    min-height: 0;
+    max-height: 420px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .housing-gallery-hint {
+    margin: 0;
+    padding: 0 0 0.1rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* 8 küçük resim = 4×2 — sol kolon yüksekliği sağdaki içerikle daha iyi dengelenir */
+  .housing-thumbs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.38rem;
+  }
+
+  .housing-thumb {
+    border: 2px solid transparent;
+    background: var(--color-bg-white);
+    padding: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+  }
+
+  .housing-thumb:hover {
+    border-color: var(--color-border-medium);
+  }
+
+  .housing-thumb img {
+    width: 100%;
+    height: 58px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .housing-thumb.is-active {
+    border-color: var(--card-accent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--card-accent) 35%, transparent);
+  }
+
+  .housing-details {
+    display: grid;
+    gap: 0.85rem;
+    align-content: start;
+    padding: 1rem 1.1rem 1.15rem;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--card-accent) 5%, #fff) 0%, #fff 72%);
+  }
+
+  .housing-detail-head h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.32rem;
+    line-height: 1.26;
+    color: #0f172a;
+  }
+
+  .housing-subtitle {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 600;
+  }
+
+  .housing-location-block {
+    padding: 0.65rem 0.82rem;
+    border-radius: 10px;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 9%, #fff) 0%, var(--color-bg-blue-soft) 100%);
+    border: 1px solid color-mix(in srgb, var(--card-accent) 18%, var(--color-border-light));
+  }
+
+  .housing-location-main {
+    margin: 0 0 0.28rem;
+    font-weight: 800;
+    color: #1e293b;
+    font-size: 0.95rem;
+    display: flex;
+    gap: 0.45rem;
+    align-items: flex-start;
+  }
+
+  .housing-location-extra,
+  .housing-commute {
+    margin: 0;
+    font-size: 0.86rem;
+    color: #64748b;
+    line-height: 1.5;
+    padding-left: 1.5rem;
+  }
+
+  .housing-commute {
+    padding-top: 0.35rem;
+    border-top: 1px dashed rgba(148, 163, 184, 0.45);
+    margin-top: 0.45rem;
+  }
+
+  .housing-inline-ic {
+    color: var(--card-accent, #6366f1);
+    margin-top: 0.08rem;
+    flex-shrink: 0;
+  }
+
+  .housing-wg-banner {
+    border-radius: 10px;
+    padding: 0.82rem 0.92rem;
+    background: var(--color-bg-yellow-soft);
+    border: 1px dashed rgba(203, 213, 225, 0.95);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .housing-wg-title {
+    font-weight: 800;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-secondary);
+    margin-bottom: 0.65rem;
+    display: flex;
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .housing-wg-rows {
+    display: grid;
+    gap: 0.72rem;
+  }
+
+  @media (min-width: 620px) {
+    .housing-wg-rows {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .housing-wg-block {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .housing-wg-block--accent .housing-wg-label {
+    color: #b45309;
+  }
+
+  .housing-wg-block--accent .housing-wg-banner,
+  .housing-wg-block--accent {
+    background: transparent;
+  }
+
+  .housing-wg-label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #6b7280;
+  }
+
+  .housing-pill-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .housing-pill-list li {
+    margin: 0;
+  }
+
+  .housing-pill {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 0.36rem 0.72rem;
+    border-radius: 999px;
+    line-height: 1.35;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+  }
+
+  .housing-pill--female {
+    background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+    color: #9d174d;
+    border: 1px solid #f472b6;
+  }
+
+  .housing-pill--male {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    color: #1e3a8a;
+    border: 1px solid #60a5fa;
+  }
+
+  .housing-pill--mixed {
+    background: linear-gradient(135deg, #ede9fe, #e9d5ff);
+    color: #5b21b6;
+    border: 1px solid #a78bfa;
+  }
+
+  .housing-pill--info {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    color: #92400e;
+    border: 1px solid #fcd34d;
+  }
+
+  .housing-wg-note {
+    margin: 0.6rem 0 0;
+    font-size: 0.85rem;
+    line-height: 1.62;
+    color: #57534e;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(251, 191, 36, 0.35);
+  }
+
+  .housing-spec-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+  }
+
+  .housing-spec-strip .housing-spec-chip {
+    flex: 1 1 calc(50% - 0.35rem);
+    min-width: 140px;
+    margin: 0;
+    padding: 0.55rem 0.62rem;
+    border-radius: 12px;
+    background: rgba(248, 250, 252, 0.92);
+    border: 1px solid #e2e8f0;
+  }
+
+  .housing-spec-chip--wide {
+    flex: 1 1 100%;
+  }
+
+  .housing-spec-chip dt {
+    margin: 0;
+    font-size: 0.66rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 0.32rem;
+  }
+
+  .housing-spec-chip dt i {
+    color: var(--card-accent);
+    font-size: 0.74rem;
+  }
+
+  .housing-spec-chip dd {
+    margin: 0.26rem 0 0;
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #334155;
+    line-height: 1.4;
+  }
+
+  .housing-money-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .housing-price-box {
+    flex: 1 1 160px;
+    padding: 0.65rem 0.85rem;
+    border-radius: 10px;
+    background: linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--card-accent) 14%, #fff) 0%,
+      color-mix(in srgb, var(--card-accent) 6%, #f8fafc) 100%
+    );
+    border: 1px solid color-mix(in srgb, var(--card-accent) 28%, var(--color-border-light));
+  }
+
+  .housing-price-box--muted {
+    background: linear-gradient(145deg, var(--color-bg-gray) 0%, #f1f5f9 100%);
+    border-color: var(--color-border-light);
+    box-shadow: none;
+  }
+
+  .housing-money-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #64748b;
+    margin-bottom: 0.2rem;
+  }
+
+  .housing-price-main {
+    font-size: 1.2rem;
+    color: var(--card-accent);
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  .housing-tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.42rem;
+  }
+
+  .housing-mini-tag {
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.32rem 0.72rem;
+    border-radius: 999px;
+    background: rgba(226, 232, 240, 0.7);
+    color: #475569;
+    border: 1px solid #cbd5e1;
+  }
+
+  .housing-perks {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .housing-perks li {
+    display: flex;
+    gap: 0.62rem;
+    align-items: flex-start;
+    font-size: 0.875rem;
+    line-height: 1.54;
+    color: #374151;
+  }
+
+  .housing-perk-ic {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #fff 0%, #f1f5f9 100%);
+    color: var(--card-accent);
+    border: 1px solid #e2e8f0;
+    font-size: 0.9rem;
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.07);
+  }
+
+  .housing-details-expand {
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 0.15rem 0.92rem;
+  }
+
+  .housing-details-expand summary {
+    cursor: pointer;
+    padding: 0.65rem 0;
+    font-weight: 900;
+    font-size: 0.92rem;
+    color: #0f172a;
+    list-style: none;
+  }
+
+  .housing-details-expand summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .housing-details-expand summary::before {
+    content: '▸ ';
+    display: inline-block;
+    transition: transform 0.2s ease;
+    color: var(--color-primary);
+  }
+
+  .housing-details-expand[open] summary::before {
+    transform: rotate(90deg);
+  }
+
+  .housing-features {
+    margin: 0 0 0.75rem;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.4rem;
+    color: #334155;
+    font-size: 0.88rem;
+    line-height: 1.58;
+  }
+
+  @media (max-width: 980px) {
+    .housing-card {
+      grid-template-columns: 1fr;
+    }
+
+    .housing-gallery-shell {
+      border-right: none;
+      border-bottom: 1px solid color-mix(in srgb, var(--card-accent) 20%, var(--color-border-light));
+    }
+
+    .housing-gallery-spacer {
+      flex: 0 0 auto;
+      min-height: 0;
+      margin-top: 0;
+      border-radius: 0;
+      border-top: 1px solid var(--color-border-light);
+      padding: 0.5rem 0.65rem 0.65rem;
+    }
+
+    .housing-gallery-spacer-inner {
+      padding: 0.4rem 0.5rem;
+    }
+
+    .housing-gallery-spacer-text {
+      font-size: 0.74rem;
+    }
+
+    .housing-details {
+      border-left: none;
+    }
+
+    .housing-main-image {
+      aspect-ratio: 16 / 10;
+      max-height: 340px;
+    }
+
+    .housing-thumbs {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .housing-thumb img {
+      height: 52px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .housing-thumbs {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .housing-thumb img {
+      height: 50px;
+    }
+  }
+</style>

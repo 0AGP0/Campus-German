@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
-import BilgiAlForm from '../../../components/BilgiAlForm.astro';
+import GlobalCourseWidget from '../../../components/GlobalCourseWidget.astro';
 import { cleanSlug, getAdvantagesPath, getContactPath, getBookingPath, isValidLang } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
@@ -199,7 +199,7 @@ const relatedAdvantages = [
                         </div>
                     </div>
                     <div class="cta-form">
-                        <BilgiAlForm lang={lang} />
+                        <GlobalCourseWidget lang={lang} bookingPath={bookingPath} />
                     </div>
                 </div>
             </div>

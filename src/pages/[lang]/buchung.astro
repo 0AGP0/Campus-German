@@ -3,7 +3,7 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import '../../styles/pages/buchung.css';
 import { coursePricing } from '../../data/coursePricing.ts';
 import { VALID_COUPONS } from '../../data/coupons.ts';
-import { getStartDateOptions } from '../../utils/coursePricingHelper';
+import { getStartDateOptionsMonthYear } from '../../utils/coursePricingHelper';
 import { getDatenschutzPath, getImpressumPath } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
@@ -19,7 +19,7 @@ const { lang } = Astro.params;
 const pricingData = coursePricing[lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en')];
 const pricingLang = lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en');
 const START_DATE_YEAR = 2026;
-const allStartDateOptions = getStartDateOptions(lang as 'tr' | 'de' | 'en' | 'es', START_DATE_YEAR);
+const allStartDateOptions = getStartDateOptionsMonthYear(lang as 'tr' | 'de' | 'en' | 'es', START_DATE_YEAR);
 const _today = new Date();
 _today.setHours(0, 0, 0, 0);
 const startDateOptions = allStartDateOptions.filter((opt) => {
@@ -167,7 +167,7 @@ const t = {
         privacyAccepted: "Kişisel Verilerin Korunması bilgilendirmesini kabul ediyorum",
         completeBooking: "Rezervasyonu Tamamla",
         freeReservation: "Ücretsiz rezervasyon",
-        proceedToPayment: "Ödemeye geç",
+        proceedToPayment: "Ücretsiz rezervasyon yap",
         priceCalculation: "Fiyat Hesaplaması",
         priceCalculationDesc: "Anlık fiyat güncellemesi",
         courseFees: "Kurs Ücretleri",
@@ -241,7 +241,7 @@ const t = {
         back: "Geri",
         completeBooking: "Rezervasyonu Tamamla",
         freeReservation: "Ücretsiz rezervasyon",
-        proceedToPayment: "Ödemeye geç",
+        proceedToPayment: "Ücretsiz rezervasyon yap",
         priceCalculation: "Fiyat Hesaplaması",
         priceCalculationDesc: "Anlık fiyat güncellemesi",
         courseFees: "Kurs Ücretleri",

@@ -1,214 +1,193 @@
 ---
-const { lang = 'tr', bookingPath = '/tr/buchung', homePath: homePathProp } = Astro.props;
+import '../styles/pages/quote-wizard.css';
+const { lang = 'tr', bookingPath = '/tr/buchung', homePath: homePathProp, embedded = false } = Astro.props;
 const homePath = homePathProp ?? `/${lang}`;
-/** Booking ücretsiz gönderim ile aynı Make senaryosu (PUBLIC_MAKE_QUOTE_WEBHOOK ile override edilebilir) */
+const quoteMode = embedded ? 'embedded' : 'standalone';
 const BOOKING_FREE_WEBHOOK = 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
 const quoteWebhook = import.meta.env.PUBLIC_MAKE_QUOTE_WEBHOOK || BOOKING_FREE_WEBHOOK;
+
+const commonPrograms = [
+  { label: 'Akademik', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'academic', image: 'https://images.unsplash.com/photo-1663493955721-110e7e1ae36c?auto=format&fit=crop&w=900&q=80' },
+  { label: 'Yoğun akademik', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'academic-plus', image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=80' },
+  { label: 'Yaz kampı', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=80' },
+  { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
+];
 
 const copy = {
   tr: {
     asideMark: 'Teklif',
-    title: 'Fiyat teklifi',
     subtitleEm: 'Size ozel, net bir teklif',
-    subtitle:
-      'Program, seviye ve tarih tercihlerinizi birkac kisa soruda topluyoruz; fiyat teklifiniz hedeflerinize gore hesaplanir.',
-    asideSteps: '4 adim',
+    subtitle: 'Program, seviye ve kurs turu secimlerinize gore uygun siniflari gosterecegiz.',
+    asideSteps: '5 adim',
     asideStepHint: 'Ilerleme',
-    programs: [
-      { label: 'Intensive', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
-      { label: '+ Intensive', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'intensive-plus', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Summer Camp', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
+    programs: commonPrograms,
+    programQ: 'Hangi programa katilmak istersiniz?',
+    levelQ: 'Dil seviyesi',
+    levelPlaceholder: 'Seviye seciniz',
+    monthQ: 'Baslangic ayi',
+    monthPlaceholder: 'Ay seciniz',
+    courseTypeQ: 'Size uygun kurs turu',
+    courseTypes: [
+      { label: 'Online', value: 'online' },
+      { label: 'Fiziksel', value: 'physical' },
+      { label: 'Aksam', value: 'evening' },
+      { label: 'Hepsi', value: 'all' }
     ],
-    programQ: 'Hangi programa daha yakin hissediyorsunuz?',
-    levelQ: 'Hangi seviye araliginda hedefliyorsunuz?',
-    planLevelCaption: 'Seviye araligi',
-    planMonthCaption: 'Baslangic aylari',
-    monthQ: 'Hangi aylar arasinda baslamak istersiniz?',
     levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
-    months: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '12+'],
-    note: 'Kurs süresi: Her tam seviye iki modüle ayrılır (ör. A1 = A1.1 + A1.2). Tam seviye başına yaklaşık 2 ay planlayın.',
-    visaQ: 'Vizeye ihtiyacınız var mı?',
-    accQ: 'Konaklama ister misiniz?',
-    yes: 'Evet',
-    no: 'Hayır',
-    acc: [
-      { label: 'Tek kişilik oda', value: 'single' },
-      { label: 'Çift kişilik oda', value: 'double' },
-      { label: 'İstemiyorum', value: 'no' }
-    ],
-    step3lead: 'Son iki tercih',
-    step4lead: 'Iletisim',
+    months: ['Ocak', 'Subat', 'Mart', 'Nisan', 'Mayis', 'Haziran', 'Temmuz', 'Agustos', 'Eylul', 'Ekim', 'Kasim', 'Aralik'],
+    step3lead: 'Uygun siniflar',
+    cardSelectHint: 'Kart seciniz, sonra sure secimi acilir.',
+    durationQ: 'Kac aylik istiyorsunuz?',
+    freeLesson: 'Ucretsiz deneme dersi',
+    freeLessonHelp: 'Bu secenek ucretsizdir.',
+    step4lead: 'Sure ve fiyat secimi',
+    step5lead: 'Iletisim',
     name: 'Ad Soyad',
     email: 'E-posta',
     phone: 'Telefon',
-    heard: 'Bizi nereden duydunuz?',
-    heardOpts: ['Instagram', 'Google', 'Arkadas Tavsiyesi', 'YouTube', 'Diger'],
+    country: 'Yasadigi ulke',
+    message: 'Mesaj',
     submit: 'Teklif Al',
-    doneTitle: 'Teşekkürler',
-    doneText:
-      'Danışmanlarımız en yakın zamanda sizinle iletişime geçecekler. İsterseniz rezervasyon yapıp ödemeye geçebilirsiniz.',
-    doneBtn: 'Rezervasyon ve ödemeye geç',
-    doneClose: 'Ana sayfaya dön',
+    doneTitle: 'Tesekkurler',
+    doneText: 'Danismanlarimiz size ulasacak.',
+    doneClose: 'Ana sayfaya don',
     close: 'Kapat',
-    error: 'Form gönderilemedi. Lütfen tekrar deneyin.',
+    error: 'Form gonderilemedi. Lutfen tekrar deneyin.',
     planContinue: 'Devam',
     planBack: 'Geri'
   },
   de: {
     asideMark: 'Angebot',
-    title: 'Preisangebot',
     subtitleEm: 'Ihr individuelles Angebot',
-    subtitle:
-      'Wir fassen Kurs, Niveau und Zeitraum in wenigen Schritten zusammen – so wird Ihr Preis passend berechnet.',
-    asideSteps: '4 Schritte',
+    subtitle: 'Waehlen Sie Programm, Niveau und Kurstyp.',
+    asideSteps: '5 Schritte',
     asideStepHint: 'Fortschritt',
-    programs: [
-      { label: 'Intensive', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
-      { label: '+ Intensive', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'intensive-plus', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Summer Camp', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
+    programs: commonPrograms,
+    programQ: 'Welches Programm moechten Sie?',
+    levelQ: 'Sprachniveau',
+    levelPlaceholder: 'Niveau waehlen',
+    monthQ: 'Startmonat',
+    monthPlaceholder: 'Monat waehlen',
+    courseTypeQ: 'Passender Kurstyp',
+    courseTypes: [
+      { label: 'Online', value: 'online' },
+      { label: 'Praesenz', value: 'physical' },
+      { label: 'Abend', value: 'evening' },
+      { label: 'Alle', value: 'all' }
     ],
-    programQ: 'Welches Programm passt am ehesten zu Ihnen?',
-    levelQ: 'Welchen Niveau-Bereich streben Sie an?',
-    planLevelCaption: 'Niveau-Spanne',
-    planMonthCaption: 'Monatsfenster',
-    monthQ: 'Zwischen welchen Monaten moechten Sie starten?',
     levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
-    months: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '12+'],
-    note: 'Kursdauer: Jede vollständige Niveaustufe ist in zwei Module aufgeteilt (z. B. A1 = A1.1 + A1.2). Rechnen Sie mit etwa 2 Monaten pro vollständiger Stufe.',
-    visaQ: 'Brauchen Sie ein Visum?',
-    accQ: 'Benötigen Sie eine Unterkunft?',
-    yes: 'Ja',
-    no: 'Nein',
-    acc: [
-      { label: 'Einzelzimmer', value: 'single' },
-      { label: 'Doppelzimmer', value: 'double' },
-      { label: 'Nein', value: 'no' }
-    ],
-    step3lead: 'Zwei Angaben',
-    step4lead: 'Kontakt',
-    name: 'Vorname Nachname',
+    months: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+    step3lead: 'Passende Klassen',
+    cardSelectHint: 'Karte waehlen, dann Dauer.',
+    durationQ: 'Wie viele Monate?',
+    freeLesson: 'Kostenlose Probestunde',
+    freeLessonHelp: 'Diese Option ist kostenlos.',
+    step4lead: 'Dauer und Preis',
+    step5lead: 'Kontakt',
+    name: 'Name',
     email: 'E-Mail',
     phone: 'Telefon',
-    heard: 'Wie haben Sie uns gefunden?',
-    heardOpts: ['Instagram', 'Google', 'Empfehlung', 'YouTube', 'Andere'],
-    submit: 'Angebot anfordern',
-    doneTitle: 'Vielen Dank',
-    doneText:
-      'Unsere Beraterinnen und Berater melden sich schnellstmöglich bei Ihnen. Wenn Sie möchten, können Sie anschließend zur Reservierung und Zahlung wechseln.',
-    doneBtn: 'Zur Reservierung und Zahlung',
+    country: 'Land',
+    message: 'Nachricht',
+    submit: 'Angebot senden',
+    doneTitle: 'Danke',
+    doneText: 'Unsere Berater melden sich bei Ihnen.',
     doneClose: 'Zur Startseite',
-    close: 'Schließen',
+    close: 'Schliessen',
     error: 'Formular konnte nicht gesendet werden.',
     planContinue: 'Weiter',
-    planBack: 'Zurück'
+    planBack: 'Zurueck'
   },
   en: {
     asideMark: 'Quote',
-    title: 'Request a quote',
     subtitleEm: 'A quote shaped around you',
-    subtitle:
-      'We gather your course, level, and timing preferences in a short flow—then your quote reflects what you actually need.',
-    asideSteps: '4 steps',
+    subtitle: 'Pick program, level, and course type to see matching classes.',
+    asideSteps: '5 steps',
     asideStepHint: 'Progress',
-    programs: [
-      { label: 'Intensive', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
-      { label: '+ Intensive', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'intensive-plus', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Summer Camp', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
+    programs: commonPrograms,
+    programQ: 'Which program do you prefer?',
+    levelQ: 'Language level',
+    levelPlaceholder: 'Select level',
+    monthQ: 'Start month',
+    monthPlaceholder: 'Select month',
+    courseTypeQ: 'Suitable course type',
+    courseTypes: [
+      { label: 'Online', value: 'online' },
+      { label: 'Physical', value: 'physical' },
+      { label: 'Evening', value: 'evening' },
+      { label: 'All', value: 'all' }
     ],
-    programQ: 'Which track feels closest to what you need?',
-    levelQ: 'What level range are you aiming for?',
-    planLevelCaption: 'Level span',
-    planMonthCaption: 'Month window',
-    monthQ: 'Between which months would you like to start?',
     levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
-    months: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '12+'],
-    note: 'Course duration: Each full level has two modules (e.g. A1 = A1.1 + A1.2). Plan about 2 months per full level.',
-    visaQ: 'Do you need a visa?',
-    accQ: 'Do you want accommodation?',
-    yes: 'Yes',
-    no: 'No',
-    acc: [
-      { label: 'Single room', value: 'single' },
-      { label: 'Double room', value: 'double' },
-      { label: 'No', value: 'no' }
-    ],
-    step3lead: 'Two preferences',
-    step4lead: 'Your details',
+    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    step3lead: 'Matching classes',
+    cardSelectHint: 'Select a card, then choose duration.',
+    durationQ: 'How many months?',
+    freeLesson: 'Free lesson',
+    freeLessonHelp: 'This option is free.',
+    step4lead: 'Duration and pricing',
+    step5lead: 'Contact',
     name: 'Full name',
     email: 'Email',
     phone: 'Phone',
-    heard: 'Where did you hear about us?',
-    heardOpts: ['Instagram', 'Google', 'Friend referral', 'YouTube', 'Other'],
+    country: 'Country',
+    message: 'Message',
     submit: 'Request quote',
     doneTitle: 'Thank you',
-    doneText:
-      'Our advisors will contact you as soon as possible. You can also continue to reservation and payment if you wish.',
-    doneBtn: 'Continue to reservation & payment',
+    doneText: 'Our advisors will contact you.',
     doneClose: 'Back to home',
     close: 'Close',
-    error: 'Something went wrong. Please try again.',
+    error: 'Form submission failed. Please try again.',
     planContinue: 'Continue',
     planBack: 'Back'
   },
   es: {
     asideMark: 'Cotiz.',
-    title: 'Pedir cotizacion',
     subtitleEm: 'Una cotizacion a tu medida',
-    subtitle:
-      'Reunimos curso, nivel y fechas en unos pasos breves; asi el precio refleja lo que buscas.',
-    asideSteps: '4 pasos',
-    asideStepHint: 'Avance',
-    programs: [
-      { label: 'Intensive', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80' },
-      { label: '+ Intensive', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'intensive-plus', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Summer Camp', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80' },
-      { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
+    subtitle: 'Selecciona programa, nivel y tipo de curso.',
+    asideSteps: '5 pasos',
+    asideStepHint: 'Progreso',
+    programs: commonPrograms,
+    programQ: 'Que programa prefieres?',
+    levelQ: 'Nivel',
+    levelPlaceholder: 'Selecciona nivel',
+    monthQ: 'Mes de inicio',
+    monthPlaceholder: 'Selecciona mes',
+    courseTypeQ: 'Tipo de curso',
+    courseTypes: [
+      { label: 'Online', value: 'online' },
+      { label: 'Presencial', value: 'physical' },
+      { label: 'Noche', value: 'evening' },
+      { label: 'Todos', value: 'all' }
     ],
-    programQ: 'Que opcion se parece mas a lo que buscas?',
-    levelQ: 'Que rango de nivel es tu objetivo?',
-    planLevelCaption: 'Rango de nivel',
-    planMonthCaption: 'Ventana de meses',
-    monthQ: 'Entre que meses te gustaria empezar?',
     levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
-    months: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '12+'],
-    note: 'Duracion: Cada nivel completo tiene dos modulos (ej. A1 = A1.1 + A1.2). Cuenta unos 2 meses por nivel completo.',
-    visaQ: 'Necesitas visa?',
-    accQ: '¿Necesitas alojamiento?',
-    yes: 'Sí',
-    no: 'No',
-    acc: [
-      { label: 'Habitación individual', value: 'single' },
-      { label: 'Habitación doble', value: 'double' },
-      { label: 'No, gracias', value: 'no' }
-    ],
-    step3lead: 'Dos preferencias',
-    step4lead: 'Contacto',
+    months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+    step3lead: 'Clases disponibles',
+    cardSelectHint: 'Selecciona una tarjeta y luego duracion.',
+    durationQ: 'Cuantos meses?',
+    freeLesson: 'Clase gratuita',
+    freeLessonHelp: 'Esta opcion es gratis.',
+    step4lead: 'Duracion y precio',
+    step5lead: 'Contacto',
     name: 'Nombre completo',
     email: 'Email',
     phone: 'Telefono',
-    heard: 'Donde nos conociste?',
-    heardOpts: ['Instagram', 'Google', 'Recomendacion', 'YouTube', 'Otro'],
+    country: 'Pais',
+    message: 'Mensaje',
     submit: 'Solicitar cotizacion',
     doneTitle: 'Gracias',
-    doneText:
-      'Nuestros asesores se pondrán en contacto contigo lo antes posible. Si lo deseas, puedes pasar a la reserva y al pago.',
-    doneBtn: 'Ir a reserva y pago',
+    doneText: 'Nuestros asesores te contactaran.',
     doneClose: 'Volver al inicio',
     close: 'Cerrar',
-    error: 'No se pudo enviar. Intentalo de nuevo.',
+    error: 'No se pudo enviar.',
     planContinue: 'Continuar',
     planBack: 'Atras'
   }
 };
-
 const t = copy[lang as keyof typeof copy] ?? copy.tr;
 ---
 
-<div class="qx-page-bg">
-<section class="qx" id="pwRoot">
+<div class={`qx-page-bg ${quoteMode === 'standalone' ? 'qx-page-bg--standalone' : 'qx-page-bg--embedded'}`}>
+<section class="qx" id="pwRoot" data-qx-mode={quoteMode}>
   <aside class="qx-aside" aria-hidden="true">
     <div class="qx-aside-ornament" aria-hidden="true"></div>
     <p class="qx-aside-title">{t.asideMark}</p>
@@ -218,12 +197,12 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         <div class="qx-aside-track">
           <span class="qx-aside-track-line" aria-hidden="true"></span>
           <div class="qx-dots">
-            {[1, 2, 3, 4].map((n) => <span class="qx-dot" data-qx-dot={n}></span>)}
+            {[1, 2, 3, 4, 5].map((n) => <span class="qx-dot" data-qx-dot={n}></span>)}
           </div>
         </div>
       </div>
       <div class="qx-aside-counter">
-        <p class="qx-aside-step" data-pw-eyebrow>01 / 04</p>
+        <p class="qx-aside-step" data-pw-eyebrow>01 / 05</p>
         <span class="qx-aside-stephint">{t.asideStepHint}</span>
       </div>
     </div>
@@ -237,40 +216,35 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       <p class="qx-lead-kicker">{t.subtitleEm}</p>
       <p class="qx-lead-body">{t.subtitle}</p>
     </div>
-    <div class="qx-line" aria-hidden="true">
-      <span class="qx-line-fill" data-pw-bar></span>
-    </div>
+    <div class="qx-line" aria-hidden="true"><span class="qx-line-fill" data-pw-bar></span></div>
+    <p class="qx-submit-feedback" id="pwSubmitFeedback" aria-live="polite"></p>
 
-    <form id="pwForm" class="qx-form" data-webhook={quoteWebhook} data-booking={bookingPath} data-levels={t.levels.join('|')} data-months={t.months.join('|')} data-error={t.error}>
+    <form id="pwForm" class="qx-form" data-webhook={quoteWebhook} data-error={t.error} data-levels={t.levels.join('|')} data-months={t.months.join('|')} data-free-lesson-label={t.freeLesson}>
       <input type="hidden" name="formType" value="price-quote" />
       <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
       <input type="hidden" name="lang" value={lang} />
       <input type="hidden" name="program" id="pwProgram" value="" />
-      <input type="hidden" name="quote-track" id="pwQuoteTrack" value="" />
       <input type="hidden" name="quote-program-label" id="pwProgramLabel" value="" />
       <input type="hidden" name="quote-intensive-type" id="pwIntensiveType" value="" />
       <input type="hidden" name="quote-level-start" id="pwLevelA" value="" />
       <input type="hidden" name="quote-level-end" id="pwLevelB" value="" />
       <input type="hidden" name="quote-month-start" id="pwMonthA" value="" />
       <input type="hidden" name="quote-month-end" id="pwMonthB" value="" />
+      <input type="hidden" name="quote-course-type" id="pwCourseType" value="" />
+      <input type="hidden" name="quote-selected-course-id" id="pwCourseId" value="" />
+      <input type="hidden" name="quote-selected-course-title" id="pwCourseTitle" value="" />
+      <input type="hidden" name="quote-duration-months" id="pwDurationMonths" value="" />
+      <input type="hidden" name="quote-is-free-lesson" id="pwFreeLesson" value="no" />
+      <input type="hidden" name="quote-plan-key" id="pwPlanKey" value="" />
+      <input type="hidden" name="totalPrice" id="pwTotalPrice" value="" />
 
       <div class="pw-viewport">
         <div class="pw-panel is-current qx-scene qx-scene--pick" data-panel="1">
           <div class="qx-stage-shell">
-            <header class="qx-scene-head qx-scene-head--pick">
-              <span class="qx-scene-kicker">1</span>
-              <h2 class="qx-question">{t.programQ}</h2>
-            </header>
+            <header class="qx-scene-head"><span class="qx-scene-kicker">1</span><h2 class="qx-question">{t.programQ}</h2></header>
             <div class="qx-strip">
               {t.programs.map((p, i) => (
-                <button
-                  type="button"
-                  class={`qx-card qx-card--${i + 1}`}
-                  data-program={p.program}
-                  data-intensive-type={p.intensiveType}
-                  data-quote-track={p.quoteTrack}
-                  data-program-label={p.label}
-                >
+                <button type="button" class={`qx-card qx-card--${i + 1}`} data-program={p.program} data-program-label={p.label} data-intensive-type={p.intensiveType}>
                   <span class="qx-card-num">{String(i + 1).padStart(2, '0')}</span>
                   <span class="qx-card-bg" style={`--qx-img:url('${p.image}')`} />
                   <strong>{p.label}</strong>
@@ -282,105 +256,74 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
 
         <div class="pw-panel qx-scene qx-scene--plan" data-panel="2">
           <div class="qx-stage-shell qx-stage-shell--with-nav">
-            <header class="qx-scene-head qx-scene-head--plan">
-              <span class="qx-scene-kicker">2</span>
-              <h2 class="qx-question">{t.levelQ}</h2>
-            </header>
-            <div class="qx-plan-grid">
-              <div class="qx-plan-card">
-                <p class="qx-plan-label">{t.planLevelCaption}</p>
-                <div class="qx-single-range" data-single-range="level">
-                  <input class="qx-rsingle" type="range" min="0" max="9" value="0" />
-                  <span class="qx-thumb-pop" data-pop></span>
-                </div>
-              </div>
-              <div class="qx-plan-card">
-                <p class="qx-plan-label">{t.planMonthCaption}</p>
-                <div class="qx-single-range" data-single-range="month">
-                  <input class="qx-rsingle" type="range" min="0" max="12" value="2" />
-                  <span class="qx-thumb-pop" data-pop></span>
-                </div>
-              </div>
+            <header class="qx-scene-head"><span class="qx-scene-kicker">2</span><h2 class="qx-question">{t.levelQ}</h2></header>
+            <div class="qx-select-wrap">
+              <label for="pwLevelSelect">{t.levelQ}</label>
+              <select id="pwLevelSelect">
+                <option value="" selected>{t.levelPlaceholder}</option>
+                {t.levels.map((lv) => <option value={lv}>{lv}</option>)}
+              </select>
             </div>
-            <p class="qx-hint">{t.note}</p>
-            <div class="qx-stage-nav" role="group" aria-label={t.planBack + ' / ' + t.planContinue}>
-              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}>
-                <i class="fas fa-arrow-left" aria-hidden="true"></i>
-              </button>
-              <button type="button" class="qx-nav-arrow qx-nav-arrow--next" data-pw-nav-next aria-label={t.planContinue}>
-                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-              </button>
+            <h3 class="qx-subq">{t.monthQ}</h3>
+            <div class="qx-select-wrap">
+              <label for="pwMonthSelect">{t.monthQ}</label>
+              <select id="pwMonthSelect">
+                <option value="" selected>{t.monthPlaceholder}</option>
+              </select>
+            </div>
+            <h3 class="qx-subq">{t.courseTypeQ}</h3>
+            <div class="qx-choice-grid qx-choice-grid--type" id="pwCourseTypeButtons">
+              {t.courseTypes.map((c) => <button type="button" class="qx-choice-btn" data-course-type={c.value}>{c.label}</button>)}
+            </div>
+            <div class="qx-stage-nav">
+              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+              <button type="button" class="qx-nav-arrow qx-nav-arrow--next" data-pw-nav-next aria-label={t.planContinue}><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
             </div>
           </div>
         </div>
 
         <div class="pw-panel qx-scene qx-scene--stay" data-panel="3">
           <div class="qx-stage-shell qx-stage-shell--with-nav">
-            <header class="qx-scene-head qx-scene-head--stay">
-              <span class="qx-scene-kicker">3</span>
-              <h2 class="qx-question">{t.step3lead}</h2>
-            </header>
-            <div class="qx-stay-cols">
-              <div class="qx-stay-card">
-                <p class="qx-subq">{t.visaQ}</p>
-                <div class="qx-split">
-                  <label><input type="radio" name="visa-needed" value="yes" required /><span>{t.yes}</span></label>
-                  <label><input type="radio" name="visa-needed" value="no" required /><span>{t.no}</span></label>
-                </div>
-              </div>
-              <div class="qx-stay-card">
-                <p class="qx-subq">{t.accQ}</p>
-                <div class="qx-split qx-split--acc">
-                  {t.acc.map((opt, idx) => (
-                    <label>
-                      <input type="radio" name="accommodation-type" value={opt.value} required={idx === 0} />
-                      <span>{opt.label}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div class="qx-stage-nav" role="group" aria-label={t.planBack}>
-              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}>
-                <i class="fas fa-arrow-left" aria-hidden="true"></i>
-              </button>
+            <header class="qx-scene-head"><span class="qx-scene-kicker">3</span><h2 class="qx-question">{t.step3lead}</h2></header>
+            <p class="qx-hint">{t.cardSelectHint}</p>
+            <div class="qx-course-cards" id="pwCourseCards"></div>
+            <div class="qx-stage-nav">
+              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+              <button type="button" class="qx-nav-arrow qx-nav-arrow--next" data-pw-nav-next aria-label={t.planContinue}><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
             </div>
           </div>
         </div>
 
-        <div class="pw-panel qx-scene qx-scene--send" data-panel="4">
+        <div class="pw-panel qx-scene qx-scene--pricing" data-panel="4">
           <div class="qx-stage-shell qx-stage-shell--with-nav">
-            <header class="qx-scene-head qx-scene-head--send">
-              <span class="qx-scene-kicker">4</span>
-              <h2 class="qx-question">{t.step4lead}</h2>
-            </header>
-            <div class="qx-fields qx-fields--grid">
-              <label>
-                <span>{t.name}</span>
-                <input type="text" name="full-name" required autocomplete="name" />
-              </label>
-              <label>
-                <span>{t.email}</span>
-                <input type="email" name="email" required autocomplete="email" />
-              </label>
-              <label>
-                <span>{t.phone}</span>
-                <input type="tel" name="phone" required autocomplete="tel" />
-              </label>
-              <label>
-                <span>{t.heard}</span>
-                <select name="heard-from" required>
-                  <option value="" selected disabled></option>
-                  {t.heardOpts.map((h) => (
-                    <option value={h}>{h}</option>
-                  ))}
-                </select>
-              </label>
+            <header class="qx-scene-head"><span class="qx-scene-kicker">4</span><h2 class="qx-question">{t.step4lead}</h2></header>
+            <div class="qx-pricing-table-wrap" id="pwPricingTable">
+              <div class="qx-pricing-head" role="row">
+                <div>Süre</div>
+                <div>Haftalık</div>
+                <div>Aylık</div>
+                <div>Toplam</div>
+              </div>
+              <div class="qx-pricing-rows" id="pwPricingRows"></div>
             </div>
-            <div class="qx-stage-nav" role="group" aria-label={t.planBack}>
-              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}>
-                <i class="fas fa-arrow-left" aria-hidden="true"></i>
-              </button>
+            <div class="qx-stage-nav">
+              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pw-panel qx-scene qx-scene--send" data-panel="5">
+          <div class="qx-stage-shell qx-stage-shell--with-nav">
+            <header class="qx-scene-head"><span class="qx-scene-kicker">5</span><h2 class="qx-question">{t.step5lead}</h2></header>
+            <div class="qx-fields qx-fields--grid">
+              <label><span>{t.name}</span><input type="text" name="full-name" required autocomplete="name" /></label>
+              <label><span>{t.email}</span><input type="email" name="email" required autocomplete="email" /></label>
+              <label><span>{t.phone}</span><input type="tel" name="phone" required autocomplete="tel" /></label>
+              <label><span>{t.country}</span><input type="text" name="country" autocomplete="country-name" /></label>
+              <label class="qx-field-full"><span>{t.message}</span><textarea name="message" rows="4"></textarea></label>
+            </div>
+            <div class="qx-stage-nav">
+              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
             </div>
             <button class="qx-send" type="submit">{t.submit}</button>
           </div>
@@ -393,27 +336,60 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
 
 <div class="pw-overlay" id="pwOverlay" data-home={homePath} aria-hidden="true">
   <div class="pw-dialog pw-dialog--done" data-pw-dialog role="dialog" aria-modal="true" aria-labelledby="pwDoneTitle">
-    <button type="button" class="pw-dialog-dismiss" data-pw-close aria-label={t.doneClose}>
-      <i class="fas fa-times" aria-hidden="true"></i>
-    </button>
-    <div class="pw-dialog-icon" aria-hidden="true">
-      <i class="fas fa-check"></i>
-    </div>
+    <button type="button" class="pw-dialog-dismiss" data-pw-close aria-label={t.doneClose}><i class="fas fa-times" aria-hidden="true"></i></button>
+    <div class="pw-dialog-icon" aria-hidden="true"><i class="fas fa-check"></i></div>
     <h3 id="pwDoneTitle" class="pw-dialog-title">{t.doneTitle}</h3>
     <p class="pw-dialog-text">{t.doneText}</p>
-    <p class="pw-dialog-price" id="pwDonePrice" data-pw-price>~</p>
     <div class="pw-dialog-cta-wrap">
-      <a href={bookingPath} class="pw-dialog-cta" data-pw-book>{t.doneBtn}</a>
       <button type="button" class="pw-dialog-home" data-pw-close>{t.doneClose}</button>
     </div>
   </div>
 </div>
 
 <script>
-  import gsap from 'gsap';
+  function pad2(n: number) { return String(n).padStart(2, '0'); }
+  function monthlyPrice(perWeek: number) { return perWeek * 4; }
+  const TIERS_20H = [
+    { min: 1, max: 4, perWeek: 190 },
+    { min: 5, max: 8, perWeek: 150 },
+    { min: 9, max: 16, perWeek: 130 },
+    { min: 17, max: 24, perWeek: 120 },
+    { min: 25, max: 999, perWeek: 110 }
+  ];
+  const TIERS_25H = [
+    { min: 1, max: 4, perWeek: 230 },
+    { min: 5, max: 8, perWeek: 180 },
+    { min: 9, max: 16, perWeek: 160 },
+    { min: 17, max: 24, perWeek: 150 },
+    { min: 25, max: 999, perWeek: 135 }
+  ];
+  function getTierPerWeek(weeks: number, plus: boolean) {
+    const tiers = plus ? TIERS_25H : TIERS_20H;
+    const tier = tiers.find((t) => weeks >= t.min && weeks <= t.max);
+    return tier ? tier.perWeek : 190;
+  }
 
-  function pad2(n: number) {
-    return String(n).padStart(2, '0');
+  function buildCourseCards(level: string, startMonth: number, courseType: string, intensiveType: string) {
+    const plus = intensiveType === 'intensive-plus';
+    const perWeekStart = getTierPerWeek(4, plus);
+    const perWeekEnd = getTierPerWeek(24, plus);
+    const priceText = `EUR ${monthlyPrice(perWeekEnd)} - ${monthlyPrice(perWeekStart)} / month`;
+    const startDate = `31.${String(startMonth).padStart(2, '0')}.2026`;
+    const teachers = ['Anna Keller', 'Murat Yildiz', 'Sofia Becker', 'Deniz Acar', 'Lukas Weber', 'Elif Demir'];
+    const pickTeacher = (seed: string) => {
+      const sum = seed.split('').reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+      return teachers[sum % teachers.length];
+    };
+    const all = [
+      { id: 'phy-morning', type: 'physical', title: `${level} (PHYSICAL)`, time: '09:00 - 11:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('phy-morning-' + level), start: startDate, places: 'Places available', extra: '' },
+      { id: 'phy-afternoon', type: 'physical', title: `${level} (PHYSICAL)`, time: '15:00 - 17:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('phy-afternoon-' + level), start: startDate, places: 'Places available', extra: '' },
+      { id: 'phy-evening', type: 'physical', title: `${level} (PHYSICAL)`, time: '18:00 - 20:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('phy-evening-' + level), start: startDate, places: 'Places available', extra: '' },
+      { id: 'online-morning', type: 'online', title: `${level} (ONLINE)`, time: '09:00 - 11:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('online-morning-' + level), start: startDate, places: 'Places available', extra: `Two months to complete ${level}` },
+      { id: 'online-evening', type: 'online', title: `${level} (ONLINE)`, time: '18:00 - 20:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('online-evening-' + level), start: startDate, places: 'Places available', extra: '' },
+      { id: 'phy-weekend', type: 'physical', title: `${level} (PHYSICAL)`, time: '10:00 - 13:00', days: 'Sat, Sun', teacher: pickTeacher('phy-weekend-' + level), start: startDate, places: 'Places available', extra: '' }
+    ];
+    const filtered = courseType === 'all' ? all : courseType === 'evening' ? all.filter((x) => x.id === 'phy-evening') : all.filter((x) => x.type === courseType);
+    return filtered.map((x) => ({ ...x, priceText }));
   }
 
   function start() {
@@ -421,60 +397,33 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
     const root = document.getElementById('pwRoot');
     if (!form || !root) return;
 
-    const total = 4;
+    const total = 5;
     let step = 1;
-    const rangeRepaints: Array<() => void> = [];
     const panels = [...form.querySelectorAll<HTMLElement>('.pw-panel')];
-    const viewport = form.querySelector<HTMLElement>('.pw-viewport');
-    const mqlMobile = window.matchMedia('(max-width: 640px)');
-
-    /** Mobilde .pw-viewport absolute paneller yüzünden yükseklik almıyor; aktif sahneye göre ayarla */
-    function syncPwViewportHeight() {
-      if (!viewport) return;
-      if (!mqlMobile.matches) {
-        viewport.style.removeProperty('height');
-        return;
-      }
-      const current = form.querySelector<HTMLElement>('.pw-panel.is-current');
-      if (!current) return;
-
-      const apply = () => {
-        const shell = current.querySelector<HTMLElement>('.qx-stage-shell');
-        if (!shell) return;
-        /*
-          panel.scrollHeight taşma yokken clientHeight ile aynı kalır; önceki adımdaki
-          uzun viewport küçülmez → altta dev boşluk. İçeriği .qx-stage-shell ile ölç.
-        */
-        const cs = getComputedStyle(current);
-        const padY = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
-        const inner = Math.max(shell.scrollHeight, shell.offsetHeight);
-        const need = Math.ceil(inner + padY) + 8;
-        viewport!.style.height = `${Math.max(need, 120)}px`;
-        const gap = current.scrollHeight - current.clientHeight;
-        if (gap > 2) {
-          viewport!.style.height = `${Math.ceil(viewport.offsetHeight + gap)}px`;
-        }
-      };
-
-      apply();
-      requestAnimationFrame(() => {
-        apply();
-      });
-    }
-
     const eyebrow = document.querySelector<HTMLElement>('[data-pw-eyebrow]');
     const bar = document.querySelector<HTMLElement>('[data-pw-bar]');
     const dots = [...document.querySelectorAll<HTMLElement>('[data-qx-dot]')];
 
-    const levels = (form.dataset.levels || '').split('|');
-    const months = (form.dataset.months || '').split('|');
+    const hProgram = document.getElementById('pwProgram') as HTMLInputElement;
+    const hProgramLabel = document.getElementById('pwProgramLabel') as HTMLInputElement;
+    const hIntensive = document.getElementById('pwIntensiveType') as HTMLInputElement;
+    const hLevelA = document.getElementById('pwLevelA') as HTMLInputElement;
+    const hLevelB = document.getElementById('pwLevelB') as HTMLInputElement;
+    const hMonthA = document.getElementById('pwMonthA') as HTMLInputElement;
+    const hMonthB = document.getElementById('pwMonthB') as HTMLInputElement;
+    const hCourseType = document.getElementById('pwCourseType') as HTMLInputElement;
+    const hCourseId = document.getElementById('pwCourseId') as HTMLInputElement;
+    const hCourseTitle = document.getElementById('pwCourseTitle') as HTMLInputElement;
+    const hDuration = document.getElementById('pwDurationMonths') as HTMLInputElement;
+    const hFreeLesson = document.getElementById('pwFreeLesson') as HTMLInputElement;
+    const hTotalPrice = document.getElementById('pwTotalPrice') as HTMLInputElement;
+    const hPlanKey = document.getElementById('pwPlanKey') as HTMLInputElement;
 
-    const overlay = document.getElementById('pwOverlay') as HTMLElement | null;
-    const dialog = document.querySelector<HTMLElement>('[data-pw-dialog]');
-    const bookLink = document.querySelector<HTMLAnchorElement>('[data-pw-book]');
-    const donePriceEl = document.getElementById('pwDonePrice') as HTMLElement | null;
-
-    if (bookLink) bookLink.href = form.dataset.booking || '/tr/buchung';
+    const courseCardsWrap = document.getElementById('pwCourseCards') as HTMLElement;
+    const levelSelect = document.getElementById('pwLevelSelect') as HTMLSelectElement;
+    const monthSelect = document.getElementById('pwMonthSelect') as HTMLSelectElement;
+    const pricingRows = document.getElementById('pwPricingRows') as HTMLElement | null;
+    const submitFeedback = document.getElementById('pwSubmitFeedback') as HTMLElement | null;
 
     function syncDots(n: number) {
       dots.forEach((d, i) => {
@@ -483,350 +432,278 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         d.classList.toggle('is-past', idx < n);
       });
     }
-
     function setStepChrome(n: number) {
       if (eyebrow) eyebrow.textContent = `${pad2(n)} / ${pad2(total)}`;
       syncDots(n);
-      if (bar) gsap.to(bar, { scaleX: (n - 1) / (total - 1 || 1), duration: 0.55, ease: 'power2.inOut' });
+      if (bar) bar.style.transform = `scaleX(${(n - 1) / (total - 1)})`;
     }
-
     function goTo(next: number) {
-      if (next === step || next < 1 || next > total) return;
-      const prevEl = panels[step - 1];
-      const nextEl = panels[next - 1];
-      const tl = gsap.timeline({
-        onComplete: () => {
-          requestAnimationFrame(() => requestAnimationFrame(syncPwViewportHeight));
-        }
-      });
-      tl.to(prevEl, { autoAlpha: 0, x: -32, duration: 0.24, ease: 'power2.in' })
-        .add(() => {
-          prevEl.classList.remove('is-current');
-          nextEl.classList.add('is-current');
-          gsap.set(nextEl, { x: 40 });
-        })
-        .to(nextEl, { autoAlpha: 1, x: 0, duration: 0.42, ease: 'power3.out' });
-
-      if (next === 1) {
-        tl.from(
-          nextEl.querySelectorAll('.qx-card'),
-          { y: 40, autoAlpha: 0, duration: 0.4, stagger: 0.07, ease: 'back.out(1.05)' },
-          '-=0.28'
-        );
-      }
-      if (next === 2) {
-        tl.from(
-          nextEl.querySelectorAll('.qx-plan-card'),
-          { y: 22, autoAlpha: 0, duration: 0.38, stagger: 0.1, ease: 'power3.out' },
-          '-=0.22'
-        );
-        tl.from(nextEl.querySelector('.qx-hint'), { autoAlpha: 0, y: 8, duration: 0.28 }, '-=0.12');
-        tl.call(() => {
-          requestAnimationFrame(() => rangeRepaints.forEach((fn) => fn()));
-        });
-      }
-      if (next === 3) {
-        tl.from(
-          nextEl.querySelectorAll('.qx-stay-card'),
-          { x: 24, autoAlpha: 0, duration: 0.36, stagger: 0.12, ease: 'power3.out' },
-          '-=0.2'
-        );
-      }
-      if (next === 4) {
-        tl.from(nextEl.querySelectorAll('.qx-fields label'), { autoAlpha: 0, y: 14, stagger: 0.06, duration: 0.3 }, '-=0.2');
-        tl.from(nextEl.querySelector('.qx-send'), { scale: 0.92, autoAlpha: 0, duration: 0.28, ease: 'back.out(1.2)' }, '-=0.15');
-      }
+      if (next < 1 || next > total || next === step) return;
+      panels[step - 1].classList.remove('is-current');
+      panels[next - 1].classList.add('is-current');
       step = next;
       setStepChrome(step);
     }
 
-    gsap.set(panels, { autoAlpha: 0, x: 28 });
-    gsap.set(panels[0], { autoAlpha: 1, x: 0 });
-    if (bar) gsap.set(bar, { scaleX: 0, transformOrigin: 'left center' });
-    syncDots(1);
+    function resetWizardState() {
+      form.reset();
+      [hProgram, hProgramLabel, hIntensive, hLevelA, hLevelB, hMonthA, hMonthB, hCourseType, hCourseId, hCourseTitle, hDuration, hPlanKey, hTotalPrice].forEach((el) => { el.value = ''; });
+      hFreeLesson.value = 'no';
+      form.querySelectorAll('.is-picked, .is-selected, .is-active').forEach((el) => el.classList.remove('is-picked', 'is-selected', 'is-active'));
+      if (courseCardsWrap) courseCardsWrap.innerHTML = '';
+      if (pricingRows) pricingRows.innerHTML = '';
+      if (levelSelect) levelSelect.value = '';
+      if (monthSelect) monthSelect.value = '';
+      panels.forEach((p, idx) => p.classList.toggle('is-current', idx === 0));
+      step = 1;
+      setStepChrome(1);
+    }
 
-    const intro = gsap.timeline({
-      defaults: { ease: 'power2.out' },
-      onComplete: () => {
-        requestAnimationFrame(() => requestAnimationFrame(syncPwViewportHeight));
+    function renderPricingTable() {
+      if (!pricingRows) return;
+      const rows = [1, 2, 3, 4, 5, 6].map((m) => {
+        const perWeek = getTierPerWeek(m * 4, hIntensive.value === 'intensive-plus');
+        const monthPrice = monthlyPrice(perWeek);
+        const total = monthPrice * m;
+        return { key: `${m}-month`, label: `${m} ay`, perWeek, monthPrice, total, months: m, free: false };
+      });
+      const freeLessonLabel = form.dataset.freeLessonLabel || 'Free lesson';
+      rows.push({ key: 'free-lesson', label: freeLessonLabel, perWeek: 0, monthPrice: 0, total: 0, months: 0, free: true });
+      pricingRows.innerHTML = rows.map((r) => `
+        <button type="button" class="qx-pricing-row" data-plan-key="${r.key}" data-total="${r.total}" data-months="${r.months}" data-free="${r.free ? 'yes' : 'no'}">
+          <span>${r.label}</span>
+          <span>${r.free ? '-' : `${r.perWeek} EUR`}</span>
+          <span>${r.free ? 'Ucretsiz' : `${r.monthPrice} EUR`}</span>
+          <span>${r.free ? '0 EUR' : `${r.total} EUR`}</span>
+        </button>
+      `).join('');
+      pricingRows.querySelectorAll<HTMLElement>('.qx-pricing-row').forEach((rowEl) => {
+        rowEl.addEventListener('click', () => {
+          pricingRows.querySelectorAll('.qx-pricing-row').forEach((x) => x.classList.remove('is-selected'));
+          rowEl.classList.add('is-selected');
+          hPlanKey.value = rowEl.dataset.planKey || '';
+          hTotalPrice.value = rowEl.dataset.total || '';
+          hDuration.value = rowEl.dataset.months || '';
+          hFreeLesson.value = rowEl.dataset.free || 'no';
+          goTo(5);
+        });
+      });
+    }
+
+    function renderCards() {
+      const level = hLevelA.value;
+      const month = Number(hMonthA.value || '8');
+      const type = hCourseType.value || 'all';
+      if (!level || !month || !type) return;
+      const cards = buildCourseCards(level, month, type, hIntensive.value);
+      if (!cards.length) {
+        courseCardsWrap.innerHTML = `<p class="qx-card-empty">Bu filtrelerle su an acik sinif bulunamadi.</p>`;
+        return;
       }
-    });
-    intro.from(root, { autoAlpha: 0, y: 20, duration: 0.5 }, 0);
-    intro.from('.qx-lead-kicker', { autoAlpha: 0, y: 10, duration: 0.38 }, 0.12);
-    intro.from('.qx-lead-body', { autoAlpha: 0, y: 8, duration: 0.32 }, 0.18);
-    if (bar) intro.to(bar, { scaleX: 0, duration: 0.35, ease: 'power2.inOut' }, 0.18);
-    intro.from(dots, { scale: 0, autoAlpha: 0, stagger: 0.06, duration: 0.32, ease: 'back.out(1.3)' }, 0.28);
-    intro.from('.qx-aside-step', { autoAlpha: 0, duration: 0.25 }, 0.35);
-    intro.from(
-      panels[0].querySelectorAll('.qx-card'),
-      { rotateY: -12, autoAlpha: 0, stagger: 0.06, duration: 0.5, ease: 'power3.out' },
-      0.4
-    );
+      courseCardsWrap.innerHTML = cards.map((card) => `
+        <button type="button" class="qx-course-card" data-course-id="${card.id}" data-course-title="${card.title}" data-course-price="${card.priceText}">
+          <div class="qx-course-card-rail" aria-hidden="true"></div>
+          <div class="qx-course-main">
+            <div class="qx-course-topline">
+              <h4>${card.title}</h4>
+              <span class="qx-course-availability">${card.places}</span>
+            </div>
+            <p class="qx-course-startline"><strong>Start:</strong> ${card.start}</p>
+            ${card.extra ? `<p class="qx-course-extra">${card.extra}</p>` : ''}
+          </div>
+          <div class="qx-course-facts">
+            <div class="qx-course-fact">
+              <span class="qx-fact-key">Time</span>
+              <strong class="qx-fact-val">${card.time}</strong>
+            </div>
+            <div class="qx-course-fact">
+              <span class="qx-fact-key">Teacher</span>
+              <strong class="qx-fact-val">${card.teacher}</strong>
+            </div>
+            <div class="qx-course-fact">
+              <span class="qx-fact-key">Days</span>
+              <strong class="qx-fact-val">${card.days}</strong>
+            </div>
+          </div>
+          <div class="qx-course-card-foot">
+            <p class="qx-course-price">${card.priceText}</p><span class="qx-course-cta">Book now</span>
+          </div>
+        </button>
+      `).join('');
+      courseCardsWrap.querySelectorAll<HTMLButtonElement>('.qx-course-card').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          courseCardsWrap.querySelectorAll('.qx-course-card').forEach((el) => el.classList.remove('is-selected'));
+          btn.classList.add('is-selected');
+          hCourseId.value = btn.dataset.courseId || '';
+          hCourseTitle.value = btn.dataset.courseTitle || '';
+        });
+      });
+    }
 
-    setStepChrome(1);
-
-    requestAnimationFrame(() => requestAnimationFrame(syncPwViewportHeight));
-
-    let resizeTimer = 0;
-    window.addEventListener('resize', () => {
-      window.clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(syncPwViewportHeight, 120);
-    });
-    mqlMobile.addEventListener('change', syncPwViewportHeight);
-
-    const pEl = document.getElementById('pwProgram') as HTMLInputElement | null;
-    const pLabelEl = document.getElementById('pwProgramLabel') as HTMLInputElement | null;
-    const pTrackEl = document.getElementById('pwQuoteTrack') as HTMLInputElement | null;
-    const pIntensiveTypeEl = document.getElementById('pwIntensiveType') as HTMLInputElement | null;
     form.querySelectorAll<HTMLButtonElement>('.qx-card').forEach((btn) => {
       btn.addEventListener('click', () => {
         form.querySelectorAll('.qx-card').forEach((b) => b.classList.remove('is-picked'));
         btn.classList.add('is-picked');
-        if (pEl) pEl.value = btn.dataset.program || '';
-        if (pLabelEl) pLabelEl.value = btn.dataset.programLabel || '';
-        if (pTrackEl) pTrackEl.value = btn.dataset.quoteTrack || '';
-        if (pIntensiveTypeEl) pIntensiveTypeEl.value = btn.dataset.intensiveType || '';
-        gsap.fromTo(btn.querySelector('.qx-card-bg'), { scale: 1 }, { scale: 1.08, duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.inOut' });
-        window.setTimeout(() => goTo(2), 200);
+        hProgram.value = btn.dataset.program || '';
+        hProgramLabel.value = btn.dataset.programLabel || '';
+        hIntensive.value = btn.dataset.intensiveType || '';
+        goTo(2);
       });
     });
 
-    function wireSingleRange(wrap: Element, labels: string[], a: HTMLInputElement | null, b: HTMLInputElement | null) {
-      const slider = wrap.querySelector<HTMLInputElement>('.qx-rsingle');
-      const pop = wrap.querySelector<HTMLElement>('[data-pop]');
-      function paint() {
-        if (!slider || !pop || !a || !b) return;
-        const idx = Number(slider.value);
-        const label = labels[idx] ?? '';
-        const min = Number(slider.min || '0');
-        const max = Number(slider.max || '1');
-        const ratio = max > min ? (idx - min) / (max - min) : 0;
-        pop.textContent = label;
-        pop.style.left = `${ratio * 100}%`;
-        a.value = label;
-        b.value = label;
-      }
-      rangeRepaints.push(paint);
-      slider?.addEventListener('input', paint);
-      paint();
+    function setupSingleSelection(containerId: string, dataAttr: string, onPick: (value: string) => void) {
+      const wrap = document.getElementById(containerId);
+      if (!wrap) return;
+      wrap.querySelectorAll<HTMLButtonElement>(`[${dataAttr}]`).forEach((btn) => {
+        btn.addEventListener('click', () => {
+          wrap.querySelectorAll('.qx-choice-btn').forEach((x) => x.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          const value = btn.getAttribute(dataAttr) || '';
+          onPick(value);
+        });
+      });
     }
 
-    wireSingleRange(
-      form.querySelector('[data-single-range="level"]')!,
-      levels,
-      document.getElementById('pwLevelA') as HTMLInputElement | null,
-      document.getElementById('pwLevelB') as HTMLInputElement | null
-    );
-    wireSingleRange(
-      form.querySelector('[data-single-range="month"]')!,
-      months,
-      document.getElementById('pwMonthA') as HTMLInputElement | null,
-      document.getElementById('pwMonthB') as HTMLInputElement | null
-    );
+    setupSingleSelection('pwCourseTypeButtons', 'data-course-type', (v) => { hCourseType.value = v; renderCards(); });
+    levelSelect?.addEventListener('change', () => { hLevelA.value = levelSelect.value; hLevelB.value = levelSelect.value; renderCards(); });
+    monthSelect?.addEventListener('change', () => { hMonthA.value = monthSelect.value; hMonthB.value = monthSelect.value; renderCards(); });
 
     form.querySelectorAll<HTMLButtonElement>('[data-pw-nav-next]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        if (step === 2) goTo(3);
+        if (step === 2) {
+          if (!hLevelA.value || !hMonthA.value || !hCourseType.value) return;
+          renderCards();
+          goTo(3);
+          return;
+        }
+        if (step === 3) {
+          if (!hCourseId.value) return;
+          goTo(4);
+          renderPricingTable();
+          return;
+        }
+        if (step === 4) {
+          if (!hPlanKey.value) return;
+          goTo(5);
+        }
       });
     });
-
-    form.querySelectorAll('input[name="visa-needed"], input[name="accommodation-type"]').forEach((el) => {
-      el.addEventListener('change', () => {
-        const v = form.querySelector<HTMLInputElement>('input[name="visa-needed"]:checked');
-        const ac = form.querySelector<HTMLInputElement>('input[name="accommodation-type"]:checked');
-        if (v && ac && step === 3) window.setTimeout(() => goTo(4), 160);
-      });
-    });
-
     form.querySelectorAll<HTMLButtonElement>('[data-pw-nav-back]').forEach((btn) => {
       btn.addEventListener('click', () => {
         if (step === 2) goTo(1);
         else if (step === 3) goTo(2);
         else if (step === 4) goTo(3);
+        else if (step === 5) goTo(4);
       });
     });
 
+    const monthNames = (form.dataset.months || '').split('|');
+    const now = new Date();
+    const currentMonth = now.getMonth() + 1;
+    monthNames.forEach((name, idx) => {
+      const monthNum = idx + 1;
+      if (monthNum < currentMonth) return;
+      const opt = document.createElement('option');
+      opt.value = String(monthNum);
+      opt.textContent = name;
+      monthSelect?.appendChild(opt);
+    });
+
+    const overlay = document.getElementById('pwOverlay') as HTMLElement | null;
+    const dialog = document.querySelector<HTMLElement>('[data-pw-dialog]');
     function openOverlay() {
       if (!overlay || !dialog) return;
       overlay.classList.add('is-open');
       overlay.setAttribute('aria-hidden', 'false');
-      gsap.fromTo(overlay, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.28 });
-      gsap.fromTo(dialog, { y: 36, scale: 0.92, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, duration: 0.48, ease: 'power3.out', delay: 0.05 });
     }
-
     function dismissToHome() {
       let target = (overlay?.dataset.home || '/').trim();
       if (!target.startsWith('/')) target = `/${target}`;
       if (target.length > 1 && target.endsWith('/')) target = target.slice(0, -1);
-      if (!overlay || !dialog) {
-        window.location.href = target;
-        return;
-      }
-      gsap.to(dialog, { y: 18, scale: 0.97, autoAlpha: 0, duration: 0.22, ease: 'power2.in' });
-      gsap.to(overlay, {
-        autoAlpha: 0,
-        duration: 0.22,
-        onComplete: () => {
-          overlay.classList.remove('is-open');
-          overlay.setAttribute('aria-hidden', 'true');
-          gsap.set(dialog, { clearProps: 'all' });
-          window.location.href = target;
-        }
-      });
+      window.location.href = target;
     }
-
-    document.querySelectorAll<HTMLButtonElement>('[data-pw-close]').forEach((btn) => {
-      btn.addEventListener('click', dismissToHome);
-    });
-    overlay?.addEventListener('click', (e) => {
-      if (e.target === overlay) dismissToHome();
-    });
+    document.querySelectorAll<HTMLButtonElement>('[data-pw-close]').forEach((btn) => btn.addEventListener('click', dismissToHome));
+    overlay?.addEventListener('click', (e) => { if (e.target === overlay) dismissToHome(); });
 
     const DEFAULT_MAKE_WEBHOOK = 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
-
-    const TIERS_20H = [
-      { min: 1, max: 4, perWeek: 190 },
-      { min: 5, max: 8, perWeek: 150 },
-      { min: 9, max: 16, perWeek: 130 },
-      { min: 17, max: 24, perWeek: 120 },
-      { min: 25, max: 999, perWeek: 110 }
-    ];
-    const TIERS_25H = [
-      { min: 1, max: 4, perWeek: 230 },
-      { min: 5, max: 8, perWeek: 180 },
-      { min: 9, max: 16, perWeek: 160 },
-      { min: 17, max: 24, perWeek: 150 },
-      { min: 25, max: 999, perWeek: 135 }
-    ];
-
-    function getTieredPrice(weeks: number, isIntensivePlus: boolean) {
-      const tiers = isIntensivePlus ? TIERS_25H : TIERS_20H;
-      const tier = tiers.find((t) => weeks >= t.min && weeks <= t.max);
-      return tier ? weeks * tier.perWeek : 0;
-    }
-
-    function parseMonthDuration(monthVal: string) {
-      const v = (monthVal || '').trim();
-      if (v === '12+') return 13;
-      const n = parseInt(v, 10);
-      return Number.isFinite(n) && n > 0 ? n : 2;
-    }
-
-    function getLevelWeeks(levelStart: string, levelEnd: string) {
-      const startIdx = levels.indexOf(levelStart);
-      const endIdx = levels.indexOf(levelEnd);
-      const a = startIdx >= 0 ? startIdx : 0;
-      const b = endIdx >= 0 ? endIdx : a;
-      const modules = Math.max(1, Math.abs(b - a) + 1);
-      return modules * 4;
-    }
-
-    function calculateQuoteTotal(data: Record<string, string>) {
-      const program = (data.program || '').trim();
-      const intensiveType = (data['quote-intensive-type'] || '').trim();
-      const monthStart = (data['quote-month-start'] || '').trim();
-      const levelStart = (data['quote-level-start'] || '').trim();
-      const levelEnd = (data['quote-level-end'] || '').trim();
-
-      if (program === 'youth-camp') {
-        return parseMonthDuration(monthStart) * 220;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector<HTMLButtonElement>('.qx-send');
+      const originalBtnText = btn?.textContent || '';
+      if (submitFeedback) {
+        submitFeedback.textContent = '';
+        submitFeedback.classList.remove('is-success', 'is-error');
       }
-
-      if (program === 'intensive' || program === 'online') {
-        const levelWeeks = getLevelWeeks(levelStart, levelEnd);
-        const monthWeeks = parseMonthDuration(monthStart) * 4;
-        const weeks = Math.max(levelWeeks, monthWeeks, 4);
-        return getTieredPrice(weeks, intensiveType === 'intensive-plus');
-      }
-
-      return 0;
-    }
-
-    function buildPriceQuotePayload(fd: FormData) {
+      if (btn) btn.disabled = true;
+      const fd = new FormData(form);
       const data = Object.fromEntries(fd.entries()) as Record<string, string>;
-      const heard = (data['heard-from'] || '').trim();
-      const qls = (data['quote-level-start'] || '').trim();
-      const qle = (data['quote-level-end'] || '').trim();
-      const qms = (data['quote-month-start'] || '').trim();
-      const qme = (data['quote-month-end'] || '').trim();
-      const qtrack = (data['quote-track'] || '').trim();
-      const qit = (data['quote-intensive-type'] || '').trim();
-      const qlabel = (data['quote-program-label'] || '').trim();
-      const totalPrice = calculateQuoteTotal(data);
-      const lines: string[] = [];
-      if (qlabel) lines.push(`Program choice: ${qlabel}`);
-      if (qtrack) lines.push(`Quote track: ${qtrack}`);
-      if (qit) lines.push(`Intensive type: ${qit}`);
-      if (qls || qle) lines.push(`Level range: ${qls} – ${qle}`);
-      if (qms || qme) lines.push(`Start months: ${qms} – ${qme}`);
-      if (totalPrice > 0) lines.push(`Estimated total: ${totalPrice} EUR`);
-      if (heard) lines.push(`Heard from: ${heard}`);
-      const message = lines.join('\n');
-      return {
+      const requiredName = String(data['full-name'] || '').trim();
+      const requiredEmail = String(data.email || '').trim();
+      const requiredPhone = String(data.phone || '').trim();
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(requiredEmail);
+      if (!requiredName || !requiredEmail || !requiredPhone || !emailOk) {
+        const msg = form.dataset.error || 'Lutfen zorunlu alanlari kontrol edin.';
+        if ((window as unknown as { showSuccessModal?: (t: string, m: string) => void }).showSuccessModal)
+          (window as unknown as { showSuccessModal: (t: string, m: string) => void }).showSuccessModal('error', msg);
+        else alert(msg);
+        if (btn) btn.disabled = false;
+        return;
+      }
+      const payload = {
         formType: 'price-quote',
         sourcePage: data.sourcePage || '',
         lang: data.lang || '',
         name: data['full-name'] || '',
-        city: '',
-        country: '',
+        country: data.country || '',
         tel: data.phone || '',
         email: data.email || '',
         program: data.program || '',
-        intensiveType: qit,
-        level: '',
-        courseSelection: [] as string[],
-        startDate: '',
-        timezone: [] as string[],
-        weeks: '',
-        examType: '',
-        visaNeeded: data['visa-needed'] || 'no',
-        accommodationType: data['accommodation-type'] || 'no',
-        airportPickup: 'no',
-        coupon: '',
-        couponDiscountPercent: '',
-        message,
-        termsAccepted: false,
-        privacyAccepted: false,
-        totalPrice: totalPrice > 0 ? String(totalPrice) : '',
+        intensiveType: data['quote-intensive-type'] || '',
+        level: data['quote-level-start'] || '',
+        courseSelection: [data['quote-selected-course-title'] || ''],
+        startDate: data['quote-month-start'] || '',
+        weeks: data['quote-duration-months'] || '',
+        message: data.message || '',
+        totalPrice: data.totalPrice || '',
         timestamp: new Date().toISOString(),
-        heardFrom: heard,
-        quoteTrack: qtrack,
-        quoteIntensiveType: qit,
-        quoteProgramLabel: qlabel,
-        quoteLevelStart: qls,
-        quoteLevelEnd: qle,
-        quoteMonthStart: qms,
-        quoteMonthEnd: qme,
-        _computedTotalPrice: totalPrice
+        quoteProgramLabel: data['quote-program-label'] || '',
+        quoteLevelStart: data['quote-level-start'] || '',
+        quoteMonthStart: data['quote-month-start'] || '',
+        quoteCourseType: data['quote-course-type'] || '',
+        quoteCourseId: data['quote-selected-course-id'] || '',
+        quoteDurationMonths: data['quote-duration-months'] || '',
+        quoteIsFreeLesson: data['quote-is-free-lesson'] || 'no'
       };
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = form.querySelector<HTMLButtonElement>('.qx-send');
-      if (btn) btn.disabled = true;
-      const fd = new FormData(form);
-      const payload = buildPriceQuotePayload(fd);
       try {
+        if (btn) btn.textContent = 'Gonderiliyor...';
         const wh = (form.dataset.webhook || '').trim() || DEFAULT_MAKE_WEBHOOK;
         const res = await fetch(wh, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
         if (!res.ok) throw new Error('webhook');
-        if (donePriceEl) {
-          const total = Number((payload as unknown as { _computedTotalPrice?: number })._computedTotalPrice || 0);
-          donePriceEl.textContent = total > 0 ? `~ ${total} EUR` : '~';
+        if (submitFeedback) {
+          submitFeedback.textContent = 'Formunuz basariyla gonderildi.';
+          submitFeedback.classList.add('is-success');
         }
+        resetWizardState();
         openOverlay();
       } catch {
         const msg = form.dataset.error || 'Error';
+        if (submitFeedback) {
+          submitFeedback.textContent = msg;
+          submitFeedback.classList.add('is-error');
+        }
         if ((window as unknown as { showSuccessModal?: (t: string, m: string) => void }).showSuccessModal)
           (window as unknown as { showSuccessModal: (t: string, m: string) => void }).showSuccessModal('error', msg);
         else alert(msg);
       } finally {
-        if (btn) btn.disabled = false;
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = originalBtnText;
+        }
       }
     });
-  }
 
+    setStepChrome(1);
+  }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();
 </script>

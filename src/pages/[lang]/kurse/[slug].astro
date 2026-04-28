@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
-import BilgiAlForm from '../../../components/BilgiAlForm.astro';
+import GlobalCourseWidget from '../../../components/GlobalCourseWidget.astro';
 import IntensivePricingSection from '../../../components/IntensivePricingSection.astro';
 import SuccessModal from '../../../components/SuccessModal.astro';
 import '../../../styles/global.css';
@@ -457,7 +457,7 @@ const groupSizeDisplay = '10-16 max.';
                         </div>
                     </section>
                     <section class="demand-form-section-inline" id="bilgi-al-form">
-                        <BilgiAlForm lang={lang} />
+                        <GlobalCourseWidget lang={lang} bookingPath={bookingPath} />
                     </section>
                 </div>
             </div>

@@ -5,7 +5,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,550&display=swap");
 
 /* Header/footer kapalı teklif sayfalarında formu görünür alanda ortala */
-main:has(#pwRoot) {
+main:has(#pwRoot[data-qx-mode="standalone"]) {
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
@@ -17,7 +17,7 @@ main:has(#pwRoot) {
   scrollbar-gutter: stable;
 }
 
-main:has(#pwRoot) .qx-page-bg {
+main:has(#pwRoot[data-qx-mode="standalone"]) .qx-page-bg--standalone {
   width: 100%;
   max-width: 960px;
   margin-inline: auto;
@@ -28,15 +28,15 @@ main:has(#pwRoot) .qx-page-bg {
   align-items: center;
 }
 
-main:has(#pwRoot) #pwRoot {
+main:has(#pwRoot[data-qx-mode="standalone"]) #pwRoot[data-qx-mode="standalone"] {
   width: 100%;
   position: relative;
   z-index: 1;
 }
 
 /* Fiyatlar sayfası hero benzeri yan çizgiler */
-.qx-page-bg::before,
-.qx-page-bg::after {
+.qx-page-bg--standalone::before,
+.qx-page-bg--standalone::after {
   content: "";
   position: fixed;
   top: 0;
@@ -48,7 +48,7 @@ main:has(#pwRoot) #pwRoot {
   z-index: 0;
 }
 
-.qx-page-bg::before {
+.qx-page-bg--standalone::before {
   left: 0;
   background: repeating-linear-gradient(
     125deg,
@@ -57,7 +57,7 @@ main:has(#pwRoot) #pwRoot {
   );
 }
 
-.qx-page-bg::after {
+.qx-page-bg--standalone::after {
   right: 0;
   background: repeating-linear-gradient(
     55deg,
@@ -337,6 +337,21 @@ main:has(#pwRoot) #pwRoot {
   transform: scaleX(0);
 }
 
+.qx-submit-feedback {
+  margin: 0 0 0.65rem;
+  min-height: 1.1rem;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.qx-submit-feedback.is-success {
+  color: #166534;
+}
+
+.qx-submit-feedback.is-error {
+  color: #b91c1c;
+}
+
 .qx-form {
   flex: 1;
   display: flex;
@@ -359,6 +374,8 @@ main:has(#pwRoot) #pwRoot {
   pointer-events: none;
   overflow-x: hidden;
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -367,8 +384,20 @@ main:has(#pwRoot) #pwRoot {
   padding: 0.25rem 0;
 }
 
+/* Embedded mode: keep full form height visible and avoid clipping */
+#pwRoot[data-qx-mode="embedded"] .pw-viewport {
+  min-height: min(74vh, 700px);
+}
+
+.pw-panel::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
 .pw-panel.is-current {
   pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
 }
 
 /* 2. aşama uzun içerik — üstten başlasın; mümkün olduğunca tek ekranda */
@@ -377,6 +406,11 @@ main:has(#pwRoot) #pwRoot {
   padding-bottom: 0.35rem;
   overflow-y: auto;
   scrollbar-gutter: stable;
+}
+
+.pw-panel.qx-scene--stay {
+  justify-content: flex-start;
+  overflow-y: hidden;
 }
 
 .pw-panel .qx-stage-shell {
@@ -459,13 +493,31 @@ main:has(#pwRoot) #pwRoot {
   transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
 }
 
-.qx-scene--stay .qx-stage-nav,
 .qx-scene--send .qx-stage-nav {
   justify-content: flex-start;
 }
 
 .qx-scene--send .qx-send {
   margin-top: 0.85rem;
+}
+
+/* Embedded widget mode: keep nav buttons inside form flow */
+#pwRoot[data-qx-mode="embedded"] .qx-stage-shell--with-nav {
+  padding-bottom: 1rem;
+}
+
+#pwRoot[data-qx-mode="embedded"] .qx-stage-shell--with-nav .qx-stage-nav {
+  position: static;
+  margin-top: 0.9rem;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  pointer-events: auto;
+}
+
+#pwRoot[data-qx-mode="embedded"] .qx-stage-shell--with-nav .qx-nav-arrow {
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .qx-nav-arrow--back {
@@ -1300,11 +1352,11 @@ main:has(#pwRoot) #pwRoot {
 
 @media (max-width: 640px) {
   /* Sadece yatay taşmayı kes; geri kalan layout önceki (daha stabil) sürümle aynı */
-  main:has(#pwRoot) {
+  main:has(#pwRoot[data-qx-mode="standalone"]) {
     overflow-x: clip;
   }
 
-  main:has(#pwRoot) #pwRoot {
+  main:has(#pwRoot[data-qx-mode="standalone"]) #pwRoot[data-qx-mode="standalone"] {
     min-width: 0;
     max-width: 100%;
   }
@@ -1441,4 +1493,359 @@ main:has(#pwRoot) #pwRoot {
     height: auto;
     min-height: 168px;
   }
+}
+
+/* New quote flow additions */
+.qx-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.qx-select-wrap {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.8rem;
+}
+
+.qx-select-wrap label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+.qx-select-wrap select {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #fff;
+  padding: 0.7rem 0.8rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.qx-select-wrap select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+
+.qx-choice-grid--months {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.qx-choice-grid--type {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.qx-choice-grid--duration {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.qx-choice-btn {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.56rem 0.45rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.qx-choice-btn:hover {
+  border-color: #2563eb;
+}
+
+.qx-choice-btn.is-active {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #fff;
+}
+
+.qx-course-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: 0.65rem;
+  max-height: min(52vh, 430px);
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-right: 0.25rem;
+}
+
+.qx-course-cards::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.qx-course-card {
+  border: 1px solid #dbe3ef;
+  border-radius: 18px;
+  text-align: left;
+  background: #ffffff;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+  transition: all 0.2s ease;
+  display: grid;
+  grid-template-columns: 8px 1fr;
+  grid-template-rows: auto auto auto;
+  color: #0f172a;
+  position: relative;
+  overflow: hidden;
+  font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.qx-course-card:hover {
+  transform: translateY(-2px);
+  border-color: #93c5fd;
+  box-shadow: 0 10px 26px rgba(59, 130, 246, 0.18);
+}
+
+.qx-course-card h4 {
+  margin: 0;
+  font-size: 1.04rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: #0f172a;
+}
+
+.qx-course-card p {
+  margin: 0;
+}
+
+.qx-course-card-rail {
+  grid-row: 1 / span 3;
+  background: linear-gradient(180deg, #2563eb, #38bdf8);
+}
+
+.qx-course-main {
+  padding: 0.85rem 0.95rem 0.45rem;
+}
+
+.qx-course-topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+.qx-course-availability {
+  border: 1px solid #86efac;
+  color: #166534;
+  background: #f0fdf4;
+  border-radius: 999px;
+  font-size: 0.69rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  white-space: nowrap;
+}
+
+.qx-course-startline {
+  margin-top: 0.35rem;
+  font-size: 0.84rem;
+  color: #334155;
+  line-height: 1.35;
+}
+
+.qx-course-facts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  padding: 0 0.95rem 0.55rem;
+}
+
+.qx-course-fact {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+  padding: 0.4rem 0.5rem;
+  display: grid;
+  gap: 0.14rem;
+}
+
+.qx-fact-key {
+  font-size: 0.69rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.qx-fact-val {
+  font-size: 0.86rem;
+  color: #0f172a;
+  line-height: 1.35;
+}
+
+.qx-course-extra {
+  margin: 0 0.95rem 0.5rem;
+  border-left: 3px solid #93c5fd;
+  background: #eff6ff;
+  color: #1e3a8a;
+  border-radius: 8px;
+  padding: 0.4rem 0.52rem;
+  font-size: 0.76rem;
+}
+
+.qx-course-card-foot {
+  border-top: 1px solid #e2e8f0;
+  padding: 0.6rem 0.95rem 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.qx-course-price {
+  margin-top: 0;
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 0.94rem;
+  letter-spacing: -0.01em;
+}
+
+.qx-course-cta {
+  display: inline-block;
+  font-weight: 700;
+  color: #1d4ed8;
+  font-size: 0.8rem;
+  border: 1px solid #93c5fd;
+  border-radius: 999px;
+  padding: 0.25rem 0.58rem;
+  background: #eff6ff;
+}
+
+.qx-course-card.is-selected {
+  border-color: #f59e0b;
+  background: linear-gradient(180deg, #fffdf4 0%, #fff7db 100%);
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.26), 0 14px 30px rgba(245, 158, 11, 0.2);
+  transform: translateY(-2px);
+}
+
+.qx-course-card.is-selected .qx-course-card-rail {
+  background: linear-gradient(180deg, #f59e0b, #facc15);
+}
+
+.qx-card-empty {
+  margin: 0.35rem 0 0;
+  padding: 0.8rem;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  color: #475569;
+}
+
+.qx-pricing-table-wrap {
+  margin-top: 0.45rem;
+  border: 1px solid #dbe3ef;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.qx-pricing-head {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: 0.5rem;
+  background: #f8fafc;
+  border-bottom: 1px solid #dbe3ef;
+  padding: 0.7rem 0.8rem;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #334155;
+}
+
+.qx-pricing-rows {
+  display: grid;
+}
+
+.qx-pricing-row {
+  border: 0;
+  border-bottom: 1px solid #e2e8f0;
+  background: #fff;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: 0.5rem;
+  padding: 0.82rem 0.8rem;
+  text-align: left;
+  font-size: 0.88rem;
+  color: #0f172a;
+  cursor: pointer;
+  transition: background 0.14s ease, box-shadow 0.14s ease;
+}
+
+.qx-pricing-row:last-child {
+  border-bottom: 0;
+}
+
+.qx-pricing-row:hover {
+  background: #f0f7ff;
+}
+
+.qx-pricing-row span:nth-child(1) {
+  font-weight: 700;
+}
+
+.qx-pricing-row.is-selected {
+  background: #e8f1ff;
+  box-shadow: inset 3px 0 0 #2563eb;
+}
+
+@media (max-width: 760px) {
+  .qx-pricing-head {
+    display: none;
+  }
+  .qx-pricing-row {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 0.35rem;
+    padding: 0.75rem;
+  }
+  .qx-pricing-row span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .qx-pricing-row span:nth-child(1) { grid-column: 1 / -1; }
+}
+
+.qx-field-full {
+  grid-column: 1 / -1;
+}
+
+.qx-fields textarea {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #fff;
+  padding: 0.7rem 0.85rem;
+  font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pw-dialog-price,
+.pw-dialog-cta {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .qx-choice-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .qx-choice-grid--months,
+  .qx-choice-grid--duration {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .qx-course-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 700px) {
+  .qx-course-cards { grid-template-columns: 1fr; }
 }

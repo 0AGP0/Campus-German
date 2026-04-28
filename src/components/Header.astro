@@ -107,6 +107,7 @@ const navTranslations = {
         // Services dropdown
         universityPlacement: 'Üniversite Yerleştirme Programı / Pathway',
         visaGuidance: 'Vize Rehberliği',
+        housingExplorer: 'Konaklama seçenekleri',
         accommodation: 'Bremen Konaklama ve Yurt Yerleştirmesi',
         airportPickup: 'Havaalanı Karşılama',
         insuranceBank: 'Sağlık Sigortası/Bloke ve Banka Hesabı',
@@ -208,6 +209,7 @@ const navTranslations = {
         advantagesCta: 'Probestunde',
         universityPlacement: 'Uni-Vermittlung / Pathway',
         visaGuidance: 'Visumsberatung',
+        housingExplorer: 'Unterkunftsoptionen',
         accommodation: 'Unterkunft Bremen',
         airportPickup: 'Flughafenabholung',
         insuranceBank: 'Versicherung & Bank',
@@ -312,6 +314,7 @@ const navTranslations = {
         // Services dropdown
         universityPlacement: 'University Placement Program / Pathway',
         visaGuidance: 'Visa Guidance',
+        housingExplorer: 'Housing options',
         accommodation: 'Bremen Accommodation and Dormitory Placement',
         airportPickup: 'Airport Pickup',
         insuranceBank: 'Health Insurance/Blocked Account and Bank Account',
@@ -416,6 +419,7 @@ const navTranslations = {
         // Services dropdown
         universityPlacement: 'Programa de Colocación Universitaria / Pathway',
         visaGuidance: 'Orientación de Visa',
+        housingExplorer: 'Opciones de alojamiento',
         accommodation: 'Alojamiento en Bremen y Colocación en Residencia',
         airportPickup: 'Recogida en el Aeropuerto',
         insuranceBank: 'Seguro de Salud/Cuenta Bloqueada y Cuenta Bancaria',
@@ -772,6 +776,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                         <div class="dropdown-menu dropdown-menu-cols">
                             <a href={`/${lang}/${sections.services}/${slugs.universityPlacement[lang]}`} class="dropdown-link">{t.universityPlacement}</a>
                             <a href={`/${lang}/${sections.services}/${slugs.visaGuidance[lang]}`} class="dropdown-link">{t.visaGuidance}</a>
+                            <a href={`/${lang}/${sections.services}/konaklama`} class="dropdown-link">{t.housingExplorer}</a>
                             <a href={`/${lang}/${sections.services}/${slugs.accommodation[lang]}`} class="dropdown-link">{t.accommodation}</a>
                             <a href={`/${lang}/${sections.services}/${slugs.airportPickup[lang]}`} class="dropdown-link">{t.airportPickup}</a>
                             <a href={`/${lang}/${sections.services}/${slugs.insuranceBank[lang]}`} class="dropdown-link">{t.insuranceBank}</a>
@@ -1065,6 +1070,9 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                         </li>
                         <li class="mobile-submenu-item">
                             <a href={`/${lang}/${sections.services}/${slugs.visaGuidance[lang]}`} class="mobile-submenu-link">{t.visaGuidance}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.services}/konaklama`} class="mobile-submenu-link">{t.housingExplorer}</a>
                         </li>
                         <li class="mobile-submenu-item">
                             <a href={`/${lang}/${sections.services}/${slugs.accommodation[lang]}`} class="mobile-submenu-link">{t.accommodation}</a>

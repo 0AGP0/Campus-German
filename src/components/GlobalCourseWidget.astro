@@ -1,0 +1,11 @@
+---
+import QuoteWizardForm from './QuoteWizardForm.astro';
+
+const { lang = 'tr', bookingPath = 'buchung' } = Astro.props;
+const normalizedBookingPath = String(bookingPath || 'buchung').replace(/^\/+/, '');
+const bookingUrl = `/${lang}/${normalizedBookingPath}`;
+---
+
+<div class="global-course-widget">
+  <QuoteWizardForm lang={lang} bookingPath={bookingUrl} homePath={`/${lang}`} embedded={true} />
+</div>

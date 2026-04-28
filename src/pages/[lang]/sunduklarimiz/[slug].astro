@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
-import BilgiAlForm from '../../../components/BilgiAlForm.astro';
+import GlobalCourseWidget from '../../../components/GlobalCourseWidget.astro';
 import { cleanSlug, getServicesPath, getContactPath, isValidLang } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
@@ -222,7 +222,7 @@ const contactPath = getContactPath(lang);
                         </div>
                     </div>
                     <div class="cta-form">
-                        <BilgiAlForm lang={lang} />
+                        <GlobalCourseWidget lang={lang} />
                     </div>
                 </div>
             </div>
@@ -230,3 +230,37 @@ const contactPath = getContactPath(lang);
     </main>
 </MainLayout>
 
+<style is:global>
+  .cta-section .cta-content {
+    display: flex !important;
+    gap: 1.5rem !important;
+    align-items: start;
+  }
+
+  .cta-section .cta-text {
+    min-width: 0;
+    flex: 0 0 38% !important;
+    max-width: 38% !important;
+  }
+
+  .cta-section .cta-form {
+    min-width: 0;
+    flex: 1 1 62% !important;
+    max-width: 62% !important;
+    overflow: visible !important;
+  }
+
+  @media (max-width: 980px) {
+    .cta-section .cta-content {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    .cta-section .cta-text,
+    .cta-section .cta-form {
+      flex: 1 1 100% !important;
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+    .cta-section .cta-form { order: 2; }
+  }
+</style>
