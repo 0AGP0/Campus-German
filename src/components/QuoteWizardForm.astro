@@ -6,12 +6,12 @@ const quoteMode = embedded ? 'embedded' : 'standalone';
 const BOOKING_FREE_WEBHOOK = 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
 const quoteWebhook = import.meta.env.PUBLIC_MAKE_QUOTE_WEBHOOK || BOOKING_FREE_WEBHOOK;
 
-const commonPrograms = [
-  { label: 'Akademik', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'academic', image: 'https://images.unsplash.com/photo-1663493955721-110e7e1ae36c?auto=format&fit=crop&w=900&q=80' },
-  { label: 'Yoğun akademik', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'academic-plus', image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=80' },
-  { label: 'Yaz kampı', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=80' },
-  { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80' }
-];
+const programImageMap = {
+  academic: 'https://images.unsplash.com/photo-1663493955721-110e7e1ae36c?auto=format&fit=crop&w=900&q=80',
+  'academic-plus': 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=80',
+  'summer-camp': 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=80',
+  online: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80'
+} as const;
 
 const copy = {
   tr: {
@@ -20,7 +20,12 @@ const copy = {
     subtitle: 'Program, seviye ve kurs turu secimlerinize gore uygun siniflari gosterecegiz.',
     asideSteps: '5 adim',
     asideStepHint: 'Ilerleme',
-    programs: commonPrograms,
+    programs: [
+      { label: 'Akademik', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'academic', image: programImageMap.academic },
+      { label: 'Yoğun akademik', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'academic-plus', image: programImageMap['academic-plus'] },
+      { label: 'Yaz kampı', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: programImageMap['summer-camp'] },
+      { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: programImageMap.online }
+    ],
     programQ: 'Hangi programa katilmak istersiniz?',
     levelQ: 'Dil seviyesi',
     levelPlaceholder: 'Seviye seciniz',
@@ -54,7 +59,23 @@ const copy = {
     close: 'Kapat',
     error: 'Form gonderilemedi. Lutfen tekrar deneyin.',
     planContinue: 'Devam',
-    planBack: 'Geri'
+    planBack: 'Geri',
+    pricingDuration: 'Süre',
+    pricingWeekly: 'Haftalık',
+    pricingMonthly: 'Aylık',
+    pricingTotal: 'Toplam',
+    monthUnit: 'ay',
+    freePriceLabel: 'Ücretsiz',
+    emptyCourses: 'Bu filtrelerle şu an açık sınıf bulunamadı.',
+    startLabel: 'Başlangıç',
+    timeLabel: 'Saat',
+    teacherLabel: 'Eğitmen',
+    daysLabel: 'Günler',
+    bookNow: 'Hemen kaydol',
+    placesAvailable: 'Kontenjan mevcut',
+    twoMonthsToComplete: 'Bu seviyeyi tamamlamak için 2 ay',
+    sending: 'Gönderiliyor...',
+    success: 'Formunuz başarıyla gönderildi.'
   },
   de: {
     asideMark: 'Angebot',
@@ -62,7 +83,12 @@ const copy = {
     subtitle: 'Waehlen Sie Programm, Niveau und Kurstyp.',
     asideSteps: '5 Schritte',
     asideStepHint: 'Fortschritt',
-    programs: commonPrograms,
+    programs: [
+      { label: 'Akademisch', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'academic', image: programImageMap.academic },
+      { label: 'Intensiv akademisch', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'academic-plus', image: programImageMap['academic-plus'] },
+      { label: 'Sommercamp', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: programImageMap['summer-camp'] },
+      { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: programImageMap.online }
+    ],
     programQ: 'Welches Programm moechten Sie?',
     levelQ: 'Sprachniveau',
     levelPlaceholder: 'Niveau waehlen',
@@ -96,7 +122,23 @@ const copy = {
     close: 'Schliessen',
     error: 'Formular konnte nicht gesendet werden.',
     planContinue: 'Weiter',
-    planBack: 'Zurueck'
+    planBack: 'Zurueck',
+    pricingDuration: 'Dauer',
+    pricingWeekly: 'Woechentlich',
+    pricingMonthly: 'Monatlich',
+    pricingTotal: 'Gesamt',
+    monthUnit: 'Monat',
+    freePriceLabel: 'Kostenlos',
+    emptyCourses: 'Fuer diese Filter sind aktuell keine offenen Klassen verfuegbar.',
+    startLabel: 'Start',
+    timeLabel: 'Zeit',
+    teacherLabel: 'Lehrkraft',
+    daysLabel: 'Tage',
+    bookNow: 'Jetzt buchen',
+    placesAvailable: 'Plaetze verfuegbar',
+    twoMonthsToComplete: 'Zwei Monate bis Abschluss von',
+    sending: 'Wird gesendet...',
+    success: 'Ihr Formular wurde erfolgreich gesendet.'
   },
   en: {
     asideMark: 'Quote',
@@ -104,7 +146,12 @@ const copy = {
     subtitle: 'Pick program, level, and course type to see matching classes.',
     asideSteps: '5 steps',
     asideStepHint: 'Progress',
-    programs: commonPrograms,
+    programs: [
+      { label: 'Academic', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'academic', image: programImageMap.academic },
+      { label: 'Intensive academic', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'academic-plus', image: programImageMap['academic-plus'] },
+      { label: 'Summer camp', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: programImageMap['summer-camp'] },
+      { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: programImageMap.online }
+    ],
     programQ: 'Which program do you prefer?',
     levelQ: 'Language level',
     levelPlaceholder: 'Select level',
@@ -138,7 +185,23 @@ const copy = {
     close: 'Close',
     error: 'Form submission failed. Please try again.',
     planContinue: 'Continue',
-    planBack: 'Back'
+    planBack: 'Back',
+    pricingDuration: 'Duration',
+    pricingWeekly: 'Weekly',
+    pricingMonthly: 'Monthly',
+    pricingTotal: 'Total',
+    monthUnit: 'month',
+    freePriceLabel: 'Free',
+    emptyCourses: 'No open class matches these filters right now.',
+    startLabel: 'Start',
+    timeLabel: 'Time',
+    teacherLabel: 'Teacher',
+    daysLabel: 'Days',
+    bookNow: 'Book now',
+    placesAvailable: 'Places available',
+    twoMonthsToComplete: 'Two months to complete',
+    sending: 'Sending...',
+    success: 'Your form was submitted successfully.'
   },
   es: {
     asideMark: 'Cotiz.',
@@ -146,7 +209,12 @@ const copy = {
     subtitle: 'Selecciona programa, nivel y tipo de curso.',
     asideSteps: '5 pasos',
     asideStepHint: 'Progreso',
-    programs: commonPrograms,
+    programs: [
+      { label: 'Académico', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'academic', image: programImageMap.academic },
+      { label: 'Académico intensivo', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'academic-plus', image: programImageMap['academic-plus'] },
+      { label: 'Campamento de verano', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: programImageMap['summer-camp'] },
+      { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: programImageMap.online }
+    ],
     programQ: 'Que programa prefieres?',
     levelQ: 'Nivel',
     levelPlaceholder: 'Selecciona nivel',
@@ -180,7 +248,23 @@ const copy = {
     close: 'Cerrar',
     error: 'No se pudo enviar.',
     planContinue: 'Continuar',
-    planBack: 'Atras'
+    planBack: 'Atras',
+    pricingDuration: 'Duración',
+    pricingWeekly: 'Semanal',
+    pricingMonthly: 'Mensual',
+    pricingTotal: 'Total',
+    monthUnit: 'mes',
+    freePriceLabel: 'Gratis',
+    emptyCourses: 'No hay clases abiertas para estos filtros en este momento.',
+    startLabel: 'Inicio',
+    timeLabel: 'Horario',
+    teacherLabel: 'Profesor',
+    daysLabel: 'Días',
+    bookNow: 'Reservar ahora',
+    placesAvailable: 'Plazas disponibles',
+    twoMonthsToComplete: 'Dos meses para completar',
+    sending: 'Enviando...',
+    success: 'Tu formulario se envió correctamente.'
   }
 };
 const t = copy[lang as keyof typeof copy] ?? copy.tr;
@@ -219,7 +303,31 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
     <div class="qx-line" aria-hidden="true"><span class="qx-line-fill" data-pw-bar></span></div>
     <p class="qx-submit-feedback" id="pwSubmitFeedback" aria-live="polite"></p>
 
-    <form id="pwForm" class="qx-form" data-webhook={quoteWebhook} data-error={t.error} data-levels={t.levels.join('|')} data-months={t.months.join('|')} data-free-lesson-label={t.freeLesson}>
+    <form
+      id="pwForm"
+      class="qx-form"
+      data-webhook={quoteWebhook}
+      data-error={t.error}
+      data-levels={t.levels.join('|')}
+      data-months={t.months.join('|')}
+      data-free-lesson-label={t.freeLesson}
+      data-pricing-duration={t.pricingDuration}
+      data-pricing-weekly={t.pricingWeekly}
+      data-pricing-monthly={t.pricingMonthly}
+      data-pricing-total={t.pricingTotal}
+      data-month-unit={t.monthUnit}
+      data-free-price-label={t.freePriceLabel}
+      data-empty-courses={t.emptyCourses}
+      data-start-label={t.startLabel}
+      data-time-label={t.timeLabel}
+      data-teacher-label={t.teacherLabel}
+      data-days-label={t.daysLabel}
+      data-book-now={t.bookNow}
+      data-places-available={t.placesAvailable}
+      data-two-months-to-complete={t.twoMonthsToComplete}
+      data-sending={t.sending}
+      data-success={t.success}
+    >
       <input type="hidden" name="formType" value="price-quote" />
       <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
       <input type="hidden" name="lang" value={lang} />
@@ -299,10 +407,10 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
             <header class="qx-scene-head"><span class="qx-scene-kicker">4</span><h2 class="qx-question">{t.step4lead}</h2></header>
             <div class="qx-pricing-table-wrap" id="pwPricingTable">
               <div class="qx-pricing-head" role="row">
-                <div>Süre</div>
-                <div>Haftalık</div>
-                <div>Aylık</div>
-                <div>Toplam</div>
+                <div>{t.pricingDuration}</div>
+                <div>{t.pricingWeekly}</div>
+                <div>{t.pricingMonthly}</div>
+                <div>{t.pricingTotal}</div>
               </div>
               <div class="qx-pricing-rows" id="pwPricingRows"></div>
             </div>
@@ -380,13 +488,15 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       const sum = seed.split('').reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
       return teachers[sum % teachers.length];
     };
+    const placesAvailable = form.dataset.placesAvailable || 'Places available';
+    const twoMonthsToComplete = form.dataset.twoMonthsToComplete || 'Two months to complete';
     const all = [
-      { id: 'phy-morning', type: 'physical', title: `${level} (PHYSICAL)`, time: '09:00 - 11:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('phy-morning-' + level), start: startDate, places: 'Places available', extra: '' },
-      { id: 'phy-afternoon', type: 'physical', title: `${level} (PHYSICAL)`, time: '15:00 - 17:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('phy-afternoon-' + level), start: startDate, places: 'Places available', extra: '' },
-      { id: 'phy-evening', type: 'physical', title: `${level} (PHYSICAL)`, time: '18:00 - 20:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('phy-evening-' + level), start: startDate, places: 'Places available', extra: '' },
-      { id: 'online-morning', type: 'online', title: `${level} (ONLINE)`, time: '09:00 - 11:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('online-morning-' + level), start: startDate, places: 'Places available', extra: `Two months to complete ${level}` },
-      { id: 'online-evening', type: 'online', title: `${level} (ONLINE)`, time: '18:00 - 20:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('online-evening-' + level), start: startDate, places: 'Places available', extra: '' },
-      { id: 'phy-weekend', type: 'physical', title: `${level} (PHYSICAL)`, time: '10:00 - 13:00', days: 'Sat, Sun', teacher: pickTeacher('phy-weekend-' + level), start: startDate, places: 'Places available', extra: '' }
+      { id: 'phy-morning', type: 'physical', title: `${level} (PHYSICAL)`, time: '09:00 - 11:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('phy-morning-' + level), start: startDate, places: placesAvailable, extra: '' },
+      { id: 'phy-afternoon', type: 'physical', title: `${level} (PHYSICAL)`, time: '15:00 - 17:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('phy-afternoon-' + level), start: startDate, places: placesAvailable, extra: '' },
+      { id: 'phy-evening', type: 'physical', title: `${level} (PHYSICAL)`, time: '18:00 - 20:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('phy-evening-' + level), start: startDate, places: placesAvailable, extra: '' },
+      { id: 'online-morning', type: 'online', title: `${level} (ONLINE)`, time: '09:00 - 11:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('online-morning-' + level), start: startDate, places: placesAvailable, extra: `${twoMonthsToComplete} ${level}` },
+      { id: 'online-evening', type: 'online', title: `${level} (ONLINE)`, time: '18:00 - 20:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('online-evening-' + level), start: startDate, places: placesAvailable, extra: '' },
+      { id: 'phy-weekend', type: 'physical', title: `${level} (PHYSICAL)`, time: '10:00 - 13:00', days: 'Sat, Sun', teacher: pickTeacher('phy-weekend-' + level), start: startDate, places: placesAvailable, extra: '' }
     ];
     const filtered = courseType === 'all' ? all : courseType === 'evening' ? all.filter((x) => x.id === 'phy-evening') : all.filter((x) => x.type === courseType);
     return filtered.map((x) => ({ ...x, priceText }));
@@ -465,7 +575,8 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         const perWeek = getTierPerWeek(m * 4, hIntensive.value === 'intensive-plus');
         const monthPrice = monthlyPrice(perWeek);
         const total = monthPrice * m;
-        return { key: `${m}-month`, label: `${m} ay`, perWeek, monthPrice, total, months: m, free: false };
+        const monthUnit = form.dataset.monthUnit || 'month';
+        return { key: `${m}-month`, label: `${m} ${monthUnit}`, perWeek, monthPrice, total, months: m, free: false };
       });
       const freeLessonLabel = form.dataset.freeLessonLabel || 'Free lesson';
       rows.push({ key: 'free-lesson', label: freeLessonLabel, perWeek: 0, monthPrice: 0, total: 0, months: 0, free: true });
@@ -473,7 +584,7 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         <button type="button" class="qx-pricing-row" data-plan-key="${r.key}" data-total="${r.total}" data-months="${r.months}" data-free="${r.free ? 'yes' : 'no'}">
           <span>${r.label}</span>
           <span>${r.free ? '-' : `${r.perWeek} EUR`}</span>
-          <span>${r.free ? 'Ucretsiz' : `${r.monthPrice} EUR`}</span>
+          <span>${r.free ? (form.dataset.freePriceLabel || 'Free') : `${r.monthPrice} EUR`}</span>
           <span>${r.free ? '0 EUR' : `${r.total} EUR`}</span>
         </button>
       `).join('');
@@ -497,7 +608,7 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       if (!level || !month || !type) return;
       const cards = buildCourseCards(level, month, type, hIntensive.value);
       if (!cards.length) {
-        courseCardsWrap.innerHTML = `<p class="qx-card-empty">Bu filtrelerle su an acik sinif bulunamadi.</p>`;
+        courseCardsWrap.innerHTML = `<p class="qx-card-empty">${form.dataset.emptyCourses || 'No open class matches these filters right now.'}</p>`;
         return;
       }
       courseCardsWrap.innerHTML = cards.map((card) => `
@@ -508,25 +619,25 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
               <h4>${card.title}</h4>
               <span class="qx-course-availability">${card.places}</span>
             </div>
-            <p class="qx-course-startline"><strong>Start:</strong> ${card.start}</p>
+            <p class="qx-course-startline"><strong>${form.dataset.startLabel || 'Start'}:</strong> ${card.start}</p>
             ${card.extra ? `<p class="qx-course-extra">${card.extra}</p>` : ''}
           </div>
           <div class="qx-course-facts">
             <div class="qx-course-fact">
-              <span class="qx-fact-key">Time</span>
+              <span class="qx-fact-key">${form.dataset.timeLabel || 'Time'}</span>
               <strong class="qx-fact-val">${card.time}</strong>
             </div>
             <div class="qx-course-fact">
-              <span class="qx-fact-key">Teacher</span>
+              <span class="qx-fact-key">${form.dataset.teacherLabel || 'Teacher'}</span>
               <strong class="qx-fact-val">${card.teacher}</strong>
             </div>
             <div class="qx-course-fact">
-              <span class="qx-fact-key">Days</span>
+              <span class="qx-fact-key">${form.dataset.daysLabel || 'Days'}</span>
               <strong class="qx-fact-val">${card.days}</strong>
             </div>
           </div>
           <div class="qx-course-card-foot">
-            <p class="qx-course-price">${card.priceText}</p><span class="qx-course-cta">Book now</span>
+            <p class="qx-course-price">${card.priceText}</p><span class="qx-course-cta">${form.dataset.bookNow || 'Book now'}</span>
           </div>
         </button>
       `).join('');
@@ -675,12 +786,12 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         quoteIsFreeLesson: data['quote-is-free-lesson'] || 'no'
       };
       try {
-        if (btn) btn.textContent = 'Gonderiliyor...';
+        if (btn) btn.textContent = form.dataset.sending || 'Sending...';
         const wh = (form.dataset.webhook || '').trim() || DEFAULT_MAKE_WEBHOOK;
         const res = await fetch(wh, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
         if (!res.ok) throw new Error('webhook');
         if (submitFeedback) {
-          submitFeedback.textContent = 'Formunuz basariyla gonderildi.';
+          submitFeedback.textContent = form.dataset.success || 'Your form was submitted successfully.';
           submitFeedback.classList.add('is-success');
         }
         resetWizardState();
