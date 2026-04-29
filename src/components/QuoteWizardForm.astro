@@ -75,7 +75,12 @@ const copy = {
     placesAvailable: 'Kontenjan mevcut',
     twoMonthsToComplete: 'Bu seviyeyi tamamlamak için 2 ay',
     sending: 'Gönderiliyor...',
-    success: 'Formunuz başarıyla gönderildi.'
+    success: 'Formunuz başarıyla gönderildi.',
+    perMonthSuffix: '/ ay',
+    modePhysical: 'FIZIKSEL',
+    modeOnline: 'ONLINE',
+    weekdaysShort: 'Pzt, Sal, Cars, Pers',
+    weekendShort: 'Cmt, Paz'
   },
   de: {
     asideMark: 'Angebot',
@@ -138,7 +143,12 @@ const copy = {
     placesAvailable: 'Plaetze verfuegbar',
     twoMonthsToComplete: 'Zwei Monate bis Abschluss von',
     sending: 'Wird gesendet...',
-    success: 'Ihr Formular wurde erfolgreich gesendet.'
+    success: 'Ihr Formular wurde erfolgreich gesendet.',
+    perMonthSuffix: '/ Monat',
+    modePhysical: 'PRAESENZ',
+    modeOnline: 'ONLINE',
+    weekdaysShort: 'Mo, Di, Mi, Do',
+    weekendShort: 'Sa, So'
   },
   en: {
     asideMark: 'Quote',
@@ -201,7 +211,12 @@ const copy = {
     placesAvailable: 'Places available',
     twoMonthsToComplete: 'Two months to complete',
     sending: 'Sending...',
-    success: 'Your form was submitted successfully.'
+    success: 'Your form was submitted successfully.',
+    perMonthSuffix: '/ month',
+    modePhysical: 'PHYSICAL',
+    modeOnline: 'ONLINE',
+    weekdaysShort: 'Mon, Tue, Wed, Thu',
+    weekendShort: 'Sat, Sun'
   },
   es: {
     asideMark: 'Cotiz.',
@@ -264,7 +279,12 @@ const copy = {
     placesAvailable: 'Plazas disponibles',
     twoMonthsToComplete: 'Dos meses para completar',
     sending: 'Enviando...',
-    success: 'Tu formulario se envió correctamente.'
+    success: 'Tu formulario se envió correctamente.',
+    perMonthSuffix: '/ mes',
+    modePhysical: 'PRESENCIAL',
+    modeOnline: 'ONLINE',
+    weekdaysShort: 'Lun, Mar, Mie, Jue',
+    weekendShort: 'Sab, Dom'
   }
 };
 const t = copy[lang as keyof typeof copy] ?? copy.tr;
@@ -327,6 +347,11 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       data-two-months-to-complete={t.twoMonthsToComplete}
       data-sending={t.sending}
       data-success={t.success}
+      data-per-month-suffix={t.perMonthSuffix}
+      data-mode-physical={t.modePhysical}
+      data-mode-online={t.modeOnline}
+      data-weekdays-short={t.weekdaysShort}
+      data-weekend-short={t.weekendShort}
     >
       <input type="hidden" name="formType" value="price-quote" />
       <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
@@ -481,7 +506,12 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
     const plus = intensiveType === 'intensive-plus';
     const perWeekStart = getTierPerWeek(4, plus);
     const perWeekEnd = getTierPerWeek(24, plus);
-    const priceText = `EUR ${monthlyPrice(perWeekEnd)} - ${monthlyPrice(perWeekStart)} / month`;
+    const perMonthSuffix = form.dataset.perMonthSuffix || '/ month';
+    const modePhysical = form.dataset.modePhysical || 'PHYSICAL';
+    const modeOnline = form.dataset.modeOnline || 'ONLINE';
+    const weekdaysShort = form.dataset.weekdaysShort || 'Mon, Tue, Wed, Thu';
+    const weekendShort = form.dataset.weekendShort || 'Sat, Sun';
+    const priceText = `EUR ${monthlyPrice(perWeekEnd)} - ${monthlyPrice(perWeekStart)} ${perMonthSuffix}`;
     const startDate = `31.${String(startMonth).padStart(2, '0')}.2026`;
     const teachers = ['Anna Keller', 'Murat Yildiz', 'Sofia Becker', 'Deniz Acar', 'Lukas Weber', 'Elif Demir'];
     const pickTeacher = (seed: string) => {
@@ -491,12 +521,12 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
     const placesAvailable = form.dataset.placesAvailable || 'Places available';
     const twoMonthsToComplete = form.dataset.twoMonthsToComplete || 'Two months to complete';
     const all = [
-      { id: 'phy-morning', type: 'physical', title: `${level} (PHYSICAL)`, time: '09:00 - 11:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('phy-morning-' + level), start: startDate, places: placesAvailable, extra: '' },
-      { id: 'phy-afternoon', type: 'physical', title: `${level} (PHYSICAL)`, time: '15:00 - 17:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('phy-afternoon-' + level), start: startDate, places: placesAvailable, extra: '' },
-      { id: 'phy-evening', type: 'physical', title: `${level} (PHYSICAL)`, time: '18:00 - 20:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('phy-evening-' + level), start: startDate, places: placesAvailable, extra: '' },
-      { id: 'online-morning', type: 'online', title: `${level} (ONLINE)`, time: '09:00 - 11:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('online-morning-' + level), start: startDate, places: placesAvailable, extra: `${twoMonthsToComplete} ${level}` },
-      { id: 'online-evening', type: 'online', title: `${level} (ONLINE)`, time: '18:00 - 20:45', days: 'Mon, Tue, Wed, Thu', teacher: pickTeacher('online-evening-' + level), start: startDate, places: placesAvailable, extra: '' },
-      { id: 'phy-weekend', type: 'physical', title: `${level} (PHYSICAL)`, time: '10:00 - 13:00', days: 'Sat, Sun', teacher: pickTeacher('phy-weekend-' + level), start: startDate, places: placesAvailable, extra: '' }
+      { id: 'phy-morning', type: 'physical', title: `${level} (${modePhysical})`, time: '09:00 - 11:45', days: weekdaysShort, teacher: pickTeacher('phy-morning-' + level), start: startDate, places: placesAvailable, extra: '' },
+      { id: 'phy-afternoon', type: 'physical', title: `${level} (${modePhysical})`, time: '15:00 - 17:45', days: weekdaysShort, teacher: pickTeacher('phy-afternoon-' + level), start: startDate, places: placesAvailable, extra: '' },
+      { id: 'phy-evening', type: 'physical', title: `${level} (${modePhysical})`, time: '18:00 - 20:45', days: weekdaysShort, teacher: pickTeacher('phy-evening-' + level), start: startDate, places: placesAvailable, extra: '' },
+      { id: 'online-morning', type: 'online', title: `${level} (${modeOnline})`, time: '09:00 - 11:45', days: weekdaysShort, teacher: pickTeacher('online-morning-' + level), start: startDate, places: placesAvailable, extra: `${twoMonthsToComplete} ${level}` },
+      { id: 'online-evening', type: 'online', title: `${level} (${modeOnline})`, time: '18:00 - 20:45', days: weekdaysShort, teacher: pickTeacher('online-evening-' + level), start: startDate, places: placesAvailable, extra: '' },
+      { id: 'phy-weekend', type: 'physical', title: `${level} (${modePhysical})`, time: '10:00 - 13:00', days: weekendShort, teacher: pickTeacher('phy-weekend-' + level), start: startDate, places: placesAvailable, extra: '' }
     ];
     const filtered = courseType === 'all' ? all : courseType === 'evening' ? all.filter((x) => x.id === 'phy-evening') : all.filter((x) => x.type === courseType);
     return filtered.map((x) => ({ ...x, priceText }));
