@@ -1,5 +1,12 @@
 {
   "redirects": [
+    { "source": "/api/private-documents.php", "destination": "/private-documents-proxy.php", "permanent": true },
+    { "source": "/de/ozel-evrak-formu", "destination": "/de/dokumenten-einreichung/", "permanent": true },
+    { "source": "/de/ozel-evrak-formu/", "destination": "/de/dokumenten-einreichung/", "permanent": true },
+    { "source": "/en/ozel-evrak-formu", "destination": "/en/private-documents/", "permanent": true },
+    { "source": "/en/ozel-evrak-formu/", "destination": "/en/private-documents/", "permanent": true },
+    { "source": "/es/ozel-evrak-formu", "destination": "/es/documentos-privados/", "permanent": true },
+    { "source": "/es/ozel-evrak-formu/", "destination": "/es/documentos-privados/", "permanent": true },
     { "source": "/tr/ueber-uns", "destination": "/tr/hakkimizda", "permanent": true },
     { "source": "/tr/ueber-uns/", "destination": "/tr/hakkimizda/", "permanent": true },
     { "source": "/tr/ueber-uns/:path*", "destination": "/tr/hakkimizda/:path*", "permanent": true },

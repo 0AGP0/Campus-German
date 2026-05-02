@@ -1,14 +1,11 @@
 ---
 // Header Component - Orijinal Yapı
 import '../styles/header.css';
-import { getTrialPath, getPartnerApplicationPath, getQuoteFormPath, getBookingPath } from '../utils/pathHelpers';
+import { getTrialPath, getPartnerApplicationPath } from '../utils/pathHelpers';
 
 const { lang = 'tr' } = Astro.props;
 const trialSlug = getTrialPath(lang as 'tr'|'de'|'en'|'es');
 const partnerSlug = getPartnerApplicationPath(lang as 'tr'|'de'|'en'|'es');
-const quoteFormSlug = getQuoteFormPath(lang as 'tr'|'de'|'en'|'es');
-const bookingPathSegment = getBookingPath(lang as 'tr'|'de'|'en'|'es');
-
 // Translations
 const navTranslations = {
     tr: {
@@ -27,7 +24,7 @@ const navTranslations = {
         email: 'E-posta',
         brochure: 'Broşür',
         pricesDates: 'Fiyatlar ve Tarihler',
-        register: 'Kayıt / Ödeme',
+        register: 'Ücretsiz rezervasyon',
         phone: '+49 163 6927842',
         // Tab labels
         tabIntensive: 'Yoğun Akademik',
@@ -133,7 +130,7 @@ const navTranslations = {
         email: 'E-Mail',
         brochure: 'Broschüre',
         pricesDates: 'Preise & Termine',
-        register: 'Buchung / Zahlung',
+        register: 'Kostenlose Buchung',
         phone: '+49 163 6927842',
         tabIntensive: 'Intensiv',
         tabSeasonal: 'Saisonal',
@@ -235,7 +232,7 @@ const navTranslations = {
         email: 'Email',
         brochure: 'Brochure',
         pricesDates: 'Prices & Dates',
-        register: 'Book / Pay',
+        register: 'Free booking',
         phone: '+49 163 6927842',
         tabIntensive: 'Intensive Academic',
         tabSeasonal: 'Seasonal',
@@ -340,7 +337,7 @@ const navTranslations = {
         email: 'Email',
         brochure: 'Folleto',
         pricesDates: 'Precios y Fechas',
-        register: 'Reserva / Pago',
+        register: 'Reserva gratuita',
         phone: '+49 163 6927842',
         tabIntensive: 'Intensivo Académico',
         tabSeasonal: 'Estacional',
@@ -580,7 +577,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
             </div>
             <!-- Orta: Fiyat teklifi, Email, WhatsApp, Fiyat ve Tarihler -->
             <div class="top-header-center">
-                <a href={`/${lang}/${quoteFormSlug}`} class="top-header-link">
+                <a href={`/${lang}/${sections.booking}`} class="top-header-link top-header-link--btn">
                     <i class="fas fa-file-alt"></i>
                     <span>{t.getQuote}</span>
                 </a>
@@ -602,11 +599,11 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
             </div>
             <!-- Sağ: Rezervasyon/Booking (gradient buton) + Dil -->
             <div class="top-header-right">
-                <a href={`/${lang}/${bookingPathSegment}`} class="top-header-register">
+                <button type="button" class="top-header-register top-header-register--btn" data-open-quote-modal>
                     <i class="fas fa-credit-card"></i>
                     <span>{t.register}</span>
                     <i class="fas fa-arrow-right register-arrow"></i>
-                </a>
+                </button>
                 <div class="top-header-lang">
                     <button type="button" class="top-lang-btn" id="topLangBtn" aria-expanded="false" aria-haspopup="true">
                         <img src={lang === 'tr' ? 'https://flagcdn.com/tr.svg' : lang === 'de' ? 'https://flagcdn.com/de.svg' : lang === 'es' ? 'https://flagcdn.com/es.svg' : 'https://flagcdn.com/gb.svg'} alt={lang === 'tr' ? 'Türkçe' : lang === 'de' ? 'Deutsch' : lang === 'es' ? 'Español' : 'English'} class="lang-flag">
@@ -641,7 +638,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
             <!-- Logo Section -->
             <div class="logo-section">
                 <a href={`/${lang}/`} class="logo-link">
-                    <img src="/German_logo.webp" alt="CampusGerman Logo" class="logo-img">
+                    <img src="/German_logo.webp" alt="CampusGerman Logo" class="logo-img" decoding="async" />
                 </a>
             </div>
 
@@ -811,7 +808,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
         <div class="mobile-menu-header">
             <div class="mobile-logo">
                 <a href={`/${lang}/`} class="mobile-logo-link">
-                    <img src="/German_logo.webp" alt="CampusGerman Logo" class="mobile-logo-img">
+                    <img src="/German_logo.webp" alt="CampusGerman Logo" class="mobile-logo-img" decoding="async" />
                 </a>
             </div>
             <button class="mobile-menu-close" id="mobileMenuClose">

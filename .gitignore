@@ -22,6 +22,8 @@ lerna-debug.log*
 
 # Hostinger admin şifresi (sadece config.example.php repoda kalır)
 public/data/config.php
+# Özel evrak PHP proxy (secret içerir)
+public/data/private-documents-proxy.config.php
 
 # OS files
 .DS_Store

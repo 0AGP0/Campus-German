@@ -143,6 +143,17 @@ export function getQuoteFormPath(lang: SupportedLang): string {
   return mapping[lang] || 'get-a-quote';
 }
 
+/** Özel evrak / pasaport formu — dil bazlı URL segmenti (tek sayfa multipart form) */
+export function getPrivateDocumentsPath(lang: SupportedLang): string {
+  const mapping: Record<SupportedLang, string> = {
+    tr: 'ozel-evrak-formu',
+    de: 'dokumenten-einreichung',
+    en: 'private-documents',
+    es: 'documentos-privados',
+  };
+  return mapping[lang] || 'private-documents';
+}
+
 /** Yasal sayfa slug'ları (Datenschutz / Gizlilik) */
 export function getDatenschutzPath(lang: SupportedLang): string {
   const mapping: Record<SupportedLang, string> = {

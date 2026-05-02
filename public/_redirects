@@ -27,6 +27,17 @@
 /tr/ueber-uns/     /tr/hakkimizda/     301!
 /tr/ueber-uns/*    /tr/hakkimizda/:splat   301!
 
+# Özel evrak PHP proxy: eski /api/ yolu -> kök (Hostinger’da api klasörü yoksa 404 önleme)
+/api/private-documents.php    /private-documents-proxy.php    301!
+
+# Özel evrak: eski ortak Türkçe slug -> dile özel kanonik URL (DE, EN, ES)
+/de/ozel-evrak-formu    /de/dokumenten-einreichung/    301!
+/de/ozel-evrak-formu/   /de/dokumenten-einreichung/    301!
+/en/ozel-evrak-formu    /en/private-documents/    301!
+/en/ozel-evrak-formu/   /en/private-documents/    301!
+/es/ozel-evrak-formu    /es/documentos-privados/    301!
+/es/ozel-evrak-formu/   /es/documentos-privados/    301!
+
 # Eski form sayfası URL'leri -> dile özel slug'lara (EN, DE, ES)
 /en/ucretsiz-deneme    /en/free-trial    301!
 /en/ucretsiz-deneme/   /en/free-trial/   301!

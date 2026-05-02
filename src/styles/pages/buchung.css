@@ -47,6 +47,30 @@
     font-weight: 500;
 }
 
+.booking-hero-quote-cta {
+    margin: 14px 0 0 59px;
+}
+
+.booking-hero-quote-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 2px solid var(--color-primary, #0cc0df);
+    background: #fff;
+    color: var(--color-primary, #0a9eb8);
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.booking-hero-quote-btn:hover {
+    background: rgba(12, 192, 223, 0.12);
+}
+
 /* Booking Form Section */
 .booking-form-section {
     padding: 80px 0;
@@ -739,7 +763,7 @@
     box-shadow: 0 12px 35px rgba(40, 167, 69, 0.5);
 }
 
-/* İki buton: Ücretsiz rezervasyon + Ödemeye geç */
+/* Son adım: tek gönder butonu */
 .form-navigation .btn-submit {
     margin-left: 0;
 }
@@ -750,18 +774,6 @@
 }
 .form-navigation .btn-submit-free:hover {
     box-shadow: 0 12px 35px rgba(40, 167, 69, 0.5);
-}
-.form-navigation .btn-submit-payment {
-    background: #1a1f36;
-    color: #fff;
-    box-shadow: 0 8px 25px rgba(26, 31, 54, 0.4);
-}
-.form-navigation .btn-submit-payment:hover {
-    background: #252b45;
-    box-shadow: 0 12px 35px rgba(26, 31, 54, 0.5);
-}
-.form-navigation .btn-submit + .btn-submit {
-    margin-left: 12px;
 }
 
 /* Booking Summary */

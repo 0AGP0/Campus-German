@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
-import GlobalCourseWidget from '../../../components/GlobalCourseWidget.astro';
+import QuoteWizardForm from '../../../components/QuoteWizardForm.astro';
 import { cleanSlug, getServicesPath, getContactPath, getBookingPath, isValidLang } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
@@ -48,6 +48,8 @@ if (!isValidLang(lang)) {
 const servicesPath = getServicesPath(lang);
 const contactPath = getContactPath(lang);
 const bookingPath = getBookingPath(lang);
+const bookingFull = `/${lang}/${bookingPath}`;
+const homePath = `/${lang}`;
 
 // Related services: [path slug per lang, labels]
 const relatedServices = [
@@ -204,7 +206,7 @@ const relatedServices = [
                         </div>
                     </div>
                     <div class="cta-form">
-                        <GlobalCourseWidget lang={lang} bookingPath={bookingPath} />
+                        <QuoteWizardForm lang={lang} bookingPath={bookingFull} homePath={homePath} embedded instanceSuffix="e" />
                     </div>
                 </div>
             </div>

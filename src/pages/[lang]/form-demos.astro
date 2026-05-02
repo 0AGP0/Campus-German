@@ -4,7 +4,6 @@ import FormDemoCss from '../../components/demos/FormDemoCss.astro';
 import FormDemoMotion from '../../components/demos/FormDemoMotion.astro';
 import FormDemoGsap from '../../components/demos/FormDemoGsap.astro';
 import '../../styles/pages/form-demos.css';
-import { getQuoteFormPath } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
   return [{ params: { lang: 'tr' } }, { params: { lang: 'de' } }, { params: { lang: 'en' } }, { params: { lang: 'es' } }];
@@ -30,7 +29,6 @@ const titles: Record<string, { title: string; lead: string }> = {
   },
 };
 const t = titles[lang as string] ?? titles.en;
-const quotePath = `/${lang}/${getQuoteFormPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
 ---
 
 <MainLayout title={`${t.title} - Campus German`} lang={lang}>
@@ -38,7 +36,10 @@ const quotePath = `/${lang}/${getQuoteFormPath(lang as 'tr' | 'de' | 'en' | 'es'
     <h1>{t.title}</h1>
     <p class="lead">{t.lead}</p>
     <p class="lead" style="font-size: 0.85rem; margin-top: -0.5rem;">
-      URL: /{lang}/form-demos · <a href={quotePath}>Teklif formuna git</a>
+      URL: /{lang}/form-demos ·{' '}
+      <button type="button" class="fd-quote-open" data-open-quote-modal style="background:none;border:none;padding:0;color:#0ea5e9;text-decoration:underline;cursor:pointer;font:inherit;">
+        Teklif formunu aç
+      </button>
     </p>
     <div class="fd-grid">
       <FormDemoCss />

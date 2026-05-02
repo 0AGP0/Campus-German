@@ -483,7 +483,7 @@ function initBilgiAlForm() {
         var data = {};
         for (var p of fd.entries()) data[p[0]] = p[1];
         var startDateVal = data['start-date'] || '';
-        if (!data.email || !data.name || !data.phone || !startDateVal) {
+        if (!data.email || !data.name || !data.phone) {
             if (window.showSuccessModal) window.showSuccessModal('error', msg.required); else alert(msg.required);
             if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalContent; }
             return;
@@ -528,15 +528,16 @@ if (document.readyState === 'loading') {
     initBilgiAlForm();
 }
 
-// ===== VISIT POPUP (kampanya görseli → WhatsApp) =====
-var VISIT_POPUP_DELAY_MS = 5000; // 5 saniye
+// ===== VISIT POPUP (ücretsiz ders / indirim formu) =====
+// Ana sayfada: #visit-popup-scroll-trigger (main sonu, footer öncesi) görününce aç. Diğer sayfalarda otomatik açılmaz.
 
 function initVisitPopup() {
     var popup = document.getElementById('visit-popup');
     if (!popup) return;
 
     var closeBtn = popup.querySelector('.visit-popup-close');
-    var waLink = document.getElementById('visit-popup-whatsapp');
+    var closeSecondaryBtn = popup.querySelector('.visit-popup-close-secondary');
+    var form = document.getElementById('visit-popup-form');
 
     function openPopup() {
         popup.classList.add('visit-popup--visible');
@@ -564,9 +565,8 @@ function initVisitPopup() {
             closePopup();
         });
     }
-
-    if (waLink) {
-        waLink.addEventListener('click', function () {
+    if (closeSecondaryBtn) {
+        closeSecondaryBtn.addEventListener('click', function () {
             closePopup();
         });
     }
@@ -583,6 +583,80 @@ function initVisitPopup() {
         closePopup();
     });
 
+    if (form) {
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            var submitBtn = document.getElementById('visit-popup-submit');
+            var original = submitBtn ? submitBtn.textContent : '';
+            var lang = form.getAttribute('data-lang') || 'tr';
+            var msg = {
+                sending: form.getAttribute('data-msg-sending') || 'Sending...',
+                required: form.getAttribute('data-msg-required') || 'Please fill in all required fields.',
+                emailInvalid: form.getAttribute('data-msg-email') || 'Invalid email.',
+                success: form.getAttribute('data-msg-success') || 'Thank you!',
+                error: form.getAttribute('data-msg-error') || 'Error.',
+            };
+            var fd = new FormData(form);
+            if (fd.get('website')) return;
+            var data = {
+                name: (fd.get('name') || '').toString().trim(),
+                phone: (fd.get('phone') || '').toString().trim(),
+                email: (fd.get('email') || '').toString().trim(),
+                level: (fd.get('level') || '').toString(),
+                city: (fd.get('city') || '').toString().trim(),
+                startDate: (fd.get('start-date') || '').toString().trim(),
+            };
+            if (!data.name || !data.phone || !data.email || !data.level || !data.city || !data.startDate) {
+                if (window.showSuccessModal) window.showSuccessModal('error', msg.required);
+                else alert(msg.required);
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+                if (window.showSuccessModal) window.showSuccessModal('error', msg.emailInvalid);
+                else alert(msg.emailInvalid);
+                return;
+            }
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = msg.sending;
+            }
+            try {
+                var res = await fetch('https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        formType: 'contact',
+                        sourcePage: window.location.pathname,
+                        lang: lang,
+                        name: data.name,
+                        tel: data.phone,
+                        email: data.email,
+                        city: data.city,
+                        country: '',
+                        level: data.level,
+                        startDate: data.startDate,
+                        message: '',
+                        timestamp: new Date().toISOString(),
+                    }),
+                });
+                if (res.ok) {
+                    if (window.showSuccessModal) window.showSuccessModal('success', msg.success);
+                    else alert(msg.success);
+                    form.reset();
+                    closePopup();
+                } else throw new Error('Submit failed');
+            } catch (err) {
+                if (window.showSuccessModal) window.showSuccessModal('error', msg.error);
+                else alert(msg.error);
+            }
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = original;
+            }
+        });
+    }
+
+    var scrollTrigger = document.getElementById('visit-popup-scroll-trigger');
     var skipAuto = false;
     try {
         if (window.sessionStorage && sessionStorage.getItem('visit_popup_shown') === '1') {
@@ -590,15 +664,49 @@ function initVisitPopup() {
         }
     } catch (e) {}
 
-    if (!skipAuto) {
-        setTimeout(function () {
+    if (!skipAuto && scrollTrigger) {
+        var scrollFired = false;
+        function tryOpenFromScroll() {
+            if (scrollFired) return;
             try {
                 if (window.sessionStorage && sessionStorage.getItem('visit_popup_shown') === '1') {
                     return;
                 }
             } catch (e) {}
+            scrollFired = true;
             openPopup();
-        }, VISIT_POPUP_DELAY_MS);
+        }
+        if ('IntersectionObserver' in window) {
+            var obs = new IntersectionObserver(
+                function (entries) {
+                    for (var i = 0; i < entries.length; i++) {
+                        if (entries[i].isIntersecting) {
+                            obs.disconnect();
+                            tryOpenFromScroll();
+                            return;
+                        }
+                    }
+                },
+                {
+                    root: null,
+                    // Viewport altına genişlet — main sonu görünmeden kısa süre önce tetik (footer öncesi)
+                    rootMargin: '0px 0px 160px 0px',
+                    threshold: 0,
+                }
+            );
+            obs.observe(scrollTrigger);
+        } else {
+            function onScrollFallback() {
+                var rect = scrollTrigger.getBoundingClientRect();
+                var vh = window.innerHeight || document.documentElement.clientHeight;
+                if (rect.top < vh && rect.bottom > 0) {
+                    window.removeEventListener('scroll', onScrollFallback);
+                    tryOpenFromScroll();
+                }
+            }
+            window.addEventListener('scroll', onScrollFallback, { passive: true });
+            onScrollFallback();
+        }
     }
 }
 

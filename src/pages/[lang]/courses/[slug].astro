@@ -2,7 +2,8 @@
 import { getCollection } from 'astro:content';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
-import GlobalCourseWidget from '../../../components/GlobalCourseWidget.astro';
+import QuoteWizardForm from '../../../components/QuoteWizardForm.astro';
+import QuoteWizardModal from '../../../components/QuoteWizardModal.astro';
 import IntensivePricingSection from '../../../components/IntensivePricingSection.astro';
 import SuccessModal from '../../../components/SuccessModal.astro';
 import '../../../styles/global.css';
@@ -452,7 +453,13 @@ const groupSizeDisplay = '10-16 max.';
                         </div>
                     </section>
                     <section class="demand-form-section-inline" id="bilgi-al-form">
-                        <GlobalCourseWidget lang={lang} bookingPath={bookingPath} />
+                        <QuoteWizardForm
+                            lang={lang}
+                            bookingPath={`/${lang}/${bookingPath}`}
+                            homePath={`/${lang}`}
+                            embedded
+                            instanceSuffix="e"
+                        />
                     </section>
                 </div>
             </div>
@@ -463,68 +470,16 @@ const groupSizeDisplay = '10-16 max.';
 
     <SuccessModal lang={lang} />
 
+    <QuoteWizardModal lang={lang} />
     <script is:inline>
-(function() {
-  function handleBilgiAlSubmit(e) {
-    var form = e.target;
-    if (!form || typeof form.classList === 'undefined' || !form.classList.contains('bilgi-al-form')) return;
-    e.preventDefault();
-    e.stopPropagation();
-    var submitBtn = form.querySelector('.form-submit-btn');
-    var originalContent = submitBtn ? submitBtn.innerHTML : '';
-    var lang = form.getAttribute('data-lang') || 'tr';
-    var msg = {
-      sending: form.getAttribute('data-msg-sending') || 'Sending...',
-      required: form.getAttribute('data-msg-required') || 'Please fill in all required fields.',
-      emailInvalid: form.getAttribute('data-msg-email') || 'Please enter a valid email address.',
-      success: form.getAttribute('data-msg-success') || 'Form submitted successfully!',
-      error: form.getAttribute('data-msg-error') || 'An error occurred. Please try again.'
-    };
-    if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>' + msg.sending + '</span>'; }
-    var fd = new FormData(form);
-    var data = {};
-    for (var p of fd.entries()) data[p[0]] = p[1];
-    var startDateVal = data['start-date'] || '';
-    if (!data.email || !data.name || !data.phone || !startDateVal) {
-      if (window.showSuccessModal) window.showSuccessModal('error', msg.required); else alert(msg.required);
-      if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalContent; }
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-      if (window.showSuccessModal) window.showSuccessModal('error', msg.emailInvalid); else alert(msg.emailInvalid);
-      if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalContent; }
-      return;
-    }
-    fetch('https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        formType: 'contact',
-        sourcePage: window.location.pathname,
-        lang: lang,
-        name: data.name,
-        email: data.email,
-        tel: data.phone,
-        city: data.city || '',
-        country: '',
-        startDate: startDateVal,
-        message: data.message || '',
-        timestamp: new Date().toISOString()
-      })
-    }).then(function(res) {
-      if (res.ok) {
-        if (window.showSuccessModal) window.showSuccessModal('success', msg.success); else alert(msg.success);
-        form.reset();
-      } else throw new Error('Submit failed');
-    }).catch(function() {
-      if (window.showSuccessModal) window.showSuccessModal('error', msg.error); else alert(msg.error);
-    }).finally(function() {
-      if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalContent; }
-    });
-  }
-  document.addEventListener('submit', handleBilgiAlSubmit, true);
-})();
+      document.addEventListener('click', function (e) {
+        var el = e.target.closest('[data-open-quote-modal]');
+        if (!el) return;
+        e.preventDefault();
+        if (typeof window.openCampusQuoteModal === 'function') window.openCampusQuoteModal();
+      });
     </script>
+
     <script is:inline src="/script.js"></script>
     <script is:inline src="/kurs-detay.js"></script>
 </body>

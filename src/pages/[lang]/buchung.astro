@@ -167,7 +167,6 @@ const t = {
         privacyAccepted: "Kişisel Verilerin Korunması bilgilendirmesini kabul ediyorum",
         completeBooking: "Rezervasyonu Tamamla",
         freeReservation: "Ücretsiz rezervasyon",
-        proceedToPayment: "Ücretsiz rezervasyon yap",
         priceCalculation: "Fiyat Hesaplaması",
         priceCalculationDesc: "Anlık fiyat güncellemesi",
         courseFees: "Kurs Ücretleri",
@@ -241,7 +240,6 @@ const t = {
         back: "Geri",
         completeBooking: "Rezervasyonu Tamamla",
         freeReservation: "Ücretsiz rezervasyon",
-        proceedToPayment: "Ücretsiz rezervasyon yap",
         priceCalculation: "Fiyat Hesaplaması",
         priceCalculationDesc: "Anlık fiyat güncellemesi",
         courseFees: "Kurs Ücretleri",
@@ -384,7 +382,6 @@ const t = {
         privacyAccepted: "Ich akzeptiere die Datenschutzinformationen",
         completeBooking: "Reservierung abschließen",
         freeReservation: "Kostenlose Reservierung",
-        proceedToPayment: "Zur Kasse",
         priceCalculation: "Preisberechnung",
         priceCalculationDesc: "Echtzeit-Preisaktualisierung",
         courseFees: "Kursgebühren",
@@ -471,7 +468,6 @@ const t = {
         back: "Zurück",
         completeBooking: "Reservierung abschließen",
         freeReservation: "Kostenlose Reservierung",
-        proceedToPayment: "Zur Kasse",
         priceCalculation: "Preisberechnung",
         priceCalculationDesc: "Echtzeit-Preisaktualisierung",
         courseFees: "Kursgebühren",
@@ -614,7 +610,6 @@ const t = {
         privacyAccepted: "I accept the Privacy Policy information",
         completeBooking: "Complete Booking",
         freeReservation: "Free reservation",
-        proceedToPayment: "Proceed to payment",
         priceCalculation: "Price Calculation",
         priceCalculationDesc: "Real-time price update",
         courseFees: "Course Fees",
@@ -701,7 +696,6 @@ const t = {
         back: "Back",
         completeBooking: "Complete Booking",
         freeReservation: "Free reservation",
-        proceedToPayment: "Proceed to payment",
         priceCalculation: "Price Calculation",
         priceCalculationDesc: "Real-time price update",
         courseFees: "Course Fees",
@@ -844,7 +838,6 @@ const t = {
         privacyAccepted: "Acepto la información de Protección de datos",
         completeBooking: "Completar reserva",
         freeReservation: "Reserva gratuita",
-        proceedToPayment: "Pagar ahora",
         priceCalculation: "Cálculo del precio",
         priceCalculationDesc: "Actualización del precio en tiempo real",
         courseFees: "Cuotas del curso",
@@ -931,7 +924,6 @@ const t = {
         back: "Atrás",
         completeBooking: "Completar reserva",
         freeReservation: "Reserva gratuita",
-        proceedToPayment: "Pagar ahora",
         priceCalculation: "Cálculo del precio",
         priceCalculationDesc: "Actualización del precio en tiempo real",
         courseFees: "Cuotas del curso",
@@ -971,6 +963,14 @@ const bookingBundlePromoLabels =
 
 const translations = t[lang as keyof typeof t];
 
+const quoteModalCtaByLang: Record<'tr' | 'de' | 'en' | 'es', string> = {
+    tr: 'Önce fiyat teklifi al',
+    de: 'Preisangebot anfordern',
+    en: 'Get a price quote',
+    es: 'Solicitar presupuesto',
+};
+const quoteModalCta = quoteModalCtaByLang[lang as 'tr' | 'de' | 'en' | 'es'] ?? quoteModalCtaByLang.en;
+
 const bundlePromoInfoboxTexts = {
     a2c1: translations.bundlePromoInfoA2C1,
     b1c1: translations.bundlePromoInfoB1C1,
@@ -996,6 +996,11 @@ const bundleNearHintCopy = {
                 </h1>
                 <p class="hero-description">
                     {translations.heroDescription}
+                </p>
+                <p class="booking-hero-quote-cta">
+                    <button type="button" class="booking-hero-quote-btn" data-open-quote-modal>
+                        {quoteModalCta}
+                    </button>
                 </p>
             </div>
         </div>
@@ -1033,7 +1038,7 @@ const bundleNearHintCopy = {
                         <!-- Form Section -->
                         <div class="form-section">
                             <!-- Booking Form -->
-                            <form id="booking-form" class="booking-form" data-coupon-success={translations.couponSuccess} data-coupon-invalid={translations.couponInvalid} data-checkout-api={import.meta.env.PUBLIC_MAKE_STRIPE_CHECKOUT_WEBHOOK ?? 'https://hook.eu2.make.com/g8snedc3p010gub5i8r6vtmv7jkcj6ra'}>
+                            <form id="booking-form" class="booking-form" data-coupon-success={translations.couponSuccess} data-coupon-invalid={translations.couponInvalid}>
                                 <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
                                 <input type="hidden" name="amountInCents" id="amount-in-cents" value="0" />
                                 <input type="hidden" name="promo-bundle" id="promo-bundle-input" value="" />
@@ -1318,11 +1323,8 @@ const bundleNearHintCopy = {
                                     </div>
                                     <div class="form-navigation">
                                         <button type="button" class="btn-prev">{translations.back}</button>
-                                        <button type="submit" name="bookingAction" value="free" class="btn-submit btn-submit-free">
+                                        <button type="submit" class="btn-submit btn-submit-free">
                                             <i class="fas fa-calendar-check" aria-hidden="true"></i> {translations.freeReservation}
-                                        </button>
-                                        <button type="submit" name="bookingAction" value="payment" class="btn-submit btn-submit-payment">
-                                            <i class="fas fa-credit-card" aria-hidden="true"></i> {translations.proceedToPayment}
                                         </button>
                                     </div>
                                 </div>
@@ -1848,16 +1850,16 @@ const bundleNearHintCopy = {
             const TIERS_20H = [
                 { min: 1, max: 4, perWeek: 190 },
                 { min: 5, max: 8, perWeek: 150 },
-                { min: 9, max: 16, perWeek: 130 },
-                { min: 17, max: 24, perWeek: 120 },
+                { min: 9, max: 15, perWeek: 130 },
+                { min: 16, max: 24, perWeek: 120 },
                 { min: 25, max: 999, perWeek: 110 }
             ];
             const TIERS_25H = [
                 { min: 1, max: 4, perWeek: 230 },
-                { min: 5, max: 8, perWeek: 180 },
-                { min: 9, max: 16, perWeek: 160 },
-                { min: 17, max: 24, perWeek: 150 },
-                { min: 25, max: 999, perWeek: 135 }
+                { min: 5, max: 8, perWeek: 190 },
+                { min: 9, max: 15, perWeek: 170 },
+                { min: 16, max: 24, perWeek: 160 },
+                { min: 25, max: 999, perWeek: 150 }
             ];
             function getTieredPrice(weeks, isIntensivePlus) {
                 const w = parseInt(weeks, 10) || 0;
@@ -2481,7 +2483,6 @@ const bundleNearHintCopy = {
 
             // ===== FORM SUBMISSION =====
             const bookingForm = document.getElementById('booking-form');
-            const CHECKOUT_API = bookingForm?.getAttribute('data-checkout-api') || '/api/create-checkout';
             function getSubmitButtons() { return bookingForm ? Array.from(bookingForm.querySelectorAll('button[type="submit"]')) : []; }
             function setSubmitButtonsDisabled(disabled) {
                 getSubmitButtons().forEach(function(btn) { btn.disabled = disabled; });
@@ -2491,29 +2492,18 @@ const bundleNearHintCopy = {
             }
             function getCompleteButtonsHtml() {
                 const freeText = lang === 'tr' ? 'Ücretsiz rezervasyon' : lang === 'de' ? 'Kostenlose Reservierung' : lang === 'es' ? 'Reserva gratuita' : 'Free reservation';
-                const payText = lang === 'tr' ? 'Ödemeye geç' : lang === 'de' ? 'Zur Kasse' : lang === 'es' ? 'Pagar ahora' : 'Proceed to payment';
-                return [
-                    '<i class="fas fa-calendar-check" aria-hidden="true"></i> ' + freeText,
-                    '<i class="fas fa-credit-card" aria-hidden="true"></i> ' + payText
-                ];
+                return '<i class="fas fa-calendar-check" aria-hidden="true"></i> ' + freeText;
             }
             function restoreSubmitButtons() {
-                const htmls = getCompleteButtonsHtml();
+                const html = getCompleteButtonsHtml();
                 const buttons = getSubmitButtons();
-                if (buttons[0]) buttons[0].innerHTML = htmls[0];
-                if (buttons[1]) buttons[1].innerHTML = htmls[1];
+                if (buttons[0]) buttons[0].innerHTML = html;
             }
 
             if (bookingForm) {
                 bookingForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     const formData = new FormData(bookingForm);
-                    // Tıklanan butona göre bookingAction'ı belirle
-                    let bookingAction = formData.get('bookingAction') || 'free';
-                    const submitter = e.submitter;
-                    if (submitter && submitter.name === 'bookingAction') {
-                        bookingAction = submitter.value || bookingAction;
-                    }
 
                     setSubmitButtonsDisabled(true);
                     const submittingText = lang === 'tr' ? 'Gönderiliyor...' : lang === 'de' ? 'Wird gesendet...' : lang === 'es' ? 'Enviando...' : 'Submitting...';
@@ -2632,50 +2622,7 @@ const bundleNearHintCopy = {
                     // Sanitize all inputs
                     standardizedData = sanitizeObject(standardizedData);
 
-                    if (bookingAction === 'payment') {
-                        // Ödemeye geç: Stripe Checkout için backend'e istek
-                        const amountInCents = parseInt(document.getElementById('amount-in-cents')?.value || '0', 10);
-                        if (amountInCents <= 0) {
-                            const zeroMsg = lang === 'tr' ? 'Ödeme için önce program ve seçenekleri belirleyin; toplam 0 € olamaz.' : lang === 'de' ? 'Bitte wählen Sie Programm und Optionen – der Gesamtbetrag darf nicht 0 € sein.' : lang === 'es' ? 'Seleccione programa y opciones; el total no puede ser 0 €.' : 'Please select program and options; total cannot be 0 €.';
-                            if (window.showSuccessModal) window.showSuccessModal('error', zeroMsg);
-                            else alert(zeroMsg);
-                            setSubmitButtonsDisabled(false);
-                            restoreSubmitButtons();
-                            return;
-                        }
-                        try {
-                            const payload = {
-                                amountInCents: amountInCents,
-                                currency: 'eur',
-                                successUrl: window.location.origin + window.location.pathname + '?payment=success',
-                                cancelUrl: window.location.origin + window.location.pathname + '?payment=cancelled',
-                                booking: standardizedData
-                            };
-                            const response = await fetch(CHECKOUT_API, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(payload)
-                            });
-                            const json = await response.json().catch(function() { return {}; });
-                            if (response.ok && json.url) {
-                                window.location.href = json.url;
-                                return;
-                            }
-                            const payErrorMsg = lang === 'tr' ? 'Ödeme sayfası şu an kullanılamıyor. Lütfen ücretsiz rezervasyonu deneyin veya bizimle iletişime geçin.' : lang === 'de' ? 'Zahlungsseite derzeit nicht verfügbar. Bitte wählen Sie die kostenlose Reservierung oder kontaktieren Sie uns.' : lang === 'es' ? 'Pago no disponible. Use la reserva gratuita o contáctenos.' : 'Payment page is not available. Please try free reservation or contact us.';
-                            if (window.showSuccessModal) window.showSuccessModal('error', payErrorMsg);
-                            else alert(payErrorMsg);
-                        } catch (err) {
-                            console.error('Checkout request failed:', err);
-                            const payErrorMsg = lang === 'tr' ? 'Ödeme bağlantısı kurulamadı. Ücretsiz rezervasyonu deneyebilir veya bizimle iletişime geçebilirsiniz.' : lang === 'de' ? 'Zahlungsverbindung fehlgeschlagen. Nutzen Sie die kostenlose Reservierung oder kontaktieren Sie uns.' : lang === 'es' ? 'No se pudo conectar con el pago. Pruebe la reserva gratuita o contáctenos.' : 'Could not connect to payment. Try free reservation or contact us.';
-                            if (window.showSuccessModal) window.showSuccessModal('error', payErrorMsg);
-                            else alert(payErrorMsg);
-                        }
-                        setSubmitButtonsDisabled(false);
-                        restoreSubmitButtons();
-                        return;
-                    }
-
-                    // Ücretsiz rezervasyon: mevcut webhook
+                    // Ücretsiz rezervasyon (webhook)
                     try {
                         const response = await fetch('https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47', {
                             method: 'POST',

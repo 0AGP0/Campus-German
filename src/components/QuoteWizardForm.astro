@@ -1,14 +1,23 @@
 ---
 import '../styles/pages/quote-wizard.css';
-const { lang = 'tr', bookingPath = '/tr/buchung', homePath: homePathProp, embedded = false } = Astro.props;
+const {
+  lang = 'tr',
+  bookingPath = '/tr/buchung',
+  homePath: homePathProp,
+  embedded = false,
+  modalMode = false,
+  /** Aynı sayfada modal + gömülü için benzersiz id: modal='m', sayfa gövdesi='e' */
+  instanceSuffix = 'm',
+} = Astro.props;
 const homePath = homePathProp ?? `/${lang}`;
 const quoteMode = embedded ? 'embedded' : 'standalone';
+const pw = (base: string) => `${base}-${instanceSuffix}`;
 const BOOKING_FREE_WEBHOOK = 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
 const quoteWebhook = import.meta.env.PUBLIC_MAKE_QUOTE_WEBHOOK || BOOKING_FREE_WEBHOOK;
 
 const programImageMap = {
-  academic: 'https://images.unsplash.com/photo-1663493955721-110e7e1ae36c?auto=format&fit=crop&w=900&q=80',
-  'academic-plus': 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=80',
+  intensive: 'https://images.unsplash.com/photo-1663493955721-110e7e1ae36c?auto=format&fit=crop&w=900&q=80',
+  telc: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=80',
   'summer-camp': 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=80',
   online: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80'
 } as const;
@@ -21,8 +30,8 @@ const copy = {
     asideSteps: '5 adim',
     asideStepHint: 'Ilerleme',
     programs: [
-      { label: 'Akademik', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'academic', image: programImageMap.academic },
-      { label: 'Yoğun akademik', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'academic-plus', image: programImageMap['academic-plus'] },
+      { label: 'Intensive Deutsch', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive-de', image: programImageMap.intensive },
+      { label: 'Telc Prüfungen', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'telc', image: programImageMap.telc },
       { label: 'Yaz kampı', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: programImageMap['summer-camp'] },
       { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: programImageMap.online }
     ],
@@ -31,14 +40,6 @@ const copy = {
     levelPlaceholder: 'Seviye seciniz',
     monthQ: 'Baslangic ayi',
     monthPlaceholder: 'Ay seciniz',
-    courseTypeQ: 'Size uygun kurs turu',
-    courseTypes: [
-      { label: 'Online', value: 'online' },
-      { label: 'Fiziksel', value: 'physical' },
-      { label: 'Aksam', value: 'evening' },
-      { label: 'Hepsi', value: 'all' }
-    ],
-    levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
     months: ['Ocak', 'Subat', 'Mart', 'Nisan', 'Mayis', 'Haziran', 'Temmuz', 'Agustos', 'Eylul', 'Ekim', 'Kasim', 'Aralik'],
     step3lead: 'Uygun siniflar',
     cardSelectHint: 'Kart seciniz, sonra sure secimi acilir.',
@@ -80,7 +81,8 @@ const copy = {
     modePhysical: 'FIZIKSEL',
     modeOnline: 'ONLINE',
     weekdaysShort: 'Pzt, Sal, Cars, Pers',
-    weekendShort: 'Cmt, Paz'
+    weekendShort: 'Cmt, Paz',
+    needLevelHint: 'Devam etmek icin dil seviyesi seciniz.'
   },
   de: {
     asideMark: 'Angebot',
@@ -89,8 +91,8 @@ const copy = {
     asideSteps: '5 Schritte',
     asideStepHint: 'Fortschritt',
     programs: [
-      { label: 'Akademisch', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'academic', image: programImageMap.academic },
-      { label: 'Intensiv akademisch', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'academic-plus', image: programImageMap['academic-plus'] },
+      { label: 'Intensive Deutsch', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive-de', image: programImageMap.intensive },
+      { label: 'Telc-Prüfungen', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'telc', image: programImageMap.telc },
       { label: 'Sommercamp', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: programImageMap['summer-camp'] },
       { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: programImageMap.online }
     ],
@@ -99,14 +101,6 @@ const copy = {
     levelPlaceholder: 'Niveau waehlen',
     monthQ: 'Startmonat',
     monthPlaceholder: 'Monat waehlen',
-    courseTypeQ: 'Passender Kurstyp',
-    courseTypes: [
-      { label: 'Online', value: 'online' },
-      { label: 'Praesenz', value: 'physical' },
-      { label: 'Abend', value: 'evening' },
-      { label: 'Alle', value: 'all' }
-    ],
-    levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
     months: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
     step3lead: 'Passende Klassen',
     cardSelectHint: 'Karte waehlen, dann Dauer.',
@@ -148,7 +142,8 @@ const copy = {
     modePhysical: 'PRAESENZ',
     modeOnline: 'ONLINE',
     weekdaysShort: 'Mo, Di, Mi, Do',
-    weekendShort: 'Sa, So'
+    weekendShort: 'Sa, So',
+    needLevelHint: 'Bitte waehlen Sie eine Sprachstufe, um fortzufahren.'
   },
   en: {
     asideMark: 'Quote',
@@ -157,8 +152,8 @@ const copy = {
     asideSteps: '5 steps',
     asideStepHint: 'Progress',
     programs: [
-      { label: 'Academic', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'academic', image: programImageMap.academic },
-      { label: 'Intensive academic', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'academic-plus', image: programImageMap['academic-plus'] },
+      { label: 'Intensive German', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive-de', image: programImageMap.intensive },
+      { label: 'Telc exams', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'telc', image: programImageMap.telc },
       { label: 'Summer camp', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: programImageMap['summer-camp'] },
       { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: programImageMap.online }
     ],
@@ -167,14 +162,6 @@ const copy = {
     levelPlaceholder: 'Select level',
     monthQ: 'Start month',
     monthPlaceholder: 'Select month',
-    courseTypeQ: 'Suitable course type',
-    courseTypes: [
-      { label: 'Online', value: 'online' },
-      { label: 'Physical', value: 'physical' },
-      { label: 'Evening', value: 'evening' },
-      { label: 'All', value: 'all' }
-    ],
-    levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
     months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     step3lead: 'Matching classes',
     cardSelectHint: 'Select a card, then choose duration.',
@@ -216,7 +203,8 @@ const copy = {
     modePhysical: 'PHYSICAL',
     modeOnline: 'ONLINE',
     weekdaysShort: 'Mon, Tue, Wed, Thu',
-    weekendShort: 'Sat, Sun'
+    weekendShort: 'Sat, Sun',
+    needLevelHint: 'Please select a language level to continue.'
   },
   es: {
     asideMark: 'Cotiz.',
@@ -225,8 +213,8 @@ const copy = {
     asideSteps: '5 pasos',
     asideStepHint: 'Progreso',
     programs: [
-      { label: 'Académico', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'academic', image: programImageMap.academic },
-      { label: 'Académico intensivo', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'academic-plus', image: programImageMap['academic-plus'] },
+      { label: 'Alemán intensivo', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive-de', image: programImageMap.intensive },
+      { label: 'Exámenes Telc', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'telc', image: programImageMap.telc },
       { label: 'Campamento de verano', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: programImageMap['summer-camp'] },
       { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: programImageMap.online }
     ],
@@ -235,14 +223,6 @@ const copy = {
     levelPlaceholder: 'Selecciona nivel',
     monthQ: 'Mes de inicio',
     monthPlaceholder: 'Selecciona mes',
-    courseTypeQ: 'Tipo de curso',
-    courseTypes: [
-      { label: 'Online', value: 'online' },
-      { label: 'Presencial', value: 'physical' },
-      { label: 'Noche', value: 'evening' },
-      { label: 'Todos', value: 'all' }
-    ],
-    levels: ['A1.1', 'A1.2', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1', 'C1.2'],
     months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
     step3lead: 'Clases disponibles',
     cardSelectHint: 'Selecciona una tarjeta y luego duracion.',
@@ -284,51 +264,60 @@ const copy = {
     modePhysical: 'PRESENCIAL',
     modeOnline: 'ONLINE',
     weekdaysShort: 'Lun, Mar, Mie, Jue',
-    weekendShort: 'Sab, Dom'
+    weekendShort: 'Sab, Dom',
+    needLevelHint: 'Selecciona un nivel para continuar.'
   }
 };
 const t = copy[lang as keyof typeof copy] ?? copy.tr;
 ---
 
-<div class={`qx-page-bg ${quoteMode === 'standalone' ? 'qx-page-bg--standalone' : 'qx-page-bg--embedded'}`}>
-<section class="qx" id="pwRoot" data-qx-mode={quoteMode}>
-  <aside class="qx-aside" aria-hidden="true">
-    <div class="qx-aside-ornament" aria-hidden="true"></div>
-    <p class="qx-aside-title">{t.asideMark}</p>
-    <p class="qx-aside-meta">{t.asideSteps}</p>
-    <div class="qx-aside-progress">
-      <div class="qx-aside-connector">
-        <div class="qx-aside-track">
-          <span class="qx-aside-track-line" aria-hidden="true"></span>
-          <div class="qx-dots">
-            {[1, 2, 3, 4, 5].map((n) => <span class="qx-dot" data-qx-dot={n}></span>)}
-          </div>
+<div class="quote-wizard-instance" data-quote-instance={instanceSuffix}>
+<div class={`qx-page-bg ${quoteMode === 'standalone' ? 'qx-page-bg--standalone' : 'qx-page-bg--embedded'} ${modalMode ? 'qx-page-bg--modal' : ''}`}>
+<section class="qx qx-layout-flow" id={pw('pwRoot')} data-qx-mode={quoteMode}>
+  <header class="qx-wiz-header">
+    <div class="qx-wiz-header__top">
+      <div class="qx-wiz-brand">
+        <img src="/German_logo.webp" alt="" class="qx-wiz-logo" width="48" height="48" loading="lazy" decoding="async" />
+        <div class="qx-wiz-brand__text">
+          <span class="qx-wiz-brand__mark">{t.asideMark}</span>
+          <span class="qx-wiz-brand__sub">{t.asideSteps}</span>
         </div>
       </div>
-      <div class="qx-aside-counter">
-        <p class="qx-aside-step" data-pw-eyebrow>01 / 05</p>
-        <span class="qx-aside-stephint">{t.asideStepHint}</span>
+      <div class="qx-wiz-status">
+        <p class="qx-wiz-status__step" data-pw-eyebrow>01 / 05</p>
+        <span class="qx-wiz-status__hint">{t.asideStepHint}</span>
       </div>
     </div>
-    <div class="qx-aside-brand" aria-hidden="true">
-      <img src="/Campusgerman.png" alt="" width="80" height="80" loading="lazy" decoding="async" />
+
+    <div class="qx-step-track" aria-hidden="true">
+      {[1, 2, 3, 4, 5].map((n) => (
+        <div class="qx-step-pill">
+          <span class="qx-dot" data-qx-dot={n}></span>
+          <span class="qx-step-pill__n">{n}</span>
+        </div>
+      ))}
     </div>
-  </aside>
+
+    <div class="qx-wiz-meter" aria-hidden="true">
+      <div class="qx-wiz-meter__track">
+        <span class="qx-wiz-meter__fill" data-pw-bar></span>
+      </div>
+    </div>
+  </header>
 
   <div class="qx-body">
     <div class="qx-lead">
       <p class="qx-lead-kicker">{t.subtitleEm}</p>
       <p class="qx-lead-body">{t.subtitle}</p>
     </div>
-    <div class="qx-line" aria-hidden="true"><span class="qx-line-fill" data-pw-bar></span></div>
-    <p class="qx-submit-feedback" id="pwSubmitFeedback" aria-live="polite"></p>
+    <p class="qx-submit-feedback" id={pw('pwSubmitFeedback')} aria-live="polite"></p>
 
     <form
-      id="pwForm"
+      id={pw('pwForm')}
       class="qx-form"
       data-webhook={quoteWebhook}
       data-error={t.error}
-      data-levels={t.levels.join('|')}
+      data-modal-mode={modalMode ? 'true' : 'false'}
       data-months={t.months.join('|')}
       data-free-lesson-label={t.freeLesson}
       data-pricing-duration={t.pricingDuration}
@@ -352,35 +341,38 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       data-mode-online={t.modeOnline}
       data-weekdays-short={t.weekdaysShort}
       data-weekend-short={t.weekendShort}
+      data-need-level-hint={t.needLevelHint}
     >
       <input type="hidden" name="formType" value="price-quote" />
       <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
       <input type="hidden" name="lang" value={lang} />
-      <input type="hidden" name="program" id="pwProgram" value="" />
-      <input type="hidden" name="quote-program-label" id="pwProgramLabel" value="" />
-      <input type="hidden" name="quote-intensive-type" id="pwIntensiveType" value="" />
-      <input type="hidden" name="quote-level-start" id="pwLevelA" value="" />
-      <input type="hidden" name="quote-level-end" id="pwLevelB" value="" />
-      <input type="hidden" name="quote-month-start" id="pwMonthA" value="" />
-      <input type="hidden" name="quote-month-end" id="pwMonthB" value="" />
-      <input type="hidden" name="quote-course-type" id="pwCourseType" value="" />
-      <input type="hidden" name="quote-selected-course-id" id="pwCourseId" value="" />
-      <input type="hidden" name="quote-selected-course-title" id="pwCourseTitle" value="" />
-      <input type="hidden" name="quote-duration-months" id="pwDurationMonths" value="" />
-      <input type="hidden" name="quote-is-free-lesson" id="pwFreeLesson" value="no" />
-      <input type="hidden" name="quote-plan-key" id="pwPlanKey" value="" />
-      <input type="hidden" name="totalPrice" id="pwTotalPrice" value="" />
+      <input type="hidden" name="program" id={pw('pwProgram')} value="" />
+      <input type="hidden" name="quote-program-label" id={pw('pwProgramLabel')} value="" />
+      <input type="hidden" name="quote-intensive-type" id={pw('pwIntensiveType')} value="" />
+      <input type="hidden" name="quote-level-start" id={pw('pwLevelA')} value="" />
+      <input type="hidden" name="quote-level-end" id={pw('pwLevelB')} value="" />
+      <input type="hidden" name="quote-month-start" id={pw('pwMonthA')} value="" />
+      <input type="hidden" name="quote-month-end" id={pw('pwMonthB')} value="" />
+      <input type="hidden" name="quote-course-type" id={pw('pwCourseType')} value="" />
+      <input type="hidden" name="quote-selected-course-id" id={pw('pwCourseId')} value="" />
+      <input type="hidden" name="quote-selected-course-title" id={pw('pwCourseTitle')} value="" />
+      <input type="hidden" name="quote-duration-months" id={pw('pwDurationMonths')} value="" />
+      <input type="hidden" name="quote-is-free-lesson" id={pw('pwFreeLesson')} value="no" />
+      <input type="hidden" name="quote-plan-key" id={pw('pwPlanKey')} value="" />
+      <input type="hidden" name="totalPrice" id={pw('pwTotalPrice')} value="" />
 
       <div class="pw-viewport">
         <div class="pw-panel is-current qx-scene qx-scene--pick" data-panel="1">
           <div class="qx-stage-shell">
             <header class="qx-scene-head"><span class="qx-scene-kicker">1</span><h2 class="qx-question">{t.programQ}</h2></header>
-            <div class="qx-strip">
+            <div class="qx-program-grid qx-strip qx-strip--programs">
               {t.programs.map((p, i) => (
-                <button type="button" class={`qx-card qx-card--${i + 1}`} data-program={p.program} data-program-label={p.label} data-intensive-type={p.intensiveType}>
-                  <span class="qx-card-num">{String(i + 1).padStart(2, '0')}</span>
-                  <span class="qx-card-bg" style={`--qx-img:url('${p.image}')`} />
-                  <strong>{p.label}</strong>
+                <button type="button" class={`qx-card qx-card--${i + 1}`} data-program={p.program} data-program-label={p.label} data-intensive-type={p.intensiveType} data-quote-track={p.quoteTrack}>
+                  <span class="qx-card-bg" style={`--qx-img:url('${p.image}')`} aria-hidden="true" />
+                  <span class="qx-card-body">
+                    <span class="qx-card-num">{String(i + 1).padStart(2, '0')}</span>
+                    <strong class="qx-card-title">{p.label}</strong>
+                  </span>
                 </button>
               ))}
             </div>
@@ -390,24 +382,9 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         <div class="pw-panel qx-scene qx-scene--plan" data-panel="2">
           <div class="qx-stage-shell qx-stage-shell--with-nav">
             <header class="qx-scene-head"><span class="qx-scene-kicker">2</span><h2 class="qx-question">{t.levelQ}</h2></header>
-            <div class="qx-select-wrap">
-              <label for="pwLevelSelect">{t.levelQ}</label>
-              <select id="pwLevelSelect">
-                <option value="" selected>{t.levelPlaceholder}</option>
-                {t.levels.map((lv) => <option value={lv}>{lv}</option>)}
-              </select>
-            </div>
+            <div class="qx-choice-grid qx-choice-grid--levels" id={pw('pwLevelButtons')} role="group" aria-label={t.levelQ}></div>
             <h3 class="qx-subq">{t.monthQ}</h3>
-            <div class="qx-select-wrap">
-              <label for="pwMonthSelect">{t.monthQ}</label>
-              <select id="pwMonthSelect">
-                <option value="" selected>{t.monthPlaceholder}</option>
-              </select>
-            </div>
-            <h3 class="qx-subq">{t.courseTypeQ}</h3>
-            <div class="qx-choice-grid qx-choice-grid--type" id="pwCourseTypeButtons">
-              {t.courseTypes.map((c) => <button type="button" class="qx-choice-btn" data-course-type={c.value}>{c.label}</button>)}
-            </div>
+            <div class="qx-choice-grid qx-choice-grid--months" id={pw('pwMonthButtons')} role="group" aria-label={t.monthQ}></div>
             <div class="qx-stage-nav">
               <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
               <button type="button" class="qx-nav-arrow qx-nav-arrow--next" data-pw-nav-next aria-label={t.planContinue}><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
@@ -419,7 +396,7 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
           <div class="qx-stage-shell qx-stage-shell--with-nav">
             <header class="qx-scene-head"><span class="qx-scene-kicker">3</span><h2 class="qx-question">{t.step3lead}</h2></header>
             <p class="qx-hint">{t.cardSelectHint}</p>
-            <div class="qx-course-cards" id="pwCourseCards"></div>
+            <div class="qx-course-cards" id={pw('pwCourseCards')}></div>
             <div class="qx-stage-nav">
               <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
               <button type="button" class="qx-nav-arrow qx-nav-arrow--next" data-pw-nav-next aria-label={t.planContinue}><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
@@ -430,14 +407,14 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         <div class="pw-panel qx-scene qx-scene--pricing" data-panel="4">
           <div class="qx-stage-shell qx-stage-shell--with-nav">
             <header class="qx-scene-head"><span class="qx-scene-kicker">4</span><h2 class="qx-question">{t.step4lead}</h2></header>
-            <div class="qx-pricing-table-wrap" id="pwPricingTable">
+            <div class="qx-pricing-table-wrap" id={pw('pwPricingTable')}>
               <div class="qx-pricing-head" role="row">
                 <div>{t.pricingDuration}</div>
                 <div>{t.pricingWeekly}</div>
                 <div>{t.pricingMonthly}</div>
                 <div>{t.pricingTotal}</div>
               </div>
-              <div class="qx-pricing-rows" id="pwPricingRows"></div>
+              <div class="qx-pricing-rows" id={pw('pwPricingRows')}></div>
             </div>
             <div class="qx-stage-nav">
               <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
@@ -467,50 +444,55 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
 </section>
 </div>
 
-<div class="pw-overlay" id="pwOverlay" data-home={homePath} aria-hidden="true">
-  <div class="pw-dialog pw-dialog--done" data-pw-dialog role="dialog" aria-modal="true" aria-labelledby="pwDoneTitle">
+<div class="pw-overlay" id={pw('pwOverlay')} data-home={homePath} aria-hidden="true">
+  <div class="pw-dialog pw-dialog--done" data-pw-dialog role="dialog" aria-modal="true" aria-labelledby={pw('pwDoneTitle')}>
     <button type="button" class="pw-dialog-dismiss" data-pw-close aria-label={t.doneClose}><i class="fas fa-times" aria-hidden="true"></i></button>
     <div class="pw-dialog-icon" aria-hidden="true"><i class="fas fa-check"></i></div>
-    <h3 id="pwDoneTitle" class="pw-dialog-title">{t.doneTitle}</h3>
+    <h3 id={pw('pwDoneTitle')} class="pw-dialog-title">{t.doneTitle}</h3>
     <p class="pw-dialog-text">{t.doneText}</p>
     <div class="pw-dialog-cta-wrap">
       <button type="button" class="pw-dialog-home" data-pw-close>{t.doneClose}</button>
     </div>
   </div>
 </div>
+</div>
 
 <script>
   function pad2(n: number) { return String(n).padStart(2, '0'); }
   function monthlyPrice(perWeek: number) { return perWeek * 4; }
+  /* Haftalık € — Fiyatlar ve Tarihler ile aynı (20h): 1–4:190, 5–8:150, 9–15:130, 16–24:120, 25+:110 */
   const TIERS_20H = [
     { min: 1, max: 4, perWeek: 190 },
     { min: 5, max: 8, perWeek: 150 },
-    { min: 9, max: 16, perWeek: 130 },
-    { min: 17, max: 24, perWeek: 120 },
+    { min: 9, max: 15, perWeek: 130 },
+    { min: 16, max: 24, perWeek: 120 },
     { min: 25, max: 999, perWeek: 110 }
   ];
+  /* 25h (Telc / intensive-plus): 20h + 40 €/hafta aynı kademelerde */
   const TIERS_25H = [
     { min: 1, max: 4, perWeek: 230 },
-    { min: 5, max: 8, perWeek: 180 },
-    { min: 9, max: 16, perWeek: 160 },
-    { min: 17, max: 24, perWeek: 150 },
-    { min: 25, max: 999, perWeek: 135 }
+    { min: 5, max: 8, perWeek: 190 },
+    { min: 9, max: 15, perWeek: 170 },
+    { min: 16, max: 24, perWeek: 160 },
+    { min: 25, max: 999, perWeek: 150 }
   ];
   function getTierPerWeek(weeks: number, plus: boolean) {
     const tiers = plus ? TIERS_25H : TIERS_20H;
     const tier = tiers.find((t) => weeks >= t.min && weeks <= t.max);
-    return tier ? tier.perWeek : 190;
+    return tier ? tier.perWeek : (plus ? 230 : 190);
   }
 
-  function buildCourseCards(level: string, startMonth: number, courseType: string, intensiveType: string) {
+  const TIME_SLOTS = ['9:00 – 12:30', '13:30 – 17:00', '18:00 – 21:30'];
+
+  function buildCourseCards(formEl: HTMLFormElement, level: string, startMonth: number, _courseType: string, intensiveType: string) {
     const plus = intensiveType === 'intensive-plus';
     const perWeekStart = getTierPerWeek(4, plus);
-    const perWeekEnd = getTierPerWeek(24, plus);
-    const perMonthSuffix = form.dataset.perMonthSuffix || '/ month';
-    const modePhysical = form.dataset.modePhysical || 'PHYSICAL';
-    const modeOnline = form.dataset.modeOnline || 'ONLINE';
-    const weekdaysShort = form.dataset.weekdaysShort || 'Mon, Tue, Wed, Thu';
-    const weekendShort = form.dataset.weekendShort || 'Sat, Sun';
+    const perWeekEnd = getTierPerWeek(32, plus);
+    const perMonthSuffix = formEl.dataset.perMonthSuffix || '/ month';
+    const modePhysical = formEl.dataset.modePhysical || 'PHYSICAL';
+    const modeOnline = formEl.dataset.modeOnline || 'ONLINE';
+    const weekdaysShort = formEl.dataset.weekdaysShort || 'Mon, Tue, Wed, Thu';
+    const weekendShort = formEl.dataset.weekendShort || 'Sat, Sun';
     const priceText = `EUR ${monthlyPrice(perWeekEnd)} - ${monthlyPrice(perWeekStart)} ${perMonthSuffix}`;
     const startDate = `31.${String(startMonth).padStart(2, '0')}.2026`;
     const teachers = ['Anna Keller', 'Murat Yildiz', 'Sofia Becker', 'Deniz Acar', 'Lukas Weber', 'Elif Demir'];
@@ -518,52 +500,111 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       const sum = seed.split('').reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
       return teachers[sum % teachers.length];
     };
-    const placesAvailable = form.dataset.placesAvailable || 'Places available';
-    const twoMonthsToComplete = form.dataset.twoMonthsToComplete || 'Two months to complete';
-    const all = [
-      { id: 'phy-morning', type: 'physical', title: `${level} (${modePhysical})`, time: '09:00 - 11:45', days: weekdaysShort, teacher: pickTeacher('phy-morning-' + level), start: startDate, places: placesAvailable, extra: '' },
-      { id: 'phy-afternoon', type: 'physical', title: `${level} (${modePhysical})`, time: '15:00 - 17:45', days: weekdaysShort, teacher: pickTeacher('phy-afternoon-' + level), start: startDate, places: placesAvailable, extra: '' },
-      { id: 'phy-evening', type: 'physical', title: `${level} (${modePhysical})`, time: '18:00 - 20:45', days: weekdaysShort, teacher: pickTeacher('phy-evening-' + level), start: startDate, places: placesAvailable, extra: '' },
-      { id: 'online-morning', type: 'online', title: `${level} (${modeOnline})`, time: '09:00 - 11:45', days: weekdaysShort, teacher: pickTeacher('online-morning-' + level), start: startDate, places: placesAvailable, extra: `${twoMonthsToComplete} ${level}` },
-      { id: 'online-evening', type: 'online', title: `${level} (${modeOnline})`, time: '18:00 - 20:45', days: weekdaysShort, teacher: pickTeacher('online-evening-' + level), start: startDate, places: placesAvailable, extra: '' },
-      { id: 'phy-weekend', type: 'physical', title: `${level} (${modePhysical})`, time: '10:00 - 13:00', days: weekendShort, teacher: pickTeacher('phy-weekend-' + level), start: startDate, places: placesAvailable, extra: '' }
+    const placesAvailable = formEl.dataset.placesAvailable || 'Places available';
+    const twoMonthsToComplete = formEl.dataset.twoMonthsToComplete || 'Two months to complete';
+    const base = [
+      { id: 'phy-morning', type: 'physical', title: `${level} (${modePhysical})`, days: weekdaysShort, teacher: pickTeacher('phy-morning-' + level), start: startDate, places: placesAvailable, extra: '' },
+      { id: 'phy-afternoon', type: 'physical', title: `${level} (${modePhysical})`, days: weekdaysShort, teacher: pickTeacher('phy-afternoon-' + level), start: startDate, places: placesAvailable, extra: '' },
+      { id: 'phy-evening', type: 'physical', title: `${level} (${modePhysical})`, days: weekdaysShort, teacher: pickTeacher('phy-evening-' + level), start: startDate, places: placesAvailable, extra: '' },
+      { id: 'online-morning', type: 'online', title: `${level} (${modeOnline})`, days: weekdaysShort, teacher: pickTeacher('online-morning-' + level), start: startDate, places: placesAvailable, extra: `${twoMonthsToComplete} ${level}` },
+      { id: 'online-evening', type: 'online', title: `${level} (${modeOnline})`, days: weekdaysShort, teacher: pickTeacher('online-evening-' + level), start: startDate, places: placesAvailable, extra: '' },
+      { id: 'phy-weekend', type: 'physical', title: `${level} (${modePhysical})`, days: weekendShort, teacher: pickTeacher('phy-weekend-' + level), start: startDate, places: placesAvailable, extra: '' }
     ];
-    const filtered = courseType === 'all' ? all : courseType === 'evening' ? all.filter((x) => x.id === 'phy-evening') : all.filter((x) => x.type === courseType);
-    return filtered.map((x) => ({ ...x, priceText }));
+    return base.map((x, i) => ({ ...x, time: TIME_SLOTS[i % TIME_SLOTS.length], priceText }));
   }
 
-  function start() {
-    const form = document.getElementById('pwForm') as HTMLFormElement | null;
-    const root = document.getElementById('pwRoot');
+  function initQuoteMount(mount: HTMLElement) {
+    const S = mount.dataset.quoteInstance || 'm';
+    const q = <T extends HTMLElement = HTMLElement>(stem: string) => mount.querySelector<T>(`#${stem}-${S}`);
+    const form = mount.querySelector<HTMLFormElement>('form.qx-form');
+    const root = q<HTMLElement>('pwRoot');
     if (!form || !root) return;
 
     const total = 5;
     let step = 1;
     const panels = [...form.querySelectorAll<HTMLElement>('.pw-panel')];
-    const eyebrow = document.querySelector<HTMLElement>('[data-pw-eyebrow]');
-    const bar = document.querySelector<HTMLElement>('[data-pw-bar]');
-    const dots = [...document.querySelectorAll<HTMLElement>('[data-qx-dot]')];
+    const eyebrow = root.querySelector<HTMLElement>('[data-pw-eyebrow]');
+    const bar = root.querySelector<HTMLElement>('[data-pw-bar]');
+    const dots = [...root.querySelectorAll<HTMLElement>('[data-qx-dot]')];
 
-    const hProgram = document.getElementById('pwProgram') as HTMLInputElement;
-    const hProgramLabel = document.getElementById('pwProgramLabel') as HTMLInputElement;
-    const hIntensive = document.getElementById('pwIntensiveType') as HTMLInputElement;
-    const hLevelA = document.getElementById('pwLevelA') as HTMLInputElement;
-    const hLevelB = document.getElementById('pwLevelB') as HTMLInputElement;
-    const hMonthA = document.getElementById('pwMonthA') as HTMLInputElement;
-    const hMonthB = document.getElementById('pwMonthB') as HTMLInputElement;
-    const hCourseType = document.getElementById('pwCourseType') as HTMLInputElement;
-    const hCourseId = document.getElementById('pwCourseId') as HTMLInputElement;
-    const hCourseTitle = document.getElementById('pwCourseTitle') as HTMLInputElement;
-    const hDuration = document.getElementById('pwDurationMonths') as HTMLInputElement;
-    const hFreeLesson = document.getElementById('pwFreeLesson') as HTMLInputElement;
-    const hTotalPrice = document.getElementById('pwTotalPrice') as HTMLInputElement;
-    const hPlanKey = document.getElementById('pwPlanKey') as HTMLInputElement;
+    const hProgram = q('pwProgram') as HTMLInputElement;
+    const hProgramLabel = q('pwProgramLabel') as HTMLInputElement;
+    const hIntensive = q('pwIntensiveType') as HTMLInputElement;
+    const hLevelA = q('pwLevelA') as HTMLInputElement;
+    const hLevelB = q('pwLevelB') as HTMLInputElement;
+    const hMonthA = q('pwMonthA') as HTMLInputElement;
+    const hMonthB = q('pwMonthB') as HTMLInputElement;
+    const hCourseType = q('pwCourseType') as HTMLInputElement;
+    const hCourseId = q('pwCourseId') as HTMLInputElement;
+    const hCourseTitle = q('pwCourseTitle') as HTMLInputElement;
+    const hDuration = q('pwDurationMonths') as HTMLInputElement;
+    const hFreeLesson = q('pwFreeLesson') as HTMLInputElement;
+    const hTotalPrice = q('pwTotalPrice') as HTMLInputElement;
+    const hPlanKey = q('pwPlanKey') as HTMLInputElement;
 
-    const courseCardsWrap = document.getElementById('pwCourseCards') as HTMLElement;
-    const levelSelect = document.getElementById('pwLevelSelect') as HTMLSelectElement;
-    const monthSelect = document.getElementById('pwMonthSelect') as HTMLSelectElement;
-    const pricingRows = document.getElementById('pwPricingRows') as HTMLElement | null;
-    const submitFeedback = document.getElementById('pwSubmitFeedback') as HTMLElement | null;
+    const courseCardsWrap = q('pwCourseCards') as HTMLElement;
+    const pricingRows = q('pwPricingRows') as HTMLElement | null;
+    const submitFeedback = q('pwSubmitFeedback') as HTMLElement | null;
+
+    const LEVELS_FULL = ['A1', 'A2', 'B1', 'B2', 'C1'];
+    const LEVELS_SHORT = ['A1', 'A2'];
+    function levelsForTrack(track: string) {
+      if (track === 'summer-camp' || track === 'online') return LEVELS_SHORT;
+      return LEVELS_FULL;
+    }
+    function populateLevelButtons(track: string) {
+      const wrap = q('pwLevelButtons');
+      if (!wrap) return;
+      wrap.innerHTML = '';
+      hLevelA.value = '';
+      hLevelB.value = '';
+      levelsForTrack(track).forEach((lv) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'qx-choice-btn qx-level-btn';
+        b.dataset.levelValue = lv;
+        b.textContent = lv;
+        b.addEventListener('click', () => {
+          wrap.querySelectorAll('.qx-level-btn').forEach((x) => x.classList.remove('is-active'));
+          b.classList.add('is-active');
+          hLevelA.value = lv;
+          hLevelB.value = lv;
+          renderCards();
+        });
+        wrap.appendChild(b);
+      });
+    }
+    function populateMonthButtons() {
+      const monthWrap = q('pwMonthButtons');
+      if (!monthWrap) return;
+      monthWrap.innerHTML = '';
+      hMonthA.value = '';
+      hMonthB.value = '';
+      const rawMonthTokens = (form.getAttribute('data-months') ?? '')
+        .split('|')
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0);
+      const monthNames = rawMonthTokens.length === 12 ? rawMonthTokens : Array.from({ length: 12 }, (_, i) => String(i + 1));
+      const now = new Date();
+      const currentMonth = now.getMonth() + 1;
+      monthNames.forEach((name, idx) => {
+        const monthNum = idx + 1;
+        if (monthNum < currentMonth) return;
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'qx-choice-btn qx-month-btn';
+        b.dataset.monthValue = String(monthNum);
+        b.textContent = name;
+        b.addEventListener('click', () => {
+          monthWrap.querySelectorAll('.qx-month-btn').forEach((x) => x.classList.remove('is-active'));
+          b.classList.add('is-active');
+          hMonthA.value = String(monthNum);
+          hMonthB.value = String(monthNum);
+          renderCards();
+        });
+        monthWrap.appendChild(b);
+      });
+    }
 
     function syncDots(n: number) {
       dots.forEach((d, i) => {
@@ -579,10 +620,25 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
     }
     function goTo(next: number) {
       if (next < 1 || next > total || next === step) return;
-      panels[step - 1].classList.remove('is-current');
-      panels[next - 1].classList.add('is-current');
+      const from = panels[step - 1];
+      const to = panels[next - 1];
+      if (!from || !to) return;
+      from.classList.remove('is-current');
+      to.classList.add('is-current');
       step = next;
       setStepChrome(step);
+    }
+
+    /** Ay bos birakilirsa varsayilan: ilk uygun ay */
+    function applyStep2Defaults() {
+      hCourseType.value = 'all';
+      const monthWrap = q('pwMonthButtons');
+      if (monthWrap && !hMonthA.value) {
+        const firstBtn = monthWrap.querySelector<HTMLButtonElement>('.qx-month-btn');
+        if (firstBtn) {
+          firstBtn.click();
+        }
+      }
     }
 
     function resetWizardState() {
@@ -592,8 +648,8 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       form.querySelectorAll('.is-picked, .is-selected, .is-active').forEach((el) => el.classList.remove('is-picked', 'is-selected', 'is-active'));
       if (courseCardsWrap) courseCardsWrap.innerHTML = '';
       if (pricingRows) pricingRows.innerHTML = '';
-      if (levelSelect) levelSelect.value = '';
-      if (monthSelect) monthSelect.value = '';
+      q('pwLevelButtons')?.querySelectorAll('.qx-level-btn').forEach((b) => b.classList.remove('is-active'));
+      q('pwMonthButtons')?.querySelectorAll('.qx-month-btn').forEach((b) => b.classList.remove('is-active'));
       panels.forEach((p, idx) => p.classList.toggle('is-current', idx === 0));
       step = 1;
       setStepChrome(1);
@@ -601,7 +657,7 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
 
     function renderPricingTable() {
       if (!pricingRows) return;
-      const rows = [1, 2, 3, 4, 5, 6].map((m) => {
+      const rows = [1, 2, 3, 4, 5, 6, 7, 8].map((m) => {
         const perWeek = getTierPerWeek(m * 4, hIntensive.value === 'intensive-plus');
         const monthPrice = monthlyPrice(perWeek);
         const total = monthPrice * m;
@@ -632,18 +688,17 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
     }
 
     function renderCards() {
+      if (!courseCardsWrap) return;
       const level = hLevelA.value;
-      const month = Number(hMonthA.value || '8');
-      const type = hCourseType.value || 'all';
-      if (!level || !month || !type) return;
-      const cards = buildCourseCards(level, month, type, hIntensive.value);
+      const month = Number(hMonthA.value || '0');
+      if (!level || !month) return;
+      const cards = buildCourseCards(form, level, month, 'all', hIntensive.value);
       if (!cards.length) {
         courseCardsWrap.innerHTML = `<p class="qx-card-empty">${form.dataset.emptyCourses || 'No open class matches these filters right now.'}</p>`;
         return;
       }
       courseCardsWrap.innerHTML = cards.map((card) => `
         <button type="button" class="qx-course-card" data-course-id="${card.id}" data-course-title="${card.title}" data-course-price="${card.priceText}">
-          <div class="qx-course-card-rail" aria-hidden="true"></div>
           <div class="qx-course-main">
             <div class="qx-course-topline">
               <h4>${card.title}</h4>
@@ -688,32 +743,41 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         hProgram.value = btn.dataset.program || '';
         hProgramLabel.value = btn.dataset.programLabel || '';
         hIntensive.value = btn.dataset.intensiveType || '';
+        const track = btn.dataset.quoteTrack || 'intensive-de';
+        populateLevelButtons(track);
+        populateMonthButtons();
         goTo(2);
+        applyStep2Defaults();
       });
     });
-
-    function setupSingleSelection(containerId: string, dataAttr: string, onPick: (value: string) => void) {
-      const wrap = document.getElementById(containerId);
-      if (!wrap) return;
-      wrap.querySelectorAll<HTMLButtonElement>(`[${dataAttr}]`).forEach((btn) => {
-        btn.addEventListener('click', () => {
-          wrap.querySelectorAll('.qx-choice-btn').forEach((x) => x.classList.remove('is-active'));
-          btn.classList.add('is-active');
-          const value = btn.getAttribute(dataAttr) || '';
-          onPick(value);
-        });
-      });
-    }
-
-    setupSingleSelection('pwCourseTypeButtons', 'data-course-type', (v) => { hCourseType.value = v; renderCards(); });
-    levelSelect?.addEventListener('change', () => { hLevelA.value = levelSelect.value; hLevelB.value = levelSelect.value; renderCards(); });
-    monthSelect?.addEventListener('change', () => { hMonthA.value = monthSelect.value; hMonthB.value = monthSelect.value; renderCards(); });
 
     form.querySelectorAll<HTMLButtonElement>('[data-pw-nav-next]').forEach((btn) => {
       btn.addEventListener('click', () => {
         if (step === 2) {
-          if (!hLevelA.value || !hMonthA.value || !hCourseType.value) return;
-          renderCards();
+          applyStep2Defaults();
+          if (!hLevelA.value) {
+            if (submitFeedback) {
+              submitFeedback.textContent = form.dataset.needLevelHint || '';
+              submitFeedback.classList.remove('is-success');
+              submitFeedback.classList.add('is-error');
+            }
+            return;
+          }
+          if (!hMonthA.value) return;
+          if (submitFeedback) {
+            submitFeedback.textContent = '';
+            submitFeedback.classList.remove('is-error');
+          }
+          try {
+            renderCards();
+          } catch (e) {
+            console.error('QuoteWizard renderCards:', e);
+            if (submitFeedback) {
+              submitFeedback.textContent = form.dataset.error || '';
+              submitFeedback.classList.add('is-error');
+            }
+            return;
+          }
           goTo(3);
           return;
         }
@@ -738,32 +802,30 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       });
     });
 
-    const monthNames = (form.dataset.months || '').split('|');
-    const now = new Date();
-    const currentMonth = now.getMonth() + 1;
-    monthNames.forEach((name, idx) => {
-      const monthNum = idx + 1;
-      if (monthNum < currentMonth) return;
-      const opt = document.createElement('option');
-      opt.value = String(monthNum);
-      opt.textContent = name;
-      monthSelect?.appendChild(opt);
-    });
+    if (form.dataset.modalMode === 'true') {
+      window.addEventListener('campus-quote-modal-close', () => {
+        resetWizardState();
+      });
+    }
 
-    const overlay = document.getElementById('pwOverlay') as HTMLElement | null;
-    const dialog = document.querySelector<HTMLElement>('[data-pw-dialog]');
+    const overlay = q('pwOverlay') as HTMLElement | null;
+    const dialog = mount.querySelector<HTMLElement>('[data-pw-dialog]');
     function openOverlay() {
       if (!overlay || !dialog) return;
       overlay.classList.add('is-open');
       overlay.setAttribute('aria-hidden', 'false');
     }
     function dismissToHome() {
+      if (form.dataset.modalMode === 'true') {
+        window.closeCampusQuoteModal?.();
+        return;
+      }
       let target = (overlay?.dataset.home || '/').trim();
       if (!target.startsWith('/')) target = `/${target}`;
       if (target.length > 1 && target.endsWith('/')) target = target.slice(0, -1);
       window.location.href = target;
     }
-    document.querySelectorAll<HTMLButtonElement>('[data-pw-close]').forEach((btn) => btn.addEventListener('click', dismissToHome));
+    mount.querySelectorAll<HTMLButtonElement>('[data-pw-close]').forEach((btn) => btn.addEventListener('click', dismissToHome));
     overlay?.addEventListener('click', (e) => { if (e.target === overlay) dismissToHome(); });
 
     const DEFAULT_MAKE_WEBHOOK = 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
@@ -845,6 +907,14 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
 
     setStepChrome(1);
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
-  else start();
+
+  function initAllQuoteWizards() {
+    document.querySelectorAll<HTMLElement>('.quote-wizard-instance').forEach((mount) => {
+      if (mount.dataset.pwInit === '1') return;
+      mount.dataset.pwInit = '1';
+      initQuoteMount(mount);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAllQuoteWizards);
+  else initAllQuoteWizards();
 </script>

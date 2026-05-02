@@ -10,6 +10,6 @@ Sitemap: https://campusgerman.com/sitemap.xml
 # Disallow: /admin/
 # Disallow: /private/
 Disallow: /tr/ozel-evrak-formu/
-Disallow: /de/ozel-evrak-formu/
-Disallow: /en/ozel-evrak-formu/
-Disallow: /es/ozel-evrak-formu/
+Disallow: /de/dokumenten-einreichung/
+Disallow: /en/private-documents/
+Disallow: /es/documentos-privados/

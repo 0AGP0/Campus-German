@@ -1,8 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
-import GlobalCourseWidget from '../../../components/GlobalCourseWidget.astro';
-import { cleanSlug, getServicesPath, getContactPath, isValidLang } from '../../../utils/pathHelpers';
+import QuoteWizardForm from '../../../components/QuoteWizardForm.astro';
+import { cleanSlug, getBookingPath, getServicesPath, getContactPath, isValidLang } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
   const allSunduklarimiz = await getCollection('unsere-dienstleistungen');
@@ -47,6 +47,8 @@ if (!isValidLang(lang)) {
 // Path helper'ları
 const servicesPath = getServicesPath(lang);
 const contactPath = getContactPath(lang);
+const bookingFull = `/${lang}/${getBookingPath(lang)}`;
+const homePath = `/${lang}`;
 ---
 
 <MainLayout title={`${hizmet.data.title} - CampusGerman`} lang={lang} includeHizmetCSS={true}>
@@ -222,7 +224,7 @@ const contactPath = getContactPath(lang);
                         </div>
                     </div>
                     <div class="cta-form">
-                        <GlobalCourseWidget lang={lang} />
+                        <QuoteWizardForm lang={lang} bookingPath={bookingFull} homePath={homePath} embedded instanceSuffix="e" />
                     </div>
                 </div>
             </div>

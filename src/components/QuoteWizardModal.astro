@@ -1,0 +1,63 @@
+---
+/**
+ * Site genelinde teklif sihirbazı — popup. MainLayout’a bir kez eklenir.
+ */
+import QuoteWizardForm from './QuoteWizardForm.astro';
+import '../styles/components/quote-modal.css';
+import { getBookingPath } from '../utils/pathHelpers';
+
+type Lang = 'tr' | 'de' | 'en' | 'es';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const bookingPath = `/${lang}/${getBookingPath(lang)}`;
+const homePath = `/${lang}`;
+const closeAria =
+  lang === 'de' ? 'Schließen' : lang === 'es' ? 'Cerrar' : lang === 'tr' ? 'Kapat' : 'Close';
+---
+
+<div id="campus-quote-modal" class="campus-quote-modal" aria-hidden="true" data-quote-modal-root>
+  <div class="campus-quote-modal__backdrop" data-close-quote-modal tabindex="-1" aria-hidden="true"></div>
+  <div class="campus-quote-modal__panel" role="dialog" aria-modal="true" aria-label="Quote">
+    <button type="button" class="campus-quote-modal__close" data-close-quote-modal aria-label={closeAria}>
+      ×
+    </button>
+    <div class="campus-quote-modal__scroll">
+      <QuoteWizardForm lang={lang} bookingPath={bookingPath} homePath={homePath} embedded modalMode instanceSuffix="m" />
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    function bind() {
+      var root = document.getElementById('campus-quote-modal');
+      if (!root) return;
+      function openModal() {
+        root.classList.add('is-open');
+        root.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeModal() {
+        root.classList.remove('is-open');
+        root.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        window.dispatchEvent(new CustomEvent('campus-quote-modal-close'));
+      }
+      window.openCampusQuoteModal = openModal;
+      window.closeCampusQuoteModal = closeModal;
+      root.querySelectorAll('[data-close-quote-modal]').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          e.stopPropagation();
+          closeModal();
+        });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && root.classList.contains('is-open')) closeModal();
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind);
+    else bind();
+  })();
+</script>

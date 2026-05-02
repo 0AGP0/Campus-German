@@ -1,23 +1,46 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-import { isValidLang, getDatenschutzPath, getImpressumPath } from '../../utils/pathHelpers';
-import '../../styles/pages/quote-wizard.css';
-
+import {
+  type SupportedLang,
+  isValidLang,
+  getDatenschutzPath,
+  getImpressumPath,
+  getPrivateDocumentsPath,
+  getSupportedLangs,
+} from '../../utils/pathHelpers';
 export async function getStaticPaths() {
-  return [
-    { params: { lang: 'tr' } },
-    { params: { lang: 'de' } },
-    { params: { lang: 'en' } },
-    { params: { lang: 'es' } },
-  ];
+  const paths: { params: { lang: string; privateDocumentsSlug: string } }[] = [];
+  for (const lang of getSupportedLangs()) {
+    paths.push({
+      params: { lang, privateDocumentsSlug: getPrivateDocumentsPath(lang) },
+    });
+  }
+  return paths;
 }
 
-const { lang } = Astro.params;
-if (!isValidLang(lang)) throw new Error(`Invalid language: ${lang}`);
+const { lang: langParam, privateDocumentsSlug } = Astro.params;
+if (!isValidLang(langParam || '')) throw new Error(`Invalid language: ${langParam}`);
+const lang = langParam as SupportedLang;
+
+const canonicalSlug = getPrivateDocumentsPath(lang);
+if (privateDocumentsSlug !== canonicalSlug) {
+  return Astro.redirect(301, `/${lang}/${canonicalSlug}/`);
+}
 
 const termsPath = `/${lang}/${getImpressumPath(lang)}`;
 const privacyPath = `/${lang}/${getDatenschutzPath(lang)}`;
-const webhook = import.meta.env.PUBLIC_MAKE_BOOKING_WEBHOOK || 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
+/**
+ * Varsayılan: aynı origin PHP proxy (CORS yok, secret sunucuda).
+ * Doğrudan portal: PUBLIC_PORTAL_PRIVATE_DOCUMENTS_URL=https://portal... (portalda CORS + PUBLIC_WEBHOOK_SECRET gerekir)
+ */
+const useDirectPortal = /^https:\/\/portal\.campusgerman\.com\//i.test(
+  import.meta.env.PUBLIC_PORTAL_PRIVATE_DOCUMENTS_URL || ''
+);
+const webhook =
+  import.meta.env.PUBLIC_PORTAL_PRIVATE_DOCUMENTS_URL || '/private-documents-proxy.php';
+/** Yalnızca doğrudan portal URL kullanılırken istemcide (CORS açıksa) */
+const webhookSecret = useDirectPortal ? import.meta.env.PUBLIC_WEBHOOK_SECRET || '' : '';
+const warnNoSecret = useDirectPortal && !webhookSecret;
 
 const copy = {
   tr: {
@@ -41,6 +64,7 @@ const copy = {
     sending: 'Gönderiliyor...',
     success: 'Form başarıyla gönderildi.',
     error: 'Form gönderilirken hata oluştu.',
+    errorNetwork: 'Sunucuya ulaşılamadı (CORS, ağ veya engelleyici). Tarayıcıda F12 → Konsol/Network kontrol edin.',
     requiredSign: 'Lütfen AGB alanını imzalayın.',
     termsLabelA: "Genel Hüküm ve Koşullar",
     termsLabelB: "'ı okudum ve kabul ediyorum",
@@ -68,6 +92,7 @@ const copy = {
     sending: 'Wird gesendet...',
     success: 'Formular erfolgreich gesendet.',
     error: 'Fehler beim Senden des Formulars.',
+    errorNetwork: 'Keine Verbindung (CORS, Netzwerk). F12 → Konsole/Network prüfen.',
     requiredSign: 'Bitte unterschreiben Sie das AGB-Feld.',
     termsLabelA: 'Allgemeinen Geschäftsbedingungen',
     termsLabelB: ' gelesen und akzeptiere sie',
@@ -95,6 +120,7 @@ const copy = {
     sending: 'Submitting...',
     success: 'Form submitted successfully.',
     error: 'Error while submitting form.',
+    errorNetwork: 'Could not reach server (CORS or network). Open F12 → Console/Network.',
     requiredSign: 'Please sign the terms field.',
     termsLabelA: 'General Terms and Conditions',
     termsLabelB: ' have been read and accepted',
@@ -122,6 +148,7 @@ const copy = {
     sending: 'Enviando...',
     success: 'Formulario enviado correctamente.',
     error: 'Error al enviar el formulario.',
+    errorNetwork: 'Sin conexión (CORS o red). F12 → Consola/Red.',
     requiredSign: 'Firme el campo de términos.',
     termsLabelA: 'Términos y Condiciones Generales',
     termsLabelB: ' leídos y aceptados',
@@ -132,12 +159,12 @@ const copy = {
 ---
 
 <MainLayout title={`${copy.title} - Campus German`} lang={lang} hideHeader={true} hideFooter={true} robots="noindex,nofollow,noarchive,nosnippet,noimageindex">
-  <div class="qx-page-bg">
+  <div class="private-doc-shell qx-page-bg">
     <section class="qx" id="pwRoot">
       <aside class="qx-aside" aria-hidden="true">
         <div class="qx-aside-ornament" aria-hidden="true"></div>
         <div class="qx-aside-brand" aria-hidden="true">
-          <img src="/Campusgerman.png" alt="" width="80" height="80" loading="lazy" decoding="async" />
+          <img src="/German_logo.webp" alt="" width="80" height="80" loading="lazy" decoding="async" />
         </div>
       </aside>
 
@@ -198,6 +225,71 @@ const copy = {
   </div>
 
   <style>
+    .private-doc-shell {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      box-sizing: border-box;
+      background: #f1f5f9;
+    }
+    .private-doc-shell section.qx {
+      width: 100%;
+      max-width: 40rem;
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+      margin: 0;
+    }
+    .private-doc-shell .qx-aside {
+      display: none;
+    }
+    .private-doc-shell .qx-body {
+      flex: 1;
+      min-width: 0;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.25rem 1.25rem 1.5rem;
+    }
+    .private-doc-shell .qx-lead {
+      margin-bottom: 0.75rem;
+    }
+    .private-doc-shell .qx-lead-kicker {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .private-doc-shell .qx-line {
+      height: 4px;
+      border-radius: 2px;
+      background: #e2e8f0;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    .private-doc-shell .qx-line-fill {
+      display: block;
+      height: 100%;
+      background: #64748b;
+      transform-origin: left center;
+    }
+    .private-doc-shell .qx-fields--grid.private-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .private-doc-shell .qx-send {
+      margin-top: 1rem;
+      padding: 0.65rem 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #f8fafc;
+      color: #0f172a;
+    }
     .qx-form { min-height: auto; }
     .pw-viewport { min-height: 0; height: auto; }
     .pw-panel {
@@ -221,7 +313,7 @@ const copy = {
     @media (max-width: 560px) { .private-grid { grid-template-columns: 1fr; } }
   </style>
 
-  <script define:vars={{ copy }}>
+  <script define:vars={{ copy, webhookSecret, warnNoSecret }}>
     const form = document.getElementById('private-doc-form');
     const canvas = document.getElementById('signature-pad');
     const clearBtn = document.getElementById('clear-signature');
@@ -273,6 +365,10 @@ const copy = {
       signData.value = '';
     });
 
+    if (warnNoSecret) {
+      console.warn('[Campus private-doc] Doğrudan portal URL kullanılıyor ama PUBLIC_WEBHOOK_SECRET yok (401). Ya proxy kullanın ya da .env ile secret ekleyin.');
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!hasSignature) {
@@ -284,14 +380,26 @@ const copy = {
       submitBtn.textContent = copy.sending;
       try {
         const fd = new FormData(form);
-        const res = await fetch(form.dataset.webhook, { method: 'POST', body: fd });
-        if (!res.ok) throw new Error('request_failed');
+        const headers = {};
+        if (webhookSecret) headers['x-webhook-secret'] = webhookSecret;
+        const url = String(form.dataset.webhook || '');
+        const res = await fetch(url, { method: 'POST', body: fd, headers, mode: 'cors' });
+        const bodyText = await res.text();
+        if (!res.ok) {
+          console.error('[Campus private-doc]', res.status, url, bodyText.slice(0, 800));
+          alert(`${copy.error}\nHTTP ${res.status}`);
+          return;
+        }
         alert(copy.success);
         form.reset();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         hasSignature = false;
-      } catch {
-        alert(copy.error);
+      } catch (err) {
+        console.error('[Campus private-doc] fetch', err);
+        const netFail =
+          err instanceof TypeError ||
+          String(err && err.message ? err.message : '').toLowerCase().includes('failed to fetch');
+        alert(netFail ? copy.errorNetwork : `${copy.error} (${err})`);
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = copy.submit;
@@ -299,4 +407,3 @@ const copy = {
     });
   </script>
 </MainLayout>
-

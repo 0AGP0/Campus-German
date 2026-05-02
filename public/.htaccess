@@ -34,6 +34,12 @@
   # Eski yanlış URL: /en/kurslar/* ve /de/kurslar/* -> doğru dil klasörü (duplicate içerik önleme)
   RewriteRule ^en/kurslar/(.*)$ /en/courses/$1 [R=301,L]
   RewriteRule ^de/kurslar/(.*)$ /de/kurse/$1 [R=301,L]
+  # Özel evrak: eski /de|en|es/ozel-evrak-formu -> dile özel slug
+  RewriteRule ^de/ozel-evrak-formu/?$ /de/dokumenten-einreichung/ [R=301,L]
+  RewriteRule ^en/ozel-evrak-formu/?$ /en/private-documents/ [R=301,L]
+  RewriteRule ^es/ozel-evrak-formu/?$ /es/documentos-privados/ [R=301,L]
+  # Eski özel evrak proxy yolu (api klasörü sunucuda yok / 404) -> kökteki kanonik PHP
+  RewriteRule ^api/private-documents\.php$ /private-documents-proxy.php [R=301,L,QSA]
   # Eski TR "Über uns" path'i -> hakkimizda (Netlify _redirects ile aynı; HTML meta-refresh sayfası yok)
   RewriteRule ^tr/ueber-uns/?$ /tr/hakkimizda/ [R=301,L]
   RewriteRule ^tr/ueber-uns/(.+)$ /tr/hakkimizda/$1 [R=301,L,QSA]

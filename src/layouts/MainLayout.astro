@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SuccessModal from '../components/SuccessModal.astro';
 import CookieConsent from '../components/CookieConsent.astro';
+import QuoteWizardModal from '../components/QuoteWizardModal.astro';
 import '../styles/global.css';
 import '../styles/header.css';
 import '../styles/footer.css';
@@ -16,36 +17,137 @@ const {
   hideHeader = false,
   hideFooter = false,
   robots = '',
+  /** Yalnızca ana sayfa: footer öncesi (main sonu) görününce otomatik aç; diğer sayfalarda otomatik açılmaz */
+  visitPopupHomeScroll = false,
 } = Astro.props;
 
 const popupLang = (lang as 'tr' | 'de' | 'en' | 'es') || 'tr';
 
-const visitPopupWhatsappHref = 'https://wa.me/4915203823792';
+type PopupCopy = {
+  title: string;
+  subtitle: string;
+  nameLabel: string;
+  phoneLabel: string;
+  emailLabel: string;
+  levelLabel: string;
+  levelPlaceholder: string;
+  levelUnknown: string;
+  cityLabel: string;
+  cityPlaceholder: string;
+  visitLabel: string;
+  visitPlaceholder: string;
+  submitLabel: string;
+  secondaryLabel: string;
+  closeAria: string;
+  sending: string;
+  required: string;
+  emailInvalid: string;
+  success: string;
+  error: string;
+};
 
-const visitPopupCopyMap: Record<'tr' | 'de' | 'en' | 'es', { closeAria: string; dialogLabel: string; imageAlt: string }> = {
+const popupCopyMap: Record<'tr' | 'de' | 'en' | 'es', PopupCopy> = {
   tr: {
+    title: 'Ücretsiz ders al, indirim kazan',
+    subtitle: 'Kısa formu doldurun; ücretsiz deneme dersi ve indirim için size dönelim.',
+    nameLabel: 'Ad Soyad',
+    phoneLabel: 'Telefon',
+    emailLabel: 'E-posta',
+    levelLabel: 'Almanca seviyeniz',
+    levelPlaceholder: 'Seçiniz',
+    levelUnknown: 'Bilmiyorum / henüz test olmadı',
+    cityLabel: 'Yaşadığınız şehir',
+    cityPlaceholder: 'Örn. İstanbul',
+    visitLabel: 'Kursu ne zaman ziyaret edebilirsiniz?',
+    visitPlaceholder: 'Örn. Mart 2026, hafta içi öğleden sonra',
+    submitLabel: 'Gönder',
+    secondaryLabel: 'Daha sonra',
     closeAria: 'Kapat',
-    dialogLabel: 'Kampanya — WhatsApp ile iletişim',
-    imageAlt: 'Campus German kampanya duyurusu — WhatsApp ile yazın',
+    sending: 'Gönderiliyor...',
+    required: 'Lütfen zorunlu alanları doldurun.',
+    emailInvalid: 'Geçerli bir e-posta girin.',
+    success: 'Talebiniz alındı. En kısa sürede sizinle iletişime geçeceğiz.',
+    error: 'Gönderimde hata oluştu. Lütfen tekrar deneyin.',
   },
   de: {
+    title: 'Kostenlose Probestunde und Rabatt sichern',
+    subtitle: 'Kurz ausfüllen – wir melden uns mit Probestunde und Rabattdetails.',
+    nameLabel: 'Vor- und Nachname',
+    phoneLabel: 'Telefon',
+    emailLabel: 'E-Mail',
+    levelLabel: 'Deutschniveau',
+    levelPlaceholder: 'Bitte wählen',
+    levelUnknown: 'Weiß ich noch nicht',
+    cityLabel: 'Wohnort / Stadt',
+    cityPlaceholder: 'z. B. Berlin',
+    visitLabel: 'Wann können Sie den Kurs besuchen?',
+    visitPlaceholder: 'z. B. März 2026, unter der Woche nachmittags',
+    submitLabel: 'Absenden',
+    secondaryLabel: 'Später',
     closeAria: 'Schließen',
-    dialogLabel: 'Aktion — Kontakt per WhatsApp',
-    imageAlt: 'Campus German Aktion — Schreiben Sie uns per WhatsApp',
+    sending: 'Wird gesendet...',
+    required: 'Bitte alle Pflichtfelder ausfüllen.',
+    emailInvalid: 'Bitte eine gültige E-Mail eingeben.',
+    success: 'Anfrage eingegangen. Wir melden uns bald bei Ihnen.',
+    error: 'Senden fehlgeschlagen. Bitte erneut versuchen.',
   },
   en: {
+    title: 'Free trial lesson and discount',
+    subtitle: 'A short form — we will get back to you with trial lesson and discount details.',
+    nameLabel: 'Full name',
+    phoneLabel: 'Phone',
+    emailLabel: 'Email',
+    levelLabel: 'German level',
+    levelPlaceholder: 'Select',
+    levelUnknown: 'Not sure yet',
+    cityLabel: 'City you live in',
+    cityPlaceholder: 'e.g. London',
+    visitLabel: 'When can you visit the course?',
+    visitPlaceholder: 'e.g. March 2026, weekday afternoons',
+    submitLabel: 'Send',
+    secondaryLabel: 'Later',
     closeAria: 'Close',
-    dialogLabel: 'Promo — Contact on WhatsApp',
-    imageAlt: 'Campus German offer — message us on WhatsApp',
+    sending: 'Sending...',
+    required: 'Please fill in all required fields.',
+    emailInvalid: 'Please enter a valid email address.',
+    error: 'Something went wrong. Please try again.',
+    success: 'Request received. We will contact you shortly.',
   },
   es: {
+    title: 'Clase de prueba gratis y descuento',
+    subtitle: 'Formulario breve; le contactamos con la clase de prueba y el descuento.',
+    nameLabel: 'Nombre completo',
+    phoneLabel: 'Teléfono',
+    emailLabel: 'Correo electrónico',
+    levelLabel: 'Nivel de alemán',
+    levelPlaceholder: 'Seleccione',
+    levelUnknown: 'Aún no lo sé',
+    cityLabel: 'Ciudad donde vive',
+    cityPlaceholder: 'p. ej. Madrid',
+    visitLabel: '¿Cuándo puede visitar el curso?',
+    visitPlaceholder: 'p. ej. marzo 2026, entre semana por la tarde',
+    submitLabel: 'Enviar',
+    secondaryLabel: 'Más tarde',
     closeAria: 'Cerrar',
-    dialogLabel: 'Oferta — Contacto por WhatsApp',
-    imageAlt: 'Oferta Campus German — escríbanos por WhatsApp',
+    sending: 'Enviando...',
+    required: 'Complete todos los campos obligatorios.',
+    emailInvalid: 'Introduzca un correo válido.',
+    success: 'Solicitud recibida. Nos pondremos en contacto pronto.',
+    error: 'Error al enviar. Inténtelo de nuevo.',
   },
 };
 
-const visitPopupCopy = visitPopupCopyMap[popupLang] || visitPopupCopyMap.tr;
+const popupCopy = popupCopyMap[popupLang] || popupCopyMap.tr;
+
+const popupLevelOptions: { value: string; label: string }[] = [
+  { value: 'a1', label: 'A1' },
+  { value: 'a2', label: 'A2' },
+  { value: 'b1', label: 'B1' },
+  { value: 'b2', label: 'B2' },
+  { value: 'c1', label: 'C1' },
+  { value: 'c2', label: 'C2' },
+  { value: 'unknown', label: popupCopy.levelUnknown },
+];
 ---
 
 <!DOCTYPE html>
@@ -81,7 +183,7 @@ const visitPopupCopy = visitPopupCopyMap[popupLang] || visitPopupCopyMap.tr;
       document.documentElement.style.setProperty('--header-height', hideHeader ? '0px' : '156px');
     </script>
     <!-- Script early so header dropdown works as soon as DOM is ready (defer = after parse, before paint) -->
-    <script src="/script.js?v=6" defer></script>
+    <script src="/script.js?v=8" defer></script>
 </head>
 <body>
     {hideHeader ? null : <Header lang={lang} />}
@@ -89,6 +191,13 @@ const visitPopupCopy = visitPopupCopyMap[popupLang] || visitPopupCopyMap.tr;
 
     <main>
         <slot />
+        {visitPopupHomeScroll ? (
+            <div
+                id="visit-popup-scroll-trigger"
+                class="visit-popup-scroll-trigger"
+                aria-hidden="true"
+            />
+        ) : null}
     </main>
 
     {!hideFooter ? <Footer lang={lang} /> : null}
@@ -99,30 +208,97 @@ const visitPopupCopy = visitPopupCopyMap[popupLang] || visitPopupCopyMap.tr;
     <!-- GDPR Cookie Consent Banner (first visit) -->
     <CookieConsent lang={lang} />
 
-    <!-- Kampanya görseli — ~5 sn sonra veya openVisitPopup(); tıklanınca WhatsApp (+49 1520 382 3792) -->
-    <div id="visit-popup" class="visit-popup" aria-hidden="true" role="dialog" aria-modal="true" aria-label={visitPopupCopy.dialogLabel}>
+    <QuoteWizardModal lang={popupLang} />
+    <script is:inline>
+      document.addEventListener('click', function (e) {
+        var el = e.target.closest('[data-open-quote-modal]');
+        if (!el) return;
+        e.preventDefault();
+        if (typeof window.openCampusQuoteModal === 'function') window.openCampusQuoteModal();
+      });
+    </script>
+
+    <!-- Ücretsiz ders / indirim — ana sayfada main sonuna gelince (scroll) veya openVisitPopup() -->
+    <div id="visit-popup" class="visit-popup" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="visit-popup-title">
         <div class="visit-popup-backdrop"></div>
-        <div class="visit-popup-card visit-popup-card--whatsapp">
-            <button class="visit-popup-close" type="button" aria-label={visitPopupCopy.closeAria}>
-                <i class="fas fa-times"></i>
-            </button>
-            <a
-                id="visit-popup-whatsapp"
-                class="visit-popup-whatsapp-link"
-                href={visitPopupWhatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <img
-                    src="/PopUp_Whatsapp.jpeg"
-                    alt={visitPopupCopy.imageAlt}
-                    class="visit-popup-whatsapp-img"
-                    width="1200"
-                    height="800"
-                    loading="eager"
-                    decoding="async"
-                />
-            </a>
+        <div class="visit-popup-card visit-popup-card--form">
+            <div class="visit-popup-inner">
+                <div class="visit-popup-image-wrap">
+                    <img
+                        src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80"
+                        alt=""
+                        class="visit-popup-image"
+                        width="900"
+                        height="600"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </div>
+                <div class="visit-popup-content visit-popup-content--form">
+                    <button class="visit-popup-close" type="button" aria-label={popupCopy.closeAria}>
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <h1 id="visit-popup-title" class="visit-popup-title">
+                        {popupCopy.title}
+                    </h1>
+                    <p class="visit-popup-description visit-popup-description--compact">
+                        {popupCopy.subtitle}
+                    </p>
+                    <form
+                        id="visit-popup-form"
+                        class="visit-popup-form"
+                        data-lang={lang}
+                        data-msg-sending={popupCopy.sending}
+                        data-msg-required={popupCopy.required}
+                        data-msg-email={popupCopy.emailInvalid}
+                        data-msg-success={popupCopy.success}
+                        data-msg-error={popupCopy.error}
+                    >
+                        <input type="text" name="website" class="visit-popup-honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+                        <div class="visit-popup-form-grid">
+                            <label class="visit-popup-field">
+                                <span class="visit-popup-label">{popupCopy.nameLabel} *</span>
+                                <input type="text" name="name" required autocomplete="name" class="visit-popup-input" />
+                            </label>
+                            <label class="visit-popup-field">
+                                <span class="visit-popup-label">{popupCopy.phoneLabel} *</span>
+                                <input type="tel" name="phone" required autocomplete="tel" class="visit-popup-input" />
+                            </label>
+                            <label class="visit-popup-field visit-popup-field--full">
+                                <span class="visit-popup-label">{popupCopy.emailLabel} *</span>
+                                <input type="email" name="email" required autocomplete="email" class="visit-popup-input" />
+                            </label>
+                            <label class="visit-popup-field">
+                                <span class="visit-popup-label">{popupCopy.levelLabel} *</span>
+                                <select name="level" required class="visit-popup-input visit-popup-select">
+                                    <option value="" disabled selected>
+                                        {popupCopy.levelPlaceholder}
+                                    </option>
+                                    {popupLevelOptions.map((opt) => (
+                                        <option value={opt.value}>{opt.label}</option>
+                                    ))}
+                                </select>
+                            </label>
+                            <label class="visit-popup-field">
+                                <span class="visit-popup-label">{popupCopy.cityLabel} *</span>
+                                <input type="text" name="city" required autocomplete="address-level2" class="visit-popup-input" placeholder={popupCopy.cityPlaceholder} />
+                            </label>
+                            <label class="visit-popup-field visit-popup-field--full">
+                                <span class="visit-popup-label">{popupCopy.visitLabel} *</span>
+                                <input type="text" name="start-date" required class="visit-popup-input" placeholder={popupCopy.visitPlaceholder} />
+                            </label>
+                            <div class="visit-popup-actions visit-popup-actions--form visit-popup-field--full">
+                                <button type="submit" class="visit-popup-btn visit-popup-btn-primary" id="visit-popup-submit">
+                                    {popupCopy.submitLabel}
+                                </button>
+                                <button type="button" class="visit-popup-btn visit-popup-btn-outline visit-popup-close-secondary">
+                                    {popupCopy.secondaryLabel}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </body>
