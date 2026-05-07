@@ -4,7 +4,7 @@ import '../../styles/pages/buchung.css';
 import { coursePricing } from '../../data/coursePricing.ts';
 import { VALID_COUPONS } from '../../data/coupons.ts';
 import { getStartDateOptionsMonthYear } from '../../utils/coursePricingHelper';
-import { getDatenschutzPath, getImpressumPath } from '../../utils/pathHelpers';
+import { getDatenschutzPath, getAgbPath } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
     return [
@@ -28,7 +28,7 @@ const startDateOptions = allStartDateOptions.filter((opt) => {
     const dt = new Date(START_DATE_YEAR, m - 1, d);
     return dt >= _today;
 });
-const termsPath = `/${lang}/${getImpressumPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
+const termsPath = `/${lang}/${getAgbPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
 const privacyPath = `/${lang}/${getDatenschutzPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
 
 // Translations

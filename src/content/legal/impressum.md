@@ -5,11 +5,10 @@ type: impressum
 
 ## Angaben gemäß § 5 TMG
 
-**Firma:** Metaloga GmbH, Gerresheimer Str. 92 40233 Düsseldorf  
-**Geschäftsführer:** Ihsan Samil Akman  
+**Firma:** Campus German Sprachschule GmbH, Florianstr. 15-21, 44139 Dortmund  
+**Geschäftsführer:** I. Akman  
 
 **Kontakt Hauptsitz:**  
-- Telefon/WhatsApp: +49 1522 5227769  
 - E-Mail: info@campusgerman.com  
 
 ## Unsere Standorte
@@ -24,13 +23,13 @@ type: impressum
 
 ## Register und Steuern
 
-- Handelsregister: Amtsgericht Düsseldorf Registernummer: HRB 107359  
+- Handelsregister: Amtsgericht Dortmund Registernummer: HRB38144  
 - Umsatzsteuer-ID USTID Nummer gemäß § 27a: DE452312228  
-- Gerichtsstand: Amtsgericht Düsseldorf  
+- Gerichtsstand: Amtsgericht Dortmund  
 
 ## Urheberrecht & Bildnachweise
 
-Die durch die Seitenbetreiber erstellten Inhalte und Konzepte auf diesen Seiten unterliegen dem Deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung der Metaloga GmbH.
+Die durch die Seitenbetreiber erstellten Inhalte und Konzepte auf diesen Seiten unterliegen dem Deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung der Campus German Sprachschule GmbH.
 
 **Bildnachweise & Quellen:**  
 - Eigene Aufnahmen: Fotos der Campus German Standorte und des Teams.  

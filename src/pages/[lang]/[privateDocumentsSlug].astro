@@ -4,7 +4,7 @@ import {
   type SupportedLang,
   isValidLang,
   getDatenschutzPath,
-  getImpressumPath,
+  getAgbPath,
   getPrivateDocumentsPath,
   getSupportedLangs,
 } from '../../utils/pathHelpers';
@@ -27,7 +27,7 @@ if (privateDocumentsSlug !== canonicalSlug) {
   return Astro.redirect(301, `/${lang}/${canonicalSlug}/`);
 }
 
-const termsPath = `/${lang}/${getImpressumPath(lang)}`;
+const termsPath = `/${lang}/${getAgbPath(lang)}`;
 const privacyPath = `/${lang}/${getDatenschutzPath(lang)}`;
 /**
  * Varsayılan: aynı origin PHP proxy (CORS yok, secret sunucuda).

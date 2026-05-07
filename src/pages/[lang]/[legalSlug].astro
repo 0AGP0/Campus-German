@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
-import { getLegalPageType, getDatenschutzPath, getImpressumPath, getInformationsauskunftPath } from '../../utils/pathHelpers';
+import { getLegalPageType, getDatenschutzPath, getImpressumPath, getInformationsauskunftPath, getAgbPath } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
   const legalSlugs = [
@@ -17,6 +17,10 @@ export async function getStaticPaths() {
     { lang: 'de', slug: 'informationsauskunft' },
     { lang: 'en', slug: 'information-request' },
     { lang: 'es', slug: 'solicitud-informacion' },
+    { lang: 'tr', slug: getAgbPath('tr') },
+    { lang: 'de', slug: getAgbPath('de') },
+    { lang: 'en', slug: getAgbPath('en') },
+    { lang: 'es', slug: getAgbPath('es') },
   ];
   return legalSlugs.map(({ lang, slug }) => ({
     params: { lang, legalSlug: slug },
@@ -56,6 +60,12 @@ const titles: Record<string, Record<string, string>> = {
     de: 'Informationsauskunft - CampusGerman',
     en: 'Information Request - CampusGerman',
     es: 'Solicitud de Información - CampusGerman',
+  },
+  agb: {
+    tr: 'Genel Hüküm ve Koşullar - CampusGerman',
+    de: 'Allgemeine Geschäftsbedingungen (AGB) - CampusGerman',
+    en: 'Terms and Conditions - CampusGerman',
+    es: 'Términos y Condiciones - CampusGerman',
   },
 };
 const pageTitle = titles[pageType]?.[lang || 'de'] ?? entry.data.title;

@@ -6,12 +6,12 @@ type: informationsauskunft
 ## Gemäß Art. 13 und Art. 14 DSGVO
 
 **Verantwortlicher:**  
-Metaloga GmbH  
-- Adresse: Gerresheimer Str. 92 40233 Düsseldorf  
+Campus German Sprachschule GmbH  
+- Adresse: Florianstr. 15-21, 44139 Dortmund  
 - E-Mail: info@campusgerman.com  
-- Geschäftsführer: Ihsan Samil Akman  
+- Geschäftsführer: I. Akman  
 
-**Allgemeines:** Auf dieser Seite erfahren Sie, wie Campus German (Metaloga GmbH) Ihre personenbezogenen Daten erfasst und verarbeitet. Dies gilt für Kursteilnehmer, Partner und Interessenten. Wir verarbeiten Ihre Daten mit größter Sorgfalt, um Ihnen einen erfolgreichen akademischen Weg in Deutschland zu ermöglichen.
+**Allgemeines:** Auf dieser Seite erfahren Sie, wie Campus German (Campus German Sprachschule GmbH) Ihre personenbezogenen Daten erfasst und verarbeitet. Dies gilt für Kursteilnehmer, Partner und Interessenten. Wir verarbeiten Ihre Daten mit größter Sorgfalt, um Ihnen einen erfolgreichen akademischen Weg in Deutschland zu ermöglichen.
 
 ## Welche Daten werden von uns verarbeitet?
 

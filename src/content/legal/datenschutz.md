@@ -9,19 +9,19 @@ Im Folgenden erklären wir Ihnen, wie wir mit Ihren persönlichen Daten umgehen.
 
 Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO), anderer in den Mitgliedstaaten der Europäischen Union geltenden Datenschutzgesetze und anderer Bestimmungen mit datenschutzrechtlichem Charakter ist die:
 
-**Metaloga GmbH künftig Campus German Sprachschule**  
+**Campus German Sprachschule GmbH**  
 - Schrift- und Geschäftsadresse: Florianstr. 15-21, 44139 Dortmund, Deutschland  
 - Kursstandort: Bürgermeister-Smidt-Str. 80 28195 Bremen Deutschland  
 - E-Mail: info@campusgerman.com  
 - Telefon / WhatsApp: +49 152 25227769  
 - Website: www.campusgerman.com  
-- Vertreten durch den Geschäftsführer: Ihsan Samil Akman  
+- Vertreten durch den Geschäftsführer: I. Akman  
 
 ## § 2 Kontaktdaten des Datenschutzbeauftragten
 
 Wir haben für unser Unternehmen einen Datenschutzbeauftragten bestellt. Sie erreichen unseren betrieblichen Datenschutzbeauftragten unter den folgenden Kontaktmöglichkeiten für alle Fragen rund um das Thema Datenschutz sowie zur Ausübung Ihrer Rechte:
 
-**Metaloga GmbH – Datenschutzbeauftragter –**  
+**Campus German Sprachschule GmbH – Datenschutzbeauftragter –**  
 Florianstr. 15-21, 44139 Dortmund, Deutschland  
 E-Mail: datenschutz@campusgerman.com  
 
@@ -46,7 +46,7 @@ Unter den angegebenen Kontaktdaten können Sie jederzeit folgende Rechte ausübe
 
 (3) Widerruf erteilter Einwilligungen: Soweit die Verarbeitung Ihrer personenbezogenen Daten auf einer von Ihnen erteilten Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO beruht (z. B. bei der Anmeldung zum Newsletter oder für bestimmte Cookies), können Sie diese Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt davon unberührt.
 
-(4) Empfänger und Form des Widerspruchs: Der Widerspruch kann formfrei mit dem Betreff „Widerspruch“ unter Angabe Ihres Namens und Ihrer Adresse erfolgen. Bitte richten Sie Ihren Widerspruch an: Metaloga GmbH Florianstr. 15-21 44139 Dortmund E-Mail: info@campusgerman.com
+(4) Empfänger und Form des Widerspruchs: Der Widerspruch kann formfrei mit dem Betreff „Widerspruch“ unter Angabe Ihres Namens und Ihrer Adresse erfolgen. Bitte richten Sie Ihren Widerspruch an: Campus German Sprachschule GmbH, Florianstr. 15-21, 44139 Dortmund, E-Mail: info@campusgerman.com
 
 ## § 5 Datenerfassung beim Besuch unserer Website (Server-Logfiles)
 
@@ -204,7 +204,7 @@ Wir unterscheiden zwei Kategorien von Cookies:
 
 (3) Zusammenarbeit mit Partnern: Bei Teilnehmern, die über externe Partner vermittelt wurden, werden relevante Buchungsdaten (z. B. Anmeldestatus) in diesen Systemen auch zur Abrechnung und Koordination mit den jeweiligen Partnern genutzt.
 
-(4) Empfänger und Auftragsverarbeitung: Die Daten werden innerhalb der Metaloga GmbH verarbeitet . Die Anbieter der Software-Lösungen (Odoo S.A., Bitrix24/Bitrix Inc. und Google Ireland Limited) fungieren als unsere Auftragsverarbeiter. Mit diesen Dienstleistern bestehen entsprechende Verträge zur Auftragsverarbeitung (AVV), die ein hohes Datenschutzniveau garantieren.
+(4) Empfänger und Auftragsverarbeitung: Die Daten werden innerhalb der Campus German Sprachschule GmbH verarbeitet. Die Anbieter der Software-Lösungen (Odoo S.A., Bitrix24/Bitrix Inc. und Google Ireland Limited) fungieren als unsere Auftragsverarbeiter. Mit diesen Dienstleistern bestehen entsprechende Verträge zur Auftragsverarbeitung (AVV), die ein hohes Datenschutzniveau garantieren.
 
 (5) Drittlandtransfer: Sofern Daten in Länder außerhalb der EU (z. B. USA) übertragen werden (beispielsweise bei der Nutzung von Google Workspace oder Bitrix Cloud), erfolgt dies auf Grundlage von Angemessenheitsbeschlüssen (wie dem EU-U.S. Data Privacy Framework) oder Standardvertragsklauseln der EU-Kommission.
 
@@ -298,7 +298,7 @@ Wir speichern dabei keinesfalls Ihr Passwort beim Drittanbieter. Umgekehrt erhä
 
 (1) Art und Umfang der Datenverarbeitung: Für die Bezahlung unserer Sprachkurse und Prüfungen bieten wir Ihnen verschiedene Zahlungsmethoden an. Hierbei nutzen wir externe Zahlungsdienstleister. Wenn Sie eine dieser Zahlungsmethoden wählen, werden Ihre für den Zahlungsvorgang erforderlichen Daten (z. B. Name, Rechnungsbetrag, Kreditkartendaten, Bankverbindung, E-Mail-Adresse) direkt an den jeweiligen Zahlungsdienstleister übermittelt.
 
-Wichtiger Hinweis: Die Metaloga GmbH speichert selbst keine vollständigen Kreditkartendaten oder Bankverbindungen auf eigenen Servern. Wir erhalten vom Zahlungsdienstleister lediglich die Information, ob die Zahlung erfolgreich war oder abgelehnt wurde.
+Wichtiger Hinweis: Die Campus German Sprachschule GmbH speichert selbst keine vollständigen Kreditkartendaten oder Bankverbindungen auf eigenen Servern. Wir erhalten vom Zahlungsdienstleister lediglich die Information, ob die Zahlung erfolgreich war oder abgelehnt wurde.
 
 (2) Eingesetzte Dienstleister:
 
@@ -328,7 +328,7 @@ Wichtiger Hinweis: Die Metaloga GmbH speichert selbst keine vollständigen Kredi
 
 (3) Rechtsgrundlage: Die Verarbeitung und Weitergabe dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Erfüllung vorvertraglicher Maßnahmen bzw. des Vermittlungsvertrages). Ohne die Weitergabe dieser Daten ist eine Organisation der Unterkunft oder des Abholservices technisch und logistisch nicht möglich.
 
-(4) Verantwortlichkeit: Bitte beachten Sie, dass Campus German (Metaloga GmbH) lediglich als Vermittler auftritt. Sobald ein Mietvertrag zwischen Ihnen und einem Vermieter zustande kommt, wird dieser Vermieter für die dort verarbeiteten Daten (z. B. Kautionsabwicklung) selbst zum eigenständigen Verantwortlichen im Sinne der DSGVO.
+(4) Verantwortlichkeit: Bitte beachten Sie, dass Campus German (Campus German Sprachschule GmbH) lediglich als Vermittler auftritt. Sobald ein Mietvertrag zwischen Ihnen und einem Vermieter zustande kommt, wird dieser Vermieter für die dort verarbeiteten Daten (z. B. Kautionsabwicklung) selbst zum eigenständigen Verantwortlichen im Sinne der DSGVO.
 
 (5) Speicherdauer: Daten zur Zimmervermittlung und zum Arrival Service werden nach Abschluss der Vermittlung bzw. nach Durchführung der Abholung unter Beachtung der steuerrechtlichen Aufbewahrungsfristen (für die Abrechnung des Services) gespeichert und anschließend gelöscht.
 
@@ -389,7 +389,7 @@ Wichtiger Hinweis: Die Metaloga GmbH speichert selbst keine vollständigen Kredi
 
 (1) Stand der Technik: Um die Sicherheit Ihrer Daten bei der Übertragung zu schützen, verwenden wir dem aktuellen Stand der Technik entsprechende Verschlüsselungsverfahren (z. B. TLS/SSL) über HTTPS. Dies stellt sicher, dass Daten, die Sie in Formulare auf unserer Website www.campusgerman.com eingeben, nicht von Dritten mitgelesen werden können.
 
-(2) Technische und organisatorische Maßnahmen (TOM): Die Metaloga GmbH setzt umfangreiche technische und organisatorische Sicherheitsmaßnahmen ein, um Ihre durch uns verwalteten Daten gegen zufällige oder vorsätzliche Manipulationen, Verlust, Zerstörung oder gegen den Zugriff unberechtigter Personen zu schützen. Unsere Sicherheitsmaßnahmen werden entsprechend der technologischen Entwicklung fortlaufend verbessert.
+(2) Technische und organisatorische Maßnahmen (TOM): Die Campus German Sprachschule GmbH setzt umfangreiche technische und organisatorische Sicherheitsmaßnahmen ein, um Ihre durch uns verwalteten Daten gegen zufällige oder vorsätzliche Manipulationen, Verlust, Zerstörung oder gegen den Zugriff unberechtigter Personen zu schützen. Unsere Sicherheitsmaßnahmen werden entsprechend der technologischen Entwicklung fortlaufend verbessert.
 
 (3) Sicherheit bei Cloud-Systemen: Da wir moderne CRM-Systeme (Odoo, Bitrix24) und Cloud-Dienste (Google Workspace) nutzen, achten wir darauf, dass diese Anbieter durch entsprechende Zertifizierungen (z. B. ISO 27001) ein Höchstmaß an Server-Sicherheit garantieren.
 
@@ -405,5 +405,5 @@ Wichtiger Hinweis: Die Metaloga GmbH speichert selbst keine vollständigen Kredi
 
 (5) Kontakt für Datenschutzanfragen: Bei Fragen zur Erhebung, Verarbeitung oder Nutzung Ihrer personenbezogenen Daten, bei Auskünften, Berichtigung, Sperrung oder Löschung von Daten sowie Widerruf erteilter Einwilligungen wenden Sie sich bitte direkt an:
 
-Metaloga GmbH, Florianstr. 15-21 44139 Dortmund  
+Campus German Sprachschule GmbH, Florianstr. 15-21, 44139 Dortmund  
 E-Mail: datenschutz@campusgerman.com  

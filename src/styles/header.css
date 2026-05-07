@@ -71,6 +71,12 @@
     transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
+.promo-banner-link--btn {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
 .promo-banner-link:hover {
     background: #ffe04d;
     transform: translateY(-2px) scale(1.02);
@@ -124,7 +130,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 42px;
+    min-height: 46px;
 }
 
 /* Sol: boş spacer – orta menüyü dengelemek için */
@@ -221,6 +227,7 @@ button.top-header-register--btn {
     justify-content: flex-end;
     align-items: center;
     gap: 12px;
+    padding: 3px 0;
 }
 
 /* Kayıt Ol Link Tasarımı */

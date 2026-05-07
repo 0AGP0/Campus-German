@@ -556,13 +556,26 @@ const sectionMapping = {
 const t = navTranslations[lang as keyof typeof navTranslations];
 const slugs = slugMapping;
 const sections = sectionMapping[lang as keyof typeof sectionMapping];
+const nextMonthDate = new Date();
+nextMonthDate.setMonth(nextMonthDate.getMonth() + 1);
+const nextMonthLocale =
+  lang === 'tr' ? 'tr-TR' : lang === 'de' ? 'de-DE' : lang === 'es' ? 'es-ES' : 'en-US';
+const nextMonthName = new Intl.DateTimeFormat(nextMonthLocale, { month: 'long' }).format(nextMonthDate);
+const promoBannerDynamicText =
+  lang === 'tr'
+    ? `Bremen için sadece ${nextMonthName} ayı kurslarına özel indirim için `
+    : lang === 'de'
+      ? `Sonderrabatt nur für ${nextMonthName}-Kurse in Bremen – `
+      : lang === 'es'
+        ? `Descuento especial solo para cursos de ${nextMonthName} en Bremen – `
+        : `Special discount for ${nextMonthName} courses in Bremen only – `;
 ---
 
 <header class="main-header" id="main-header">
     <!-- Promo Banner (Bremen Mart indirim - kapatılabilir) -->
     <div class="promo-banner" id="promo-banner" role="region" aria-label="Kampanya">
         <div class="promo-banner-inner">
-            <span class="promo-banner-text"><i class="fas fa-tag promo-banner-icon" aria-hidden="true"></i> {t.promoBannerText}<a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="promo-banner-link"><i class="fab fa-whatsapp"></i> {t.promoBannerLink}</a></span>
+            <span class="promo-banner-text"><i class="fas fa-tag promo-banner-icon" aria-hidden="true"></i> {promoBannerDynamicText}<button type="button" class="promo-banner-link promo-banner-link--btn" data-open-quote-modal><i class="fab fa-whatsapp"></i> {t.promoBannerLink}</button></span>
             <button type="button" class="promo-banner-close" id="promo-banner-close" aria-label={lang === 'tr' ? 'Bannerı kapat' : lang === 'de' ? 'Banner schließen' : lang === 'es' ? 'Cerrar banner' : 'Close banner'}>
                 <i class="fas fa-times"></i>
             </button>
@@ -587,10 +600,10 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping];
                     <span>{t.email}</span>
                 </a>
                 <span class="top-header-divider"></span>
-                <a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="top-header-link">
+                <button type="button" class="top-header-link top-header-link--btn" data-open-quote-modal>
                     <i class="fab fa-whatsapp"></i>
                     <span>{t.contactUs}</span>
-                </a>
+                </button>
                 <span class="top-header-divider"></span>
                 <a href={`/${lang}/${lang === 'tr' ? 'fiyatlar-tarihler' : lang === 'de' ? 'preise-termine' : lang === 'en' ? 'prices-dates' : 'precios-fechas'}`} class="top-header-link">
                     <i class="fas fa-euro-sign"></i>

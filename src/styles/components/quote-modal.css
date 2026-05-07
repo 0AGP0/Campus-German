@@ -30,8 +30,8 @@
 
 .campus-quote-modal__panel {
   position: relative;
-  width: min(680px, 100%);
-  max-height: min(92vh, 900px);
+  width: min(960px, 100%);
+  max-height: min(96vh, 980px);
   margin-top: 0;
   background: linear-gradient(180deg, #ffffff 0%, rgba(207, 245, 252, 0.35) 100%);
   border: 1px solid rgba(12, 192, 223, 0.22);

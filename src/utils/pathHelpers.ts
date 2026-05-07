@@ -187,17 +187,29 @@ export function getInformationsauskunftPath(lang: SupportedLang): string {
   return mapping[lang] || 'information-request';
 }
 
+/** Yasal sayfa slug'ları (AGB / Kullanım Koşulları) */
+export function getAgbPath(lang: SupportedLang): string {
+  const mapping: Record<SupportedLang, string> = {
+    tr: 'genel-hukum-ve-kosullar',
+    de: 'agb',
+    en: 'terms-and-conditions',
+    es: 'terminos-y-condiciones'
+  };
+  return mapping[lang] || 'terms-and-conditions';
+}
+
 /**
- * legalSlug'dan sayfa tipini döndürür (datenschutz | impressum | informationsauskunft)
+ * legalSlug'dan sayfa tipini döndürür (datenschutz | impressum | informationsauskunft | agb)
  */
-export function getLegalPageType(legalSlug: string): 'datenschutz' | 'impressum' | 'informationsauskunft' | null {
+export function getLegalPageType(legalSlug: string): 'datenschutz' | 'impressum' | 'informationsauskunft' | 'agb' | null {
   const slugs = {
     datenschutz: ['gizlilik-politikasi', 'datenschutz', 'privacy-policy', 'politica-privacidad'],
     impressum: ['yasal-uyari', 'impressum', 'imprint', 'aviso-legal'],
     informationsauskunft: ['bilgi-talebi', 'informationsauskunft', 'information-request', 'solicitud-informacion'],
+    agb: ['genel-hukum-ve-kosullar', 'agb', 'terms-and-conditions', 'terminos-y-condiciones'],
   };
   for (const [type, list] of Object.entries(slugs))
-    if (list.includes(legalSlug)) return type as 'datenschutz' | 'impressum' | 'informationsauskunft';
+    if (list.includes(legalSlug)) return type as 'datenschutz' | 'impressum' | 'informationsauskunft' | 'agb';
   return null;
 }
 

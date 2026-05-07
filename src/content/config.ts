@@ -121,7 +121,7 @@ const legalCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    type: z.enum(['datenschutz', 'impressum', 'informationsauskunft']),
+    type: z.enum(['datenschutz', 'impressum', 'informationsauskunft', 'agb']),
   }),
 });
 

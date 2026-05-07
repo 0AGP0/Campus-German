@@ -1,7 +1,7 @@
----
+﻿---
 // Footer Component - Yeni navbar yapısına göre güncellendi
 import '../styles/footer.css';
-import { getDatenschutzPath, getImpressumPath, getInformationsauskunftPath } from '../utils/pathHelpers';
+import { getDatenschutzPath, getImpressumPath, getInformationsauskunftPath, getAgbPath } from '../utils/pathHelpers';
 
 const { lang = 'tr' } = Astro.props;
 
@@ -419,16 +419,13 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionM
                         {currentLang.description}
                     </p>
                     <div class="footer-social">
-                        <a href="#" class="social-link" aria-label="Facebook">
+                        <a href="https://www.facebook.com/campusgermanbremen/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="social-link" aria-label="Instagram">
+                        <a href="https://www.instagram.com/campus.german/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="social-link" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="#" class="social-link" aria-label="LinkedIn">
+                        <a href="https://www.linkedin.com/company/campusgerman" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                         <a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="WhatsApp">
@@ -517,6 +514,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionM
                     <p>&copy; {currentYear} CampusGerman. {currentLang.allRightsReserved}</p>
                 </div>
                 <div class="footer-legal">
+                    <a href={`/${lang}/${getAgbPath(lang as 'tr' | 'de' | 'en' | 'es')}`}>{currentLang.termsOfUse}</a>
                     <a href={`/${lang}/${getDatenschutzPath(lang as 'tr' | 'de' | 'en' | 'es')}`}>{currentLang.privacyPolicy}</a>
                     <a href={`/${lang}/${getImpressumPath(lang as 'tr' | 'de' | 'en' | 'es')}`}>{currentLang.impressum}</a>
                     <a href={`/${lang}/${getInformationsauskunftPath(lang as 'tr' | 'de' | 'en' | 'es')}`}>{currentLang.informationsauskunft}</a>

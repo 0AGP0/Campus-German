@@ -22,13 +22,52 @@ const programImageMap = {
   online: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80'
 } as const;
 
+const programHintByLang = {
+  tr: 'Tum seceneklerde seviye, program suresi ve haftalik yogunluk bilgilerini ayni duzende gorebilirsiniz.',
+  de: 'In allen Optionen sehen Sie Niveau, Programmdauer und Wochenintensitat in derselben Struktur.',
+  en: 'Compare level, duration, and weekly intensity in a consistent layout.',
+  es: 'Compare nivel, duracion e intensidad semanal en la misma estructura.'
+} as const;
+
+const programCardMeta = {
+  intensive: {
+    badges: ['Vize iade Garantisi', 'Uni Bremen Hazirlik / HS Bremen Hazirlik'],
+    levelTitle: 'Seviye',
+    levels: ['A1', 'A2', 'B1', 'B2', 'C1'],
+    infoTitle: 'Program & Sure',
+    infos: ['20 sa/hafta', 'Her seviye 8 hafta']
+  },
+  'summer-camp': {
+    badges: ['Cesitli Etkinlikler', 'Tam Konaklama', 'Eslik'],
+    levelTitle: 'Seviye',
+    levels: ['A1', 'A2'],
+    infoTitle: 'Program & Sure',
+    infos: ['2 haftalik programlar', '11-17 Yas']
+  },
+  telc: {
+    badges: ['Uzman Egitmenler', 'Ornek Sinav Cozumleri'],
+    levelTitle: 'Seviye',
+    levels: ['A2', 'B1', 'B2', 'C1 Hochschule', 'FSP Medizin'],
+    infoTitle: 'Program & Sure',
+    infos: ['Her Ay Sinavlar', 'Yogun Hazirlik']
+  },
+  online: {
+    badges: ['Canli Online Ders', 'Yapay Zeka Destekli', 'Esnek Katilim'],
+    levelTitle: 'Seviye',
+    levels: ['A1', 'A2'],
+    infoTitle: 'Program & Sure',
+    infos: ['16 sa/hafta', '6 hafta']
+  }
+} as const;
+
 const copy = {
   tr: {
     asideMark: 'Teklif',
     subtitleEm: 'Size ozel, net bir teklif',
     subtitle: 'Program, seviye ve kurs turu secimlerinize gore uygun siniflari gosterecegiz.',
     asideSteps: '5 adim',
-    asideStepHint: 'Ilerleme',
+    asideStepHint: 'ILERLEME',
+    stepLabels: ['Program', 'Seviye', 'Ders Zamani', 'Tarih', 'Iletisim'],
     programs: [
       { label: 'Intensive Deutsch', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive-de', image: programImageMap.intensive },
       { label: 'Telc Prüfungen', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'telc', image: programImageMap.telc },
@@ -42,12 +81,70 @@ const copy = {
     monthPlaceholder: 'Ay seciniz',
     months: ['Ocak', 'Subat', 'Mart', 'Nisan', 'Mayis', 'Haziran', 'Temmuz', 'Agustos', 'Eylul', 'Ekim', 'Kasim', 'Aralik'],
     step3lead: 'Uygun siniflar',
-    cardSelectHint: 'Kart seciniz, sonra sure secimi acilir.',
+    step3Title: 'Ders zamanini sec',
+    step3Subtitle:
+      'Gunluk rutininize en uygun saat dilimini secin. Tum gruplarda haftada 20 saat yuz yuze egitim yer alir.',
+    teachersInGroup: 'Bu gruptaki egitmenler',
+    slotMorningTitle: 'Sabah Grubu',
+    slotAfternoonTitle: 'Ogleden Sonra Grubu',
+    slotEveningTitle: 'Aksam Grubu',
+    slotMorningTime: '09:00 – 12:30',
+    slotAfternoonTime: '13:00 – 16:30',
+    slotEveningTime: '18:00 – 21:30',
+    slotMorningF1: 'Hafta ici egitim',
+    slotMorningF2: 'Enerjik baslangic',
+    slotMorningF3: '20 saat / hafta',
+    slotAfternoonF1: 'Hafta ici egitim',
+    slotAfternoonF2: 'Dengeli program',
+    slotAfternoonF3: '20 saat / hafta',
+    slotEveningF1: 'Hafta ici egitim',
+    slotEveningF2: 'Calisanlar icin ideal',
+    slotEveningF3: '20 saat / hafta',
+    speakingClubAria: 'Konusma kulubu',
+    speakingClubTitle: 'Ucretsiz Cumartesi Konusma Kulubu',
+    speakingClubBody: 'Ders disi pratik ile Almancani sosyal ortamda pekistir, sinifta ogrendiklerini canli kullan.',
+    speakingClubF1: 'Tum seviyelere acik',
+    speakingClubF2: 'Duzenli oturumlar',
+    speakingClubF3: 'Sehir ve kamp gezileriyle destek',
+    cardSelectHint:
+      'Secilen seviye sabah, ogle veya aksam grubunda olabilir; size uygun saati secin. Sonra baslangic tarihi ve iletisime gecilir.',
     durationQ: 'Kac aylik istiyorsunuz?',
     freeLesson: 'Ucretsiz deneme dersi',
     freeLessonHelp: 'Bu secenek ucretsizdir.',
-    step4lead: 'Sure ve fiyat secimi',
+    step4lead: 'Baslangic tarihi',
+    step4Title: 'Baslangic tarihini sec',
+    step4Subtitle:
+      'Size en uygun baslangic tarihini secin veya danismanla ozel bir tarih belirleyin.',
+    step4PresetTitle: 'Kur basindan baslama tarihleri',
+    step4CustomTitle: 'Baslama tarihini kendim secmek istiyorum',
+    step4CustomF1: 'Ozel baslangic tarihi',
+    step4CustomF2: 'Esnek planlama',
+    step4CustomF3: 'Size uygun program icin danisman destegi',
+    step4CustomCta: 'Tarihimi kendim secmek istiyorum',
+    step4Trust: 'Guvenli secim, basariya giden en dogru adim.',
+    step4Continue: 'Devam Et',
+    step4NeedPick: 'Listeden bir tarih secin veya ozel tarih icin secenegi acip bir gun secin.',
+    step4NeedCustomDate: 'Ozel baslangic icin lutfen asagidan bir tarih secin.',
+    step4PickDateLabel: 'Baslangic tarihiniz',
+    step4PickDateHint: 'Son kesin tarih danismanlikta netlesir.',
+    step4CustomSummary: 'Ozel baslangic tarihi — danisman ile netlestirilecek',
     step5lead: 'Iletisim',
+    step5Title: 'Iletisim bilgilerinizi girin',
+    step5Subtitle:
+      'Basvurunuzla ilgili tum bilgilendirmeleri size iletebilmemiz icin lutfen iletisim bilgilerinizi eksiksiz girin.',
+    step5SectionPersonal: 'Kisisel Bilgiler',
+    step5SectionExtra: 'Eklemek istedikleriniz',
+    step5CtaDemoLesson: 'Demo dersi al',
+    firstName: 'Ad',
+    lastName: 'Soyad',
+    firstNamePlaceholder: 'Adinizi giriniz',
+    lastNamePlaceholder: 'Soyadinizi giriniz',
+    emailPlaceholder: 'ornek@mail.com',
+    phonePlaceholder: 'Ornek: 5XX XXX XX XX',
+    birthDate: 'Dogum tarihi',
+    nationality: 'Uyruk',
+    nationalityPlaceholder: 'Ulkenizi yaziniz',
+    extraPlaceholder: 'Eklemek istediklerinizi buraya yazabilirsiniz (istege bagli)',
     name: 'Ad Soyad',
     email: 'E-posta',
     phone: 'Telefon',
@@ -82,14 +179,23 @@ const copy = {
     modeOnline: 'ONLINE',
     weekdaysShort: 'Pzt, Sal, Cars, Pers',
     weekendShort: 'Cmt, Paz',
-    needLevelHint: 'Devam etmek icin dil seviyesi seciniz.'
+    needLevelHint: 'Devam etmek icin dil seviyesi seciniz.',
+    levelHeroTitle: 'Seviyeni kesfet',
+    levelHeroSubtitle: "A1'den C1'e kadar seviyeni incele, emin degilsen ucretsiz seviye tespiti ile dogru sinifi bul.",
+    levelBannerTitle: 'Dogru seviyeden baslamak onemli',
+    levelBannerText: 'Kendi seviyene uygun bir baslangic yapmak, zaman kazandirir ve ogrenme basarini artirir.',
+    levelHelpTitle: 'Seviyenden emin degil misin?',
+    levelHelpText: 'Kisa bir degerlendirme ile sana en uygun baslangic seviyesini belirleyelim.',
+    levelHelpCtaPrimary: 'Ucretsiz Seviye Tespiti Yap',
+    levelHelpCtaSecondary: "A1'den Baslamak Istiyorum"
   },
   de: {
     asideMark: 'Angebot',
     subtitleEm: 'Ihr individuelles Angebot',
     subtitle: 'Waehlen Sie Programm, Niveau und Kurstyp.',
     asideSteps: '5 Schritte',
-    asideStepHint: 'Fortschritt',
+    asideStepHint: 'FORTSCHRITT',
+    stepLabels: ['Programm', 'Niveau', 'Unterrichtszeit', 'Datum', 'Kontakt'],
     programs: [
       { label: 'Intensive Deutsch', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive-de', image: programImageMap.intensive },
       { label: 'Telc-Prüfungen', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'telc', image: programImageMap.telc },
@@ -103,12 +209,71 @@ const copy = {
     monthPlaceholder: 'Monat waehlen',
     months: ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
     step3lead: 'Passende Klassen',
-    cardSelectHint: 'Karte waehlen, dann Dauer.',
+    step3Title: 'Unterrichtszeit waehlen',
+    step3Subtitle:
+      'Waehlen Sie das Zeitfenster, das am besten zu Ihrem Alltag passt. Alle Gruppen: 20 Wochenstunden Praesenzunterricht.',
+    teachersInGroup: 'Lehrkraefte in dieser Gruppe',
+    slotMorningTitle: 'Morgengruppe',
+    slotAfternoonTitle: 'Nachmittagsgruppe',
+    slotEveningTitle: 'Abendgruppe',
+    slotMorningTime: '09:00 – 12:30',
+    slotAfternoonTime: '13:00 – 16:30',
+    slotEveningTime: '18:00 – 21:30',
+    slotMorningF1: 'Unterricht unter der Woche',
+    slotMorningF2: 'Start mit Energie',
+    slotMorningF3: '20 Std. / Woche',
+    slotAfternoonF1: 'Unterricht unter der Woche',
+    slotAfternoonF2: 'Ausgewogenes Programm',
+    slotAfternoonF3: '20 Std. / Woche',
+    slotEveningF1: 'Unterricht unter der Woche',
+    slotEveningF2: 'Ideal neben Beruf und Studium',
+    slotEveningF3: '20 Std. / Woche',
+    speakingClubAria: 'Sprachclub',
+    speakingClubTitle: 'Kostenloser Samstag-Sprachclub',
+    speakingClubBody:
+      'Vertiefen Sie spontan im Gespraech, was Sie im Kurs lernen – mit festen Terminen und begleiteten Aktivitaeten.',
+    speakingClubF1: 'Fuer alle Niveaus',
+    speakingClubF2: 'Regelmaessige Treffen',
+    speakingClubF3: 'Stadt- und Campuserlebnisse',
+    cardSelectHint:
+      'Ihr Niveau passt zu Morgen-, Nachmittags- oder Abendgruppe — waehlen Sie Ihr Zeitfenster, danach Starttermin und Kontakt.',
     durationQ: 'Wie viele Monate?',
     freeLesson: 'Kostenlose Probestunde',
     freeLessonHelp: 'Diese Option ist kostenlos.',
-    step4lead: 'Dauer und Preis',
+    step4lead: 'Starttermin',
+    step4Title: 'Starttermin waehlen',
+    step4Subtitle:
+      'Waehlen Sie einen passenden Kursbeginn oder vereinbaren Sie individuell einen Termin mit der Beratung.',
+    step4PresetTitle: 'Starttermine zum Kursbeginn',
+    step4CustomTitle: 'Ich moechte meinen Starttermin selbst festlegen',
+    step4CustomF1: 'Individueller Starttermin',
+    step4CustomF2: 'Flexible Planung',
+    step4CustomF3: 'Beratung fuer das passende Programm',
+    step4CustomCta: 'Starttermin selbst waehlen',
+    step4Trust: 'Sichere Auswahl – der richtige Schritt zum Erfolg.',
+    step4Continue: 'Weiter',
+    step4NeedPick: 'Bitte waehlen Sie einen Termin aus der Liste oder oeffnen Sie die individuelle Option und setzen Sie ein Datum.',
+    step4NeedCustomDate: 'Bitte waehlen Sie unten ein Datum fuer Ihren individuellen Start.',
+    step4PickDateLabel: 'Ihr Wunsch-Startdatum',
+    step4PickDateHint: 'Der endgueltige Termin wird in der Beratung festgelegt.',
+    step4CustomSummary: 'Individueller Starttermin — wird mit der Beratung abgestimmt',
     step5lead: 'Kontakt',
+    step5Title: 'Geben Sie Ihre Kontaktdaten ein',
+    step5Subtitle:
+      'Bitte vervollstaendigen Sie Ihre Daten, damit wir Sie zur Bewerbung und allen Folgeinfos erreichen koennen.',
+    step5SectionPersonal: 'Persoenliche Daten',
+    step5SectionExtra: 'Was Sie noch mitteilen moechten',
+    step5CtaDemoLesson: 'Demo-Unterricht anfragen',
+    firstName: 'Vorname',
+    lastName: 'Nachname',
+    firstNamePlaceholder: 'Ihren Vornamen eingeben',
+    lastNamePlaceholder: 'Ihren Nachnamen eingeben',
+    emailPlaceholder: 'beispiel@mail.de',
+    phonePlaceholder: 'z. B. 151 12345678',
+    birthDate: 'Geburtsdatum',
+    nationality: 'Staatsangehoerigkeit',
+    nationalityPlaceholder: 'Land eingeben',
+    extraPlaceholder: 'Weitere Hinweise (optional)',
     name: 'Name',
     email: 'E-Mail',
     phone: 'Telefon',
@@ -143,14 +308,23 @@ const copy = {
     modeOnline: 'ONLINE',
     weekdaysShort: 'Mo, Di, Mi, Do',
     weekendShort: 'Sa, So',
-    needLevelHint: 'Bitte waehlen Sie eine Sprachstufe, um fortzufahren.'
+    needLevelHint: 'Bitte waehlen Sie eine Sprachstufe, um fortzufahren.',
+    levelHeroTitle: 'Entdecke dein Niveau',
+    levelHeroSubtitle: 'Pruefe dein Niveau von A1 bis C1 und finde mit einer kostenlosen Einstufung die passende Klasse.',
+    levelBannerTitle: 'Der richtige Startlevel ist wichtig',
+    levelBannerText: 'Der passende Einstieg spart Zeit und steigert den Lernerfolg.',
+    levelHelpTitle: 'Unsicher bei Ihrem Niveau?',
+    levelHelpText: 'Mit einer kurzen Einschaetzung finden wir den richtigen Startlevel.',
+    levelHelpCtaPrimary: 'Kostenlose Niveaustufe pruefen',
+    levelHelpCtaSecondary: 'Ich moechte mit A1 starten'
   },
   en: {
     asideMark: 'Quote',
     subtitleEm: 'A quote shaped around you',
     subtitle: 'Pick program, level, and course type to see matching classes.',
     asideSteps: '5 steps',
-    asideStepHint: 'Progress',
+    asideStepHint: 'PROGRESS',
+    stepLabels: ['Program', 'Level', 'Lesson time', 'Date', 'Contact'],
     programs: [
       { label: 'Intensive German', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive-de', image: programImageMap.intensive },
       { label: 'Telc exams', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'telc', image: programImageMap.telc },
@@ -164,12 +338,70 @@ const copy = {
     monthPlaceholder: 'Select month',
     months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     step3lead: 'Matching classes',
-    cardSelectHint: 'Select a card, then choose duration.',
+    step3Title: 'Choose your lesson time',
+    step3Subtitle:
+      'Pick the time window that fits your routine. Every group includes 20 hours per week of in-person teaching.',
+    teachersInGroup: 'Teachers in this group',
+    slotMorningTitle: 'Morning group',
+    slotAfternoonTitle: 'Afternoon group',
+    slotEveningTitle: 'Evening group',
+    slotMorningTime: '09:00 – 12:30',
+    slotAfternoonTime: '13:00 – 16:30',
+    slotEveningTime: '18:00 – 21:30',
+    slotMorningF1: 'Weekday classes',
+    slotMorningF2: 'Energetic start',
+    slotMorningF3: '20 hrs / week',
+    slotAfternoonF1: 'Weekday classes',
+    slotAfternoonF2: 'Balanced rhythm',
+    slotAfternoonF3: '20 hrs / week',
+    slotEveningF1: 'Weekday classes',
+    slotEveningF2: 'Designed for workers',
+    slotEveningF3: '20 hrs / week',
+    speakingClubAria: 'Speaking club',
+    speakingClubTitle: 'Free Saturday speaking club',
+    speakingClubBody: 'Practice outside class in a social setting and apply what you learn right away.',
+    speakingClubF1: 'Open to all levels',
+    speakingClubF2: 'Regular sessions',
+    speakingClubF3: 'City & campus activities',
+    cardSelectHint:
+      'Your level can fit morning, afternoon, or evening — pick your slot, then start date and contact.',
     durationQ: 'How many months?',
     freeLesson: 'Free lesson',
     freeLessonHelp: 'This option is free.',
-    step4lead: 'Duration and pricing',
+    step4lead: 'Start date',
+    step4Title: 'Choose your start date',
+    step4Subtitle:
+      'Pick the best course start date for you, or arrange a custom date with our advisors.',
+    step4PresetTitle: 'Scheduled course start dates',
+    step4CustomTitle: 'I want to choose my own start date',
+    step4CustomF1: 'Custom start date',
+    step4CustomF2: 'Flexible planning',
+    step4CustomF3: 'Advisor support for the best programme fit',
+    step4CustomCta: 'I want to pick my own date',
+    step4Trust: 'A confident choice — the right step toward success.',
+    step4Continue: 'Continue',
+    step4NeedPick: 'Pick a date from the list, or open the custom option and choose a day.',
+    step4NeedCustomDate: 'Please choose your preferred start date below.',
+    step4PickDateLabel: 'Your preferred start date',
+    step4PickDateHint: 'The exact date can be confirmed with an advisor.',
+    step4CustomSummary: 'Custom start date — to be confirmed with an advisor',
     step5lead: 'Contact',
+    step5Title: 'Enter your contact details',
+    step5Subtitle:
+      'Please complete your details so we can send you all follow-up information about your enquiry.',
+    step5SectionPersonal: 'Personal details',
+    step5SectionExtra: 'Anything you would like to add',
+    step5CtaDemoLesson: 'Book a demo lesson',
+    firstName: 'First name',
+    lastName: 'Last name',
+    firstNamePlaceholder: 'Enter your first name',
+    lastNamePlaceholder: 'Enter your last name',
+    emailPlaceholder: 'you@example.com',
+    phonePlaceholder: 'e.g. +49 151 12345678',
+    birthDate: 'Date of birth',
+    nationality: 'Nationality',
+    nationalityPlaceholder: 'Enter your country',
+    extraPlaceholder: 'Optional notes or questions',
     name: 'Full name',
     email: 'Email',
     phone: 'Phone',
@@ -204,14 +436,23 @@ const copy = {
     modeOnline: 'ONLINE',
     weekdaysShort: 'Mon, Tue, Wed, Thu',
     weekendShort: 'Sat, Sun',
-    needLevelHint: 'Please select a language level to continue.'
+    needLevelHint: 'Please select a language level to continue.',
+    levelHeroTitle: 'Discover your level',
+    levelHeroSubtitle: 'Review your level from A1 to C1 and find the right class with a free placement check.',
+    levelBannerTitle: 'Starting at the right level matters',
+    levelBannerText: 'A suitable level saves time and improves learning outcomes.',
+    levelHelpTitle: 'Not sure about your level?',
+    levelHelpText: 'A short assessment helps us find your best starting level.',
+    levelHelpCtaPrimary: 'Take free level assessment',
+    levelHelpCtaSecondary: 'I want to start from A1'
   },
   es: {
     asideMark: 'Cotiz.',
     subtitleEm: 'Una cotizacion a tu medida',
     subtitle: 'Selecciona programa, nivel y tipo de curso.',
     asideSteps: '5 pasos',
-    asideStepHint: 'Progreso',
+    asideStepHint: 'PROGRESO',
+    stepLabels: ['Programa', 'Nivel', 'Horario', 'Fecha', 'Contacto'],
     programs: [
       { label: 'Alemán intensivo', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive-de', image: programImageMap.intensive },
       { label: 'Exámenes Telc', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'telc', image: programImageMap.telc },
@@ -225,12 +466,70 @@ const copy = {
     monthPlaceholder: 'Selecciona mes',
     months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
     step3lead: 'Clases disponibles',
-    cardSelectHint: 'Selecciona una tarjeta y luego duracion.',
+    step3Title: 'Elige tu horario',
+    step3Subtitle:
+      'Elige el tramo horario que mejor encaje con tu rutina. Todos los grupos incluyen 20 horas semanales presenciales.',
+    teachersInGroup: 'Profesores de este grupo',
+    slotMorningTitle: 'Grupo manana',
+    slotAfternoonTitle: 'Grupo tarde',
+    slotEveningTitle: 'Grupo noche',
+    slotMorningTime: '09:00 – 12:30',
+    slotAfternoonTime: '13:00 – 16:30',
+    slotEveningTime: '18:00 – 21:30',
+    slotMorningF1: 'Entre semana',
+    slotMorningF2: 'Comienzo con energia',
+    slotMorningF3: '20 h / semana',
+    slotAfternoonF1: 'Entre semana',
+    slotAfternoonF2: 'Ritmo equilibrado',
+    slotAfternoonF3: '20 h / semana',
+    slotEveningF1: 'Entre semana',
+    slotEveningF2: 'Ideal si trabajas',
+    slotEveningF3: '20 h / semana',
+    speakingClubAria: 'Club de conversacion',
+    speakingClubTitle: 'Club de conversacion gratis los sabados',
+    speakingClubBody: 'Practica fuera de clase y refuerza lo aprendido en un ambiente social.',
+    speakingClubF1: 'Todos los niveles',
+    speakingClubF2: 'Sesiones regulares',
+    speakingClubF3: 'Actividades en la ciudad y campus',
+    cardSelectHint:
+      'Tu nivel puede ser en manana, tarde o noche; elige horario y luego fecha de inicio y contacto.',
     durationQ: 'Cuantos meses?',
     freeLesson: 'Clase gratuita',
     freeLessonHelp: 'Esta opcion es gratis.',
-    step4lead: 'Duracion y precio',
+    step4lead: 'Fecha de inicio',
+    step4Title: 'Elige tu fecha de inicio',
+    step4Subtitle:
+      'Selecciona la fecha de inicio que mejor te convenga o acuerda una fecha personalizada con un asesor.',
+    step4PresetTitle: 'Fechas de inicio del curso',
+    step4CustomTitle: 'Quiero elegir mi propia fecha de inicio',
+    step4CustomF1: 'Fecha de inicio personalizada',
+    step4CustomF2: 'Planificacion flexible',
+    step4CustomF3: 'Apoyo del asesor para el mejor programa',
+    step4CustomCta: 'Quiero elegir mi fecha',
+    step4Trust: 'Una eleccion segura — el paso correcto hacia el exito.',
+    step4Continue: 'Continuar',
+    step4NeedPick: 'Elige una fecha de la lista o abre la opcion personalizada y elige un dia.',
+    step4NeedCustomDate: 'Por favor elige una fecha de inicio abajo.',
+    step4PickDateLabel: 'Tu fecha de inicio deseada',
+    step4PickDateHint: 'La fecha definitiva se confirma con un asesor.',
+    step4CustomSummary: 'Fecha personalizada — se confirma con un asesor',
     step5lead: 'Contacto',
+    step5Title: 'Introduce tus datos de contacto',
+    step5Subtitle:
+      'Completa tus datos para poder enviarte toda la informacion relacionada con tu solicitud.',
+    step5SectionPersonal: 'Datos personales',
+    step5SectionExtra: 'Lo que quieras anadir',
+    step5CtaDemoLesson: 'Clase demo gratuita',
+    firstName: 'Nombre',
+    lastName: 'Apellidos',
+    firstNamePlaceholder: 'Tu nombre',
+    lastNamePlaceholder: 'Tus apellidos',
+    emailPlaceholder: 'ejemplo@correo.com',
+    phonePlaceholder: 'Ej.: +34 612 345 678',
+    birthDate: 'Fecha de nacimiento',
+    nationality: 'Nacionalidad',
+    nationalityPlaceholder: 'Indica tu pais',
+    extraPlaceholder: 'Notas u otras consultas (opcional)',
     name: 'Nombre completo',
     email: 'Email',
     phone: 'Telefono',
@@ -265,37 +564,68 @@ const copy = {
     modeOnline: 'ONLINE',
     weekdaysShort: 'Lun, Mar, Mie, Jue',
     weekendShort: 'Sab, Dom',
-    needLevelHint: 'Selecciona un nivel para continuar.'
+    needLevelHint: 'Selecciona un nivel para continuar.',
+    levelHeroTitle: 'Descubre tu nivel',
+    levelHeroSubtitle: 'Revisa tu nivel de A1 a C1 y encuentra tu clase ideal con una evaluacion gratuita.',
+    levelBannerTitle: 'Empezar en el nivel correcto es clave',
+    levelBannerText: 'Un inicio adecuado ahorra tiempo y mejora el progreso.',
+    levelHelpTitle: 'No estas seguro de tu nivel?',
+    levelHelpText: 'Con una breve evaluacion definimos tu mejor nivel de inicio.',
+    levelHelpCtaPrimary: 'Hacer evaluacion gratuita',
+    levelHelpCtaSecondary: 'Quiero empezar desde A1'
   }
 };
 const t = copy[lang as keyof typeof copy] ?? copy.tr;
+const programHint = programHintByLang[lang as keyof typeof programHintByLang] ?? programHintByLang.tr;
+const step3Json = JSON.stringify({
+  teachersInGroup: t.teachersInGroup,
+  slotMorningTitle: t.slotMorningTitle,
+  slotAfternoonTitle: t.slotAfternoonTitle,
+  slotEveningTitle: t.slotEveningTitle,
+  slotMorningTime: t.slotMorningTime,
+  slotAfternoonTime: t.slotAfternoonTime,
+  slotEveningTime: t.slotEveningTime,
+  slotMorningF1: t.slotMorningF1,
+  slotMorningF2: t.slotMorningF2,
+  slotMorningF3: t.slotMorningF3,
+  slotAfternoonF1: t.slotAfternoonF1,
+  slotAfternoonF2: t.slotAfternoonF2,
+  slotAfternoonF3: t.slotAfternoonF3,
+  slotEveningF1: t.slotEveningF1,
+  slotEveningF2: t.slotEveningF2,
+  slotEveningF3: t.slotEveningF3
+});
+const step4Json = JSON.stringify({
+  step4NeedPick: t.step4NeedPick,
+  step4NeedCustomDate: t.step4NeedCustomDate,
+  step4CustomSummary: t.step4CustomSummary
+});
 ---
 
 <div class="quote-wizard-instance" data-quote-instance={instanceSuffix}>
+  <script type="application/json" id={pw('pwStep3Json')} set:html={step3Json} />
+  <script type="application/json" id={pw('pwStep4Json')} set:html={step4Json} />
 <div class={`qx-page-bg ${quoteMode === 'standalone' ? 'qx-page-bg--standalone' : 'qx-page-bg--embedded'} ${modalMode ? 'qx-page-bg--modal' : ''}`}>
 <section class="qx qx-layout-flow" id={pw('pwRoot')} data-qx-mode={quoteMode}>
   <header class="qx-wiz-header">
     <div class="qx-wiz-header__top">
-      <div class="qx-wiz-brand">
+      <div class="qx-wiz-brand qx-wiz-brand--logo">
         <img src="/German_logo.webp" alt="" class="qx-wiz-logo" width="48" height="48" loading="lazy" decoding="async" />
-        <div class="qx-wiz-brand__text">
-          <span class="qx-wiz-brand__mark">{t.asideMark}</span>
-          <span class="qx-wiz-brand__sub">{t.asideSteps}</span>
-        </div>
       </div>
-      <div class="qx-wiz-status">
+
+      <div class="qx-step-track" aria-hidden="true">
+        {[1, 2, 3, 4, 5].map((n) => (
+          <div class="qx-step-pill">
+            <span class="qx-dot" data-qx-dot={n}>{n}</span>
+            <span class="qx-step-pill__label">{t.stepLabels[n - 1]}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="qx-wiz-status qx-wiz-status--box">
         <p class="qx-wiz-status__step" data-pw-eyebrow>01 / 05</p>
         <span class="qx-wiz-status__hint">{t.asideStepHint}</span>
       </div>
-    </div>
-
-    <div class="qx-step-track" aria-hidden="true">
-      {[1, 2, 3, 4, 5].map((n) => (
-        <div class="qx-step-pill">
-          <span class="qx-dot" data-qx-dot={n}></span>
-          <span class="qx-step-pill__n">{n}</span>
-        </div>
-      ))}
     </div>
 
     <div class="qx-wiz-meter" aria-hidden="true">
@@ -306,7 +636,7 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
   </header>
 
   <div class="qx-body">
-    <div class="qx-lead">
+    <div class="qx-lead qx-lead--hero">
       <p class="qx-lead-kicker">{t.subtitleEm}</p>
       <p class="qx-lead-body">{t.subtitle}</p>
     </div>
@@ -343,99 +673,296 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       data-weekend-short={t.weekendShort}
       data-need-level-hint={t.needLevelHint}
     >
-      <input type="hidden" name="formType" value="price-quote" />
       <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
       <input type="hidden" name="lang" value={lang} />
       <input type="hidden" name="program" id={pw('pwProgram')} value="" />
       <input type="hidden" name="quote-program-label" id={pw('pwProgramLabel')} value="" />
       <input type="hidden" name="quote-intensive-type" id={pw('pwIntensiveType')} value="" />
       <input type="hidden" name="quote-level-start" id={pw('pwLevelA')} value="" />
-      <input type="hidden" name="quote-level-end" id={pw('pwLevelB')} value="" />
       <input type="hidden" name="quote-month-start" id={pw('pwMonthA')} value="" />
-      <input type="hidden" name="quote-month-end" id={pw('pwMonthB')} value="" />
       <input type="hidden" name="quote-course-type" id={pw('pwCourseType')} value="" />
       <input type="hidden" name="quote-selected-course-id" id={pw('pwCourseId')} value="" />
       <input type="hidden" name="quote-selected-course-title" id={pw('pwCourseTitle')} value="" />
       <input type="hidden" name="quote-duration-months" id={pw('pwDurationMonths')} value="" />
-      <input type="hidden" name="quote-is-free-lesson" id={pw('pwFreeLesson')} value="no" />
-      <input type="hidden" name="quote-plan-key" id={pw('pwPlanKey')} value="" />
       <input type="hidden" name="totalPrice" id={pw('pwTotalPrice')} value="" />
+      <input type="hidden" name="quote-start-date-mode" id={pw('pwStartDateMode')} value="" />
+      <input type="hidden" name="quote-start-date-iso" id={pw('pwStartDateIso')} value="" />
+      <input type="hidden" name="quote-start-date-label" id={pw('pwStartDateLabel')} value="" />
 
       <div class="pw-viewport">
         <div class="pw-panel is-current qx-scene qx-scene--pick" data-panel="1">
           <div class="qx-stage-shell">
-            <header class="qx-scene-head"><span class="qx-scene-kicker">1</span><h2 class="qx-question">{t.programQ}</h2></header>
+            <header class="qx-scene-head qx-scene-head--program">
+              <span class="qx-scene-kicker">1</span>
+              <div class="qx-scene-head__copy">
+                <h2 class="qx-question">{t.programQ}</h2>
+                <p class="qx-question-note">{programHint}</p>
+              </div>
+            </header>
             <div class="qx-program-grid qx-strip qx-strip--programs">
-              {t.programs.map((p, i) => (
-                <button type="button" class={`qx-card qx-card--${i + 1}`} data-program={p.program} data-program-label={p.label} data-intensive-type={p.intensiveType} data-quote-track={p.quoteTrack}>
-                  <span class="qx-card-bg" style={`--qx-img:url('${p.image}')`} aria-hidden="true" />
-                  <span class="qx-card-body">
-                    <span class="qx-card-num">{String(i + 1).padStart(2, '0')}</span>
-                    <strong class="qx-card-title">{p.label}</strong>
-                  </span>
-                </button>
-              ))}
+              {t.programs.map((p, i) => {
+                const meta = programCardMeta[p.quoteTrack as keyof typeof programCardMeta] ?? programCardMeta.intensive;
+                return (
+                  <button type="button" class={`qx-card qx-card--program qx-card--${i + 1}`} data-program={p.program} data-program-label={p.label} data-intensive-type={p.intensiveType} data-quote-track={p.quoteTrack}>
+                    <span class="qx-card-bg" style={`--qx-img:url('${p.image}')`} aria-hidden="true" />
+                    <span class="qx-card-body">
+                      <span class="qx-card-title-row">
+                        <strong class="qx-card-title">{p.label}</strong>
+                        <span class="qx-card-go" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+                      </span>
+                      <span class="qx-card-badges">
+                        {meta.badges.map((badge) => <span class="qx-card-badge">{badge}</span>)}
+                      </span>
+                      <span class="qx-card-meta">
+                        <span class="qx-card-meta-block">
+                          <span class="qx-card-chip-row">
+                            {meta.levels.map((lv) => <span class="qx-card-chip">{lv}</span>)}
+                          </span>
+                        </span>
+                        <span class="qx-card-meta-block">
+                          <span class="qx-card-chip-row">
+                            {meta.infos.map((info) => <span class="qx-card-chip">{info}</span>)}
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
 
         <div class="pw-panel qx-scene qx-scene--plan" data-panel="2">
-          <div class="qx-stage-shell qx-stage-shell--with-nav">
-            <header class="qx-scene-head"><span class="qx-scene-kicker">2</span><h2 class="qx-question">{t.levelQ}</h2></header>
-            <div class="qx-choice-grid qx-choice-grid--levels" id={pw('pwLevelButtons')} role="group" aria-label={t.levelQ}></div>
-            <h3 class="qx-subq">{t.monthQ}</h3>
-            <div class="qx-choice-grid qx-choice-grid--months" id={pw('pwMonthButtons')} role="group" aria-label={t.monthQ}></div>
-            <div class="qx-stage-nav">
-              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
-              <button type="button" class="qx-nav-arrow qx-nav-arrow--next" data-pw-nav-next aria-label={t.planContinue}><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+          <div class="qx-stage-shell qx-stage-shell--with-nav qx-stage-shell--level-v2">
+            <header class="qx-scene-head qx-scene-head--level">
+              <span class="qx-scene-kicker">2</span>
+              <div class="qx-scene-head__copy">
+                <h2 class="qx-question">{t.levelHeroTitle}</h2>
+                <p class="qx-question-note">{t.levelHeroSubtitle}</p>
+              </div>
+            </header>
+            <section class="qx-level-banner" aria-label={t.levelBannerTitle}>
+              <span class="qx-level-banner__icon" aria-hidden="true"><i class="far fa-star"></i></span>
+              <div class="qx-level-banner__copy">
+                <strong>{t.levelBannerTitle}</strong>
+                <p>{t.levelBannerText}</p>
+              </div>
+            </section>
+            <div class="qx-choice-grid qx-choice-grid--levels qx-choice-grid--levels-v2" id={pw('pwLevelButtons')} role="group" aria-label={t.levelQ}></div>
+            <div class="qx-level-help">
+              <div class="qx-level-help__copy">
+                <strong>{t.levelHelpTitle}</strong>
+                <p>{t.levelHelpText}</p>
+              </div>
+              <div class="qx-level-help__actions">
+                <button type="button" class="qx-level-help__btn qx-level-help__btn--primary" data-pw-level-assessment>{t.levelHelpCtaPrimary} <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                <button type="button" class="qx-level-help__btn qx-level-help__btn--ghost" data-pw-level-a1>{t.levelHelpCtaSecondary} <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+              </div>
             </div>
+            <div class="qx-choice-grid qx-choice-grid--months" id={pw('pwMonthButtons')} role="group" aria-label={t.monthQ}></div>
           </div>
         </div>
 
         <div class="pw-panel qx-scene qx-scene--stay" data-panel="3">
-          <div class="qx-stage-shell qx-stage-shell--with-nav">
-            <header class="qx-scene-head"><span class="qx-scene-kicker">3</span><h2 class="qx-question">{t.step3lead}</h2></header>
-            <p class="qx-hint">{t.cardSelectHint}</p>
-            <div class="qx-course-cards" id={pw('pwCourseCards')}></div>
-            <div class="qx-stage-nav">
-              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
-              <button type="button" class="qx-nav-arrow qx-nav-arrow--next" data-pw-nav-next aria-label={t.planContinue}><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+          <div class="qx-stage-shell qx-stage-shell--step3">
+            <header class="qx-scene-head qx-scene-head--step3">
+              <span class="qx-scene-kicker">3</span>
+              <div class="qx-scene-head__copy">
+                <h2 class="qx-question">{t.step3Title}</h2>
+                <p class="qx-question-note">{t.step3Subtitle}</p>
+              </div>
+            </header>
+            <p class="qx-hint qx-hint--step3">{t.cardSelectHint}</p>
+            <div class="qx-step3-scroll">
+              <div class="qx-course-cards qx-course-cards--time-slots" id={pw('pwCourseCards')} role="group" aria-label={t.step3Title}></div>
             </div>
+            <aside class="qx-speaking-banner" aria-label={t.speakingClubAria}>
+              <div class="qx-speaking-banner__icon" aria-hidden="true"><i class="fas fa-comments"></i></div>
+              <div class="qx-speaking-banner__text">
+                <strong>{t.speakingClubTitle}</strong>
+                <p>{t.speakingClubBody}</p>
+              </div>
+              <ul class="qx-speaking-banner__ticks">
+                <li><i class="fas fa-check" aria-hidden="true"></i> {t.speakingClubF1}</li>
+                <li><i class="fas fa-check" aria-hidden="true"></i> {t.speakingClubF2}</li>
+                <li><i class="fas fa-check" aria-hidden="true"></i> {t.speakingClubF3}</li>
+              </ul>
+            </aside>
           </div>
         </div>
 
-        <div class="pw-panel qx-scene qx-scene--pricing" data-panel="4">
-          <div class="qx-stage-shell qx-stage-shell--with-nav">
-            <header class="qx-scene-head"><span class="qx-scene-kicker">4</span><h2 class="qx-question">{t.step4lead}</h2></header>
-            <div class="qx-pricing-table-wrap" id={pw('pwPricingTable')}>
-              <div class="qx-pricing-head" role="row">
-                <div>{t.pricingDuration}</div>
-                <div>{t.pricingWeekly}</div>
-                <div>{t.pricingMonthly}</div>
-                <div>{t.pricingTotal}</div>
+        <div class="pw-panel qx-scene qx-scene--step4" data-panel="4">
+          <div class="qx-stage-shell qx-stage-shell--step4">
+            <header class="qx-scene-head qx-scene-head--step4">
+              <span class="qx-scene-kicker">4</span>
+              <div class="qx-scene-head__copy">
+                <h2 class="qx-question">{t.step4Title}</h2>
+                <p class="qx-question-note">{t.step4Subtitle}</p>
               </div>
-              <div class="qx-pricing-rows" id={pw('pwPricingRows')}></div>
+            </header>
+            <div class="qx-step4-grid">
+              <article class="qx-step4-card qx-step4-card--presets">
+                <div class="qx-step4-card__head">
+                  <span class="qx-step4-card__icon qx-step4-card__icon--cal" aria-hidden="true"><i class="far fa-calendar-alt"></i></span>
+                  <h3 class="qx-step4-card__title">{t.step4PresetTitle}</h3>
+                </div>
+                <div class="qx-step4-presets" id={pw('pwStep4Presets')} role="radiogroup" aria-label={t.step4PresetTitle}></div>
+              </article>
+              <article class="qx-step4-card qx-step4-card--custom" data-pw-step4-custom-card>
+                <div class="qx-step4-card__head">
+                  <span class="qx-step4-card__icon qx-step4-card__icon--clock" aria-hidden="true"><i class="far fa-calendar-alt"></i></span>
+                  <h3 class="qx-step4-card__title">{t.step4CustomTitle}</h3>
+                </div>
+                <div class="qx-step4-custom-intro" data-pw-step4-custom-intro>
+                  <div class="qx-cal-art" aria-hidden="true">
+                    <div class="qx-cal-art__binder">
+                      <span class="qx-cal-art__ring"></span>
+                      <span class="qx-cal-art__ring"></span>
+                    </div>
+                    <div class="qx-cal-art__sheet">
+                      <div class="qx-cal-art__strip"></div>
+                      <div class="qx-cal-art__face">
+                        <div class="qx-cal-art__weekday">Mon</div>
+                        <div class="qx-cal-art__daynum">12</div>
+                        <div class="qx-cal-art__mini">
+                          <span class="qx-cal-art__cell"></span>
+                          <span class="qx-cal-art__cell"></span>
+                          <span class="qx-cal-art__cell qx-cal-art__cell--on"></span>
+                          <span class="qx-cal-art__cell"></span>
+                          <span class="qx-cal-art__cell"></span>
+                          <span class="qx-cal-art__cell qx-cal-art__cell--on"></span>
+                          <span class="qx-cal-art__cell"></span>
+                          <span class="qx-cal-art__cell"></span>
+                          <span class="qx-cal-art__cell"></span>
+                          <span class="qx-cal-art__cell"></span>
+                          <span class="qx-cal-art__cell"></span>
+                          <span class="qx-cal-art__cell qx-cal-art__cell--accent"></span>
+                        </div>
+                        <div class="qx-cal-art__plant" aria-hidden="true">
+                          <span class="qx-cal-art__pot"></span>
+                          <span class="qx-cal-art__leaf qx-cal-art__leaf--l"></span>
+                          <span class="qx-cal-art__leaf qx-cal-art__leaf--r"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ul class="qx-step4-custom-list">
+                    <li><i class="fas fa-check" aria-hidden="true"></i> {t.step4CustomF1}</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> {t.step4CustomF2}</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> {t.step4CustomF3}</li>
+                  </ul>
+                  <button type="button" class="qx-step4-custom-cta" data-pw-step4-custom>
+                    {t.step4CustomCta} <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div class="qx-step4-custom-picker-panel" id={pw('pwStep4CustomPicker')} role="group" aria-label={t.step4PickDateLabel}>
+                  <label class="qx-step4-picker-label-block" for={pw('pwCustomDateInput')}>
+                    <span class="qx-step4-picker-lead">{t.step4PickDateLabel}</span>
+                    <input
+                      type="date"
+                      id={pw('pwCustomDateInput')}
+                      class="qx-step4-date-input qx-step4-date-input--panel"
+                      autocomplete="off"
+                      max="2030-12-31"
+                    />
+                  </label>
+                  <p class="qx-step4-date-hint">{t.step4PickDateHint}</p>
+                  <button type="button" class="qx-step4-custom-back" data-pw-step4-custom-back>
+                    <i class="fas fa-arrow-left" aria-hidden="true"></i> {t.planBack}
+                  </button>
+                </div>
+              </article>
             </div>
-            <div class="qx-stage-nav">
-              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
-            </div>
+            <p class="qx-step4-error" id={pw('pwStep4Error')} hidden role="alert"></p>
+            <footer class="qx-step4-footer">
+              <p class="qx-step4-trust"><i class="fas fa-shield-alt" aria-hidden="true"></i> {t.step4Trust}</p>
+              <button type="button" class="qx-step4-continue" data-pw-step4-continue>
+                {t.step4Continue} <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </button>
+            </footer>
           </div>
         </div>
 
         <div class="pw-panel qx-scene qx-scene--send" data-panel="5">
-          <div class="qx-stage-shell qx-stage-shell--with-nav">
-            <header class="qx-scene-head"><span class="qx-scene-kicker">5</span><h2 class="qx-question">{t.step5lead}</h2></header>
-            <div class="qx-fields qx-fields--grid">
-              <label><span>{t.name}</span><input type="text" name="full-name" required autocomplete="name" /></label>
-              <label><span>{t.email}</span><input type="email" name="email" required autocomplete="email" /></label>
-              <label><span>{t.phone}</span><input type="tel" name="phone" required autocomplete="tel" /></label>
-              <label><span>{t.country}</span><input type="text" name="country" autocomplete="country-name" /></label>
-              <label class="qx-field-full"><span>{t.message}</span><textarea name="message" rows="4"></textarea></label>
+          <div class="qx-stage-shell qx-stage-shell--contact">
+            <header class="qx-scene-head qx-scene-head--contact">
+              <span class="qx-scene-kicker">5</span>
+              <div class="qx-scene-head__copy">
+                <h2 class="qx-question">{t.step5Title}</h2>
+                <p class="qx-question-note">{t.step5Subtitle}</p>
+              </div>
+            </header>
+
+            <section class="qx-contact-card" aria-labelledby={pw('pwContactPersonalTitle')}>
+              <div class="qx-contact-card__head">
+                <span class="qx-contact-card__icon" aria-hidden="true"><i class="fas fa-user"></i></span>
+                <h3 class="qx-contact-card__title" id={pw('pwContactPersonalTitle')}>{t.step5SectionPersonal}</h3>
+              </div>
+              <div class="qx-contact-grid">
+                <label class="qx-contact-field">
+                  <span class="qx-contact-label">{t.firstName}</span>
+                  <input type="text" name="first-name" autocomplete="given-name" required class="qx-contact-input" placeholder={t.firstNamePlaceholder} />
+                </label>
+                <label class="qx-contact-field">
+                  <span class="qx-contact-label">{t.lastName}</span>
+                  <input type="text" name="last-name" autocomplete="family-name" required class="qx-contact-input" placeholder={t.lastNamePlaceholder} />
+                </label>
+                <label class="qx-contact-field">
+                  <span class="qx-contact-label">{t.email}</span>
+                  <span class="qx-contact-input-wrap">
+                    <i class="fas fa-envelope qx-contact-input-icon" aria-hidden="true"></i>
+                    <input type="email" name="email" autocomplete="email" required class="qx-contact-input qx-contact-input--pad-icon" placeholder={t.emailPlaceholder} />
+                  </span>
+                </label>
+                <label class="qx-contact-field">
+                  <span class="qx-contact-label">{t.phone}</span>
+                  <span class="qx-contact-input-wrap">
+                    <i class="fas fa-phone qx-contact-input-icon" aria-hidden="true"></i>
+                    <input type="tel" name="phone" autocomplete="tel" required class="qx-contact-input qx-contact-input--pad-icon" placeholder={t.phonePlaceholder} />
+                  </span>
+                </label>
+                <label class="qx-contact-field">
+                  <span class="qx-contact-label">{t.birthDate}</span>
+                  <span class="qx-contact-input-wrap">
+                    <i class="far fa-calendar-alt qx-contact-input-icon" aria-hidden="true"></i>
+                    <input type="date" name="birth-date" class="qx-contact-input qx-contact-input--pad-icon qx-contact-input--date" min="1920-01-01" />
+                  </span>
+                </label>
+                <label class="qx-contact-field">
+                  <span class="qx-contact-label">{t.nationality}</span>
+                  <span class="qx-contact-input-wrap">
+                    <i class="fas fa-globe qx-contact-input-icon" aria-hidden="true"></i>
+                    <input type="text" name="nationality" autocomplete="country-name" class="qx-contact-input qx-contact-input--pad-icon" placeholder={t.nationalityPlaceholder} />
+                  </span>
+                </label>
+              </div>
+            </section>
+
+            <section class="qx-contact-card qx-contact-card--extra" aria-labelledby={pw('pwContactExtraTitle')}>
+              <div class="qx-contact-card__head">
+                <span class="qx-contact-card__icon qx-contact-card__icon--chat" aria-hidden="true"><i class="fas fa-comment-dots"></i></span>
+                <h3 class="qx-contact-card__title" id={pw('pwContactExtraTitle')}>{t.step5SectionExtra}</h3>
+              </div>
+              <textarea
+                name="message"
+                rows="5"
+                class="qx-contact-textarea"
+                placeholder={t.extraPlaceholder}
+                aria-label={t.step5SectionExtra}
+              ></textarea>
+            </section>
+
+            <div class="qx-contact-actions">
+              <button type="submit" class="qx-contact-btn qx-contact-btn--outline qx-contact-submit" data-pw-submit-intent="demo-lesson">
+                <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                <span>{t.step5CtaDemoLesson}</span>
+              </button>
+              <button type="submit" class="qx-contact-btn qx-contact-btn--solid qx-send qx-contact-submit" data-pw-submit-intent="quote">
+                <i class="far fa-calendar-alt" aria-hidden="true"></i>
+                <span>{t.submit}</span>
+              </button>
             </div>
-            <div class="qx-stage-nav">
-              <button type="button" class="qx-nav-arrow qx-nav-arrow--back" data-pw-nav-back aria-label={t.planBack}><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
-            </div>
-            <button class="qx-send" type="submit">{t.submit}</button>
           </div>
         </div>
       </div>
@@ -459,58 +986,94 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
 
 <script>
   function pad2(n: number) { return String(n).padStart(2, '0'); }
-  function monthlyPrice(perWeek: number) { return perWeek * 4; }
-  /* Haftalık € — Fiyatlar ve Tarihler ile aynı (20h): 1–4:190, 5–8:150, 9–15:130, 16–24:120, 25+:110 */
-  const TIERS_20H = [
-    { min: 1, max: 4, perWeek: 190 },
-    { min: 5, max: 8, perWeek: 150 },
-    { min: 9, max: 15, perWeek: 130 },
-    { min: 16, max: 24, perWeek: 120 },
-    { min: 25, max: 999, perWeek: 110 }
+
+  /** Sabit kur başlangıç tarihleri (Mart–Aralık 2026) — fiyat gösterilmez */
+  const PRESET_COURSE_START_ISOS = [
+    '2026-03-02',
+    '2026-04-07',
+    '2026-05-05',
+    '2026-06-02',
+    '2026-07-07',
+    '2026-08-04',
+    '2026-09-01',
+    '2026-10-06',
+    '2026-11-03',
+    '2026-12-01'
   ];
-  /* 25h (Telc / intensive-plus): 20h + 40 €/hafta aynı kademelerde */
-  const TIERS_25H = [
-    { min: 1, max: 4, perWeek: 230 },
-    { min: 5, max: 8, perWeek: 190 },
-    { min: 9, max: 15, perWeek: 170 },
-    { min: 16, max: 24, perWeek: 160 },
-    { min: 25, max: 999, perWeek: 150 }
-  ];
-  function getTierPerWeek(weeks: number, plus: boolean) {
-    const tiers = plus ? TIERS_25H : TIERS_20H;
-    const tier = tiers.find((t) => weeks >= t.min && weeks <= t.max);
-    return tier ? tier.perWeek : (plus ? 230 : 190);
+
+  type Step3Copy = Record<string, string>;
+  type Step4Copy = { step4NeedPick?: string; step4NeedCustomDate?: string; step4CustomSummary?: string };
+
+  function parseStep3Copy(mount: HTMLElement, S: string): Step3Copy {
+    try {
+      const raw = mount.querySelector(`#pwStep3Json-${S}`)?.textContent;
+      if (!raw) return {};
+      return JSON.parse(raw.trim()) as Step3Copy;
+    } catch {
+      return {};
+    }
   }
 
-  const TIME_SLOTS = ['9:00 – 12:30', '13:30 – 17:00', '18:00 – 21:30'];
+  function parseStep4Copy(mount: HTMLElement, S: string): Step4Copy {
+    try {
+      const raw = mount.querySelector(`#pwStep4Json-${S}`)?.textContent;
+      if (!raw) return {};
+      return JSON.parse(raw.trim()) as Step4Copy;
+    } catch {
+      return {};
+    }
+  }
 
-  function buildCourseCards(formEl: HTMLFormElement, level: string, startMonth: number, _courseType: string, intensiveType: string) {
-    const plus = intensiveType === 'intensive-plus';
-    const perWeekStart = getTierPerWeek(4, plus);
-    const perWeekEnd = getTierPerWeek(32, plus);
-    const perMonthSuffix = formEl.dataset.perMonthSuffix || '/ month';
-    const modePhysical = formEl.dataset.modePhysical || 'PHYSICAL';
-    const modeOnline = formEl.dataset.modeOnline || 'ONLINE';
+  function localeForLang(lang: string) {
+    const lc = lang.toLowerCase();
+    if (lc === 'de') return 'de-DE';
+    if (lc === 'en') return 'en-GB';
+    if (lc === 'es') return 'es-ES';
+    return 'tr-TR';
+  }
+
+  function formatPresetStartLabels(iso: string, lang: string) {
+    const d = new Date(`${iso}T12:00:00`);
+    const loc = localeForLang(lang);
+    const long = new Intl.DateTimeFormat(loc, { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
+    const short = new Intl.DateTimeFormat(loc, { day: '2-digit', month: '2-digit', year: '2-digit' }).format(d);
+    return { long, short };
+  }
+
+  function escAttr(s: string) {
+    return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  }
+
+  function escHtml(s: string) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  }
+
+  function initials(name: string) {
+    const p = name.trim().split(/\s+/).filter(Boolean);
+    if (p.length >= 2) return (p[0][0] + p[p.length - 1][0]).toUpperCase();
+    return name.slice(0, 2).toUpperCase();
+  }
+
+  function buildTimeSlots(formEl: HTMLFormElement, level: string, startMonth: number, _intensiveType: string, s3: Step3Copy) {
     const weekdaysShort = formEl.dataset.weekdaysShort || 'Mon, Tue, Wed, Thu';
-    const weekendShort = formEl.dataset.weekendShort || 'Sat, Sun';
-    const priceText = `EUR ${monthlyPrice(perWeekEnd)} - ${monthlyPrice(perWeekStart)} ${perMonthSuffix}`;
     const startDate = `31.${String(startMonth).padStart(2, '0')}.2026`;
-    const teachers = ['Anna Keller', 'Murat Yildiz', 'Sofia Becker', 'Deniz Acar', 'Lukas Weber', 'Elif Demir'];
-    const pickTeacher = (seed: string) => {
-      const sum = seed.split('').reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
-      return teachers[sum % teachers.length];
-    };
-    const placesAvailable = formEl.dataset.placesAvailable || 'Places available';
-    const twoMonthsToComplete = formEl.dataset.twoMonthsToComplete || 'Two months to complete';
-    const base = [
-      { id: 'phy-morning', type: 'physical', title: `${level} (${modePhysical})`, days: weekdaysShort, teacher: pickTeacher('phy-morning-' + level), start: startDate, places: placesAvailable, extra: '' },
-      { id: 'phy-afternoon', type: 'physical', title: `${level} (${modePhysical})`, days: weekdaysShort, teacher: pickTeacher('phy-afternoon-' + level), start: startDate, places: placesAvailable, extra: '' },
-      { id: 'phy-evening', type: 'physical', title: `${level} (${modePhysical})`, days: weekdaysShort, teacher: pickTeacher('phy-evening-' + level), start: startDate, places: placesAvailable, extra: '' },
-      { id: 'online-morning', type: 'online', title: `${level} (${modeOnline})`, days: weekdaysShort, teacher: pickTeacher('online-morning-' + level), start: startDate, places: placesAvailable, extra: `${twoMonthsToComplete} ${level}` },
-      { id: 'online-evening', type: 'online', title: `${level} (${modeOnline})`, days: weekdaysShort, teacher: pickTeacher('online-evening-' + level), start: startDate, places: placesAvailable, extra: '' },
-      { id: 'phy-weekend', type: 'physical', title: `${level} (${modePhysical})`, days: weekendShort, teacher: pickTeacher('phy-weekend-' + level), start: startDate, places: placesAvailable, extra: '' }
+    const teacherPool = ['Anna Keller', 'Murat Yildiz', 'Sofia Becker', 'Deniz Acar', 'Lukas Weber', 'Elif Demir'];
+    const teachersInGroup = s3.teachersInGroup || 'Teachers';
+    const slotConfigs = [
+      { id: 'phy-morning', theme: 'morning' as const, icon: 'fa-sun', titleKey: 'slotMorningTitle', timeKey: 'slotMorningTime', f1: 'slotMorningF1', f2: 'slotMorningF2', f3: 'slotMorningF3' },
+      { id: 'phy-afternoon', theme: 'afternoon' as const, icon: 'fa-cloud-sun', titleKey: 'slotAfternoonTitle', timeKey: 'slotAfternoonTime', f1: 'slotAfternoonF1', f2: 'slotAfternoonF2', f3: 'slotAfternoonF3' },
+      { id: 'phy-evening', theme: 'evening' as const, icon: 'fa-moon', titleKey: 'slotEveningTitle', timeKey: 'slotEveningTime', f1: 'slotEveningF1', f2: 'slotEveningF2', f3: 'slotEveningF3' }
     ];
-    return base.map((x, i) => ({ ...x, time: TIME_SLOTS[i % TIME_SLOTS.length], priceText }));
+    return slotConfigs.map((slot, slotIdx) => {
+      const title = s3[slot.titleKey] || slot.id;
+      const time = s3[slot.timeKey] || '';
+      const bullets = [s3[slot.f1], s3[slot.f2], s3[slot.f3]].filter(Boolean) as string[];
+      const base = (slotIdx * 2 + level.charCodeAt(0)) % teacherPool.length;
+      const teacherNames = [0, 1, 2, 3].map((i) => teacherPool[(base + i) % teacherPool.length]);
+      const teachers = teacherNames.map((name) => ({ name }));
+      const displayTitle = `${level} · ${title}`;
+      return { ...slot, title, time, bullets, teachers, teachersInGroup, weekdaysShort, startDate, displayTitle };
+    });
   }
 
   function initQuoteMount(mount: HTMLElement) {
@@ -531,23 +1094,61 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
     const hProgramLabel = q('pwProgramLabel') as HTMLInputElement;
     const hIntensive = q('pwIntensiveType') as HTMLInputElement;
     const hLevelA = q('pwLevelA') as HTMLInputElement;
-    const hLevelB = q('pwLevelB') as HTMLInputElement;
     const hMonthA = q('pwMonthA') as HTMLInputElement;
-    const hMonthB = q('pwMonthB') as HTMLInputElement;
     const hCourseType = q('pwCourseType') as HTMLInputElement;
     const hCourseId = q('pwCourseId') as HTMLInputElement;
     const hCourseTitle = q('pwCourseTitle') as HTMLInputElement;
     const hDuration = q('pwDurationMonths') as HTMLInputElement;
-    const hFreeLesson = q('pwFreeLesson') as HTMLInputElement;
     const hTotalPrice = q('pwTotalPrice') as HTMLInputElement;
-    const hPlanKey = q('pwPlanKey') as HTMLInputElement;
+    const hStartDateMode = q('pwStartDateMode') as HTMLInputElement;
+    const hStartDateIso = q('pwStartDateIso') as HTMLInputElement;
+    const hStartDateLabel = q('pwStartDateLabel') as HTMLInputElement;
 
     const courseCardsWrap = q('pwCourseCards') as HTMLElement;
-    const pricingRows = q('pwPricingRows') as HTMLElement | null;
+    const step4PresetsWrap = q('pwStep4Presets') as HTMLElement | null;
+    const step4ErrorEl = q('pwStep4Error') as HTMLElement | null;
+    const step4CustomCard = form.querySelector<HTMLElement>('[data-pw-step4-custom-card]');
+    const customDateInput = q('pwCustomDateInput') as HTMLInputElement | null;
+    const step4Copy = parseStep4Copy(mount, S);
     const submitFeedback = q('pwSubmitFeedback') as HTMLElement | null;
 
     const LEVELS_FULL = ['A1', 'A2', 'B1', 'B2', 'C1'];
     const LEVELS_SHORT = ['A1', 'A2'];
+    const langCode = (form.querySelector<HTMLInputElement>('input[name="lang"]')?.value || 'tr').toLowerCase();
+    const LEVEL_META_BY_LANG: Record<string, Record<string, { title: string; desc: string; icon: string }>> = {
+      tr: {
+        A1: { title: 'Baslangic', desc: 'Kendini tanit, temel ifadeleri kullan.', icon: 'far fa-comments' },
+        A2: { title: 'Temel Iletisim', desc: 'Gunluk konularda daha rahat iletisim kur.', icon: 'far fa-comment-dots' },
+        B1: { title: 'Gunluk Hayat', desc: 'Gunluk yasamda bagimsizca ilerle.', icon: 'fas fa-bicycle' },
+        B2: { title: 'Akademik & Profesyonel', desc: 'Egitim ve is icin daha guclu ifade kur.', icon: 'fas fa-laptop' },
+        C1: { title: 'Ileri Seviye', desc: 'Universite ve ileri seviye hedeflere hazirlan.', icon: 'fas fa-graduation-cap' }
+      },
+      de: {
+        A1: { title: 'Einstieg', desc: 'Stelle dich vor und nutze einfache Ausdruecke.', icon: 'far fa-comments' },
+        A2: { title: 'Basis Kommunikation', desc: 'Kommuniziere sicherer im Alltag.', icon: 'far fa-comment-dots' },
+        B1: { title: 'Alltag', desc: 'Bewege dich selbststaendig im Alltag.', icon: 'fas fa-bicycle' },
+        B2: { title: 'Akademisch & Beruf', desc: 'Druecke dich klarer in Studium und Beruf aus.', icon: 'fas fa-laptop' },
+        C1: { title: 'Fortgeschritten', desc: 'Bereite dich auf Hochschule und Karriere vor.', icon: 'fas fa-graduation-cap' }
+      },
+      en: {
+        A1: { title: 'Starter', desc: 'Introduce yourself and use basic expressions.', icon: 'far fa-comments' },
+        A2: { title: 'Basic Communication', desc: 'Communicate more comfortably in daily topics.', icon: 'far fa-comment-dots' },
+        B1: { title: 'Daily Life', desc: 'Progress independently in everyday situations.', icon: 'fas fa-bicycle' },
+        B2: { title: 'Academic & Professional', desc: 'Use stronger language for study and work.', icon: 'fas fa-laptop' },
+        C1: { title: 'Advanced', desc: 'Prepare for university and higher-level goals.', icon: 'fas fa-graduation-cap' }
+      },
+      es: {
+        A1: { title: 'Inicio', desc: 'Presentate y usa expresiones basicas.', icon: 'far fa-comments' },
+        A2: { title: 'Comunicacion Basica', desc: 'Comunicacion mas comoda en temas diarios.', icon: 'far fa-comment-dots' },
+        B1: { title: 'Vida Diaria', desc: 'Avanza de forma independiente en la vida diaria.', icon: 'fas fa-bicycle' },
+        B2: { title: 'Academico y Profesional', desc: 'Expresate mejor para estudios y trabajo.', icon: 'fas fa-laptop' },
+        C1: { title: 'Avanzado', desc: 'Preparate para universidad y metas superiores.', icon: 'fas fa-graduation-cap' }
+      }
+    };
+    function getLevelMeta(level: string) {
+      const dict = LEVEL_META_BY_LANG[langCode] || LEVEL_META_BY_LANG.tr;
+      return dict[level] || LEVEL_META_BY_LANG.tr[level] || { title: level, desc: '', icon: 'far fa-star' };
+    }
     function levelsForTrack(track: string) {
       if (track === 'summer-camp' || track === 'online') return LEVELS_SHORT;
       return LEVELS_FULL;
@@ -557,19 +1158,25 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       if (!wrap) return;
       wrap.innerHTML = '';
       hLevelA.value = '';
-      hLevelB.value = '';
       levelsForTrack(track).forEach((lv) => {
+        const meta = getLevelMeta(lv);
         const b = document.createElement('button');
         b.type = 'button';
-        b.className = 'qx-choice-btn qx-level-btn';
+        b.className = 'qx-choice-btn qx-level-btn qx-level-card';
         b.dataset.levelValue = lv;
-        b.textContent = lv;
+        b.innerHTML = `
+          <span class="qx-level-card__badge">${lv}</span>
+          <strong class="qx-level-card__title">${meta.title}</strong>
+          <span class="qx-level-card__desc">${meta.desc}</span>
+          <span class="qx-level-card__icon" aria-hidden="true"><i class="${meta.icon}"></i></span>
+        `;
         b.addEventListener('click', () => {
           wrap.querySelectorAll('.qx-level-btn').forEach((x) => x.classList.remove('is-active'));
           b.classList.add('is-active');
           hLevelA.value = lv;
-          hLevelB.value = lv;
+          applyStep2Defaults();
           renderCards();
+          goTo(3);
         });
         wrap.appendChild(b);
       });
@@ -579,7 +1186,6 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       if (!monthWrap) return;
       monthWrap.innerHTML = '';
       hMonthA.value = '';
-      hMonthB.value = '';
       const rawMonthTokens = (form.getAttribute('data-months') ?? '')
         .split('|')
         .map((s) => s.trim())
@@ -599,7 +1205,6 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
           monthWrap.querySelectorAll('.qx-month-btn').forEach((x) => x.classList.remove('is-active'));
           b.classList.add('is-active');
           hMonthA.value = String(monthNum);
-          hMonthB.value = String(monthNum);
           renderCards();
         });
         monthWrap.appendChild(b);
@@ -638,16 +1243,89 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         if (firstBtn) {
           firstBtn.click();
         }
+      } else if (!hMonthA.value) {
+        const now = new Date();
+        const monthNum = String(now.getMonth() + 1);
+        hMonthA.value = monthNum;
       }
+    }
+
+    function hideStep4Error() {
+      if (!step4ErrorEl) return;
+      step4ErrorEl.hidden = true;
+      step4ErrorEl.textContent = '';
+    }
+
+    function showStep4Error(msg: string) {
+      if (!step4ErrorEl) return;
+      step4ErrorEl.textContent = msg;
+      step4ErrorEl.hidden = false;
+    }
+
+    function applyStep4DateMin() {
+      if (!customDateInput) return;
+      const d = new Date();
+      d.setHours(0, 0, 0, 0);
+      customDateInput.min = `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+    }
+
+    function hideCustomDatePicker() {
+      step4CustomCard?.classList.remove('is-picking-custom');
+      if (customDateInput) customDateInput.value = '';
+    }
+
+    function syncCustomDateHiddenFromInput() {
+      if (hStartDateMode.value !== 'custom' || !customDateInput) return;
+      const iso = customDateInput.value.trim();
+      if (!iso) {
+        hStartDateIso.value = '';
+        hStartDateLabel.value = '';
+        return;
+      }
+      hStartDateIso.value = iso;
+      hStartDateLabel.value = formatPresetStartLabels(iso, langCode).long;
+    }
+
+    function clearStep4Fields() {
+      hStartDateMode.value = '';
+      hStartDateIso.value = '';
+      hStartDateLabel.value = '';
+      step4CustomCard?.classList.remove('is-selected');
+      hideCustomDatePicker();
+      hideStep4Error();
+    }
+
+    function renderStep4Presets() {
+      if (!step4PresetsWrap) return;
+      applyStep4DateMin();
+      const groupName = `qx-preset-${S}`;
+      step4PresetsWrap.innerHTML = PRESET_COURSE_START_ISOS.map((iso) => {
+        const { long, short } = formatPresetStartLabels(iso, langCode);
+        const safeLong = escHtml(long);
+        const safeShort = escHtml(short);
+        const safeIso = escAttr(iso);
+        const disp = escAttr(long);
+        return `
+          <label class="qx-step4-preset-row">
+            <input type="radio" name="${groupName}" value="${safeIso}" data-display-label="${disp}" class="qx-step4-preset-radio" />
+            <span class="qx-step4-preset-visual" aria-hidden="true"><i class="far fa-calendar-alt"></i></span>
+            <span class="qx-step4-preset-text">
+              <strong class="qx-step4-preset-long">${safeLong}</strong>
+              <span class="qx-step4-preset-short">${safeShort}</span>
+            </span>
+          </label>`;
+      }).join('');
     }
 
     function resetWizardState() {
       form.reset();
-      [hProgram, hProgramLabel, hIntensive, hLevelA, hLevelB, hMonthA, hMonthB, hCourseType, hCourseId, hCourseTitle, hDuration, hPlanKey, hTotalPrice].forEach((el) => { el.value = ''; });
-      hFreeLesson.value = 'no';
+      [hProgram, hProgramLabel, hIntensive, hLevelA, hMonthA, hCourseType, hCourseId, hCourseTitle, hDuration, hTotalPrice, hStartDateMode, hStartDateIso, hStartDateLabel].forEach((el) => { el.value = ''; });
       form.querySelectorAll('.is-picked, .is-selected, .is-active').forEach((el) => el.classList.remove('is-picked', 'is-selected', 'is-active'));
       if (courseCardsWrap) courseCardsWrap.innerHTML = '';
-      if (pricingRows) pricingRows.innerHTML = '';
+      if (step4PresetsWrap) step4PresetsWrap.innerHTML = '';
+      step4CustomCard?.classList.remove('is-selected');
+      hideCustomDatePicker();
+      hideStep4Error();
       q('pwLevelButtons')?.querySelectorAll('.qx-level-btn').forEach((b) => b.classList.remove('is-active'));
       q('pwMonthButtons')?.querySelectorAll('.qx-month-btn').forEach((b) => b.classList.remove('is-active'));
       panels.forEach((p, idx) => p.classList.toggle('is-current', idx === 0));
@@ -655,83 +1333,137 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       setStepChrome(1);
     }
 
-    function renderPricingTable() {
-      if (!pricingRows) return;
-      const rows = [1, 2, 3, 4, 5, 6, 7, 8].map((m) => {
-        const perWeek = getTierPerWeek(m * 4, hIntensive.value === 'intensive-plus');
-        const monthPrice = monthlyPrice(perWeek);
-        const total = monthPrice * m;
-        const monthUnit = form.dataset.monthUnit || 'month';
-        return { key: `${m}-month`, label: `${m} ${monthUnit}`, perWeek, monthPrice, total, months: m, free: false };
-      });
-      const freeLessonLabel = form.dataset.freeLessonLabel || 'Free lesson';
-      rows.push({ key: 'free-lesson', label: freeLessonLabel, perWeek: 0, monthPrice: 0, total: 0, months: 0, free: true });
-      pricingRows.innerHTML = rows.map((r) => `
-        <button type="button" class="qx-pricing-row" data-plan-key="${r.key}" data-total="${r.total}" data-months="${r.months}" data-free="${r.free ? 'yes' : 'no'}">
-          <span>${r.label}</span>
-          <span>${r.free ? '-' : `${r.perWeek} EUR`}</span>
-          <span>${r.free ? (form.dataset.freePriceLabel || 'Free') : `${r.monthPrice} EUR`}</span>
-          <span>${r.free ? '0 EUR' : `${r.total} EUR`}</span>
-        </button>
-      `).join('');
-      pricingRows.querySelectorAll<HTMLElement>('.qx-pricing-row').forEach((rowEl) => {
-        rowEl.addEventListener('click', () => {
-          pricingRows.querySelectorAll('.qx-pricing-row').forEach((x) => x.classList.remove('is-selected'));
-          rowEl.classList.add('is-selected');
-          hPlanKey.value = rowEl.dataset.planKey || '';
-          hTotalPrice.value = rowEl.dataset.total || '';
-          hDuration.value = rowEl.dataset.months || '';
-          hFreeLesson.value = rowEl.dataset.free || 'no';
-          goTo(5);
-        });
-      });
-    }
+    const step4PresetGroupName = `qx-preset-${S}`;
+    step4PresetsWrap?.addEventListener('change', (ev) => {
+      const target = ev.target as HTMLInputElement;
+      if (target.name !== step4PresetGroupName || target.type !== 'radio' || !target.checked) return;
+      hideCustomDatePicker();
+      step4CustomCard?.classList.remove('is-selected');
+      hStartDateMode.value = 'preset';
+      hStartDateIso.value = target.value;
+      hStartDateLabel.value = target.dataset.displayLabel || '';
+      hideStep4Error();
+    });
+
+    customDateInput?.addEventListener('input', () => {
+      syncCustomDateHiddenFromInput();
+      hideStep4Error();
+    });
+
+    form.addEventListener('click', (ev) => {
+      const root = ev.target as HTMLElement;
+      if (root.closest('[data-pw-step4-custom-back]')) {
+        step4CustomCard?.classList.remove('is-selected');
+        hideCustomDatePicker();
+        hStartDateMode.value = '';
+        hStartDateIso.value = '';
+        hStartDateLabel.value = '';
+        hideStep4Error();
+        return;
+      }
+      if (root.closest('[data-pw-step4-custom]')) {
+        form.querySelectorAll<HTMLInputElement>(`input[name="${step4PresetGroupName}"]`).forEach((r) => { r.checked = false; });
+        step4CustomCard?.classList.add('is-selected', 'is-picking-custom');
+        hStartDateMode.value = 'custom';
+        hStartDateIso.value = '';
+        hStartDateLabel.value = '';
+        applyStep4DateMin();
+        if (customDateInput) customDateInput.value = '';
+        hideStep4Error();
+        customDateInput?.focus();
+        return;
+      }
+      const go = root.closest('[data-pw-step4-continue]');
+      if (go) {
+        ev.preventDefault();
+        const mode = hStartDateMode.value.trim();
+        if (!mode) {
+          showStep4Error(step4Copy.step4NeedPick || '');
+          return;
+        }
+        if (mode === 'preset') {
+          if (!hStartDateIso.value.trim()) {
+            showStep4Error(step4Copy.step4NeedPick || '');
+            return;
+          }
+        } else if (mode === 'custom') {
+          syncCustomDateHiddenFromInput();
+          if (!hStartDateIso.value.trim()) {
+            showStep4Error(step4Copy.step4NeedCustomDate || '');
+            step4CustomCard?.classList.add('is-picking-custom');
+            customDateInput?.focus();
+            return;
+          }
+        }
+        goTo(5);
+      }
+    });
 
     function renderCards() {
       if (!courseCardsWrap) return;
       const level = hLevelA.value;
       const month = Number(hMonthA.value || '0');
       if (!level || !month) return;
-      const cards = buildCourseCards(form, level, month, 'all', hIntensive.value);
-      if (!cards.length) {
+      const s3 = parseStep3Copy(mount, S);
+      const slots = buildTimeSlots(form, level, month, hIntensive.value, s3);
+      if (!slots.length) {
         courseCardsWrap.innerHTML = `<p class="qx-card-empty">${form.dataset.emptyCourses || 'No open class matches these filters right now.'}</p>`;
         return;
       }
-      courseCardsWrap.innerHTML = cards.map((card) => `
-        <button type="button" class="qx-course-card" data-course-id="${card.id}" data-course-title="${card.title}" data-course-price="${card.priceText}">
-          <div class="qx-course-main">
-            <div class="qx-course-topline">
-              <h4>${card.title}</h4>
-              <span class="qx-course-availability">${card.places}</span>
+      const startLab = escHtml(form.dataset.startLabel || 'Start');
+      const bookNow = escHtml(form.dataset.bookNow || 'Book now');
+      const teachersK = escHtml(s3.teachersInGroup || '');
+      courseCardsWrap.innerHTML = `
+        <div class="qx-time-slots">
+          ${slots
+            .map(
+              (slot) => `
+          <button type="button" class="qx-time-slot qx-time-slot--${slot.theme}" data-course-id="${escAttr(slot.id)}" data-course-title="${escAttr(slot.displayTitle)}">
+            <div class="qx-time-slot__accent" aria-hidden="true"></div>
+            <div class="qx-time-slot__head">
+              <span class="qx-time-slot__icon"><i class="fas ${slot.icon}" aria-hidden="true"></i></span>
+              <div class="qx-time-slot__head-text">
+                <strong class="qx-time-slot__title">${escHtml(slot.title)}</strong>
+                <span class="qx-time-slot__time">${escHtml(slot.time)}</span>
+              </div>
             </div>
-            <p class="qx-course-startline"><strong>${form.dataset.startLabel || 'Start'}:</strong> ${card.start}</p>
-            ${card.extra ? `<p class="qx-course-extra">${card.extra}</p>` : ''}
-          </div>
-          <div class="qx-course-facts">
-            <div class="qx-course-fact">
-              <span class="qx-fact-key">${form.dataset.timeLabel || 'Time'}</span>
-              <strong class="qx-fact-val">${card.time}</strong>
+            <ul class="qx-time-slot__features">
+              ${slot.bullets.map((b) => `<li><i class="fas fa-check" aria-hidden="true"></i> ${escHtml(b)}</li>`).join('')}
+            </ul>
+            <div class="qx-time-slot__teachers">
+              <p class="qx-time-slot__teachers-kicker">${teachersK}</p>
+              <ul class="qx-time-slot__teacher-list">
+                ${slot.teachers
+                  .map((row) => {
+                    const chips = `<span class="qx-slot-level-chip">${escHtml(level)}</span>`;
+                    return `<li class="qx-slot-teacher">
+                    <span class="qx-slot-teacher__avatar" aria-hidden="true">${escHtml(initials(row.name))}</span>
+                    <div class="qx-slot-teacher__body">
+                      <span class="qx-slot-teacher__name">${escHtml(row.name)}</span>
+                      <div class="qx-slot-teacher__levels">${chips}</div>
+                    </div>
+                  </li>`;
+                  })
+                  .join('')}
+              </ul>
             </div>
-            <div class="qx-course-fact">
-              <span class="qx-fact-key">${form.dataset.teacherLabel || 'Teacher'}</span>
-              <strong class="qx-fact-val">${card.teacher}</strong>
+            <div class="qx-time-slot__foot">
+              <span class="qx-time-slot__meta"><strong>${startLab}:</strong> ${escHtml(slot.startDate)} · ${escHtml(slot.weekdaysShort)}</span>
+              <span class="qx-time-slot__cta">${bookNow}</span>
             </div>
-            <div class="qx-course-fact">
-              <span class="qx-fact-key">${form.dataset.daysLabel || 'Days'}</span>
-              <strong class="qx-fact-val">${card.days}</strong>
-            </div>
-          </div>
-          <div class="qx-course-card-foot">
-            <p class="qx-course-price">${card.priceText}</p><span class="qx-course-cta">${form.dataset.bookNow || 'Book now'}</span>
-          </div>
-        </button>
-      `).join('');
-      courseCardsWrap.querySelectorAll<HTMLButtonElement>('.qx-course-card').forEach((btn) => {
+          </button>`
+            )
+            .join('')}
+        </div>`;
+      courseCardsWrap.querySelectorAll<HTMLButtonElement>('.qx-time-slot').forEach((btn) => {
         btn.addEventListener('click', () => {
-          courseCardsWrap.querySelectorAll('.qx-course-card').forEach((el) => el.classList.remove('is-selected'));
+          courseCardsWrap.querySelectorAll('.qx-time-slot').forEach((el) => el.classList.remove('is-selected'));
           btn.classList.add('is-selected');
           hCourseId.value = btn.dataset.courseId || '';
           hCourseTitle.value = btn.dataset.courseTitle || '';
+          clearStep4Fields();
+          renderStep4Presets();
+          goTo(4);
         });
       });
     }
@@ -751,55 +1483,26 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
       });
     });
 
-    form.querySelectorAll<HTMLButtonElement>('[data-pw-nav-next]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        if (step === 2) {
-          applyStep2Defaults();
-          if (!hLevelA.value) {
-            if (submitFeedback) {
-              submitFeedback.textContent = form.dataset.needLevelHint || '';
-              submitFeedback.classList.remove('is-success');
-              submitFeedback.classList.add('is-error');
-            }
-            return;
-          }
-          if (!hMonthA.value) return;
-          if (submitFeedback) {
-            submitFeedback.textContent = '';
-            submitFeedback.classList.remove('is-error');
-          }
-          try {
-            renderCards();
-          } catch (e) {
-            console.error('QuoteWizard renderCards:', e);
-            if (submitFeedback) {
-              submitFeedback.textContent = form.dataset.error || '';
-              submitFeedback.classList.add('is-error');
-            }
-            return;
-          }
-          goTo(3);
-          return;
-        }
-        if (step === 3) {
-          if (!hCourseId.value) return;
-          goTo(4);
-          renderPricingTable();
-          return;
-        }
-        if (step === 4) {
-          if (!hPlanKey.value) return;
-          goTo(5);
-        }
-      });
+    const levelAssessmentBtn = form.querySelector<HTMLButtonElement>('[data-pw-level-assessment]');
+    levelAssessmentBtn?.addEventListener('click', () => {
+      applyStep2Defaults();
+      if (!hLevelA.value) {
+        const first = q('pwLevelButtons')?.querySelector<HTMLButtonElement>('.qx-level-btn');
+        first?.click();
+      }
+      if (!hLevelA.value || !hMonthA.value) return;
+      renderCards();
+      goTo(3);
     });
-    form.querySelectorAll<HTMLButtonElement>('[data-pw-nav-back]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        if (step === 2) goTo(1);
-        else if (step === 3) goTo(2);
-        else if (step === 4) goTo(3);
-        else if (step === 5) goTo(4);
-      });
+
+    const levelA1Btn = form.querySelector<HTMLButtonElement>('[data-pw-level-a1]');
+    levelA1Btn?.addEventListener('click', () => {
+      const a1Btn = q('pwLevelButtons')?.querySelector<HTMLButtonElement>('.qx-level-btn[data-level-value="A1"]');
+      if (a1Btn) a1Btn.click();
+      applyStep2Defaults();
+      if (!hLevelA.value || !hMonthA.value) return;
+      renderCards();
+      goTo(3);
     });
 
     if (form.dataset.modalMode === 'true') {
@@ -831,33 +1534,49 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
     const DEFAULT_MAKE_WEBHOOK = 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = form.querySelector<HTMLButtonElement>('.qx-send');
-      const originalBtnText = btn?.textContent || '';
+      const submitEv = e as SubmitEvent;
+      const submitter = submitEv.submitter as HTMLButtonElement | null;
+      const intentRaw = submitter?.dataset.pwSubmitIntent || '';
+      const submitIntent = intentRaw === 'demo-lesson' ? 'demo-lesson' : 'quote';
+      const demoLessonRequested = submitIntent === 'demo-lesson';
+      const submitBtns = form.querySelectorAll<HTMLButtonElement>('.qx-contact-submit');
+      const activeBtn =
+        submitter?.classList.contains('qx-contact-submit')
+          ? submitter
+          : form.querySelector<HTMLButtonElement>('.qx-contact-submit[data-pw-submit-intent="quote"]');
+      const originalBtnHtml = activeBtn?.innerHTML || '';
       if (submitFeedback) {
         submitFeedback.textContent = '';
         submitFeedback.classList.remove('is-success', 'is-error');
       }
-      if (btn) btn.disabled = true;
+      submitBtns.forEach((b) => { b.disabled = true; });
       const fd = new FormData(form);
       const data = Object.fromEntries(fd.entries()) as Record<string, string>;
-      const requiredName = String(data['full-name'] || '').trim();
+      const firstNm = String(data['first-name'] || '').trim();
+      const lastNm = String(data['last-name'] || '').trim();
+      const requiredName = `${firstNm} ${lastNm}`.trim();
       const requiredEmail = String(data.email || '').trim();
       const requiredPhone = String(data.phone || '').trim();
       const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(requiredEmail);
-      if (!requiredName || !requiredEmail || !requiredPhone || !emailOk) {
+      if (!firstNm || !lastNm || !requiredEmail || !requiredPhone || !emailOk) {
         const msg = form.dataset.error || 'Lutfen zorunlu alanlari kontrol edin.';
         if ((window as unknown as { showSuccessModal?: (t: string, m: string) => void }).showSuccessModal)
           (window as unknown as { showSuccessModal: (t: string, m: string) => void }).showSuccessModal('error', msg);
         else alert(msg);
-        if (btn) btn.disabled = false;
+        submitBtns.forEach((b) => { b.disabled = false; });
         return;
       }
       const payload = {
         formType: 'price-quote',
+        quoteSubmitIntent: submitIntent,
+        demoLessonRequested,
         sourcePage: data.sourcePage || '',
         lang: data.lang || '',
-        name: data['full-name'] || '',
-        country: data.country || '',
+        firstName: firstNm,
+        lastName: lastNm,
+        name: requiredName,
+        birthDate: data['birth-date'] || '',
+        nationality: data.nationality || '',
         tel: data.phone || '',
         email: data.email || '',
         program: data.program || '',
@@ -875,10 +1594,13 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
         quoteCourseType: data['quote-course-type'] || '',
         quoteCourseId: data['quote-selected-course-id'] || '',
         quoteDurationMonths: data['quote-duration-months'] || '',
-        quoteIsFreeLesson: data['quote-is-free-lesson'] || 'no'
+        quoteStartDateMode: data['quote-start-date-mode'] || '',
+        quoteStartDateIso: data['quote-start-date-iso'] || '',
+        quoteStartDateLabel: data['quote-start-date-label'] || ''
       };
       try {
-        if (btn) btn.textContent = form.dataset.sending || 'Sending...';
+        const sending = form.dataset.sending || 'Sending...';
+        if (activeBtn) activeBtn.textContent = sending;
         const wh = (form.dataset.webhook || '').trim() || DEFAULT_MAKE_WEBHOOK;
         const res = await fetch(wh, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
         if (!res.ok) throw new Error('webhook');
@@ -898,10 +1620,8 @@ const t = copy[lang as keyof typeof copy] ?? copy.tr;
           (window as unknown as { showSuccessModal: (t: string, m: string) => void }).showSuccessModal('error', msg);
         else alert(msg);
       } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = originalBtnText;
-        }
+        submitBtns.forEach((b) => { b.disabled = false; });
+        if (activeBtn) activeBtn.innerHTML = originalBtnHtml;
       }
     });
 
