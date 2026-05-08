@@ -673,21 +673,19 @@ const step4Json = JSON.stringify({
       data-weekend-short={t.weekendShort}
       data-need-level-hint={t.needLevelHint}
     >
+      <input type="hidden" name="formType" value="price-quote" />
       <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
       <input type="hidden" name="lang" value={lang} />
+      <input type="hidden" name="quoteSubmitIntent" id={pw('pwSubmitIntent')} value="quote" />
+      <input type="hidden" name="demoLessonRequested" id={pw('pwDemoLessonRequested')} value="false" />
       <input type="hidden" name="program" id={pw('pwProgram')} value="" />
-      <input type="hidden" name="quote-program-label" id={pw('pwProgramLabel')} value="" />
-      <input type="hidden" name="quote-intensive-type" id={pw('pwIntensiveType')} value="" />
-      <input type="hidden" name="quote-level-start" id={pw('pwLevelA')} value="" />
-      <input type="hidden" name="quote-month-start" id={pw('pwMonthA')} value="" />
-      <input type="hidden" name="quote-course-type" id={pw('pwCourseType')} value="" />
-      <input type="hidden" name="quote-selected-course-id" id={pw('pwCourseId')} value="" />
-      <input type="hidden" name="quote-selected-course-title" id={pw('pwCourseTitle')} value="" />
-      <input type="hidden" name="quote-duration-months" id={pw('pwDurationMonths')} value="" />
-      <input type="hidden" name="totalPrice" id={pw('pwTotalPrice')} value="" />
-      <input type="hidden" name="quote-start-date-mode" id={pw('pwStartDateMode')} value="" />
-      <input type="hidden" name="quote-start-date-iso" id={pw('pwStartDateIso')} value="" />
-      <input type="hidden" name="quote-start-date-label" id={pw('pwStartDateLabel')} value="" />
+      <input type="hidden" name="programLabel" id={pw('pwProgramLabel')} value="" />
+      <input type="hidden" name="level" id={pw('pwLevelA')} value="" />
+      <input type="hidden" name="courseId" id={pw('pwCourseId')} value="" />
+      <input type="hidden" name="courseTitle" id={pw('pwCourseTitle')} value="" />
+      <input type="hidden" name="startDateMode" id={pw('pwStartDateMode')} value="" />
+      <input type="hidden" name="startDateIso" id={pw('pwStartDateIso')} value="" />
+      <input type="hidden" name="startDateLabel" id={pw('pwStartDateLabel')} value="" />
 
       <div class="pw-viewport">
         <div class="pw-panel is-current qx-scene qx-scene--pick" data-panel="1">
@@ -1054,7 +1052,7 @@ const step4Json = JSON.stringify({
     return name.slice(0, 2).toUpperCase();
   }
 
-  function buildTimeSlots(formEl: HTMLFormElement, level: string, startMonth: number, _intensiveType: string, s3: Step3Copy) {
+  function buildTimeSlots(formEl: HTMLFormElement, level: string, startMonth: number, s3: Step3Copy) {
     const weekdaysShort = formEl.dataset.weekdaysShort || 'Mon, Tue, Wed, Thu';
     const startDate = `31.${String(startMonth).padStart(2, '0')}.2026`;
     const teacherPool = ['Anna Keller', 'Murat Yildiz', 'Sofia Becker', 'Deniz Acar', 'Lukas Weber', 'Elif Demir'];
@@ -1085,6 +1083,8 @@ const step4Json = JSON.stringify({
 
     const total = 5;
     let step = 1;
+    /** Adım 2 ay seçimi — sadece adım 3 slotları için; webhook’a gitmez */
+    let wizardMonth = 0;
     const panels = [...form.querySelectorAll<HTMLElement>('.pw-panel')];
     const eyebrow = root.querySelector<HTMLElement>('[data-pw-eyebrow]');
     const bar = root.querySelector<HTMLElement>('[data-pw-bar]');
@@ -1092,17 +1092,14 @@ const step4Json = JSON.stringify({
 
     const hProgram = q('pwProgram') as HTMLInputElement;
     const hProgramLabel = q('pwProgramLabel') as HTMLInputElement;
-    const hIntensive = q('pwIntensiveType') as HTMLInputElement;
     const hLevelA = q('pwLevelA') as HTMLInputElement;
-    const hMonthA = q('pwMonthA') as HTMLInputElement;
-    const hCourseType = q('pwCourseType') as HTMLInputElement;
     const hCourseId = q('pwCourseId') as HTMLInputElement;
     const hCourseTitle = q('pwCourseTitle') as HTMLInputElement;
-    const hDuration = q('pwDurationMonths') as HTMLInputElement;
-    const hTotalPrice = q('pwTotalPrice') as HTMLInputElement;
     const hStartDateMode = q('pwStartDateMode') as HTMLInputElement;
     const hStartDateIso = q('pwStartDateIso') as HTMLInputElement;
     const hStartDateLabel = q('pwStartDateLabel') as HTMLInputElement;
+    const hSubmitIntent = q('pwSubmitIntent') as HTMLInputElement;
+    const hDemoLessonRequested = q('pwDemoLessonRequested') as HTMLInputElement;
 
     const courseCardsWrap = q('pwCourseCards') as HTMLElement;
     const step4PresetsWrap = q('pwStep4Presets') as HTMLElement | null;
@@ -1185,7 +1182,7 @@ const step4Json = JSON.stringify({
       const monthWrap = q('pwMonthButtons');
       if (!monthWrap) return;
       monthWrap.innerHTML = '';
-      hMonthA.value = '';
+      wizardMonth = 0;
       const rawMonthTokens = (form.getAttribute('data-months') ?? '')
         .split('|')
         .map((s) => s.trim())
@@ -1204,7 +1201,7 @@ const step4Json = JSON.stringify({
         b.addEventListener('click', () => {
           monthWrap.querySelectorAll('.qx-month-btn').forEach((x) => x.classList.remove('is-active'));
           b.classList.add('is-active');
-          hMonthA.value = String(monthNum);
+          wizardMonth = monthNum;
           renderCards();
         });
         monthWrap.appendChild(b);
@@ -1236,17 +1233,15 @@ const step4Json = JSON.stringify({
 
     /** Ay bos birakilirsa varsayilan: ilk uygun ay */
     function applyStep2Defaults() {
-      hCourseType.value = 'all';
       const monthWrap = q('pwMonthButtons');
-      if (monthWrap && !hMonthA.value) {
+      if (monthWrap && !wizardMonth) {
         const firstBtn = monthWrap.querySelector<HTMLButtonElement>('.qx-month-btn');
         if (firstBtn) {
           firstBtn.click();
         }
-      } else if (!hMonthA.value) {
+      } else if (!wizardMonth) {
         const now = new Date();
-        const monthNum = String(now.getMonth() + 1);
-        hMonthA.value = monthNum;
+        wizardMonth = now.getMonth() + 1;
       }
     }
 
@@ -1319,7 +1314,10 @@ const step4Json = JSON.stringify({
 
     function resetWizardState() {
       form.reset();
-      [hProgram, hProgramLabel, hIntensive, hLevelA, hMonthA, hCourseType, hCourseId, hCourseTitle, hDuration, hTotalPrice, hStartDateMode, hStartDateIso, hStartDateLabel].forEach((el) => { el.value = ''; });
+      wizardMonth = 0;
+      [hProgram, hProgramLabel, hLevelA, hCourseId, hCourseTitle, hStartDateMode, hStartDateIso, hStartDateLabel].forEach((el) => { el.value = ''; });
+      if (hSubmitIntent) hSubmitIntent.value = 'quote';
+      if (hDemoLessonRequested) hDemoLessonRequested.value = 'false';
       form.querySelectorAll('.is-picked, .is-selected, .is-active').forEach((el) => el.classList.remove('is-picked', 'is-selected', 'is-active'));
       if (courseCardsWrap) courseCardsWrap.innerHTML = '';
       if (step4PresetsWrap) step4PresetsWrap.innerHTML = '';
@@ -1402,10 +1400,10 @@ const step4Json = JSON.stringify({
     function renderCards() {
       if (!courseCardsWrap) return;
       const level = hLevelA.value;
-      const month = Number(hMonthA.value || '0');
+      const month = wizardMonth;
       if (!level || !month) return;
       const s3 = parseStep3Copy(mount, S);
-      const slots = buildTimeSlots(form, level, month, hIntensive.value, s3);
+      const slots = buildTimeSlots(form, level, month, s3);
       if (!slots.length) {
         courseCardsWrap.innerHTML = `<p class="qx-card-empty">${form.dataset.emptyCourses || 'No open class matches these filters right now.'}</p>`;
         return;
@@ -1474,7 +1472,6 @@ const step4Json = JSON.stringify({
         btn.classList.add('is-picked');
         hProgram.value = btn.dataset.program || '';
         hProgramLabel.value = btn.dataset.programLabel || '';
-        hIntensive.value = btn.dataset.intensiveType || '';
         const track = btn.dataset.quoteTrack || 'intensive-de';
         populateLevelButtons(track);
         populateMonthButtons();
@@ -1490,7 +1487,7 @@ const step4Json = JSON.stringify({
         const first = q('pwLevelButtons')?.querySelector<HTMLButtonElement>('.qx-level-btn');
         first?.click();
       }
-      if (!hLevelA.value || !hMonthA.value) return;
+      if (!hLevelA.value || !wizardMonth) return;
       renderCards();
       goTo(3);
     });
@@ -1500,7 +1497,7 @@ const step4Json = JSON.stringify({
       const a1Btn = q('pwLevelButtons')?.querySelector<HTMLButtonElement>('.qx-level-btn[data-level-value="A1"]');
       if (a1Btn) a1Btn.click();
       applyStep2Defaults();
-      if (!hLevelA.value || !hMonthA.value) return;
+      if (!hLevelA.value || !wizardMonth) return;
       renderCards();
       goTo(3);
     });
@@ -1550,11 +1547,12 @@ const step4Json = JSON.stringify({
         submitFeedback.classList.remove('is-success', 'is-error');
       }
       submitBtns.forEach((b) => { b.disabled = true; });
+      if (hSubmitIntent) hSubmitIntent.value = submitIntent;
+      if (hDemoLessonRequested) hDemoLessonRequested.value = demoLessonRequested ? 'true' : 'false';
       const fd = new FormData(form);
       const data = Object.fromEntries(fd.entries()) as Record<string, string>;
       const firstNm = String(data['first-name'] || '').trim();
       const lastNm = String(data['last-name'] || '').trim();
-      const requiredName = `${firstNm} ${lastNm}`.trim();
       const requiredEmail = String(data.email || '').trim();
       const requiredPhone = String(data.phone || '').trim();
       const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(requiredEmail);
@@ -1563,40 +1561,48 @@ const step4Json = JSON.stringify({
         if ((window as unknown as { showSuccessModal?: (t: string, m: string) => void }).showSuccessModal)
           (window as unknown as { showSuccessModal: (t: string, m: string) => void }).showSuccessModal('error', msg);
         else alert(msg);
+        if (hSubmitIntent) hSubmitIntent.value = 'quote';
+        if (hDemoLessonRequested) hDemoLessonRequested.value = 'false';
         submitBtns.forEach((b) => { b.disabled = false; });
         return;
       }
+      const programLabel = String(data.programLabel || '').trim();
+      const programCode = String(data.program || '').trim();
+      const lev = String(data.level || '').trim();
+      const cid = String(data.courseId || '').trim();
+      const ctitle = String(data.courseTitle || '').trim();
+      const mode = String(data.startDateMode || '').trim();
+      const iso = String(data.startDateIso || '').trim();
+      const startLab = String(data.startDateLabel || '').trim();
+      let quoteMonthStart = '';
+      if (/^\d{4}-(\d{2})-\d{2}/.test(iso)) quoteMonthStart = String(parseInt(iso.slice(5, 7), 10));
+      const fullName = `${firstNm} ${lastNm}`.trim();
       const payload = {
         formType: 'price-quote',
-        quoteSubmitIntent: submitIntent,
-        demoLessonRequested,
-        sourcePage: data.sourcePage || '',
-        lang: data.lang || '',
         firstName: firstNm,
         lastName: lastNm,
-        name: requiredName,
-        birthDate: data['birth-date'] || '',
-        nationality: data.nationality || '',
-        tel: data.phone || '',
-        email: data.email || '',
-        program: data.program || '',
-        intensiveType: data['quote-intensive-type'] || '',
-        level: data['quote-level-start'] || '',
-        courseSelection: [data['quote-selected-course-title'] || ''],
-        startDate: data['quote-month-start'] || '',
-        weeks: data['quote-duration-months'] || '',
-        message: data.message || '',
-        totalPrice: data.totalPrice || '',
+        name: fullName,
+        tel: String(data.phone || '').trim(),
+        email: String(data.email || '').trim(),
+        birthDate: String(data['birth-date'] || '').trim(),
+        nationality: String(data.nationality || '').trim(),
+        message: String(data.message || '').trim(),
+        quoteProgramLabel: programLabel,
+        program: programCode,
+        quoteLevelStart: lev,
+        quoteMonthStart,
+        startDate: iso,
+        quoteCourseType: ctitle,
+        quoteCourseId: cid,
+        demoLessonRequested: String(data.demoLessonRequested || 'false'),
+        quoteSubmitIntent: String(data.quoteSubmitIntent || 'quote'),
+        courseSelection: ctitle ? [ctitle] : [],
         timestamp: new Date().toISOString(),
-        quoteProgramLabel: data['quote-program-label'] || '',
-        quoteLevelStart: data['quote-level-start'] || '',
-        quoteMonthStart: data['quote-month-start'] || '',
-        quoteCourseType: data['quote-course-type'] || '',
-        quoteCourseId: data['quote-selected-course-id'] || '',
-        quoteDurationMonths: data['quote-duration-months'] || '',
-        quoteStartDateMode: data['quote-start-date-mode'] || '',
-        quoteStartDateIso: data['quote-start-date-iso'] || '',
-        quoteStartDateLabel: data['quote-start-date-label'] || ''
+        sourcePage: String(data.sourcePage || '').trim(),
+        lang: String(data.lang || '').trim(),
+        quoteStartDateMode: mode,
+        quoteStartDateIso: iso,
+        quoteStartDateLabel: startLab
       };
       try {
         const sending = form.dataset.sending || 'Sending...';

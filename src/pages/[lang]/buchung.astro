@@ -2579,11 +2579,11 @@ const bundleNearHintCopy = {
                         formType: 'booking',
                         sourcePage: data.sourcePage || window.location.pathname,
                         lang: typeof lang !== 'undefined' ? lang : 'tr',
+                        amountInCents: String(data.amountInCents || '0').trim(),
                         promoBundle: (document.getElementById('promo-bundle-input')?.value || '').trim(),
                         learningPurpose: data['learning-purpose'] || '',
                         firstName: data.first_name || '',
                         lastName: data.last_name || '',
-                        name: `${String(data.first_name || '').trim()} ${String(data.last_name || '').trim()}`.trim(),
                         birthDate: data.birth_date || '',
                         birthPlace: data.birth_place || '',
                         nationality: data.nationality || '',
@@ -2592,18 +2592,16 @@ const bundleNearHintCopy = {
                         postalCode: data.postal_code || '',
                         city: data.city || '',
                         country: data.country || '',
-                        tel: data.phone || '',
+                        phone: data.phone || '',
                         email: data.email || '',
                         program: program,
                         intensiveType: data['intensive-type'] || '',
-                        level: courseSelectionArr[0] || data.level || '',
                         courseSelection: courseSelectionArr,
                         startDate: data['start-date'] || '',
                         timezone: timezoneArr,
-                        weeks: effectiveWeeks || data.weeks || '',
+                        weeks: effectiveWeeks || '',
                         examType: data['exam-type'] || '',
                         visaGuarantee: data['visa-guarantee'] || 'no',
-                        visaNeeded: data['visa-guarantee'] || 'no',
                         opportunity: data.opportunity || '',
                         hearAbout: data['hear-about'] || '',
                         agencyCoupon: (data['agency-coupon'] || '').trim(),
@@ -2616,7 +2614,7 @@ const bundleNearHintCopy = {
                         termsAccepted: data['terms-accepted'] || false,
                         privacyAccepted: data['privacy-accepted'] || false,
                         totalPrice: document.getElementById('total-price')?.textContent || '0 €',
-                        timestamp: new Date().toISOString()
+                        submittedAt: new Date().toISOString()
                     };
                     
                     // Sanitize all inputs
