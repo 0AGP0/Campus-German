@@ -106,10 +106,11 @@ const t = {
         coursesSubtitle: "Bremen'de 10 öğrenciden 9unun ilk tercihi Campus German oldu. Sınırlı kontenjandan yararlanmak için yerini şimdiden ayırt, Almancayı kusursuz öğren!",
         courseBookButton: "Yer Ayırt",
         courseDetailsButton: "Detaylar",
-        countdownDiscountTitle: "%10 İndirim",
-        countdownDiscountDesc: "Kuponu rezervasyon formunda girin",
-        countdownGrabCta: "İndirimi Kap",
-        countdownEndsIn: "Bitiş",
+        coursesSidebarOfficeTitle: "Bremen'de yaşayanlara özel ofis indirimi",
+        coursesSidebarOfficeDesc: "%30'a varan ofis indirimi fırsatını hemen değerlendirin.",
+        coursesSidebarOfficeTag: "Vize ve akademik hedefe uygun eğitim akışı",
+        coursesSidebarOfficeCta: "Şimdi ofis rezervasyonu yap",
+        visitPopupFabAria: "Ücretsiz ders ve indirim formunu aç",
         // Hero video section
         videoTitle: "Campus German Tanıtım",
         floatingInfo1Title: "A1-C1 Seviye",
@@ -347,10 +348,11 @@ const t = {
         coursesSubtitle: "9 out of 10 students in Bremen chose Campus German as their first choice. Reserve your spot now to learn German perfectly from limited quota!",
         courseBookButton: "Reserve Spot",
         courseDetailsButton: "Details",
-        countdownDiscountTitle: "10% Off",
-        countdownDiscountDesc: "Enter coupon on booking form",
-        countdownGrabCta: "Grab Discount",
-        countdownEndsIn: "Ends in",
+        coursesSidebarOfficeTitle: "Special office discount for residents in Bremen",
+        coursesSidebarOfficeDesc: "Get up to 30% office discount and secure your spot now.",
+        coursesSidebarOfficeTag: "Visa and academic goal aligned learning path",
+        coursesSidebarOfficeCta: "Reserve office now",
+        visitPopupFabAria: "Open free trial lesson and discount form",
         videoTitle: "Campus German Introduction",
         floatingInfo1Title: "A1-C1 Levels",
         floatingInfo1Subtitle: "Exam Prep",
@@ -596,10 +598,11 @@ const t = {
         coursesSubtitle: "Passendes Programm wählen, Deutsch lernen.",
         courseBookButton: "Kurs Buchen",
         courseDetailsButton: "Details",
-        countdownDiscountTitle: "10 % Rabatt",
-        countdownDiscountDesc: "Gutschein im Buchungsformular eingeben",
-        countdownGrabCta: "Rabatt sichern",
-        countdownEndsIn: "Endet in",
+        coursesSidebarOfficeTitle: "Sonderrabatt für Menschen in Bremen",
+        coursesSidebarOfficeDesc: "Bis zu 30 % Office-Rabatt – jetzt Platz anfragen.",
+        coursesSidebarOfficeTag: "Visa- und studienorientierte Kursstruktur",
+        coursesSidebarOfficeCta: "Jetzt Office-Reservierung",
+        visitPopupFabAria: "Formular für Probestunde und Rabatt öffnen",
         // Hero video section
         videoTitle: "Campus German Vorstellung",
         floatingInfo1Title: "A1-C1",
@@ -835,10 +838,11 @@ const t = {
         coursesSubtitle: "9 de cada 10 estudiantes en Bremen eligieron Campus German como su primera opción. ¡Reserva tu lugar ahora para aprender alemán perfectamente del cupo limitado!",
         courseBookButton: "Reservar Lugar",
         courseDetailsButton: "Detalles",
-        countdownDiscountTitle: "10% de descuento",
-        countdownDiscountDesc: "Introduce el cupón en el formulario de reserva",
-        countdownGrabCta: "Obtener descuento",
-        countdownEndsIn: "Termina en",
+        coursesSidebarOfficeTitle: "Descuento especial de oficina para residentes en Bremen",
+        coursesSidebarOfficeDesc: "Hasta un 30% de descuento de oficina. Reserva ahora.",
+        coursesSidebarOfficeTag: "Planificación alineada con visa y objetivo académico",
+        coursesSidebarOfficeCta: "Reservar oficina ahora",
+        visitPopupFabAria: "Abrir formulario de clase de prueba y descuento",
         videoTitle: "Introducción Campus German",
         floatingInfo1Title: "Niveles A1-C1",
         floatingInfo1Subtitle: "Preparación de Exámenes",
@@ -1069,10 +1073,15 @@ const translations = t[lang as keyof typeof t];
                             <span>{translations.heroCta1}</span>
                             <div class="cta-arrow">→</div>
                         </button>
-                        <button type="button" class="cta-secondary cta-secondary--quote" data-open-quote-modal>
+                        <a
+                            href="https://api.whatsapp.com/send/?phone=4915203823792&text&type=phone_number&app_absent=0"
+                            class="cta-secondary cta-secondary--quote"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <i class="fab fa-whatsapp"></i>
                             <span set:html={translations.heroCta2}></span>
-                        </button>
+                        </a>
                     </div>
                     <div class="hero-trust">
                         {translations.trustItems.map((item, index) => (
@@ -1224,35 +1233,22 @@ const translations = t[lang as keyof typeof t];
             </div>
             <div class="index-courses-layout">
                 <aside class="index-courses-sidebar">
-                    <!-- İndirim geri sayım – mobilde filtreden önce, masaüstünde filtrenin altında -->
-                    <div class="countdown-discount-banner" id="countdownDiscountBanner" data-end="2026-02-15T23:59:59">
-                        <div class="countdown-discount-inner">
-                            <div class="countdown-discount-content">
-                                <span class="countdown-discount-badge">{translations.countdownDiscountTitle}</span>
-                                <p class="countdown-discount-desc">{translations.countdownDiscountDesc}</p>
-                                <div class="countdown-coupon-code">
-                                    <span class="countdown-coupon-label">{lang === 'tr' ? 'Kupon' : lang === 'de' ? 'Gutschein' : lang === 'es' ? 'Cupón' : 'Coupon'}:</span>
-                                    <code class="countdown-coupon-value">HBCampusGerman</code>
-                                </div>
-                                <p class="countdown-discount-hint">{lang === 'tr' ? 'Rezervasyon formunda bu kodu girin.' : lang === 'de' ? 'Code im Buchungsformular eingeben.' : lang === 'es' ? 'Introduce el código en el formulario.' : 'Enter this code on the booking form.'}</p>
-                            </div>
-                            <div class="countdown-discount-timer-block">
-                                <span class="countdown-ends-label">{translations.countdownEndsIn}</span>
-                                <div class="countdown-timer" id="countdownTimer" aria-live="polite">
-                                    <span class="countdown-part"><span id="countdownDays">0</span> <span class="countdown-unit">{lang === 'tr' ? 'gün' : lang === 'de' ? 'Tage' : lang === 'es' ? 'días' : 'days'}</span></span>
-                                    <span class="countdown-sep">:</span>
-                                    <span class="countdown-part"><span id="countdownHours">00</span> <span class="countdown-unit">{lang === 'tr' ? 'sa' : lang === 'de' ? 'Std' : lang === 'es' ? 'h' : 'hrs'}</span></span>
-                                    <span class="countdown-sep">:</span>
-                                    <span class="countdown-part"><span id="countdownMins">00</span> <span class="countdown-unit">{lang === 'tr' ? 'dk' : lang === 'de' ? 'Min' : lang === 'es' ? 'min' : 'min'}</span></span>
-                                    <span class="countdown-sep">:</span>
-                                    <span class="countdown-part"><span id="countdownSecs">00</span> <span class="countdown-unit">{lang === 'tr' ? 'sn' : lang === 'de' ? 'Sek' : lang === 'es' ? 's' : 'sec'}</span></span>
-                                </div>
-                            </div>
-                            <a href={`${bookingPath}?coupon=HBCampusGerman`} class="countdown-discount-cta">
-                                <i class="fas fa-tag"></i>
-                                {translations.countdownGrabCta}
-                            </a>
+                    <!-- Bremen ofis indirimi – mobilde filtreden önce, masaüstünde filtrenin altında -->
+                    <div class="index-sidebar-office-promo" role="complementary" aria-label={translations.coursesSidebarOfficeTitle}>
+                        <h3 class="index-sidebar-office-promo__title">{translations.coursesSidebarOfficeTitle}</h3>
+                        <p class="index-sidebar-office-promo__desc">{translations.coursesSidebarOfficeDesc}</p>
+                        <div class="index-sidebar-office-promo__tags">
+                            <span>{translations.coursesSidebarOfficeTag}</span>
                         </div>
+                        <a
+                            href="https://wa.me/4915203823792"
+                            class="index-sidebar-office-promo__cta"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                            {translations.coursesSidebarOfficeCta}
+                        </a>
                     </div>
                     <div class="courses-filter-panel">
                         <div class="filter-panel-search">
@@ -1817,6 +1813,9 @@ const translations = t[lang as keyof typeof t];
         </div>
     </section>
 
+    <button type="button" class="visit-popup-fab" id="visit-popup-fab" aria-label={translations.visitPopupFabAria}>
+        <span class="visit-popup-fab__mark" aria-hidden="true">?</span>
+    </button>
 </MainLayout>
 
 <script>
@@ -1824,6 +1823,10 @@ const translations = t[lang as keyof typeof t];
     document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('hero-free-lesson-btn')?.addEventListener('click', function () {
+        if (typeof window.openVisitPopup === 'function') window.openVisitPopup();
+    });
+
+    document.getElementById('visit-popup-fab')?.addEventListener('click', function () {
         if (typeof window.openVisitPopup === 'function') window.openVisitPopup();
     });
 
@@ -1844,45 +1847,6 @@ const translations = t[lang as keyof typeof t];
         nextBtn.addEventListener('click', function() {
             carousel.scrollBy({ left: cardWidth(), behavior: 'smooth' });
         });
-    })();
-
-    // Countdown discount banner
-    (function() {
-        const banner = document.getElementById('countdownDiscountBanner');
-        const timerEl = document.getElementById('countdownTimer');
-        const endAttr = banner?.getAttribute('data-end');
-        if (!banner || !timerEl || !endAttr) return;
-        const endDate = new Date(endAttr);
-        function pad(n) { return String(Math.max(0, Math.floor(n))).padStart(2, '0'); }
-        function tick() {
-            const now = new Date();
-            const diff = endDate.getTime() - now.getTime();
-            if (diff <= 0) {
-                const days = document.getElementById('countdownDays');
-                const hours = document.getElementById('countdownHours');
-                const mins = document.getElementById('countdownMins');
-                const secs = document.getElementById('countdownSecs');
-                if (days) days.textContent = '0';
-                if (hours) hours.textContent = '00';
-                if (mins) mins.textContent = '00';
-                if (secs) secs.textContent = '00';
-                return;
-            }
-            const days = document.getElementById('countdownDays');
-            const hours = document.getElementById('countdownHours');
-            const mins = document.getElementById('countdownMins');
-            const secs = document.getElementById('countdownSecs');
-            const d = diff / (24 * 60 * 60 * 1000);
-            const h = (d % 1) * 24;
-            const m = (h % 1) * 60;
-            const s = (m % 1) * 60;
-            if (days) days.textContent = Math.floor(d);
-            if (hours) hours.textContent = pad(h);
-            if (mins) mins.textContent = pad(m);
-            if (secs) secs.textContent = pad(s);
-        }
-        tick();
-        setInterval(tick, 1000);
     })();
 
     // Index kurs: sol filtre, sağda sayfa başı 6 kurs + sayfalama

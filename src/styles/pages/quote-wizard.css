@@ -73,6 +73,53 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   margin-bottom: 0.5rem;
 }
 
+.qx-step-track-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.qx-step-track-wrap .qx-step-track {
+  flex: 1;
+  min-width: 0;
+}
+
+.qx-wiz-header-back {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(12, 192, 223, 0.4);
+  background: #fff;
+  color: #084a73;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.qx-wiz-header-back:hover:not(:disabled) {
+  background: rgba(12, 192, 223, 0.14);
+  border-color: var(--qw-cyan);
+  color: #063252;
+}
+
+.qx-wiz-header-back:focus-visible {
+  outline: 2px solid var(--qw-cyan);
+  outline-offset: 2px;
+}
+
+.qx-wiz-header-back:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 .qx-wiz-brand {
   display: flex;
   align-items: center;
@@ -435,7 +482,8 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 
 .qx-card-bg {
   display: block;
-  height: 128px;
+  height: clamp(148px, 32vw, 188px);
+  min-height: 148px;
   background-image: var(--qx-img);
   background-size: cover;
   background-position: center;
@@ -444,8 +492,8 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 .qx-card-body {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 0.74rem 0.78rem 0.78rem;
+  gap: 0.42rem;
+  padding: 0.65rem 0.75rem 0.78rem;
   background: linear-gradient(180deg, #fff 0%, #fafdff 100%);
 }
 
@@ -457,9 +505,9 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-card-title {
-  font-size: 1.2rem;
+  font-size: 1.12rem;
   font-weight: 800;
-  line-height: 1.25;
+  line-height: 1.22;
   color: #0a6ea8;
   letter-spacing: -0.01em;
 }
@@ -477,62 +525,61 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   flex-shrink: 0;
 }
 
+/* Program kartı — rozet satırları */
+.qx-card-program-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-top: 0.4rem;
+  margin-top: 0.06rem;
+  border-top: 1px solid rgba(226, 232, 240, 0.95);
+  min-width: 0;
+}
+
 .qx-card-badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.28rem;
+  align-items: flex-start;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.qx-card-badges--highlights {
+  row-gap: 0.32rem;
+}
+
+.qx-card-badges--meta {
+  row-gap: 0.26rem;
 }
 
 .qx-card-badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.24rem 0.5rem;
+  max-width: 100%;
+  padding: 0.26rem 0.52rem;
   border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+
+.qx-card-badge--hi {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(8, 74, 115, 0.2);
+  color: #063252;
+  box-shadow: 0 1px 2px rgba(44, 54, 63, 0.06);
+}
+
+.qx-card-badge--meta {
+  padding: 0.2rem 0.42rem;
+  font-size: 0.68rem;
+  font-weight: 600;
   background: rgba(12, 192, 223, 0.1);
-  border: 1px solid rgba(12, 192, 223, 0.28);
-  color: #0c5f93;
-  font-size: 0.76rem;
-  font-weight: 800;
-}
-
-.qx-card-meta {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.42rem;
-  padding-top: 0.14rem;
-  border-top: 1px solid rgba(226, 232, 240, 0.9);
-}
-
-.qx-card-meta-block {
-  min-width: 0;
-}
-
-.qx-card-meta-title {
-  display: block;
-  font-size: 0.74rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-weight: 800;
-  color: #0a7fbe;
-  margin-bottom: 0.24rem;
-}
-
-.qx-card-chip-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.22rem;
-}
-
-.qx-card-chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.17rem 0.32rem;
-  border-radius: 9px;
-  background: #ffffff;
-  border: 1px solid rgba(12, 192, 223, 0.3);
-  color: #0e6ea8;
-  font-size: 0.74rem;
-  font-weight: 800;
+  border-color: rgba(12, 192, 223, 0.28);
+  color: #0b5c8c;
 }
 
 /* Seviye / ay düğmeleri — 2. aşama: büyük dokunma alanı */
@@ -1107,74 +1154,115 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
     0 12px 32px -8px rgba(255, 210, 31, 0.28);
 }
 
-.qx-time-slot__accent {
-  height: 5px;
-  width: 100%;
+/* Üst bant: günün dilimi + saat aralığı — kartın kimliği burada */
+.qx-time-slot__period {
+  position: relative;
   flex-shrink: 0;
-}
-
-.qx-time-slot--morning .qx-time-slot__accent {
-  background: linear-gradient(90deg, #22c55e, #14b8a6);
-}
-
-.qx-time-slot--afternoon .qx-time-slot__accent {
-  background: linear-gradient(90deg, #f97316, #fb923c);
-}
-
-.qx-time-slot--evening .qx-time-slot__accent {
-  background: linear-gradient(90deg, #8b5cf6, #6366f1);
-}
-
-.qx-time-slot__head {
   display: flex;
-  align-items: flex-start;
-  gap: 0.65rem;
-  padding: 0.85rem 0.9rem 0.5rem;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem 0.95rem;
+  overflow: hidden;
+  border-radius: 17px 17px 0 0;
 }
 
+.qx-time-slot__period::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 80% at 100% 0%, rgba(255, 255, 255, 0.22) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.qx-time-slot--morning .qx-time-slot__period {
+  background: linear-gradient(118deg, #059669 0%, #0d9488 48%, #0f766e 100%);
+  color: #ecfdf5;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+}
+
+.qx-time-slot--afternoon .qx-time-slot__period {
+  background: linear-gradient(118deg, #ea580c 0%, #f97316 45%, #fb923c 100%);
+  color: #fff7ed;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+}
+
+.qx-time-slot--evening .qx-time-slot__period {
+  background: linear-gradient(118deg, #4c1d95 0%, #6d28d9 42%, #7c3aed 100%);
+  color: #f5f3ff;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* Gün dilimi — Font Awesome simge kutusu (sabah: bulut+güneş, öğle: güneş, akşam: bulut+ay) */
 .qx-time-slot__icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  display: inline-flex;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.15rem;
-  flex-shrink: 0;
+  width: 3.65rem;
+  height: 3.65rem;
+  border-radius: 22%;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.05) inset,
+    0 10px 26px rgba(0, 0, 0, 0.16);
 }
 
-.qx-time-slot--morning .qx-time-slot__icon {
-  color: #15803d;
-  background: rgba(34, 197, 94, 0.14);
-  border: 1px solid rgba(34, 197, 94, 0.28);
+.qx-time-slot__icon .fas {
+  font-size: 1.72rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.22));
 }
 
-.qx-time-slot--afternoon .qx-time-slot__icon {
-  color: #c2410c;
-  background: rgba(249, 115, 22, 0.14);
-  border: 1px solid rgba(249, 115, 22, 0.28);
+.qx-time-slot--morning .qx-time-slot__icon .fas {
+  color: #fef9c3;
 }
 
-.qx-time-slot--evening .qx-time-slot__icon {
-  color: #5b21b6;
-  background: rgba(139, 92, 246, 0.14);
-  border: 1px solid rgba(139, 92, 246, 0.28);
+.qx-time-slot--afternoon .qx-time-slot__icon .fas {
+  color: #fffbeb;
 }
 
-.qx-time-slot__title {
+.qx-time-slot--evening .qx-time-slot__icon .fas {
+  color: #ede9fe;
+}
+
+.qx-time-slot__period-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.qx-time-slot__period-label {
   display: block;
-  font-size: 1.05rem;
+  font-size: 0.74rem;
   font-weight: 800;
-  color: #143a5c;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.92;
+  line-height: 1.25;
 }
 
-.qx-time-slot__time {
+.qx-time-slot__period-clock {
   display: block;
-  margin-top: 0.2rem;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #3d5a80;
+  font-size: clamp(1.28rem, 3.4vw, 1.65rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  font-variant-numeric: tabular-nums;
+}
+
+.qx-time-slot__main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 
 .qx-time-slot__features {
@@ -1223,7 +1311,7 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 
 .qx-time-slot__teachers-kicker {
   margin: 0 0 0.5rem;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -1283,7 +1371,7 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-slot-teacher__name {
-  font-size: 0.84rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: #1e293b;
 }
@@ -1341,16 +1429,16 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-time-slot__meta {
-  font-size: 0.68rem;
-  line-height: 1.3;
+  font-size: 0.72rem;
+  line-height: 1.35;
   color: #64748b;
 }
 
 .qx-time-slot__cta {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   font-weight: 800;
   color: #0b7dc1;
-  padding: 0.22rem 0.5rem;
+  padding: 0.24rem 0.52rem;
   border-radius: 999px;
   border: 1px solid rgba(12, 192, 223, 0.35);
   background: rgba(12, 192, 223, 0.1);
@@ -1747,12 +1835,12 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 
 .qx-step4-custom-picker-panel {
   display: none;
-  flex: 1;
+  flex: 0 1 auto;
   flex-direction: column;
-  justify-content: center;
-  gap: 0.75rem;
-  min-height: 220px;
-  padding: 0.15rem 0 0.1rem;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  min-height: 0;
+  padding: 0;
   animation: qx-step4-picker-in 0.24s ease-out;
 }
 
@@ -1772,12 +1860,199 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   }
 }
 
-.qx-step4-picker-label-block {
+/* Özel tarih: tam genişlik yüzey + ortalanmış başlık; takvim kartı alanı doldurur */
+.qx-step4-cal-surface {
+  width: 100%;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  align-items: stretch;
+  gap: 0.48rem;
+  padding: 0.52rem 0.6rem 0.55rem;
+  border-radius: 14px;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(167, 139, 250, 0.14) 0%, transparent 52%),
+    linear-gradient(180deg, #faf8ff 0%, #ffffff 38%, #f8fafc 100%);
+  border: 1px solid rgba(139, 92, 246, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    0 6px 16px rgba(15, 23, 42, 0.05);
+}
+
+.qx-step4-cal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.28rem;
+  padding: 0 0.15rem;
+}
+
+.qx-step4-cal-header .qx-step4-picker-lead {
+  font-size: 0.88rem;
+  max-width: 22rem;
+  line-height: 1.2;
+}
+
+.qx-step4-inline-cal-summary {
   margin: 0;
+  width: 100%;
+  max-width: 26rem;
+  padding: 0.28rem 0.72rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #5b21b6;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(139, 92, 246, 0.22);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.qx-inline-cal {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.38);
+  background: #ffffff;
+  padding: 0.38rem 0.45rem 0.42rem;
+  box-shadow:
+    0 4px 16px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.qx-inline-cal__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  margin-bottom: 0.22rem;
+  padding: 0.08rem 0.05rem 0.22rem;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.95);
+}
+
+.qx-inline-cal__monthyear {
+  flex: 1;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #0f172a;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+}
+
+.qx-inline-cal__nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.72rem;
+  height: 1.72rem;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: rgba(139, 92, 246, 0.1);
+  color: #5b21b6;
   cursor: pointer;
+  font-size: 0.62rem;
+  transition:
+    background 0.12s ease,
+    opacity 0.12s ease,
+    transform 0.12s ease;
+}
+
+.qx-inline-cal__nav-btn:hover:not(:disabled) {
+  background: rgba(139, 92, 246, 0.2);
+}
+
+.qx-inline-cal__nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.qx-inline-cal__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.06rem;
+  margin-bottom: 0.12rem;
+}
+
+.qx-inline-cal__weekday {
+  text-align: center;
+  font-size: 0.54rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.qx-inline-cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-auto-rows: 1.42rem;
+  gap: 0.1rem;
+  width: 100%;
+}
+
+.qx-inline-cal__cell {
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qx-inline-cal__pad {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.qx-inline-cal__day {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+  border: none;
+  border-radius: 7px;
+  background: rgba(248, 250, 252, 0.95);
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #1e293b;
+  cursor: pointer;
+  transition:
+    background 0.12s ease,
+    color 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.qx-inline-cal__day:hover:not(:disabled) {
+  background: rgba(139, 92, 246, 0.12);
+  color: #5b21b6;
+}
+
+.qx-inline-cal__day:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.45);
+}
+
+.qx-inline-cal__day.is-selected {
+  background: linear-gradient(145deg, #7c3aed 0%, #5b21b6 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.28);
+}
+
+.qx-inline-cal__day.is-selected:hover:not(:disabled) {
+  color: #fff;
+}
+
+.qx-inline-cal__day.is-out {
+  opacity: 0.28;
+  cursor: not-allowed;
 }
 
 .qx-step4-picker-lead {
@@ -1856,6 +2131,18 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   color: #64748b;
 }
 
+.qx-step4-custom-picker-panel > .qx-step4-date-hint {
+  text-align: center;
+  max-width: 34rem;
+  margin-inline: auto;
+  font-size: 0.68rem;
+  line-height: 1.35;
+}
+
+.qx-step4-custom-picker-panel > .qx-step4-custom-back {
+  align-self: center;
+}
+
 .qx-step4-custom-list {
   margin: 0;
   padding: 0;
@@ -1923,6 +2210,13 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   justify-content: space-between;
   gap: 0.65rem;
   padding-top: 0.15rem;
+}
+
+.qx-step4-footer--top {
+  padding-top: 0;
+  padding-bottom: 0.35rem;
+  margin-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.35);
 }
 
 .qx-step4-trust {
@@ -2034,13 +2328,9 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 /* --- 5. aşama: iletişim (iki kart + çift CTA) --- */
-/* İletişim paneli taşarsa kaydırma (modal / sayfa / gömülü) */
+/* İç panelde kaydırma yok: tam sayfada main, modalda gövde (aşağıda) tek kaydırma */
 .pw-panel.qx-scene--send.is-current {
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  scrollbar-gutter: stable;
+  overflow: visible;
 }
 
 .qx-stage-shell--contact {
@@ -2538,27 +2828,27 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-page-bg--modal .qx-wiz-status__step {
-  font-size: 1.8rem;
+  font-size: 2.05rem;
 }
 
 .qx-page-bg--modal .qx-step-track {
-  gap: 0.34rem;
+  gap: 0.38rem;
 }
 
 .qx-page-bg--modal .qx-dot {
-  width: 28px;
-  height: 28px;
-  font-size: 0.78rem;
+  width: 30px;
+  height: 30px;
+  font-size: 0.84rem;
 }
 
 .qx-page-bg--modal .qx-step-pill:not(:last-child)::after {
-  top: 13px;
-  left: calc(50% + 16px);
-  right: calc(-50% + 16px);
+  top: 14px;
+  left: calc(50% + 17px);
+  right: calc(-50% + 17px);
 }
 
 .qx-page-bg--modal .qx-step-pill__label {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 }
 
 .qx-page-bg--modal .qx-body {
@@ -2576,7 +2866,8 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-page-bg--modal .qx-lead-body {
-  font-size: 0.94rem;
+  font-size: 1.02rem;
+  line-height: 1.5;
 }
 
 .qx-page-bg--modal .qx-scene-head {
@@ -2584,20 +2875,23 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-page-bg--modal .qx-question {
-  font-size: 1.65rem;
+  font-size: 1.82rem;
+  line-height: 1.2;
 }
 
 .qx-page-bg--modal .qx-question-note {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
 .qx-page-bg--modal .qx-card-bg {
-  height: 126px;
+  height: clamp(132px, 36vw, 168px);
+  min-height: 132px;
 }
 
 .qx-page-bg--modal .qx-card-body {
-  padding: 0.76rem 0.8rem 0.8rem;
-  gap: 0.48rem;
+  padding: 0.6rem 0.72rem 0.76rem;
+  gap: 0.38rem;
 }
 
 .qx-page-bg--modal .qx-card-title {
@@ -2605,18 +2899,19 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   color: #0a6ea8;
 }
 
-.qx-page-bg--modal .qx-card-badge {
-  font-size: 0.72rem;
-  padding: 0.18rem 0.34rem;
+.qx-page-bg--modal .qx-card-program-badges {
+  gap: 0.38rem;
+  padding-top: 0.4rem;
 }
 
-.qx-page-bg--modal .qx-card-meta-title {
-  font-size: 0.69rem;
+.qx-page-bg--modal .qx-card-badge--hi {
+  font-size: 0.8rem;
+  padding: 0.26rem 0.5rem;
 }
 
-.qx-page-bg--modal .qx-card-chip {
-  font-size: 0.68rem;
-  padding: 0.16rem 0.3rem;
+.qx-page-bg--modal .qx-card-badge--meta {
+  font-size: 0.73rem;
+  padding: 0.2rem 0.42rem;
 }
 
 /* Modalde 1. adım taşarsa yalnızca bu panel kendi içinde kaydırılsın */
@@ -2714,12 +3009,37 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 .qx-page-bg--modal .pw-panel.qx-scene--send.is-current {
   flex: 1;
   min-height: 0;
+  overflow: visible;
+  padding-right: 0;
+}
+
+/* Modal + adım 5: üst kahraman bandı yer tutmasın; içerik gövdede tek kaydırma */
+.qx-page-bg--modal .qx[data-qx-active-step='5'] .qx-lead--hero {
+  display: none;
+}
+
+.qx-page-bg--modal .qx[data-qx-active-step='5'] .qx-body {
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  scrollbar-gutter: stable;
-  padding-right: 2px;
+}
+
+.qx-page-bg--modal .qx[data-qx-active-step='5'] .qx-form {
+  flex: 0 1 auto;
+  overflow: visible;
+  min-height: 0;
+}
+
+.qx-page-bg--modal .qx[data-qx-active-step='5'] .pw-viewport {
+  flex: 0 1 auto;
+  overflow: visible;
+  min-height: 0;
+}
+
+.qx-page-bg--modal .qx[data-qx-active-step='5'] .qx-contact-textarea {
+  min-height: 5.25rem;
+  max-height: min(7.25rem, 22vh);
 }
 
 .qx-page-bg--modal .qx-stage-shell--contact {
@@ -2731,12 +3051,12 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-page-bg--modal .qx-scene-head--contact .qx-question {
-  font-size: clamp(1.05rem, 2vw, 1.38rem);
+  font-size: clamp(1.18rem, 2.2vw, 1.52rem);
 }
 
 .qx-page-bg--modal .qx-scene-head--contact .qx-question-note {
-  font-size: 0.78rem;
-  line-height: 1.38;
+  font-size: 0.86rem;
+  line-height: 1.42;
 }
 
 .qx-page-bg--modal .qx-contact-card {
@@ -2757,6 +3077,11 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   gap: 0.55rem 0.65rem;
 }
 
+.qx-page-bg--modal .qx-contact-input,
+.qx-page-bg--modal .qx-contact-textarea {
+  font-size: 0.98rem;
+}
+
 .qx-page-bg--modal .qx-contact-textarea {
   min-height: 7rem;
 }
@@ -2766,14 +3091,14 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-page-bg--modal .qx-contact-btn {
-  padding: 0.9rem 1.05rem;
-  min-height: 3.05rem;
-  font-size: 0.76rem;
+  padding: 0.95rem 1.1rem;
+  min-height: 3.15rem;
+  font-size: 0.84rem;
 }
 
 .qx-page-bg--modal .qx-contact-btn .fa-calendar-alt,
 .qx-page-bg--modal .qx-contact-btn .fa-graduation-cap {
-  font-size: 1.05rem;
+  font-size: 1.12rem;
 }
 
 /* 3. aşama (modal): eski çift sütun kart ızgarası — zaman dilimi tasarımında kullanılmıyor */
@@ -2823,96 +3148,89 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-page-bg--modal .qx-scene-head--step3 .qx-question {
-  font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+  font-size: clamp(1.32rem, 2.6vw, 1.68rem);
 }
 
 .qx-page-bg--modal .qx-hint--step3 {
-  margin-bottom: 0.2rem;
-  font-size: 0.82rem;
-  line-height: 1.35;
+  margin-bottom: 0.25rem;
+  font-size: 0.94rem;
+  line-height: 1.42;
 }
 
 .qx-page-bg--modal .qx-time-slots {
   gap: 0.55rem;
 }
 
-.qx-page-bg--modal .qx-time-slot__accent {
-  height: 4px;
-}
-
-.qx-page-bg--modal .qx-time-slot__head {
-  padding: 0.55rem 0.65rem 0.35rem;
-  gap: 0.45rem;
+.qx-page-bg--modal .qx-time-slot__period {
+  padding: 0.72rem 0.85rem 0.85rem;
+  gap: 0.65rem;
+  border-radius: 16px 16px 0 0;
 }
 
 .qx-page-bg--modal .qx-time-slot__icon {
-  width: 36px;
-  height: 36px;
-  font-size: 0.95rem;
-  border-radius: 11px;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 20%;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.05) inset,
+    0 6px 18px rgba(0, 0, 0, 0.16);
 }
 
-.qx-page-bg--modal .qx-time-slot__title {
-  font-size: 0.88rem;
+.qx-page-bg--modal .qx-time-slot__icon .fas {
+  font-size: 1.52rem;
 }
 
-.qx-page-bg--modal .qx-time-slot__time {
-  font-size: 0.8rem;
-  margin-top: 0.1rem;
+.qx-page-bg--modal .qx-time-slot__period-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.09em;
 }
 
-.qx-page-bg--modal .qx-time-slot__features {
-  padding: 0 0.65rem 0.45rem;
-  gap: 0.22rem;
-}
-
-.qx-page-bg--modal .qx-time-slot__features li {
-  font-size: 0.72rem;
-  line-height: 1.28;
+.qx-page-bg--modal .qx-time-slot__period-clock {
+  font-size: clamp(1.18rem, 3vw, 1.45rem);
 }
 
 .qx-page-bg--modal .qx-time-slot__teachers {
-  margin: 0 0.5rem 0.45rem;
-  padding: 0.45rem 0.5rem;
+  margin: 0 0.55rem 0.5rem;
+  padding: 0.52rem 0.58rem;
   border-radius: 12px;
 }
 
 .qx-page-bg--modal .qx-time-slot__teachers-kicker {
-  margin-bottom: 0.35rem;
-  font-size: 0.6rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.72rem;
 }
 
 .qx-page-bg--modal .qx-time-slot__teacher-list {
-  gap: 0.32rem;
+  gap: 0.38rem;
 }
 
 .qx-page-bg--modal .qx-slot-teacher__avatar {
-  width: 32px;
-  height: 32px;
-  font-size: 0.62rem;
+  width: 36px;
+  height: 36px;
+  font-size: 0.68rem;
 }
 
 .qx-page-bg--modal .qx-slot-teacher__name {
-  font-size: 0.74rem;
+  font-size: 0.84rem;
 }
 
 .qx-page-bg--modal .qx-slot-level-chip {
-  font-size: 0.6rem;
-  padding: 0.06rem 0.22rem;
-  min-width: 1.65rem;
+  font-size: 0.68rem;
+  padding: 0.1rem 0.26rem;
+  min-width: 1.75rem;
 }
 
 .qx-page-bg--modal .qx-time-slot__foot {
-  padding: 0.4rem 0.65rem;
+  padding: 0.48rem 0.72rem;
 }
 
 .qx-page-bg--modal .qx-time-slot__meta {
-  font-size: 0.6rem;
+  font-size: 0.72rem;
 }
 
 .qx-page-bg--modal .qx-time-slot__cta {
-  font-size: 0.58rem;
-  padding: 0.15rem 0.38rem;
+  font-size: 0.68rem;
+  padding: 0.2rem 0.44rem;
 }
 
 .qx-page-bg--modal .qx-time-slot__price {
@@ -2932,16 +3250,16 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-page-bg--modal .qx-speaking-banner__text strong {
-  font-size: 0.86rem;
+  font-size: 0.94rem;
 }
 
 .qx-page-bg--modal .qx-speaking-banner__text p {
-  font-size: 0.72rem;
-  line-height: 1.35;
+  font-size: 0.8rem;
+  line-height: 1.4;
 }
 
 .qx-page-bg--modal .qx-speaking-banner__ticks li {
-  font-size: 0.64rem;
+  font-size: 0.72rem;
 }
 
 .qx-page-bg--modal .pw-panel.qx-scene--step4.is-current {
@@ -2955,7 +3273,7 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-page-bg--modal .qx-scene-head--step4 .qx-question {
-  font-size: clamp(1.12rem, 2vw, 1.38rem);
+  font-size: clamp(1.22rem, 2.2vw, 1.52rem);
 }
 
 .qx-page-bg--modal .qx-step4-grid {
@@ -2975,16 +3293,16 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-page-bg--modal .qx-step4-preset-long {
-  font-size: 0.76rem;
+  font-size: 0.84rem;
 }
 
 .qx-page-bg--modal .qx-step4-preset-short {
-  font-size: 0.62rem;
+  font-size: 0.7rem;
 }
 
 .qx-page-bg--modal .qx-step4-continue {
-  padding: 0.58rem 1rem;
-  font-size: 0.84rem;
+  padding: 0.62rem 1.05rem;
+  font-size: 0.9rem;
 }
 
 .qx-page-bg--modal .qx-cal-art {
@@ -3002,12 +3320,51 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-page-bg--modal .qx-step4-custom-picker-panel {
-  min-height: 190px;
-  gap: 0.55rem;
+  min-height: 0;
+  gap: 0.38rem;
 }
 
-.qx-page-bg--modal .qx-step4-date-input--panel {
-  font-size: 0.95rem;
-  padding: 0.62rem 0.72rem;
+.qx-page-bg--modal .qx-step4-cal-surface {
+  padding: 0.42rem 0.48rem 0.48rem;
+  gap: 0.38rem;
+  border-radius: 12px;
+}
+
+.qx-page-bg--modal .qx-step4-cal-header {
+  gap: 0.22rem;
+}
+
+.qx-page-bg--modal .qx-step4-inline-cal-summary {
+  padding: 0.24rem 0.62rem;
+  font-size: 0.68rem;
+}
+
+.qx-page-bg--modal .qx-inline-cal {
+  padding: 0.32rem 0.38rem 0.36rem;
+}
+
+.qx-page-bg--modal .qx-inline-cal__monthyear {
+  font-size: 0.74rem;
+}
+
+.qx-page-bg--modal .qx-inline-cal__weekday {
+  font-size: 0.5rem;
+}
+
+.qx-page-bg--modal .qx-inline-cal__grid {
+  grid-auto-rows: 1.28rem;
+  gap: 0.08rem;
+}
+
+.qx-page-bg--modal .qx-inline-cal__day {
+  min-height: 0;
+  font-size: 0.65rem;
+  border-radius: 6px;
+}
+
+.qx-page-bg--modal .qx-inline-cal__nav-btn {
+  width: 1.55rem;
+  height: 1.55rem;
+  font-size: 0.56rem;
 }
 

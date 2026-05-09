@@ -1132,15 +1132,15 @@ main section + section {
     box-shadow: 0 6px 24px rgba(12, 192, 223, 0.45);
 }
 
-/* Mobilde banner filtreden önce; masaüstünde filtrenin altında */
-.index-courses-section .index-courses-sidebar .countdown-discount-banner {
+/* Mobilde ofis kartı filtreden önce; masaüstünde filtrenin altında */
+.index-courses-section .index-courses-sidebar .index-sidebar-office-promo {
     order: -1;
 }
 .index-courses-section .index-courses-sidebar .courses-filter-panel {
     order: 0;
 }
 @media (min-width: 993px) {
-    .index-courses-section .index-courses-sidebar .countdown-discount-banner {
+    .index-courses-section .index-courses-sidebar .index-sidebar-office-promo {
         order: 1;
     }
     .index-courses-section .index-courses-sidebar .courses-filter-panel {
@@ -1148,212 +1148,123 @@ main section + section {
     }
 }
 
-/* Countdown discount banner – yazılar belirgin */
-.index-courses-section .countdown-discount-banner {
+/* Kurslar sol sütun: Bremen ofis indirimi (Fiyatlar sayfasındaki yeşil kart ile uyumlu) */
+.index-courses-section .index-sidebar-office-promo {
     margin-top: 0;
     margin-bottom: 24px;
-    padding: 0;
+    padding: 22px 20px;
     border-radius: 16px;
-    overflow: hidden;
-    background: #0c4a4e;
-    border: 2px solid #0f766e;
-    box-shadow: 0 8px 24px rgba(12, 74, 78, 0.35);
-    position: relative;
+    background: linear-gradient(145deg, #14532d 0%, #15803d 75%);
+    border: 2px solid rgba(187, 247, 208, 0.45);
+    box-shadow: 0 8px 24px rgba(20, 83, 45, 0.35);
+    text-align: center;
+    box-sizing: border-box;
 }
+
 @media (min-width: 993px) {
-    .index-courses-section .countdown-discount-banner {
+    .index-courses-section .index-sidebar-office-promo {
         margin-top: 24px;
         margin-bottom: 0;
     }
 }
 
-.index-courses-section .countdown-discount-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 18px;
-    padding: 22px 20px;
-    position: relative;
-    z-index: 1;
-    text-align: center;
-}
-
-.index-courses-section .index-courses-sidebar .countdown-discount-content {
-    flex: none;
-    width: 100%;
-    text-align: center;
-}
-.index-courses-section .index-courses-sidebar .countdown-discount-timer-block {
-    align-items: center;
-}
-.index-courses-section .index-courses-sidebar .countdown-discount-cta {
-    width: 100%;
-    justify-content: center;
-}
-
-.index-courses-section .countdown-discount-content {
-    flex: none;
-    width: 100%;
-    text-align: center;
-}
-
-.index-courses-section .countdown-discount-badge {
-    display: block;
-    font-size: 1.4rem;
+.index-sidebar-office-promo__title {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
     font-weight: 800;
     color: #fff;
-    margin-bottom: 8px;
-    letter-spacing: 0.02em;
-    line-height: 1.2;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    line-height: 1.25;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.index-courses-section .countdown-discount-desc {
-    font-size: 1rem;
-    color: #fff;
-    margin: 0 0 12px;
+.index-sidebar-office-promo__desc {
+    margin: 0 0 14px;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.94);
     line-height: 1.45;
-    font-weight: 600;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.index-courses-section .countdown-coupon-code {
+.index-sidebar-office-promo__tags {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    width: 100%;
-    margin: 0 auto 12px;
-    padding: 12px 14px;
-    background: #fff;
-    border-radius: 10px;
-    border: 2px solid #0f766e;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    box-sizing: border-box;
-}
-
-.index-courses-section .countdown-coupon-label {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #0c4a4e;
-    text-align: center;
-}
-
-.index-courses-section .countdown-coupon-value {
-    font-size: clamp(0.8rem, 4vw, 1rem);
-    font-weight: 800;
-    color: #0f766e;
-    letter-spacing: 0.02em;
-    text-align: center;
-    padding: 8px 12px;
-    background: rgba(15, 118, 110, 0.08);
-    border-radius: 6px;
-    font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
-    white-space: nowrap;
-    line-height: 1.2;
-}
-
-.index-courses-section .countdown-discount-hint {
-    font-size: 0.9rem;
-    color: #e0f2f1;
-    margin: 0;
-    line-height: 1.4;
-    font-weight: 600;
-}
-
-.index-courses-section .countdown-discount-timer-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
-
-.index-courses-section .countdown-ends-label {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.index-courses-section .countdown-timer {
-    display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 6px;
-    font-variant-numeric: tabular-nums;
-    padding: 12px 18px;
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    gap: 8px;
+    margin-bottom: 16px;
 }
 
-.index-courses-section .countdown-part {
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: #fff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-}
-
-.index-courses-section .countdown-part .countdown-unit {
-    font-size: 0.7rem;
+.index-sidebar-office-promo__tags span {
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
     font-weight: 700;
-    color: #e0f2f1;
-    margin-left: 2px;
-    text-transform: uppercase;
-}
-
-.index-courses-section .countdown-sep {
+    background: rgba(255, 255, 255, 0.18);
     color: #fff;
-    font-weight: 800;
-    font-size: 1rem;
+    line-height: 1.35;
 }
 
-.index-courses-section .countdown-discount-cta {
+.index-sidebar-office-promo__cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 14px 22px;
-    border-radius: 10px;
-    background: #fff;
-    color: #0c4a4e;
-    font-size: 1rem;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-size: 0.88rem;
     font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+    text-align: center;
     text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    white-space: nowrap;
+    color: #0f172a;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border: 2px solid rgba(255, 255, 255, 0.95);
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.12),
+        0 1px 0 rgba(255, 255, 255, 0.8) inset;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease,
+        color 0.15s ease;
+    box-sizing: border-box;
 }
 
-.index-courses-section .countdown-discount-cta:hover {
+.index-sidebar-office-promo__cta .fab.fa-whatsapp {
+    flex-shrink: 0;
+    font-size: 1.28rem;
+    color: #25d366;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.08));
+}
+
+.index-sidebar-office-promo__cta:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-    background: #fff;
-    color: #0f766e;
+    border-color: #bbf7d0;
+    box-shadow:
+        0 8px 26px rgba(0, 0, 0, 0.16),
+        0 1px 0 rgba(255, 255, 255, 0.9) inset;
+    color: #052e16;
+}
+
+.index-sidebar-office-promo__cta:focus-visible {
+    outline: 3px solid rgba(255, 210, 31, 0.95);
+    outline-offset: 3px;
+}
+
+.index-sidebar-office-promo__cta:active {
+    transform: translateY(0);
 }
 
 @media (max-width: 768px) {
-    .index-courses-section .countdown-discount-banner {
+    .index-courses-section .index-sidebar-office-promo {
         margin-bottom: 20px;
         border-radius: 14px;
-    }
-    .index-courses-section .countdown-discount-inner {
         padding: 20px 18px;
-        gap: 16px;
     }
-    .index-courses-section .countdown-discount-badge {
-        font-size: 1.5rem;
-    }
-    .index-courses-section .countdown-discount-desc {
-        font-size: 1.05rem;
-    }
-    .index-courses-section .countdown-discount-cta {
-        width: 100%;
-        padding: 14px 20px;
-        font-size: 1.05rem;
+    .index-sidebar-office-promo__title {
+        font-size: 1.15rem;
     }
 }
 

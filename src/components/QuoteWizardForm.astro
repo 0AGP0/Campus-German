@@ -23,139 +23,208 @@ const programImageMap = {
 } as const;
 
 const programHintByLang = {
-  tr: 'Tum seceneklerde seviye, program suresi ve haftalik yogunluk bilgilerini ayni duzende gorebilirsiniz.',
+  tr: 'Tüm seçeneklerde seviye, program süresi ve haftalık yoğunluk bilgilerini aynı düzende görebilirsiniz.',
   de: 'In allen Optionen sehen Sie Niveau, Programmdauer und Wochenintensitat in derselben Struktur.',
   en: 'Compare level, duration, and weekly intensity in a consistent layout.',
   es: 'Compare nivel, duracion e intensidad semanal en la misma estructura.'
 } as const;
 
-const programCardMeta = {
-  intensive: {
-    badges: ['Vize iade Garantisi', 'Uni Bremen Hazirlik / HS Bremen Hazirlik'],
-    levelTitle: 'Seviye',
-    levels: ['A1', 'A2', 'B1', 'B2', 'C1'],
-    infoTitle: 'Program & Sure',
-    infos: ['20 sa/hafta', 'Her seviye 8 hafta']
+/**
+ * Program kartı özeti: highlights = 2 kısa satır (pill yok);
+ * detail = seviye + program bilgisi, tek akışta · ile (kartta az yer kaplar).
+ */
+const programCardMetaByLang = {
+  tr: {
+    'intensive-de': {
+      highlights: ['Vize iadesi garantisi', 'Üniversite hazırlığı'],
+      levels: ['A1', 'A2', 'B1', 'B2', 'C1'],
+      infos: ['20 saat/hafta', 'Seviye başına 8 hafta']
+    },
+    'summer-camp': {
+      highlights: ['Yaz kampı', 'Tam pansiyon · rehberlik'],
+      levels: ['A1', 'A2'],
+      infos: ['2 haftalık dönemler', '11–17 yaş']
+    },
+    telc: {
+      highlights: ['Telc / sınav hazırlığı', 'Uzman eğitmen'],
+      levels: ['A2', 'B1', 'B2', 'C1 Hochschule', 'FSP Medizin'],
+      infos: ['Aylık sınav takvimi']
+    },
+    online: {
+      highlights: ['Canlı ders + AI', 'Esnek katılım'],
+      levels: ['A1', 'A2'],
+      infos: ['16 saat/hafta', '6 haftalık modül']
+    }
   },
-  'summer-camp': {
-    badges: ['Cesitli Etkinlikler', 'Tam Konaklama', 'Eslik'],
-    levelTitle: 'Seviye',
-    levels: ['A1', 'A2'],
-    infoTitle: 'Program & Sure',
-    infos: ['2 haftalik programlar', '11-17 Yas']
+  de: {
+    'intensive-de': {
+      highlights: ['Visum-Rückzahlungsgarantie', 'Uni-/HS-Vorbereitung'],
+      levels: ['A1', 'A2', 'B1', 'B2', 'C1'],
+      infos: ['20 Std./Wo.', '8 Wo. pro Niveau']
+    },
+    'summer-camp': {
+      highlights: ['Sommercamp', 'Vollpension · Betreuung'],
+      levels: ['A1', 'A2'],
+      infos: ['2-Wochen-Blöcke', '11–17 Jahre']
+    },
+    telc: {
+      highlights: ['telc & Prüfungsvorbereitung', 'Erfahrene Lehrkräfte'],
+      levels: ['A2', 'B1', 'B2', 'C1 Hochschule', 'FSP Medizin'],
+      infos: ['Prüfungen monatlich']
+    },
+    online: {
+      highlights: ['Live-Unterricht + KI', 'Flexible Teilnahme'],
+      levels: ['A1', 'A2'],
+      infos: ['16 Std./Wo.', '6 Wochen']
+    }
   },
-  telc: {
-    badges: ['Uzman Egitmenler', 'Ornek Sinav Cozumleri'],
-    levelTitle: 'Seviye',
-    levels: ['A2', 'B1', 'B2', 'C1 Hochschule', 'FSP Medizin'],
-    infoTitle: 'Program & Sure',
-    infos: ['Her Ay Sinavlar', 'Yogun Hazirlik']
+  en: {
+    'intensive-de': {
+      highlights: ['Visa refund guarantee', 'University pathway prep'],
+      levels: ['A1', 'A2', 'B1', 'B2', 'C1'],
+      infos: ['20 hrs/week', '8 weeks per level']
+    },
+    'summer-camp': {
+      highlights: ['Summer camp', 'Full board · supervision'],
+      levels: ['A1', 'A2'],
+      infos: ['2-week blocks', 'Ages 11–17']
+    },
+    telc: {
+      highlights: ['telc & exam prep', 'Expert instructors'],
+      levels: ['A2', 'B1', 'B2', 'C1 Hochschule', 'FSP Medizin'],
+      infos: ['Monthly exam dates']
+    },
+    online: {
+      highlights: ['Live lessons + AI', 'Flexible schedule'],
+      levels: ['A1', 'A2'],
+      infos: ['16 hrs/week', '6-week module']
+    }
   },
-  online: {
-    badges: ['Canli Online Ders', 'Yapay Zeka Destekli', 'Esnek Katilim'],
-    levelTitle: 'Seviye',
-    levels: ['A1', 'A2'],
-    infoTitle: 'Program & Sure',
-    infos: ['16 sa/hafta', '6 hafta']
+  es: {
+    'intensive-de': {
+      highlights: ['Garantía de visado', 'Prep. universitaria'],
+      levels: ['A1', 'A2', 'B1', 'B2', 'C1'],
+      infos: ['20 h/semana', '8 semanas/nivel']
+    },
+    'summer-camp': {
+      highlights: ['Campamento de verano', 'Pensión completa · tutoría'],
+      levels: ['A1', 'A2'],
+      infos: ['Bloques de 2 semanas', '11–17 años']
+    },
+    telc: {
+      highlights: ['telc y preparación', 'Profesores expertos'],
+      levels: ['A2', 'B1', 'B2', 'C1 Hochschule', 'FSP Medizin'],
+      infos: ['Exámenes cada mes']
+    },
+    online: {
+      highlights: ['Clases en vivo + IA', 'Horario flexible'],
+      levels: ['A1', 'A2'],
+      infos: ['16 h/semana', 'Módulo 6 semanas']
+    }
   }
 } as const;
 
 const copy = {
   tr: {
     asideMark: 'Teklif',
-    subtitleEm: 'Size ozel, net bir teklif',
-    subtitle: 'Program, seviye ve kurs turu secimlerinize gore uygun siniflari gosterecegiz.',
-    asideSteps: '5 adim',
-    asideStepHint: 'ILERLEME',
-    stepLabels: ['Program', 'Seviye', 'Ders Zamani', 'Tarih', 'Iletisim'],
+    subtitleEm: 'Size özel, net bir teklif',
+    subtitle: 'Program, seviye ve kurs türü seçimlerinize göre uygun sınıfları göstereceğiz.',
+    asideSteps: '5 adım',
+    asideStepHint: 'İLERLEME',
+    stepLabels: ['Program', 'Seviye', 'Ders zamanı', 'Tarih', 'İletişim'],
     programs: [
       { label: 'Intensive Deutsch', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive-de', image: programImageMap.intensive },
       { label: 'Telc Prüfungen', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'telc', image: programImageMap.telc },
       { label: 'Yaz kampı', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: programImageMap['summer-camp'] },
       { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: programImageMap.online }
     ],
-    programQ: 'Hangi programa katilmak istersiniz?',
+    programQ: 'Hangi programa katılmak istersiniz?',
     levelQ: 'Dil seviyesi',
-    levelPlaceholder: 'Seviye seciniz',
-    monthQ: 'Baslangic ayi',
-    monthPlaceholder: 'Ay seciniz',
-    months: ['Ocak', 'Subat', 'Mart', 'Nisan', 'Mayis', 'Haziran', 'Temmuz', 'Agustos', 'Eylul', 'Ekim', 'Kasim', 'Aralik'],
-    step3lead: 'Uygun siniflar',
-    step3Title: 'Ders zamanini sec',
+    levelPlaceholder: 'Seviye seçiniz',
+    monthQ: 'Başlangıç ayı',
+    monthPlaceholder: 'Ay seçiniz',
+    months: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+    step3lead: 'Uygun sınıflar',
+    step3Title: 'Ders zamanını seç',
     step3Subtitle:
-      'Gunluk rutininize en uygun saat dilimini secin. Tum gruplarda haftada 20 saat yuz yuze egitim yer alir.',
-    teachersInGroup: 'Bu gruptaki egitmenler',
-    slotMorningTitle: 'Sabah Grubu',
-    slotAfternoonTitle: 'Ogleden Sonra Grubu',
-    slotEveningTitle: 'Aksam Grubu',
+      'Günlük rutininize en uygun saat dilimini seçin. Tüm gruplarda haftada 20 saat yüz yüze eğitim yer alır.',
+    teachersInGroup: 'Bu gruptaki eğitmenler',
+    slotMorningTitle: 'Sabah grubu',
+    slotAfternoonTitle: 'Öğleden sonra grubu',
+    slotEveningTitle: 'Akşam grubu',
     slotMorningTime: '09:00 – 12:30',
     slotAfternoonTime: '13:00 – 16:30',
     slotEveningTime: '18:00 – 21:30',
-    slotMorningF1: 'Hafta ici egitim',
-    slotMorningF2: 'Enerjik baslangic',
+    slotMorningF1: 'Hafta içi eğitim',
+    slotMorningF2: 'Enerjik başlangıç',
     slotMorningF3: '20 saat / hafta',
-    slotAfternoonF1: 'Hafta ici egitim',
+    slotAfternoonF1: 'Hafta içi eğitim',
     slotAfternoonF2: 'Dengeli program',
     slotAfternoonF3: '20 saat / hafta',
-    slotEveningF1: 'Hafta ici egitim',
-    slotEveningF2: 'Calisanlar icin ideal',
+    slotEveningF1: 'Hafta içi eğitim',
+    slotEveningF2: 'Çalışanlar için ideal',
     slotEveningF3: '20 saat / hafta',
-    speakingClubAria: 'Konusma kulubu',
-    speakingClubTitle: 'Ucretsiz Cumartesi Konusma Kulubu',
-    speakingClubBody: 'Ders disi pratik ile Almancani sosyal ortamda pekistir, sinifta ogrendiklerini canli kullan.',
-    speakingClubF1: 'Tum seviyelere acik',
-    speakingClubF2: 'Duzenli oturumlar',
-    speakingClubF3: 'Sehir ve kamp gezileriyle destek',
+    speakingClubAria: 'Konuşma kulübü',
+    speakingClubTitle: 'Ücretsiz cumartesi konuşma kulübü',
+    speakingClubBody:
+      'Ders dışı pratik ile Almancanı sosyal ortamda pekiştir; sınıfta öğrendiklerini canlı kullan.',
+    speakingClubF1: 'Tüm seviyelere açık',
+    speakingClubF2: 'Düzenli oturumlar',
+    speakingClubF3: 'Şehir ve kamp gezileriyle destek',
     cardSelectHint:
-      'Secilen seviye sabah, ogle veya aksam grubunda olabilir; size uygun saati secin. Sonra baslangic tarihi ve iletisime gecilir.',
-    durationQ: 'Kac aylik istiyorsunuz?',
-    freeLesson: 'Ucretsiz deneme dersi',
-    freeLessonHelp: 'Bu secenek ucretsizdir.',
-    step4lead: 'Baslangic tarihi',
-    step4Title: 'Baslangic tarihini sec',
+      'Seçilen seviye sabah, öğle veya akşam grubunda olabilir; size uygun saati seçin. Sonra başlangıç tarihi ve iletişime geçilir.',
+    durationQ: 'Kaç aylık istiyorsunuz?',
+    freeLesson: 'Ücretsiz deneme dersi',
+    freeLessonHelp: 'Bu seçenek ücretsizdir.',
+    step4lead: 'Başlangıç tarihi',
+    step4Title: 'Başlangıç tarihini seç',
     step4Subtitle:
-      'Size en uygun baslangic tarihini secin veya danismanla ozel bir tarih belirleyin.',
-    step4PresetTitle: 'Kur basindan baslama tarihleri',
-    step4CustomTitle: 'Baslama tarihini kendim secmek istiyorum',
-    step4CustomF1: 'Ozel baslangic tarihi',
+      'Size en uygun başlangıç tarihini seçin veya danışmanla özel bir tarih belirleyin.',
+    step4PresetTitle: 'Kurs başlangıç dönemleri',
+    step4CustomTitle: 'Başlama tarihini kendim seçmek istiyorum',
+    step4CustomF1: 'Özel başlangıç tarihi',
     step4CustomF2: 'Esnek planlama',
-    step4CustomF3: 'Size uygun program icin danisman destegi',
-    step4CustomCta: 'Tarihimi kendim secmek istiyorum',
-    step4Trust: 'Guvenli secim, basariya giden en dogru adim.',
-    step4Continue: 'Devam Et',
-    step4NeedPick: 'Listeden bir tarih secin veya ozel tarih icin secenegi acip bir gun secin.',
-    step4NeedCustomDate: 'Ozel baslangic icin lutfen asagidan bir tarih secin.',
-    step4PickDateLabel: 'Baslangic tarihiniz',
-    step4PickDateHint: 'Son kesin tarih danismanlikta netlesir.',
-    step4CustomSummary: 'Ozel baslangic tarihi — danisman ile netlestirilecek',
-    step5lead: 'Iletisim',
-    step5Title: 'Iletisim bilgilerinizi girin',
+    step4CustomF3: 'Size uygun program için danışman desteği',
+    step4CustomCta: 'Tarihimi kendim seçmek istiyorum',
+    step4Trust: 'Güvenli seçim; başarıya giden en doğru adım.',
+    step4Continue: 'Devam et',
+    step4NeedPick:
+      'Listeden bir dönem seçin veya özel tarih için seçeneği açıp takvimden bir gün seçin.',
+    step4NeedCustomDate: 'Özel başlangıç için lütfen takvimden bir tarih seçin.',
+    step4PickDateLabel: 'Başlangıç tarihiniz',
+    step4PickDateHint: 'Son kesin tarih danışmanlıkta netleşir.',
+    step4CalendarTrigger: 'Takvimden bir gün seçin',
+    step4CalPrevMonth: 'Önceki ay',
+    step4CalNextMonth: 'Sonraki ay',
+    step4CustomSummary: 'Özel başlangıç tarihi — danışman ile netleştirilecek',
+    step5lead: 'İletişim',
+    step5Title: 'İletişim bilgilerinizi girin',
     step5Subtitle:
-      'Basvurunuzla ilgili tum bilgilendirmeleri size iletebilmemiz icin lutfen iletisim bilgilerinizi eksiksiz girin.',
-    step5SectionPersonal: 'Kisisel Bilgiler',
+      'Başvurunuzla ilgili tüm bilgilendirmeleri size iletebilmemiz için lütfen iletişim bilgilerinizi eksiksiz girin.',
+    step5SectionPersonal: 'Kişisel bilgiler',
     step5SectionExtra: 'Eklemek istedikleriniz',
     step5CtaDemoLesson: 'Demo dersi al',
     firstName: 'Ad',
     lastName: 'Soyad',
-    firstNamePlaceholder: 'Adinizi giriniz',
-    lastNamePlaceholder: 'Soyadinizi giriniz',
+    firstNamePlaceholder: 'Adınızı giriniz',
+    lastNamePlaceholder: 'Soyadınızı giriniz',
     emailPlaceholder: 'ornek@mail.com',
-    phonePlaceholder: 'Ornek: 5XX XXX XX XX',
-    birthDate: 'Dogum tarihi',
+    phonePlaceholder: 'Örnek: 5XX XXX XX XX',
+    birthDate: 'Doğum tarihi',
     nationality: 'Uyruk',
-    nationalityPlaceholder: 'Ulkenizi yaziniz',
-    extraPlaceholder: 'Eklemek istediklerinizi buraya yazabilirsiniz (istege bagli)',
+    nationalityPlaceholder: 'Ülkenizi yazınız',
+    extraPlaceholder: 'Eklemek istediklerinizi buraya yazabilirsiniz (isteğe bağlı)',
     name: 'Ad Soyad',
     email: 'E-posta',
     phone: 'Telefon',
-    country: 'Yasadigi ulke',
+    country: 'Yaşadığı ülke',
     message: 'Mesaj',
     submit: 'Teklif Al',
-    doneTitle: 'Tesekkurler',
+    doneTitle: 'Teşekkürler',
     doneText: 'Danismanlarimiz size ulasacak.',
-    doneClose: 'Ana sayfaya don',
+    doneClose: 'Ana sayfaya dön',
     close: 'Kapat',
-    error: 'Form gonderilemedi. Lutfen tekrar deneyin.',
+    error: 'Form gönderilemedi. Lütfen tekrar deneyin.',
     planContinue: 'Devam',
     planBack: 'Geri',
     pricingDuration: 'Süre',
@@ -177,17 +246,19 @@ const copy = {
     perMonthSuffix: '/ ay',
     modePhysical: 'FIZIKSEL',
     modeOnline: 'ONLINE',
-    weekdaysShort: 'Pzt, Sal, Cars, Pers',
+    weekdaysShort: 'Pzt, Sal, Çar, Per',
     weekendShort: 'Cmt, Paz',
-    needLevelHint: 'Devam etmek icin dil seviyesi seciniz.',
-    levelHeroTitle: 'Seviyeni kesfet',
-    levelHeroSubtitle: "A1'den C1'e kadar seviyeni incele, emin degilsen ucretsiz seviye tespiti ile dogru sinifi bul.",
-    levelBannerTitle: 'Dogru seviyeden baslamak onemli',
-    levelBannerText: 'Kendi seviyene uygun bir baslangic yapmak, zaman kazandirir ve ogrenme basarini artirir.',
-    levelHelpTitle: 'Seviyenden emin degil misin?',
-    levelHelpText: 'Kisa bir degerlendirme ile sana en uygun baslangic seviyesini belirleyelim.',
-    levelHelpCtaPrimary: 'Ucretsiz Seviye Tespiti Yap',
-    levelHelpCtaSecondary: "A1'den Baslamak Istiyorum"
+    needLevelHint: 'Devam etmek için dil seviyesi seçiniz.',
+    levelHeroTitle: 'Seviyeni keşfet',
+    levelHeroSubtitle:
+      "A1'den C1'e kadar seviyeni incele; emin değilsen ücretsiz seviye tespiti ile doğru sınıfı bul.",
+    levelBannerTitle: 'Doğru seviyeden başlamak önemli',
+    levelBannerText:
+      'Kendi seviyene uygun bir başlangıç yapmak zaman kazandırır ve öğrenme başarını artırır.',
+    levelHelpTitle: 'Seviyenden emin değil misin?',
+    levelHelpText: 'Kısa bir değerlendirme ile sana en uygun başlangıç seviyesini belirleyelim.',
+    levelHelpCtaPrimary: 'Ücretsiz seviye tespiti yap',
+    levelHelpCtaSecondary: "A1'den başlamak istiyorum"
   },
   de: {
     asideMark: 'Angebot',
@@ -256,6 +327,9 @@ const copy = {
     step4NeedCustomDate: 'Bitte waehlen Sie unten ein Datum fuer Ihren individuellen Start.',
     step4PickDateLabel: 'Ihr Wunsch-Startdatum',
     step4PickDateHint: 'Der endgueltige Termin wird in der Beratung festgelegt.',
+    step4CalendarTrigger: 'Waehlen Sie einen Tag im Kalender',
+    step4CalPrevMonth: 'Voriger Monat',
+    step4CalNextMonth: 'Naechster Monat',
     step4CustomSummary: 'Individueller Starttermin — wird mit der Beratung abgestimmt',
     step5lead: 'Kontakt',
     step5Title: 'Geben Sie Ihre Kontaktdaten ein',
@@ -384,6 +458,9 @@ const copy = {
     step4NeedCustomDate: 'Please choose your preferred start date below.',
     step4PickDateLabel: 'Your preferred start date',
     step4PickDateHint: 'The exact date can be confirmed with an advisor.',
+    step4CalendarTrigger: 'Pick a day in the calendar',
+    step4CalPrevMonth: 'Previous month',
+    step4CalNextMonth: 'Next month',
     step4CustomSummary: 'Custom start date — to be confirmed with an advisor',
     step5lead: 'Contact',
     step5Title: 'Enter your contact details',
@@ -512,6 +589,9 @@ const copy = {
     step4NeedCustomDate: 'Por favor elige una fecha de inicio abajo.',
     step4PickDateLabel: 'Tu fecha de inicio deseada',
     step4PickDateHint: 'La fecha definitiva se confirma con un asesor.',
+    step4CalendarTrigger: 'Elige un día en el calendario',
+    step4CalPrevMonth: 'Mes anterior',
+    step4CalNextMonth: 'Mes siguiente',
     step4CustomSummary: 'Fecha personalizada — se confirma con un asesor',
     step5lead: 'Contacto',
     step5Title: 'Introduce tus datos de contacto',
@@ -577,6 +657,10 @@ const copy = {
 };
 const t = copy[lang as keyof typeof copy] ?? copy.tr;
 const programHint = programHintByLang[lang as keyof typeof programHintByLang] ?? programHintByLang.tr;
+type QuoteCardLang = keyof typeof programCardMetaByLang;
+const quoteCardLang: QuoteCardLang =
+  lang === 'de' || lang === 'en' || lang === 'es' ? lang : 'tr';
+const programCardMeta = programCardMetaByLang[quoteCardLang];
 const step3Json = JSON.stringify({
   teachersInGroup: t.teachersInGroup,
   slotMorningTitle: t.slotMorningTitle,
@@ -606,20 +690,31 @@ const step4Json = JSON.stringify({
   <script type="application/json" id={pw('pwStep3Json')} set:html={step3Json} />
   <script type="application/json" id={pw('pwStep4Json')} set:html={step4Json} />
 <div class={`qx-page-bg ${quoteMode === 'standalone' ? 'qx-page-bg--standalone' : 'qx-page-bg--embedded'} ${modalMode ? 'qx-page-bg--modal' : ''}`}>
-<section class="qx qx-layout-flow" id={pw('pwRoot')} data-qx-mode={quoteMode}>
+<section class="qx qx-layout-flow" id={pw('pwRoot')} data-qx-mode={quoteMode} data-qx-active-step="1">
   <header class="qx-wiz-header">
     <div class="qx-wiz-header__top">
       <div class="qx-wiz-brand qx-wiz-brand--logo">
         <img src="/German_logo.webp" alt="" class="qx-wiz-logo" width="48" height="48" loading="lazy" decoding="async" />
       </div>
 
-      <div class="qx-step-track" aria-hidden="true">
-        {[1, 2, 3, 4, 5].map((n) => (
-          <div class="qx-step-pill">
-            <span class="qx-dot" data-qx-dot={n}>{n}</span>
-            <span class="qx-step-pill__label">{t.stepLabels[n - 1]}</span>
-          </div>
-        ))}
+      <div class="qx-step-track-wrap">
+        <button
+          type="button"
+          class="qx-wiz-header-back"
+          data-pw-header-back
+          hidden
+          aria-label={t.planBack}
+        >
+          <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        </button>
+        <div class="qx-step-track" aria-hidden="true">
+          {[1, 2, 3, 4, 5].map((n) => (
+            <div class="qx-step-pill">
+              <span class="qx-dot" data-qx-dot={n}>{n}</span>
+              <span class="qx-step-pill__label">{t.stepLabels[n - 1]}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div class="qx-wiz-status qx-wiz-status--box">
@@ -672,6 +767,7 @@ const step4Json = JSON.stringify({
       data-weekdays-short={t.weekdaysShort}
       data-weekend-short={t.weekendShort}
       data-need-level-hint={t.needLevelHint}
+      data-calendar-trigger-label={t.step4CalendarTrigger}
     >
       <input type="hidden" name="formType" value="price-quote" />
       <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
@@ -699,7 +795,8 @@ const step4Json = JSON.stringify({
             </header>
             <div class="qx-program-grid qx-strip qx-strip--programs">
               {t.programs.map((p, i) => {
-                const meta = programCardMeta[p.quoteTrack as keyof typeof programCardMeta] ?? programCardMeta.intensive;
+                const meta =
+                  programCardMeta[p.quoteTrack as keyof typeof programCardMeta] ?? programCardMeta['intensive-de'];
                 return (
                   <button type="button" class={`qx-card qx-card--program qx-card--${i + 1}`} data-program={p.program} data-program-label={p.label} data-intensive-type={p.intensiveType} data-quote-track={p.quoteTrack}>
                     <span class="qx-card-bg" style={`--qx-img:url('${p.image}')`} aria-hidden="true" />
@@ -708,21 +805,21 @@ const step4Json = JSON.stringify({
                         <strong class="qx-card-title">{p.label}</strong>
                         <span class="qx-card-go" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
                       </span>
-                      <span class="qx-card-badges">
-                        {meta.badges.map((badge) => <span class="qx-card-badge">{badge}</span>)}
-                      </span>
-                      <span class="qx-card-meta">
-                        <span class="qx-card-meta-block">
-                          <span class="qx-card-chip-row">
-                            {meta.levels.map((lv) => <span class="qx-card-chip">{lv}</span>)}
-                          </span>
-                        </span>
-                        <span class="qx-card-meta-block">
-                          <span class="qx-card-chip-row">
-                            {meta.infos.map((info) => <span class="qx-card-chip">{info}</span>)}
-                          </span>
-                        </span>
-                      </span>
+                      <div class="qx-card-program-badges">
+                        <div class="qx-card-badges qx-card-badges--highlights" role="list">
+                          {meta.highlights.map((h) => (
+                            <span class="qx-card-badge qx-card-badge--hi" role="listitem">{h}</span>
+                          ))}
+                        </div>
+                        <div class="qx-card-badges qx-card-badges--meta" role="list">
+                          {meta.levels.map((lv) => (
+                            <span class="qx-card-badge qx-card-badge--meta" role="listitem">{lv}</span>
+                          ))}
+                          {meta.infos.map((info) => (
+                            <span class="qx-card-badge qx-card-badge--meta" role="listitem">{info}</span>
+                          ))}
+                        </div>
+                      </div>
                     </span>
                   </button>
                 );
@@ -799,6 +896,12 @@ const step4Json = JSON.stringify({
                 <p class="qx-question-note">{t.step4Subtitle}</p>
               </div>
             </header>
+            <footer class="qx-step4-footer qx-step4-footer--top">
+              <p class="qx-step4-trust"><i class="fas fa-shield-alt" aria-hidden="true"></i> {t.step4Trust}</p>
+              <button type="button" class="qx-step4-continue" data-pw-step4-continue>
+                {t.step4Continue} <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </button>
+            </footer>
             <div class="qx-step4-grid">
               <article class="qx-step4-card qx-step4-card--presets">
                 <div class="qx-step4-card__head">
@@ -855,16 +958,38 @@ const step4Json = JSON.stringify({
                   </button>
                 </div>
                 <div class="qx-step4-custom-picker-panel" id={pw('pwStep4CustomPicker')} role="group" aria-label={t.step4PickDateLabel}>
-                  <label class="qx-step4-picker-label-block" for={pw('pwCustomDateInput')}>
-                    <span class="qx-step4-picker-lead">{t.step4PickDateLabel}</span>
-                    <input
-                      type="date"
-                      id={pw('pwCustomDateInput')}
-                      class="qx-step4-date-input qx-step4-date-input--panel"
-                      autocomplete="off"
-                      max="2030-12-31"
-                    />
-                  </label>
+                  <div class="qx-step4-cal-surface">
+                    <header class="qx-step4-cal-header">
+                      <span class="qx-step4-picker-lead" id={pw('pwCustomDateLead')}>{t.step4PickDateLabel}</span>
+                      <p class="qx-step4-inline-cal-summary" aria-live="polite">
+                        <span data-pw-step4-calendar-trigger-label>{t.step4CalendarTrigger}</span>
+                      </p>
+                    </header>
+                    <input type="hidden" id={pw('pwCustomDateInput')} />
+                    <div class="qx-inline-cal" data-pw-inline-cal aria-labelledby={pw('pwCustomDateLead')}>
+                      <div class="qx-inline-cal__nav">
+                        <button
+                          type="button"
+                          class="qx-inline-cal__nav-btn"
+                          data-pw-cal-prev
+                          aria-label={t.step4CalPrevMonth}
+                        >
+                          <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                        </button>
+                        <span class="qx-inline-cal__monthyear" data-pw-cal-monthyear></span>
+                        <button
+                          type="button"
+                          class="qx-inline-cal__nav-btn"
+                          data-pw-cal-next
+                          aria-label={t.step4CalNextMonth}
+                        >
+                          <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                      <div class="qx-inline-cal__weekdays" data-pw-cal-weekdays></div>
+                      <div class="qx-inline-cal__grid" data-pw-cal-grid role="grid"></div>
+                    </div>
+                  </div>
                   <p class="qx-step4-date-hint">{t.step4PickDateHint}</p>
                   <button type="button" class="qx-step4-custom-back" data-pw-step4-custom-back>
                     <i class="fas fa-arrow-left" aria-hidden="true"></i> {t.planBack}
@@ -873,12 +998,6 @@ const step4Json = JSON.stringify({
               </article>
             </div>
             <p class="qx-step4-error" id={pw('pwStep4Error')} hidden role="alert"></p>
-            <footer class="qx-step4-footer">
-              <p class="qx-step4-trust"><i class="fas fa-shield-alt" aria-hidden="true"></i> {t.step4Trust}</p>
-              <button type="button" class="qx-step4-continue" data-pw-step4-continue>
-                {t.step4Continue} <i class="fas fa-arrow-right" aria-hidden="true"></i>
-              </button>
-            </footer>
           </div>
         </div>
 
@@ -1030,12 +1149,19 @@ const step4Json = JSON.stringify({
     return 'tr-TR';
   }
 
+  /** Sol liste: yalnızca ay + yıl (gün yok); ISO değeri tam tarih kalır */
   function formatPresetStartLabels(iso: string, lang: string) {
     const d = new Date(`${iso}T12:00:00`);
     const loc = localeForLang(lang);
-    const long = new Intl.DateTimeFormat(loc, { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
-    const short = new Intl.DateTimeFormat(loc, { day: '2-digit', month: '2-digit', year: '2-digit' }).format(d);
+    const long = new Intl.DateTimeFormat(loc, { month: 'long', year: 'numeric' }).format(d);
+    const short = new Intl.DateTimeFormat(loc, { month: 'short', year: 'numeric' }).format(d);
     return { long, short };
+  }
+
+  function formatFullCustomStartLabel(iso: string, lang: string) {
+    const d = new Date(`${iso}T12:00:00`);
+    const loc = localeForLang(lang);
+    return new Intl.DateTimeFormat(loc, { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' }).format(d);
   }
 
   function escAttr(s: string) {
@@ -1052,25 +1178,35 @@ const step4Json = JSON.stringify({
     return name.slice(0, 2).toUpperCase();
   }
 
+  /** Sabah / öğle / akşam — Font Awesome (site ile aynı CDN); yaygın “günün zamanı” ikon kalıbı */
+  function buildStep3PeriodVisual(theme: 'morning' | 'afternoon' | 'evening'): string {
+    const fa: Record<typeof theme, string> = {
+      morning: 'cloud-sun',
+      afternoon: 'sun',
+      evening: 'cloud-moon'
+    };
+    return `<span class="qx-time-slot__icon" aria-hidden="true"><i class="fas fa-${fa[theme]}"></i></span>`;
+  }
+
   function buildTimeSlots(formEl: HTMLFormElement, level: string, startMonth: number, s3: Step3Copy) {
     const weekdaysShort = formEl.dataset.weekdaysShort || 'Mon, Tue, Wed, Thu';
     const startDate = `31.${String(startMonth).padStart(2, '0')}.2026`;
-    const teacherPool = ['Anna Keller', 'Murat Yildiz', 'Sofia Becker', 'Deniz Acar', 'Lukas Weber', 'Elif Demir'];
+    const teacherPool = ['Anna Keller', 'Clara Hoffmann', 'Sofia Becker', 'Jonas Fischer', 'Lukas Weber', 'Marie Neumann'];
     const teachersInGroup = s3.teachersInGroup || 'Teachers';
     const slotConfigs = [
-      { id: 'phy-morning', theme: 'morning' as const, icon: 'fa-sun', titleKey: 'slotMorningTitle', timeKey: 'slotMorningTime', f1: 'slotMorningF1', f2: 'slotMorningF2', f3: 'slotMorningF3' },
-      { id: 'phy-afternoon', theme: 'afternoon' as const, icon: 'fa-cloud-sun', titleKey: 'slotAfternoonTitle', timeKey: 'slotAfternoonTime', f1: 'slotAfternoonF1', f2: 'slotAfternoonF2', f3: 'slotAfternoonF3' },
-      { id: 'phy-evening', theme: 'evening' as const, icon: 'fa-moon', titleKey: 'slotEveningTitle', timeKey: 'slotEveningTime', f1: 'slotEveningF1', f2: 'slotEveningF2', f3: 'slotEveningF3' }
+      { id: 'phy-morning', theme: 'morning' as const, titleKey: 'slotMorningTitle', timeKey: 'slotMorningTime' },
+      { id: 'phy-afternoon', theme: 'afternoon' as const, titleKey: 'slotAfternoonTitle', timeKey: 'slotAfternoonTime' },
+      { id: 'phy-evening', theme: 'evening' as const, titleKey: 'slotEveningTitle', timeKey: 'slotEveningTime' }
     ];
     return slotConfigs.map((slot, slotIdx) => {
       const title = s3[slot.titleKey] || slot.id;
       const time = s3[slot.timeKey] || '';
-      const bullets = [s3[slot.f1], s3[slot.f2], s3[slot.f3]].filter(Boolean) as string[];
+      const periodVisualHtml = buildStep3PeriodVisual(slot.theme);
       const base = (slotIdx * 2 + level.charCodeAt(0)) % teacherPool.length;
       const teacherNames = [0, 1, 2, 3].map((i) => teacherPool[(base + i) % teacherPool.length]);
       const teachers = teacherNames.map((name) => ({ name }));
       const displayTitle = `${level} · ${title}`;
-      return { ...slot, title, time, bullets, teachers, teachersInGroup, weekdaysShort, startDate, displayTitle };
+      return { ...slot, title, time, teachers, teachersInGroup, weekdaysShort, startDate, displayTitle, periodVisualHtml };
     });
   }
 
@@ -1089,6 +1225,7 @@ const step4Json = JSON.stringify({
     const eyebrow = root.querySelector<HTMLElement>('[data-pw-eyebrow]');
     const bar = root.querySelector<HTMLElement>('[data-pw-bar]');
     const dots = [...root.querySelectorAll<HTMLElement>('[data-qx-dot]')];
+    const headerBack = root.querySelector<HTMLButtonElement>('[data-pw-header-back]');
 
     const hProgram = q('pwProgram') as HTMLInputElement;
     const hProgramLabel = q('pwProgramLabel') as HTMLInputElement;
@@ -1114,11 +1251,11 @@ const step4Json = JSON.stringify({
     const langCode = (form.querySelector<HTMLInputElement>('input[name="lang"]')?.value || 'tr').toLowerCase();
     const LEVEL_META_BY_LANG: Record<string, Record<string, { title: string; desc: string; icon: string }>> = {
       tr: {
-        A1: { title: 'Baslangic', desc: 'Kendini tanit, temel ifadeleri kullan.', icon: 'far fa-comments' },
-        A2: { title: 'Temel Iletisim', desc: 'Gunluk konularda daha rahat iletisim kur.', icon: 'far fa-comment-dots' },
-        B1: { title: 'Gunluk Hayat', desc: 'Gunluk yasamda bagimsizca ilerle.', icon: 'fas fa-bicycle' },
-        B2: { title: 'Akademik & Profesyonel', desc: 'Egitim ve is icin daha guclu ifade kur.', icon: 'fas fa-laptop' },
-        C1: { title: 'Ileri Seviye', desc: 'Universite ve ileri seviye hedeflere hazirlan.', icon: 'fas fa-graduation-cap' }
+        A1: { title: 'Başlangıç', desc: 'Kendini tanıt, temel ifadeleri kullan.', icon: 'far fa-comments' },
+        A2: { title: 'Temel iletişim', desc: 'Günlük konularda daha rahat iletişim kur.', icon: 'far fa-comment-dots' },
+        B1: { title: 'Günlük hayat', desc: 'Günlük yaşamda bağımsızca ilerle.', icon: 'fas fa-bicycle' },
+        B2: { title: 'Akademik ve profesyonel', desc: 'Eğitim ve iş için daha güçlü ifade kur.', icon: 'fas fa-laptop' },
+        C1: { title: 'İleri seviye', desc: 'Üniversite ve ileri seviye hedeflere hazırlan.', icon: 'fas fa-graduation-cap' }
       },
       de: {
         A1: { title: 'Einstieg', desc: 'Stelle dich vor und nutze einfache Ausdruecke.', icon: 'far fa-comments' },
@@ -1216,10 +1353,20 @@ const step4Json = JSON.stringify({
       });
     }
     function setStepChrome(n: number) {
+      root.dataset.qxActiveStep = String(n);
       if (eyebrow) eyebrow.textContent = `${pad2(n)} / ${pad2(total)}`;
       syncDots(n);
       if (bar) bar.style.transform = `scaleX(${(n - 1) / (total - 1)})`;
+      if (headerBack) {
+        const show = n > 1;
+        headerBack.hidden = !show;
+        headerBack.disabled = !show;
+      }
     }
+    headerBack?.addEventListener('click', () => {
+      if (step > 1) goTo(step - 1);
+    });
+
     function goTo(next: number) {
       if (next < 1 || next > total || next === step) return;
       const from = panels[step - 1];
@@ -1257,16 +1404,161 @@ const step4Json = JSON.stringify({
       step4ErrorEl.hidden = false;
     }
 
-    function applyStep4DateMin() {
-      if (!customDateInput) return;
-      const d = new Date();
-      d.setHours(0, 0, 0, 0);
-      customDateInput.min = `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+    const inlineCalRoot = form.querySelector<HTMLElement>('[data-pw-inline-cal]');
+    const calMonthYearEl = form.querySelector<HTMLElement>('[data-pw-cal-monthyear]');
+    const calWeekdaysEl = form.querySelector<HTMLElement>('[data-pw-cal-weekdays]');
+    const calGridEl = form.querySelector<HTMLElement>('[data-pw-cal-grid]');
+    const calPrevBtn = form.querySelector<HTMLButtonElement>('[data-pw-cal-prev]');
+    const calNextBtn = form.querySelector<HTMLButtonElement>('[data-pw-cal-next]');
+
+    let calViewYear = new Date().getFullYear();
+    let calViewMonth = new Date().getMonth() + 1;
+
+    function step4CalendarBounds() {
+      const min = new Date();
+      min.setHours(0, 0, 0, 0);
+      const max = new Date(2030, 11, 31);
+      max.setHours(0, 0, 0, 0);
+      return { min, max };
     }
+
+    function calMonthFirst(y: number, m: number) {
+      const d = new Date(y, m - 1, 1);
+      d.setHours(0, 0, 0, 0);
+      return d;
+    }
+
+    function calIsoFromParts(y: number, m: number, day: number) {
+      return `${y}-${pad2(m)}-${pad2(day)}`;
+    }
+
+    function calClampViewMonth() {
+      const { min, max } = step4CalendarBounds();
+      const cur = calMonthFirst(calViewYear, calViewMonth);
+      const minM = calMonthFirst(min.getFullYear(), min.getMonth() + 1);
+      const maxM = calMonthFirst(max.getFullYear(), max.getMonth() + 1);
+      if (cur < minM) {
+        calViewYear = min.getFullYear();
+        calViewMonth = min.getMonth() + 1;
+      } else if (cur > maxM) {
+        calViewYear = max.getFullYear();
+        calViewMonth = max.getMonth() + 1;
+      }
+    }
+
+    function fillCalWeekdayHeaders() {
+      if (!calWeekdaysEl) return;
+      calWeekdaysEl.innerHTML = '';
+      const loc = localeForLang(langCode);
+      for (let i = 0; i < 7; i++) {
+        const dd = new Date(2024, 0, 1 + i);
+        const el = document.createElement('div');
+        el.className = 'qx-inline-cal__weekday';
+        el.textContent = new Intl.DateTimeFormat(loc, { weekday: 'narrow' }).format(dd);
+        calWeekdaysEl.appendChild(el);
+      }
+    }
+
+    function renderInlineCalendar() {
+      if (!calGridEl || !calMonthYearEl) return;
+      calClampViewMonth();
+      const { min, max } = step4CalendarBounds();
+      const loc = localeForLang(langCode);
+      calMonthYearEl.textContent = new Intl.DateTimeFormat(loc, { month: 'long', year: 'numeric' }).format(
+        new Date(calViewYear, calViewMonth - 1, 1)
+      );
+
+      const minM = calMonthFirst(min.getFullYear(), min.getMonth() + 1);
+      const maxM = calMonthFirst(max.getFullYear(), max.getMonth() + 1);
+      const curM = calMonthFirst(calViewYear, calViewMonth);
+      if (calPrevBtn) calPrevBtn.disabled = curM.getTime() <= minM.getTime();
+      if (calNextBtn) calNextBtn.disabled = curM.getTime() >= maxM.getTime();
+
+      if (calWeekdaysEl && calWeekdaysEl.childElementCount === 0) fillCalWeekdayHeaders();
+
+      const first = new Date(calViewYear, calViewMonth - 1, 1);
+      const startPad = (first.getDay() + 6) % 7;
+      const daysInMonth = new Date(calViewYear, calViewMonth, 0).getDate();
+      const selectedIso = customDateInput?.value?.trim() || '';
+
+      calGridEl.innerHTML = '';
+      let dayNum = 1;
+      for (let i = 0; i < 42; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'qx-inline-cal__cell';
+        if (i < startPad || dayNum > daysInMonth) {
+          const pad = document.createElement('span');
+          pad.className = 'qx-inline-cal__pad';
+          pad.setAttribute('aria-hidden', 'true');
+          cell.appendChild(pad);
+        } else {
+          const iso = calIsoFromParts(calViewYear, calViewMonth, dayNum);
+          const cellDate = new Date(calViewYear, calViewMonth - 1, dayNum);
+          cellDate.setHours(0, 0, 0, 0);
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'qx-inline-cal__day';
+          btn.textContent = String(dayNum);
+          btn.dataset.calDay = iso;
+          if (cellDate < min || cellDate > max) {
+            btn.disabled = true;
+            btn.classList.add('is-out');
+          }
+          if (iso === selectedIso) btn.classList.add('is-selected');
+          cell.appendChild(btn);
+          dayNum++;
+        }
+        calGridEl.appendChild(cell);
+      }
+    }
+
+    function shiftInlineCalMonth(delta: number) {
+      calViewMonth += delta;
+      if (calViewMonth > 12) {
+        calViewMonth = 1;
+        calViewYear++;
+      }
+      if (calViewMonth < 1) {
+        calViewMonth = 12;
+        calViewYear--;
+      }
+      renderInlineCalendar();
+    }
+
+    function syncCalViewToSelectionOrMin() {
+      const { min } = step4CalendarBounds();
+      calViewYear = min.getFullYear();
+      calViewMonth = min.getMonth() + 1;
+      const sel = customDateInput?.value?.trim();
+      if (sel && /^\d{4}-\d{2}-\d{2}$/.test(sel)) {
+        const y = parseInt(sel.slice(0, 4), 10);
+        const m = parseInt(sel.slice(5, 7), 10);
+        if (!Number.isNaN(y) && !Number.isNaN(m)) {
+          calViewYear = y;
+          calViewMonth = m;
+        }
+      }
+      calClampViewMonth();
+    }
+
+    calGridEl?.addEventListener('click', (ev) => {
+      const hit = (ev.target as HTMLElement).closest('button[data-cal-day]');
+      if (!(hit instanceof HTMLButtonElement) || hit.disabled) return;
+      const iso = hit.dataset.calDay;
+      if (!iso || !customDateInput) return;
+      customDateInput.value = iso;
+      syncCustomDateHiddenFromInput();
+      updateCalendarTriggerLabel();
+      hideStep4Error();
+      renderInlineCalendar();
+    });
 
     function hideCustomDatePicker() {
       step4CustomCard?.classList.remove('is-picking-custom');
       if (customDateInput) customDateInput.value = '';
+      syncCalViewToSelectionOrMin();
+      renderInlineCalendar();
+      updateCalendarTriggerLabel();
     }
 
     function syncCustomDateHiddenFromInput() {
@@ -1278,7 +1570,15 @@ const step4Json = JSON.stringify({
         return;
       }
       hStartDateIso.value = iso;
-      hStartDateLabel.value = formatPresetStartLabels(iso, langCode).long;
+      hStartDateLabel.value = formatFullCustomStartLabel(iso, langCode);
+    }
+
+    function updateCalendarTriggerLabel() {
+      const span = form.querySelector('[data-pw-step4-calendar-trigger-label]');
+      if (!(span instanceof HTMLElement)) return;
+      const iso = customDateInput?.value?.trim() || '';
+      const fallback = (form.dataset.calendarTriggerLabel || '').trim();
+      span.textContent = iso ? formatFullCustomStartLabel(iso, langCode) : fallback;
     }
 
     function clearStep4Fields() {
@@ -1292,7 +1592,6 @@ const step4Json = JSON.stringify({
 
     function renderStep4Presets() {
       if (!step4PresetsWrap) return;
-      applyStep4DateMin();
       const groupName = `qx-preset-${S}`;
       step4PresetsWrap.innerHTML = PRESET_COURSE_START_ISOS.map((iso) => {
         const { long, short } = formatPresetStartLabels(iso, langCode);
@@ -1343,11 +1642,6 @@ const step4Json = JSON.stringify({
       hideStep4Error();
     });
 
-    customDateInput?.addEventListener('input', () => {
-      syncCustomDateHiddenFromInput();
-      hideStep4Error();
-    });
-
     form.addEventListener('click', (ev) => {
       const root = ev.target as HTMLElement;
       if (root.closest('[data-pw-step4-custom-back]')) {
@@ -1359,16 +1653,28 @@ const step4Json = JSON.stringify({
         hideStep4Error();
         return;
       }
+      if (root.closest('[data-pw-cal-prev]')) {
+        ev.preventDefault();
+        shiftInlineCalMonth(-1);
+        return;
+      }
+      if (root.closest('[data-pw-cal-next]')) {
+        ev.preventDefault();
+        shiftInlineCalMonth(1);
+        return;
+      }
       if (root.closest('[data-pw-step4-custom]')) {
         form.querySelectorAll<HTMLInputElement>(`input[name="${step4PresetGroupName}"]`).forEach((r) => { r.checked = false; });
         step4CustomCard?.classList.add('is-selected', 'is-picking-custom');
         hStartDateMode.value = 'custom';
         hStartDateIso.value = '';
         hStartDateLabel.value = '';
-        applyStep4DateMin();
         if (customDateInput) customDateInput.value = '';
+        syncCalViewToSelectionOrMin();
+        renderInlineCalendar();
+        updateCalendarTriggerLabel();
         hideStep4Error();
-        customDateInput?.focus();
+        inlineCalRoot?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         return;
       }
       const go = root.closest('[data-pw-step4-continue]');
@@ -1389,7 +1695,9 @@ const step4Json = JSON.stringify({
           if (!hStartDateIso.value.trim()) {
             showStep4Error(step4Copy.step4NeedCustomDate || '');
             step4CustomCard?.classList.add('is-picking-custom');
-            customDateInput?.focus();
+            syncCalViewToSelectionOrMin();
+            renderInlineCalendar();
+            inlineCalRoot?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
             return;
           }
         }
@@ -1416,18 +1724,15 @@ const step4Json = JSON.stringify({
           ${slots
             .map(
               (slot) => `
-          <button type="button" class="qx-time-slot qx-time-slot--${slot.theme}" data-course-id="${escAttr(slot.id)}" data-course-title="${escAttr(slot.displayTitle)}">
-            <div class="qx-time-slot__accent" aria-hidden="true"></div>
-            <div class="qx-time-slot__head">
-              <span class="qx-time-slot__icon"><i class="fas ${slot.icon}" aria-hidden="true"></i></span>
-              <div class="qx-time-slot__head-text">
-                <strong class="qx-time-slot__title">${escHtml(slot.title)}</strong>
-                <span class="qx-time-slot__time">${escHtml(slot.time)}</span>
+          <button type="button" class="qx-time-slot qx-time-slot--${slot.theme}" data-period="${slot.theme}" data-course-id="${escAttr(slot.id)}" data-course-title="${escAttr(slot.displayTitle)}" aria-label="${escAttr(`${slot.title}, ${slot.time}`)}">
+            <div class="qx-time-slot__period" aria-hidden="true">
+              ${slot.periodVisualHtml}
+              <div class="qx-time-slot__period-copy">
+                <span class="qx-time-slot__period-label">${escHtml(slot.title)}</span>
+                <span class="qx-time-slot__period-clock">${escHtml(slot.time)}</span>
               </div>
             </div>
-            <ul class="qx-time-slot__features">
-              ${slot.bullets.map((b) => `<li><i class="fas fa-check" aria-hidden="true"></i> ${escHtml(b)}</li>`).join('')}
-            </ul>
+            <div class="qx-time-slot__main">
             <div class="qx-time-slot__teachers">
               <p class="qx-time-slot__teachers-kicker">${teachersK}</p>
               <ul class="qx-time-slot__teacher-list">
@@ -1448,6 +1753,7 @@ const step4Json = JSON.stringify({
             <div class="qx-time-slot__foot">
               <span class="qx-time-slot__meta"><strong>${startLab}:</strong> ${escHtml(slot.startDate)} · ${escHtml(slot.weekdaysShort)}</span>
               <span class="qx-time-slot__cta">${bookNow}</span>
+            </div>
             </div>
           </button>`
             )
@@ -1631,6 +1937,7 @@ const step4Json = JSON.stringify({
       }
     });
 
+    updateCalendarTriggerLabel();
     setStepChrome(1);
   }
 
