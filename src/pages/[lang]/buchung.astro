@@ -2,7 +2,6 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import '../../styles/pages/buchung.css';
 import { coursePricing } from '../../data/coursePricing.ts';
-import { VALID_COUPONS } from '../../data/coupons.ts';
 import { getStartDateOptionsMonthYear } from '../../utils/coursePricingHelper';
 import { getDatenschutzPath, getAgbPath } from '../../utils/pathHelpers';
 
@@ -113,7 +112,6 @@ const t = {
         hearAboutGoogle: "Google",
         hearAboutInstagram: "Instagram / sosyal medya",
         hearAboutOther: "Diğer",
-        agencyCouponPlaceholder: "Acenta kupon kodu",
         friendNameLabel: "Arkadaşınızın adı soyadı",
         friendNamePlaceholder: "Ad Soyad",
         telcPrepLabel: "+ Telc-Prep",
@@ -177,11 +175,6 @@ const t = {
         continueBtn: "Devam Et",
         courseInfo: "Kurs Bilgileri",
         courseInfoDesc: "Program ve tarih bilgilerinizi seçin",
-        couponLabel: "İndirim kuponu",
-        couponPlaceholder: "Kupon kodu girin",
-        couponApply: "Uygula",
-        couponSuccess: "%10 indirim uygulandı",
-        couponInvalid: "Geçersiz kupon",
         duration: "Süre",
         durationPlaceholder: "Süre seçiniz",
         weeks: "Hafta",
@@ -331,7 +324,6 @@ const t = {
         hearAboutGoogle: "Google",
         hearAboutInstagram: "Instagram / soziale Medien",
         hearAboutOther: "Sonstiges",
-        agencyCouponPlaceholder: "Agentur-Gutscheincode",
         friendNameLabel: "Name der Person",
         friendNamePlaceholder: "Vor- und Nachname",
         telcPrepLabel: "+ Telc-Prep",
@@ -397,11 +389,6 @@ const t = {
         optionalServices: "Zusatzleistungen",
         visaGuaranteePrice: "Einladungsschreiben (+50 €)",
         airportPickupPrice: "Flughafenabholung (100 €)",
-        couponLabel: "Rabatt-Gutschein",
-        couponPlaceholder: "Gutscheincode eingeben",
-        couponApply: "Anwenden",
-        couponSuccess: "10 % Rabatt angewendet",
-        couponInvalid: "Ungültiger Gutschein",
         duration: "Dauer",
         durationPlaceholder: "Dauer wählen",
         weeks: "Wochen",
@@ -559,7 +546,6 @@ const t = {
         hearAboutGoogle: "Google",
         hearAboutInstagram: "Instagram / social media",
         hearAboutOther: "Other",
-        agencyCouponPlaceholder: "Agency coupon code",
         friendNameLabel: "Friend's full name",
         friendNamePlaceholder: "Full name",
         telcPrepLabel: "+ Telc-Prep",
@@ -625,11 +611,6 @@ const t = {
         optionalServices: "Additional services",
         visaGuaranteePrice: "Letter of invitation (+50 €)",
         airportPickupPrice: "Airport pickup (100 €)",
-        couponLabel: "Discount coupon",
-        couponPlaceholder: "Enter coupon code",
-        couponApply: "Apply",
-        couponSuccess: "10% discount applied",
-        couponInvalid: "Invalid coupon",
         duration: "Duration",
         durationPlaceholder: "Select duration",
         weeks: "Weeks",
@@ -787,7 +768,6 @@ const t = {
         hearAboutGoogle: "Google",
         hearAboutInstagram: "Instagram / redes sociales",
         hearAboutOther: "Otro",
-        agencyCouponPlaceholder: "Código de cupón de agencia",
         friendNameLabel: "Nombre completo del amigo/a",
         friendNamePlaceholder: "Nombre y apellidos",
         telcPrepLabel: "+ Telc-Prep",
@@ -853,11 +833,6 @@ const t = {
         optionalServices: "Servicios adicionales",
         visaGuaranteePrice: "Carta de invitación (+50 €)",
         airportPickupPrice: "Recogida en aeropuerto (100 €)",
-        couponLabel: "Cupón de descuento",
-        couponPlaceholder: "Introduzca el código",
-        couponApply: "Aplicar",
-        couponSuccess: "10% de descuento aplicado",
-        couponInvalid: "Cupón no válido",
         duration: "Duración",
         durationPlaceholder: "Seleccione duración",
         weeks: "Semanas",
@@ -1038,7 +1013,7 @@ const bundleNearHintCopy = {
                         <!-- Form Section -->
                         <div class="form-section">
                             <!-- Booking Form -->
-                            <form id="booking-form" class="booking-form" data-coupon-success={translations.couponSuccess} data-coupon-invalid={translations.couponInvalid}>
+                            <form id="booking-form" class="booking-form">
                                 <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
                                 <input type="hidden" name="amountInCents" id="amount-in-cents" value="0" />
                                 <input type="hidden" name="promo-bundle" id="promo-bundle-input" value="" />
@@ -1245,10 +1220,6 @@ const bundleNearHintCopy = {
                                             <option value="instagram">{translations.hearAboutInstagram}</option>
                                             <option value="other">{translations.hearAboutOther}</option>
                                         </select>
-                                        <div id="hear-about-agency-fields" class="hear-about-extra" style="display: none;">
-                                            <label for="agency-coupon-input">{translations.agencyCouponPlaceholder}</label>
-                                            <input type="text" id="agency-coupon-input" name="agency-coupon" class="booking-text-input" autocomplete="off" placeholder={translations.couponPlaceholder} />
-                                        </div>
                                         <div id="hear-about-friend-fields" class="hear-about-extra" style="display: none;">
                                             <label for="friend-referrer-name">{translations.friendNameLabel} *</label>
                                             <input type="text" id="friend-referrer-name" name="friend-referrer-name" class="booking-text-input" placeholder={translations.friendNamePlaceholder} />
@@ -1350,10 +1321,6 @@ const bundleNearHintCopy = {
                                             <span class="price-item-label"></span>
                                             <span class="price-item-value">-</span>
                                         </div>
-                                        <div class="price-item price-item-coupon" id="coupon-discount-row" style="display: none;">
-                                            <span class="price-item-label">{translations.couponSuccess}</span>
-                                            <span class="price-item-value" id="coupon-discount-value">-</span>
-                                        </div>
                                         <div class="price-item price-item-coupon" id="bundle-discount-row" style="display: none;">
                                             <span class="price-item-label">{translations.bundleDiscountLabel}</span>
                                             <span class="price-item-value" id="bundle-discount-value">-</span>
@@ -1376,10 +1343,6 @@ const bundleNearHintCopy = {
                                     </div>
                                 </div>
 
-                                <input type="hidden" id="coupon-input" name="coupon" value="" />
-                                <input type="hidden" name="couponDiscountPercent" id="coupon-discount-percent" value="" />
-                                <p class="coupon-message" id="coupon-message" aria-live="polite" style="display: none;"></p>
-                                
                                 <!-- Price Total Container -->
                                 <div class="price-total-container">
                                     <div class="price-total">
@@ -1395,7 +1358,7 @@ const bundleNearHintCopy = {
         </div>
     </section>
 
-    <script define:vars={{ pricingData, lang, validCoupons: VALID_COUPONS, pathwayBundlePrefill, pathwayBundleCourseLabel, bookingBundlePromoLabels, bundlePromoInfoboxTexts, bundleNearHintCopy }}>
+    <script define:vars={{ pricingData, lang, pathwayBundlePrefill, pathwayBundleCourseLabel, bookingBundlePromoLabels, bundlePromoInfoboxTexts, bundleNearHintCopy }}>
         // Import security utilities
         const { checkRateLimit, sanitizeObject, validateEmail, validatePhone, checkHoneypot } = (() => {
             // Rate limiting
@@ -2263,55 +2226,11 @@ const bundleNearHintCopy = {
                 });
             });
 
-            // ===== COUPON =====
-            let appliedCoupon = null;
-            const couponInput = document.getElementById('coupon-input');
-            const couponApplyBtn = document.getElementById('coupon-apply-btn');
-            const couponMessage = document.getElementById('coupon-message');
-            const couponDiscountRow = document.getElementById('coupon-discount-row');
-            const couponDiscountValue = document.getElementById('coupon-discount-value');
-            const couponDiscountPercentInput = document.getElementById('coupon-discount-percent');
-            const formEl = document.getElementById('booking-form');
-            const couponInvalidText = (formEl && formEl.dataset.couponInvalid) ? formEl.dataset.couponInvalid : (lang === 'tr' ? 'Geçersiz kupon' : lang === 'de' ? 'Ungültiger Gutschein' : lang === 'es' ? 'Cupón no válido' : 'Invalid coupon');
-            function getCouponSuccessText(pct) {
-                return lang === 'tr' ? '%' + pct + ' indirim uygulandı' : lang === 'de' ? pct + ' % Rabatt angewendet' : lang === 'es' ? pct + '% de descuento aplicado' : pct + '% discount applied';
-            }
-            function applyCoupon() {
-                const raw = couponInput?.value?.trim() || '';
-                const code = raw.toUpperCase();
-                const found = Array.isArray(validCoupons) && validCoupons.find(function(c) { return (c.code || '').toUpperCase() === code; });
-                if (found) {
-                    appliedCoupon = found;
-                    const pct = found.discountPercent || 0;
-                    const successText = getCouponSuccessText(pct);
-                    if (couponDiscountPercentInput) couponDiscountPercentInput.value = String(pct);
-                    if (couponMessage) { couponMessage.textContent = successText; couponMessage.style.display = 'block'; couponMessage.classList.remove('coupon-message-error'); couponMessage.classList.add('coupon-message-success'); }
-                    const couponRowLabel = document.querySelector('#coupon-discount-row .price-item-label');
-                    if (couponRowLabel) couponRowLabel.textContent = successText;
-                    if (couponInput) couponInput.disabled = true;
-                    if (couponApplyBtn) couponApplyBtn.disabled = true;
-                    updatePrice();
-                } else {
-                    appliedCoupon = null;
-                    if (couponDiscountPercentInput) couponDiscountPercentInput.value = '';
-                    if (couponMessage) { couponMessage.textContent = couponInvalidText; couponMessage.style.display = 'block'; couponMessage.classList.remove('coupon-message-success'); couponMessage.classList.add('coupon-message-error'); }
-                    if (couponDiscountRow) couponDiscountRow.style.display = 'none';
-                    updatePrice();
-                }
-            }
-            if (couponApplyBtn) couponApplyBtn.addEventListener('click', applyCoupon);
-            if (couponInput) couponInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); applyCoupon(); } });
-            if (couponInput?.value?.trim() && Array.isArray(validCoupons) && validCoupons.find(function(c) { return (c.code || '').toUpperCase() === couponInput.value.trim().toUpperCase(); })) {
-                setTimeout(applyCoupon, 100);
-            }
-
             const hearAboutSelect = document.getElementById('hear-about-select');
             function toggleHearAboutExtras() {
                 const v = hearAboutSelect?.value || '';
-                const ag = document.getElementById('hear-about-agency-fields');
                 const fr = document.getElementById('hear-about-friend-fields');
                 const fn = document.getElementById('friend-referrer-name');
-                if (ag) ag.style.display = v === 'agency' ? 'block' : 'none';
                 if (fr) fr.style.display = v === 'friend' ? 'block' : 'none';
                 if (fn) {
                     if (v === 'friend') fn.setAttribute('required', 'required');
@@ -2321,18 +2240,6 @@ const bundleNearHintCopy = {
             if (hearAboutSelect) {
                 hearAboutSelect.addEventListener('change', toggleHearAboutExtras);
                 toggleHearAboutExtras();
-            }
-            const agencyCouponInput = document.getElementById('agency-coupon-input');
-            function syncAgencyCouponToHidden() {
-                if (!agencyCouponInput || !couponInput) return;
-                couponInput.value = agencyCouponInput.value.trim();
-                applyCoupon();
-            }
-            if (agencyCouponInput) {
-                agencyCouponInput.addEventListener('blur', syncAgencyCouponToHidden);
-                agencyCouponInput.addEventListener('keydown', function (e) {
-                    if (e.key === 'Enter') { e.preventDefault(); syncAgencyCouponToHidden(); }
-                });
             }
 
             // ===== PRICE CALCULATION =====
@@ -2462,18 +2369,9 @@ const bundleNearHintCopy = {
                     airportPriceRow.style.display = airportPickup ? 'flex' : 'none';
                 }
 
-                let couponDiscountAmount = 0;
-                if (appliedCoupon && appliedCoupon.discountPercent && effectiveCourseFromDOM > 0) {
-                    couponDiscountAmount = Math.round(effectiveCourseFromDOM * appliedCoupon.discountPercent / 100);
-                    if (couponDiscountRow) { couponDiscountRow.style.display = 'flex'; }
-                    if (couponDiscountValue) couponDiscountValue.textContent = '-' + couponDiscountAmount + ' €';
-                } else {
-                    if (couponDiscountRow) couponDiscountRow.style.display = 'none';
-                }
-
                 const visaAmount = visaNeeded ? VISA_GUARANTEE : 0;
                 const airportAmount = airportPickup ? AIRPORT_PICKUP : 0;
-                const finalTotal = Math.max(0, effectiveCourseFromDOM + visaAmount + airportAmount + accAmount - couponDiscountAmount);
+                const finalTotal = Math.max(0, effectiveCourseFromDOM + visaAmount + airportAmount + accAmount);
                 if (totalPriceElement) totalPriceElement.textContent = finalTotal + ' €';
                 const amountCentsEl = document.getElementById('amount-in-cents');
                 if (amountCentsEl) amountCentsEl.value = String(Math.round(finalTotal * 100));
@@ -2604,12 +2502,9 @@ const bundleNearHintCopy = {
                         visaGuarantee: data['visa-guarantee'] || 'no',
                         opportunity: data.opportunity || '',
                         hearAbout: data['hear-about'] || '',
-                        agencyCoupon: (data['agency-coupon'] || '').trim(),
                         friendReferrerName: (data['friend-referrer-name'] || '').trim(),
                         accommodationType: data['accommodation-type'] || 'no',
                         airportPickup: data['airport-pickup'] || 'no',
-                        coupon: (document.getElementById('coupon-input')?.value || '').trim(),
-                        couponDiscountPercent: document.getElementById('coupon-discount-percent')?.value || '',
                         message: (data.message || '').trim(),
                         termsAccepted: data['terms-accepted'] || false,
                         privacyAccepted: data['privacy-accepted'] || false,
