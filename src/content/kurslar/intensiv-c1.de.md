@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "24 Unterrichtseinheiten (UE)"
+    description: "20 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
     description: "8 Wochen"
@@ -37,7 +37,7 @@ tabs:
       title: "Intensiv-Deutschkurs C1"
       paragraphs:
         - heading: "Kursüberblick"
-          text: "Der Intensiv-Deutschkurs C1 ist ein umfassendes Programm für Lernende, die das Niveau B2 abgeschlossen haben und darauf ausgerichtet sind, ihre fortgeschrittenen Deutschkenntnisse zu entwickeln. Dieser Kurs zielt darauf ab, den Teilnehmenden Sprachkenntnisse zu vermitteln, die es ihnen ermöglichen, auf Universitätsniveau akademische Arbeiten durchzuführen und in professionellen Umgebungen fließend zu kommunizieren. Mit 24 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Lernerfahrung über 8 Wochen und umfasst insgesamt etwa 200 Unterrichtseinheiten."
+          text: "Der Intensiv-Deutschkurs C1 ist ein umfassendes Programm für Lernende, die das Niveau B2 abgeschlossen haben und darauf ausgerichtet sind, ihre fortgeschrittenen Deutschkenntnisse zu entwickeln. Dieser Kurs zielt darauf ab, den Teilnehmenden Sprachkenntnisse zu vermitteln, die es ihnen ermöglichen, auf Universitätsniveau akademische Arbeiten durchzuführen und in professionellen Umgebungen fließend zu kommunizieren. Mit 20 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Lernerfahrung über 8 Wochen und umfasst insgesamt etwa 200 Unterrichtseinheiten."
         - heading: "Zielgruppe und Voraussetzungen"
           text: "Dieser Kurs eignet sich für Lernende, die das Niveau B2 erfolgreich abgeschlossen haben. Das C1-Niveau ist eines der höchsten Niveaus beim Deutschlernen, und auf dieser Stufe können Lernende nun fast auf Muttersprachlerniveau kommunizieren. Alle, die ein Universitätsstudium in Deutschland planen, akademische Forschungen durchführen möchten, in Führungspositionen im Berufsleben arbeiten möchten oder eine professionelle Karriere in deutschsprachigen Ländern planen, können an diesem Kurs teilnehmen."
         - heading: "Kursinhalte und Lernziele"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "C1-Niveau-Inhalte"
       lessons:
-        - title: "Akademisches Deutsch"
-          description: "Universitätsniveau akademisches Deutsch"
+        - title: "Intensiv Deutsch"
+          description: "Universitätsniveau Intensiv Deutsch"
         - title: "Forschungsschreiben"
           description: "Akademische Forschungstexte schreiben"
         - title: "Professionelle Präsentation"

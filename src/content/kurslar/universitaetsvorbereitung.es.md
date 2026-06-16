@@ -79,7 +79,7 @@ tabs:
       title: "Módulos del Programa de Preparación Universitaria"
       lessons:
         - title: "Educación Intensiva en Alemán"
-          description: "Educación en alemán enfocada en comunicación, estandarizada académicamente en todos los niveles desde A1 hasta C1. 20-25 horas de clase por semana."
+          description: "Educación en alemán enfocada en comunicación, estandarizada académicamente en todos los niveles desde A1 hasta C1. 20 horas de clase por semana."
         - title: "Preparación para Exámenes (DSH, TestDaF, Goethe/TELC)"
           description: "Preparación especial para exámenes de idioma requeridos para admisión universitaria. Exámenes simulados y retroalimentación."
         - title: "Orientación de Solicitud Universitaria"

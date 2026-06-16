@@ -1,6 +1,5 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-import BundleOffersSection from '../../components/BundleOffersSection.astro';
 import IntensivePricingSection from '../../components/IntensivePricingSection.astro';
 import '../../styles/pages/fiyatlar-tarihler.css';
 import { coursePricing } from '../../data/coursePricing';
@@ -66,7 +65,7 @@ const t = {
     heroTitle: 'Campus German ile Bremen’de hedefe odaklı Almanca',
     heroText:
       'Akıllı tahta destekli sınıflar, yapılandırılmış seviye takibi ve vize uyumlu eğitim planı ile sürecini netleştiriyoruz.',
-    heroText2: 'Yoğun program, güçlü akademik altyapı ve düzenli danışmanlıkla seni bir üst seviyeye taşıyoruz.',
+    heroText2: 'Yoğun program, güçlü yoğun Almanca altyapısı ve düzenli danışmanlıkla seni bir üst seviyeye taşıyoruz.',
     officeCardTitle: "Arkadaşınla gel, haftaları birleştir, bonusları kap",
     officeCardText:
       'İki kişi birlikte kayıt olduğunuzda toplam hafta planını birleştirip ek avantajlardan faydalanın.',
@@ -76,7 +75,7 @@ const t = {
     bremenCardCta: 'Şimdi ofis rezervasyonu yap',
     heroPoint1: 'Akıllı tahta destekli modern sınıflar',
     heroPoint2: 'A1–C1 arası planlı seviye takibi',
-    heroPoint3: 'Vize ve akademik hedefe uygun eğitim akışı',
+    heroPoint3: 'Vize ve yoğun Almanca hedefine uygun eğitim akışı',
     heroBadge: 'Campus German Bremen',
     heroSecondaryCta: 'WhatsApp ile bilgi al',
   },
@@ -110,7 +109,7 @@ const t = {
     heroTitle: 'Campus German: zielgerichtetes Deutsch in Bremen',
     heroText:
       'Mit Smartboard-Unterricht, klarer Niveaustruktur und visakonformer Planung halten wir Ihren Lernweg transparent.',
-    heroText2: 'Intensives Programm, starke akademische Basis und laufende Beratung aus einer Hand.',
+    heroText2: 'Intensives Programm, starke Intensiv-Deutsch-Basis und laufende Beratung aus einer Hand.',
     officeCardTitle: 'Mit Freund*in kommen, Wochen kombinieren, Bonus sichern',
     officeCardText:
       'Wenn Sie zu zweit buchen, bündeln wir die Wochenplanung und prüfen zusätzliche Vorteile für Sie.',
@@ -270,8 +269,6 @@ const simpleStartDates = uniqueDdMmMonday.map((ddmm) =>
       </div>
     </div>
   </section>
-
-  <BundleOffersSection lang={lang} />
 
   <!-- Yeni fiyat yapısı: Intensive 20h / Intensive 25h -->
   <IntensivePricingSection lang={lang} showSectionTitle={true} />

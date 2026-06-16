@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1523050854058-8df90110c9e1?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Clases Semanales"
-    description: "24 Clases (UE)"
+    description: "20 Clases (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Curso"
     description: "8 Semanas"
@@ -37,7 +37,7 @@ tabs:
       title: "Curso de Preparación TestDaF/DSH"
       paragraphs:
         - heading: "Resumen del Curso"
-          text: "El Curso de Preparación TestDaF/DSH es un programa especial de preparación para exámenes de ingreso universitario diseñado para estudiantes que planean educación universitaria en Alemania. Este curso tiene como objetivo asegurar que los estudiantes hagan preparación específica para los formatos de exámenes TestDaF y DSH, desarrollen sus habilidades de escritura académica y tengan éxito. El programa, que ofrece una experiencia de preparación intensiva con 24 horas de clase por semana, dura 8 semanas y consta de aproximadamente 200 horas de clase."
+          text: "El Curso de Preparación TestDaF/DSH es un programa especial de preparación para exámenes de ingreso universitario diseñado para estudiantes que planean educación universitaria en Alemania. Este curso tiene como objetivo asegurar que los estudiantes hagan preparación específica para los formatos de exámenes TestDaF y DSH, desarrollen sus habilidades de escritura académica y tengan éxito. El programa, que ofrece una experiencia de preparación intensiva con 20 horas de clase por semana, dura 8 semanas y consta de aproximadamente 200 horas de clase."
         - heading: "Exámenes Objetivo y Prerrequisitos"
           text: "Este curso prepara para los exámenes TestDaF y DSH. Es adecuado para estudiantes que han completado al menos el nivel B2, pero se recomienda el nivel C1. TestDaF (Test Deutsch als Fremdsprache) es un examen nacional válido para todas las universidades alemanas y se realiza en todo el mundo. DSH (Deutsche Sprachprüfung für den Hochschulzugang) es un examen realizado por cada universidad y es válido solo para esa universidad. Ambos exámenes miden el nivel de idioma requerido para educación universitaria."
         - heading: "Contenido del Curso y Métodos de Preparación"

@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Clases Semanales"
-    description: "24 Clases (UE)"
+    description: "20 Clases (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Programa"
     description: "8 Semanas"
@@ -54,11 +54,11 @@ tabs:
       pricing:
         - name: "8 Semanas Trayectoria Profesional"
           duration: "8 Semanas"
-          schedule: "24 Clases/Semana"
+          schedule: "20 Clases/Semana"
           price: "Precio Especial"
         - name: "24 Semanas Trayectoria Profesional"
           duration: "24 Semanas"
-          schedule: "24 Clases/Semana"
+          schedule: "20 Clases/Semana"
           price: "Precio Especial"
           highlighted: true
   - id: "detalles-programa"

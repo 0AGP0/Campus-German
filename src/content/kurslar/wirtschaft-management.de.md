@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "20–24 Unterrichtseinheiten"
+    description: "20 Unterrichtseinheiten"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
     description: "8 Wochen"
@@ -45,7 +45,7 @@ tabs:
         - heading: "Lehrmethode und Unterrichtsumfeld"
           text: "Bei CampusGerman wird der Kurs fachbezogen und praxisorientiert durchgeführt. Im Unterricht werden reale akademische und branchenspezifische Texte, Präsentationen und Case Studies, Gruppendiskussionen sowie anwendungsorientierte Sprech- und Schreibübungen eingesetzt. Die Gruppen sind bewusst klein gehalten und die aktive Mitarbeit wird gefördert. Die Lehrkräfte verfügen über Erfahrung in Wirtschaftsdeutsch und akademischem Deutsch und unterstützen die Teilnehmenden auch individuell."
         - heading: "Fortschritt nach dem Kurs"
-          text: "Nach Abschluss des Deutschkurses für Wirtschafts- und Managementwissenschaften stärken Teilnehmende ihre akademischen Deutschkompetenzen, finden sich leichter in Lehrveranstaltungen an deutschen Hochschulen zurecht, können im beruflichen Umfeld professionell auf Deutsch kommunizieren und kommen ihren Karriere- und Studienzielen einen wichtigen Schritt näher. CampusGerman begleitet Sie auch nach dem Kurs und berät zu weiterführenden Programmen, Prüfungsvorbereitung oder karriereorientierten Trainings."
+          text: "Nach Abschluss des Deutschkurses für Wirtschafts- und Managementwissenschaften stärken Teilnehmende ihre Intensiv-Deutsch-Kompetenzen, finden sich leichter in Lehrveranstaltungen an deutschen Hochschulen zurecht, können im beruflichen Umfeld professionell auf Deutsch kommunizieren und kommen ihren Karriere- und Studienzielen einen wichtigen Schritt näher. CampusGerman begleitet Sie auch nach dem Kurs und berät zu weiterführenden Programmen, Prüfungsvorbereitung oder karriereorientierten Trainings."
   - id: "termine-preise"
     icon: "fas fa-calendar-alt"
     title: "Termine und Preise"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "8 Wochen Wirtschaft/Management"
           duration: "8 Wochen"
-          schedule: "20–24 Unterrichtseinheiten/Woche"
+          schedule: "20 Unterrichtseinheiten/Woche"
           price: "Sonderkonditionen"
           highlighted: true
   - id: "programmdetails"

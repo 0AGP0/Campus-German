@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Haftalık Ders"
-    description: "25 Ders (UE)"
+    description: "20 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
     description: "8 Hafta"
@@ -37,7 +37,7 @@ tabs:
       title: "Yoğun Almanca C1 Kursu"
       paragraphs:
         - heading: "Kursa Genel Bakış"
-          text: "Yoğun Almanca C1 Kursu, B2 seviyesini tamamlamış öğrenciler için tasarlanmış, ileri seviye Almanca becerilerini geliştirmeye odaklı kapsamlı bir programdır. Bu kurs, öğrencilerin üniversite seviyesinde akademik çalışmalar yapabilmelerini ve profesyonel ortamlarda akıcı bir şekilde iletişim kurabilmelerini sağlayacak dil becerilerini kazandırmayı hedefler. Haftada 25 ders saati ile yoğun bir öğrenme deneyimi sunan program, 8 hafta sürmektedir ve yaklaşık 200 ders saatinden oluşmaktadır."
+          text: "Yoğun Almanca C1 Kursu, B2 seviyesini tamamlamış öğrenciler için tasarlanmış, ileri seviye Almanca becerilerini geliştirmeye odaklı kapsamlı bir programdır. Bu kurs, öğrencilerin üniversite seviyesinde akademik çalışmalar yapabilmelerini ve profesyonel ortamlarda akıcı bir şekilde iletişim kurabilmelerini sağlayacak dil becerilerini kazandırmayı hedefler. Haftada 20 ders saati ile yoğun bir öğrenme deneyimi sunan program, 8 hafta sürmektedir ve yaklaşık 200 ders saatinden oluşmaktadır."
         - heading: "Hedef Kitle ve Ön Koşullar"
           text: "Bu kurs, B2 seviyesini başarıyla tamamlamış öğrenciler için uygundur. C1 seviyesi, Almanca öğrenmede en üst seviyelerden biridir ve bu seviyede öğrenciler artık neredeyse ana dil seviyesinde iletişim kurabilir hale gelirler. Almanya'da üniversite eğitimi almayı planlayan öğrenciler, akademik araştırmalar yapmayı düşünenler, iş hayatında üst düzey pozisyonlarda çalışmak isteyenler veya Almanca konuşulan ülkelerde profesyonel kariyer yapmayı planlayan herkes bu kursa katılabilir."
         - heading: "Kurs İçeriği ve Öğrenme Hedefleri"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "C1 Seviyesi İçeriği"
       lessons:
-        - title: "Akademik Almanca"
-          description: "Üniversite seviyesi akademik Almanca"
+        - title: "Yoğun Almanca"
+          description: "Üniversite seviyesi yoğun Almanca"
         - title: "Araştırma Yazma"
           description: "Akademik araştırma metinleri yazma"
         - title: "Profesyonel Sunum"

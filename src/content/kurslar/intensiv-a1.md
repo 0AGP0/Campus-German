@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Haftalık Ders"
-    description: "24 Ders (UE)"
+    description: "20 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
     description: "8 Hafta"
@@ -37,7 +37,7 @@ tabs:
       title: "Yoğun Almanca A1 Kursu"
       paragraphs:
         - heading: "Kursa Genel Bakış"
-          text: "Yoğun Almanca A1 Kursu, Almanca öğrenmeye sıfırdan başlayanlar için tasarlanmış kapsamlı bir programdır. Bu kurs, Avrupa Ortak Dil Referans Çerçevesi (CEFR) standartlarına uygun olarak hazırlanmıştır ve öğrencilere temel Almanca dil becerilerini kazandırmayı hedefler. Haftada 24 ders saati ile yoğun bir öğrenme deneyimi sunan program, 8 hafta sürmektedir ve yaklaşık 160 ders saatinden oluşmaktadır."
+          text: "Yoğun Almanca A1 Kursu, Almanca öğrenmeye sıfırdan başlayanlar için tasarlanmış kapsamlı bir programdır. Bu kurs, Avrupa Ortak Dil Referans Çerçevesi (CEFR) standartlarına uygun olarak hazırlanmıştır ve öğrencilere temel Almanca dil becerilerini kazandırmayı hedefler. Haftada 20 ders saati ile yoğun bir öğrenme deneyimi sunan program, 8 hafta sürmektedir ve yaklaşık 160 ders saatinden oluşmaktadır."
         - heading: "Hedef Kitle ve Ön Koşullar"
           text: "Bu kurs, Almanca bilgisi olmayan veya çok az bilgisi olan öğrenciler için idealdir. Herhangi bir ön koşul gerektirmez ve tamamen sıfırdan başlayanlar için tasarlanmıştır. Almanya'da üniversite eğitimi almayı planlayan öğrenciler, iş hayatında Almanca kullanmak isteyen profesyoneller veya kişisel gelişim amacıyla Almanca öğrenmek isteyen herkes bu kursa katılabilir."
         - heading: "Kurs İçeriği ve Öğrenme Hedefleri"

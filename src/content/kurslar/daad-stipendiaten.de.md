@@ -5,12 +5,12 @@ customSlug: "daad-stipendiaten"
 badge:
   icon: "fas fa-graduation-cap"
   text: "DAAD"
-description: "Spezieller Deutschkurs für DAAD-Stipendiaten. Akademisches Deutsch und Universitätsvorbereitung."
+description: "Spezieller Deutschkurs für DAAD-Stipendiaten. Intensiv Deutsch und Universitätsvorbereitung."
 image: "https://images.unsplash.com/photo-1523050854058-8df90110c9e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "20–24 Unterrichtseinheiten"
+    description: "20 Unterrichtseinheiten"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
     description: "Flexibel"
@@ -43,7 +43,7 @@ tabs:
         - heading: "Kursinhalte und Lernziele"
           text: "Der Deutschkurs für DAAD-Stipendiaten fokussiert sich auf sprachliche Kompetenzen für das akademische und universitäre Umfeld. Zu den Kursinhalten gehören: akademischer Wortschatz und Redemittel; Sprache für die universitäre Kommunikation und Korrespondenz; Fähigkeiten zum Verfolgen von Vorlesungen und Seminaren; Lesen und Verstehen akademischer Texte; Präsentations- und Diskussionssprache. Das Lernziel besteht darin, Deutsch im akademischen Kontext sicher, korrekt und flüssig anwenden zu können. Nach Abschluss des Kurses sind die Teilnehmenden in der Lage, universitäre Lehrveranstaltungen besser zu verfolgen und sich in der akademischen Kommunikation selbstbewusst auszudrücken."
         - heading: "Lehrmethode und Unterrichtsumfeld"
-          text: "Bei CampusGerman wird dieser Kurs mit einem akademisch ausgerichteten und praxisnahen Lehransatz durchgeführt. Im Unterricht kommen unter anderem folgende Methoden und Materialien zum Einsatz: Beispiele aus realen universitären Lehrveranstaltungen; akademische Texte und Fallstudien; Präsentations- und Diskussionsübungen; hör- und sprechorientierte Aktivitäten. Der Unterricht ist interaktiv gestaltet und die aktive Teilnahme der Stipendiaten wird gezielt gefördert. Die Lehrkräfte verfügen über umfassende Erfahrung im Bereich akademisches Deutsch und im deutschen Hochschulsystem."
+          text: "Bei CampusGerman wird dieser Kurs mit einem akademisch ausgerichteten und praxisnahen Lehransatz durchgeführt. Im Unterricht kommen unter anderem folgende Methoden und Materialien zum Einsatz: Beispiele aus realen universitären Lehrveranstaltungen; akademische Texte und Fallstudien; Präsentations- und Diskussionsübungen; hör- und sprechorientierte Aktivitäten. Der Unterricht ist interaktiv gestaltet und die aktive Teilnahme der Stipendiaten wird gezielt gefördert. Die Lehrkräfte verfügen über umfassende Erfahrung im Bereich Intensiv Deutsch und im deutschen Hochschulsystem."
         - heading: "Fortschritt nach dem Kurs"
           text: "Teilnehmende, die den Deutschkurs für DAAD-Stipendiaten erfolgreich abschließen, profitieren von folgenden Vorteilen: Vertiefung ihrer akademischen Deutschkenntnisse auf ein fortgeschrittenes Niveau; schnellere Anpassung an das Universitätsleben in Deutschland; eine solide sprachliche Grundlage zur Unterstützung des akademischen Erfolgs; Möglichkeit zum Übergang in weiterführende akademische oder prüfungsvorbereitende Programme. CampusGerman begleitet die Stipendiaten auch nach Kursende weiter und unterstützt sie bei fortgeschrittenen Deutschprogrammen sowie in akademischen Beratungsprozessen."
   - id: "termine-preise"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "DAAD-Stipendiaten"
           duration: "Flexibel"
-          schedule: "20–24 Unterrichtseinheiten/Woche"
+          schedule: "20 Unterrichtseinheiten/Woche"
           price: "Sonderkonditionen"
           highlighted: true
   - id: "daad-informationen"
@@ -64,7 +64,7 @@ tabs:
       title: "Besondere Leistungen für DAAD-Stipendiaten"
       items:
         - icon: "fas fa-check-circle"
-          text: "<strong>Akademisches Deutsch:</strong> Sprachkompetenzen für das Universitätsstudium"
+          text: "<strong>Intensiv Deutsch:</strong> Sprachkompetenzen für das Universitätsstudium"
         - icon: "fas fa-check-circle"
           text: "<strong>Sonderrabatt:</strong> Exklusive Preisgestaltung für DAAD-Stipendiaten"
         - icon: "fas fa-check-circle"
@@ -72,8 +72,8 @@ tabs:
 faqs:
   - question: "Wie kann ich nachweisen, dass ich DAAD-Stipendiat bin?"
     answer: "Es genügt, Ihre DAAD-Stipendienbescheinigung bei der Anmeldung vorzulegen."
-  - question: "Wird akademisches Deutsch unterrichtet?"
-    answer: "Ja, der Kurs ist gezielt auf akademisches Deutsch und die Universitätsvorbereitung ausgerichtet."
+  - question: "Wird Intensiv Deutsch unterrichtet?"
+    answer: "Ja, der Kurs ist gezielt auf Intensiv Deutsch und die Universitätsvorbereitung ausgerichtet."
   - question: "Welche Kursformate werden angeboten?"
     answer: "Unsere Kurse bieten Ihnen flexible Lernformate: Hybridunterricht: Eine Kombination aus Präsenz- und Live-Online-Unterricht. Dank des hybriden Systems können Sie an Präsenztagen auch online am Unterricht teilnehmen. Live-Online-Unterricht: In diesem Format nehmen Sie vollständig live und online am Unterricht teil."
   - question: "Welche Inhalte werden in den Kursen behandelt?"

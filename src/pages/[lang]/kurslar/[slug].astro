@@ -5,6 +5,7 @@ import Footer from '../../../components/Footer.astro';
 import QuoteWizardForm from '../../../components/QuoteWizardForm.astro';
 import QuoteWizardModal from '../../../components/QuoteWizardModal.astro';
 import IntensivePricingSection from '../../../components/IntensivePricingSection.astro';
+import PromoPrice from '../../../components/PromoPrice.astro';
 import SuccessModal from '../../../components/SuccessModal.astro';
 import '../../../styles/global.css';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, formatCourseDate } from '../../../utils/coursePricingHelper';
@@ -352,6 +353,11 @@ const displayBadgeText = shortenLabels(kurs.data.badge?.text ?? '');
                                                 )}
 
                                                 {tab.content.pricing && (
+                                                    tab.content.pricing.some((p) => typeof p.price === 'string' && p.price.includes('€')) ? (
+                                                        <div class="dynamic-pricing-content">
+                                                            <PromoPrice lang={lang} variant="block" />
+                                                        </div>
+                                                    ) : (
                                                     <div class="pricing-table">
                                                         <div class="table-header">
                                                             <div class="header-cell">Program</div>
@@ -368,6 +374,7 @@ const displayBadgeText = shortenLabels(kurs.data.badge?.text ?? '');
                                                             </div>
                                                         ))}
                                                     </div>
+                                                    )
                                                 )}
 
                                                 {tab.content.lessons && (

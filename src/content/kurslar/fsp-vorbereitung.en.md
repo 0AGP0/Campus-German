@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3
 features:
   - icon: "fas fa-clock"
     title: "Weekly Lessons"
-    description: "25 Lessons (UE)"
+    description: "20 Lessons (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
     description: "8 Weeks"
@@ -37,15 +37,15 @@ tabs:
       title: "About FSP Preparation Course"
       paragraphs:
         - heading: "Course Overview"
-          text: "The FSP (Feststellungsprüfung) Preparation Course is an intensive program specially prepared for students who complete the Studienkolleg process in Germany and aim to successfully pass the FSP exam required for transition to university education. This course offered by CampusGerman aims to systematically develop both students' academic German skills and field-focused knowledge they will need in the exam. The FSP exam is a critical stage in the transition to universities in Germany and measures not only language knowledge but also academic thinking, text comprehension, and expression ability. This course, with its content exactly compatible with the exam format, ensures that students enter the exam process consciously and prepared. The program is structured with an academic German approach in accordance with CEFR standards. Unlike classic German courses, the CampusGerman FSP Preparation Course progresses focusing on exam strategy, mock exams, and academic expression."
+          text: "The FSP (Feststellungsprüfung) Preparation Course is an intensive program specially prepared for students who complete the Studienkolleg process in Germany and aim to successfully pass the FSP exam required for transition to university education. This course offered by CampusGerman aims to systematically develop both students' intensive German skills and field-focused knowledge they will need in the exam. The FSP exam is a critical stage in the transition to universities in Germany and measures not only language knowledge but also academic thinking, text comprehension, and expression ability. This course, with its content exactly compatible with the exam format, ensures that students enter the exam process consciously and prepared. The program is structured with an intensive German approach in accordance with CEFR standards. Unlike classic German courses, the CampusGerman FSP Preparation Course progresses focusing on exam strategy, mock exams, and academic expression."
         - heading: "Target Audience and Prerequisites"
-          text: "This course is designed for students planning to take the FSP exam. It is particularly suitable for the following groups: Students who have completed or are about to complete Studienkolleg education Candidates aiming for undergraduate education in Germany Those who need support in academic German for the FSP exam Students who want to complete the transition to university safely At least B1–B2 level general German knowledge is recommended for course participation. This level ensures more efficient study of academic texts and exam content. CampusGerman guides students correctly by conducting level and needs analysis before the course."
+          text: "This course is designed for students planning to take the FSP exam. It is particularly suitable for the following groups: Students who have completed or are about to complete Studienkolleg education Candidates aiming for undergraduate education in Germany Those who need support in intensive German for the FSP exam Students who want to complete the transition to university safely At least B1–B2 level general German knowledge is recommended for course participation. This level ensures more efficient study of academic texts and exam content. CampusGerman guides students correctly by conducting level and needs analysis before the course."
         - heading: "Course Content and Learning Goals"
-          text: "The FSP Preparation Course focuses on academic language and skills required by the exam. The course content includes: Reading and analyzing academic German texts Written expression and academic text writing Field-based terminology (T-Kurs, M-Kurs, W-Kurs, etc.) Listening and comprehension exercises Trial studies suitable for exam format The learning goal is for the student to be able to clearly demonstrate their linguistic and academic competence in the FSP exam. At the end of the course, students become familiar with the exam format and confident."
+          text: "The FSP Preparation Course focuses on academic language and skills required by the exam. The course content includes: Reading and analyzing intensive German texts Written expression and academic text writing Field-based terminology (T-Kurs, M-Kurs, W-Kurs, etc.) Listening and comprehension exercises Trial studies suitable for exam format The learning goal is for the student to be able to clearly demonstrate their linguistic and academic competence in the FSP exam. At the end of the course, students become familiar with the exam format and confident."
         - heading: "Teaching Method and Classroom Environment"
-          text: "The FSP Preparation Course at CampusGerman is conducted with an exam-focused and applied method. In classes: Real FSP examples Mock exams and analyses Academic writing and speaking exercises Individual feedback are used. The classroom environment is disciplined and goal-oriented. Instructors are experienced in the FSP process and academic German and support students individually."
+          text: "The FSP Preparation Course at CampusGerman is conducted with an exam-focused and applied method. In classes: Real FSP examples Mock exams and analyses Academic writing and speaking exercises Individual feedback are used. The classroom environment is disciplined and goal-oriented. Instructors are experienced in the FSP process and intensive German and support students individually."
         - heading: "Post-Course Progress"
-          text: "Students who complete the FSP Preparation Course: Enter the FSP exam consciously and prepared Strengthen their academic German skills Complete an important step for transition to universities in Germany Start undergraduate education with a stronger foundation CampusGerman continues to support students in university placement and academic counseling processes after the course."
+          text: "Students who complete the FSP Preparation Course: Enter the FSP exam consciously and prepared Strengthen their intensive German skills Complete an important step for transition to universities in Germany Start undergraduate education with a stronger foundation CampusGerman continues to support students in university placement and academic counseling processes after the course."
   - id: "dates-prices"
     icon: "fas fa-calendar-alt"
     title: "Dates and Prices"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "8 Weeks FSP Preparation"
           duration: "8 Weeks"
-          schedule: "25 Lessons/Week"
+          schedule: "20 Lessons/Week"
           price: "Special Pricing"
           highlighted: true
   - id: "fsp-info"

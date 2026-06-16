@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1523050854058-8df90110c9e1?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "25 Unterrichtseinheiten (UE)"
+    description: "20 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
     description: "8 Wochen"
@@ -37,7 +37,7 @@ tabs:
       title: "TestDaF/DSH Vorbereitungskurs"
       paragraphs:
         - heading: "Kursüberblick"
-          text: "Der TestDaF/DSH Vorbereitungskurs ist ein spezielles Vorbereitungsprogramm für Studierende, die ein Universitätsstudium in Deutschland planen. Dieser Kurs zielt darauf ab, dass die Teilnehmenden sich gezielt auf das TestDaF- und DSH-Prüfungsformat vorbereiten, ihre akademischen Schreibfähigkeiten entwickeln und erfolgreich abschneiden. Mit 25 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Vorbereitungserfahrung über 8 Wochen und umfasst insgesamt etwa 200 Unterrichtseinheiten."
+          text: "Der TestDaF/DSH Vorbereitungskurs ist ein spezielles Vorbereitungsprogramm für Studierende, die ein Universitätsstudium in Deutschland planen. Dieser Kurs zielt darauf ab, dass die Teilnehmenden sich gezielt auf das TestDaF- und DSH-Prüfungsformat vorbereiten, ihre akademischen Schreibfähigkeiten entwickeln und erfolgreich abschneiden. Mit 20 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Vorbereitungserfahrung über 8 Wochen und umfasst insgesamt etwa 200 Unterrichtseinheiten."
         - heading: "Zielprüfungen und Voraussetzungen"
           text: "Dieser Kurs bereitet auf TestDaF- und DSH-Prüfungen vor. Er ist für Studierende geeignet, die mindestens das B2-Niveau abgeschlossen haben, wobei C1-Niveau empfohlen wird. TestDaF (Test Deutsch als Fremdsprache) ist eine nationale Prüfung, die für alle deutschen Universitäten gilt und weltweit durchgeführt wird. DSH (Deutsche Sprachprüfung für den Hochschulzugang) ist eine von jeder Universität selbst durchgeführte Prüfung und gilt nur für diese Universität. Beide Prüfungen messen das für ein Universitätsstudium erforderliche Sprachniveau."
         - heading: "Kursinhalte und Vorbereitungsmethoden"

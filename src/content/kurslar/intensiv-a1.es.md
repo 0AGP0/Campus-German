@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Clases Semanales"
-    description: "24 Clases (UE)"
+    description: "20 Clases (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Curso"
     description: "8 Semanas"
@@ -37,7 +37,7 @@ tabs:
       title: "Curso Intensivo de Alemán A1"
       paragraphs:
         - heading: "Resumen del Curso"
-          text: "El Curso Intensivo de Alemán A1 es un programa integral diseñado para quienes comienzan a aprender alemán desde cero. Este curso está preparado de acuerdo con los estándares del Marco Común Europeo de Referencia para las Lenguas (MCER) y tiene como objetivo proporcionar a los estudiantes habilidades básicas del idioma alemán. El programa, que ofrece una experiencia de aprendizaje intensiva con 24 horas de clase por semana, dura 8 semanas y consta de aproximadamente 160 horas de clase."
+          text: "El Curso Intensivo de Alemán A1 es un programa integral diseñado para quienes comienzan a aprender alemán desde cero. Este curso está preparado de acuerdo con los estándares del Marco Común Europeo de Referencia para las Lenguas (MCER) y tiene como objetivo proporcionar a los estudiantes habilidades básicas del idioma alemán. El programa, que ofrece una experiencia de aprendizaje intensiva con 20 horas de clase por semana, dura 8 semanas y consta de aproximadamente 160 horas de clase."
         - heading: "Audiencia Objetivo y Prerrequisitos"
           text: "Este curso es ideal para estudiantes que no tienen conocimiento de alemán o tienen conocimiento muy básico. No requiere ningún prerrequisito y está completamente diseñado para principiantes. Estudiantes que planean educación universitaria en Alemania, profesionales que desean usar alemán en la vida empresarial, o cualquier persona que desee aprender alemán para desarrollo personal pueden participar en este curso."
         - heading: "Contenido del Curso y Objetivos de Aprendizaje"

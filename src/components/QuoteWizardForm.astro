@@ -133,8 +133,8 @@ const copy = {
     asideStepHint: 'İLERLEME',
     stepLabels: ['Program', 'Seviye', 'Ders zamanı', 'Tarih', 'İletişim'],
     programs: [
-      { label: 'Intensive Deutsch', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive-de', image: programImageMap.intensive },
-      { label: 'Telc Prüfungen', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'telc', image: programImageMap.telc },
+      { label: 'Yoğun Almanca', program: 'intensive', intensiveType: 'intensive', quoteTrack: 'intensive-de', image: programImageMap.intensive },
+      { label: 'Telc Sınavları', program: 'intensive', intensiveType: 'intensive-plus', quoteTrack: 'telc', image: programImageMap.telc },
       { label: 'Yaz kampı', program: 'youth-camp', intensiveType: '', quoteTrack: 'summer-camp', image: programImageMap['summer-camp'] },
       { label: 'Online', program: 'online', intensiveType: 'intensive', quoteTrack: 'online', image: programImageMap.online }
     ],
@@ -684,6 +684,38 @@ const step4Json = JSON.stringify({
   step4NeedCustomDate: t.step4NeedCustomDate,
   step4CustomSummary: t.step4CustomSummary
 });
+
+/** Webhook payload için okunabilir etiketler (form diline göre) */
+const quoteWebhookLabels = {
+  startDateKind: {
+    preset:
+      lang === 'tr'
+        ? 'Dönem listesinden'
+        : lang === 'de'
+          ? 'Aus Terminliste'
+          : lang === 'es'
+            ? 'De la lista de fechas'
+            : 'From preset list',
+    custom:
+      lang === 'tr'
+        ? 'Özel tarih (takvim)'
+        : lang === 'de'
+          ? 'Individueller Termin'
+          : lang === 'es'
+            ? 'Fecha personalizada'
+            : 'Custom date',
+  },
+  lessonTime: {
+    morning: t.slotMorningTitle,
+    afternoon: t.slotAfternoonTitle,
+    evening: t.slotEveningTitle,
+  },
+  submitIntent: {
+    quote: t.submit,
+    'demo-lesson': t.step5CtaDemoLesson,
+  },
+};
+const quoteWebhookLabelsJson = JSON.stringify(quoteWebhookLabels);
 ---
 
 <div class="quote-wizard-instance" data-quote-instance={instanceSuffix}>
@@ -731,9 +763,52 @@ const step4Json = JSON.stringify({
   </header>
 
   <div class="qx-body">
-    <div class="qx-lead qx-lead--hero">
-      <p class="qx-lead-kicker">{t.subtitleEm}</p>
-      <p class="qx-lead-body">{t.subtitle}</p>
+    <div class="qx-lead qx-lead--hero" id={pw('pwStepLead')}>
+      <div class="qx-lead-step is-active" data-step-lead="1">
+        <div class="qx-lead-step__head">
+          <span class="qx-scene-kicker">1</span>
+          <div class="qx-lead-step__copy">
+            <h2 class="qx-lead-kicker">{t.programQ}</h2>
+            <p class="qx-lead-body">{programHint}</p>
+          </div>
+        </div>
+      </div>
+      <div class="qx-lead-step" data-step-lead="2" hidden>
+        <div class="qx-lead-step__head">
+          <span class="qx-scene-kicker">2</span>
+          <div class="qx-lead-step__copy">
+            <h2 class="qx-lead-kicker">{t.levelHeroTitle}</h2>
+            <p class="qx-lead-body">{t.levelHeroSubtitle}</p>
+          </div>
+        </div>
+      </div>
+      <div class="qx-lead-step" data-step-lead="3" hidden>
+        <div class="qx-lead-step__head">
+          <span class="qx-scene-kicker">3</span>
+          <div class="qx-lead-step__copy">
+            <h2 class="qx-lead-kicker">{t.step3Title}</h2>
+            <p class="qx-lead-body">{t.step3Subtitle}</p>
+          </div>
+        </div>
+      </div>
+      <div class="qx-lead-step" data-step-lead="4" hidden>
+        <div class="qx-lead-step__head">
+          <span class="qx-scene-kicker">4</span>
+          <div class="qx-lead-step__copy">
+            <h2 class="qx-lead-kicker">{t.step4Title}</h2>
+            <p class="qx-lead-body">{t.step4Subtitle}</p>
+          </div>
+        </div>
+      </div>
+      <div class="qx-lead-step" data-step-lead="5" hidden>
+        <div class="qx-lead-step__head">
+          <span class="qx-scene-kicker">5</span>
+          <div class="qx-lead-step__copy">
+            <h2 class="qx-lead-kicker">{t.step5Title}</h2>
+            <p class="qx-lead-body">{t.step5Subtitle}</p>
+          </div>
+        </div>
+      </div>
     </div>
     <p class="qx-submit-feedback" id={pw('pwSubmitFeedback')} aria-live="polite"></p>
 
@@ -741,6 +816,7 @@ const step4Json = JSON.stringify({
       id={pw('pwForm')}
       class="qx-form"
       data-webhook={quoteWebhook}
+      data-webhook-labels={quoteWebhookLabelsJson}
       data-error={t.error}
       data-modal-mode={modalMode ? 'true' : 'false'}
       data-months={t.months.join('|')}
@@ -782,17 +858,14 @@ const step4Json = JSON.stringify({
       <input type="hidden" name="startDateMode" id={pw('pwStartDateMode')} value="" />
       <input type="hidden" name="startDateIso" id={pw('pwStartDateIso')} value="" />
       <input type="hidden" name="startDateLabel" id={pw('pwStartDateLabel')} value="" />
+      <input type="hidden" name="preferredMonth" id={pw('pwPreferredMonth')} value="" />
+      <input type="hidden" name="preferredMonthLabel" id={pw('pwPreferredMonthLabel')} value="" />
+      <input type="hidden" name="lessonPeriod" id={pw('pwLessonPeriod')} value="" />
+      <input type="hidden" name="lessonTimeSchedule" id={pw('pwLessonTimeSchedule')} value="" />
 
       <div class="pw-viewport">
         <div class="pw-panel is-current qx-scene qx-scene--pick" data-panel="1">
           <div class="qx-stage-shell">
-            <header class="qx-scene-head qx-scene-head--program">
-              <span class="qx-scene-kicker">1</span>
-              <div class="qx-scene-head__copy">
-                <h2 class="qx-question">{t.programQ}</h2>
-                <p class="qx-question-note">{programHint}</p>
-              </div>
-            </header>
             <div class="qx-program-grid qx-strip qx-strip--programs">
               {t.programs.map((p, i) => {
                 const meta =
@@ -830,20 +903,6 @@ const step4Json = JSON.stringify({
 
         <div class="pw-panel qx-scene qx-scene--plan" data-panel="2">
           <div class="qx-stage-shell qx-stage-shell--with-nav qx-stage-shell--level-v2">
-            <header class="qx-scene-head qx-scene-head--level">
-              <span class="qx-scene-kicker">2</span>
-              <div class="qx-scene-head__copy">
-                <h2 class="qx-question">{t.levelHeroTitle}</h2>
-                <p class="qx-question-note">{t.levelHeroSubtitle}</p>
-              </div>
-            </header>
-            <section class="qx-level-banner" aria-label={t.levelBannerTitle}>
-              <span class="qx-level-banner__icon" aria-hidden="true"><i class="far fa-star"></i></span>
-              <div class="qx-level-banner__copy">
-                <strong>{t.levelBannerTitle}</strong>
-                <p>{t.levelBannerText}</p>
-              </div>
-            </section>
             <div class="qx-choice-grid qx-choice-grid--levels qx-choice-grid--levels-v2" id={pw('pwLevelButtons')} role="group" aria-label={t.levelQ}></div>
             <div class="qx-level-help">
               <div class="qx-level-help__copy">
@@ -861,14 +920,6 @@ const step4Json = JSON.stringify({
 
         <div class="pw-panel qx-scene qx-scene--stay" data-panel="3">
           <div class="qx-stage-shell qx-stage-shell--step3">
-            <header class="qx-scene-head qx-scene-head--step3">
-              <span class="qx-scene-kicker">3</span>
-              <div class="qx-scene-head__copy">
-                <h2 class="qx-question">{t.step3Title}</h2>
-                <p class="qx-question-note">{t.step3Subtitle}</p>
-              </div>
-            </header>
-            <p class="qx-hint qx-hint--step3">{t.cardSelectHint}</p>
             <div class="qx-step3-scroll">
               <div class="qx-course-cards qx-course-cards--time-slots" id={pw('pwCourseCards')} role="group" aria-label={t.step3Title}></div>
             </div>
@@ -889,19 +940,6 @@ const step4Json = JSON.stringify({
 
         <div class="pw-panel qx-scene qx-scene--step4" data-panel="4">
           <div class="qx-stage-shell qx-stage-shell--step4">
-            <header class="qx-scene-head qx-scene-head--step4">
-              <span class="qx-scene-kicker">4</span>
-              <div class="qx-scene-head__copy">
-                <h2 class="qx-question">{t.step4Title}</h2>
-                <p class="qx-question-note">{t.step4Subtitle}</p>
-              </div>
-            </header>
-            <footer class="qx-step4-footer qx-step4-footer--top">
-              <p class="qx-step4-trust"><i class="fas fa-shield-alt" aria-hidden="true"></i> {t.step4Trust}</p>
-              <button type="button" class="qx-step4-continue" data-pw-step4-continue>
-                {t.step4Continue} <i class="fas fa-arrow-right" aria-hidden="true"></i>
-              </button>
-            </footer>
             <div class="qx-step4-grid">
               <article class="qx-step4-card qx-step4-card--presets">
                 <div class="qx-step4-card__head">
@@ -1003,14 +1041,6 @@ const step4Json = JSON.stringify({
 
         <div class="pw-panel qx-scene qx-scene--send" data-panel="5">
           <div class="qx-stage-shell qx-stage-shell--contact">
-            <header class="qx-scene-head qx-scene-head--contact">
-              <span class="qx-scene-kicker">5</span>
-              <div class="qx-scene-head__copy">
-                <h2 class="qx-question">{t.step5Title}</h2>
-                <p class="qx-question-note">{t.step5Subtitle}</p>
-              </div>
-            </header>
-
             <section class="qx-contact-card" aria-labelledby={pw('pwContactPersonalTitle')}>
               <div class="qx-contact-card__head">
                 <span class="qx-contact-card__icon" aria-hidden="true"><i class="fas fa-user"></i></span>
@@ -1103,6 +1133,22 @@ const step4Json = JSON.stringify({
 
 <script>
   function pad2(n: number) { return String(n).padStart(2, '0'); }
+
+  type QuoteWebhookLabels = {
+    startDateKind?: Record<string, string>;
+    lessonTime?: Record<string, string>;
+    submitIntent?: Record<string, string>;
+  };
+
+  function parseWebhookLabels(form: HTMLFormElement): QuoteWebhookLabels {
+    try {
+      const raw = form.dataset.webhookLabels || '';
+      if (!raw) return {};
+      return JSON.parse(raw) as QuoteWebhookLabels;
+    } catch {
+      return {};
+    }
+  }
 
   /** Sabit kur başlangıç tarihleri (Mart–Aralık 2026) — fiyat gösterilmez */
   const PRESET_COURSE_START_ISOS = [
@@ -1235,13 +1281,19 @@ const step4Json = JSON.stringify({
     const hStartDateMode = q('pwStartDateMode') as HTMLInputElement;
     const hStartDateIso = q('pwStartDateIso') as HTMLInputElement;
     const hStartDateLabel = q('pwStartDateLabel') as HTMLInputElement;
+    const hPreferredMonth = q('pwPreferredMonth') as HTMLInputElement;
+    const hPreferredMonthLabel = q('pwPreferredMonthLabel') as HTMLInputElement;
+    const hLessonPeriod = q('pwLessonPeriod') as HTMLInputElement;
+    const hLessonTimeSchedule = q('pwLessonTimeSchedule') as HTMLInputElement;
     const hSubmitIntent = q('pwSubmitIntent') as HTMLInputElement;
     const hDemoLessonRequested = q('pwDemoLessonRequested') as HTMLInputElement;
 
     const courseCardsWrap = q('pwCourseCards') as HTMLElement;
     const step4PresetsWrap = q('pwStep4Presets') as HTMLElement | null;
+    const step4PresetGroupName = `qx-preset-${S}`;
     const step4ErrorEl = q('pwStep4Error') as HTMLElement | null;
     const step4CustomCard = form.querySelector<HTMLElement>('[data-pw-step4-custom-card]');
+    const step4CustomCta = form.querySelector<HTMLButtonElement>('[data-pw-step4-custom]');
     const customDateInput = q('pwCustomDateInput') as HTMLInputElement | null;
     const step4Copy = parseStep4Copy(mount, S);
     const submitFeedback = q('pwSubmitFeedback') as HTMLElement | null;
@@ -1320,6 +1372,8 @@ const step4Json = JSON.stringify({
       if (!monthWrap) return;
       monthWrap.innerHTML = '';
       wizardMonth = 0;
+      hPreferredMonth.value = '';
+      hPreferredMonthLabel.value = '';
       const rawMonthTokens = (form.getAttribute('data-months') ?? '')
         .split('|')
         .map((s) => s.trim())
@@ -1339,6 +1393,8 @@ const step4Json = JSON.stringify({
           monthWrap.querySelectorAll('.qx-month-btn').forEach((x) => x.classList.remove('is-active'));
           b.classList.add('is-active');
           wizardMonth = monthNum;
+          hPreferredMonth.value = String(monthNum);
+          hPreferredMonthLabel.value = name;
           renderCards();
         });
         monthWrap.appendChild(b);
@@ -1362,6 +1418,12 @@ const step4Json = JSON.stringify({
         headerBack.hidden = !show;
         headerBack.disabled = !show;
       }
+      root.querySelectorAll<HTMLElement>('[data-step-lead]').forEach((el) => {
+        const stepNum = parseInt(el.getAttribute('data-step-lead') || '0', 10);
+        const active = stepNum === n;
+        el.classList.toggle('is-active', active);
+        el.hidden = !active;
+      });
     }
     headerBack?.addEventListener('click', () => {
       if (step > 1) goTo(step - 1);
@@ -1551,6 +1613,7 @@ const step4Json = JSON.stringify({
       updateCalendarTriggerLabel();
       hideStep4Error();
       renderInlineCalendar();
+      tryAdvanceFromStep4();
     });
 
     function hideCustomDatePicker() {
@@ -1585,9 +1648,53 @@ const step4Json = JSON.stringify({
       hStartDateMode.value = '';
       hStartDateIso.value = '';
       hStartDateLabel.value = '';
-      step4CustomCard?.classList.remove('is-selected');
+      step4CustomCard?.classList.remove('is-selected', 'is-picking-custom', 'is-locked');
+      step4CustomCard?.removeAttribute('aria-disabled');
+      if (step4CustomCta) {
+        step4CustomCta.disabled = false;
+        step4CustomCta.removeAttribute('aria-disabled');
+      }
+      form.querySelectorAll<HTMLInputElement>(`input[name="${step4PresetGroupName}"]`).forEach((r) => { r.checked = false; });
       hideCustomDatePicker();
       hideStep4Error();
+      syncStep4DateCardStates();
+    }
+
+    function syncStep4DateCardStates() {
+      const hasPreset = !!step4PresetsWrap?.querySelector('input[type="radio"]:checked');
+      const customActive = step4CustomCard?.classList.contains('is-picking-custom');
+      if (hasPreset) {
+        step4CustomCard?.classList.add('is-locked');
+        step4CustomCard?.setAttribute('aria-disabled', 'true');
+        if (step4CustomCta) {
+          step4CustomCta.disabled = true;
+          step4CustomCta.setAttribute('aria-disabled', 'true');
+        }
+      } else if (!customActive) {
+        step4CustomCard?.classList.remove('is-locked');
+        step4CustomCard?.removeAttribute('aria-disabled');
+        if (step4CustomCta) {
+          step4CustomCta.disabled = false;
+          step4CustomCta.removeAttribute('aria-disabled');
+        }
+      }
+    }
+
+    function tryAdvanceFromStep4() {
+      const mode = hStartDateMode.value.trim();
+      if (!mode) return;
+      if (mode === 'preset' && hStartDateIso.value.trim()) {
+        hideStep4Error();
+        goTo(5);
+        return;
+      }
+      if (mode === 'custom') {
+        syncCustomDateHiddenFromInput();
+        if (hStartDateIso.value.trim()) {
+          hideStep4Error();
+          goTo(5);
+        }
+      }
     }
 
     function renderStep4Presets() {
@@ -1614,13 +1721,33 @@ const step4Json = JSON.stringify({
     function resetWizardState() {
       form.reset();
       wizardMonth = 0;
-      [hProgram, hProgramLabel, hLevelA, hCourseId, hCourseTitle, hStartDateMode, hStartDateIso, hStartDateLabel].forEach((el) => { el.value = ''; });
+      [
+        hProgram,
+        hProgramLabel,
+        hLevelA,
+        hCourseId,
+        hCourseTitle,
+        hStartDateMode,
+        hStartDateIso,
+        hStartDateLabel,
+        hPreferredMonth,
+        hPreferredMonthLabel,
+        hLessonPeriod,
+        hLessonTimeSchedule,
+      ].forEach((el) => {
+        el.value = '';
+      });
       if (hSubmitIntent) hSubmitIntent.value = 'quote';
       if (hDemoLessonRequested) hDemoLessonRequested.value = 'false';
       form.querySelectorAll('.is-picked, .is-selected, .is-active').forEach((el) => el.classList.remove('is-picked', 'is-selected', 'is-active'));
       if (courseCardsWrap) courseCardsWrap.innerHTML = '';
       if (step4PresetsWrap) step4PresetsWrap.innerHTML = '';
-      step4CustomCard?.classList.remove('is-selected');
+      step4CustomCard?.classList.remove('is-selected', 'is-picking-custom', 'is-locked');
+      step4CustomCard?.removeAttribute('aria-disabled');
+      if (step4CustomCta) {
+        step4CustomCta.disabled = false;
+        step4CustomCta.removeAttribute('aria-disabled');
+      }
       hideCustomDatePicker();
       hideStep4Error();
       q('pwLevelButtons')?.querySelectorAll('.qx-level-btn').forEach((b) => b.classList.remove('is-active'));
@@ -1630,27 +1757,29 @@ const step4Json = JSON.stringify({
       setStepChrome(1);
     }
 
-    const step4PresetGroupName = `qx-preset-${S}`;
     step4PresetsWrap?.addEventListener('change', (ev) => {
       const target = ev.target as HTMLInputElement;
       if (target.name !== step4PresetGroupName || target.type !== 'radio' || !target.checked) return;
       hideCustomDatePicker();
-      step4CustomCard?.classList.remove('is-selected');
+      step4CustomCard?.classList.remove('is-selected', 'is-picking-custom');
       hStartDateMode.value = 'preset';
       hStartDateIso.value = target.value;
       hStartDateLabel.value = target.dataset.displayLabel || '';
       hideStep4Error();
+      syncStep4DateCardStates();
+      tryAdvanceFromStep4();
     });
 
     form.addEventListener('click', (ev) => {
       const root = ev.target as HTMLElement;
       if (root.closest('[data-pw-step4-custom-back]')) {
-        step4CustomCard?.classList.remove('is-selected');
+        step4CustomCard?.classList.remove('is-selected', 'is-picking-custom');
         hideCustomDatePicker();
         hStartDateMode.value = '';
         hStartDateIso.value = '';
         hStartDateLabel.value = '';
         hideStep4Error();
+        syncStep4DateCardStates();
         return;
       }
       if (root.closest('[data-pw-cal-prev]')) {
@@ -1664,7 +1793,14 @@ const step4Json = JSON.stringify({
         return;
       }
       if (root.closest('[data-pw-step4-custom]')) {
+        if (step4CustomCard?.classList.contains('is-locked')) return;
         form.querySelectorAll<HTMLInputElement>(`input[name="${step4PresetGroupName}"]`).forEach((r) => { r.checked = false; });
+        step4CustomCard?.classList.remove('is-locked');
+        step4CustomCard?.removeAttribute('aria-disabled');
+        if (step4CustomCta) {
+          step4CustomCta.disabled = false;
+          step4CustomCta.removeAttribute('aria-disabled');
+        }
         step4CustomCard?.classList.add('is-selected', 'is-picking-custom');
         hStartDateMode.value = 'custom';
         hStartDateIso.value = '';
@@ -1676,32 +1812,6 @@ const step4Json = JSON.stringify({
         hideStep4Error();
         inlineCalRoot?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         return;
-      }
-      const go = root.closest('[data-pw-step4-continue]');
-      if (go) {
-        ev.preventDefault();
-        const mode = hStartDateMode.value.trim();
-        if (!mode) {
-          showStep4Error(step4Copy.step4NeedPick || '');
-          return;
-        }
-        if (mode === 'preset') {
-          if (!hStartDateIso.value.trim()) {
-            showStep4Error(step4Copy.step4NeedPick || '');
-            return;
-          }
-        } else if (mode === 'custom') {
-          syncCustomDateHiddenFromInput();
-          if (!hStartDateIso.value.trim()) {
-            showStep4Error(step4Copy.step4NeedCustomDate || '');
-            step4CustomCard?.classList.add('is-picking-custom');
-            syncCalViewToSelectionOrMin();
-            renderInlineCalendar();
-            inlineCalRoot?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-            return;
-          }
-        }
-        goTo(5);
       }
     });
 
@@ -1724,7 +1834,7 @@ const step4Json = JSON.stringify({
           ${slots
             .map(
               (slot) => `
-          <button type="button" class="qx-time-slot qx-time-slot--${slot.theme}" data-period="${slot.theme}" data-course-id="${escAttr(slot.id)}" data-course-title="${escAttr(slot.displayTitle)}" aria-label="${escAttr(`${slot.title}, ${slot.time}`)}">
+          <button type="button" class="qx-time-slot qx-time-slot--${slot.theme}" data-period="${slot.theme}" data-course-id="${escAttr(slot.id)}" data-course-title="${escAttr(slot.displayTitle)}" data-time="${escAttr(slot.time)}" aria-label="${escAttr(`${slot.title}, ${slot.time}`)}">
             <div class="qx-time-slot__period" aria-hidden="true">
               ${slot.periodVisualHtml}
               <div class="qx-time-slot__period-copy">
@@ -1765,6 +1875,8 @@ const step4Json = JSON.stringify({
           btn.classList.add('is-selected');
           hCourseId.value = btn.dataset.courseId || '';
           hCourseTitle.value = btn.dataset.courseTitle || '';
+          hLessonPeriod.value = btn.dataset.period || '';
+          hLessonTimeSchedule.value = btn.dataset.time || '';
           clearStep4Fields();
           renderStep4Presets();
           goTo(4);
@@ -1880,35 +1992,46 @@ const step4Json = JSON.stringify({
       const mode = String(data.startDateMode || '').trim();
       const iso = String(data.startDateIso || '').trim();
       const startLab = String(data.startDateLabel || '').trim();
-      let quoteMonthStart = '';
-      if (/^\d{4}-(\d{2})-\d{2}/.test(iso)) quoteMonthStart = String(parseInt(iso.slice(5, 7), 10));
-      const fullName = `${firstNm} ${lastNm}`.trim();
+      const lessonPeriod = String(data.lessonPeriod || '').trim();
+      const preferredMonthRaw = String(data.preferredMonth || '').trim();
+      const preferredMonthNumber = preferredMonthRaw ? Number(preferredMonthRaw) : null;
+      const webhookLabels = parseWebhookLabels(form);
       const payload = {
         formType: 'price-quote',
-        firstName: firstNm,
-        lastName: lastNm,
-        name: fullName,
-        tel: String(data.phone || '').trim(),
-        email: String(data.email || '').trim(),
-        birthDate: String(data['birth-date'] || '').trim(),
-        nationality: String(data.nationality || '').trim(),
-        message: String(data.message || '').trim(),
-        quoteProgramLabel: programLabel,
-        program: programCode,
-        quoteLevelStart: lev,
-        quoteMonthStart,
-        startDate: iso,
-        quoteCourseType: ctitle,
-        quoteCourseId: cid,
-        demoLessonRequested: String(data.demoLessonRequested || 'false'),
-        quoteSubmitIntent: String(data.quoteSubmitIntent || 'quote'),
-        courseSelection: ctitle ? [ctitle] : [],
-        timestamp: new Date().toISOString(),
-        sourcePage: String(data.sourcePage || '').trim(),
         lang: String(data.lang || '').trim(),
-        quoteStartDateMode: mode,
-        quoteStartDateIso: iso,
-        quoteStartDateLabel: startLab
+        sourcePage: String(data.sourcePage || '').trim() || window.location.pathname,
+        submittedAt: new Date().toISOString(),
+
+        customer: {
+          firstName: firstNm,
+          lastName: lastNm,
+          email: requiredEmail,
+          phone: requiredPhone,
+          birthDate: String(data['birth-date'] || '').trim(),
+          nationality: String(data.nationality || '').trim(),
+        },
+
+        course: {
+          program: programLabel || programCode,
+          programCode,
+          level: lev,
+          preferredMonth: String(data.preferredMonthLabel || '').trim(),
+          preferredMonthNumber: Number.isFinite(preferredMonthNumber) ? preferredMonthNumber : null,
+          lessonTime: webhookLabels.lessonTime?.[lessonPeriod] || lessonPeriod,
+          lessonSchedule: String(data.lessonTimeSchedule || '').trim(),
+          lessonSlotId: cid,
+          courseTitle: ctitle,
+          startDate: iso,
+          startDateKind: webhookLabels.startDateKind?.[mode] || mode,
+          startDateLabel: startLab,
+        },
+
+        request: {
+          submitIntent,
+          submitIntentLabel: webhookLabels.submitIntent?.[submitIntent] || submitIntent,
+          demoLessonRequested,
+          message: String(data.message || '').trim(),
+        },
       };
       try {
         const sending = form.dataset.sending || 'Sending...';

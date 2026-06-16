@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "24 Unterrichtseinheiten (UE)"
+    description: "20 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
     description: "8 Wochen"
@@ -37,15 +37,15 @@ tabs:
       title: "Über den FSP-Vorbereitungskurs"
       paragraphs:
         - heading: "Kursüberblick"
-          text: "Der FSP (Feststellungsprüfung) Vorbereitungskurs ist ein intensives Programm für Studierende, die das Studienkolleg in Deutschland absolviert haben (oder kurz davor stehen) und die Feststellungsprüfung erfolgreich bestehen möchten, um anschließend an eine Hochschule zu wechseln. Der von CampusGerman angebotene Kurs zielt darauf ab, sowohl akademische Deutschkompetenzen als auch die prüfungsrelevanten fachbezogenen Inhalte systematisch zu stärken. Die Feststellungsprüfung ist ein entscheidender Schritt auf dem Weg zur Universität und prüft nicht nur Sprachkenntnisse, sondern auch akademisches Denken, Textverständnis und Ausdrucksfähigkeit. Mit prüfungsnahen Materialien und einem klaren Fokus auf das Prüfungsformat ermöglicht der Kurs eine strukturierte, bewusste und sichere Vorbereitung. Das Programm ist im Sinne eines akademischen Deutschansatzes an den CEFR-Standards ausgerichtet. Im Unterschied zu klassischen Deutschkursen stehen hier Prüfungsstrategien, Probeklausuren und akademischer Ausdruck im Mittelpunkt."
+          text: "Der FSP (Feststellungsprüfung) Vorbereitungskurs ist ein intensives Programm für Studierende, die das Studienkolleg in Deutschland absolviert haben (oder kurz davor stehen) und die Feststellungsprüfung erfolgreich bestehen möchten, um anschließend an eine Hochschule zu wechseln. Der von CampusGerman angebotene Kurs zielt darauf ab, sowohl Intensiv-Deutsch-Kompetenzen als auch die prüfungsrelevanten fachbezogenen Inhalte systematisch zu stärken. Die Feststellungsprüfung ist ein entscheidender Schritt auf dem Weg zur Universität und prüft nicht nur Sprachkenntnisse, sondern auch akademisches Denken, Textverständnis und Ausdrucksfähigkeit. Mit prüfungsnahen Materialien und einem klaren Fokus auf das Prüfungsformat ermöglicht der Kurs eine strukturierte, bewusste und sichere Vorbereitung. Das Programm ist im Sinne eines Intensiv-Deutsch-Ansatzes an den CEFR-Standards ausgerichtet. Im Unterschied zu klassischen Deutschkursen stehen hier Prüfungsstrategien, Probeklausuren und akademischer Ausdruck im Mittelpunkt."
         - heading: "Zielgruppe und Voraussetzungen"
-          text: "Dieser Kurs ist für Studierende konzipiert, die die FSP ablegen möchten. Besonders geeignet ist er für: Studierende, die das Studienkolleg abgeschlossen haben oder kurz vor dem Abschluss stehen; Bewerberinnen und Bewerber mit dem Ziel eines Bachelorstudiums in Deutschland; Personen, die Unterstützung im akademischen Deutsch für die FSP benötigen; sowie alle, die den Übergang an die Universität sicher und planbar gestalten möchten. Für eine erfolgreiche Teilnahme wird mindestens ein allgemeines Deutschniveau von B1–B2 empfohlen, da dies das Arbeiten mit akademischen Texten und prüfungsrelevanten Aufgaben erleichtert. CampusGerman führt vor Kursbeginn eine Niveau- und Bedarfsanalyse durch und berät zur passenden Vorbereitung."
+          text: "Dieser Kurs ist für Studierende konzipiert, die die FSP ablegen möchten. Besonders geeignet ist er für: Studierende, die das Studienkolleg abgeschlossen haben oder kurz vor dem Abschluss stehen; Bewerberinnen und Bewerber mit dem Ziel eines Bachelorstudiums in Deutschland; Personen, die Unterstützung im Intensiv Deutsch für die FSP benötigen; sowie alle, die den Übergang an die Universität sicher und planbar gestalten möchten. Für eine erfolgreiche Teilnahme wird mindestens ein allgemeines Deutschniveau von B1–B2 empfohlen, da dies das Arbeiten mit akademischen Texten und prüfungsrelevanten Aufgaben erleichtert. CampusGerman führt vor Kursbeginn eine Niveau- und Bedarfsanalyse durch und berät zur passenden Vorbereitung."
         - heading: "Kursinhalte und Lernziele"
           text: "Der FSP-Vorbereitungskurs konzentriert sich auf die sprachlichen und akademischen Kompetenzen, die für die Prüfung erforderlich sind. Inhalte sind unter anderem: Lesen und Analysieren akademischer Texte; schriftlicher Ausdruck und akademisches Schreiben; fachspezifische Terminologie (z. B. T-Kurs, M-Kurs, W-Kurs usw.); Hörverstehen mit akademischem Schwerpunkt; sowie prüfungsnahe Trainings und Probeklausuren im Originalformat. Ziel ist es, dass Studierende ihre sprachliche und akademische Leistungsfähigkeit in der FSP klar, strukturiert und überzeugend zeigen können. Am Ende des Kurses sind Teilnehmende mit dem Prüfungsformat vertraut und gehen mit mehr Sicherheit in die Prüfung."
         - heading: "Lehrmethode und Unterrichtsumfeld"
           text: "Bei CampusGerman wird der FSP-Vorbereitungskurs prüfungsorientiert und praxisnah durchgeführt. Im Unterricht werden eingesetzt: originale bzw. realitätsnahe FSP-Beispiele; Probeklausuren mit Auswertung; akademische Schreib- und Sprechtrainings; sowie individuelles Feedback. Das Unterrichtsumfeld ist strukturiert und zielorientiert. Die Lehrkräfte verfügen über Erfahrung mit dem FSP-Prozess und akademischem Deutsch und begleiten die Teilnehmenden auch individuell."
         - heading: "Fortschritt nach dem Kurs"
-          text: "Nach Abschluss des FSP-Vorbereitungskurses: gehen Studierende vorbereitet und strategisch in die Feststellungsprüfung; stärken ihre akademischen Deutschkompetenzen; bewältigen einen zentralen Schritt für den Hochschulzugang in Deutschland; und starten das Studium mit einer stabileren fachsprachlichen und akademischen Grundlage. CampusGerman unterstützt Studierende auch nach dem Kurs weiterhin – z. B. bei Hochschulbewerbung, Platzierung und akademischer Beratung."
+          text: "Nach Abschluss des FSP-Vorbereitungskurses: gehen Studierende vorbereitet und strategisch in die Feststellungsprüfung; stärken ihre Intensiv-Deutsch-Kompetenzen; bewältigen einen zentralen Schritt für den Hochschulzugang in Deutschland; und starten das Studium mit einer stabileren fachsprachlichen und akademischen Grundlage. CampusGerman unterstützt Studierende auch nach dem Kurs weiterhin – z. B. bei Hochschulbewerbung, Platzierung und akademischer Beratung."
   - id: "termine-preise"
     icon: "fas fa-calendar-alt"
     title: "Termine und Preise"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "8 Wochen FSP-Vorbereitung"
           duration: "8 Wochen"
-          schedule: "24 Unterrichtseinheiten/Woche"
+          schedule: "20 Unterrichtseinheiten/Woche"
           price: "Sonderkonditionen"
           highlighted: true
   - id: "fsp-info"

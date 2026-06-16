@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "24 Unterrichtseinheiten (UE)"
+    description: "20 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
     description: "8 Wochen"
@@ -37,7 +37,7 @@ tabs:
       title: "Über den Goethe/TELC C1 Prüfungsvorbereitungskurs"
       paragraphs:
         - heading: "Kursüberblick"
-          text: "Der Goethe/TELC C1 Prüfungsvorbereitungskurs ist ein umfassendes, prüfungsorientiertes Programm auf Hochschulniveau für Lernende, die sich gezielt auf die Goethe-C1- oder TELC-C1-Hochschule-Prüfung vorbereiten möchten. Ziel des Kurses ist es, das C1-Prüfungsformat sicher zu beherrschen, akademische Schreibkompetenzen auszubauen und die Prüfung erfolgreich zu bestehen. Mit 24 Unterrichtseinheiten pro Woche bietet der Kurs eine intensive Vorbereitung über 8 Wochen und umfasst insgesamt rund 200 Unterrichtsstunden."
+          text: "Der Goethe/TELC C1 Prüfungsvorbereitungskurs ist ein umfassendes, prüfungsorientiertes Programm auf Hochschulniveau für Lernende, die sich gezielt auf die Goethe-C1- oder TELC-C1-Hochschule-Prüfung vorbereiten möchten. Ziel des Kurses ist es, das C1-Prüfungsformat sicher zu beherrschen, akademische Schreibkompetenzen auszubauen und die Prüfung erfolgreich zu bestehen. Mit 20 Unterrichtseinheiten pro Woche bietet der Kurs eine intensive Vorbereitung über 8 Wochen und umfasst insgesamt rund 200 Unterrichtsstunden."
         - heading: "Zielprüfungen und Voraussetzungen"
           text: "Der Kurs bereitet auf die Goethe C1 und die TELC C1 Hochschule Prüfungen vor und richtet sich an Teilnehmende, die das C1-Niveau bereits abgeschlossen haben. Das Goethe-Zertifikat C1 ist international anerkannt und bestätigt fortgeschrittene Deutschkenntnisse. Die TELC C1 Hochschule Prüfung ist speziell für den Hochschulzugang konzipiert und wird von deutschen Universitäten anerkannt. Beide Prüfungen prüfen Sprachkompetenzen auf dem Niveau C1 und gelten als studienqualifizierend."
         - heading: "Kursinhalte und Vorbereitungsmethoden"

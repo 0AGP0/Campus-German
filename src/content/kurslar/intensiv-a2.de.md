@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "24 Unterrichtseinheiten (UE)"
+    description: "20 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
     description: "8 Wochen"
@@ -37,7 +37,7 @@ tabs:
       title: "Intensiv-Deutschkurs A2"
       paragraphs:
         - heading: "Kursüberblick"
-          text: "Der Intensiv-Deutschkurs A2 ist ein Programm für Lernende, die das Niveau A1 abgeschlossen haben und darauf ausgerichtet sind, grundlegende Deutschkenntnisse zu entwickeln. Dieser Kurs zielt darauf ab, den Teilnehmenden Sprachkenntnisse zu vermitteln, die es ihnen ermöglichen, mit komplexeren Situationen im Alltag umzugehen. Mit 24 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Lernerfahrung über 8 Wochen und umfasst insgesamt etwa 160 Unterrichtseinheiten."
+          text: "Der Intensiv-Deutschkurs A2 ist ein Programm für Lernende, die das Niveau A1 abgeschlossen haben und darauf ausgerichtet sind, grundlegende Deutschkenntnisse zu entwickeln. Dieser Kurs zielt darauf ab, den Teilnehmenden Sprachkenntnisse zu vermitteln, die es ihnen ermöglichen, mit komplexeren Situationen im Alltag umzugehen. Mit 20 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Lernerfahrung über 8 Wochen und umfasst insgesamt etwa 160 Unterrichtseinheiten."
         - heading: "Zielgruppe und Voraussetzungen"
           text: "Dieser Kurs eignet sich für Lernende, die das Niveau A1 erfolgreich abgeschlossen haben. Der A2-Kurs, der auf den in A1 erworbenen Grundkenntnissen aufbaut, ermöglicht es den Lernenden, ihre Sprachkenntnisse auf die nächste Stufe zu bringen. Alle, die in Deutschland leben möchten, grundlegendes Deutsch im Berufsleben verwenden möchten oder fließender kommunizieren möchten, können an diesem Kurs teilnehmen."
         - heading: "Kursinhalte und Lernziele"

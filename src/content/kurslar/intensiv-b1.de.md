@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "24 Unterrichtseinheiten (UE)"
+    description: "20 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
     description: "8 Wochen"
@@ -37,7 +37,7 @@ tabs:
       title: "Intensiv-Deutschkurs B1"
       paragraphs:
         - heading: "Kursüberblick"
-          text: "Der Intensiv-Deutschkurs B1 ist ein umfassendes Programm für Lernende, die das Niveau A2 abgeschlossen haben und darauf ausgerichtet sind, ihre Mittelstufenkenntnisse zu entwickeln. Dieser Kurs zielt darauf ab, den Teilnehmenden Sprachkenntnisse zu vermitteln, die es ihnen ermöglichen, im Berufsleben und in sozialen Umgebungen unabhängiger zu kommunizieren. Mit 24 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Lernerfahrung über 8 Wochen und umfasst insgesamt etwa 200 Unterrichtseinheiten."
+          text: "Der Intensiv-Deutschkurs B1 ist ein umfassendes Programm für Lernende, die das Niveau A2 abgeschlossen haben und darauf ausgerichtet sind, ihre Mittelstufenkenntnisse zu entwickeln. Dieser Kurs zielt darauf ab, den Teilnehmenden Sprachkenntnisse zu vermitteln, die es ihnen ermöglichen, im Berufsleben und in sozialen Umgebungen unabhängiger zu kommunizieren. Mit 20 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Lernerfahrung über 8 Wochen und umfasst insgesamt etwa 200 Unterrichtseinheiten."
         - heading: "Zielgruppe und Voraussetzungen"
           text: "Dieser Kurs eignet sich für Lernende, die das Niveau A2 erfolgreich abgeschlossen haben. Das B1-Niveau ist ein wichtiger Meilenstein beim Deutschlernen, da Lernende auf dieser Stufe nun in der Lage sind, über komplexere Themen zu kommunizieren. Alle, die in Deutschland arbeiten möchten, ein Universitätsstudium anstreben oder in deutschsprachigen Ländern leben möchten, können an diesem Kurs teilnehmen."
         - heading: "Kursinhalte und Lernziele"

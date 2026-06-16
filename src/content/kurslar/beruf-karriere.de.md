@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "20–24 Unterrichtseinheiten"
+    description: "20 Unterrichtseinheiten"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
     description: "8 Wochen"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "8 Wochen Beruf & Karriere"
           duration: "8 Wochen"
-          schedule: "20–24 UE pro Woche"
+          schedule: "20 UE pro Woche"
           price: "Individuelle Preisgestaltung"
           highlighted: true
   - id: "programmdetails"

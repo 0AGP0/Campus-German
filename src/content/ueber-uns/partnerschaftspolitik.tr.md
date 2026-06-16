@@ -78,7 +78,7 @@ Partner süreçlerinin şeffaf yürütülmesi için raporlama standardı:
 
 - **Komisyon oranı: %20**
 - Komisyon, **dil kursları için geçerlidir**
-- (Yoğun akademik / online / haftalık dil kursları dahil olarak uygulanır)
+- (Yoğun Almanca / online / haftalık dil kursları dahil olarak uygulanır)
 
 ### Komisyon Ödeme Zamanı
 

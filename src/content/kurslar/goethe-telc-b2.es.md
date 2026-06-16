@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Clases Semanales"
-    description: "24 Clases (UE)"
+    description: "20 Clases (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Curso"
     description: "8 Semanas"
@@ -37,7 +37,7 @@ tabs:
       title: "Curso de Preparación Goethe/TELC B2"
       paragraphs:
         - heading: "Resumen del Curso"
-          text: "El Curso de Preparación Goethe/TELC B2 es un programa integral centrado en exámenes diseñado para estudiantes que quieren prepararse para los exámenes Goethe y TELC B2. Este curso tiene como objetivo asegurar que los estudiantes hagan preparación específica para el formato del examen B2, aprendan técnicas de examen y tengan éxito. El programa, que ofrece una experiencia de preparación intensiva con 24 horas de clase por semana, dura 8 semanas y consta de aproximadamente 200 horas de clase."
+          text: "El Curso de Preparación Goethe/TELC B2 es un programa integral centrado en exámenes diseñado para estudiantes que quieren prepararse para los exámenes Goethe y TELC B2. Este curso tiene como objetivo asegurar que los estudiantes hagan preparación específica para el formato del examen B2, aprendan técnicas de examen y tengan éxito. El programa, que ofrece una experiencia de preparación intensiva con 20 horas de clase por semana, dura 8 semanas y consta de aproximadamente 200 horas de clase."
         - heading: "Exámenes Objetivo y Prerrequisitos"
           text: "Este curso prepara para los exámenes Goethe B2 y TELC B2. Es adecuado para estudiantes que han completado el nivel B2. El examen Goethe B2 es un certificado de idioma alemán reconocido globalmente y documenta el conocimiento de alemán de nivel intermedio superior. El examen TELC B2 es un certificado de idioma ampliamente utilizado en toda Europa y es aceptado por algunas universidades y empleadores. Ambos exámenes miden las habilidades lingüísticas en el nivel B2."
         - heading: "Contenido del Curso y Métodos de Preparación"

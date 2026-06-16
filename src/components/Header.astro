@@ -24,10 +24,10 @@ const navTranslations = {
         email: 'E-posta',
         brochure: 'Broşür',
         pricesDates: 'Fiyatlar ve Tarihler',
-        register: 'Ücretsiz rezervasyon',
+        register: 'Kurs rezervasyonu',
         phone: '+49 163 6927842',
         // Tab labels
-        tabIntensive: 'Yoğun Akademik',
+        tabIntensive: 'Yoğun Almanca',
         tabSeasonal: 'Dönemsel',
         tabOnline: 'Online',
         tabExam: 'Sınav Hazırlık',
@@ -130,7 +130,7 @@ const navTranslations = {
         email: 'E-Mail',
         brochure: 'Broschüre',
         pricesDates: 'Preise & Termine',
-        register: 'Kostenlose Buchung',
+        register: 'Kursbuchung',
         phone: '+49 163 6927842',
         tabIntensive: 'Intensiv',
         tabSeasonal: 'Saisonal',
@@ -232,9 +232,9 @@ const navTranslations = {
         email: 'Email',
         brochure: 'Brochure',
         pricesDates: 'Prices & Dates',
-        register: 'Free booking',
+        register: 'Course booking',
         phone: '+49 163 6927842',
-        tabIntensive: 'Intensive Academic',
+        tabIntensive: 'Intensive German',
         tabSeasonal: 'Seasonal',
         tabOnline: 'Online',
         tabExam: 'Exam Preparation',
@@ -337,9 +337,9 @@ const navTranslations = {
         email: 'Email',
         brochure: 'Folleto',
         pricesDates: 'Precios y Fechas',
-        register: 'Reserva gratuita',
+        register: 'Reserva de curso',
         phone: '+49 163 6927842',
-        tabIntensive: 'Intensivo Académico',
+        tabIntensive: 'Alemán Intensivo',
         tabSeasonal: 'Estacional',
         tabOnline: 'Online',
         tabExam: 'Preparación de Exámenes',
@@ -556,6 +556,7 @@ const sectionMapping = {
 const t = navTranslations[lang as keyof typeof navTranslations];
 const slugs = slugMapping;
 const sections = sectionMapping[lang as keyof typeof sectionMapping];
+const whatsappHref = 'https://wa.me/4915203823792';
 const nextMonthDate = new Date();
 nextMonthDate.setMonth(nextMonthDate.getMonth() + 1);
 const nextMonthLocale =
@@ -575,7 +576,7 @@ const promoBannerDynamicText =
     <!-- Promo Banner (Bremen Mart indirim - kapatılabilir) -->
     <div class="promo-banner" id="promo-banner" role="region" aria-label="Kampanya">
         <div class="promo-banner-inner">
-            <span class="promo-banner-text"><i class="fas fa-tag promo-banner-icon" aria-hidden="true"></i> {promoBannerDynamicText}<button type="button" class="promo-banner-link promo-banner-link--btn" data-open-quote-modal><i class="fab fa-whatsapp"></i> {t.promoBannerLink}</button></span>
+            <span class="promo-banner-text"><i class="fas fa-tag promo-banner-icon" aria-hidden="true"></i> {promoBannerDynamicText}<a href={whatsappHref} class="promo-banner-link promo-banner-link--btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> {t.promoBannerLink}</a></span>
             <button type="button" class="promo-banner-close" id="promo-banner-close" aria-label={lang === 'tr' ? 'Bannerı kapat' : lang === 'de' ? 'Banner schließen' : lang === 'es' ? 'Cerrar banner' : 'Close banner'}>
                 <i class="fas fa-times"></i>
             </button>
@@ -590,20 +591,20 @@ const promoBannerDynamicText =
             </div>
             <!-- Orta: Fiyat teklifi, Email, WhatsApp, Fiyat ve Tarihler -->
             <div class="top-header-center">
-                <a href={`/${lang}/${sections.booking}`} class="top-header-link top-header-link--btn">
+                <button type="button" class="top-header-link top-header-link--btn" data-open-quote-modal>
                     <i class="fas fa-file-alt"></i>
                     <span>{t.getQuote}</span>
-                </a>
+                </button>
                 <span class="top-header-divider"></span>
                 <a href="mailto:info@campusgerman.com" class="top-header-link top-header-email">
                     <i class="fas fa-envelope"></i>
                     <span>{t.email}</span>
                 </a>
                 <span class="top-header-divider"></span>
-                <button type="button" class="top-header-link top-header-link--btn" data-open-quote-modal>
+                <a href={whatsappHref} class="top-header-link" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-whatsapp"></i>
                     <span>{t.contactUs}</span>
-                </button>
+                </a>
                 <span class="top-header-divider"></span>
                 <a href={`/${lang}/${lang === 'tr' ? 'fiyatlar-tarihler' : lang === 'de' ? 'preise-termine' : lang === 'en' ? 'prices-dates' : 'precios-fechas'}`} class="top-header-link">
                     <i class="fas fa-euro-sign"></i>
@@ -612,11 +613,11 @@ const promoBannerDynamicText =
             </div>
             <!-- Sağ: Rezervasyon/Booking (gradient buton) + Dil -->
             <div class="top-header-right">
-                <button type="button" class="top-header-register top-header-register--btn" data-open-quote-modal>
+                <a href={`/${lang}/${sections.booking}`} class="top-header-register top-header-register--btn">
                     <i class="fas fa-credit-card"></i>
                     <span>{t.register}</span>
                     <i class="fas fa-arrow-right register-arrow"></i>
-                </button>
+                </a>
                 <div class="top-header-lang">
                     <button type="button" class="top-lang-btn" id="topLangBtn" aria-expanded="false" aria-haspopup="true">
                         <img src={lang === 'tr' ? 'https://flagcdn.com/tr.svg' : lang === 'de' ? 'https://flagcdn.com/de.svg' : lang === 'es' ? 'https://flagcdn.com/es.svg' : 'https://flagcdn.com/gb.svg'} alt={lang === 'tr' ? 'Türkçe' : lang === 'de' ? 'Deutsch' : lang === 'es' ? 'Español' : 'English'} class="lang-flag">
@@ -674,7 +675,7 @@ const promoBannerDynamicText =
                                     <button class="course-tab" data-tab="firma">{t.tabCorporate}</button>
                                 </div>
                                 <div class="courses-content">
-                                    <!-- Yoğun Akademik Tab -->
+                                    <!-- Yoğun Almanca Tab -->
                                     <div class="course-tab-panel active" data-panel="yogun">
                                         <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivOverview[lang]}`} class="dropdown-link">{t.intensivOverview}</a>
                                         <a href={`/${lang}/${sections.courses}/${courseSlugs.intensivA1[lang]}`} class="dropdown-link">{t.intensivA1}</a>
@@ -847,7 +848,7 @@ const promoBannerDynamicText =
                         </button>
                     </div>
                     <ul class="mobile-submenu" id="mobileCoursesSubmenu">
-                        <!-- Yoğun Akademik Kurslar -->
+                        <!-- Yoğun Almanca Kurslar -->
                         <li class="mobile-submenu-item mobile-submenu-category">
                             <span class="mobile-submenu-category-title">{t.tabIntensive}</span>
                         </li>
@@ -1139,7 +1140,7 @@ const promoBannerDynamicText =
         <div class="mobile-actions">
             <a href={`/${lang}/${sections.booking}`} class="mobile-cta">
                 <i class="fas fa-arrow-right"></i>
-                <span>{t.cta}</span>
+                <span>{t.register}</span>
             </a>
         </div>
     </div>

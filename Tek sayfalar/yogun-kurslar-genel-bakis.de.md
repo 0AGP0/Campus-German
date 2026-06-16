@@ -15,7 +15,7 @@ Diese Datei wird verwendet, um den Inhalt der Intensivkurse-Übersichtsseite (`k
 
 **Beschreibung 1:** Erreichen Sie Ihre Ziele für Universitätsbildung oder Karriere in Deutschland in kürzester Zeit. Machen Sie schnelle Fortschritte mit unseren Intensivkursen.
 
-**Beschreibung 2:** Erhalten Sie eine kommunikationsorientierte, akademische Ausbildung mit 24 Unterrichtsstunden pro Woche.
+**Beschreibung 2:** Erhalten Sie eine kommunikationsorientierte, Intensiv-Deutsch-Ausbildung mit 24 Unterrichtsstunden pro Woche.
 
 **Buttons:**
 - **Primärer Button:** Kurse entdecken
@@ -27,7 +27,7 @@ Diese Datei wird verwendet, um den Inhalt der Intensivkurse-Übersichtsseite (`k
 
 **Titel:** Entdecken Sie unsere Intensivkurse
 
-**Beschreibung:** Schnelle Fortschritte, akademische Standards und flexible Programmoptionen.
+**Beschreibung:** Schnelle Fortschritte, Intensiv-Programm-Standards und flexible Programmoptionen.
 
 **Statistiken:**
 - **6+** Kurs

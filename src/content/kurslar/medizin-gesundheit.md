@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3
 features:
   - icon: "fas fa-clock"
     title: "Haftalık Ders"
-    description: "20-24 Ders"
+    description: "20 Ders"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
     description: "8 Hafta"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "8 Hafta Tıp/Sağlık"
           duration: "8 Hafta"
-          schedule: "20-24 Ders/Hafta"
+          schedule: "20 Ders/Hafta"
           price: "Özel Fiyatlandırma"
           highlighted: true
   - id: "program-detaylari"

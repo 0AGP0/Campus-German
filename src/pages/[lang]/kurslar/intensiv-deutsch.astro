@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
 import IntensivePricingSection from '../../../components/IntensivePricingSection.astro';
+import PromoPrice from '../../../components/PromoPrice.astro';
 import '../../../styles/pages/kurslar.css';
 import { coursePricing } from '../../../data/coursePricing';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, getSimpleCourseStartDates } from '../../../utils/coursePricingHelper';
@@ -52,11 +53,11 @@ const t = {
         title: "Yoğun Almanca Kursları Genel Bakış - Campus German",
         heroTitle: "Yoğun Almanca Kursları",
         heroDescription1: "Almanya'da üniversite eğitimi veya kariyer hedeflerinize en kısa sürede ulaşın. Yoğun Almanca kurslarımız ile hızlı ilerleme sağlayın.",
-        heroDescription2: "Haftada 25 ders saati ile iletişim odaklı, akademik standartlarda eğitim alın.",
+        heroDescription2: "Haftada 20 ders saati ile iletişim odaklı, yoğun program standartlarında eğitim alın.",
         buttonText1: "Kursları İncele",
         buttonText2: "İletişime Geç",
         ctaCardTitle: "Yoğun Kurslarımızı Keşfedin",
-        ctaCardDescription: "Hızlı ilerleme, akademik standartlar ve esnek program seçenekleri.",
+        ctaCardDescription: "Hızlı ilerleme, yoğun program standartları ve esnek program seçenekleri.",
         stat1Number: "6+",
         stat1Label: "Kurs",
         stat2Number: "24",
@@ -75,11 +76,11 @@ const t = {
         title: "Übersicht Intensivkurse - Campus German",
         heroTitle: "Intensiv Deutschkurse",
         heroDescription1: "Erreichen Sie Ihre Ziele für Universitätsbildung oder Karriere in Deutschland in kürzester Zeit. Machen Sie schnelle Fortschritte mit unseren Intensivkursen.",
-        heroDescription2: "Erhalten Sie eine kommunikationsorientierte, akademische Ausbildung mit 24 Unterrichtsstunden pro Woche.",
+        heroDescription2: "Erhalten Sie eine kommunikationsorientierte, Intensiv-Deutsch-Ausbildung mit 20 Unterrichtsstunden pro Woche.",
         buttonText1: "Kurse entdecken",
         buttonText2: "Kontakt",
         ctaCardTitle: "Entdecken Sie unsere Intensivkurse",
-        ctaCardDescription: "Schnelle Fortschritte, akademische Standards und flexible Programmoptionen.",
+        ctaCardDescription: "Schnelle Fortschritte, Intensiv-Programm-Standards und flexible Programmoptionen.",
         stat1Number: "6+",
         stat1Label: "Kurs",
         stat2Number: "24",
@@ -175,19 +176,10 @@ const translations = t[lang as keyof typeof t];
             <div class="courses-grid">
                 {yogunKurslar.map(kurs => {
                     const pricingData = getCoursePricingData(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
-                    let priceText = translations.courseCardContactUs;
                     const perWeekPrice = getCourseCardPerWeekPrice(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
-                    if (perWeekPrice) {
-                        priceText = perWeekPrice;
-                    } else if (pricingData?.pricing?.fullCourse) {
-                        priceText = `${pricingData.pricing.fullCourse} ${translations.courseCardStartingPrices}`;
-                    } else if (pricingData?.isWeeklyOnly && pricingData?.weeklyPricing) {
-                        const courseInfo = extractCourseInfo(kurs.slug);
-                        const weeklyCat = getWeeklyPricingCategory(courseInfo.level);
-                        const weeklyPrices = weeklyCat ? pricingData.weeklyPricing[weeklyCat] : null;
-                        const firstPrice = weeklyPrices?.['2'] || (weeklyPrices && Object.values(weeklyPrices)[0]);
-                        if (firstPrice) priceText = `${firstPrice} ${translations.courseCardStartingPrices}`;
-                    }
+                    const hasPrice = !!perWeekPrice
+                        || !!pricingData?.pricing?.fullCourse
+                        || !!(pricingData?.isWeeklyOnly && pricingData?.weeklyPricing);
                     return (
                     <div class="course-card">
                         <div class="course-image">
@@ -208,7 +200,9 @@ const translations = t[lang as keyof typeof t];
                             <p class="course-description">
                                 {kurs.data.description}
                             </p>
-                            <p class="course-card-price">{priceText}</p>
+                            {hasPrice
+                                ? <div class="course-card-price"><PromoPrice lang={lang} variant="card" /></div>
+                                : <p class="course-card-price">{translations.courseCardContactUs}</p>}
                             <a href={`/${lang}/kurslar/${kurs.data.customSlug ?? cleanSlug(kurs.slug)}`} class="course-btn">
                                 <span>{lang === 'tr' ? 'Detay' : 'Details'}</span>
                                 <i class="fas fa-arrow-right"></i>

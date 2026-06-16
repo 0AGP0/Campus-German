@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1504307651254-35680f086213?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Clases Semanales"
-    description: "20-24 Clases"
+    description: "20 Clases"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Curso"
     description: "8 Semanas"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "8 Semanas Ingeniería/Técnico"
           duration: "8 Semanas"
-          schedule: "20-24 Clases/Semana"
+          schedule: "20 Clases/Semana"
           price: "Precio Especial"
           highlighted: true
   - id: "detalles-programa"

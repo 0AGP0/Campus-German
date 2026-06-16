@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "24 Unterrichtseinheiten (UE)"
+    description: "20 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Programmdauer"
     description: "8 Wochen"
@@ -54,11 +54,11 @@ tabs:
       pricing:
         - name: "Career Pathway (8 Wochen)"
           duration: "8 Wochen"
-          schedule: "24 UE/Woche"
+          schedule: "20 UE/Woche"
           price: "Individuelle Preisgestaltung"
         - name: "Career Pathway (24 Wochen)"
           duration: "24 Wochen"
-          schedule: "24 UE/Woche"
+          schedule: "20 UE/Woche"
           price: "Individuelle Preisgestaltung"
           highlighted: true
   - id: "programmdetails"

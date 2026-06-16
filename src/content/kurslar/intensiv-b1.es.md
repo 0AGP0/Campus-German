@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Clases Semanales"
-    description: "24 Clases (UE)"
+    description: "20 Clases (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Curso"
     description: "8 Semanas"
@@ -37,7 +37,7 @@ tabs:
       title: "Curso Intensivo de Alemán B1"
       paragraphs:
         - heading: "Resumen del Curso"
-          text: "El Curso Intensivo de Alemán B1 es un programa integral diseñado para estudiantes que han completado el nivel A2, enfocado en desarrollar habilidades intermedias de alemán. Este curso tiene como objetivo proporcionar a los estudiantes habilidades lingüísticas que les permitirán comunicarse de manera más independiente en la vida empresarial y entornos sociales. El programa, que ofrece una experiencia de aprendizaje intensiva con 24 horas de clase por semana, dura 8 semanas y consta de aproximadamente 200 horas de clase."
+          text: "El Curso Intensivo de Alemán B1 es un programa integral diseñado para estudiantes que han completado el nivel A2, enfocado en desarrollar habilidades intermedias de alemán. Este curso tiene como objetivo proporcionar a los estudiantes habilidades lingüísticas que les permitirán comunicarse de manera más independiente en la vida empresarial y entornos sociales. El programa, que ofrece una experiencia de aprendizaje intensiva con 20 horas de clase por semana, dura 8 semanas y consta de aproximadamente 200 horas de clase."
         - heading: "Audiencia Objetivo y Prerrequisitos"
           text: "Este curso es adecuado para estudiantes que han completado exitosamente el nivel A2. El nivel B1 es un punto de inflexión importante en el aprendizaje de alemán porque en este nivel los estudiantes se vuelven capaces de comunicarse sobre temas más complejos. Profesionales que planean trabajar en Alemania, estudiantes que planean recibir educación universitaria, o cualquier persona que quiera vivir en países de habla alemana puede participar en este curso."
         - heading: "Contenido del Curso y Objetivos de Aprendizaje"

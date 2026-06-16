@@ -5,6 +5,7 @@ import '../../styles/pages/index.css';
 import { getCollection } from 'astro:content';
 import { isOverviewPage, getSectionPath, cleanSlug, getContactPath, getBookingPath } from '../../utils/pathHelpers';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
+import PromoPrice from '../../components/PromoPrice.astro';
 import { getNavbarCourseSlugs, navbarCourseSlugsByLang } from '../../data/navbarCourseSlugs';
 
 export async function getStaticPaths() {
@@ -108,7 +109,7 @@ const t = {
         courseDetailsButton: "Detaylar",
         coursesSidebarOfficeTitle: "Bremen'de yaşayanlara özel ofis indirimi",
         coursesSidebarOfficeDesc: "%30'a varan ofis indirimi fırsatını hemen değerlendirin.",
-        coursesSidebarOfficeTag: "Vize ve akademik hedefe uygun eğitim akışı",
+        coursesSidebarOfficeTag: "Vize ve yoğun Almanca hedefine uygun eğitim akışı",
         coursesSidebarOfficeCta: "Şimdi ofis rezervasyonu yap",
         visitPopupFabAria: "Ücretsiz ders ve indirim formunu aç",
         // Hero video section
@@ -1030,6 +1031,50 @@ const t = {
 };
 
 const translations = t[lang as keyof typeof t];
+
+// --- Öğrenci yorumları (gerçek Google yorumları) ---
+// Yorumlar elle yönetilir ve her dilde aynı şekilde (orijinal dillerinde) gösterilir.
+// Yeni bir Google yorumu geldiğinde listeye yeni bir nesne ekle:
+//   { name: "Ad Soyad", rating: 5, text: "\"Yorum metni\"" }
+// Alanlar: name (zorunlu), rating 1-5 (zorunlu), text (zorunlu),
+//          subtitle (opsiyonel, boşsa gösterilmez), avatar (opsiyonel, boşsa kişi simgesi).
+// Slider yorum sayısını otomatik uyarlar.
+type Review = { name: string; rating: number; text: string; subtitle?: string; avatar?: string };
+const reviews: Review[] = [
+    { name: "Tolunay Çetin", rating: 5, text: "\"Bremen'deki açık ara en iyi dil okulu. Vize sürecinden konaklamaya kadar çok yardımcı oldular. Öğretmenleri 10 numara ve kurum içi hizmet kalitesi mükemmel. Herkese kesinlikle tavsiye ederim.\"", avatar: "https://lh3.googleusercontent.com/a-/ALV-UjVuraAOGXkVKhVlwv04VnD8zBPS4VPkT9n1brculMJbsdqEahGCXQ=s128-c-rp-mo-br100" },
+    { name: "Selçuk Köroğlu", rating: 5, text: "\"Ich habe bei der Campus German Sprachschule einen Intensivkurs gemacht und bin insgesamt sehr zufrieden. Die Lehrer sind freundlich, geduldig und erklären den Stoff klar und verständlich. Der Unterricht ist gut strukturiert.\"", avatar: "https://lh3.googleusercontent.com/a-/ALV-UjWldMCaSb5Wri5r1DwPeD0O_8mZxXxa37FxXQgf-tbZlaL1SdPD=s128-c-rp-mo-br100" },
+    { name: "Cem Deniz Akgök", rating: 5, text: "\"I studied German A1 at Campus German Sprachschule. The teachers are very patient and friendly. Lessons are clear and easy to understand. I am happy with my progress.\"", avatar: "https://lh3.googleusercontent.com/a-/ALV-UjWYyd-05esf7r-keC4Sn1Cz3VLXzqGZ9u4Yehka2D52WmYX8SaN=s128-c-rp-mo-br100" },
+    { name: "Selim M.", rating: 5, text: "\"Öğretmenler harika, ayrıca kurs dışında yaptığımız geziler de mükemmeldi. Herkese ilgilerinden dolayı teşekkür ediyorum. Bremen'e gelecek öğrencilere tavsiye ederim.\"", avatar: "https://lh3.googleusercontent.com/a-/ALV-UjUbwEREyvLI072C57wAMgrLw8pY4Eq2fd-r0omWGIWX7iZrZDRY=s128-c-rp-mo-br100" },
+    { name: "Jamilya Kaldygarina", rating: 5, text: "\"Ich habe bereits zwei andere Sprachschulen in Bremen besucht, aber Campus German ist wirklich auf einem ganz anderen Niveau. Man merkt sofort, dass der Unterricht gut strukturiert ist.\"", avatar: "https://lh3.googleusercontent.com/a-/ALV-UjXbjbtKaPmJRUTGLiLEib1EgoJR_ll2C1r1hwrRHSrnrbuy2Ik=s128-c-rp-mo-br100" },
+    { name: "Salih Can Karataş", rating: 5, text: "\"My friend and I attended the Sprachcafé event they organize on Saturdays, and we had a lot of fun. It offers a friendly environment where you can both enjoy your time and practice the language.\"", avatar: "https://lh3.googleusercontent.com/a/ACg8ocJ0PxVIZXa8oDW9ig-A3KCkQDSmZCXoaAJzvoBB1t6S6UpuBw=s128-c-rp-mo-br100" },
+    { name: "Ali Timur", rating: 5, text: "\"Campus German'da aldığım dil kursu çok güzel ve eğlenceli geçti; hocaların ilgisi ve bağlılığı takdire şayandı. Böyle bir düşünceniz varsa düşünmenize bile gerek yok, sevgilerimle.\"", avatar: "https://lh3.googleusercontent.com/a/ACg8ocIdviX_cDdPJnxKbL8pTsT41P9zoJjDODHxLu2bK5Jo3i8X6A=s128-c-rp-mo-br100" },
+    { name: "Mustafa Öztemiz", rating: 5, text: "\"Ich nehme am Konversationsklub teil. Im Gegensatz zu normalen Kursen ist es dort viel natürlicher. Wir üben, wie man im Alltag spricht, und lernen, flüssiger zu reden. Das hilft mir sehr.\"", avatar: "https://lh3.googleusercontent.com/a-/ALV-UjXwtIs0sBTpTdxhOx7JMbyK8lldToTnYHkV3BWl9hBjWP5NjMvwMg=s128-c-rp-mo-br100" },
+    { name: "Rene Ndekwe", rating: 5, text: "\"I really liked the environment. It was fun learning with everyone, regardless of their level of language proficiency.\"", avatar: "https://lh3.googleusercontent.com/a-/ALV-UjXAYsrqCFOxX9GCcUQx0co-AoDs0rTrswLzFyioxmA3-FR5yEw=s128-c-rp-mo-br100" },
+    { name: "Feyyaz Yalçın", rating: 5, text: "\"Eğitim kalitesi ve ilgi çok güzel, akıllı tahta ile dersleri daha verimli işleyebiliyoruz. Bremen'de diğer dil okullarına gitmiş biri olarak Campus German kesinlikle çok daha önde ve yenilikçi bir eğitim sunuyor.\"", avatar: "https://lh3.googleusercontent.com/a/ACg8ocK2mmslt4uztG1aLtXfswRkFvR1Ze2UGX6TisMo_QzAHBW8tQ=s128-c-rp-mo-br100" },
+    { name: "Fırat Köy", rating: 5, text: "\"Mein Kurs startet im April. Die Leute waren echt super nett und hilfsbereit, hab mich direkt wohlgefühlt. Freue mich drauf!\"", avatar: "https://lh3.googleusercontent.com/a-/ALV-UjX0zDVsRAGMQ1CNafVt4r9nOScJFSxZ3uyBcSL11Wu_yNzWasDS=s128-c-rp-mo-br100" },
+    { name: "Manak Sharma", rating: 5, text: "\"Very good institute, and they host a lot of fun events too!\"", avatar: "https://lh3.googleusercontent.com/a-/ALV-UjW0DldCDqybV6eZ3yIinyQRscgezC6ZuFoP950N8FF0rogtfqam=s128-c-rp-mo-br100" },
+    { name: "M. Guel", rating: 5, text: "\"Bremen'de kaliteli bir dil kursu arayanlara kayıt olmalarını şiddetle tavsiye ettiğim dil okulu. Hocaları ilgili, ödeme konusunda da kolaylık sağlıyorlar.\"", avatar: "https://lh3.googleusercontent.com/a-/ALV-UjWz5m7K22GKEz5SMV2fnJrUYLPUAFja6GywTnkkRb8SqgXAbZpG=s128-c-rp-mo-br100" },
+    { name: "Bülent Kayan", rating: 5, text: "\"Ich habe Deutschkurse der Niveaus A2, B1, B2 und C1 an der Campus German Sprachschule besucht und war durchweg zufrieden.\"", avatar: "https://lh3.googleusercontent.com/a/ACg8ocK4elynog9gu6SC1y2Bt-vF0VEfIzSE-hzGNCbkdOP_vQxzAg=s128-c-rp-mo-br100" },
+    { name: "Adesiyan Michael", rating: 5, text: "\"The school is good and is a great place to learn the German language.\"", avatar: "https://lh3.googleusercontent.com/a-/ALV-UjX8aw9jaQcorUKDFkT4jLDnE5u6X5YqRzkMkSaUBgcoOAU7At7n9A=s128-c-rp-mo-br100" },
+    { name: "Ravza Arslan", rating: 5, text: "\"İlk defa gittim ve iyi ki gelmişim, çok eğlendim, çok tatlı insanlar tanıdım. Gitmek isteyip de çekinenler hiç kafaya takmasın; çok sıcak ve samimi bir ortamları var.\"", avatar: "https://lh3.googleusercontent.com/a/ACg8ocJl0koDLHJVUGC-RjBXNIFa9ZnNqo3ZcxrZz9S6aChJOdSSXC4=s128-c-rp-mo-br100" },
+    { name: "Divan Kılınç", rating: 5, text: "\"Die beste Sprachschule in Bremen.\"", avatar: "https://lh3.googleusercontent.com/a/ACg8ocLRLgMYgRK78JS9DxkhN-DQrE_12Xr_GfzHaV3jNX_dOi2-0g=s128-c-rp-mo-br100" },
+    { name: "Ekin Su Teker", rating: 5, text: "\"Harika bir ekip, öğretmenler mükemmel. İyi ki Campus German!\"", avatar: "https://lh3.googleusercontent.com/a/ACg8ocIzzfAPYPLSQQV9letJ3erOW_0zmKCnAbVK3deDXkspYZJylA=s128-c-rp-mo-br100" },
+    { name: "Aykut Zilayan", rating: 5, text: "\"Etkinlikte çok güzel vakit geçirdik. Bence ilerleyen zamanlarda Bremen'in en iyi dil kursu olacak.\"", avatar: "https://lh3.googleusercontent.com/a/ACg8ocJZVs98pe9yTLTv6WN2RRnHnBjQhWkZOZoPEpEghKTJKAfQvg=s128-c-rp-mo-br100" },
+];
+
+// avatar verilmeyen yorumlar için isim baş harflerinden otomatik renkli avatar üretir
+function getInitials(name: string): string {
+    const parts = name.replace(/[^\p{L}\s]/gu, '').trim().split(/\s+/).filter(Boolean);
+    const first = parts[0]?.[0] ?? '';
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
+    return (first + last).toUpperCase();
+}
+const avatarColors = ['#0cc0df', '#1a7a8c', '#2563eb', '#7c3aed', '#db2777', '#ea580c', '#16a34a', '#0891b2'];
+function getAvatarColor(name: string): string {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    return avatarColors[Math.abs(hash) % avatarColors.length];
+}
 ---
 
 <MainLayout title={translations.title} lang={lang} visitPopupHomeScroll={true}>
@@ -1334,19 +1379,10 @@ const translations = t[lang as keyof typeof t];
                             const periodLabel = coursePeriod === 'yaz-donemi' ? translations.courseFilterSummer : translations.courseFilterYearRound;
                             const features = (kurs.data.features || []).slice(0, 2);
                             const pricingData = getCoursePricingData(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
-                            let priceText = translations.courseCardContactUs;
                             const perWeekPrice = getCourseCardPerWeekPrice(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
-                            if (perWeekPrice) {
-                                priceText = perWeekPrice;
-                            } else if (pricingData?.pricing?.fullCourse) {
-                                priceText = `${pricingData.pricing.fullCourse} ${translations.courseCardStartingPrices}`;
-                            } else if (pricingData?.isWeeklyOnly && pricingData?.weeklyPricing) {
-                                const courseInfo = extractCourseInfo(kurs.slug);
-                                const weeklyCat = getWeeklyPricingCategory(courseInfo.level);
-                                const weeklyPrices = weeklyCat ? pricingData.weeklyPricing[weeklyCat] : null;
-                                const firstPrice = weeklyPrices?.['2'] || (weeklyPrices && Object.values(weeklyPrices)[0]);
-                                if (firstPrice) priceText = `${firstPrice} ${translations.courseCardStartingPrices}`;
-                            }
+                            const hasPrice = !!perWeekPrice
+                                || !!pricingData?.pricing?.fullCourse
+                                || !!(pricingData?.isWeeklyOnly && pricingData?.weeklyPricing);
                             return (
                                 <article class="course-card" data-level={`all ${courseLevel}`} data-type={courseType} data-period={coursePeriod}>
                                     <a href={href} class="course-card-link">
@@ -1367,7 +1403,9 @@ const translations = t[lang as keyof typeof t];
                                                     {features.map((f) => <li key={f.title}>{f.title}</li>)}
                                                 </ul>
                                             ) : null}
-                                            <p class="course-card-price">{priceText}</p>
+                                            {hasPrice
+                                                ? <div class="course-card-price"><PromoPrice lang={lang} variant="card" /></div>
+                                                : <p class="course-card-price">{translations.courseCardContactUs}</p>}
                                             <div class="course-card-footer">
                                                 <span class="course-card-cta-text">{translations.courseDetailsButton}</span>
                                                 <span class="course-card-arrow"><i class="fas fa-arrow-right"></i></span>
@@ -1564,90 +1602,29 @@ const translations = t[lang as keyof typeof t];
                         <h3 class="reviews-title">{translations.reviewsTitle}</h3>
                         <div class="reviews-slider">
                             <div class="reviews-container" id="reviewsSlider">
+                                {reviews.map((review) => (
                                 <div class="review-card">
                                     <div class="review-top">
                                         <div class="reviewer-info">
                                             <div class="reviewer-avatar">
-                                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=45&h=45&fit=crop&crop=face" alt="Maria Schmidt">
+                                                {review.avatar
+                                                    ? <img src={review.avatar} alt={review.name} loading="lazy" referrerpolicy="no-referrer" />
+                                                    : <span class="reviewer-avatar-initials" style={`background:${getAvatarColor(review.name)}`}>{getInitials(review.name)}</span>}
                                             </div>
                                             <div class="reviewer-details">
-                                                <h4>Maria Schmidt</h4>
-                                                <p>A1 → B2 (8 {lang === 'tr' ? 'ay' : 'Monate'})</p>
+                                                <h4>{review.name}</h4>
+                                                {review.subtitle && <p>{review.subtitle}</p>}
                                             </div>
                                         </div>
                                         <div class="review-rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
+                                            {Array.from({ length: 5 }).map((_, i) => (
+                                                <i class={i < review.rating ? 'fas fa-star' : 'far fa-star'}></i>
+                                            ))}
                                         </div>
                                     </div>
-                                    <p class="review-text">{lang === 'tr' ? "\"Campus German'da öğrendiğim Almanca ile Almanya'da bir üniversitede İşletme okuyorum. Öğretmenlerim çok sabırlıydı ve konuşma odaklı eğitim sayesinde hızlı ilerledim.\"" : translations.review1Text}</p>
+                                    <p class="review-text">{review.text}</p>
                                 </div>
-                                <div class="review-card">
-                                    <div class="review-top">
-                                        <div class="reviewer-info">
-                                            <div class="reviewer-avatar">
-                                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=45&h=45&fit=crop&crop=face" alt="Ahmet Yılmaz">
-                                            </div>
-                                            <div class="reviewer-details">
-                                                <h4>Ahmet Yılmaz</h4>
-                                                <p>{lang === 'tr' ? 'Türkiye → Almanya' : 'Türkei → Deutschland'}</p>
-                                            </div>
-                                        </div>
-                                        <div class="review-rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <p class="review-text">{lang === 'tr' ? "\"Türkiye'den gelerek Campus German'da eğitim aldım. Şimdi Almanya'da bir şirkette çalışıyorum. Program çok kapsamlıydı ve iş bulmamda büyük yardımı oldu.\"" : translations.review2Text}</p>
-                                </div>
-                                <div class="review-card">
-                                    <div class="review-top">
-                                        <div class="reviewer-info">
-                                            <div class="reviewer-avatar">
-                                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=45&h=45&fit=crop&crop=face" alt="Lisa Müller">
-                                            </div>
-                                            <div class="reviewer-details">
-                                                <h4>Lisa Müller</h4>
-                                                <p>B1 → C1 (6 {lang === 'tr' ? 'ay' : 'Monate'})</p>
-                                            </div>
-                                        </div>
-                                        <div class="review-rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <p class="review-text">{lang === 'tr' ? "\"İş için Almanca öğrenmek istiyordum. Campus German'da aldığım eğitim sayesinde şirketimde terfi aldım. Özellikle iş Almancası konusunda çok faydalı oldu.\"" : translations.review3Text}</p>
-                                </div>
-                                <div class="review-card">
-                                    <div class="review-top">
-                                        <div class="reviewer-info">
-                                            <div class="reviewer-avatar">
-                                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=45&h=45&fit=crop&crop=face" alt="Carlos Rodriguez">
-                                            </div>
-                                            <div class="reviewer-details">
-                                                <h4>Carlos Rodriguez</h4>
-                                                <p>{lang === 'tr' ? 'İspanya → Almanya' : 'Spanien → Deutschland'}</p>
-                                            </div>
-                                        </div>
-                                        <div class="review-rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <p class="review-text">{lang === 'tr' ? "\"İspanya'dan Almanya'ya geldim ve Campus German'da üniversite hazırlık kursu aldım. Şimdi Almanya'da bir üniversitede Mühendislik okuyorum. Çok teşekkürler!\"" : translations.review4Text}</p>
-                                </div>
+                                ))}
                             </div>
                             <div class="slider-controls">
                                 <button class="slider-btn prev" id="reviewsPrev">

@@ -7,6 +7,7 @@ import QuoteWizardModal from '../../../components/QuoteWizardModal.astro';
 import '../../../styles/global.css';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo } from '../../../utils/coursePricingHelper';
 import IntensivePricingSection from '../../../components/IntensivePricingSection.astro';
+import PromoPrice from '../../../components/PromoPrice.astro';
 import SuccessModal from '../../../components/SuccessModal.astro';
 
 export async function getStaticPaths() {
@@ -316,6 +317,11 @@ const groupSizeDisplay = '10-16 máx.';
                                                 )}
 
                                                 {tab.content.pricing && (
+                                                    tab.content.pricing.some((p) => typeof p.price === 'string' && p.price.includes('€')) ? (
+                                                        <div class="dynamic-pricing-content">
+                                                            <PromoPrice lang={lang} variant="block" />
+                                                        </div>
+                                                    ) : (
                                                     <div class="pricing-table">
                                                         <div class="table-header">
                                                             <div class="header-cell">Programa</div>
@@ -332,6 +338,7 @@ const groupSizeDisplay = '10-16 máx.';
                                                             </div>
                                                         ))}
                                                     </div>
+                                                    )
                                                 )}
 
                                                 {tab.content.lessons && (

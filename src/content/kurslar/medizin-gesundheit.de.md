@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "20-24 Unterrichtseinheiten"
+    description: "20 Unterrichtseinheiten"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
     description: "8 Wochen"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "8 Wochen Medizin/Gesundheit"
           duration: "8 Wochen"
-          schedule: "20-24 Unterrichtseinheiten/Woche"
+          schedule: "20 Unterrichtseinheiten/Woche"
           price: "Individuelle Preisgestaltung"
           highlighted: true
   - id: "programmdetails"

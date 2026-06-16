@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Haftalık Ders"
-    description: "25 Ders (UE)"
+    description: "20 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
     description: "8 Hafta"
@@ -37,7 +37,7 @@ tabs:
       title: "Goethe/TELC B2 Hazırlık Kursu"
       paragraphs:
         - heading: "Kursa Genel Bakış"
-          text: "Goethe/TELC B2 Hazırlık Kursu, Goethe ve TELC B2 sınavlarına hazırlanmak isteyen öğrenciler için tasarlanmış, sınav odaklı kapsamlı bir programdır. Bu kurs, öğrencilerin B2 sınav formatına özel hazırlık yapmalarını, sınav tekniklerini öğrenmelerini ve başarılı olmalarını sağlamayı hedefler. Haftada 25 ders saati ile yoğun bir hazırlık deneyimi sunan program, 8 hafta sürmektedir ve yaklaşık 200 ders saatinden oluşmaktadır."
+          text: "Goethe/TELC B2 Hazırlık Kursu, Goethe ve TELC B2 sınavlarına hazırlanmak isteyen öğrenciler için tasarlanmış, sınav odaklı kapsamlı bir programdır. Bu kurs, öğrencilerin B2 sınav formatına özel hazırlık yapmalarını, sınav tekniklerini öğrenmelerini ve başarılı olmalarını sağlamayı hedefler. Haftada 20 ders saati ile yoğun bir hazırlık deneyimi sunan program, 8 hafta sürmektedir ve yaklaşık 200 ders saatinden oluşmaktadır."
         - heading: "Hedef Sınavlar ve Ön Koşullar"
           text: "Bu kurs, Goethe B2 ve TELC B2 sınavlarına hazırlık yapmaktadır. B2 seviyesini tamamlamış öğrenciler için uygundur. Goethe B2 sınavı, dünya çapında tanınan bir Almanca dil sertifikasıdır ve ileri orta seviye Almanca bilgisini belgeler. TELC B2 sınavı ise Avrupa çapında yaygın olarak kullanılan bir dil sertifikasıdır ve bazı üniversiteler ve işverenler tarafından kabul edilir. Her iki sınav da B2 seviyesindeki dil becerilerini ölçer."
         - heading: "Kurs İçeriği ve Hazırlık Yöntemleri"

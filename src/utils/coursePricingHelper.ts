@@ -358,6 +358,35 @@ export function getStartDateOptions(lang: 'tr' | 'de' | 'en' | 'es', year = 2026
   }));
 }
 
+/** Tüm kurslarda gösterilen tek/sabit indirim fiyatı (üstü çizili eski → indirimli). */
+export const PROMO_PRICE = {
+  original: 990,
+  discounted: 890,
+  percent: 10,
+  originalText: '990€',
+  discountedText: '890€',
+};
+
+/** "%10 indirim" etiketini dile göre döndürür. */
+export function getPromoDiscountBadge(lang: 'tr' | 'de' | 'en' | 'es'): string {
+  const labels: Record<'tr' | 'de' | 'en' | 'es', string> = {
+    tr: `%${PROMO_PRICE.percent} indirim`,
+    de: `${PROMO_PRICE.percent}% Rabatt`,
+    en: `${PROMO_PRICE.percent}% off`,
+    es: `${PROMO_PRICE.percent}% de descuento`,
+  };
+  return labels[lang] ?? labels.en;
+}
+
+/** Bir kursun (kart için) somut fiyat gösterip göstermediğini belirler. */
+export function courseShowsPrice(lang: 'tr' | 'de' | 'en' | 'es', slug: string): boolean {
+  if (getCourseCardPerWeekPrice(lang, slug)) return true;
+  const data = getCoursePricingData(lang, slug);
+  if (data?.pricing?.fullCourse) return true;
+  if (data?.isWeeklyOnly && data?.weeklyPricing) return true;
+  return false;
+}
+
 /** Kart ve detay sayfalarında ders saati yerine kullanılacak ibare: "200 derse kadar" / "bis zu 200 UStd" vb. */
 export const LESSONS_UP_TO_200: Record<'tr' | 'de' | 'en' | 'es', string> = {
   tr: '200 derse kadar',

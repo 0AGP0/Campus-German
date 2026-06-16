@@ -5,7 +5,7 @@ customSlug: "erasmus-studenten"
 badge:
   icon: "fas fa-user-graduate"
   text: "Erasmus"
-description: "Spezieller Deutschkurs für Erasmus-Studierende. Akademisches Deutsch und Vorbereitung auf das Universitätsleben."
+description: "Spezieller Deutschkurs für Erasmus-Studierende. Intensiv Deutsch und Vorbereitung auf das Universitätsleben."
 image: "https://images.unsplash.com/photo-1523050854058-8df90110c9e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
 features:
   - icon: "fas fa-clock"
@@ -68,7 +68,7 @@ tabs:
       title: "Vorteile für Erasmus-Studierende"
       items:
         - icon: "fas fa-check-circle"
-          text: "<strong>Akademisches Deutsch:</strong> Vorbereitung auf universitäre Lehrveranstaltungen"
+          text: "<strong>Intensiv Deutsch:</strong> Vorbereitung auf universitäre Lehrveranstaltungen"
         - icon: "fas fa-check-circle"
           text: "<strong>Sonderrabatt:</strong> Exklusive Preisgestaltung für Erasmus-Studierende"
         - icon: "fas fa-check-circle"
@@ -76,8 +76,8 @@ tabs:
 faqs:
   - question: "Wie kann ich nachweisen, dass ich Erasmus-Studierende*r bin?"
     answer: "Es reicht aus, Ihr Erasmus-Dokument bei der Anmeldung vorzulegen."
-  - question: "Wird akademisches Deutsch unterrichtet?"
-    answer: "Ja, der Kurs ist auf akademisches Deutsch und die Vorbereitung auf das Universitätsleben ausgerichtet."
+  - question: "Wird Intensiv Deutsch unterrichtet?"
+    answer: "Ja, der Kurs ist auf Intensiv Deutsch und die Vorbereitung auf das Universitätsleben ausgerichtet."
   - question: "Welche Kursformate werden angeboten?"
     answer: "Unsere Kurse bieten flexible Lernformate: Hybridunterricht – eine Kombination aus Präsenz- und Live-Online-Unterricht, bei der Sie auch an Präsenztagen online teilnehmen können; sowie Live-Online-Unterricht, bei dem Sie vollständig live und online am Unterricht teilnehmen."
   - question: "Welche Inhalte werden in den Kursen behandelt?"

@@ -5,7 +5,7 @@ customSlug: "erasmus-ogrencileri"
 badge:
   icon: "fas fa-user-graduate"
   text: "Erasmus"
-description: "Erasmus öğrencileri için özel Almanca kursu. Akademik Almanca ve üniversite hayatına hazırlık."
+description: "Erasmus öğrencileri için özel Almanca kursu. Yoğun Almanca ve üniversite hayatına hazırlık."
 image: "https://images.unsplash.com/photo-1523050854058-8df90110c9e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
 features:
   - icon: "fas fa-clock"
@@ -68,7 +68,7 @@ tabs:
       title: "Erasmus Öğrencileri İçin Özellikler"
       items:
         - icon: "fas fa-check-circle"
-          text: "<strong>Akademik Almanca:</strong> Üniversite derslerine hazırlık"
+          text: "<strong>Yoğun Almanca:</strong> Üniversite derslerine hazırlık"
         - icon: "fas fa-check-circle"
           text: "<strong>Özel İndirim:</strong> Erasmus öğrencilerine özel fiyatlandırma"
         - icon: "fas fa-check-circle"
@@ -76,8 +76,8 @@ tabs:
 faqs:
   - question: "Erasmus öğrencisi olduğumu nasıl kanıtlarım?"
     answer: "Erasmus belgenizi kayıt sırasında sunmanız yeterlidir."
-  - question: "Akademik Almanca öğretiliyor mu?"
-    answer: "Evet, kurs akademik Almanca ve üniversite hayatına hazırlık odaklıdır."
+  - question: "Yoğun Almanca öğretiliyor mu?"
+    answer: "Evet, kurs yoğun Almanca ve üniversite hayatına hazırlık odaklıdır."
   - question: "Hangi kurs formatları sunulmaktadır?"
     answer: "Kurslarımız size esnek bir öğrenme deneyimi sunar: Hibrit Eğitim: Kursunuz, yüz yüze dersler ile canlı online derslerin birleşiminden oluşur. Hibrit sistem sayesinde, yüz yüze ders günlerinde dilediğiniz zaman online olarak da derse katılabilirsiniz. Canlı Online Eğitim: Bu formatta derslere tamamen canlı ve online olarak katılırsınız."
   - question: "Kurslarda hangi içerikler işlenmektedir?"

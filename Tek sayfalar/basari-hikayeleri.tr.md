@@ -39,10 +39,10 @@ Bu dosya başarı hikayeleri sayfası (`erfolgsgeschichten.astro`) içeriğini d
 ### Hikaye 3: Zeynep Kaya
 
 **İsim:** Zeynep Kaya
-**Rol/Başarı:** Telc C1 Sertifikası - Akademik Başarı
+**Rol/Başarı:** Telc C1 Sertifikası - Yoğun Almanca Başarısı
 **Rozet:** Telc C1: Sehr Gut
 
-**Alıntı:** "Yüksek lisans için Almanya'ya gelmek istiyordum. CampusGerman'ın akademik Almanca programı sayesinde Telc C1 sınavını başarıyla geçtim. Şu anda Almanya'da bir üniversitede İşletme yüksek lisansı yapıyorum."
+**Alıntı:** "Yüksek lisans için Almanya'ya gelmek istiyordum. CampusGerman'ın yoğun Almanca programı sayesinde Telc C1 sınavını başarıyla geçtim. Şu anda Almanya'da bir üniversitede İşletme yüksek lisansı yapıyorum."
 
 **Detaylar:**
 - 8 Aylık Program

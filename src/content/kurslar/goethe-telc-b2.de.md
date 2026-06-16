@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "24 Unterrichtseinheiten (UE)"
+    description: "20 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
     description: "8 Wochen"
@@ -37,7 +37,7 @@ tabs:
       title: "Über den Goethe/TELC B2 Prüfungsvorbereitungskurs"
       paragraphs:
         - heading: "Kursüberblick"
-          text: "Der Goethe/TELC B2 Prüfungsvorbereitungskurs ist ein intensives, prüfungsorientiertes Programm für Lernende, die sich gezielt auf die Goethe- oder TELC-B2-Prüfung vorbereiten möchten. Ziel des Kurses ist es, das B2-Prüfungsformat sicher zu beherrschen, fortgeschrittene Prüfungstechniken zu erlernen und die Prüfung erfolgreich zu bestehen. Mit 24 Unterrichtseinheiten pro Woche bietet der Kurs eine intensive Vorbereitung über 8 Wochen und umfasst insgesamt rund 200 Unterrichtsstunden."
+          text: "Der Goethe/TELC B2 Prüfungsvorbereitungskurs ist ein intensives, prüfungsorientiertes Programm für Lernende, die sich gezielt auf die Goethe- oder TELC-B2-Prüfung vorbereiten möchten. Ziel des Kurses ist es, das B2-Prüfungsformat sicher zu beherrschen, fortgeschrittene Prüfungstechniken zu erlernen und die Prüfung erfolgreich zu bestehen. Mit 20 Unterrichtseinheiten pro Woche bietet der Kurs eine intensive Vorbereitung über 8 Wochen und umfasst insgesamt rund 200 Unterrichtsstunden."
         - heading: "Zielprüfungen und Voraussetzungen"
           text: "Der Kurs bereitet auf die Goethe B2 und TELC B2 Prüfungen vor und richtet sich an Teilnehmende, die das B2-Niveau bereits abgeschlossen haben. Das Goethe-Zertifikat B2 ist ein international anerkanntes Sprachzertifikat und bestätigt fortgeschrittene Deutschkenntnisse auf gehobenem Mittelstufenniveau. Die TELC-B2-Prüfung ist europaweit verbreitet und wird von vielen Hochschulen und Arbeitgebern anerkannt. Beide Prüfungen überprüfen Sprachkompetenzen auf dem Niveau B2."
         - heading: "Kursinhalte und Vorbereitungsmethoden"

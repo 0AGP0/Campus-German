@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3
 features:
   - icon: "fas fa-clock"
     title: "Haftalık Ders"
-    description: "20-24 Ders"
+    description: "20 Ders"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
     description: "8 Hafta"
@@ -43,9 +43,9 @@ tabs:
         - heading: "Kurs İçeriği ve Öğrenme Hedefleri"
           text: "Kurs içeriği, ekonomi ve yönetim alanında sık kullanılan Almanca terminoloji ve akademik dil üzerine kuruludur. Program kapsamında ekonomi ve işletme terimleri, akademik metin okuma ve analiz, sunum ve rapor dili, toplantı ve iş yazışmaları, grafik, tablo ve veri yorumlama gibi konular ele alınır. Öğrenme hedefi, öğrencinin Almanca'yı kendi alanında akıcı, doğru ve profesyonel şekilde kullanabilmesidir. Kurs sonunda öğrenciler, akademik dersleri daha rahat takip edebilir ve profesyonel ortamlarda kendilerini net şekilde ifade edebilir."
         - heading: "Öğretim Metodu ve Sınıf Ortamı"
-          text: "CampusGerman'da bu kurs, alan odaklı ve uygulamalı bir öğretim yöntemiyle yürütülür. Derslerde gerçek akademik ve sektörel metinler, sunum ve vaka çalışmaları, grup tartışmaları, uygulamalı konuşma ve yazma egzersizleri kullanılır. Sınıflar küçük tutulur ve öğrencilerin aktif katılımı teşvik edilir. Eğitmenler, ekonomi ve akademik Almanca konusunda deneyimlidir ve öğrencileri bireysel olarak destekler."
+          text: "CampusGerman'da bu kurs, alan odaklı ve uygulamalı bir öğretim yöntemiyle yürütülür. Derslerde gerçek akademik ve sektörel metinler, sunum ve vaka çalışmaları, grup tartışmaları, uygulamalı konuşma ve yazma egzersizleri kullanılır. Sınıflar küçük tutulur ve öğrencilerin aktif katılımı teşvik edilir. Eğitmenler, ekonomi ve yoğun Almanca konusunda deneyimlidir ve öğrencileri bireysel olarak destekler."
         - heading: "Kurs Sonrası İlerleme"
-          text: "Ekonomi ve Yönetim Bilimleri için Almanca Kursu'nu tamamlayan öğrenciler akademik Almanca becerilerini güçlendirir, Almanya'daki üniversite derslerine daha rahat adapte olur, iş dünyasında Almanca iletişim kurabilir ve kariyer ve akademik hedeflerine bir adım daha yaklaşır. CampusGerman, kurs sonrasında öğrencileri ileri seviye programlar, sınav hazırlıkları veya kariyer odaklı eğitimler konusunda da yönlendirir."
+          text: "Ekonomi ve Yönetim Bilimleri için Almanca Kursu'nu tamamlayan öğrenciler yoğun Almanca becerilerini güçlendirir, Almanya'daki üniversite derslerine daha rahat adapte olur, iş dünyasında Almanca iletişim kurabilir ve kariyer ve akademik hedeflerine bir adım daha yaklaşır. CampusGerman, kurs sonrasında öğrencileri ileri seviye programlar, sınav hazırlıkları veya kariyer odaklı eğitimler konusunda da yönlendirir."
   - id: "tarihler-fiyatlar"
     icon: "fas fa-calendar-alt"
     title: "Tarihler ve Fiyatlar"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "8 Hafta Ekonomi/Yönetim"
           duration: "8 Hafta"
-          schedule: "20-24 Ders/Hafta"
+          schedule: "20 Ders/Hafta"
           price: "Özel Fiyatlandırma"
           highlighted: true
   - id: "program-detaylari"
@@ -141,13 +141,13 @@ CampusGerman'da bu kurs, alan odaklı ve uygulamalı bir öğretim yöntemiyle y
 - Grup tartışmaları
 - Uygulamalı konuşma ve yazma egzersizleri
 
-kullanılır. Sınıflar küçük tutulur ve öğrencilerin aktif katılımı teşvik edilir. Eğitmenler, ekonomi ve akademik Almanca konusunda deneyimlidir ve öğrencileri bireysel olarak destekler.
+kullanılır. Sınıflar küçük tutulur ve öğrencilerin aktif katılımı teşvik edilir. Eğitmenler, ekonomi ve yoğun Almanca konusunda deneyimlidir ve öğrencileri bireysel olarak destekler.
 
 ## Kurs Sonrası İlerleme
 
 Ekonomi ve Yönetim Bilimleri için Almanca Kursu'nu tamamlayan öğrenciler:
 
-- Akademik Almanca becerilerini güçlendirir
+- Yoğun Almanca becerilerini güçlendirir
 - Almanya'daki üniversite derslerine daha rahat adapte olur
 - İş dünyasında Almanca iletişim kurabilir
 - Kariyer ve akademik hedeflerine bir adım daha yaklaşır

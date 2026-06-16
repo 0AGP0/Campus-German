@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Weekly Lessons"
-    description: "25 Lessons (UE)"
+    description: "20 Lessons (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
     description: "8 Weeks"
@@ -37,7 +37,7 @@ tabs:
       title: "Intensive German C1 Course"
       paragraphs:
         - heading: "Course Overview"
-          text: "The Intensive German C1 Course is a comprehensive program designed for students who have completed B2 level, focused on developing advanced German skills. This course aims to provide students with language skills that will enable them to conduct university-level academic studies and communicate fluently in professional environments. The program, which offers an intensive learning experience with 25 lesson hours per week, lasts 8 weeks and consists of approximately 200 lesson hours."
+          text: "The Intensive German C1 Course is a comprehensive program designed for students who have completed B2 level, focused on developing advanced German skills. This course aims to provide students with language skills that will enable them to conduct university-level academic studies and communicate fluently in professional environments. The program, which offers an intensive learning experience with 20 lesson hours per week, lasts 8 weeks and consists of approximately 200 lesson hours."
         - heading: "Target Audience and Prerequisites"
           text: "This course is suitable for students who have successfully completed the B2 level. The C1 level is one of the highest levels in learning German, and at this level students become able to communicate almost at native speaker level. Students planning university education in Germany, those planning to conduct academic research, those wanting to work in senior positions in business life, or anyone planning a professional career in German-speaking countries can participate in this course."
         - heading: "Course Content and Learning Goals"
@@ -52,8 +52,8 @@ tabs:
     content:
       title: "C1 Level Content"
       lessons:
-        - title: "Academic German"
-          description: "University-level academic German"
+        - title: "Intensive German"
+          description: "University-level intensive German"
         - title: "Research Writing"
           description: "Writing academic research texts"
         - title: "Professional Presentation"

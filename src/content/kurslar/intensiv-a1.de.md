@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "24 Unterrichtseinheiten (UE)"
+    description: "20 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
     description: "8 Wochen"
@@ -37,7 +37,7 @@ tabs:
       title: "Intensiv-Deutschkurs A1"
       paragraphs:
         - heading: "Kursüberblick"
-          text: "Der Intensiv-Deutschkurs A1 ist ein umfassendes Programm für Lernende, die bei Null mit dem Deutschlernen beginnen. Dieser Kurs wurde gemäß den Standards des Gemeinsamen Europäischen Referenzrahmens (CEFR) entwickelt und zielt darauf ab, den Teilnehmenden grundlegende Deutschkenntnisse zu vermitteln. Mit 24 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Lernerfahrung über 8 Wochen und umfasst insgesamt etwa 160 Unterrichtseinheiten."
+          text: "Der Intensiv-Deutschkurs A1 ist ein umfassendes Programm für Lernende, die bei Null mit dem Deutschlernen beginnen. Dieser Kurs wurde gemäß den Standards des Gemeinsamen Europäischen Referenzrahmens (CEFR) entwickelt und zielt darauf ab, den Teilnehmenden grundlegende Deutschkenntnisse zu vermitteln. Mit 20 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Lernerfahrung über 8 Wochen und umfasst insgesamt etwa 160 Unterrichtseinheiten."
         - heading: "Zielgruppe und Voraussetzungen"
           text: "Dieser Kurs ist ideal für Lernende ohne oder mit sehr geringen Deutschkenntnissen. Er erfordert keine Vorkenntnisse und ist speziell für absolute Anfänger konzipiert. Studierende, die ein Universitätsstudium in Deutschland planen, Berufstätige, die Deutsch im Berufsleben verwenden möchten, oder Personen, die Deutsch aus persönlichem Interesse lernen möchten, können an diesem Kurs teilnehmen."
         - heading: "Kursinhalte und Lernziele"

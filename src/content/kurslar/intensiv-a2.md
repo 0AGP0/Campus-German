@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Haftalık Ders"
-    description: "25 Ders (UE)"
+    description: "20 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
     description: "8 Hafta"
@@ -37,7 +37,7 @@ tabs:
       title: "Yoğun Almanca A2 Kursu"
       paragraphs:
         - heading: "Kursa Genel Bakış"
-          text: "Yoğun Almanca A2 Kursu, A1 seviyesini tamamlamış öğrenciler için tasarlanmış, temel Almanca bilgisini geliştirmeye odaklı bir programdır. Bu kurs, öğrencilerin günlük hayatta daha karmaşık durumlarla başa çıkabilmelerini sağlayacak dil becerilerini kazandırmayı hedefler. Haftada 25 ders saati ile yoğun bir öğrenme deneyimi sunan program, 8 hafta sürmektedir ve yaklaşık 160 ders saatinden oluşmaktadır."
+          text: "Yoğun Almanca A2 Kursu, A1 seviyesini tamamlamış öğrenciler için tasarlanmış, temel Almanca bilgisini geliştirmeye odaklı bir programdır. Bu kurs, öğrencilerin günlük hayatta daha karmaşık durumlarla başa çıkabilmelerini sağlayacak dil becerilerini kazandırmayı hedefler. Haftada 20 ders saati ile yoğun bir öğrenme deneyimi sunan program, 8 hafta sürmektedir ve yaklaşık 160 ders saatinden oluşmaktadır."
         - heading: "Hedef Kitle ve Ön Koşullar"
           text: "Bu kurs, A1 seviyesini başarıyla tamamlamış öğrenciler için uygundur. A1 seviyesinde kazanılan temel bilgiler üzerine inşa edilen A2 kursu, öğrencilerin dil becerilerini bir üst seviyeye taşımalarını sağlar. Almanya'da yaşamayı planlayanlar, iş hayatında temel Almanca kullanmak isteyenler veya daha akıcı bir şekilde iletişim kurmak isteyen herkes bu kursa katılabilir."
         - heading: "Kurs İçeriği ve Öğrenme Hedefleri"

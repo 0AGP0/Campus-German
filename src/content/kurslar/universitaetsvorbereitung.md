@@ -41,7 +41,7 @@ tabs:
         - heading: "Hedef Kitle ve Ön Koşullar"
           text: "Bu program, Almanya'da üniversite eğitimi almak isteyen öğrencilere yönelik olup aşağıdaki gruplara hitap eder: Lise diplomasına sahip olup Almanya'da lisans eğitimi hedefleyenler, yazılı ve sözlü Almanca seviyesini akademik düzeye taşımak isteyenler, Studienkolleg'e hazırlanan veya doğrudan üniversiteye başvurmayı planlayanlar, Almanya'daki resmi başvuru süreçleri, vizeler ve akademik gereklilikler hakkında profesyonel rehberlik arayan öğrenciler. Program kapsamında genellikle A1'den C1'e kadar seviyelerle başlayan bir Almanca eğitim planı uygulanır. Bu öğrenme sürecine ek olarak, öğrencilerin mevcut eğitim belgeleri, motivasyon mektupları ve Almanya üniversitelerinin gereksinimlerine uygun hazırlık yapmaları beklenir. Campus German, öğrencilerin mevcut Almanca seviyesini değerlendirip onları en uygun seviyeden programa başlatır."
         - heading: "Kurs İçeriği ve Öğrenme Hedefleri"
-          text: "Üniversite Hazırlık Programı, Almanca dil eğitiminin ötesinde akademik ve başvuru odaklı geniş kapsamlı içerikler sunar: Almanca Dil Eğitimi: A1–C1 seviyelerine kadar okuma, yazma, dinleme ve konuşma becerileri geliştirilir. Akademik Almanca: Üniversite derslerini takip etmek için gerekli seviyeye ulaşma, akademik metin okuma ve rapor yazma. Başvuru Hazırlığı: CV hazırlama, motivasyon mektubu yazma, belgelerin Almanca'ya çevrilmesi ve tamamlanması. Üniversite Yerleştirme Danışmanlığı: Belge kontrolü, üniversite seçimleri, Studienkolleg veya doğrudan başvuru stratejileri. Resmî Süreç Rehberliği: Bloke hesap açılışı, vize türü belirleme, başvuru takvimi ve resmi prosedürler. Bu kapsamlı içerikler sayesinde öğrenciler, Almanya'daki üniversite eğitimlerinde dilsel, akademik ve bürokratik gereklilikleri başarıyla karşılayacak şekilde hazırlanır."
+          text: "Üniversite Hazırlık Programı, Almanca dil eğitiminin ötesinde akademik ve başvuru odaklı geniş kapsamlı içerikler sunar: Almanca Dil Eğitimi: A1–C1 seviyelerine kadar okuma, yazma, dinleme ve konuşma becerileri geliştirilir. Yoğun Almanca: Üniversite derslerini takip etmek için gerekli seviyeye ulaşma, akademik metin okuma ve rapor yazma. Başvuru Hazırlığı: CV hazırlama, motivasyon mektubu yazma, belgelerin Almanca'ya çevrilmesi ve tamamlanması. Üniversite Yerleştirme Danışmanlığı: Belge kontrolü, üniversite seçimleri, Studienkolleg veya doğrudan başvuru stratejileri. Resmî Süreç Rehberliği: Bloke hesap açılışı, vize türü belirleme, başvuru takvimi ve resmi prosedürler. Bu kapsamlı içerikler sayesinde öğrenciler, Almanya'daki üniversite eğitimlerinde dilsel, akademik ve bürokratik gereklilikleri başarıyla karşılayacak şekilde hazırlanır."
         - heading: "Öğretim Metodu ve Sınıf Ortamı"
           text: "Campus German Üniversite Hazırlık Programı, öğrenci merkezli, etkileşimli ve hedef odaklı bir öğretim yöntemiyle yürütülür: Etkileşimli Dil Eğitimi: Grup çalışmaları, rol canlandırmaları ve günlük iletişim odaklı aktiviteler. Akademik Hazırlık: Üniversite dersleri için okuma, sunum ve yazma atölyeleri. Danışmanlık ve Koçluk: Başvuru belgeleri, motivasyon mektupları ve portföy geliştirme desteği. Küçük Sınıf Mevcudu: Yüksek etkileşim ve kişisel geri bildirim fırsatı. Öğrenciler, derslerin yanı sıra birebir danışmanlık ve proje çalışmalarıyla desteklenir. Bu sayede Almanca öğrenme süreci, sadece dil bilgisiyle sınırlı kalmayıp akademik ve profesyonel hedeflere yönelik olacak şekilde genişletilir."
         - heading: "Kurs Sonrası İlerleme"
@@ -79,7 +79,7 @@ tabs:
       title: "Üniversite Hazırlık Programı Modülleri"
       lessons:
         - title: "Yoğun Almanca Eğitimi"
-          description: "A1'den C1'e kadar tüm seviyelerde iletişim odaklı, akademik standartlarda Almanca eğitimi. Haftada 20-25 ders saati."
+          description: "A1'den C1'e kadar tüm seviyelerde iletişim odaklı, yoğun program standartlarında Almanca eğitimi. Haftada 20 ders saati."
         - title: "Sınav Hazırlığı (DSH, TestDaF, Goethe/TELC)"
           description: "Üniversite kabulü için gerekli dil sınavlarına yönelik özel hazırlık. Deneme sınavları ve geri bildirim."
         - title: "Üniversite Başvuru Rehberliği"
@@ -141,7 +141,7 @@ Program kapsamında genellikle A1'den C1'e kadar seviyelerle başlayan bir Alman
 Üniversite Hazırlık Programı, Almanca dil eğitiminin ötesinde akademik ve başvuru odaklı geniş kapsamlı içerikler sunar:
 
 - **Almanca Dil Eğitimi:** A1–C1 seviyelerine kadar okuma, yazma, dinleme ve konuşma becerileri geliştirilir.
-- **Akademik Almanca:** Üniversite derslerini takip etmek için gerekli seviyeye ulaşma, akademik metin okuma ve rapor yazma.
+- **Yoğun Almanca:** Üniversite derslerini takip etmek için gerekli seviyeye ulaşma, akademik metin okuma ve rapor yazma.
 - **Başvuru Hazırlığı:** CV hazırlama, motivasyon mektubu yazma, belgelerin Almanca'ya çevrilmesi ve tamamlanması.
 - **Üniversite Yerleştirme Danışmanlığı:** Belge kontrolü, üniversite seçimleri, Studienkolleg veya doğrudan başvuru stratejileri.
 - **Resmî Süreç Rehberliği:** Bloke hesap açılışı, vize türü belirleme, başvuru takvimi ve resmi prosedürler.

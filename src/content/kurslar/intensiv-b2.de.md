@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Wochenstunden"
-    description: "24 Unterrichtseinheiten (UE)"
+    description: "20 Unterrichtseinheiten (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kursdauer"
     description: "8 Wochen"
@@ -37,7 +37,7 @@ tabs:
       title: "Intensiv-Deutschkurs B2"
       paragraphs:
         - heading: "Kursüberblick"
-          text: "Der Intensiv-Deutschkurs B2 ist ein umfassendes Programm für Lernende, die das Niveau B1 abgeschlossen haben und darauf ausgerichtet sind, ihre fortgeschrittenen Mittelstufenkenntnisse zu entwickeln. Dieser Kurs zielt darauf ab, den Teilnehmenden Sprachkenntnisse zu vermitteln, die es ihnen ermöglichen, im Berufsleben und in akademischen Umgebungen auf professionellem Niveau zu kommunizieren. Mit 24 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Lernerfahrung über 8 Wochen und umfasst insgesamt etwa 200 Unterrichtseinheiten."
+          text: "Der Intensiv-Deutschkurs B2 ist ein umfassendes Programm für Lernende, die das Niveau B1 abgeschlossen haben und darauf ausgerichtet sind, ihre fortgeschrittenen Mittelstufenkenntnisse zu entwickeln. Dieser Kurs zielt darauf ab, den Teilnehmenden Sprachkenntnisse zu vermitteln, die es ihnen ermöglichen, im Berufsleben und in akademischen Umgebungen auf professionellem Niveau zu kommunizieren. Mit 20 Unterrichtseinheiten pro Woche bietet das Programm eine intensive Lernerfahrung über 8 Wochen und umfasst insgesamt etwa 200 Unterrichtseinheiten."
         - heading: "Zielgruppe und Voraussetzungen"
           text: "Dieser Kurs eignet sich für Lernende, die das Niveau B1 erfolgreich abgeschlossen haben. Das B2-Niveau ist eine kritische Stufe beim Deutschlernen, da Lernende auf dieser Stufe nun in der Lage sind, komplexe Texte zu verstehen und fließend über abstrakte Themen zu sprechen. Alle, die ein Universitätsstudium in Deutschland planen, Deutsch auf professionellem Niveau im Berufsleben verwenden möchten oder akademische Arbeiten durchführen möchten, können an diesem Kurs teilnehmen."
         - heading: "Kursinhalte und Lernziele"

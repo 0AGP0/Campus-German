@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Clases Semanales"
-    description: "24 Clases (UE)"
+    description: "20 Clases (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Curso"
     description: "8 Semanas"
@@ -37,7 +37,7 @@ tabs:
       title: "Curso de Preparación Goethe/TELC C1"
       paragraphs:
         - heading: "Resumen del Curso"
-          text: "El Curso de Preparación Goethe/TELC C1 es un programa integral centrado en exámenes a nivel universitario diseñado para estudiantes que quieren prepararse para los exámenes Goethe C1 y TELC C1 Hochschule. Este curso tiene como objetivo asegurar que los estudiantes hagan preparación específica para el formato del examen C1, desarrollen sus habilidades de escritura académica y tengan éxito. El programa, que ofrece una experiencia de preparación intensiva con 24 horas de clase por semana, dura 8 semanas y consta de aproximadamente 200 horas de clase."
+          text: "El Curso de Preparación Goethe/TELC C1 es un programa integral centrado en exámenes a nivel universitario diseñado para estudiantes que quieren prepararse para los exámenes Goethe C1 y TELC C1 Hochschule. Este curso tiene como objetivo asegurar que los estudiantes hagan preparación específica para el formato del examen C1, desarrollen sus habilidades de escritura académica y tengan éxito. El programa, que ofrece una experiencia de preparación intensiva con 20 horas de clase por semana, dura 8 semanas y consta de aproximadamente 200 horas de clase."
         - heading: "Exámenes Objetivo y Prerrequisitos"
           text: "Este curso prepara para los exámenes Goethe C1 y TELC C1 Hochschule. Es adecuado para estudiantes que han completado el nivel C1. El examen Goethe C1 es un certificado de idioma alemán reconocido globalmente y documenta el conocimiento avanzado del idioma alemán. El examen TELC C1 Hochschule es un examen específicamente diseñado para educación universitaria y es aceptado por universidades alemanas. Ambos exámenes miden las habilidades lingüísticas en el nivel C1 y son aceptados como suficientes para educación universitaria."
         - heading: "Contenido del Curso y Métodos de Preparación"

@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Weekly Lessons"
-    description: "20-24 Lessons"
+    description: "20 Lessons"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
     description: "8 Weeks"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "8 Weeks Profession/Career"
           duration: "8 Weeks"
-          schedule: "20-24 Lessons/Week"
+          schedule: "20 Lessons/Week"
           price: "Special Pricing"
           highlighted: true
   - id: "program-details"

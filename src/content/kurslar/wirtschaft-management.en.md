@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3
 features:
   - icon: "fas fa-clock"
     title: "Weekly Lessons"
-    description: "20-24 Lessons"
+    description: "20 Lessons"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
     description: "8 Weeks"
@@ -43,9 +43,9 @@ tabs:
         - heading: "Course Content and Learning Goals"
           text: "The course content is based on German terminology and academic language frequently used in the field of economics and management. Within the scope of the program, topics such as economics and business terms, reading and analyzing academic texts, presentation and report language, meetings and business correspondence, and interpreting graphs, tables, and data are addressed. The learning goal is for the student to be able to use German fluently, correctly, and professionally in their own field. At the end of the course, students can follow academic courses more comfortably and express themselves clearly in professional environments."
         - heading: "Teaching Method and Classroom Environment"
-          text: "This course at CampusGerman is conducted with a field-focused and applied teaching method. In classes, real academic and sectoral texts, presentation and case studies, group discussions, and applied speaking and writing exercises are used. Classes are kept small and active participation of students is encouraged. Instructors are experienced in economics and academic German and support students individually."
+          text: "This course at CampusGerman is conducted with a field-focused and applied teaching method. In classes, real academic and sectoral texts, presentation and case studies, group discussions, and applied speaking and writing exercises are used. Classes are kept small and active participation of students is encouraged. Instructors are experienced in economics and intensive German and support students individually."
         - heading: "Post-Course Progress"
-          text: "Students who complete the German Course for Economics and Management Sciences strengthen their academic German skills, more easily adapt to university courses in Germany, can communicate in German in the business world, and get one step closer to their career and academic goals. CampusGerman also guides students on advanced programs, exam preparations, or career-focused education after the course."
+          text: "Students who complete the German Course for Economics and Management Sciences strengthen their intensive German skills, more easily adapt to university courses in Germany, can communicate in German in the business world, and get one step closer to their career and academic goals. CampusGerman also guides students on advanced programs, exam preparations, or career-focused education after the course."
   - id: "dates-prices"
     icon: "fas fa-calendar-alt"
     title: "Dates and Prices"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "8 Weeks Economics/Management"
           duration: "8 Weeks"
-          schedule: "20-24 Lessons/Week"
+          schedule: "20 Lessons/Week"
           price: "Special Pricing"
           highlighted: true
   - id: "program-details"
@@ -141,13 +141,13 @@ This course at CampusGerman is conducted with a field-focused and applied teachi
 - Group discussions
 - Applied speaking and writing exercises
 
-are used. Classes are kept small and active participation of students is encouraged. Instructors are experienced in economics and academic German and support students individually.
+are used. Classes are kept small and active participation of students is encouraged. Instructors are experienced in economics and intensive German and support students individually.
 
 ## Post-Course Progress
 
 Students who complete the German Course for Economics and Management Sciences:
 
-- Strengthen their academic German skills
+- Strengthen their intensive German skills
 - More easily adapt to university courses in Germany
 - Can communicate in German in the business world
 - Get one step closer to their career and academic goals

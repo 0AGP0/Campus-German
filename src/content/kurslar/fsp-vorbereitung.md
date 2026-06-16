@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3
 features:
   - icon: "fas fa-clock"
     title: "Haftalık Ders"
-    description: "25 Ders (UE)"
+    description: "20 Ders (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Kurs Süresi"
     description: "8 Hafta"
@@ -37,15 +37,15 @@ tabs:
       title: "FSP Hazırlık Kursu Hakkında"
       paragraphs:
         - heading: "Kursa Genel Bakış"
-          text: "FSP (Feststellungsprüfung) Hazırlık Kursu, Almanya'da Studienkolleg sürecini tamamlayan ve üniversite eğitimine geçiş için gerekli olan FSP sınavını başarıyla geçmeyi hedefleyen öğrenciler için özel olarak hazırlanmış yoğun bir programdır. CampusGerman tarafından sunulan bu kurs, öğrencilerin hem akademik Almanca becerilerini hem de sınavda ihtiyaç duyacakları alan odaklı bilgileri sistemli şekilde geliştirmeyi amaçlar. FSP sınavı, Almanya'daki üniversitelere geçişte kritik bir aşamadır ve yalnızca dil bilgisini değil, aynı zamanda akademik düşünme, metin anlama ve ifade yeteneğini de ölçer. Bu kurs, sınav formatına birebir uyumlu içerikleriyle öğrencilerin sınav sürecine bilinçli ve hazırlıklı şekilde girmesini sağlar. Program, CEFR standartlarına uygun akademik Almanca yaklaşımıyla yapılandırılır. CampusGerman FSP Hazırlık Kursu, klasik Almanca kurslarından farklı olarak sınav stratejisi, deneme sınavları ve akademik ifade odaklı ilerler."
+          text: "FSP (Feststellungsprüfung) Hazırlık Kursu, Almanya'da Studienkolleg sürecini tamamlayan ve üniversite eğitimine geçiş için gerekli olan FSP sınavını başarıyla geçmeyi hedefleyen öğrenciler için özel olarak hazırlanmış yoğun bir programdır. CampusGerman tarafından sunulan bu kurs, öğrencilerin hem yoğun Almanca becerilerini hem de sınavda ihtiyaç duyacakları alan odaklı bilgileri sistemli şekilde geliştirmeyi amaçlar. FSP sınavı, Almanya'daki üniversitelere geçişte kritik bir aşamadır ve yalnızca dil bilgisini değil, aynı zamanda akademik düşünme, metin anlama ve ifade yeteneğini de ölçer. Bu kurs, sınav formatına birebir uyumlu içerikleriyle öğrencilerin sınav sürecine bilinçli ve hazırlıklı şekilde girmesini sağlar. Program, CEFR standartlarına uygun yoğun Almanca yaklaşımıyla yapılandırılır. CampusGerman FSP Hazırlık Kursu, klasik Almanca kurslarından farklı olarak sınav stratejisi, deneme sınavları ve akademik ifade odaklı ilerler."
         - heading: "Hedef Kitle ve Ön Koşullar"
-          text: "Bu kurs, FSP sınavına girmeyi planlayan öğrenciler için tasarlanmıştır. Özellikle aşağıdaki gruplar için uygundur: Studienkolleg eğitimini tamamlamış veya tamamlamak üzere olan öğrenciler Almanya'da lisans eğitimi hedefleyen adaylar FSP sınavında akademik Almanca konusunda desteğe ihtiyaç duyanlar Üniversiteye geçiş sürecini güvenli şekilde tamamlamak isteyen öğrenciler Kursa katılım için en az B1–B2 seviyesinde genel Almanca bilgisi önerilir. Bu seviye, akademik metinler ve sınav içeriklerinin daha verimli çalışılmasını sağlar. CampusGerman, kurs öncesinde seviye ve ihtiyaç analizi yaparak öğrencileri doğru şekilde yönlendirir."
+          text: "Bu kurs, FSP sınavına girmeyi planlayan öğrenciler için tasarlanmıştır. Özellikle aşağıdaki gruplar için uygundur: Studienkolleg eğitimini tamamlamış veya tamamlamak üzere olan öğrenciler Almanya'da lisans eğitimi hedefleyen adaylar FSP sınavında yoğun Almanca konusunda desteğe ihtiyaç duyanlar Üniversiteye geçiş sürecini güvenli şekilde tamamlamak isteyen öğrenciler Kursa katılım için en az B1–B2 seviyesinde genel Almanca bilgisi önerilir. Bu seviye, akademik metinler ve sınav içeriklerinin daha verimli çalışılmasını sağlar. CampusGerman, kurs öncesinde seviye ve ihtiyaç analizi yaparak öğrencileri doğru şekilde yönlendirir."
         - heading: "Kurs İçeriği ve Öğrenme Hedefleri"
-          text: "FSP Hazırlık Kursu, sınavın gerektirdiği akademik dil ve becerilere odaklanır. Kurs içeriğinde: Akademik Almanca metin okuma ve analiz Yazılı ifade ve akademik metin yazımı Alan bazlı terminoloji (T-Kurs, M-Kurs, W-Kurs vb.) Dinleme ve anlama çalışmaları Sınav formatına uygun deneme çalışmaları yer alır. Öğrenme hedefi, öğrencinin FSP sınavında dilsel ve akademik yeterliliğini net şekilde ortaya koyabilmesidir. Kurs sonunda öğrenciler, sınav formatına hâkim ve özgüvenli hâle gelir."
+          text: "FSP Hazırlık Kursu, sınavın gerektirdiği akademik dil ve becerilere odaklanır. Kurs içeriğinde: Yoğun Almanca metin okuma ve analiz Yazılı ifade ve akademik metin yazımı Alan bazlı terminoloji (T-Kurs, M-Kurs, W-Kurs vb.) Dinleme ve anlama çalışmaları Sınav formatına uygun deneme çalışmaları yer alır. Öğrenme hedefi, öğrencinin FSP sınavında dilsel ve akademik yeterliliğini net şekilde ortaya koyabilmesidir. Kurs sonunda öğrenciler, sınav formatına hâkim ve özgüvenli hâle gelir."
         - heading: "Öğretim Metodu ve Sınıf Ortamı"
-          text: "CampusGerman'da FSP Hazırlık Kursu, sınav odaklı ve uygulamalı bir yöntemle yürütülür. Derslerde: Gerçek FSP örnekleri Deneme sınavları ve analizler Akademik yazma ve konuşma çalışmaları Bireysel geri bildirimler kullanılır. Sınıf ortamı disiplinli ve hedef odaklıdır. Eğitmenler, FSP süreci ve akademik Almanca konusunda deneyimlidir ve öğrencileri bireysel olarak destekler."
+          text: "CampusGerman'da FSP Hazırlık Kursu, sınav odaklı ve uygulamalı bir yöntemle yürütülür. Derslerde: Gerçek FSP örnekleri Deneme sınavları ve analizler Akademik yazma ve konuşma çalışmaları Bireysel geri bildirimler kullanılır. Sınıf ortamı disiplinli ve hedef odaklıdır. Eğitmenler, FSP süreci ve yoğun Almanca konusunda deneyimlidir ve öğrencileri bireysel olarak destekler."
         - heading: "Kurs Sonrası İlerleme"
-          text: "FSP Hazırlık Kursu'nu tamamlayan öğrenciler: FSP sınavına bilinçli ve hazırlıklı girer Akademik Almanca becerilerini güçlendirir Almanya'daki üniversitelere geçiş için önemli bir adımı tamamlar Lisans eğitimine daha sağlam bir altyapıyla başlar CampusGerman, kurs sonrası öğrencileri üniversite yerleştirme ve akademik danışmanlık süreçlerinde de desteklemeye devam eder."
+          text: "FSP Hazırlık Kursu'nu tamamlayan öğrenciler: FSP sınavına bilinçli ve hazırlıklı girer Yoğun Almanca becerilerini güçlendirir Almanya'daki üniversitelere geçiş için önemli bir adımı tamamlar Lisans eğitimine daha sağlam bir altyapıyla başlar CampusGerman, kurs sonrası öğrencileri üniversite yerleştirme ve akademik danışmanlık süreçlerinde de desteklemeye devam eder."
   - id: "tarihler-fiyatlar"
     icon: "fas fa-calendar-alt"
     title: "Tarihler ve Fiyatlar"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "8 Hafta FSP Hazırlık"
           duration: "8 Hafta"
-          schedule: "25 Ders/Hafta"
+          schedule: "20 Ders/Hafta"
           price: "Özel Fiyatlandırma"
           highlighted: true
   - id: "fsp-bilgisi"

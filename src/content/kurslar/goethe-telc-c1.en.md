@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Weekly Lessons"
-    description: "25 Lessons (UE)"
+    description: "20 Lessons (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
     description: "8 Weeks"
@@ -37,7 +37,7 @@ tabs:
       title: "Goethe/TELC C1 Preparation Course"
       paragraphs:
         - heading: "Course Overview"
-          text: "The Goethe/TELC C1 Preparation Course is a comprehensive, university-level exam-focused program designed for students who want to prepare for Goethe C1 and TELC C1 Hochschule exams. This course aims to ensure that students make specific preparation for the C1 exam format, develop their academic writing skills, and succeed. The program, which offers an intensive preparation experience with 25 lesson hours per week, lasts 8 weeks and consists of approximately 200 lesson hours."
+          text: "The Goethe/TELC C1 Preparation Course is a comprehensive, university-level exam-focused program designed for students who want to prepare for Goethe C1 and TELC C1 Hochschule exams. This course aims to ensure that students make specific preparation for the C1 exam format, develop their academic writing skills, and succeed. The program, which offers an intensive preparation experience with 20 lesson hours per week, lasts 8 weeks and consists of approximately 200 lesson hours."
         - heading: "Target Exams and Prerequisites"
           text: "This course prepares for Goethe C1 and TELC C1 Hochschule exams. It is suitable for students who have completed C1 level. The Goethe C1 exam is a globally recognized German language certificate and documents advanced level German knowledge. The TELC C1 Hochschule exam is an exam specifically designed for university education and is accepted by German universities. Both exams measure language skills at C1 level and are accepted as sufficient for university education."
         - heading: "Course Content and Preparation Methods"

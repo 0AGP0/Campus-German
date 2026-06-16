@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Weekly Lessons"
-    description: "25 Lessons (UE)"
+    description: "20 Lessons (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Course Duration"
     description: "8 Weeks"
@@ -37,7 +37,7 @@ tabs:
       title: "Intensive German A2 Course"
       paragraphs:
         - heading: "Course Overview"
-          text: "The Intensive German A2 Course is a program designed for students who have completed the A1 level, focused on developing basic German knowledge. This course aims to provide students with language skills that will enable them to cope with more complex situations in daily life. The program, which offers an intensive learning experience with 25 lesson hours per week, lasts 8 weeks and consists of approximately 160 lesson hours."
+          text: "The Intensive German A2 Course is a program designed for students who have completed the A1 level, focused on developing basic German knowledge. This course aims to provide students with language skills that will enable them to cope with more complex situations in daily life. The program, which offers an intensive learning experience with 20 lesson hours per week, lasts 8 weeks and consists of approximately 160 lesson hours."
         - heading: "Target Audience and Prerequisites"
           text: "This course is suitable for students who have successfully completed the A1 level. The A2 course, built upon the basic knowledge acquired at A1 level, enables students to take their language skills to the next level. Anyone planning to live in Germany, wanting to use basic German in business life, or wanting to communicate more fluently can participate in this course."
         - heading: "Course Content and Learning Goals"

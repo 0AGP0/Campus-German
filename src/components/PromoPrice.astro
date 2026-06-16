@@ -1,0 +1,106 @@
+---
+// Tüm kurs fiyatlarında kullanılan tek indirim bloğu: üstü çizili eski fiyat,
+// indirimli fiyat, %10 indirim etiketi ve "(gelecek ay) ayına kadar geçerli" metni.
+// Geçerlilik metni tarayıcıda canlı (JS) hesaplanır; deploy beklemeden hep doğrudur.
+import { PROMO_PRICE, getPromoDiscountBadge } from '../utils/coursePricingHelper';
+
+interface Props {
+  lang: string;
+  variant?: 'card' | 'block';
+}
+
+const { lang, variant = 'block' } = Astro.props;
+const L = (['tr', 'de', 'en', 'es'].includes(lang) ? lang : 'en') as 'tr' | 'de' | 'en' | 'es';
+const badge = getPromoDiscountBadge(L);
+---
+
+<div class={`promo-price promo-price--${variant}`}>
+  <div class="promo-price-row">
+    <span class="promo-price-old">{PROMO_PRICE.originalText}</span>
+    <span class="promo-price-new">{PROMO_PRICE.discountedText}</span>
+    <span class="promo-price-badge">{badge}</span>
+  </div>
+  <span class="promo-price-validity" data-promo-validity={L}></span>
+</div>
+
+<style>
+  .promo-price {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .promo-price-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .promo-price-old {
+    text-decoration: line-through;
+    color: #94a3b8;
+    font-weight: 600;
+    font-size: 0.95em;
+  }
+  .promo-price-new {
+    color: #059669;
+    font-weight: 800;
+    font-size: 1.15em;
+  }
+  .promo-price-badge {
+    display: inline-block;
+    background: #fee2e2;
+    color: #dc2626;
+    font-weight: 700;
+    font-size: 0.72em;
+    line-height: 1;
+    padding: 0.3em 0.55em;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .promo-price-validity {
+    color: #64748b;
+    font-size: 0.78em;
+    font-weight: 500;
+  }
+  .promo-price-validity:empty {
+    display: none;
+  }
+  .promo-price--block {
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+  .promo-price--block .promo-price-new {
+    font-size: 1.6rem;
+  }
+  .promo-price--block .promo-price-old {
+    font-size: 1.1rem;
+  }
+</style>
+
+<script>
+  function fillPromoValidity() {
+    const els = document.querySelectorAll<HTMLElement>('.promo-price-validity');
+    if (!els.length) return;
+    const months: Record<string, string[]> = {
+      tr: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+      de: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+      en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      es: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    };
+    const nextIdx = (new Date().getMonth() + 1) % 12;
+    els.forEach((el) => {
+      const lang = el.dataset.promoValidity || 'en';
+      const list = months[lang] || months.en;
+      const month = list[nextIdx];
+      const text: Record<string, string> = {
+        tr: `${month} ayına kadar geçerli`,
+        de: `Gültig bis ${month}`,
+        en: `Valid until ${month}`,
+        es: `Válido hasta ${month}`,
+      };
+      el.textContent = text[lang] || text.en;
+    });
+  }
+  fillPromoValidity();
+  document.addEventListener('astro:after-swap', fillPromoValidity);
+</script>

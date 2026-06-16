@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Clases Semanales"
-    description: "24 Clases (UE)"
+    description: "20 Clases (UE)"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Curso"
     description: "8 Semanas"
@@ -37,7 +37,7 @@ tabs:
       title: "Curso Intensivo de Alemán A2"
       paragraphs:
         - heading: "Resumen del Curso"
-          text: "El Curso Intensivo de Alemán A2 es un programa diseñado para estudiantes que han completado el nivel A1, enfocado en desarrollar conocimientos básicos de alemán. Este curso tiene como objetivo proporcionar a los estudiantes habilidades lingüísticas que les permitirán hacer frente a situaciones más complejas en la vida diaria. El programa, que ofrece una experiencia de aprendizaje intensiva con 24 horas de clase por semana, dura 8 semanas y consta de aproximadamente 160 horas de clase."
+          text: "El Curso Intensivo de Alemán A2 es un programa diseñado para estudiantes que han completado el nivel A1, enfocado en desarrollar conocimientos básicos de alemán. Este curso tiene como objetivo proporcionar a los estudiantes habilidades lingüísticas que les permitirán hacer frente a situaciones más complejas en la vida diaria. El programa, que ofrece una experiencia de aprendizaje intensiva con 20 horas de clase por semana, dura 8 semanas y consta de aproximadamente 160 horas de clase."
         - heading: "Audiencia Objetivo y Prerrequisitos"
           text: "Este curso es adecuado para estudiantes que han completado exitosamente el nivel A1. El curso A2, construido sobre el conocimiento básico adquirido en el nivel A1, permite a los estudiantes llevar sus habilidades lingüísticas al siguiente nivel. Cualquier persona que planee vivir en Alemania, quiera usar alemán básico en la vida empresarial, o quiera comunicarse con más fluidez puede participar en este curso."
         - heading: "Contenido del Curso y Objetivos de Aprendizaje"

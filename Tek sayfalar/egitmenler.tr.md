@@ -43,7 +43,7 @@ Prof. Dr. Anna Schmidt, 15 yılı aşkın deneyimiyle Almanca eğitiminde öncü
 
 **Uzmanlık Alanları:**
 - İleri Seviye Almanca (C1/C2)
-- Akademik Almanca
+- Yoğun Almanca
 - TestDaF Hazırlık
 - Telc C1 Hazırlık
 

@@ -1,10 +1,15 @@
 ---
+import PromoPrice from './PromoPrice.astro';
+
 interface Props {
   lang: string;
   showSectionTitle?: boolean;
 }
 
 const { lang, showSectionTitle = true } = Astro.props;
+
+const courseFeeTitle =
+  lang === 'de' ? 'Kursgebühr' : lang === 'es' ? 'Precio del curso' : lang === 'tr' ? 'Kurs ücreti' : 'Course fee';
 
 const L = lang === 'de' ? 'de' : lang === 'es' ? 'es' : lang === 'tr' ? 'tr' : 'en';
 
@@ -177,7 +182,7 @@ const acc = {
     demiProduct: 'Demi-Pair ve BFD yerleştirme',
     campTitle: 'Lise yaz kampı (14–17 yaş) – 2 hafta',
     campBullets: [
-      'Akademik: Haftada 25 Almanca dersi ve bitirme sertifikası dahil.',
+      'Yoğun Almanca: Haftada 25 Almanca dersi ve bitirme sertifikası dahil.',
       'Lojistik: Tam pansiyon konaklama, Bremen havaalanı transferi, yerel ulaşım kartı.',
       'Aktiviteler: Günlük öğleden sonra etkinlikleri ve hafta sonu gezileri.',
       'Fiyat: 2.500 € / 2 hafta (tüm kapsayıcı).',
@@ -468,35 +473,12 @@ const pc = popupCopy[lang as keyof typeof popupCopy] ?? popupCopy.en;
       </div>
     )}
 
+    <div class="intensive-pricing-promo">
+      <h3 class="intensive-pricing-promo-title">{courseFeeTitle}</h3>
+      <PromoPrice lang={lang} variant="block" />
+    </div>
+
     <div class="pricing-accordion">
-      <details class="pricing-item" open>
-        <summary>{a.intensive20Summary}</summary>
-        <div class="pricing-content">
-          <table class="pricing-table">
-            <thead><tr><th>{tbl.duration}</th><th>{tbl.perWeek}</th><th>{tbl.example}</th></tr></thead>
-            <tbody>
-              {base20.map((row) => (
-                <tr><td>{row.range}</td><td>{fmtMoney(row.perWeek)}</td><td>{row.exampleWeeks} {weekLabel} = {fmtMoney(total(row))}</td></tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </details>
-
-      <details class="pricing-item">
-        <summary>{a.intensive25Summary}</summary>
-        <div class="pricing-content">
-          <table class="pricing-table">
-            <thead><tr><th>{tbl.duration}</th><th>{tbl.perWeek}</th><th>{tbl.example}</th></tr></thead>
-            <tbody>
-              {base25.map((row) => (
-                <tr><td>{row.range}</td><td>{fmtMoney(row.perWeek)}</td><td>{row.exampleWeeks} {weekLabel} = {fmtMoney(total(row))}</td></tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </details>
-
       <details class="pricing-item">
         <summary>{a.workStudyTitle}</summary>
         <div class="pricing-content">
@@ -567,47 +549,6 @@ const pc = popupCopy[lang as keyof typeof popupCopy] ?? popupCopy.en;
             ))}
           </ul>
           <button class="pricing-cta-btn" type="button" data-popup-product={a.accProduct}>{pc.cta}</button>
-        </div>
-      </details>
-
-      <details class="pricing-item">
-        <summary>{a.onlineTitle}</summary>
-        <div class="pricing-content">
-          <h4>{a.onlineH20}</h4>
-          <table class="pricing-table">
-            <thead><tr><th>{tbl.duration}</th><th>{tbl.perWeek}</th><th>{tbl.example}</th></tr></thead>
-            <tbody>
-              {online20.map((row) => (
-                <tr><td>{row.range}</td><td>{fmtMoney(row.perWeek)}</td><td>{row.exampleWeeks} {weekLabel} = {fmtMoney(total(row))}</td></tr>
-              ))}
-            </tbody>
-          </table>
-          <h4>{a.onlineH25}</h4>
-          <table class="pricing-table">
-            <thead><tr><th>{tbl.duration}</th><th>{tbl.perWeek}</th><th>{tbl.example}</th></tr></thead>
-            <tbody>
-              {online25.map((row) => (
-                <tr><td>{row.range}</td><td>{fmtMoney(row.perWeek)}</td><td>{row.exampleWeeks} {weekLabel} = {fmtMoney(total(row))}</td></tr>
-              ))}
-            </tbody>
-          </table>
-          <button class="pricing-cta-btn" type="button" data-popup-product={a.onlineProduct}>{pc.cta}</button>
-        </div>
-      </details>
-
-      <details class="pricing-item">
-        <summary>{a.eveningTitle}</summary>
-        <div class="pricing-content">
-          <p>{a.eveningIntro}</p>
-          <table class="pricing-table">
-            <thead><tr><th>{tbl.duration}</th><th>{tbl.perWeek}</th><th>{tbl.example}</th></tr></thead>
-            <tbody>
-              {evening.map((row) => (
-                <tr><td>{row.range}</td><td>{fmtMoney(row.perWeek)}</td><td>{row.exampleWeeks} {weekLabel} = {fmtMoney(total(row))}</td></tr>
-              ))}
-            </tbody>
-          </table>
-          <button class="pricing-cta-btn" type="button" data-popup-product={a.eveningProduct}>{pc.cta}</button>
         </div>
       </details>
 
@@ -685,6 +626,20 @@ const pc = popupCopy[lang as keyof typeof popupCopy] ?? popupCopy.en;
     letter-spacing: -0.02em;
   }
   .intensive-pricing-subtitle { margin: 0; color: #64748b; font-size: 0.95rem; max-width: 52ch; }
+  .intensive-pricing-promo {
+    background: #fff;
+    border: 1px solid rgba(5, 150, 105, 0.25);
+    border-radius: 16px;
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 1.1rem;
+    box-shadow: 0 4px 22px rgba(5, 150, 105, 0.08);
+  }
+  .intensive-pricing-promo-title {
+    margin: 0 0 0.6rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0b1220;
+  }
   .pricing-accordion { display: grid; gap: 0.85rem; }
   .pricing-item {
     border: 1px solid rgba(15, 23, 42, 0.08);

@@ -62,6 +62,8 @@ build/
 *.temp
 *.log
 .cache/
+.tmpconfig/
+.tmpcache/
 
 # Package manager locks (optional - uncomment if you want to ignore)
 # package-lock.json

@@ -16,7 +16,7 @@ Yoğun Almanca Kursları
 Almanya'da üniversite eğitimi veya kariyer hedeflerinize en kısa sürede ulaşın. Yoğun Almanca kurslarımız ile hızlı ilerleme sağlayın.
 
 ### Açıklama 2
-Haftada 24 ders saati ile iletişim odaklı, akademik standartlarda eğitim alın.
+Haftada 24 ders saati ile iletişim odaklı, yoğun program standartlarında eğitim alın.
 
 ### Butonlar
 - **Birincil Buton:** Kursları İncele
@@ -30,7 +30,7 @@ Haftada 24 ders saati ile iletişim odaklı, akademik standartlarda eğitim alı
 Yoğun Kurslarımızı Keşfedin
 
 ### Açıklama
-Hızlı ilerleme, akademik standartlar ve esnek program seçenekleri.
+Hızlı ilerleme, yoğun program standartları ve esnek program seçenekleri.
 
 ### İstatistikler
 - **6+** Kurs

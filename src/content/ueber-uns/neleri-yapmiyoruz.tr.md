@@ -87,7 +87,7 @@ Bu tür ifadeler öğrenciyle yanlış beklenti oluşturur, anlaşmazlık doğur
 Campus German olarak sunduğumuz hizmetler:
 
 ✅ **Almanca Dil Eğitimi**
-- Yoğun akademik kurslar (A1-C1)
+- Yoğun Almanca kursları (A1-C1)
 - Online kurslar
 - Haftalık esnek kurslar
 - Sınav hazırlık programları

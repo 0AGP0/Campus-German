@@ -1,7 +1,7 @@
 // Kurs Fiyatları ve Tarihleri Data
 export const coursePricing = {
   tr: {
-    // Akademik Almanca Kursları Fiyatları (Yoğun) – yeni fiyatlar
+    // Yoğun Almanca Kursları Fiyatları (Yoğun) – yeni fiyatlar
     intensive: {
       a1: {
         fullCourse: "890€",
@@ -202,7 +202,7 @@ export const coursePricing = {
     onlineNote: "1 ders = 45 dakika, tüm seviyeler 20+ 4 ders",
   },
   de: {
-    // Akademik Almanca Kursları Fiyatları (Yoğun) – neue Preise
+    // Yoğun Almanca Kursları Fiyatları (Yoğun) – neue Preise
     intensive: {
       a1: {
         fullCourse: "890€",
@@ -403,7 +403,7 @@ export const coursePricing = {
     onlineNote: "1 UStd = 45 Min, alle Niveaus 20+ 4 UStd",
   },
   en: {
-    // Academic German Courses Pricing (Intensive) – new prices
+    // Intensive German Courses Pricing (Intensive) – new prices
     intensive: {
       a1: {
         fullCourse: "890€",

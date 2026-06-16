@@ -10,7 +10,7 @@ image: "https://images.unsplash.com/photo-1523050854058-8df90110c9e1?ixlib=rb-4.
 features:
   - icon: "fas fa-clock"
     title: "Clases Semanales"
-    description: "20-24 Clases"
+    description: "20 Clases"
   - icon: "fas fa-calendar-alt"
     title: "Duración del Curso"
     description: "Flexible"
@@ -54,7 +54,7 @@ tabs:
       pricing:
         - name: "Becarios DAAD"
           duration: "Flexible"
-          schedule: "20-24 Clases/Semana"
+          schedule: "20 Clases/Semana"
           price: "Precio Especial"
           highlighted: true
   - id: "informacion-daad"

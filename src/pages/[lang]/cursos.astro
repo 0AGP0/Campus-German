@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 import { coursePricing } from '../../data/coursePricing';
 import { cleanSlug, isOverviewPage, getSectionPath, getContactPath, isValidLang } from '../../utils/pathHelpers';
 import { getSimpleCourseStartDates, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
+import PromoPrice from '../../components/PromoPrice.astro';
 
 export async function getStaticPaths() {
     return [
@@ -313,7 +314,7 @@ const simpleStartDates = getSimpleCourseStartDates(pricingLang as 'tr' | 'de' | 
             </div>
             
             <div class="pricing-content">
-                <!-- Akademik Almanca Kursları Fiyatları -->
+                <!-- Yoğun Almanca Kursları Fiyatları -->
                 <div class="pricing-block">
                     <h3 class="pricing-block-title">Precios de cursos académicos de alemán</h3>
                     <div class="pricing-table-wrapper">
@@ -334,7 +335,7 @@ const simpleStartDates = getSimpleCourseStartDates(pricingLang as 'tr' | 'de' | 
                                             <td><strong>{level.toUpperCase()}</strong></td>
                                             <td>{pricing.lessons}</td>
                                             <td>{pricing.duration}</td>
-                                            <td><strong>{pricing.fullCourse}</strong></td>
+                                            <td><PromoPrice lang={lang} variant="card" /></td>
                                         </tr>
                                     );
                                 })}
@@ -364,7 +365,7 @@ const simpleStartDates = getSimpleCourseStartDates(pricingLang as 'tr' | 'de' | 
                                             <td><strong>{level.toUpperCase()}</strong></td>
                                             <td>{pricing.lessons}</td>
                                             <td>{pricing.duration}</td>
-                                            <td><strong>{pricing.fullCourse}</strong></td>
+                                            <td><PromoPrice lang={lang} variant="card" /></td>
                                         </tr>
                                     );
                                 })}
@@ -394,7 +395,7 @@ const simpleStartDates = getSimpleCourseStartDates(pricingLang as 'tr' | 'de' | 
                                             <td><strong>Goethe/TELC {level.toUpperCase()}</strong></td>
                                             <td>{pricing.lessons}</td>
                                             <td>{pricing.duration}</td>
-                                            <td><strong>{pricing.fullCourse}</strong></td>
+                                            <td><PromoPrice lang={lang} variant="card" /></td>
                                         </tr>
                                     );
                                 })}
@@ -402,7 +403,7 @@ const simpleStartDates = getSimpleCourseStartDates(pricingLang as 'tr' | 'de' | 
                                     <td><strong>TestDaF/DSH</strong></td>
                                     <td>{coursePricing[pricingLang as 'tr' | 'de'].examPrep.testdafDsh.lessons}</td>
                                     <td>{coursePricing[pricingLang as 'tr' | 'de'].examPrep.testdafDsh.duration}</td>
-                                    <td><strong>{coursePricing[pricingLang as 'tr' | 'de'].examPrep.testdafDsh.fullCourse}</strong></td>
+                                    <td><PromoPrice lang={lang} variant="card" /></td>
                                 </tr>
                             </tbody>
                         </table>

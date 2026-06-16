@@ -48,10 +48,10 @@ Diese Datei wird verwendet, um den Inhalt der Erfolgsgeschichten-Seite (`erfolgs
 ### Geschichte 3: Zeynep Kaya
 
 **Name:** Zeynep Kaya
-**Rolle:** Telc C1-Zertifikat - Akademischer Erfolg
+**Rolle:** Telc C1-Zertifikat - Intensiv-Deutsch-Erfolg
 **Badge:** Telc C1: Sehr Gut
 
-**Zitat:** "Ich wollte für meinen Master nach Deutschland kommen. Dank des akademischen Deutschprogramms von CampusGerman habe ich die Telc C1-Prüfung erfolgreich bestanden. Ich studiere derzeit Betriebswirtschaftslehre an einer Universität in Deutschland."
+**Zitat:** "Ich wollte für meinen Master nach Deutschland kommen. Dank des Intensiv-Deutschprogramms von CampusGerman habe ich die Telc C1-Prüfung erfolgreich bestanden. Ich studiere derzeit Betriebswirtschaftslehre an einer Universität in Deutschland."
 
 **Details:**
 - 8 Monate Programm

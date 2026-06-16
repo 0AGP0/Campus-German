@@ -5,7 +5,7 @@ customSlug: "erasmus-students"
 badge:
   icon: "fas fa-user-graduate"
   text: "Erasmus"
-description: "Special German course for Erasmus students. Academic German and preparation for university life."
+description: "Special German course for Erasmus students. Intensive German and preparation for university life."
 image: "https://images.unsplash.com/photo-1523050854058-8df90110c9e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80"
 features:
   - icon: "fas fa-clock"
@@ -68,7 +68,7 @@ tabs:
       title: "Features for Erasmus Students"
       items:
         - icon: "fas fa-check-circle"
-          text: "<strong>Academic German:</strong> Preparation for university courses"
+          text: "<strong>Intensive German:</strong> Preparation for university courses"
         - icon: "fas fa-check-circle"
           text: "<strong>Special Discount:</strong> Special pricing for Erasmus students"
         - icon: "fas fa-check-circle"
@@ -76,8 +76,8 @@ tabs:
 faqs:
   - question: "How do I prove I'm an Erasmus student?"
     answer: "It is sufficient to submit your Erasmus document during registration."
-  - question: "Is academic German taught?"
-    answer: "Yes, the course is focused on academic German and preparation for university life."
+  - question: "Is intensive German taught?"
+    answer: "Yes, the course is focused on intensive German and preparation for university life."
   - question: "What course formats are offered?"
     answer: "Our courses offer you a flexible learning experience: Hybrid Education: Your course consists of a combination of face-to-face classes and live online classes. Thanks to the hybrid system, you can also attend classes online whenever you want on face-to-face class days. Live Online Education: In this format, you attend classes completely live and online."
   - question: "What content is covered in the courses?"
