@@ -10,6 +10,7 @@ import SuccessModal from '../../../components/SuccessModal.astro';
 import '../../../styles/global.css';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, formatCourseDate } from '../../../utils/coursePricingHelper';
 import { getBookingPath, getContactPath, getSectionPath } from '../../../utils/pathHelpers';
+import { buildBookingUrl } from '../../../utils/bookingPrefillHelper';
 
 export async function getStaticPaths() {
   const allKurslar = await getCollection('kurslar');
@@ -102,7 +103,8 @@ const hasPricingTab = kurs.data.tabs?.some(tab =>
 
 // Booking ve contact path'leri dil bazlı (talep formu yoksa CTA booking'e)
 const bookingPath = getBookingPath(lang as 'tr' | 'de' | 'en' | 'es');
-const bookingFull = `/${lang}/${bookingPath}`;
+const courseSlugForBooking = kurs.data.customSlug ?? slug ?? kurs.slug;
+const bookingFull = buildBookingUrl(lang as 'tr' | 'de' | 'en' | 'es', courseSlugForBooking);
 const homePath = `/${lang}`;
 const contactPath = getContactPath(lang as 'tr' | 'de' | 'en' | 'es');
 const sectionPath = getSectionPath(lang as 'tr' | 'de' | 'en' | 'es');
@@ -209,7 +211,7 @@ const displayBadgeText = shortenLabels(kurs.data.badge?.text ?? '');
                                         <i class="fas fa-envelope"></i>
                                         <span>{lang === 'tr' ? 'Ücretsiz bilgi al' : lang === 'de' ? 'Information anfragen' : lang === 'es' ? 'Solicitar información' : 'Get Information'}</span>
                                     </a>
-                                    <a href={`/${lang}/${bookingPath}`} class="hero-cta-button">
+                                    <a href={bookingFull} class="hero-cta-button">
                                         <span>{lang === 'tr' ? 'Hemen kayıt ol' : lang === 'de' ? 'Jetzt anmelden' : lang === 'es' ? 'Registrarse' : 'Register'}</span>
                                         <i class="fas fa-arrow-right"></i>
                                     </a>

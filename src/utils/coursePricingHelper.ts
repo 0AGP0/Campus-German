@@ -358,6 +358,22 @@ export function getStartDateOptions(lang: 'tr' | 'de' | 'en' | 'es', year = 2026
   }));
 }
 
+/** Online yoğun kurs seviye fiyatları (8 haftalık program). */
+export const ONLINE_LEVEL_PRICES = {
+  a1: 300,
+  a2: 350,
+} as const;
+
+export function getOnlineLevelPriceNum(level: string): number {
+  const key = level.toLowerCase() as keyof typeof ONLINE_LEVEL_PRICES;
+  return ONLINE_LEVEL_PRICES[key] ?? 0;
+}
+
+export function formatOnlineLevelPrice(level: string): string {
+  const n = getOnlineLevelPriceNum(level);
+  return n > 0 ? `${n}€` : '';
+}
+
 /** Tüm kurslarda gösterilen tek/sabit indirim fiyatı (üstü çizili eski → indirimli). */
 export const PROMO_PRICE = {
   original: 990,

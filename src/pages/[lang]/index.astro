@@ -5,6 +5,7 @@ import '../../styles/pages/index.css';
 import { getCollection } from 'astro:content';
 import { isOverviewPage, getSectionPath, cleanSlug, getContactPath, getBookingPath } from '../../utils/pathHelpers';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
+import { buildBookingUrl } from '../../utils/bookingPrefillHelper';
 import PromoPrice from '../../components/PromoPrice.astro';
 import { getNavbarCourseSlugs, navbarCourseSlugsByLang } from '../../data/navbarCourseSlugs';
 
@@ -107,6 +108,7 @@ const t = {
         coursesSubtitle: "Bremen'de 10 öğrenciden 9unun ilk tercihi Campus German oldu. Sınırlı kontenjandan yararlanmak için yerini şimdiden ayırt, Almancayı kusursuz öğren!",
         courseBookButton: "Yer Ayırt",
         courseDetailsButton: "Detaylar",
+        courseRegisterButton: "Kayıt Ol",
         coursesSidebarOfficeTitle: "Bremen'de yaşayanlara özel ofis indirimi",
         coursesSidebarOfficeDesc: "%30'a varan ofis indirimi fırsatını hemen değerlendirin.",
         coursesSidebarOfficeTag: "Vize ve yoğun Almanca hedefine uygun eğitim akışı",
@@ -231,6 +233,8 @@ const t = {
         // Reviews section
         reviewsTitle: "Öğrenci Yorumları",
         reviewsSubtitle: "Başarı hikayelerimizi dinleyin",
+        reviewsGoogleLabel: "Google yorumları",
+        reviewsGoogleNote: "5 yıldız — hiçbir yorumumuz 5 yıldızın altında değil.",
         review1Text: "\"Campus German'da öğrendiğim Almanca ile Almanya'da bir üniversitede İşletme okuyorum. Öğretmenlerim çok sabırlıydı ve konuşma odaklı eğitim sayesinde hızlı ilerledim.\"",
         review2Text: "\"Türkiye'den gelerek Campus German'da eğitim aldım. Şimdi Almanya'da bir şirkette çalışıyorum. Program çok kapsamlıydı ve iş bulmamda büyük yardımı oldu.\"",
         review3Text: "\"İş için Almanca öğrenmek istiyordum. Campus German'da aldığım eğitim sayesinde şirketimde terfi aldım. Özellikle iş Almancası konusunda çok faydalı oldu.\"",
@@ -349,6 +353,7 @@ const t = {
         coursesSubtitle: "9 out of 10 students in Bremen chose Campus German as their first choice. Reserve your spot now to learn German perfectly from limited quota!",
         courseBookButton: "Reserve Spot",
         courseDetailsButton: "Details",
+        courseRegisterButton: "Register",
         coursesSidebarOfficeTitle: "Special office discount for residents in Bremen",
         coursesSidebarOfficeDesc: "Get up to 30% office discount and secure your spot now.",
         coursesSidebarOfficeTag: "Visa and academic goal aligned learning path",
@@ -484,6 +489,8 @@ const t = {
         formError: "An error occurred. Please try again or contact us.",
         reviewsTitle: "Student Reviews",
         reviewsSubtitle: "Listen to our success stories",
+        reviewsGoogleLabel: "Google reviews",
+        reviewsGoogleNote: "5 stars — every review is a 5-star rating.",
         review1Text: "\"With the German I learned at Campus German, I study Business Administration at a university in Germany. My teachers were very patient and I progressed quickly thanks to the conversation-focused education.\"",
         review2Text: "\"I came from Turkey and studied at Campus German. I now work at a company in Germany. The program was very comprehensive and greatly helped me find a job.\"",
         review3Text: "\"I wanted to learn German for work. Thanks to the education I received at Campus German, I got promoted at my company. It was especially useful for business German.\"",
@@ -599,6 +606,7 @@ const t = {
         coursesSubtitle: "Passendes Programm wählen, Deutsch lernen.",
         courseBookButton: "Kurs Buchen",
         courseDetailsButton: "Details",
+        courseRegisterButton: "Anmelden",
         coursesSidebarOfficeTitle: "Sonderrabatt für Menschen in Bremen",
         coursesSidebarOfficeDesc: "Bis zu 30 % Office-Rabatt – jetzt Platz anfragen.",
         coursesSidebarOfficeTag: "Visa- und studienorientierte Kursstruktur",
@@ -723,6 +731,8 @@ const t = {
         // Reviews section
         reviewsTitle: "Bewertungen",
         reviewsSubtitle: "Erfolgsgeschichten",
+        reviewsGoogleLabel: "Google-Bewertungen",
+        reviewsGoogleNote: "5 Sterne — alle unsere Bewertungen sind 5 Sterne.",
         review1Text: "\"Mit dem Deutsch, das ich bei Campus German gelernt habe, studiere ich jetzt Betriebswirtschaft an einer Universität in Deutschland. Meine Lehrer waren sehr geduldig und dank des konversationsorientierten Unterrichts habe ich mich schnell verbessert.\"",
         review2Text: "\"Ich kam aus der Türkei und nahm an Campus German teil. Jetzt arbeite ich in einem Unternehmen in Deutschland. Das Programm war sehr umfassend und half mir sehr, einen Job zu finden.\"",
         review3Text: "\"Ich wollte Deutsch für die Arbeit lernen. Dank der Ausbildung, die ich bei Campus German erhalten habe, wurde ich in meinem Unternehmen befördert. Besonders das Geschäftsdeutsch war sehr nützlich.\"",
@@ -839,6 +849,7 @@ const t = {
         coursesSubtitle: "9 de cada 10 estudiantes en Bremen eligieron Campus German como su primera opción. ¡Reserva tu lugar ahora para aprender alemán perfectamente del cupo limitado!",
         courseBookButton: "Reservar Lugar",
         courseDetailsButton: "Detalles",
+        courseRegisterButton: "Registrarse",
         coursesSidebarOfficeTitle: "Descuento especial de oficina para residentes en Bremen",
         coursesSidebarOfficeDesc: "Hasta un 30% de descuento de oficina. Reserva ahora.",
         coursesSidebarOfficeTag: "Planificación alineada con visa y objetivo académico",
@@ -974,6 +985,8 @@ const t = {
         formError: "Ha ocurrido un error. Inténtelo de nuevo o contáctenos.",
         reviewsTitle: "Reseñas de Estudiantes",
         reviewsSubtitle: "Escucha nuestras historias de éxito",
+        reviewsGoogleLabel: "Reseñas de Google",
+        reviewsGoogleNote: "5 estrellas — todas nuestras reseñas son de 5 estrellas.",
         review1Text: "\"Con el alemán que aprendí en Campus German, estudio Administración de Empresas en una universidad en Alemania. Mis profesores fueron muy pacientes y progresé rápidamente gracias a la educación centrada en la conversación.\"",
         review2Text: "\"Vine de Turquía y estudié en Campus German. Ahora trabajo en una empresa en Alemania. El programa fue muy completo y me ayudó mucho a encontrar trabajo.\"",
         review3Text: "\"Quería aprender alemán para el trabajo. Gracias a la educación que recibí en Campus German, obtuve un ascenso en mi empresa. Fue especialmente útil para el alemán empresarial.\"",
@@ -1374,6 +1387,7 @@ function getAvatarColor(name: string): string {
                             if (cleanedSlug.includes('yaz-okulu')) coursePeriod = 'yaz-donemi';
                             const slug = kurs.data.customSlug || cleanedSlug;
                             const href = `/${lang}/${courseBase}/${slug}`;
+                            const registerHref = buildBookingUrl(lang as 'tr' | 'de' | 'en' | 'es', slug);
                             const levelLabel = courseLevel === 'all' ? '' : courseLevel.toUpperCase();
                             const typeLabel = courseType === 'online' ? translations.courseFilterTypeOnline : translations.courseFilterInPerson;
                             const periodLabel = coursePeriod === 'yaz-donemi' ? translations.courseFilterSummer : translations.courseFilterYearRound;
@@ -1406,12 +1420,17 @@ function getAvatarColor(name: string): string {
                                             {hasPrice
                                                 ? <div class="course-card-price"><PromoPrice lang={lang} variant="card" /></div>
                                                 : <p class="course-card-price">{translations.courseCardContactUs}</p>}
-                                            <div class="course-card-footer">
-                                                <span class="course-card-cta-text">{translations.courseDetailsButton}</span>
-                                                <span class="course-card-arrow"><i class="fas fa-arrow-right"></i></span>
-                                            </div>
                                         </div>
                                     </a>
+                                    <div class="course-card-footer">
+                                        <a href={href} class="course-card-btn course-card-btn--detail">
+                                            <span>{translations.courseDetailsButton}</span>
+                                        </a>
+                                        <a href={registerHref} class="course-card-btn course-card-btn--register">
+                                            <span>{translations.courseRegisterButton}</span>
+                                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
                                 </article>
                             );
                         })}
@@ -1599,7 +1618,21 @@ function getAvatarColor(name: string): string {
                     
                     <!-- Student Reviews -->
                     <div class="student-reviews">
-                        <h3 class="reviews-title">{translations.reviewsTitle}</h3>
+                        <div class="reviews-header">
+                            <h3 class="reviews-title">{translations.reviewsTitle}</h3>
+                            <div class="reviews-google-badge" aria-label={translations.reviewsGoogleNote}>
+                                <span class="reviews-google-badge__label">
+                                    <i class="fab fa-google" aria-hidden="true"></i>
+                                    {translations.reviewsGoogleLabel}
+                                </span>
+                                <span class="reviews-google-badge__stars" aria-hidden="true">
+                                    {Array.from({ length: 5 }).map(() => (
+                                        <i class="fas fa-star"></i>
+                                    ))}
+                                </span>
+                                <p class="reviews-google-badge__note">{translations.reviewsGoogleNote}</p>
+                            </div>
+                        </div>
                         <div class="reviews-slider">
                             <div class="reviews-container" id="reviewsSlider">
                                 {reviews.map((review) => (

@@ -7,6 +7,7 @@ import '../../../styles/pages/kurslar.css';
 import { coursePricing } from '../../../data/coursePricing';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, getSimpleCourseStartDates } from '../../../utils/coursePricingHelper';
 import { getContactPath } from '../../../utils/pathHelpers';
+import CourseCardActions from '../../../components/CourseCardActions.astro';
 
 export async function getStaticPaths() {
     return [
@@ -206,10 +207,11 @@ const translations = t[lang as keyof typeof t];
                             {hasPrice
                                 ? <div class="course-card-price"><PromoPrice lang={lang} variant="card" /></div>
                                 : <p class="course-card-price">{translations.courseCardContactUs}</p>}
-                            <a href={`/${lang}/kurslar/${kurs.data.customSlug ?? cleanSlug(kurs.slug)}`} class="course-btn">
-                                <span>{lang === 'tr' ? 'Detay' : 'Details'}</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
+                            <CourseCardActions
+                                lang={lang}
+                                detailHref={`/${lang}/kurslar/${kurs.data.customSlug ?? cleanSlug(kurs.slug)}`}
+                                courseSlug={kurs.data.customSlug ?? cleanSlug(kurs.slug)}
+                            />
                         </div>
                     </div>
                     );

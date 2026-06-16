@@ -5,7 +5,8 @@ import IntensivePricingSection from '../../../components/IntensivePricingSection
 import '../../../styles/pages/kurslar.css';
 import { coursePricing } from '../../../data/coursePricing';
 import { getSimpleCourseStartDates, LESSONS_UP_TO_200 } from '../../../utils/coursePricingHelper';
-import { getContactPath } from '../../../utils/pathHelpers';
+import { getContactPath, getSectionPath } from '../../../utils/pathHelpers';
+import CourseCardActions from '../../../components/CourseCardActions.astro';
 
 export async function getStaticPaths() {
     return [
@@ -205,10 +206,11 @@ const translations = t[lang as keyof typeof t];
                             <p class="course-description">
                                 {kurs.data.description}
                             </p>
-                            <a href={`/${lang}/${lang === 'tr' ? 'kurslar' : lang === 'de' ? 'kurse' : 'courses'}/${kurs.data.customSlug ?? cleanSlug(kurs.slug)}`} class="course-btn">
-                                <span>{lang === 'tr' ? 'Detayları Gör' : lang === 'de' ? 'Details ansehen' : 'View Details'}</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
+                            <CourseCardActions
+                                lang={lang}
+                                detailHref={`/${lang}/${getSectionPath(lang as 'tr' | 'de' | 'en' | 'es')}/${kurs.data.customSlug ?? cleanSlug(kurs.slug)}`}
+                                courseSlug={kurs.data.customSlug ?? cleanSlug(kurs.slug)}
+                            />
                         </div>
                     </div>
                 ))}

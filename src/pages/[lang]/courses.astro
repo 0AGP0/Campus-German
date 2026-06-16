@@ -6,6 +6,7 @@ import { getCollection } from 'astro:content';
 import { coursePricing } from '../../data/coursePricing';
 import { cleanSlug, isOverviewPage, getSectionPath, getContactPath, isValidLang } from '../../utils/pathHelpers';
 import { getSimpleCourseStartDates, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
+import CourseCardActions from '../../components/CourseCardActions.astro';
 
 export async function getStaticPaths() {
     return [
@@ -281,10 +282,11 @@ const kurumsalKurslar = anaKurslar.filter(kurs =>
                                 <p class="course-description">
                                     {kurs.data.description}
                                 </p>
-                                <a href={`/${lang}/${sectionPath}/${kurs.data.customSlug || cleanSlug(kurs.slug)}`} class="course-btn">
-                                    <span>{lang === 'tr' ? 'Detayları Gör' : lang === 'de' ? 'Details ansehen' : 'View Details'}</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </a>
+                                <CourseCardActions
+                                    lang={lang}
+                                    detailHref={`/${lang}/${sectionPath}/${kurs.data.customSlug || cleanSlug(kurs.slug)}`}
+                                    courseSlug={kurs.data.customSlug || cleanSlug(kurs.slug)}
+                                />
                             </div>
                         </div>
                     );

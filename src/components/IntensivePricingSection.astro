@@ -1,5 +1,6 @@
 ---
 import PromoPrice from './PromoPrice.astro';
+import { ONLINE_LEVEL_PRICES } from '../utils/coursePricingHelper';
 
 interface Props {
   lang: string;
@@ -8,10 +9,137 @@ interface Props {
 
 const { lang, showSectionTitle = true } = Astro.props;
 
-const courseFeeTitle =
-  lang === 'de' ? 'Kursgebühr' : lang === 'es' ? 'Precio del curso' : lang === 'tr' ? 'Kurs ücreti' : 'Course fee';
 
 const L = lang === 'de' ? 'de' : lang === 'es' ? 'es' : lang === 'tr' ? 'tr' : 'en';
+
+const levelCardCopy = {
+  tr: {
+    weeks: '8 hafta',
+    club: 'Konuşma kulübü',
+    native: 'Ana dili Almanca hocalar',
+    visa: 'Vize garantisi',
+    lessons: '200 ders saati',
+    inPerson: 'Yüz yüze',
+  },
+  de: {
+    weeks: '8 Wochen',
+    club: 'Sprachclub',
+    native: 'Muttersprachliche Lehrkräfte',
+    visa: 'Visumsgarantie',
+    lessons: '200 Unterrichtsstunden',
+    inPerson: 'Präsenzunterricht',
+  },
+  en: {
+    weeks: '8 weeks',
+    club: 'Speaking club',
+    native: 'Native German teachers',
+    visa: 'Visa guarantee',
+    lessons: '200 lesson hours',
+    inPerson: 'In-person',
+  },
+  es: {
+    weeks: '8 semanas',
+    club: 'Club de conversación',
+    native: 'Profesores nativos de alemán',
+    visa: 'Garantía de visado',
+    lessons: '200 horas de clase',
+    inPerson: 'Presencial',
+  },
+} as const;
+
+const lc = levelCardCopy[L as keyof typeof levelCardCopy] ?? levelCardCopy.en;
+
+const onlineCardCopy = {
+  tr: {
+    weeks: '8 hafta',
+    lessons: '16 ders saati + 4 etüt',
+    noNative: 'Ana dili Almanca hoca yok',
+    noVisa: 'Vize garantisi yok',
+    evening: 'Akşam sınıfları',
+    online: 'Online',
+    subtitle: 'A1 ve A2 · akşam grubu (19:00 – 22:00)',
+  },
+  de: {
+    weeks: '8 Wochen',
+    lessons: '16 Unterrichtsstunden + 4 Tutorien',
+    noNative: 'Keine muttersprachlichen Deutschlehrer',
+    noVisa: 'Keine Visumgarantie',
+    evening: 'Abendkurse',
+    online: 'Online',
+    subtitle: 'A1 und A2 · Abendgruppe (19:00 – 22:00)',
+  },
+  en: {
+    weeks: '8 weeks',
+    lessons: '16 lesson hours + 4 tutorials',
+    noNative: 'No native German teachers',
+    noVisa: 'No visa guarantee',
+    evening: 'Evening classes',
+    online: 'Online',
+    subtitle: 'A1 and A2 · evening group (19:00 – 22:00)',
+  },
+  es: {
+    weeks: '8 semanas',
+    lessons: '16 horas de clase + 4 tutorías',
+    noNative: 'Sin profesores nativos de alemán',
+    noVisa: 'Sin garantía de visado',
+    evening: 'Clases vespertinas',
+    online: 'Online',
+    subtitle: 'A1 y A2 · grupo de tarde-noche (19:00 – 22:00)',
+  },
+} as const;
+
+const oc = onlineCardCopy[L as keyof typeof onlineCardCopy] ?? onlineCardCopy.en;
+
+const onlineLevelCards = [
+  { level: 'A1', mod: 'a1', icon: 'seedling', price: ONLINE_LEVEL_PRICES.a1 },
+  { level: 'A2', mod: 'a2', icon: 'book-open', price: ONLINE_LEVEL_PRICES.a2 },
+] as const;
+
+const programSectionTitles = {
+  tr: { intensive: 'Yoğun Almanca', online: 'Online Almanca', shortTerm: 'Short term' },
+  de: { intensive: 'Intensiv Deutsch', online: 'Online Deutsch', shortTerm: 'Short term' },
+  en: { intensive: 'Intensive German', online: 'Online German', shortTerm: 'Short term' },
+  es: { intensive: 'Alemán intensivo', online: 'Alemán online', shortTerm: 'Short term' },
+} as const;
+
+const pst = programSectionTitles[L as keyof typeof programSectionTitles] ?? programSectionTitles.en;
+
+const shortTermCopy = {
+  tr: {
+    subtitle: '1–24 hafta (6 aya kadar) · hafta sayısına göre kademeli fiyat',
+    hours: 'Haftada 20 saat yüz yüze',
+    flexible: 'Esnek süre — istediğiniz hafta sayısını seçin',
+    note: '6 haftadan uzun planlar için yoğun Almanca programını öneriyoruz.',
+  },
+  de: {
+    subtitle: '1–24 Wochen (bis zu 6 Monaten) · gestaffelter Wochenpreis',
+    hours: '20 Std./Woche Präsenzunterricht',
+    flexible: 'Flexible Dauer — wählen Sie Ihre Wochenanzahl',
+    note: 'Für längere Pläne empfehlen wir das Intensivprogramm.',
+  },
+  en: {
+    subtitle: '1–24 weeks (up to 6 months) · tiered weekly pricing',
+    hours: '20 hours/week in-person',
+    flexible: 'Flexible duration — choose your number of weeks',
+    note: 'For plans longer than 6 weeks we recommend the intensive program.',
+  },
+  es: {
+    subtitle: '1–24 semanas (hasta 6 meses) · precio semanal escalonado',
+    hours: '20 horas/semana presencial',
+    flexible: 'Duración flexible — elige el número de semanas',
+    note: 'Para planes más largos recomendamos el programa intensivo.',
+  },
+} as const;
+
+const stc = shortTermCopy[L as keyof typeof shortTermCopy] ?? shortTermCopy.en;
+
+const intensiveLevelCards = [
+  { level: 'A1', mod: 'a1', icon: 'seedling' },
+  { level: 'A2', mod: 'a2', icon: 'book-open' },
+  { level: 'B1', mod: 'b1', icon: 'comments' },
+  { level: 'B2', mod: 'b2', icon: 'briefcase' },
+  { level: 'C1', mod: 'c1', icon: 'graduation-cap' },
+] as const;
 
 type Tier = { range: string; perWeek: number; exampleWeeks: number };
 
@@ -42,8 +170,6 @@ const rng = tierRanges[L] ?? tierRanges.en;
 const base20: Tier[] = base20n.map((r, i) => ({ ...r, range: rng[i] ?? '' }));
 const base25: Tier[] = base25n.map((r, i) => ({ ...r, range: rng[i] ?? '' }));
 
-const online20 = base20.map((r) => ({ ...r, perWeek: Math.round(r.perWeek / 2) }));
-const online25 = base25.map((r) => ({ ...r, perWeek: Math.round(r.perWeek / 2) }));
 const evening = base20.map((r) => ({ ...r, perWeek: r.perWeek + 10 }));
 
 const numLocale = L === 'de' ? 'de-DE' : L === 'tr' ? 'tr-TR' : L === 'es' ? 'es-ES' : 'en-US';
@@ -162,6 +288,16 @@ const acc = {
   tr: {
     intensive20Summary: 'Intensive 20 saat / hafta',
     intensive25Summary: '+ Intensive 25 saat / hafta',
+    shortTermTitle: 'Short term (1–24 hafta)',
+    shortTermIntro:
+      'Kısa süreli veya esnek planlar için haftalık kademeli fiyat. A1–C1 seviyelerinde, istediğiniz hafta sayısıyla katılabilirsiniz.',
+    shortTermBullets: [
+      '1–24 hafta arası esnek süre',
+      'Haftada 20 saat yüz yüze eğitim',
+      'Konuşma kulübü ve ana dili Almanca eğitmenler',
+      'Hafta sayısı arttıkça birim fiyat düşer',
+    ],
+    shortTermProduct: 'Short term',
     workStudyTitle: 'Work & Study Germany (Minijob desteği)',
     workStudyIntro:
       'Öğrencileri Bremen’de yasal yarı zamanlı iş için anlaşmalı ortaklarımızla buluşturuyoruz; eğitim sırasında maddi bağımsızlığa destek oluyoruz.',
@@ -205,7 +341,7 @@ const acc = {
       'İsteğe bağlı başlangıç setleri: Yatak takımı 80 €, mutfak seti 120 €.',
     ],
     accProduct: 'Konaklama fiyatları',
-    onlineTitle: 'Online kurslar (yüz yüze fiyatın %50’si)',
+    onlineTitle: 'Online kurslar (A1 / A2)',
     onlineH20: 'Online Intensive 20 saat / hafta',
     onlineH25: 'Online + Intensive 25 saat / hafta',
     onlineProduct: 'Online kurslar',
@@ -220,6 +356,16 @@ const acc = {
   de: {
     intensive20Summary: 'Intensive 20 Std./Woche',
     intensive25Summary: '+ Intensive 25 Std./Woche',
+    shortTermTitle: 'Short term (1–24 Wochen)',
+    shortTermIntro:
+      'Kurzzeit- und Flexprogramm mit gestaffeltem Wochenpreis. Niveaus A1–C1, frei wählbare Wochenanzahl.',
+    shortTermBullets: [
+      'Flexible Dauer von 1–24 Wochen',
+      '20 Std./Woche Präsenzunterricht',
+      'Sprachclub und muttersprachliche Lehrkräfte',
+      'Längere Buchung — niedrigerer Wochenpreis',
+    ],
+    shortTermProduct: 'Short term',
     workStudyTitle: 'Work & Study Germany (Minijob-Unterstützung)',
     workStudyIntro:
       'Wir verbinden Studierende mit unseren Partnern für legale Teilzeitjobs in Bremen und unterstützen finanzielle Unabhängigkeit während des Kurses.',
@@ -263,7 +409,7 @@ const acc = {
       'Optional: Bettpaket 80 €, Küchen-Starterset 120 €.',
     ],
     accProduct: 'Unterbringung Preise',
-    onlineTitle: 'Online-Kurse (50 % des Präsenzpreises)',
+    onlineTitle: 'Online-Kurse (A1 / A2)',
     onlineH20: 'Online Intensive 20 Std./Woche',
     onlineH25: 'Online + Intensive 25 Std./Woche',
     onlineProduct: 'Online-Kurse',
@@ -278,6 +424,16 @@ const acc = {
   en: {
     intensive20Summary: 'Intensive 20h/week',
     intensive25Summary: '+ Intensive 25h/week',
+    shortTermTitle: 'Short term (1–24 weeks)',
+    shortTermIntro:
+      'Short or flexible plans with tiered weekly pricing. Levels A1–C1; choose how many weeks you study.',
+    shortTermBullets: [
+      'Flexible duration from 1–24 weeks',
+      '20 hours/week in-person classes',
+      'Speaking club and native German teachers',
+      'Longer bookings lower the weekly rate',
+    ],
+    shortTermProduct: 'Short term',
     workStudyTitle: 'Work & Study Germany (Minijob support)',
     workStudyIntro:
       'We connect students with our partner network for legal part-time work in Bremen and support financial independence while studying.',
@@ -321,7 +477,7 @@ const acc = {
       'Optional starter kits: Bedding €80, kitchen set €120.',
     ],
     accProduct: 'Accommodation pricing',
-    onlineTitle: 'Online courses (50% of on-site price)',
+    onlineTitle: 'Online courses (A1 / A2)',
     onlineH20: 'Online intensive 20h/week',
     onlineH25: 'Online + intensive 25h/week',
     onlineProduct: 'Online courses',
@@ -336,6 +492,16 @@ const acc = {
   es: {
     intensive20Summary: 'Intensive 20h/semana',
     intensive25Summary: '+ Intensive 25h/semana',
+    shortTermTitle: 'Short term (1–24 semanas)',
+    shortTermIntro:
+      'Planes cortos o flexibles con precio semanal escalonado. Niveles A1–C1; elige cuántas semanas cursas.',
+    shortTermBullets: [
+      'Duración flexible de 1–24 semanas',
+      '20 horas/semana presencial',
+      'Club de conversación y profesores nativos',
+      'Más semanas — menor precio por semana',
+    ],
+    shortTermProduct: 'Short term',
     workStudyTitle: 'Work & Study Germany (apoyo Minijob)',
     workStudyIntro:
       'Conectamos a estudiantes con socios para trabajo a tiempo parcial legal en Bremen y apoyamos la independencia económica durante los estudios.',
@@ -379,7 +545,7 @@ const acc = {
       'Kits opcionales: ropa de cama 80 €, kit cocina 120 €.',
     ],
     accProduct: 'Precios de alojamiento',
-    onlineTitle: 'Cursos online (50% del precio presencial)',
+    onlineTitle: 'Cursos online (A1 / A2)',
     onlineH20: 'Online intensive 20h/semana',
     onlineH25: 'Online + intensive 25h/semana',
     onlineProduct: 'Cursos online',
@@ -473,12 +639,109 @@ const pc = popupCopy[lang as keyof typeof popupCopy] ?? popupCopy.en;
       </div>
     )}
 
-    <div class="intensive-pricing-promo">
-      <h3 class="intensive-pricing-promo-title">{courseFeeTitle}</h3>
-      <PromoPrice lang={lang} variant="block" />
-    </div>
-
     <div class="pricing-accordion">
+      <details class="pricing-item pricing-item--intensive" open>
+        <summary>{pst.intensive}</summary>
+        <div class="pricing-content">
+          <p class="pricing-panel-lead">{lc.weeks} · {lc.inPerson}</p>
+          <div class="intensive-level-cards">
+            {intensiveLevelCards.map((card) => (
+              <article class={`intensive-level-card intensive-level-card--${card.mod}`}>
+                <div class="intensive-level-card__head">
+                  <span class="intensive-level-card__icon" aria-hidden="true">
+                    <i class={`fas fa-${card.icon}`}></i>
+                  </span>
+                  <div class="intensive-level-card__head-copy">
+                    <span class="intensive-level-card__level">{card.level}</span>
+                    <span class="intensive-level-card__weeks">{lc.weeks}</span>
+                  </div>
+                </div>
+                <ul class="intensive-level-card__features">
+                  <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.club}</span></li>
+                  <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.native}</span></li>
+                  <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.visa}</span></li>
+                  <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.lessons}</span></li>
+                  <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.inPerson}</span></li>
+                </ul>
+                <div class="intensive-level-card__price">
+                  <PromoPrice lang={lang} variant="card" />
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </details>
+
+      <details class="pricing-item pricing-item--online">
+        <summary>{pst.online}</summary>
+        <div class="pricing-content">
+          <p class="pricing-panel-lead">{oc.subtitle}</p>
+          <div class="intensive-level-cards intensive-level-cards--online">
+            {onlineLevelCards.map((card) => (
+              <article class={`intensive-level-card intensive-level-card--${card.mod}`}>
+                <div class="intensive-level-card__head">
+                  <span class="intensive-level-card__icon" aria-hidden="true">
+                    <i class={`fas fa-${card.icon}`}></i>
+                  </span>
+                  <div class="intensive-level-card__head-copy">
+                    <span class="intensive-level-card__level">{card.level}</span>
+                    <span class="intensive-level-card__weeks">{oc.weeks}</span>
+                  </div>
+                </div>
+                <div class="intensive-level-card__badges">
+                  <span class="intensive-level-card__badge intensive-level-card__badge--lessons">{oc.lessons}</span>
+                  <span class="intensive-level-card__badge intensive-level-card__badge--online">{oc.online}</span>
+                </div>
+                <ul class="intensive-level-card__features">
+                  <li><i class="fas fa-check" aria-hidden="true"></i><span>{oc.noNative}</span></li>
+                  <li><i class="fas fa-check" aria-hidden="true"></i><span>{oc.noVisa}</span></li>
+                  <li><i class="fas fa-check" aria-hidden="true"></i><span>{oc.evening}</span></li>
+                </ul>
+                <div class="intensive-level-card__price intensive-level-card__price--online">
+                  <span class="intensive-level-card__price-amount">{fmtMoney(card.price)}</span>
+                  <span class="intensive-level-card__price-note">{oc.weeks}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+          <button class="pricing-cta-btn" type="button" data-popup-product={a.onlineProduct}>{pc.cta}</button>
+        </div>
+      </details>
+
+      <details class="pricing-item pricing-item--short">
+        <summary>{pst.shortTerm}</summary>
+        <div class="pricing-content">
+          <p class="pricing-panel-lead">{stc.subtitle}</p>
+          <ul class="intensive-short-term-features">
+            <li><i class="fas fa-check" aria-hidden="true"></i><span>{stc.hours}</span></li>
+            <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.club}</span></li>
+            <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.native}</span></li>
+            <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.inPerson}</span></li>
+            <li><i class="fas fa-check" aria-hidden="true"></i><span>{stc.flexible}</span></li>
+          </ul>
+          <table class="pricing-table pricing-table--short-term">
+            <thead>
+              <tr>
+                <th>{tbl.duration}</th>
+                <th>{tbl.perWeek}</th>
+                <th>{tbl.example}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {base20.map((row) => (
+                <tr>
+                  <td>{row.range}</td>
+                  <td>{fmtMoney(row.perWeek)} / {tbl.perWeekUnit}</td>
+                  <td>{fmtMoney(total(row))} ({row.exampleWeeks} {weekLabel})</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="intensive-short-term-note">{stc.note}</p>
+          <button class="pricing-cta-btn" type="button" data-popup-product={a.shortTermProduct}>{pc.cta}</button>
+        </div>
+      </details>
+
       <details class="pricing-item">
         <summary>{a.workStudyTitle}</summary>
         <div class="pricing-content">
@@ -626,19 +889,180 @@ const pc = popupCopy[lang as keyof typeof popupCopy] ?? popupCopy.en;
     letter-spacing: -0.02em;
   }
   .intensive-pricing-subtitle { margin: 0; color: #64748b; font-size: 0.95rem; max-width: 52ch; }
-  .intensive-pricing-promo {
-    background: #fff;
-    border: 1px solid rgba(5, 150, 105, 0.25);
-    border-radius: 16px;
-    padding: 1.1rem 1.25rem;
-    margin-bottom: 1.1rem;
-    box-shadow: 0 4px 22px rgba(5, 150, 105, 0.08);
+  .pricing-panel-lead {
+    margin: 0 0 0.85rem;
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 500;
   }
-  .intensive-pricing-promo-title {
-    margin: 0 0 0.6rem;
-    font-size: 1.05rem;
+  .pricing-content__subhead {
+    margin: 1rem 0 0.45rem;
+    font-size: 0.88rem;
     font-weight: 700;
     color: #0b1220;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .pricing-item--intensive[open] > summary {
+    border-left-color: #059669;
+  }
+  .pricing-item--online[open] > summary {
+    border-left-color: #7c3aed;
+  }
+  .pricing-item--short[open] > summary {
+    border-left-color: #0ea5e9;
+  }
+  .intensive-level-cards--online {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    max-width: 560px;
+  }
+  .intensive-level-card__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .intensive-level-card__badge {
+    display: inline-block;
+    padding: 0.32rem 0.62rem;
+    font-size: 0.68rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  .intensive-level-card__badge--lessons {
+    color: #fff;
+    background: linear-gradient(135deg, #7c3aed, #0cc0df);
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
+  }
+  .intensive-level-card__badge--online {
+    color: #5b21b6;
+    background: #f3e8ff;
+    font-weight: 700;
+  }
+  .intensive-short-term-features {
+    list-style: none;
+    margin: 0 0 0.85rem;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+  .intensive-short-term-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: #334155;
+  }
+  .intensive-short-term-features i {
+    color: #0ea5e9;
+    margin-top: 0.15rem;
+    font-size: 0.7rem;
+  }
+  .pricing-table--short-term {
+    margin-bottom: 0.5rem;
+  }
+  .intensive-short-term-note {
+    margin: 0.5rem 0 0;
+    font-size: 0.82rem;
+    color: #64748b;
+    font-style: italic;
+  }
+  .intensive-level-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.85rem;
+  }
+  .intensive-level-card {
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    border-radius: 14px;
+    padding: 0.9rem 0.95rem;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+  }
+  .intensive-level-card__head {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .intensive-level-card__icon {
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .intensive-level-card--a1 .intensive-level-card__icon { background: #ecfdf5; color: #059669; }
+  .intensive-level-card--a2 .intensive-level-card__icon { background: #eff6ff; color: #2563eb; }
+  .intensive-level-card--b1 .intensive-level-card__icon { background: #f5f3ff; color: #7c3aed; }
+  .intensive-level-card--b2 .intensive-level-card__icon { background: #fff7ed; color: #ea580c; }
+  .intensive-level-card--c1 .intensive-level-card__icon { background: #fef2f2; color: #dc2626; }
+  .intensive-level-card__level {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0b1220;
+    line-height: 1.1;
+  }
+  .intensive-level-card__weeks {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-top: 0.1rem;
+  }
+  .intensive-level-card__features {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+    flex: 1;
+  }
+  .intensive-level-card__features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: #334155;
+  }
+  .intensive-level-card__features i {
+    color: #059669;
+    margin-top: 0.15rem;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+  .intensive-level-card__price {
+    margin-top: auto;
+    padding-top: 0.35rem;
+    border-top: 1px solid #eef2f7;
+  }
+  .intensive-level-card__price :global(.promo-price-new) {
+    font-size: 1.15rem;
+  }
+  .intensive-level-card__price--online {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .intensive-level-card__price-amount {
+    color: #7c3aed;
+    font-weight: 800;
+    font-size: 1.15rem;
+    line-height: 1.2;
+  }
+  .intensive-level-card__price-note {
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 500;
   }
   .pricing-accordion { display: grid; gap: 0.85rem; }
   .pricing-item {
@@ -665,8 +1089,8 @@ const pc = popupCopy[lang as keyof typeof popupCopy] ?? popupCopy.en;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    font-weight: 600;
-    font-size: 0.94rem;
+    font-weight: 700;
+    font-size: 1.02rem;
     line-height: 1.35;
     color: #0f172a;
     background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
@@ -878,6 +1302,26 @@ const pc = popupCopy[lang as keyof typeof popupCopy] ?? popupCopy.en;
   if (backdrop && backdrop.parentElement !== document.body) {
     document.body.appendChild(backdrop);
   }
+
+  document.querySelectorAll('.intensive-pricing-section .pricing-item > summary').forEach((summary) => {
+    summary.addEventListener('mousedown', () => {
+      const details = summary.parentElement;
+      if (details instanceof HTMLDetailsElement && details.open) {
+        summary.dataset.pricingWasOpen = '1';
+      } else {
+        delete summary.dataset.pricingWasOpen;
+      }
+    });
+    summary.addEventListener('click', (e) => {
+      const details = summary.parentElement;
+      if (!(details instanceof HTMLDetailsElement)) return;
+      if (summary.dataset.pricingWasOpen === '1') {
+        e.preventDefault();
+        details.open = false;
+        delete summary.dataset.pricingWasOpen;
+      }
+    });
+  });
 
   document.querySelectorAll('[data-popup-product]').forEach((btn) => {
     btn.addEventListener('click', () => {

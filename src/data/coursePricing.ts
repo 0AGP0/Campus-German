@@ -42,14 +42,14 @@ export const coursePricing = {
     // Online Almanca Kursları Fiyatları (intensive ile aynı yeni fiyatlar)
     online: {
       a1: {
-        fullCourse: "890€",
+        fullCourse: "300€",
         lessons: "20+ 4 ders",
         duration: "8 hafta",
         weeklyLessons: "20 ders",
         totalLessons: "20+ 4",
       },
       a2: {
-        fullCourse: "890€",
+        fullCourse: "350€",
         lessons: "20+ 4 ders",
         duration: "8 hafta",
         weeklyLessons: "20 ders",
@@ -243,14 +243,14 @@ export const coursePricing = {
     // Online Almanca Kursları Fiyatları (wie Intensiv)
     online: {
       a1: {
-        fullCourse: "890€",
+        fullCourse: "300€",
         lessons: "20+ 4 UStd",
         duration: "8 Wochen",
         weeklyLessons: "20 UStd",
         totalLessons: "20+ 4",
       },
       a2: {
-        fullCourse: "890€",
+        fullCourse: "350€",
         lessons: "20+ 4 UStd",
         duration: "8 Wochen",
         weeklyLessons: "20 UStd",
@@ -444,14 +444,14 @@ export const coursePricing = {
     // Online German Courses Pricing (same as intensive)
     online: {
       a1: {
-        fullCourse: "890€",
+        fullCourse: "300€",
         lessons: "20+ 4 lessons",
         duration: "8 weeks",
         weeklyLessons: "20 lessons",
         totalLessons: "20+ 4",
       },
       a2: {
-        fullCourse: "890€",
+        fullCourse: "350€",
         lessons: "20+ 4 lessons",
         duration: "8 weeks",
         weeklyLessons: "20 lessons",

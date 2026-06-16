@@ -6,6 +6,7 @@ import '../../../styles/pages/kurslar.css';
 import { coursePricing } from '../../../data/coursePricing';
 import { getSimpleCourseStartDates } from '../../../utils/coursePricingHelper';
 import { getContactPath } from '../../../utils/pathHelpers';
+import CourseCardActions from '../../../components/CourseCardActions.astro';
 
 export async function getStaticPaths() {
     return [
@@ -179,10 +180,11 @@ const translations = t[lang as keyof typeof t];
                             <p class="course-description">
                                 {kurs.data.description}
                             </p>
-                            <a href={`/${lang}/cursos/${kurs.data.customSlug ?? cleanSlug(kurs.slug)}`} class="course-btn">
-                                <span>Ver Detalles</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
+                            <CourseCardActions
+                                lang={lang}
+                                detailHref={`/${lang}/cursos/${kurs.data.customSlug ?? cleanSlug(kurs.slug)}`}
+                                courseSlug={kurs.data.customSlug ?? cleanSlug(kurs.slug)}
+                            />
                         </div>
                     </div>
                 ))}

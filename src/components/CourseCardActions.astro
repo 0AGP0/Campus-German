@@ -1,0 +1,32 @@
+---
+import { buildBookingUrl } from '../utils/bookingPrefillHelper';
+import type { SupportedLang } from '../utils/pathHelpers';
+
+interface Props {
+  lang: string;
+  detailHref: string;
+  courseSlug: string;
+}
+
+const { lang, detailHref, courseSlug } = Astro.props;
+const registerHref = buildBookingUrl(lang as SupportedLang, courseSlug);
+
+const labels: Record<SupportedLang, { detail: string; register: string }> = {
+  tr: { detail: 'Detay', register: 'Kayıt Ol' },
+  de: { detail: 'Details', register: 'Anmelden' },
+  en: { detail: 'Details', register: 'Register' },
+  es: { detail: 'Detalles', register: 'Registrarse' },
+};
+const l = labels[lang as SupportedLang] ?? labels.en;
+---
+
+<div class="course-card-actions">
+  <a href={detailHref} class="course-btn course-btn--detail">
+    <span>{l.detail}</span>
+    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+  </a>
+  <a href={registerHref} class="course-btn course-btn--register">
+    <span>{l.register}</span>
+    <i class="fas fa-pen-to-square" aria-hidden="true"></i>
+  </a>
+</div>

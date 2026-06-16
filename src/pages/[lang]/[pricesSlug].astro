@@ -4,7 +4,7 @@ import IntensivePricingSection from '../../components/IntensivePricingSection.as
 import '../../styles/pages/fiyatlar-tarihler.css';
 import { coursePricing } from '../../data/coursePricing';
 import { isValidLang, getPricesDatesPath, getBookingPath } from '../../utils/pathHelpers';
-import { LESSONS_UP_TO_200, formatCourseDate, getNearestMondayDdmm } from '../../utils/coursePricingHelper';
+import { formatCourseDate, getNearestMondayDdmm } from '../../utils/coursePricingHelper';
 
 export async function getStaticPaths() {
   const priceSlugs = [
@@ -319,16 +319,6 @@ const simpleStartDates = uniqueDdMmMonday.map((ddmm) =>
           <span class="fiyatlar-date-badge">{dateStr} 2026</span>
         ))}
       </div>
-      <p class="fiyatlar-lessons-note">
-        <strong>{LESSONS_UP_TO_200[lang as keyof typeof LESSONS_UP_TO_200]}</strong>{' '}
-        {lang === 'tr'
-          ? '(kurs başına)'
-          : lang === 'de'
-          ? '(pro Kurs)'
-          : lang === 'es'
-          ? '(por curso)'
-          : '(per course)'}
-      </p>
     </div>
   </section>
 

@@ -557,31 +557,9 @@ const t = navTranslations[lang as keyof typeof navTranslations];
 const slugs = slugMapping;
 const sections = sectionMapping[lang as keyof typeof sectionMapping];
 const whatsappHref = 'https://wa.me/4915203823792';
-const nextMonthDate = new Date();
-nextMonthDate.setMonth(nextMonthDate.getMonth() + 1);
-const nextMonthLocale =
-  lang === 'tr' ? 'tr-TR' : lang === 'de' ? 'de-DE' : lang === 'es' ? 'es-ES' : 'en-US';
-const nextMonthName = new Intl.DateTimeFormat(nextMonthLocale, { month: 'long' }).format(nextMonthDate);
-const promoBannerDynamicText =
-  lang === 'tr'
-    ? `Bremen için sadece ${nextMonthName} ayı kurslarına özel indirim için `
-    : lang === 'de'
-      ? `Sonderrabatt nur für ${nextMonthName}-Kurse in Bremen – `
-      : lang === 'es'
-        ? `Descuento especial solo para cursos de ${nextMonthName} en Bremen – `
-        : `Special discount for ${nextMonthName} courses in Bremen only – `;
 ---
 
 <header class="main-header" id="main-header">
-    <!-- Promo Banner (Bremen Mart indirim - kapatılabilir) -->
-    <div class="promo-banner" id="promo-banner" role="region" aria-label="Kampanya">
-        <div class="promo-banner-inner">
-            <span class="promo-banner-text"><i class="fas fa-tag promo-banner-icon" aria-hidden="true"></i> {promoBannerDynamicText}<a href={whatsappHref} class="promo-banner-link promo-banner-link--btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> {t.promoBannerLink}</a></span>
-            <button type="button" class="promo-banner-close" id="promo-banner-close" aria-label={lang === 'tr' ? 'Bannerı kapat' : lang === 'de' ? 'Banner schließen' : lang === 'es' ? 'Cerrar banner' : 'Close banner'}>
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    </div>
     <!-- Top Header Bar -->
     <div class="top-header">
         <div class="top-header-container">
@@ -1145,36 +1123,3 @@ const promoBannerDynamicText =
         </div>
     </div>
 </header>
-
-<script>
-    (function() {
-        const HEADER_HEIGHT_DEFAULT = 112;
-        const PROMO_BANNER_HEIGHT = 44;
-
-        function setHeaderHeight(px) {
-            document.documentElement.style.setProperty('--header-height', px + 'px');
-        }
-
-        function hidePromo() {
-            const banner = document.getElementById('promo-banner');
-            if (banner) {
-                banner.classList.add('promo-banner-closed');
-                banner.setAttribute('aria-hidden', 'true');
-            }
-            setHeaderHeight(HEADER_HEIGHT_DEFAULT);
-        }
-
-        function initPromoBanner() {
-            const closeBtn = document.getElementById('promo-banner-close');
-            if (closeBtn) {
-                closeBtn.addEventListener('click', hidePromo);
-            }
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initPromoBanner);
-        } else {
-            initPromoBanner();
-        }
-    })();
-</script>

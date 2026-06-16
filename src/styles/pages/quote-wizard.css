@@ -18,6 +18,16 @@
   --qw-shadow: 0 12px 44px rgba(12, 192, 223, 0.14), 0 6px 18px rgba(44, 54, 63, 0.07);
   font-family: 'Outfit', system-ui, sans-serif;
   color: var(--qw-ink);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.quote-wizard-instance *,
+.quote-wizard-instance *::before,
+.quote-wizard-instance *::after {
+  box-sizing: border-box;
 }
 
 /* Standalone sayfa — uzun adımlarda (özellikle iletişim) sayfa kaydırmalı */
@@ -41,6 +51,14 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 
 .qx-page-bg--embedded .qx.qx-layout-flow {
   max-width: 100%;
+}
+
+.qx-page-bg--embedded,
+.qx-page-bg--standalone,
+.qx-page-bg--modal {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 /* Ana kabuk */
@@ -286,6 +304,15 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 .qx-body {
   padding: 1rem 1rem 1.3rem;
   background: var(--qw-surface);
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+}
+
+.qx-form,
+.pw-viewport {
+  max-width: 100%;
+  min-width: 0;
 }
 
 .qx-lead {
@@ -522,6 +549,7 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   line-height: 1.22;
   color: #0a6ea8;
   letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
 }
 
 .qx-card-go {
@@ -1125,13 +1153,7 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   }
 }
 
-/* Dar ekranda üç kart yan yana kalsın (modal ~960px): dikey yığılmayı azaltır */
-@media (min-width: 600px) and (max-width: 920px) {
-  .qx-page-bg--modal .qx-time-slots {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.5rem;
-  }
-}
+/* Eski: modalda 600–920px arası üç sütun taşmaya yol açıyordu — kaldırıldı */
 
 .qx-time-slot {
   position: relative;
@@ -1479,12 +1501,7 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 
 @media (max-width: 720px) {
   .qx-speaking-banner {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .qx-speaking-banner__ticks {
-    justify-content: center;
+    display: none;
   }
 }
 
@@ -3407,5 +3424,302 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   width: 1.55rem;
   height: 1.55rem;
   font-size: 0.56rem;
+}
+
+/* ===== Responsive — teklif formu (modal, gömülü, standalone) ===== */
+@media (max-width: 768px) {
+  main:has(section.qx[data-qx-mode='standalone']) {
+    padding: 0.65rem;
+  }
+
+  .qx.qx-layout-flow {
+    border-radius: 18px;
+  }
+
+  .qx-wiz-header {
+    padding: 0.75rem 0.85rem 0.6rem;
+  }
+
+  .qx-wiz-header__top {
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem;
+  }
+
+  .qx-wiz-status--box {
+    display: none;
+  }
+
+  .qx-wiz-logo {
+    width: 96px;
+    height: 36px;
+  }
+
+  .qx-step-pill__label {
+    display: none;
+  }
+
+  .qx-step-pill:not(:last-child)::after {
+    top: 13px;
+    left: calc(50% + 14px);
+    right: calc(-50% + 14px);
+  }
+
+  .qx-dot {
+    width: 26px;
+    height: 26px;
+    font-size: 0.72rem;
+  }
+
+  .qx-body {
+    padding: 0.85rem 0.85rem 1rem;
+  }
+
+  .qx-lead--hero {
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .qx-lead--hero::after {
+    display: none;
+  }
+
+  .qx-lead-kicker {
+    font-size: 1.35rem;
+  }
+
+  .qx-lead-body {
+    font-size: 0.84rem;
+  }
+
+  .qx-scene-kicker {
+    width: 1.9rem;
+    height: 1.9rem;
+    font-size: 0.88rem;
+  }
+
+  .qx-program-grid.qx-strip--programs {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+
+  .qx-card-bg {
+    height: clamp(120px, 34vw, 160px);
+    min-height: 120px;
+  }
+
+  .qx-choice-grid--levels-v2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .qx-level-card {
+    min-height: 0;
+    padding: 0.75rem 0.7rem;
+  }
+
+  .qx-level-card__badge {
+    width: 48px;
+    height: 48px;
+    font-size: 1.45rem;
+  }
+
+  .qx-level-card__title {
+    font-size: 0.95rem;
+  }
+
+  .qx-level-card__desc {
+    font-size: 0.82rem;
+  }
+
+  .qx-level-card__icon {
+    font-size: 1.75rem;
+  }
+
+  .qx-level-help__copy strong {
+    font-size: 1.15rem;
+  }
+
+  .qx-level-help__copy p {
+    font-size: 0.88rem;
+  }
+
+  .qx-level-help__btn {
+    min-height: 44px;
+    font-size: 0.88rem;
+  }
+
+  .qx-time-slot__foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .qx-time-slot__cta {
+    align-self: flex-end;
+  }
+
+  .qx-slot-teacher__body {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .qx-slot-teacher__levels {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .qx-step4-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .qx-contact-card {
+    padding: 0.85rem 0.9rem;
+  }
+
+  .qx-contact-card__title {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .qx-wiz-header {
+    padding: 0.65rem 0.7rem 0.55rem;
+    padding-right: 2.75rem;
+  }
+
+  .qx-wiz-header-back {
+    width: 32px;
+    height: 32px;
+  }
+
+  .qx-step-track-wrap {
+    min-width: 0;
+  }
+
+  .qx-body {
+    padding: 0.75rem 0.7rem 0.9rem;
+  }
+
+  .qx-lead-kicker {
+    font-size: 1.2rem;
+  }
+
+  .qx-lead-step__head {
+    gap: 0.55rem;
+  }
+
+  .qx-card-title {
+    font-size: 1rem;
+  }
+
+  .qx-card-badge--hi {
+    font-size: 0.7rem;
+  }
+
+  .qx-card-badge--meta {
+    font-size: 0.64rem;
+  }
+
+  .qx-choice-grid--levels-v2 {
+    grid-template-columns: 1fr;
+  }
+
+  .qx-level-help__actions {
+    width: 100%;
+  }
+
+  .qx-level-help__btn {
+    width: 100%;
+  }
+
+  .qx-choice-grid--months {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .qx-time-slot__period {
+    flex-wrap: wrap;
+    padding: 0.7rem 0.75rem;
+  }
+
+  .qx-time-slot__period-clock {
+    font-size: 1.15rem;
+  }
+
+  .qx-time-slot__icon {
+    width: 2.85rem;
+    height: 2.85rem;
+  }
+
+  .qx-time-slot__icon .fas {
+    font-size: 1.35rem;
+  }
+
+  .qx-contact-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .qx-contact-btn {
+    font-size: 0.75rem;
+    padding: 0.85rem 0.9rem;
+    letter-spacing: 0.03em;
+  }
+
+  .qx-step4-preset-long {
+    font-size: 0.78rem;
+  }
+
+  .pw-overlay {
+    padding: 0.75rem;
+  }
+}
+
+/* Modal — mobil tam ekran hissi */
+@media (max-width: 640px) {
+  .qx-page-bg--modal .qx-wiz-header {
+    padding-right: 2.85rem;
+  }
+
+  .qx-page-bg--modal .qx-lead-kicker {
+    font-size: 1.22rem;
+  }
+
+  .qx-page-bg--modal .qx-choice-grid--levels-v2 {
+    grid-template-columns: 1fr;
+  }
+
+  .qx-page-bg--modal .qx-level-card {
+    min-height: 0;
+  }
+
+  .qx-page-bg--modal .qx-time-slots {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .qx-page-bg--modal .qx-contact-btn {
+    font-size: 0.72rem;
+    padding: 0.8rem 0.75rem;
+  }
+}
+
+/* Kurs detay sayfası gömülü form */
+.demand-form-section-inline .quote-wizard-instance,
+.demand-form-section-inline .qx-page-bg--embedded {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.demand-form-section-inline .qx.qx-layout-flow {
+  max-width: 100%;
+  border-radius: 16px;
+}
+
+.faq-form-layout .demand-form-section-inline,
+.faq-form-layout .quote-wizard-instance {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
 }
 

@@ -2,9 +2,10 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import BookingLessonTimeStep from '../../components/BookingLessonTimeStep.astro';
 import BookingExtrasStep from '../../components/BookingExtrasStep.astro';
+import PromoPrice from '../../components/PromoPrice.astro';
 import '../../styles/pages/buchung.css';
 import { coursePricing } from '../../data/coursePricing.ts';
-import { getStartDateOptionsMonthYear, PROMO_PRICE } from '../../utils/coursePricingHelper';
+import { getStartDateOptions, PROMO_PRICE, LESSONS_UP_TO_200, ONLINE_LEVEL_PRICES } from '../../utils/coursePricingHelper';
 import { getDatenschutzPath, getAgbPath } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
@@ -20,7 +21,7 @@ const { lang } = Astro.params;
 const pricingData = coursePricing[lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en')];
 const pricingLang = lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en');
 const START_DATE_YEAR = 2026;
-const allStartDateOptions = getStartDateOptionsMonthYear(lang as 'tr' | 'de' | 'en' | 'es', START_DATE_YEAR);
+const allStartDateOptions = getStartDateOptions(lang as 'tr' | 'de' | 'en' | 'es', START_DATE_YEAR);
 const _today = new Date();
 _today.setHours(0, 0, 0, 0);
 const startDateOptions = allStartDateOptions.filter((opt) => {
@@ -72,6 +73,31 @@ const t = {
         programShortTerm: "Short term",
         programOnlineLabel: "Online kurs",
         programYouthCampLabel: "Yaz kampı",
+        programIntensiveDesc: "Yüz yüze yoğun Almanca",
+        programShortTermDesc: "Esnek süre, haftalık kayıt",
+        programOnlineDesc: "Uzaktan canlı dersler",
+        programYouthCampDesc: "Yaz dönemi kamp programı",
+        weeksUnitLabel: "hafta",
+        weeksBtnOther: "Diğer",
+        weeksOtherPlaceholder: "Hafta sayısı girin",
+        weekCard2f1: "Okul ve şehre hızlı alışma",
+        weekCard2f2: "20 saat/hafta yüz yüze ders",
+        weekCard2f3: "Kısa süreli deneme için ideal",
+        weekCard4f1: "Yarım seviye ilerleme",
+        weekCard4f2: "Esnek başlangıç tarihi",
+        weekCard4f3: "Günlük hayat Almancası",
+        weekCard8f1: "Tam bir seviye (A1, A2…)",
+        weekCard8f2: "Vize sürecine uygun süre",
+        weekCard8f3: "Konuşma kulübü dahil",
+        weekCard12f1: "Genişletilmiş öğrenme süresi",
+        weekCard12f2: "Daha avantajlı haftalık ücret",
+        weekCard12f3: "Uzun dönem planlama",
+        weekCardOtherf1: "1–48 hafta arası özel süre",
+        weekCardOtherf2: "İhtiyacınıza göre planlama",
+        weekCardOtherf3: "Danışmanla tarih belirleme",
+        telcWeeksLabel: "4 hafta",
+        telcPriceBadge: "Sınav hazırlığı",
+        telcPriceNote: "4 haftalık sabit program ücreti",
         intensiveAcademic: "Yoğun",
         onlineCourse: "Online Kurs",
         youthCamp: "Yaz Kampı",
@@ -81,19 +107,26 @@ const t = {
         intensiveTypeLabel: "Intensive programı — haftalık süre *",
         intensive20: "Intensive 20h/hafta",
         intensivePlus25: "+ Intensive 25h/hafta",
-        courseInfoOneCourse: "Vize davet mektubu için 3 kur gerekmektedir. 2 kur daha ekleyerek indirimden yararlanabilirsiniz.",
+        courseInfoOneCourse: "Alman konsolosluğu en az iki kur kaydı istemektedir. Lütfen bir kur daha seçin.",
         courseInfoTwoCourses: "Vize davet mektubu için 3 kur gerekmektedir. 1 kur daha ekleyerek indirimden yararlanabilirsiniz.",
         courseInfoMultiDiscount: "Toplam {weeks} hafta — %{percent} indirim uygulanıyor",
         multiCourseDiscountLabel: "Çoklu kurs indirimi",
         totalWeeksInfo: "Toplam {n} hafta",
         totalWeekOne: "Toplam 1 hafta",
-        courseWeeksLabel: "4 hafta",
+        courseWeeksLabel: "8 hafta",
         courseSelectionSummaryTitle: "Seçilen program",
         courseUnsureLabel: "Emin değilim",
         telcC1PrepLabel: "Telc C1 prep",
         courseCardFeatureClub: "Konuşma kulübü",
         courseCardFeatureNative: "Ana dili Almanca hocalar",
         courseCardFeatureVisa: "Vize garantisi",
+        courseCardLessons: "200 ders saati",
+        courseCardOnlineLessons: "16 ders saati + 4 etüt",
+        courseCardOnlineNoNative: "Ana dili Almanca hoca yok",
+        courseCardOnlineNoVisa: "Vize garantisi yok",
+        courseCardOnlineEvening: "Akşam sınıfları",
+        courseCardInPerson: "Yüz yüze",
+        courseCardOnline: "Online",
         courseCardUnsureNote: "Seviyemi sonra belirleyeceğim",
         weeksOption1: "1 - 1 Hafta Demo Kursu",
         weeksOption2: "2 - 2 Hafta Taster Kursu",
@@ -151,7 +184,7 @@ const t = {
         accommodationLabel: "Konaklama desteği ister misiniz?",
         accommodationSupportLabel: "Konaklama desteği",
         accommodationNo: "Hayır",
-        bringFriendDiscountLabel: "Arkadaşını getir, daha fazla indirim kazan",
+        bringFriendDiscountLabel: "Arkadaşını getir, 2x indirimi kap",
         bringFriendSectionTitle: "Arkadaş bilgileri",
         bringFriendNameLabel: "Arkadaş ad soyad",
         bringFriendEmailLabel: "Arkadaş e-posta",
@@ -162,7 +195,7 @@ const t = {
         airportYes: "Evet",
         airportNo: "Hayır",
         extraInfoGeneral: "Danışmanlık hizmeti içermemektedir. Sunulan programlar tek seferliktir, sonrası kapsam dışındadır. Hariç masraflar kişiye iletilecektir.",
-        extraInfoAccommodation: "Kurs başlamadan 1 ay önce konaklama desteği sunulacaktır. Konaklama beğenilmemesi durumunda para iadesi garantidir.",
+        extraInfoAccommodation: "Kurs başlamadan 1 ay önce konaklama desteği sunulacaktır. Konaklama 6 aylık kira sözleşmesi üzerinden ilerlemektedir.",
         extraInfoClose: "Kapat",
         extraInfoBtnLabel: "Bilgi",
         cityLabel: "Şehir",
@@ -285,6 +318,31 @@ const t = {
         programShortTerm: "Short term",
         programOnlineLabel: "Online-Kurs",
         programYouthCampLabel: "Sommercamp",
+        programIntensiveDesc: "Intensiv vor Ort",
+        programShortTermDesc: "Flexible Dauer, wöchentlich",
+        programOnlineDesc: "Live-Unterricht online",
+        programYouthCampDesc: "Sommercamp-Programm",
+        weeksUnitLabel: "Wochen",
+        weeksBtnOther: "Andere",
+        weeksOtherPlaceholder: "Anzahl Wochen",
+        weekCard2f1: "Schnelle Eingewöhnung in Schule & Stadt",
+        weekCard2f2: "20 Std./Woche Präsenzunterricht",
+        weekCard2f3: "Ideal zum kurzen Ausprobieren",
+        weekCard4f1: "Halbes Niveau Fortschritt",
+        weekCard4f2: "Flexibler Starttermin",
+        weekCard4f3: "Alltagsdeutsch im Fokus",
+        weekCard8f1: "Ein volles Niveau (A1, A2 …)",
+        weekCard8f2: "Passende Dauer für Visum",
+        weekCard8f3: "Konversationsclub inklusive",
+        weekCard12f1: "Verlängerte Lernzeit",
+        weekCard12f2: "Günstigerer Wochenpreis",
+        weekCard12f3: "Ideal für Langzeitplanung",
+        weekCardOtherf1: "Individuelle Dauer 1–48 Wochen",
+        weekCardOtherf2: "Planung nach Ihrem Bedarf",
+        weekCardOtherf3: "Starttermin mit Beratung",
+        telcWeeksLabel: "4 Wochen",
+        telcPriceBadge: "Prüfungsvorbereitung",
+        telcPriceNote: "Fester Programmpreis für 4 Wochen",
         intensiveAcademic: "Intensiv",
         onlineCourse: "Online-Kurs",
         youthCamp: "Sommercamp",
@@ -294,19 +352,26 @@ const t = {
         intensiveTypeLabel: "Intensivkurs — Stunden pro Woche *",
         intensive20: "Intensive 20h/Woche",
         intensivePlus25: "+ Intensive 25h/Woche",
-        courseInfoOneCourse: "Für das Visum-Einladungsschreiben sind 3 Kurse erforderlich. Fügen Sie 2 weitere Kurse hinzu, um vom Rabatt zu profitieren.",
+        courseInfoOneCourse: "Das deutsche Konsulat verlangt mindestens zwei Kursanmeldungen. Bitte wählen Sie einen weiteren Kurs.",
         courseInfoTwoCourses: "Für das Visum-Einladungsschreiben sind 3 Kurse erforderlich. Fügen Sie 1 weiteren Kurs hinzu, um vom Rabatt zu profitieren.",
         courseInfoMultiDiscount: "Insgesamt {weeks} Wochen — {percent}% Rabatt wird angewendet",
         multiCourseDiscountLabel: "Mehrkurs-Rabatt",
         totalWeeksInfo: "Gesamt {n} Wochen",
         totalWeekOne: "Gesamt 1 Woche",
-        courseWeeksLabel: "4 Wochen",
+        courseWeeksLabel: "8 Wochen",
         courseSelectionSummaryTitle: "Gewähltes Programm",
         courseUnsureLabel: "Weiß ich noch nicht",
         telcC1PrepLabel: "Telc C1 Prep",
         courseCardFeatureClub: "Sprachclub",
         courseCardFeatureNative: "Muttersprachliche Deutschlehrer",
         courseCardFeatureVisa: "Visumgarantie",
+        courseCardLessons: "200 Unterrichtsstunden",
+        courseCardOnlineLessons: "16 Unterrichtsstunden + 4 Tutorien",
+        courseCardOnlineNoNative: "Keine muttersprachlichen Deutschlehrer",
+        courseCardOnlineNoVisa: "Keine Visumgarantie",
+        courseCardOnlineEvening: "Abendkurse",
+        courseCardInPerson: "Präsenzunterricht",
+        courseCardOnline: "Online",
         courseCardUnsureNote: "Niveau später festlegen",
         weeksOption1: "1 - 1 Woche Demo-Kurs",
         weeksOption2: "2 - 2 Wochen Taster-Kurs",
@@ -364,7 +429,7 @@ const t = {
         accommodationLabel: "Möchten Sie Unterkunftsunterstützung?",
         accommodationSupportLabel: "Unterkunftsunterstützung",
         accommodationNo: "Nein",
-        bringFriendDiscountLabel: "Freund mitbringen, mehr Rabatt sichern",
+        bringFriendDiscountLabel: "Freund mitbringen — doppelten Rabatt sichern",
         bringFriendSectionTitle: "Freundesdaten",
         bringFriendNameLabel: "Name des Freundes",
         bringFriendEmailLabel: "E-Mail des Freundes",
@@ -375,7 +440,7 @@ const t = {
         airportYes: "Ja",
         airportNo: "Nein",
         extraInfoGeneral: "Enthält keine Beratungsleistung. Die angebotenen Programme sind einmalig; danach nicht im Leistungsumfang. Ausgenommene Kosten werden der Person mitgeteilt.",
-        extraInfoAccommodation: "Unterstützung bei der Unterkunft wird 1 Monat vor Kursbeginn angeboten. Bei Unzufriedenheit mit der Unterkunft ist eine Geld-zurück-Garantie gegeben.",
+        extraInfoAccommodation: "Unterstützung bei der Unterkunft wird 1 Monat vor Kursbeginn angeboten. Die Unterkunft erfolgt auf Basis eines 6-monatigen Mietvertrags.",
         extraInfoClose: "Schließen",
         extraInfoBtnLabel: "Info",
         cityLabel: "Stadt",
@@ -508,6 +573,31 @@ const t = {
         programShortTerm: "Short term",
         programOnlineLabel: "Online course",
         programYouthCampLabel: "Summer camp",
+        programIntensiveDesc: "In-person intensive German",
+        programShortTermDesc: "Flexible duration, weekly",
+        programOnlineDesc: "Live online classes",
+        programYouthCampDesc: "Summer camp programme",
+        weeksUnitLabel: "weeks",
+        weeksBtnOther: "Other",
+        weeksOtherPlaceholder: "Enter number of weeks",
+        weekCard2f1: "Quick adjustment to school & city",
+        weekCard2f2: "20 hours/week in-person lessons",
+        weekCard2f3: "Perfect for a short trial",
+        weekCard4f1: "Half-level progress",
+        weekCard4f2: "Flexible start date",
+        weekCard4f3: "Everyday German focus",
+        weekCard8f1: "One full level (A1, A2…)",
+        weekCard8f2: "Suitable duration for visa",
+        weekCard8f3: "Conversation club included",
+        weekCard12f1: "Extended learning period",
+        weekCard12f2: "Lower weekly rate advantage",
+        weekCard12f3: "Ideal for long-term planning",
+        weekCardOtherf1: "Custom duration 1–48 weeks",
+        weekCardOtherf2: "Tailored to your needs",
+        weekCardOtherf3: "Start date with advisor support",
+        telcWeeksLabel: "4 weeks",
+        telcPriceBadge: "Exam preparation",
+        telcPriceNote: "Fixed price for the 4-week programme",
         intensiveAcademic: "Intensive",
         onlineCourse: "Online Course",
         youthCamp: "Summer Camp",
@@ -517,19 +607,26 @@ const t = {
         intensiveTypeLabel: "Intensive course — hours per week *",
         intensive20: "Intensive 20h/week",
         intensivePlus25: "+ Intensive 25h/week",
-        courseInfoOneCourse: "3 courses are required for the visa invitation letter. Add 2 more courses to benefit from the discount.",
+        courseInfoOneCourse: "The German consulate requires at least two course registrations. Please select one more course.",
         courseInfoTwoCourses: "3 courses are required for the visa invitation letter. Add 1 more course to benefit from the discount.",
         courseInfoMultiDiscount: "Total {weeks} weeks — {percent}% discount applied",
         multiCourseDiscountLabel: "Multi-course discount",
         totalWeeksInfo: "Total {n} weeks",
         totalWeekOne: "Total 1 week",
-        courseWeeksLabel: "4 weeks",
+        courseWeeksLabel: "8 weeks",
         courseSelectionSummaryTitle: "Selected program",
         courseUnsureLabel: "Not sure yet",
         telcC1PrepLabel: "Telc C1 prep",
         courseCardFeatureClub: "Conversation club",
         courseCardFeatureNative: "Native German teachers",
         courseCardFeatureVisa: "Visa guarantee",
+        courseCardLessons: "200 lesson hours",
+        courseCardOnlineLessons: "16 lesson hours + 4 tutorials",
+        courseCardOnlineNoNative: "No native German teachers",
+        courseCardOnlineNoVisa: "No visa guarantee",
+        courseCardOnlineEvening: "Evening classes",
+        courseCardInPerson: "In-person",
+        courseCardOnline: "Online",
         courseCardUnsureNote: "I'll decide my level later",
         weeksOption1: "1 - 1 Week Demo Course",
         weeksOption2: "2 - 2 Week Taster Course",
@@ -587,7 +684,7 @@ const t = {
         accommodationLabel: "Do you want accommodation support?",
         accommodationSupportLabel: "Accommodation support",
         accommodationNo: "No",
-        bringFriendDiscountLabel: "Bring a friend, get more discount",
+        bringFriendDiscountLabel: "Bring a friend, get 2x discount",
         bringFriendSectionTitle: "Friend details",
         bringFriendNameLabel: "Friend's full name",
         bringFriendEmailLabel: "Friend's email",
@@ -598,7 +695,7 @@ const t = {
         airportYes: "Yes",
         airportNo: "No",
         extraInfoGeneral: "Does not include advisory services. Programs offered are one-time; subsequent support is out of scope. Excluded costs will be communicated to you.",
-        extraInfoAccommodation: "Accommodation support is provided 1 month before the course starts. Money-back guarantee if you are not satisfied with the accommodation.",
+        extraInfoAccommodation: "Accommodation support is provided 1 month before the course starts. Accommodation is arranged via a 6-month rental agreement.",
         extraInfoClose: "Close",
         extraInfoBtnLabel: "Info",
         cityLabel: "City",
@@ -731,6 +828,31 @@ const t = {
         programShortTerm: "Short term",
         programOnlineLabel: "Curso online",
         programYouthCampLabel: "Campamento de verano",
+        programIntensiveDesc: "Alemán intensivo presencial",
+        programShortTermDesc: "Duración flexible, semanal",
+        programOnlineDesc: "Clases en vivo online",
+        programYouthCampDesc: "Programa de campamento de verano",
+        weeksUnitLabel: "semanas",
+        weeksBtnOther: "Otro",
+        weeksOtherPlaceholder: "Introduzca semanas",
+        weekCard2f1: "Adaptación rápida a escuela y ciudad",
+        weekCard2f2: "20 horas/semana presenciales",
+        weekCard2f3: "Ideal para una prueba corta",
+        weekCard4f1: "Medio nivel de progreso",
+        weekCard4f2: "Fecha de inicio flexible",
+        weekCard4f3: "Alemán cotidiano",
+        weekCard8f1: "Un nivel completo (A1, A2…)",
+        weekCard8f2: "Duración adecuada para visado",
+        weekCard8f3: "Club de conversación incluido",
+        weekCard12f1: "Periodo de aprendizaje ampliado",
+        weekCard12f2: "Tarifa semanal más ventajosa",
+        weekCard12f3: "Ideal para planificación a largo plazo",
+        weekCardOtherf1: "Duración personalizada 1–48 semanas",
+        weekCardOtherf2: "Plan según sus necesidades",
+        weekCardOtherf3: "Fecha de inicio con asesor",
+        telcWeeksLabel: "4 semanas",
+        telcPriceBadge: "Preparación de examen",
+        telcPriceNote: "Precio fijo del programa de 4 semanas",
         intensiveAcademic: "Intensivo",
         onlineCourse: "Curso online",
         youthCamp: "Campamento de verano",
@@ -740,19 +862,26 @@ const t = {
         intensiveTypeLabel: "Curso intensivo — horas por semana *",
         intensive20: "Intensive 20h/semana",
         intensivePlus25: "+ Intensive 25h/semana",
-        courseInfoOneCourse: "Se requieren 3 cursos para la carta de invitación de visado. Añada 2 cursos más para beneficiarse del descuento.",
+        courseInfoOneCourse: "El consulado alemán exige al menos dos inscripciones de curso. Seleccione un curso más.",
         courseInfoTwoCourses: "Se requieren 3 cursos para la carta de invitación de visado. Añada 1 curso más para beneficiarse del descuento.",
         courseInfoMultiDiscount: "Total {weeks} semanas — {percent}% de descuento aplicado",
         multiCourseDiscountLabel: "Descuento multi-curso",
         totalWeeksInfo: "Total {n} semanas",
         totalWeekOne: "Total 1 semana",
-        courseWeeksLabel: "4 semanas",
+        courseWeeksLabel: "8 semanas",
         courseSelectionSummaryTitle: "Programa seleccionado",
         courseUnsureLabel: "Aún no lo sé",
         telcC1PrepLabel: "Telc C1 prep",
         courseCardFeatureClub: "Club de conversación",
         courseCardFeatureNative: "Profesores nativos de alemán",
         courseCardFeatureVisa: "Garantía de visado",
+        courseCardLessons: "200 horas de clase",
+        courseCardOnlineLessons: "16 horas de clase + 4 tutorías",
+        courseCardOnlineNoNative: "Sin profesores nativos de alemán",
+        courseCardOnlineNoVisa: "Sin garantía de visado",
+        courseCardOnlineEvening: "Clases vespertinas",
+        courseCardInPerson: "Presencial",
+        courseCardOnline: "Online",
         courseCardUnsureNote: "Decidiré el nivel más tarde",
         weeksOption1: "1 - Curso demo 1 semana",
         weeksOption2: "2 - Curso de prueba 2 semanas",
@@ -810,7 +939,7 @@ const t = {
         accommodationLabel: "¿Desea apoyo de alojamiento?",
         accommodationSupportLabel: "Apoyo de alojamiento",
         accommodationNo: "No",
-        bringFriendDiscountLabel: "Trae a un amigo, consigue más descuento",
+        bringFriendDiscountLabel: "Trae a un amigo y consigue el doble de descuento",
         bringFriendSectionTitle: "Datos del amigo/a",
         bringFriendNameLabel: "Nombre completo del amigo/a",
         bringFriendEmailLabel: "Email del amigo/a",
@@ -821,7 +950,7 @@ const t = {
         airportYes: "Sí",
         airportNo: "No",
         extraInfoGeneral: "No incluye servicios de asesoramiento. Los programas ofrecidos son puntuales; lo posterior queda fuera del alcance. Los costes no incluidos se comunicarán a la persona.",
-        extraInfoAccommodation: "El apoyo de alojamiento se ofrecerá 1 mes antes del inicio del curso. Garantía de reembolso si no queda satisfecho/a con el alojamiento.",
+        extraInfoAccommodation: "El apoyo de alojamiento se ofrecerá 1 mes antes del inicio del curso. El alojamiento se gestiona mediante un contrato de alquiler de 6 meses.",
         extraInfoClose: "Cerrar",
         extraInfoBtnLabel: "Info",
         cityLabel: "Ciudad",
@@ -942,7 +1071,29 @@ const t = {
 const translations = t[lang as keyof typeof t];
 
 const courseCardLevels = ['a1', 'a2', 'b1', 'b2', 'c1'] as const;
-const courseCardPrice = `${PROMO_PRICE.discounted} €`;
+const courseCardLessonsBadge = LESSONS_UP_TO_200[lang as keyof typeof LESSONS_UP_TO_200] ?? LESSONS_UP_TO_200.en;
+const telcPrepPrice = '640 €';
+const TELC_PREP_PRICE_NUM = 640;
+const TELC_PREP_WEEKS = 4;
+const programImages = {
+    intensive: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80',
+    'short-term': 'https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=800&q=80',
+    online: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80',
+    'youth-camp': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
+} as const;
+const programCardItems = [
+    { value: 'intensive', title: translations.programIntensive, desc: translations.programIntensiveDesc, image: programImages.intensive, mod: 'intensive', icon: 'graduation-cap' },
+    { value: 'short-term', title: translations.programShortTerm, desc: translations.programShortTermDesc, image: programImages['short-term'], mod: 'short-term', icon: 'calendar-alt' },
+    { value: 'online', title: translations.programOnlineLabel, desc: translations.programOnlineDesc, image: programImages.online, mod: 'online', icon: 'laptop' },
+    { value: 'youth-camp', title: translations.programYouthCampLabel, desc: translations.programYouthCampDesc, image: programImages['youth-camp'], mod: 'youth-camp', icon: 'umbrella-beach' },
+] as const;
+const shortTermWeekOptions = [
+    { value: 2, mod: 'w2', features: [translations.weekCard2f1, translations.weekCard2f2, translations.weekCard2f3] },
+    { value: 4, mod: 'w4', features: [translations.weekCard4f1, translations.weekCard4f2, translations.weekCard4f3] },
+    { value: 8, mod: 'w8', features: [translations.weekCard8f1, translations.weekCard8f2, translations.weekCard8f3] },
+    { value: 12, mod: 'w12', features: [translations.weekCard12f1, translations.weekCard12f2, translations.weekCard12f3] },
+] as const;
+const weekCardOtherFeatures = [translations.weekCardOtherf1, translations.weekCardOtherf2, translations.weekCardOtherf3] as const;
 const courseSlotThemes: Record<(typeof courseCardLevels)[number], { icon: string; mod: string }> = {
     a1: { icon: 'seedling', mod: 'a1' },
     a2: { icon: 'book-open', mod: 'a2' },
@@ -1076,23 +1227,23 @@ const extrasStepCopy = {
                                     <div class="form-grid">
                                         <div class="form-group full-width">
                                             <label>{translations.programLabel} *</label>
-                                            <div class="option-buttons program-options" role="group" aria-label={translations.programLabel}>
-                                                <label class="option-btn">
-                                                    <input type="radio" name="program" value="intensive">
-                                                    <span class="option-btn-text">🎓 {translations.programIntensive}</span>
-                                                </label>
-                                                <label class="option-btn">
-                                                    <input type="radio" name="program" value="short-term">
-                                                    <span class="option-btn-text">📅 {translations.programShortTerm}</span>
-                                                </label>
-                                                <label class="option-btn">
-                                                    <input type="radio" name="program" value="online">
-                                                    <span class="option-btn-text">💻 {translations.programOnlineLabel}</span>
-                                                </label>
-                                                <label class="option-btn">
-                                                    <input type="radio" name="program" value="youth-camp">
-                                                    <span class="option-btn-text">🏖️ {translations.programYouthCampLabel}</span>
-                                                </label>
+                                            <div class="program-slot-grid" id="program-options-grid" role="group" aria-label={translations.programLabel}>
+                                                {programCardItems.map((item) => (
+                                                    <label class={`program-slot program-slot--${item.mod}`}>
+                                                        <input type="radio" name="program" value={item.value} />
+                                                        <span class="program-slot__sel-mark" aria-hidden="true"><i class="fas fa-check"></i></span>
+                                                        <div class="program-slot__head">
+                                                            <img src={item.image} alt="" width="480" height="280" loading="lazy" class="program-slot__photo" />
+                                                            <div class="program-slot__head-inner">
+                                                                <span class="program-slot__icon"><i class={`fas fa-${item.icon}`}></i></span>
+                                                                <div class="program-slot__head-copy">
+                                                                    <span class="program-slot__title">{item.title}</span>
+                                                                    <span class="program-slot__meta">{item.desc}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                ))}
                                             </div>
                                         </div>
                                         <input type="hidden" name="intensive-type" id="intensive-type-hidden" value="intensive" />
@@ -1106,8 +1257,9 @@ const extrasStepCopy = {
                                                 <div id="course-levels-buttons" class="course-slot-grid" role="group">
                                                     {courseCardLevels.map((level) => {
                                                         const theme = courseSlotThemes[level];
+                                                        const isOnlineOnlyLevel = level === 'a1' || level === 'a2';
                                                         return (
-                                                            <label class={`course-slot course-slot--${theme.mod}`}>
+                                                            <label class={`course-slot course-slot--${theme.mod}${isOnlineOnlyLevel ? '' : ' course-slot--intensive-only'}`} data-course-level={level}>
                                                                 <input type="checkbox" name="course-selection" value={level} class="course-level-cb course-priced-cb" />
                                                                 <div class="course-slot__head" aria-hidden="true">
                                                                     <span class="course-slot__sel-mark" aria-hidden="true"></span>
@@ -1118,36 +1270,66 @@ const extrasStepCopy = {
                                                                     </div>
                                                                 </div>
                                                                 <div class="course-slot__main">
-                                                                    <ul class="course-slot__features">
+                                                                    <div class="course-slot__tags">
+                                                                        <span class="course-slot__badge course-slot__badge--lessons course-slot__mode-intensive">{courseCardLessonsBadge}</span>
+                                                                        <span class="course-slot__badge course-slot__badge--period course-slot__mode-intensive">{translations.courseCardInPerson}</span>
+                                                                        <span class="course-slot__badge course-slot__badge--lessons course-slot__mode-online">{translations.courseCardOnlineLessons}</span>
+                                                                    </div>
+                                                                    <ul class="course-slot__features course-slot__mode-intensive">
                                                                         <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardFeatureClub}</span></li>
                                                                         <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardFeatureNative}</span></li>
                                                                         <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardFeatureVisa}</span></li>
+                                                                        <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardLessons}</span></li>
                                                                     </ul>
-                                                                    <div class="course-slot__foot">
-                                                                        <span class="course-slot__price">{courseCardPrice}</span>
+                                                                    <ul class="course-slot__features course-slot__mode-online">
+                                                                        <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardOnlineNoNative}</span></li>
+                                                                        <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardOnlineNoVisa}</span></li>
+                                                                        <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardOnlineEvening}</span></li>
+                                                                    </ul>
+                                                                    <div class="course-slot__foot course-slot__foot--promo course-slot__mode-intensive">
+                                                                        <PromoPrice lang={lang} variant="card" />
                                                                     </div>
+                                                                    {(level === 'a1' || level === 'a2') && (
+                                                                        <div class="course-slot__foot course-slot__foot--promo course-slot__foot--fixed-price course-slot__mode-online">
+                                                                            <div class="course-slot__fixed-price">
+                                                                                <span class="course-slot__fixed-price-amount">{ONLINE_LEVEL_PRICES[level]} €</span>
+                                                                                <span class="course-slot__fixed-price-note">{translations.courseWeeksLabel}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    )}
                                                                 </div>
                                                             </label>
                                                         );
                                                     })}
-                                                    <label class="course-slot course-slot--telc">
+                                                    <label class="course-slot course-slot--telc course-slot--intensive-only">
                                                         <input type="checkbox" name="course-selection" value="telc-c1-prep" class="course-priced-cb course-telc-cb" />
                                                         <div class="course-slot__head" aria-hidden="true">
                                                             <span class="course-slot__sel-mark" aria-hidden="true"></span>
                                                             <span class="course-slot__icon"><i class="fas fa-certificate"></i></span>
                                                             <div class="course-slot__head-copy">
                                                                 <span class="course-slot__level-label course-slot__level-label--sm">{translations.telcC1PrepLabel}</span>
-                                                                <span class="course-slot__head-meta">{translations.courseWeeksLabel}</span>
+                                                                <span class="course-slot__head-meta">{translations.telcWeeksLabel}</span>
                                                             </div>
                                                         </div>
                                                         <div class="course-slot__main">
+                                                            <div class="course-slot__tags">
+                                                                <span class="course-slot__badge course-slot__badge--lessons">{translations.telcWeeksLabel}</span>
+                                                                <span class="course-slot__badge course-slot__badge--period">{translations.courseCardInPerson}</span>
+                                                            </div>
                                                             <ul class="course-slot__features">
                                                                 <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardFeatureClub}</span></li>
                                                                 <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardFeatureNative}</span></li>
                                                                 <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardFeatureVisa}</span></li>
+                                                                <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardLessons}</span></li>
                                                             </ul>
-                                                            <div class="course-slot__foot">
-                                                                <span class="course-slot__price">{courseCardPrice}</span>
+                                                            <div class="course-slot__foot course-slot__foot--promo course-slot__foot--fixed-price">
+                                                                <div class="course-slot__fixed-price">
+                                                                    <div class="course-slot__fixed-price-row">
+                                                                        <span class="course-slot__fixed-price-amount">{telcPrepPrice}</span>
+                                                                        <span class="course-slot__fixed-price-badge">{translations.telcPriceBadge}</span>
+                                                                    </div>
+                                                                    <span class="course-slot__fixed-price-note">{translations.telcPriceNote}</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </label>
@@ -1174,8 +1356,55 @@ const extrasStepCopy = {
                                         </div>
                                         <div class="form-group full-width" id="weeks-block" style="display: none;">
                                             <input type="hidden" id="weeks-value" name="weeks" value="" />
-                                            <label for="weeks" id="weeks-label">{translations.weeksLabel} *</label>
-                                            <div id="weeks-select-wrap" class="weeks-control-wrap">
+                                            <label id="weeks-label">{translations.weeksLabel} *</label>
+                                            <div id="weeks-buttons-wrap" class="week-slot-grid" role="group" aria-label={translations.weeksLabel} style="display: none;">
+                                                {shortTermWeekOptions.map((opt) => (
+                                                    <label class={`course-slot course-slot--week course-slot--week-${opt.value}`}>
+                                                        <input type="radio" name="weeks-choice" value={String(opt.value)} class="weeks-choice-radio" />
+                                                        <div class="course-slot__head" aria-hidden="true">
+                                                            <span class="course-slot__sel-mark" aria-hidden="true"></span>
+                                                            <span class="course-slot__icon"><i class="fas fa-calendar-week"></i></span>
+                                                            <div class="course-slot__head-copy">
+                                                                <span class="course-slot__level-label">{opt.value}</span>
+                                                                <span class="course-slot__head-meta">{translations.weeksUnitLabel}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="course-slot__main course-slot__main--compact-week">
+                                                            <ul class="course-slot__features">
+                                                                {opt.features.map((feature) => (
+                                                                    <li><i class="fas fa-check" aria-hidden="true"></i><span>{feature}</span></li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+                                                    </label>
+                                                ))}
+                                                <label class="course-slot course-slot--week course-slot--week-other">
+                                                    <input type="radio" name="weeks-choice" value="other" class="weeks-choice-radio" />
+                                                    <div class="course-slot__head" aria-hidden="true">
+                                                        <span class="course-slot__sel-mark" aria-hidden="true"></span>
+                                                        <span class="course-slot__icon"><i class="fas fa-sliders-h"></i></span>
+                                                        <div class="course-slot__head-copy">
+                                                            <span class="course-slot__level-label course-slot__level-label--sm">{translations.weeksBtnOther}</span>
+                                                            <span class="course-slot__head-meta">{translations.weeksOtherPlaceholder}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="course-slot__main course-slot__main--compact-week">
+                                                        <ul class="course-slot__features">
+                                                            {weekCardOtherFeatures.map((feature) => (
+                                                                <li><i class="fas fa-check" aria-hidden="true"></i><span>{feature}</span></li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <div id="weeks-other-wrap" class="weeks-other-panel" style="display: none;">
+                                                <label for="weeks-other-input" class="weeks-other-panel__label">{translations.weeksOtherPlaceholder}</label>
+                                                <div class="weeks-number-input-wrap">
+                                                    <input type="number" id="weeks-other-input" min="1" max="48" placeholder="1–48" aria-label={translations.weeksOtherPlaceholder} class="booking-text-input" />
+                                                    <span class="weeks-number-unit">{translations.weeksUnitLabel}</span>
+                                                </div>
+                                            </div>
+                                            <div id="weeks-select-wrap" class="weeks-control-wrap" style="display: none;">
                                                 <select id="weeks" aria-label={translations.weeksLabel}>
                                                     <option value="">{translations.weeksPlaceholder}</option>
                                                     <option value="1">{translations.weeksOption1}</option>
@@ -1421,7 +1650,7 @@ const extrasStepCopy = {
         </div>
     </section>
 
-    <script define:vars={{ pricingData, lang, courseInfoCopy, promoPrice: PROMO_PRICE.discounted, bookingWebhookLabels }}>
+    <script define:vars={{ pricingData, lang, courseInfoCopy, promoPrice: PROMO_PRICE.discounted, onlineLevelPrices: ONLINE_LEVEL_PRICES, telcPrepPriceNum: TELC_PREP_PRICE_NUM, telcPrepWeeks: TELC_PREP_WEEKS, bookingWebhookLabels }}>
         // Import security utilities
         const { checkRateLimit, sanitizeObject, validateEmail, validatePhone, checkHoneypot } = (() => {
             // Rate limiting
@@ -1510,6 +1739,32 @@ const extrasStepCopy = {
                 return isNaN(d.getTime()) ? null : iso;
             }
 
+            function syncProgramCardsUI() {
+                const grid = document.getElementById('program-options-grid');
+                const selected = document.querySelector('[name="program"]:checked');
+                if (!grid) return;
+                grid.classList.toggle('program-slot-grid--compact', !!selected);
+                grid.querySelectorAll('.program-slot').forEach(function (card) {
+                    card.classList.toggle('program-slot--selected', !!card.querySelector('input')?.checked);
+                });
+            }
+
+            function resetWeeksControls() {
+                document.querySelectorAll('[name="weeks-choice"]').forEach(function (r) { r.checked = false; });
+                const otherInput = document.getElementById('weeks-other-input');
+                if (otherInput) otherInput.value = '';
+                const otherWrap = document.getElementById('weeks-other-wrap');
+                if (otherWrap) otherWrap.style.display = 'none';
+                if (weeksSelect) weeksSelect.value = '';
+                setWeeksValue('');
+            }
+
+            function syncWeeksOtherVisibility() {
+                const otherWrap = document.getElementById('weeks-other-wrap');
+                const otherSelected = document.querySelector('[name="weeks-choice"][value="other"]:checked');
+                if (otherWrap) otherWrap.style.display = otherSelected ? 'block' : 'none';
+            }
+
             // Program change: show intensive-type, course selection (levels+exam for intensive/online, camps for youth-camp), weeks
             const programRadios = document.querySelectorAll('[name="program"]');
             const weeksBlock = document.getElementById('weeks-block');
@@ -1519,7 +1774,7 @@ const extrasStepCopy = {
             const courseSelectionGroup = document.getElementById('course-selection-group');
             const courseBundleInfobox = document.getElementById('course-bundle-infobox');
             const LEVEL_RE = /^(a1|a2|b1|b2|c1)$/;
-            const WEEKS_PER_LEVEL = 4;
+            const WEEKS_PER_LEVEL = 8;
             function mainLevelsFromCourseSelection(values) {
                 const mains = new Set();
                 for (const v of values) {
@@ -1543,11 +1798,29 @@ const extrasStepCopy = {
             function getSelectedCourseCount(values) {
                 return levelModuleCount(values);
             }
-            function getMultiCourseDiscount(courseCount, grossTotal) {
+            function getMultiCourseDiscount(courseCount, grossTotal, bringFriendActive) {
                 if (courseCount < 2 || grossTotal <= 0) return { percent: 0, amount: 0 };
                 const percent = courseCount;
-                const amount = Math.round(grossTotal * percent / 100);
+                let amount = Math.round(grossTotal * percent / 100);
+                if (bringFriendActive) {
+                    amount *= 2;
+                    return { percent: percent * 2, amount };
+                }
                 return { percent, amount };
+            }
+
+            function syncOnlineCourseCards() {
+                const program = document.querySelector('[name="program"]:checked')?.value;
+                const isOnline = program === 'online';
+                const grid = document.getElementById('course-levels-buttons');
+                if (grid) grid.classList.toggle('course-slot-grid--online', isOnline);
+                document.querySelectorAll('.course-slot--intensive-only').forEach(function (el) {
+                    el.style.display = isOnline ? 'none' : '';
+                    if (isOnline) {
+                        const cb = el.querySelector('input[name="course-selection"]');
+                        if (cb instanceof HTMLInputElement) cb.checked = false;
+                    }
+                });
             }
 
             function toggleProgramExtras() {
@@ -1557,22 +1830,63 @@ const extrasStepCopy = {
                 if (weeksBlock) weeksBlock.style.display = (program === 'short-term' || program === 'youth-camp') ? 'block' : 'none';
                 if (weeksSelect) {
                     weeksSelect.removeAttribute('required');
-                    if (program === 'short-term' || program === 'youth-camp') weeksSelect.setAttribute('required', 'required');
+                    if (program === 'youth-camp') weeksSelect.setAttribute('required', 'required');
                 }
                 if (courseLevelsBlock) courseLevelsBlock.style.display = (program === 'intensive' || program === 'online') ? 'block' : 'none';
                 if (courseCampsBlock) courseCampsBlock.style.display = program === 'youth-camp' ? 'block' : 'none';
                 document.querySelectorAll('[name="course-selection"]').forEach(cb => { cb.checked = false; cb.disabled = false; });
+                resetWeeksControls();
                 toggleYouthCampWeeksOnly();
+                syncProgramCardsUI();
+                syncOnlineCourseCards();
+                if (typeof window.syncBookingLessonTimeForProgram === 'function') {
+                    window.syncBookingLessonTimeForProgram(program || '');
+                }
                 toggleBundleInfobox();
                 filterWeeksByLevelCourses();
                 reorderCourseSelectionChain();
                 updatePrice();
             }
+            const weeksButtonsWrap = document.getElementById('weeks-buttons-wrap');
+            const weeksOtherInput = document.getElementById('weeks-other-input');
             const weeksValueInput = document.getElementById('weeks-value');
             const weeksSelectWrap = document.getElementById('weeks-select-wrap');
             function getWeeksValue() { return (weeksValueInput && weeksValueInput.value) || ''; }
             function setWeeksValue(v) { if (weeksValueInput) weeksValueInput.value = String(v || ''); }
+            function getIntensiveWeeksForCourse(courseValue) {
+                if (courseValue === 'telc-c1-prep') return telcPrepWeeks;
+                if (LEVEL_RE.test(courseValue)) return WEEKS_PER_LEVEL;
+                return 0;
+            }
+            function getIntensiveWeeksTotal(courses) {
+                return courses.reduce(function (sum, c) { return sum + getIntensiveWeeksForCourse(c); }, 0);
+            }
+            function getIntensiveCourseGross(courses) {
+                const program = document.querySelector('[name="program"]:checked')?.value;
+                return courses.reduce(function (sum, c) {
+                    if (c === 'telc-c1-prep') return sum + telcPrepPriceNum;
+                    if (LEVEL_RE.test(c)) {
+                        if (program === 'online') return sum + (onlineLevelPrices[c] || 0);
+                        return sum + promoPrice;
+                    }
+                    return sum;
+                }, 0);
+            }
             function syncWeeksFromControl() {
+                const program = document.querySelector('[name="program"]:checked')?.value;
+                if (program === 'short-term' && weeksButtonsWrap && weeksButtonsWrap.style.display !== 'none') {
+                    const selected = document.querySelector('[name="weeks-choice"]:checked');
+                    if (!selected) {
+                        setWeeksValue('');
+                        return;
+                    }
+                    if (selected.value === 'other') {
+                        setWeeksValue(weeksOtherInput?.value || '');
+                    } else {
+                        setWeeksValue(selected.value);
+                    }
+                    return;
+                }
                 if (weeksSelectWrap && weeksSelectWrap.style.display !== 'none' && weeksSelect) {
                     setWeeksValue(weeksSelect.value || '');
                 }
@@ -1580,17 +1894,29 @@ const extrasStepCopy = {
             function toggleYouthCampWeeksOnly() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
                 const weeksLabel = document.getElementById('weeks-label');
-                if (program === 'short-term' || program === 'youth-camp') {
+                if (program === 'short-term') {
                     if (weeksBlock) weeksBlock.style.display = 'block';
+                    if (weeksButtonsWrap) weeksButtonsWrap.style.display = 'grid';
+                    if (weeksSelectWrap) weeksSelectWrap.style.display = 'none';
+                    if (weeksSelect) weeksSelect.removeAttribute('required');
+                    if (weeksLabel) weeksLabel.removeAttribute('for');
+                    syncWeeksOtherVisibility();
+                    syncWeeksFromControl();
+                } else if (program === 'youth-camp') {
+                    if (weeksBlock) weeksBlock.style.display = 'block';
+                    if (weeksButtonsWrap) weeksButtonsWrap.style.display = 'none';
+                    const otherWrap = document.getElementById('weeks-other-wrap');
+                    if (otherWrap) otherWrap.style.display = 'none';
                     if (weeksSelectWrap) weeksSelectWrap.style.display = 'block';
                     if (weeksLabel) weeksLabel.setAttribute('for', 'weeks');
-                    if (weeksSelect) { weeksSelect.setAttribute('required', 'required'); }
-                    if (program === 'short-term') {
-                        Array.from(weeksSelect?.options || []).forEach(opt => { opt.disabled = false; opt.style.display = ''; });
-                    }
+                    if (weeksSelect) weeksSelect.setAttribute('required', 'required');
                     syncWeeksFromControl();
                 } else {
                     if (weeksBlock) weeksBlock.style.display = 'none';
+                    if (weeksButtonsWrap) weeksButtonsWrap.style.display = 'none';
+                    const otherWrap = document.getElementById('weeks-other-wrap');
+                    if (otherWrap) otherWrap.style.display = 'none';
+                    if (weeksSelectWrap) weeksSelectWrap.style.display = 'none';
                     if (weeksSelect) { weeksSelect.removeAttribute('required'); weeksSelect.value = ''; }
                     setWeeksValue('');
                 }
@@ -1601,7 +1927,7 @@ const extrasStepCopy = {
                 const vals = checked.map(c => c.value);
                 const courseCount = getSelectedCourseCount(vals);
                 const totalWeeks = (program === 'intensive' || program === 'online')
-                    ? (courseCount * WEEKS_PER_LEVEL)
+                    ? getIntensiveWeeksTotal(vals)
                     : (program === 'short-term')
                         ? (parseInt(getWeeksValue(), 10) || 0)
                         : (parseInt(getWeeksValue(), 10) || 0);
@@ -1610,20 +1936,21 @@ const extrasStepCopy = {
                 if (!box || !textEl) return;
                 const show =
                     (program === 'intensive' || program === 'online') &&
-                    courseCount > 0;
+                    courseCount > 0 &&
+                    courseCount !== 2;
                 box.style.display = show ? 'flex' : 'none';
                 if (!show) {
-                    box.classList.remove('form-infobox--bundle');
+                    box.classList.remove('form-infobox--bundle', 'form-infobox--warning');
                     return;
                 }
                 if (courseCount === 1) {
                     box.classList.remove('form-infobox--bundle');
+                    box.classList.add('form-infobox--warning');
                     textEl.textContent = courseInfoCopy?.oneCourse || '';
-                } else if (courseCount === 2) {
-                    box.classList.remove('form-infobox--bundle');
-                    textEl.textContent = courseInfoCopy?.twoCourses || '';
                 } else {
-                    const percent = courseCount;
+                    box.classList.remove('form-infobox--warning');
+                    let percent = courseCount;
+                    if (document.getElementById('bring-friend-discount')?.checked) percent *= 2;
                     const tpl = courseInfoCopy?.multiDiscount || 'Total {weeks} weeks — {percent}% discount applied';
                     textEl.textContent = tpl
                         .replace(/\{weeks\}/g, String(totalWeeks))
@@ -1655,7 +1982,25 @@ const extrasStepCopy = {
                     syncWeeksFromControl();
                 }
             }
-            programRadios.forEach(r => r.addEventListener('change', toggleProgramExtras));
+            programRadios.forEach(r => r.addEventListener('change', function () {
+                syncProgramCardsUI();
+                toggleProgramExtras();
+            }));
+            document.querySelectorAll('[name="weeks-choice"]').forEach(function (radio) {
+                radio.addEventListener('change', function () {
+                    syncWeeksOtherVisibility();
+                    syncWeeksFromControl();
+                    toggleBundleInfobox();
+                    updatePrice();
+                });
+            });
+            weeksOtherInput?.addEventListener('input', function () {
+                if (document.querySelector('[name="weeks-choice"][value="other"]:checked')) {
+                    syncWeeksFromControl();
+                    toggleBundleInfobox();
+                    updatePrice();
+                }
+            });
 
             // Short term seçiliyken diğer kurslar (A1-C1, Telc-Prep) seçilemesin; diğerleri seçilince short term kaldırılsın
             function enforceShortTermExclusion() {}
@@ -1683,7 +2028,7 @@ const extrasStepCopy = {
             if (unsureCb) unsureCb.addEventListener('change', syncUnsureCourseSelection);
 
             const COURSE_LEVEL_CHAIN_ORDER = ['a1','a2','b1','b2','c1','telc-c1-prep','unsure'];
-            const WEEKS_PER_COURSE = 4;
+            const WEEKS_PER_COURSE = 8;
             function getOrderedSelectedCourses() {
                 const checked = Array.from(document.querySelectorAll('#course-levels-buttons [name="course-selection"]:checked'));
                 return checked
@@ -1757,7 +2102,10 @@ const extrasStepCopy = {
 
             function getCoursePrice(program, courseValue, weeks) {
                 const mainLevel = (courseValue || '').toString().split('.')[0] || 'a1';
-                if (program === 'intensive' || program === 'online') {
+                if (program === 'online' && LEVEL_RE.test(mainLevel)) {
+                    return onlineLevelPrices[mainLevel] || 0;
+                }
+                if (program === 'intensive') {
                     return promoPrice;
                 }
                 if (program === 'short-term') {
@@ -1804,6 +2152,10 @@ const extrasStepCopy = {
                 currentStep = step;
                 updateProgress();
                 updatePrice();
+                if (step === 2 && typeof window.syncBookingLessonTimeForProgram === 'function') {
+                    const program = document.querySelector('[name="program"]:checked')?.value || '';
+                    window.syncBookingLessonTimeForProgram(program);
+                }
             }
             
             function _unusedBookingSummary() {
@@ -2052,8 +2404,10 @@ const extrasStepCopy = {
                     if (!program) { document.querySelector('[name="program"]')?.closest('.form-group')?.classList.add('error'); isValid = false; } else { document.querySelector('[name="program"]')?.closest('.form-group')?.classList.remove('error'); }
                     if (program && !hasVisibleCourseSelection) { if (courseSelectionGroup) courseSelectionGroup.classList.add('error'); isValid = false; } else { if (courseSelectionGroup) courseSelectionGroup.classList.remove('error'); }
                     if (program === 'short-term' || program === 'youth-camp') {
+                        syncWeeksFromControl();
                         const weeks = getWeeksValue();
-                        if (!weeks) { weeksBlock?.classList.add('error'); isValid = false; } else { weeksBlock?.classList.remove('error'); }
+                        const weeksValid = weeks && parseInt(weeks, 10) >= 1;
+                        if (!weeksValid) { weeksBlock?.classList.add('error'); isValid = false; } else { weeksBlock?.classList.remove('error'); }
                     }
                     return isValid;
                 }
@@ -2199,7 +2553,11 @@ const extrasStepCopy = {
             }
             const bringFriendCheckbox = document.getElementById('bring-friend-discount');
             if (bringFriendCheckbox) {
-                bringFriendCheckbox.addEventListener('change', toggleBringFriendFields);
+                bringFriendCheckbox.addEventListener('change', function () {
+                    toggleBringFriendFields();
+                    toggleBundleInfobox();
+                    updatePrice();
+                });
                 toggleBringFriendFields();
             }
 
@@ -2245,7 +2603,8 @@ const extrasStepCopy = {
                 if (!courseTypePrice) return;
 
                 const courseCount = getSelectedCourseCount(checkedCourses);
-                const dispWeeksIntensive = courseCount * WEEKS_PER_LEVEL;
+                const pricedCourses = checkedCourses.filter(function (c) { return LEVEL_RE.test(c) || c === 'telc-c1-prep'; });
+                const dispWeeksIntensive = getIntensiveWeeksTotal(pricedCourses);
                 const weeksNum = parseInt(weeks, 10) || 0;
 
                 if (program && (checkedCourses.length > 0 || program === 'short-term')) {
@@ -2256,8 +2615,9 @@ const extrasStepCopy = {
                         coursePrice = getTieredPrice(weeksNum);
                     } else if (program === 'intensive' || program === 'online') {
                         if (courseCount > 0) {
-                            const gross = courseCount * promoPrice;
-                            multiDiscount = getMultiCourseDiscount(courseCount, gross);
+                            const gross = getIntensiveCourseGross(pricedCourses);
+                            const bringFriendActive = !!document.getElementById('bring-friend-discount')?.checked;
+                            multiDiscount = getMultiCourseDiscount(courseCount, gross, bringFriendActive);
                             coursePrice = gross;
                         }
                     } else if (program === 'youth-camp') {
@@ -2557,9 +2917,51 @@ const extrasStepCopy = {
                 });
             }
 
+            function applyBookingPrefillFromUrl() {
+                const params = new URLSearchParams(window.location.search);
+                const program = params.get('program');
+                if (!program) return;
+
+                const programRadio = document.querySelector('[name="program"][value="' + program + '"]');
+                if (!(programRadio instanceof HTMLInputElement)) return;
+
+                programRadio.checked = true;
+                toggleProgramExtras();
+
+                const courses = (params.get('courses') || '').split(',').map(function (c) { return c.trim(); }).filter(Boolean);
+                courses.forEach(function (courseValue) {
+                    const cb = document.querySelector('[name="course-selection"][value="' + courseValue + '"]');
+                    if (cb instanceof HTMLInputElement) cb.checked = true;
+                });
+
+                const weeks = params.get('weeks');
+                if (weeks && program === 'short-term') {
+                    const weekRadio = document.querySelector('[name="weeks-choice"][value="' + weeks + '"]');
+                    if (weekRadio instanceof HTMLInputElement) {
+                        weekRadio.checked = true;
+                        syncWeeksOtherVisibility();
+                        syncWeeksFromControl();
+                    }
+                }
+
+                syncUnsureCourseSelection();
+                toggleBundleInfobox();
+                filterWeeksByLevelCourses();
+                reorderCourseSelectionChain();
+                syncProgramCardsUI();
+                syncOnlineCourseCards();
+                if (typeof window.syncBookingLessonTimeForProgram === 'function') {
+                    window.syncBookingLessonTimeForProgram(program);
+                }
+                updatePrice();
+            }
+
             // Initialize
+            applyBookingPrefillFromUrl();
             updateProgress();
             updatePrice();
+            syncProgramCardsUI();
+            syncOnlineCourseCards();
         });
     </script>
 </MainLayout>

@@ -9,6 +9,7 @@ import PromoPrice from '../../../components/PromoPrice.astro';
 import SuccessModal from '../../../components/SuccessModal.astro';
 import '../../../styles/global.css';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo } from '../../../utils/coursePricingHelper';
+import { buildBookingUrl } from '../../../utils/bookingPrefillHelper';
 
 export async function getStaticPaths() {
   const allKurslar = await getCollection('kurslar');
@@ -93,6 +94,8 @@ const hasPricingTab = kurs.data.tabs?.some(tab =>
 ) || false;
 
 const bookingPath = 'buchung';
+const courseSlugForBooking = kurs.data.customSlug ?? slug ?? kurs.slug;
+const bookingFull = buildBookingUrl(lang as 'tr' | 'de' | 'en' | 'es', courseSlugForBooking);
 const contactPath = 'kontakt';
 const sectionPath = 'kurse';
 // Kişi sayısı: 10-16 max. (DE)
@@ -178,7 +181,7 @@ const groupSizeDisplay = '10-16 max.';
                                         <i class="fas fa-envelope"></i>
                                         <span>{lang === 'tr' ? 'Ücretsiz bilgi al' : lang === 'de' ? 'Information anfragen' : lang === 'es' ? 'Solicitar información' : 'Get Information'}</span>
                                     </a>
-                                    <a href={`/${lang}/${bookingPath}`} class="hero-cta-button">
+                                    <a href={bookingFull} class="hero-cta-button">
                                         <span>{lang === 'tr' ? 'Hemen kayıt ol' : lang === 'de' ? 'Jetzt anmelden' : lang === 'es' ? 'Registrarse' : 'Register'}</span>
                                         <i class="fas fa-arrow-right"></i>
                                     </a>
@@ -467,7 +470,7 @@ const groupSizeDisplay = '10-16 max.';
                     <section class="demand-form-section-inline" id="bilgi-al-form">
                         <QuoteWizardForm
                             lang={lang}
-                            bookingPath={`/${lang}/${bookingPath}`}
+                            bookingPath={bookingFull}
                             homePath={`/${lang}`}
                             embedded
                             instanceSuffix="e"

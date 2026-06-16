@@ -1853,9 +1853,58 @@ a.cta-secondary {
 .reviews-title {
     font-size: 1.15rem;
     color: var(--color-text-primary);
-    margin-bottom: 15px;
+    margin-bottom: 0;
     font-weight: 700;
     display: block;
+}
+
+.reviews-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.reviews-google-badge {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(12, 192, 223, 0.08) 0%, rgba(255, 255, 255, 0.95) 100%);
+    border: 1px solid rgba(12, 192, 223, 0.18);
+}
+
+.reviews-google-badge__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.reviews-google-badge__label .fa-google {
+    color: #ea4335;
+    font-size: 0.9rem;
+}
+
+.reviews-google-badge__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    color: #f59e0b;
+    font-size: 0.78rem;
+}
+
+.reviews-google-badge__note {
+    flex: 1 1 100%;
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: var(--color-text-secondary);
+    font-weight: 600;
 }
 
 .reviews-slider {
@@ -3115,6 +3164,12 @@ a.cta-secondary {
     max-width: none !important;
 }
 
+.visit-popup-deadline {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: var(--color-primary) !important;
+}
+
 .visit-popup-form {
     width: 100%;
     margin: 0;
@@ -3220,6 +3275,12 @@ a.cta-secondary {
         object-fit: cover;
         border-radius: 0 20px 20px 0;
     }
+
+    .visit-popup-card--form .visit-popup-image--flyer {
+        object-fit: contain;
+        object-position: center center;
+        background: #ffffff;
+    }
 }
 
 .visit-popup-card {
@@ -3296,6 +3357,12 @@ a.cta-secondary {
     display: block;
 }
 
+.visit-popup-image--flyer {
+    object-fit: contain;
+    object-position: center center;
+    background: #ffffff;
+}
+
 @media (min-width: 900px) {
     .visit-popup-image {
         min-height: 380px;
@@ -3303,9 +3370,18 @@ a.cta-secondary {
     }
 }
 
+.visit-popup-image-wrap--flyer {
+    background: #ffffff;
+}
+
 @media (max-width: 899px) {
     .visit-popup-image-wrap {
         border-radius: 20px 20px 0 0;
+    }
+
+    .visit-popup-image-wrap--flyer {
+        min-height: 220px;
+        max-height: 280px;
     }
 }
 

@@ -6,6 +6,7 @@ import { coursePricing } from '../../data/coursePricing';
 import { cleanSlug, isOverviewPage, getSectionPath, getContactPath, isValidLang } from '../../utils/pathHelpers';
 import { getSimpleCourseStartDates, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
 import PromoPrice from '../../components/PromoPrice.astro';
+import CourseCardActions from '../../components/CourseCardActions.astro';
 
 export async function getStaticPaths() {
     return [
@@ -277,10 +278,11 @@ const simpleStartDates = getSimpleCourseStartDates(pricingLang as 'tr' | 'de' | 
                                 <p class="course-description">
                                     {kurs.data.description}
                                 </p>
-                                <a href={`/${lang}/${sectionPath}/${kurs.data.customSlug || cleanSlug(kurs.slug)}`} class="course-btn">
-                                    <span>Ver detalles</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </a>
+                                <CourseCardActions
+                                    lang={lang}
+                                    detailHref={`/${lang}/${sectionPath}/${kurs.data.customSlug || cleanSlug(kurs.slug)}`}
+                                    courseSlug={kurs.data.customSlug || cleanSlug(kurs.slug)}
+                                />
                             </div>
                         </div>
                     );

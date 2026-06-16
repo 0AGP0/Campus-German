@@ -5,10 +5,11 @@ interface Props {
   lang: string;
   morningTime: string;
   afternoonTime: string;
+  eveningTime?: string;
   startDateOptions: { value: string; label: string }[];
 }
 
-const { lang, morningTime, afternoonTime, startDateOptions } = Astro.props;
+const { lang, morningTime, afternoonTime, eveningTime = '19:00 – 22:00', startDateOptions } = Astro.props;
 
 const copy = {
   tr: {
@@ -19,6 +20,8 @@ const copy = {
     cardSelectHint: 'Sabah veya öğleden sonra gruplarından birini seçin.',
     slotMorningTitle: 'Sabah grubu',
     slotAfternoonTitle: 'Öğleden sonra grubu',
+    slotEveningTitle: 'Akşam grubu',
+    step3SubtitleOnline: 'Online programda akşam grubu (19:00 – 22:00) sabittir.',
     step4Title: 'Başlangıç tarihini seç',
     step4Subtitle: 'Size en uygun başlangıç tarihini seçin veya danışmanla özel bir tarih belirleyin.',
     step4PresetTitle: 'Kurs başlangıç dönemleri',
@@ -40,6 +43,8 @@ const copy = {
     needCustomDate: 'Özel başlangıç için lütfen takvimden bir tarih seçin.',
     weekdaysShort: 'Pzt, Sal, Çar, Per',
     hoursPerWeek: '20 saat / hafta',
+    hoursPerWeekOnline: '16 saat + 4 etüt / hafta',
+    weekdaysShortOnline: 'Pzt – Per',
   },
   de: {
     stepTitle: 'Unterrichtszeit',
@@ -49,6 +54,8 @@ const copy = {
     cardSelectHint: 'Wählen Sie eine Morgen- oder Nachmittagsgruppe.',
     slotMorningTitle: 'Morgengruppe',
     slotAfternoonTitle: 'Nachmittagsgruppe',
+    slotEveningTitle: 'Abendgruppe',
+    step3SubtitleOnline: 'Beim Online-Programm ist die Abendgruppe (19:00 – 22:00) fest vorgegeben.',
     step4Title: 'Starttermin wählen',
     step4Subtitle: 'Wählen Sie Ihren Wunschstarttermin oder vereinbaren Sie einen individuellen Termin.',
     step4PresetTitle: 'Starttermine zum Kursbeginn',
@@ -70,6 +77,8 @@ const copy = {
     needCustomDate: 'Bitte wählen Sie unten ein Datum für Ihren individuellen Start.',
     weekdaysShort: 'Mo, Di, Mi, Do',
     hoursPerWeek: '20 Std./Woche',
+    hoursPerWeekOnline: '16 Std. + 4 Tutorien / Woche',
+    weekdaysShortOnline: 'Mo – Do',
   },
   en: {
     stepTitle: 'Lesson time',
@@ -79,6 +88,8 @@ const copy = {
     cardSelectHint: 'Select a morning or afternoon group.',
     slotMorningTitle: 'Morning group',
     slotAfternoonTitle: 'Afternoon group',
+    slotEveningTitle: 'Evening group',
+    step3SubtitleOnline: 'For the online program, the evening group (19:00 – 22:00) is fixed.',
     step4Title: 'Choose your start date',
     step4Subtitle: 'Select the start date that works best for you, or arrange a custom date with an advisor.',
     step4PresetTitle: 'Course start dates',
@@ -100,6 +111,8 @@ const copy = {
     needCustomDate: 'Please pick a start date on the calendar below.',
     weekdaysShort: 'Mon, Tue, Wed, Thu',
     hoursPerWeek: '20 hrs/week',
+    hoursPerWeekOnline: '16 hrs + 4 tutorials / week',
+    weekdaysShortOnline: 'Mon – Thu',
   },
   es: {
     stepTitle: 'Horario de clase',
@@ -109,6 +122,8 @@ const copy = {
     cardSelectHint: 'Elige un grupo de mañana o de tarde.',
     slotMorningTitle: 'Grupo de mañana',
     slotAfternoonTitle: 'Grupo de tarde',
+    slotEveningTitle: 'Grupo de tarde-noche',
+    step3SubtitleOnline: 'En el programa online, el grupo de tarde-noche (19:00 – 22:00) es fijo.',
     step4Title: 'Elige tu fecha de inicio',
     step4Subtitle: 'Selecciona la fecha que mejor te convenga o acuerda una fecha personalizada con un asesor.',
     step4PresetTitle: 'Fechas de inicio del curso',
@@ -130,6 +145,8 @@ const copy = {
     needCustomDate: 'Por favor elige una fecha de inicio abajo.',
     weekdaysShort: 'Lun, Mar, Mié, Jue',
     hoursPerWeek: '20 h/semana',
+    hoursPerWeekOnline: '16 h + 4 tutorías / semana',
+    weekdaysShortOnline: 'Lun – Jue',
   },
 };
 
@@ -149,7 +166,7 @@ const presetIsos = startDateOptions.map((opt) => {
         <span class="qx-scene-kicker">1</span>
         <div class="qx-scene-head__copy">
           <h3 class="qx-question">{t.step3Title}</h3>
-          <p class="qx-question-note">{t.step3Subtitle}</p>
+          <p class="qx-question-note" id="booking-lesson-time-subtitle">{t.step3Subtitle}</p>
         </div>
       </header>
       <input type="hidden" name="timezone-slot" id="booking-timezone-slot" value="" />
@@ -182,9 +199,24 @@ const presetIsos = startDateOptions.map((opt) => {
             </div>
           </div>
         </button>
+        <button type="button" class="qx-time-slot qx-time-slot--evening" data-period="evening" data-timezone-value="evening" aria-pressed="false">
+          <div class="qx-time-slot__period" aria-hidden="true">
+            <span class="qx-time-slot__icon"><i class="fas fa-moon"></i></span>
+            <div class="qx-time-slot__period-copy">
+              <span class="qx-time-slot__period-label">{t.slotEveningTitle}</span>
+              <span class="qx-time-slot__period-clock">{eveningTime}</span>
+            </div>
+          </div>
+          <div class="qx-time-slot__main">
+            <div class="qx-time-slot__foot">
+              <span class="qx-time-slot__meta"><strong>{t.hoursPerWeekOnline}</strong> · {t.weekdaysShortOnline}</span>
+            </div>
+          </div>
+        </button>
       </div>
       <input type="checkbox" name="timezone" value="morning" id="booking-tz-morning" class="booking-tz-hidden" hidden />
       <input type="checkbox" name="timezone" value="afternoon" id="booking-tz-afternoon" class="booking-tz-hidden" hidden />
+      <input type="checkbox" name="timezone" value="evening" id="booking-tz-evening" class="booking-tz-hidden" hidden />
     </section>
 
     <section class="qx-stage-shell qx-stage-shell--step4">
@@ -270,14 +302,16 @@ const presetIsos = startDateOptions.map((opt) => {
   </div>
 </div>
 
-<script define:vars={{ lang, needTime: t.needTime, needDate: t.needDate, needCustomDate: t.needCustomDate }}>
+<script define:vars={{ lang, needTime: t.needTime, needDate: t.needDate, needCustomDate: t.needCustomDate, step3Subtitle: t.step3Subtitle, step3SubtitleOnline: t.step3SubtitleOnline }}>
   document.addEventListener('DOMContentLoaded', function () {
     const step = document.querySelector('.booking-lesson-time-step');
     if (!step) return;
 
     const timeSlots = step.querySelector('#booking-time-slots');
+    const lessonTimeSubtitle = step.querySelector('#booking-lesson-time-subtitle');
     const tzMorning = step.querySelector('#booking-tz-morning');
     const tzAfternoon = step.querySelector('#booking-tz-afternoon');
+    const tzEvening = step.querySelector('#booking-tz-evening');
     const tzSlotHidden = step.querySelector('#booking-timezone-slot');
     const startDateHidden = step.querySelector('#start-date');
     const startDateMode = step.querySelector('#booking-start-date-mode');
@@ -328,6 +362,7 @@ const presetIsos = startDateOptions.map((opt) => {
 
     timeSlots?.querySelectorAll('.qx-time-slot').forEach(function (btn) {
       btn.addEventListener('click', function () {
+        if (btn.hidden) return;
         timeSlots.querySelectorAll('.qx-time-slot').forEach(function (el) {
           el.classList.remove('is-selected');
           el.setAttribute('aria-pressed', 'false');
@@ -338,9 +373,50 @@ const presetIsos = startDateOptions.map((opt) => {
         if (tzSlotHidden) tzSlotHidden.value = val;
         if (tzMorning) tzMorning.checked = val === 'morning';
         if (tzAfternoon) tzAfternoon.checked = val === 'afternoon';
+        if (tzEvening) tzEvening.checked = val === 'evening';
         hideError();
       });
     });
+
+    function clearTimeSlotSelection() {
+      timeSlots?.querySelectorAll('.qx-time-slot').forEach(function (el) {
+        el.classList.remove('is-selected');
+        el.setAttribute('aria-pressed', 'false');
+      });
+      if (tzSlotHidden) tzSlotHidden.value = '';
+      if (tzMorning) tzMorning.checked = false;
+      if (tzAfternoon) tzAfternoon.checked = false;
+      if (tzEvening) tzEvening.checked = false;
+    }
+
+    function selectTimeSlot(value) {
+      const btn = timeSlots?.querySelector('.qx-time-slot[data-timezone-value="' + value + '"]');
+      if (!btn) return;
+      timeSlots?.querySelectorAll('.qx-time-slot').forEach(function (el) {
+        el.classList.remove('is-selected');
+        el.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('is-selected');
+      btn.setAttribute('aria-pressed', 'true');
+      const val = btn.getAttribute('data-timezone-value') || '';
+      if (tzSlotHidden) tzSlotHidden.value = val;
+      if (tzMorning) tzMorning.checked = val === 'morning';
+      if (tzAfternoon) tzAfternoon.checked = val === 'afternoon';
+      if (tzEvening) tzEvening.checked = val === 'evening';
+      hideError();
+    }
+
+    window.syncBookingLessonTimeForProgram = function (program) {
+      const isOnline = program === 'online';
+      if (timeSlots) timeSlots.classList.toggle('qx-time-slots--online', isOnline);
+      if (lessonTimeSubtitle) {
+        lessonTimeSubtitle.textContent = isOnline ? step3SubtitleOnline : step3Subtitle;
+      }
+      clearTimeSlotSelection();
+      if (isOnline) {
+        selectTimeSlot('evening');
+      }
+    };
 
     function syncStep4DateCardStates() {
       const hasPreset = !!presetsWrap?.querySelector('input[type="radio"]:checked');
@@ -378,6 +454,35 @@ const presetIsos = startDateOptions.map((opt) => {
       updateCalendarTriggerLabel();
       syncStep4DateCardStates();
     }
+
+    presetsWrap?.addEventListener('mousedown', function (ev) {
+      const row = ev.target.closest('.qx-step4-preset-row');
+      if (!row) return;
+      const radio = row.querySelector('input[type="radio"]');
+      if (!(radio instanceof HTMLInputElement)) return;
+      if (radio.checked) {
+        radio.dataset.presetWasChecked = '1';
+      } else {
+        delete radio.dataset.presetWasChecked;
+      }
+    });
+
+    presetsWrap?.addEventListener('click', function (ev) {
+      const row = ev.target.closest('.qx-step4-preset-row');
+      if (!row) return;
+      const radio = row.querySelector('input[type="radio"]');
+      if (!(radio instanceof HTMLInputElement)) return;
+      if (radio.dataset.presetWasChecked === '1') {
+        ev.preventDefault();
+        ev.stopPropagation();
+        radio.checked = false;
+        delete radio.dataset.presetWasChecked;
+        if (startDateHidden) startDateHidden.value = '';
+        if (startDateMode) startDateMode.value = '';
+        hideError();
+        syncStep4DateCardStates();
+      }
+    });
 
     presetsWrap?.addEventListener('change', function (ev) {
       const target = ev.target;
@@ -546,6 +651,9 @@ const presetIsos = startDateOptions.map((opt) => {
     };
 
     window.resetBookingLessonTimeStep = clearStartDateSelection;
+
+    const initialProgram = document.querySelector('[name="program"]:checked')?.value || '';
+    if (initialProgram) window.syncBookingLessonTimeForProgram(initialProgram);
   });
 </script>
 
@@ -565,6 +673,20 @@ const presetIsos = startDateOptions.map((opt) => {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1rem;
+  }
+  .booking-lesson-time-step .qx-time-slot--evening {
+    display: none !important;
+  }
+  .booking-lesson-time-step .qx-time-slots--online .qx-time-slot--morning,
+  .booking-lesson-time-step .qx-time-slots--online .qx-time-slot--afternoon {
+    display: none !important;
+  }
+  .booking-lesson-time-step .qx-time-slots--online .qx-time-slot--evening {
+    display: flex !important;
+  }
+  .booking-lesson-time-step .qx-time-slots--online {
+    grid-template-columns: 1fr;
+    max-width: 320px;
   }
   .booking-lesson-time-step .qx-step4-card--custom.is-locked {
     opacity: 0.48;

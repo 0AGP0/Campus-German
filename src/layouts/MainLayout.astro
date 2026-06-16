@@ -23,6 +23,25 @@ const {
 
 const popupLang = (lang as 'tr' | 'de' | 'en' | 'es') || 'tr';
 
+function getNextMonthDeadlineLabel(lang: 'tr' | 'de' | 'en' | 'es'): string {
+  const now = new Date();
+  const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+  const localeMap: Record<'tr' | 'de' | 'en' | 'es', string> = {
+    tr: 'tr-TR',
+    de: 'de-DE',
+    en: 'en-GB',
+    es: 'es-ES',
+  };
+  const monthYear = nextMonth.toLocaleDateString(localeMap[lang], { month: 'long', year: 'numeric' });
+  const prefix: Record<'tr' | 'de' | 'en' | 'es', string> = {
+    tr: 'Son tarih:',
+    de: 'Anmeldeschluss:',
+    en: 'Deadline:',
+    es: 'Fecha límite:',
+  };
+  return `${prefix[lang]} ${monthYear}`;
+}
+
 type PopupCopy = {
   title: string;
   subtitle: string;
@@ -48,8 +67,8 @@ type PopupCopy = {
 
 const popupCopyMap: Record<'tr' | 'de' | 'en' | 'es', PopupCopy> = {
   tr: {
-    title: 'Ücretsiz ders al, indirim kazan',
-    subtitle: 'Kısa formu doldurun; ücretsiz deneme dersi ve indirim için size dönelim.',
+    title: 'Yeni kurslarımız başlıyor fırsatlardan yararlanın',
+    subtitle: '',
     nameLabel: 'Ad Soyad',
     phoneLabel: 'Telefon',
     emailLabel: 'E-posta',
@@ -70,8 +89,8 @@ const popupCopyMap: Record<'tr' | 'de' | 'en' | 'es', PopupCopy> = {
     error: 'Gönderimde hata oluştu. Lütfen tekrar deneyin.',
   },
   de: {
-    title: 'Kostenlose Probestunde und Rabatt sichern',
-    subtitle: 'Kurz ausfüllen – wir melden uns mit Probestunde und Rabattdetails.',
+    title: 'Neue Kurse starten – nutzen Sie die Vorteile',
+    subtitle: '',
     nameLabel: 'Vor- und Nachname',
     phoneLabel: 'Telefon',
     emailLabel: 'E-Mail',
@@ -92,8 +111,8 @@ const popupCopyMap: Record<'tr' | 'de' | 'en' | 'es', PopupCopy> = {
     error: 'Senden fehlgeschlagen. Bitte erneut versuchen.',
   },
   en: {
-    title: 'Free trial lesson and discount',
-    subtitle: 'A short form — we will get back to you with trial lesson and discount details.',
+    title: 'New courses are starting – seize the opportunities',
+    subtitle: '',
     nameLabel: 'Full name',
     phoneLabel: 'Phone',
     emailLabel: 'Email',
@@ -114,8 +133,8 @@ const popupCopyMap: Record<'tr' | 'de' | 'en' | 'es', PopupCopy> = {
     success: 'Request received. We will contact you shortly.',
   },
   es: {
-    title: 'Clase de prueba gratis y descuento',
-    subtitle: 'Formulario breve; le contactamos con la clase de prueba y el descuento.',
+    title: 'Empiezan nuestros nuevos cursos – aproveche las oportunidades',
+    subtitle: '',
     nameLabel: 'Nombre completo',
     phoneLabel: 'Teléfono',
     emailLabel: 'Correo electrónico',
@@ -137,7 +156,10 @@ const popupCopyMap: Record<'tr' | 'de' | 'en' | 'es', PopupCopy> = {
   },
 };
 
-const popupCopy = popupCopyMap[popupLang] || popupCopyMap.tr;
+const popupCopy = {
+  ...(popupCopyMap[popupLang] || popupCopyMap.tr),
+  subtitle: getNextMonthDeadlineLabel(popupLang),
+};
 
 const popupLevelOptions: { value: string; label: string }[] = [
   { value: 'a1', label: 'A1' },
@@ -178,9 +200,9 @@ const popupLevelOptions: { value: string; label: string }[] = [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Header height: promo açıkken ~156px; gömülü / tam ekran sayfalarda 0 -->
+    <!-- Header height: top bar + nav (~112px); gömülü / tam ekran sayfalarda 0 -->
     <script is:inline define:vars={{ hideHeader }}>
-      document.documentElement.style.setProperty('--header-height', hideHeader ? '0px' : '156px');
+      document.documentElement.style.setProperty('--header-height', hideHeader ? '0px' : '112px');
     </script>
     <!-- Script early so header dropdown works as soon as DOM is ready (defer = after parse, before paint) -->
     <script src="/script.js?v=8" defer></script>
@@ -223,13 +245,13 @@ const popupLevelOptions: { value: string; label: string }[] = [
         <div class="visit-popup-backdrop"></div>
         <div class="visit-popup-card visit-popup-card--form">
             <div class="visit-popup-inner">
-                <div class="visit-popup-image-wrap">
+                <div class="visit-popup-image-wrap visit-popup-image-wrap--flyer">
                     <img
-                        src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80"
+                        src="/PopUp_Whatsapp.jpeg"
                         alt=""
-                        class="visit-popup-image"
+                        class="visit-popup-image visit-popup-image--flyer"
                         width="900"
-                        height="600"
+                        height="1200"
                         loading="lazy"
                         decoding="async"
                     />
@@ -241,7 +263,7 @@ const popupLevelOptions: { value: string; label: string }[] = [
                     <h1 id="visit-popup-title" class="visit-popup-title">
                         {popupCopy.title}
                     </h1>
-                    <p class="visit-popup-description visit-popup-description--compact">
+                    <p class="visit-popup-description visit-popup-description--compact visit-popup-deadline">
                         {popupCopy.subtitle}
                     </p>
                     <form
