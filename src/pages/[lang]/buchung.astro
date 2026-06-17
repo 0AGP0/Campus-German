@@ -119,11 +119,11 @@ const t = {
         telcC1PrepLabel: "Telc C1 prep",
         courseCardFeatureClub: "Konuşma kulübü",
         courseCardFeatureNative: "Ana dili Almanca hocalar",
-        courseCardFeatureVisa: "Vize garantisi",
+        courseCardFeatureVisa: "Vize iadesi garantisi",
         courseCardLessons: "200 ders saati",
         courseCardOnlineLessons: "16 ders saati + 4 etüt",
         courseCardOnlineNoNative: "Ana dili Almanca hoca yok",
-        courseCardOnlineNoVisa: "Vize garantisi yok",
+        courseCardOnlineNoVisa: "Vize iadesi garantisi yok",
         courseCardOnlineEvening: "Akşam sınıfları",
         courseCardInPerson: "Yüz yüze",
         courseCardOnline: "Online",
@@ -364,11 +364,11 @@ const t = {
         telcC1PrepLabel: "Telc C1 Prep",
         courseCardFeatureClub: "Sprachclub",
         courseCardFeatureNative: "Muttersprachliche Deutschlehrer",
-        courseCardFeatureVisa: "Visumgarantie",
+        courseCardFeatureVisa: "Visum-Rückzahlungsgarantie",
         courseCardLessons: "200 Unterrichtsstunden",
         courseCardOnlineLessons: "16 Unterrichtsstunden + 4 Tutorien",
         courseCardOnlineNoNative: "Keine muttersprachlichen Deutschlehrer",
-        courseCardOnlineNoVisa: "Keine Visumgarantie",
+        courseCardOnlineNoVisa: "Keine Visum-Rückzahlungsgarantie",
         courseCardOnlineEvening: "Abendkurse",
         courseCardInPerson: "Präsenzunterricht",
         courseCardOnline: "Online",
@@ -619,11 +619,11 @@ const t = {
         telcC1PrepLabel: "Telc C1 prep",
         courseCardFeatureClub: "Conversation club",
         courseCardFeatureNative: "Native German teachers",
-        courseCardFeatureVisa: "Visa guarantee",
+        courseCardFeatureVisa: "Visa refund guarantee",
         courseCardLessons: "200 lesson hours",
         courseCardOnlineLessons: "16 lesson hours + 4 tutorials",
         courseCardOnlineNoNative: "No native German teachers",
-        courseCardOnlineNoVisa: "No visa guarantee",
+        courseCardOnlineNoVisa: "No visa refund guarantee",
         courseCardOnlineEvening: "Evening classes",
         courseCardInPerson: "In-person",
         courseCardOnline: "Online",
@@ -874,11 +874,11 @@ const t = {
         telcC1PrepLabel: "Telc C1 prep",
         courseCardFeatureClub: "Club de conversación",
         courseCardFeatureNative: "Profesores nativos de alemán",
-        courseCardFeatureVisa: "Garantía de visado",
+        courseCardFeatureVisa: "Garantía de reembolso de visado",
         courseCardLessons: "200 horas de clase",
         courseCardOnlineLessons: "16 horas de clase + 4 tutorías",
         courseCardOnlineNoNative: "Sin profesores nativos de alemán",
-        courseCardOnlineNoVisa: "Sin garantía de visado",
+        courseCardOnlineNoVisa: "Sin garantía de reembolso de visado",
         courseCardOnlineEvening: "Clases vespertinas",
         courseCardInPerson: "Presencial",
         courseCardOnline: "Online",
@@ -1442,24 +1442,6 @@ const extrasStepCopy = {
                                     </div>
 
                                     <div class="final-step-panel">
-                                        <div class="final-step-block hear-about-block">
-                                            <label for="hear-about-select">{translations.hearAboutLabel} *</label>
-                                            <select id="hear-about-select" name="hear-about" required class="booking-select-input">
-                                                <option value="">{lang === 'tr' ? 'Seçiniz' : lang === 'de' ? 'Bitte wählen' : lang === 'es' ? 'Seleccione' : 'Please select'}</option>
-                                                <option value="agency">{translations.hearAboutAgency}</option>
-                                                <option value="friend">{translations.hearAboutFriend}</option>
-                                                <option value="google">{translations.hearAboutGoogle}</option>
-                                                <option value="instagram">{translations.hearAboutInstagram}</option>
-                                                <option value="other">{translations.hearAboutOther}</option>
-                                            </select>
-                                            <div id="hear-about-friend-fields" class="hear-about-extra" style="display: none;">
-                                                <label for="friend-referrer-name">{translations.friendNameLabel} *</label>
-                                                <input type="text" id="friend-referrer-name" name="friend-referrer-name" class="booking-text-input" placeholder={translations.friendNamePlaceholder} />
-                                            </div>
-                                        </div>
-
-                                        <div class="final-step-divider" aria-hidden="true"></div>
-
                                         <div class="final-step-block">
                                             <div class="form-grid final-step-grid">
                                                 <div class="form-group">
@@ -2420,16 +2402,6 @@ const extrasStepCopy = {
                 }
 
                 if (step === 4) {
-                    const hear = document.getElementById('hear-about-select')?.value;
-                    if (hear === 'friend') {
-                        const fn = document.getElementById('friend-referrer-name')?.value?.trim();
-                        if (!fn) {
-                            document.getElementById('friend-referrer-name')?.classList.add('error');
-                            isValid = false;
-                        } else {
-                            document.getElementById('friend-referrer-name')?.classList.remove('error');
-                        }
-                    }
                     const bringFriend = document.getElementById('bring-friend-discount')?.checked;
                     if (bringFriend) {
                         ['bring-friend-name', 'bring-friend-email', 'bring-friend-phone'].forEach(function (id) {
@@ -2559,22 +2531,6 @@ const extrasStepCopy = {
                     updatePrice();
                 });
                 toggleBringFriendFields();
-            }
-
-            const hearAboutSelect = document.getElementById('hear-about-select');
-            function toggleHearAboutExtras() {
-                const v = hearAboutSelect?.value || '';
-                const fr = document.getElementById('hear-about-friend-fields');
-                const fn = document.getElementById('friend-referrer-name');
-                if (fr) fr.style.display = v === 'friend' ? 'block' : 'none';
-                if (fn) {
-                    if (v === 'friend') fn.setAttribute('required', 'required');
-                    else fn.removeAttribute('required');
-                }
-            }
-            if (hearAboutSelect) {
-                hearAboutSelect.addEventListener('change', toggleHearAboutExtras);
-                toggleHearAboutExtras();
             }
 
             // ===== PRICE CALCULATION =====
@@ -2804,7 +2760,6 @@ const extrasStepCopy = {
                         : submittedWeeks;
                     const lessonTime = (data['timezone-slot'] || document.getElementById('booking-timezone-slot')?.value || '').trim();
                     const startDateKind = (data['start-date-mode'] || '').trim();
-                    const hearAboutKey = data['hear-about'] || '';
                     const bringFriendActive = data['bring-friend-discount'] === 'yes';
                     const yesNo = (field) => (data[field] === 'yes' ? bookingWebhookLabels.yes : bookingWebhookLabels.no);
                     const courseLevelsText = courseSelectionArr
@@ -2847,8 +2802,8 @@ const extrasStepCopy = {
                         },
 
                         marketing: {
-                            heardFrom: bookingWebhookLabels.hearAbout[hearAboutKey] || hearAboutKey,
-                            referrerName: hearAboutKey === 'friend' ? (data['friend-referrer-name'] || '').trim() : '',
+                            heardFrom: '',
+                            referrerName: '',
                         },
 
                         bringFriend: bringFriendActive

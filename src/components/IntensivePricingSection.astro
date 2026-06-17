@@ -1,6 +1,8 @@
 ---
 import PromoPrice from './PromoPrice.astro';
 import { ONLINE_LEVEL_PRICES } from '../utils/coursePricingHelper';
+import { buildBookingUrl } from '../utils/bookingPrefillHelper';
+import type { SupportedLang } from '../utils/pathHelpers';
 
 interface Props {
   lang: string;
@@ -11,50 +13,77 @@ const { lang, showSectionTitle = true } = Astro.props;
 
 
 const L = lang === 'de' ? 'de' : lang === 'es' ? 'es' : lang === 'tr' ? 'tr' : 'en';
+const bookingLang = L as SupportedLang;
+
+const intensiveBookingSlugs = {
+  a1: { tr: 'yogun-a1', de: 'intensiv-a1', en: 'intensive-a1', es: 'intensivo-a1' },
+  a2: { tr: 'yogun-a2', de: 'intensiv-a2', en: 'intensive-a2', es: 'intensivo-a2' },
+  b1: { tr: 'yogun-b1', de: 'intensiv-b1', en: 'intensive-b1', es: 'intensivo-b1' },
+  b2: { tr: 'yogun-b2', de: 'intensiv-b2', en: 'intensive-b2', es: 'intensivo-b2' },
+  c1: { tr: 'yogun-c1', de: 'intensiv-c1', en: 'intensive-c1', es: 'intensivo-c1' },
+} as const;
+
+const onlineBookingSlugs = {
+  a1: { tr: 'online-yogun-a1', de: 'online-intensiv-a1', en: 'online-intensive-a1', es: 'intensivo-online-a1' },
+  a2: { tr: 'online-yogun-a2', de: 'online-intensiv-a2', en: 'online-intensive-a2', es: 'intensivo-online-a2' },
+} as const;
 
 const levelCardCopy = {
   tr: {
     weeks: '8 hafta',
     club: 'Konuşma kulübü',
     native: 'Ana dili Almanca hocalar',
-    visa: 'Vize garantisi',
-    lessons: '200 ders saati',
+    visa: 'Vize iadesi garantisi',
+    cefr: 'CEFR Standartları uyumlu',
+    weeklyHours: 'Haftada 20 saat',
     inPerson: 'Yüz yüze',
   },
   de: {
     weeks: '8 Wochen',
     club: 'Sprachclub',
     native: 'Muttersprachliche Lehrkräfte',
-    visa: 'Visumsgarantie',
-    lessons: '200 Unterrichtsstunden',
+    visa: 'Visum-Rückzahlungsgarantie',
+    cefr: 'CEFR-Standards konform',
+    weeklyHours: '20 Std./Woche',
     inPerson: 'Präsenzunterricht',
   },
   en: {
     weeks: '8 weeks',
     club: 'Speaking club',
     native: 'Native German teachers',
-    visa: 'Visa guarantee',
-    lessons: '200 lesson hours',
+    visa: 'Visa refund guarantee',
+    cefr: 'Aligned with CEFR standards',
+    weeklyHours: '20 hours/week',
     inPerson: 'In-person',
   },
   es: {
     weeks: '8 semanas',
     club: 'Club de conversación',
     native: 'Profesores nativos de alemán',
-    visa: 'Garantía de visado',
-    lessons: '200 horas de clase',
+    visa: 'Garantía de reembolso de visado',
+    cefr: 'Conforme a los estándares MCER',
+    weeklyHours: '20 horas/semana',
     inPerson: 'Presencial',
   },
 } as const;
 
 const lc = levelCardCopy[L as keyof typeof levelCardCopy] ?? levelCardCopy.en;
 
+const reserveBtnCopy = {
+  tr: 'Hemen rezervasyon',
+  de: 'Jetzt reservieren',
+  en: 'Book now',
+  es: 'Reservar ahora',
+} as const;
+
+const reserveBtnLabel = reserveBtnCopy[L as keyof typeof reserveBtnCopy] ?? reserveBtnCopy.en;
+
 const onlineCardCopy = {
   tr: {
     weeks: '8 hafta',
     lessons: '16 ders saati + 4 etüt',
     noNative: 'Ana dili Almanca hoca yok',
-    noVisa: 'Vize garantisi yok',
+    noVisa: 'Vize iadesi garantisi yok',
     evening: 'Akşam sınıfları',
     online: 'Online',
     subtitle: 'A1 ve A2 · akşam grubu (19:00 – 22:00)',
@@ -63,7 +92,7 @@ const onlineCardCopy = {
     weeks: '8 Wochen',
     lessons: '16 Unterrichtsstunden + 4 Tutorien',
     noNative: 'Keine muttersprachlichen Deutschlehrer',
-    noVisa: 'Keine Visumgarantie',
+    noVisa: 'Keine Visum-Rückzahlungsgarantie',
     evening: 'Abendkurse',
     online: 'Online',
     subtitle: 'A1 und A2 · Abendgruppe (19:00 – 22:00)',
@@ -72,7 +101,7 @@ const onlineCardCopy = {
     weeks: '8 weeks',
     lessons: '16 lesson hours + 4 tutorials',
     noNative: 'No native German teachers',
-    noVisa: 'No visa guarantee',
+    noVisa: 'No visa refund guarantee',
     evening: 'Evening classes',
     online: 'Online',
     subtitle: 'A1 and A2 · evening group (19:00 – 22:00)',
@@ -81,7 +110,7 @@ const onlineCardCopy = {
     weeks: '8 semanas',
     lessons: '16 horas de clase + 4 tutorías',
     noNative: 'Sin profesores nativos de alemán',
-    noVisa: 'Sin garantía de visado',
+    noVisa: 'Sin garantía de reembolso de visado',
     evening: 'Clases vespertinas',
     online: 'Online',
     subtitle: 'A1 y A2 · grupo de tarde-noche (19:00 – 22:00)',
@@ -645,7 +674,9 @@ const pc = popupCopy[lang as keyof typeof popupCopy] ?? popupCopy.en;
         <div class="pricing-content">
           <p class="pricing-panel-lead">{lc.weeks} · {lc.inPerson}</p>
           <div class="intensive-level-cards">
-            {intensiveLevelCards.map((card) => (
+            {intensiveLevelCards.map((card) => {
+              const bookingHref = buildBookingUrl(bookingLang, intensiveBookingSlugs[card.mod][L]);
+              return (
               <article class={`intensive-level-card intensive-level-card--${card.mod}`}>
                 <div class="intensive-level-card__head">
                   <span class="intensive-level-card__icon" aria-hidden="true">
@@ -660,14 +691,19 @@ const pc = popupCopy[lang as keyof typeof popupCopy] ?? popupCopy.en;
                   <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.club}</span></li>
                   <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.native}</span></li>
                   <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.visa}</span></li>
-                  <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.lessons}</span></li>
+                  <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.cefr}</span></li>
+                  <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.weeklyHours}</span></li>
                   <li><i class="fas fa-check" aria-hidden="true"></i><span>{lc.inPerson}</span></li>
                 </ul>
                 <div class="intensive-level-card__price">
                   <PromoPrice lang={lang} variant="card" />
                 </div>
+                <a href={bookingHref} class="intensive-level-card__btn">
+                  <span>{reserveBtnLabel}</span>
+                  <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
               </article>
-            ))}
+            );})}
           </div>
         </div>
       </details>
@@ -677,7 +713,9 @@ const pc = popupCopy[lang as keyof typeof popupCopy] ?? popupCopy.en;
         <div class="pricing-content">
           <p class="pricing-panel-lead">{oc.subtitle}</p>
           <div class="intensive-level-cards intensive-level-cards--online">
-            {onlineLevelCards.map((card) => (
+            {onlineLevelCards.map((card) => {
+              const bookingHref = buildBookingUrl(bookingLang, onlineBookingSlugs[card.mod][L]);
+              return (
               <article class={`intensive-level-card intensive-level-card--${card.mod}`}>
                 <div class="intensive-level-card__head">
                   <span class="intensive-level-card__icon" aria-hidden="true">
@@ -701,8 +739,12 @@ const pc = popupCopy[lang as keyof typeof popupCopy] ?? popupCopy.en;
                   <span class="intensive-level-card__price-amount">{fmtMoney(card.price)}</span>
                   <span class="intensive-level-card__price-note">{oc.weeks}</span>
                 </div>
+                <a href={bookingHref} class="intensive-level-card__btn">
+                  <span>{reserveBtnLabel}</span>
+                  <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
               </article>
-            ))}
+            );})}
           </div>
           <button class="pricing-cta-btn" type="button" data-popup-product={a.onlineProduct}>{pc.cta}</button>
         </div>
@@ -984,6 +1026,35 @@ const pc = popupCopy[lang as keyof typeof popupCopy] ?? popupCopy.en;
     flex-direction: column;
     gap: 0.65rem;
     box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+  }
+  .intensive-level-card__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    width: 100%;
+    margin-top: auto;
+    padding: 0.62rem 1rem;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #0cc0df 0%, #0aa5c0 100%);
+    color: #fff;
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(12, 192, 223, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .intensive-level-card__btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(12, 192, 223, 0.38);
+    color: #fff;
+  }
+  .intensive-level-card__btn i {
+    font-size: 0.72rem;
+    transition: transform 0.15s ease;
+  }
+  .intensive-level-card__btn:hover i {
+    transform: translateX(2px);
   }
   .intensive-level-card__head {
     display: flex;

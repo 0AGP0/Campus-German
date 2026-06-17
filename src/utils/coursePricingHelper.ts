@@ -403,13 +403,126 @@ export function courseShowsPrice(lang: 'tr' | 'de' | 'en' | 'es', slug: string):
   return false;
 }
 
-/** Kart ve detay sayfalarında ders saati yerine kullanılacak ibare: "200 derse kadar" / "bis zu 200 UStd" vb. */
-export const LESSONS_UP_TO_200: Record<'tr' | 'de' | 'en' | 'es', string> = {
-  tr: '200 derse kadar',
-  de: 'bis zu 200 UStd',
-  en: 'up to 200 lessons',
-  es: 'hasta 200 clases',
+/** Kurs kartı: Almanya vizesine uygun etiketi */
+export const VISA_ELIGIBLE_LABEL: Record<'tr' | 'de' | 'en' | 'es', string> = {
+  tr: 'Almanya vizesine uygun',
+  de: 'Für deutsche Visumanträge geeignet',
+  en: 'Eligible for Germany visa',
+  es: 'Apto para visado en Alemania',
 };
+
+/** Yoğun yüz yüze / sınav hazırlık gibi vize amaçlı programlar için kart etiketi gösterilir. */
+export function isVisaEligibleCourse(slug: string): boolean {
+  const s = slug.toLowerCase().replace(/\.(md|de|en|es)$/i, '');
+  if (s.startsWith('online-') || s.includes('/online-')) return false;
+  if (
+    s.includes('yaz-okulu') ||
+    s.includes('sommerschule') ||
+    s.includes('lise-yaz') ||
+    s.includes('gymnasium-sommer') ||
+    s.includes('universite-yaz') ||
+    s.includes('highschool-summer') ||
+    s.includes('university-summer') ||
+    s.includes('escuela-verano')
+  ) {
+    return false;
+  }
+
+  const info = extractCourseInfo(slug);
+  if (info.type === 'online') return false;
+  if (info.type === 'intensive' || info.type === 'exam') return true;
+  if (info.type === 'seasonal' && s.includes('haftalik')) return true;
+
+  return false;
+}
+
+/** Kart ve detay sayfalarında ders saati yerine kullanılacak ibare: haftalık ders yükü rozeti. */
+export const LESSONS_UP_TO_200: Record<'tr' | 'de' | 'en' | 'es', string> = {
+  tr: 'Haftada 20 saat',
+  de: '20 Std./Woche',
+  en: '20 hours/week',
+  es: '20 horas/semana',
+};
+
+export interface CourseCardDisplayBadges {
+  /** Üst satır — toplam ders saati veya program tipi */
+  highlight: string;
+  /** Özellik rozeti: haftalık yük */
+  weekly: string;
+  /** Özellik rozeti: kurs süresi */
+  duration: string;
+}
+
+const CARD_DISPLAY_BADGE_COPY = {
+  tr: {
+    weekly20: '20 saat/hafta',
+    weekly16: '16 saat/hafta',
+    duration8: '8 hafta',
+    highlight200: '200 ders saati',
+    highlightOnline: 'Akşam sınıfları',
+    durationFlexible: 'Esnek süre',
+  },
+  de: {
+    weekly20: '20 Std./Wo.',
+    weekly16: '16 Std./Wo.',
+    duration8: '8 Wochen',
+    highlight200: '200 UStd.',
+    highlightOnline: 'Abendkurse',
+    durationFlexible: 'Flexibel',
+  },
+  en: {
+    weekly20: '20 h/week',
+    weekly16: '16 h/week',
+    duration8: '8 weeks',
+    highlight200: '200 lesson hrs',
+    highlightOnline: 'Evening classes',
+    durationFlexible: 'Flexible',
+  },
+  es: {
+    weekly20: '20 h/sem.',
+    weekly16: '16 h/sem.',
+    duration8: '8 semanas',
+    highlight200: '200 h de clase',
+    highlightOnline: 'Clases vespertinas',
+    durationFlexible: 'Flexible',
+  },
+} as const;
+
+/** Ana sayfa kurs kartı: üst vurgu + haftalık/süre rozetleri */
+export function getCourseCardDisplayBadges(
+  lang: 'tr' | 'de' | 'en' | 'es',
+  slug: string,
+): CourseCardDisplayBadges | null {
+  const info = extractCourseInfo(slug);
+  const c = CARD_DISPLAY_BADGE_COPY[lang] ?? CARD_DISPLAY_BADGE_COPY.en;
+  const s = slug.toLowerCase();
+
+  if (info.type === 'online') {
+    return {
+      highlight: c.highlightOnline,
+      weekly: c.weekly16,
+      duration: c.duration8,
+    };
+  }
+
+  if (info.type === 'intensive' || info.type === 'exam') {
+    return {
+      highlight: c.highlight200,
+      weekly: c.weekly20,
+      duration: c.duration8,
+    };
+  }
+
+  if (info.type === 'seasonal' && s.includes('haftalik')) {
+    return {
+      highlight: c.highlight200,
+      weekly: c.weekly20,
+      duration: c.durationFlexible,
+    };
+  }
+
+  return null;
+}
 
 /** Yoğun/online kurs kartlarında gösterilecek haftalık fiyat metni. Hep Intensive (110€) olarak gösterilir. */
 export function getCourseCardPerWeekPrice(lang: 'tr' | 'de' | 'en' | 'es', slug: string): string | null {

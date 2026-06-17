@@ -1,0 +1,20 @@
+---
+import { isVisaEligibleCourse, VISA_ELIGIBLE_LABEL } from '../utils/coursePricingHelper';
+
+interface Props {
+  lang: string;
+  slug: string;
+  class?: string;
+}
+
+const { lang, slug, class: className = '' } = Astro.props;
+const show = isVisaEligibleCourse(slug);
+const label = VISA_ELIGIBLE_LABEL[lang as keyof typeof VISA_ELIGIBLE_LABEL] ?? VISA_ELIGIBLE_LABEL.en;
+---
+
+{show ? (
+  <span class:list={['course-card-visa-badge', className]}>
+    <i class="fas fa-passport" aria-hidden="true"></i>
+    <span>{label}</span>
+  </span>
+) : null}

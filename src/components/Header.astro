@@ -589,13 +589,8 @@ const whatsappHref = 'https://wa.me/4915203823792';
                     <span>{t.pricesDates}</span>
                 </a>
             </div>
-            <!-- Sağ: Rezervasyon/Booking (gradient buton) + Dil -->
+            <!-- Sağ: Dil -->
             <div class="top-header-right">
-                <a href={`/${lang}/${sections.booking}`} class="top-header-register top-header-register--btn">
-                    <i class="fas fa-credit-card"></i>
-                    <span>{t.register}</span>
-                    <i class="fas fa-arrow-right register-arrow"></i>
-                </a>
                 <div class="top-header-lang">
                     <button type="button" class="top-lang-btn" id="topLangBtn" aria-expanded="false" aria-haspopup="true">
                         <img src={lang === 'tr' ? 'https://flagcdn.com/tr.svg' : lang === 'de' ? 'https://flagcdn.com/de.svg' : lang === 'es' ? 'https://flagcdn.com/es.svg' : 'https://flagcdn.com/gb.svg'} alt={lang === 'tr' ? 'Türkçe' : lang === 'de' ? 'Deutsch' : lang === 'es' ? 'Español' : 'English'} class="lang-flag">
@@ -777,10 +772,18 @@ const whatsappHref = 'https://wa.me/4915203823792';
                         </div>
                     </li>
 
-                    <!-- 5. İletişime geç - CTA Link (mavi çerçeve) -->
+                    <!-- 5. İletişim -->
                     <li class="nav-item">
-                        <a href={`/${lang}/${sections.contact}`} class="nav-link nav-link-cta">
+                        <a href={`/${lang}/${sections.contact}`} class="nav-link">
                             <span>{t.contactCta}</span>
+                        </a>
+                    </li>
+
+                    <!-- 6. Kurs rezervasyonu -->
+                    <li class="nav-item">
+                        <a href={`/${lang}/${sections.booking}`} class="nav-link nav-link-register">
+                            <i class="fas fa-credit-card" aria-hidden="true"></i>
+                            <span>{t.register}</span>
                         </a>
                     </li>
                 </ul>
@@ -1082,7 +1085,7 @@ const whatsappHref = 'https://wa.me/4915203823792';
                 </li>
                 
                 <li class="mobile-menu-item">
-                    <a href={`/${lang}/${sections.contact}`} class="mobile-menu-link mobile-menu-link-cta">{t.contactCta}</a>
+                    <a href={`/${lang}/${sections.contact}`} class="mobile-menu-link">{t.contactCta}</a>
                 </li>
             </ul>
         </nav>

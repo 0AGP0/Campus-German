@@ -4,8 +4,9 @@ import BilgiAlForm from '../../components/BilgiAlForm.astro';
 import '../../styles/pages/index.css';
 import { getCollection } from 'astro:content';
 import { isOverviewPage, getSectionPath, cleanSlug, getContactPath, getBookingPath } from '../../utils/pathHelpers';
-import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
+import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, getCourseCardDisplayBadges, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
 import { buildBookingUrl } from '../../utils/bookingPrefillHelper';
+import CourseCardVisaBadge from '../../components/CourseCardVisaBadge.astro';
 import PromoPrice from '../../components/PromoPrice.astro';
 import { getNavbarCourseSlugs, navbarCourseSlugsByLang } from '../../data/navbarCourseSlugs';
 
@@ -103,7 +104,6 @@ const t = {
         courseFilterNext: "Sonraki",
         courseCardStartingPrices: "başlayan fiyatlarla",
         courseCardContactUs: "İletişime geç",
-        courseCardLessons: "200 derse kadar",
         coursesTitle: "En Çok Tercih Edilen Kurslar",
         coursesSubtitle: "Bremen'de 10 öğrenciden 9unun ilk tercihi Campus German oldu. Sınırlı kontenjandan yararlanmak için yerini şimdiden ayırt, Almancayı kusursuz öğren!",
         courseBookButton: "Yer Ayırt",
@@ -348,7 +348,6 @@ const t = {
         courseFilterNext: "Next",
         courseCardStartingPrices: "starting at",
         courseCardContactUs: "Contact us",
-        courseCardLessons: "up to 200 lessons",
         coursesTitle: "Most Popular Courses",
         coursesSubtitle: "9 out of 10 students in Bremen chose Campus German as their first choice. Reserve your spot now to learn German perfectly from limited quota!",
         courseBookButton: "Reserve Spot",
@@ -601,7 +600,6 @@ const t = {
         courseFilterNext: "Weiter",
         courseCardStartingPrices: "ab",
         courseCardContactUs: "Kontakt",
-        courseCardLessons: "bis zu 200 UStd",
         coursesTitle: "Bevorzugte Kurse",
         coursesSubtitle: "Passendes Programm wählen, Deutsch lernen.",
         courseBookButton: "Kurs Buchen",
@@ -844,7 +842,6 @@ const t = {
         courseFilterNext: "Siguiente",
         courseCardStartingPrices: "a partir de",
         courseCardContactUs: "Contáctenos",
-        courseCardLessons: "hasta 200 clases",
         coursesTitle: "Cursos Más Populares",
         coursesSubtitle: "9 de cada 10 estudiantes en Bremen eligieron Campus German como su primera opción. ¡Reserva tu lugar ahora para aprender alemán perfectamente del cupo limitado!",
         courseBookButton: "Reservar Lugar",
@@ -1392,6 +1389,7 @@ function getAvatarColor(name: string): string {
                             const typeLabel = courseType === 'online' ? translations.courseFilterTypeOnline : translations.courseFilterInPerson;
                             const periodLabel = coursePeriod === 'yaz-donemi' ? translations.courseFilterSummer : translations.courseFilterYearRound;
                             const features = (kurs.data.features || []).slice(0, 2);
+                            const cardBadges = getCourseCardDisplayBadges(lang as 'tr' | 'de' | 'en' | 'es', slug);
                             const pricingData = getCoursePricingData(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
                             const perWeekPrice = getCourseCardPerWeekPrice(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
                             const hasPrice = !!perWeekPrice
@@ -1406,15 +1404,25 @@ function getAvatarColor(name: string): string {
                                         <div class="course-card-body">
                                             <div class="course-card-tags">
                                                 {levelLabel ? <span class="course-card-badge">{levelLabel}</span> : ''}
+                                                <CourseCardVisaBadge lang={lang} slug={slug} />
                                                 <span class="course-card-period">{periodLabel}</span>
                                             </div>
                                             <h3 class="course-title">{kurs.data.title}</h3>
                                             <p class="course-description">{kurs.data.description}</p>
-                                            <span class="course-card-lessons">{translations.courseCardLessons}</span>
+                                            {cardBadges?.highlight ? (
+                                                <span class="course-card-lessons">{cardBadges.highlight}</span>
+                                            ) : null}
                                             <span class="course-card-meta">{typeLabel}</span>
-                                            {features.length > 0 ? (
+                                            {(cardBadges || features.length > 0) ? (
                                                 <ul class="course-card-features" aria-hidden="true">
-                                                    {features.map((f) => <li key={f.title}>{f.title}</li>)}
+                                                    {cardBadges ? (
+                                                        <>
+                                                            <li>{cardBadges.weekly}</li>
+                                                            <li>{cardBadges.duration}</li>
+                                                        </>
+                                                    ) : (
+                                                        features.map((f) => <li key={f.title}>{f.title}</li>)
+                                                    )}
                                                 </ul>
                                             ) : null}
                                             {hasPrice

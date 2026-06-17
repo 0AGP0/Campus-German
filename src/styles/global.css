@@ -1069,6 +1069,32 @@ a.cta-secondary {
     transition: transform 0.4s ease;
 }
 
+.course-card-visa-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 5px 10px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #0a6ea8;
+    background: rgba(12, 192, 223, 0.1);
+    border: 1px solid rgba(12, 192, 223, 0.32);
+    border-radius: 8px;
+    max-width: 100%;
+}
+
+.course-card-visa-badge i {
+    font-size: 0.62rem;
+    flex-shrink: 0;
+    opacity: 0.9;
+}
+
+.course-content > .course-card-visa-badge,
+.course-card-body > .course-card-visa-badge {
+    margin-bottom: 0.65rem;
+}
+
 /* Featured Course - En Popüler Card */
 .course-card.featured-course {
     border: 3px solid var(--color-primary);

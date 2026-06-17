@@ -7,6 +7,7 @@ import { coursePricing } from '../../data/coursePricing';
 import { cleanSlug, isOverviewPage, getSectionPath, getContactPath, isValidLang } from '../../utils/pathHelpers';
 import { getSimpleCourseStartDates, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
 import CourseCardActions from '../../components/CourseCardActions.astro';
+import CourseCardVisaBadge from '../../components/CourseCardVisaBadge.astro';
 
 export async function getStaticPaths() {
     return [
@@ -265,6 +266,7 @@ const kurumsalKurslar = anaKurslar.filter(kurs =>
                             </div>
                             <div class="course-content">
                                 <h3 class="course-title">{kurs.data.title}</h3>
+                                <CourseCardVisaBadge lang={lang} slug={kurs.data.customSlug || cleanSlug(kurs.slug)} />
                                 <div class="course-details">
                                     <div class="course-detail">
                                         <i class="fas fa-chalkboard-teacher"></i>
