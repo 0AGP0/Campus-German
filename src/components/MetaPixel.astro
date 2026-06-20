@@ -1,0 +1,60 @@
+---
+/** Meta (Facebook) Pixel — yalnızca çerez onayı "accepted" ise yüklenir (GDPR). */
+const PIXEL_ID = '1668966297649816';
+---
+
+<!-- Meta Pixel: çerez onayı sonrası yüklenir -->
+<script is:inline define:vars={{ PIXEL_ID }}>
+  (function () {
+    var STORAGE_KEY = 'campusgerman_cookie_consent';
+
+    function loadMetaPixel() {
+      if (window.__campusMetaPixelLoaded) return;
+      window.__campusMetaPixelLoaded = true;
+
+      !function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+      fbq('init', PIXEL_ID);
+      fbq('track', 'PageView');
+    }
+
+    function maybeLoad() {
+      try {
+        if (localStorage.getItem(STORAGE_KEY) === 'accepted') {
+          loadMetaPixel();
+        }
+      } catch (_) {}
+    }
+
+    maybeLoad();
+    window.addEventListener('cookie-consent-updated', function (e) {
+      if (e.detail && e.detail.value === 'accepted') {
+        loadMetaPixel();
+      }
+    });
+  })();
+</script>
+<noscript>
+  <img
+    height="1"
+    width="1"
+    style="display:none"
+    alt=""
+    src={`https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`}
+  />
+</noscript>

@@ -7,6 +7,8 @@ import QuoteWizardModal from '../../../components/QuoteWizardModal.astro';
 import IntensivePricingSection from '../../../components/IntensivePricingSection.astro';
 import PromoPrice from '../../../components/PromoPrice.astro';
 import SuccessModal from '../../../components/SuccessModal.astro';
+import CookieConsent from '../../../components/CookieConsent.astro';
+import MetaPixel from '../../../components/MetaPixel.astro';
 import '../../../styles/global.css';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo } from '../../../utils/coursePricingHelper';
 import { buildBookingUrl } from '../../../utils/bookingPrefillHelper';
@@ -115,6 +117,7 @@ const groupSizeDisplay = '10-16 max.';
     <style is:inline>
       body.course-detail-page-wrap .header-spacer { display: block !important; height: 155px !important; min-height: 155px !important; width: 100%; }
     </style>
+    <MetaPixel />
 </head>
 <body class="course-detail-page-wrap">
     <Header lang={lang} />
@@ -479,6 +482,8 @@ const groupSizeDisplay = '10-16 max.';
     <Footer lang={lang} />
 
     <SuccessModal lang={lang} />
+
+    <CookieConsent lang={lang as 'tr' | 'de' | 'en' | 'es'} />
 
     <QuoteWizardModal lang={lang} />
     <script is:inline>

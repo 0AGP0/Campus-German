@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SuccessModal from '../components/SuccessModal.astro';
 import CookieConsent from '../components/CookieConsent.astro';
+import MetaPixel from '../components/MetaPixel.astro';
 import QuoteWizardModal from '../components/QuoteWizardModal.astro';
 import '../styles/global.css';
 import '../styles/header.css';
@@ -206,6 +207,8 @@ const popupLevelOptions: { value: string; label: string }[] = [
     </script>
     <!-- Script early so header dropdown works as soon as DOM is ready (defer = after parse, before paint) -->
     <script src="/script.js?v=8" defer></script>
+
+    <MetaPixel />
 </head>
 <body>
     {hideHeader ? null : <Header lang={lang} />}
