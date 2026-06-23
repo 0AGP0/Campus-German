@@ -1,0 +1,58 @@
+---
+/** Google Tag Manager — yalnızca çerez onayı "accepted" ise yüklenir (GDPR). GA4 GTM panelinden bağlanır. */
+interface Props {
+  part: 'head' | 'body';
+}
+
+const { part } = Astro.props;
+const GTM_ID = 'GTM-PNJ8QFS4';
+---
+
+{part === 'head' ? (
+  <script is:inline define:vars={{ GTM_ID }}>
+    (function () {
+      var STORAGE_KEY = 'campusgerman_cookie_consent';
+
+      function loadGTM() {
+        if (window.__campusGTMLoaded) return;
+        window.__campusGTMLoaded = true;
+
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0];
+          var j = d.createElement(s);
+          var dl = l !== 'dataLayer' ? '&l=' + l : '';
+          j.async = true;
+          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', GTM_ID);
+      }
+
+      function maybeLoad() {
+        try {
+          if (localStorage.getItem(STORAGE_KEY) === 'accepted') {
+            loadGTM();
+          }
+        } catch (_) {}
+      }
+
+      maybeLoad();
+      window.addEventListener('cookie-consent-updated', function (e) {
+        if (e.detail && e.detail.value === 'accepted') {
+          loadGTM();
+        }
+      });
+    })();
+  </script>
+) : (
+  <noscript>
+    <iframe
+      src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+      height="0"
+      width="0"
+      style="display:none;visibility:hidden"
+      title="Google Tag Manager"
+    />
+  </noscript>
+)}

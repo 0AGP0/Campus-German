@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import SuccessModal from '../components/SuccessModal.astro';
 import CookieConsent from '../components/CookieConsent.astro';
 import MetaPixel from '../components/MetaPixel.astro';
+import GoogleTagManager from '../components/GoogleTagManager.astro';
 import QuoteWizardModal from '../components/QuoteWizardModal.astro';
 import '../styles/global.css';
 import '../styles/header.css';
@@ -188,6 +189,8 @@ const popupLevelOptions: { value: string; label: string }[] = [
     <link rel="shortcut icon" href="https://campusgerman.com/favicon.ico">
     <link rel="apple-touch-icon" href="https://campusgerman.com/Campusgerman.png">
     <meta property="og:image" content="https://campusgerman.com/Campusgerman.png">
+
+    <GoogleTagManager part="head" />
     
     <!-- CSS: hizmet.css (koşullu) - global.css ve header.css import ediliyor -->
     {includeHizmetCSS ? (
@@ -211,6 +214,7 @@ const popupLevelOptions: { value: string; label: string }[] = [
     <MetaPixel />
 </head>
 <body>
+    <GoogleTagManager part="body" />
     {hideHeader ? null : <Header lang={lang} />}
     {hideHeader ? null : <div class="header-spacer" aria-hidden="true"></div>}
 

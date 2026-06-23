@@ -9,6 +9,7 @@ import PromoPrice from '../../../components/PromoPrice.astro';
 import SuccessModal from '../../../components/SuccessModal.astro';
 import CookieConsent from '../../../components/CookieConsent.astro';
 import MetaPixel from '../../../components/MetaPixel.astro';
+import GoogleTagManager from '../../../components/GoogleTagManager.astro';
 import '../../../styles/global.css';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, formatCourseDate } from '../../../utils/coursePricingHelper';
 import { getBookingPath, getContactPath, getSectionPath } from '../../../utils/pathHelpers';
@@ -138,6 +139,7 @@ const displayBadgeText = shortenLabels(kurs.data.badge?.text ?? '');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{kurs.data.title} - CampusGerman</title>
+    <GoogleTagManager part="head" />
     <link rel="stylesheet" href="/kurs-detay.css">
     <link rel="stylesheet" href="/kurs-detay-override.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -150,6 +152,7 @@ const displayBadgeText = shortenLabels(kurs.data.badge?.text ?? '');
     <MetaPixel />
 </head>
 <body class="course-detail-page-wrap">
+    <GoogleTagManager part="body" />
     <Header lang={lang} />
     <div class="header-spacer" aria-hidden="true"></div>
 
