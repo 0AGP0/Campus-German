@@ -3,8 +3,8 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import BilgiAlForm from '../../components/BilgiAlForm.astro';
 import '../../styles/pages/index.css';
 import { getCollection } from 'astro:content';
-import { isOverviewPage, getSectionPath, cleanSlug, getContactPath, getBookingPath } from '../../utils/pathHelpers';
-import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, getCourseCardDisplayBadges, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
+import { isOverviewPage, getSectionPath, cleanSlug, getContactPath, getBookingPath, getPricesDatesPath } from '../../utils/pathHelpers';
+import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, getCourseCardDisplayBadges, LESSONS_UP_TO_200, getStartDateOptions } from '../../utils/coursePricingHelper';
 import { buildBookingUrl } from '../../utils/bookingPrefillHelper';
 import CourseCardVisaBadge from '../../components/CourseCardVisaBadge.astro';
 import PromoPrice from '../../components/PromoPrice.astro';
@@ -27,6 +27,52 @@ const courseBasePath = `/${lang}/${courseBase}`;
 // Form/başvuru sayfası path (hero ve CTA butonları için)
 const bookingPath = `/${lang}/${getBookingPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
 const contactPath = getContactPath(lang);
+const pricesDatesPath = `/${lang}/${getPricesDatesPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
+
+/** Bugünden itibaren en yakın N kurs başlangıç tarihi */
+const COURSE_YEAR = 2026;
+const monthNamesByLang: Record<string, Record<number, string>> = {
+    tr: { 1: 'Ocak', 2: 'Şubat', 3: 'Mart', 4: 'Nisan', 5: 'Mayıs', 6: 'Haziran', 7: 'Temmuz', 8: 'Ağustos', 9: 'Eylül', 10: 'Ekim', 11: 'Kasım', 12: 'Aralık' },
+    de: { 1: 'Januar', 2: 'Februar', 3: 'März', 4: 'April', 5: 'Mai', 6: 'Juni', 7: 'Juli', 8: 'August', 9: 'September', 10: 'Oktober', 11: 'November', 12: 'Dezember' },
+    en: { 1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July', 8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December' },
+    es: { 1: 'Enero', 2: 'Febrero', 3: 'Marzo', 4: 'Abril', 5: 'Mayo', 6: 'Junio', 7: 'Julio', 8: 'Agosto', 9: 'Septiembre', 10: 'Octubre', 11: 'Noviembre', 12: 'Diciembre' },
+};
+const weekdayNamesByLang: Record<string, string[]> = {
+    tr: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+    de: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+    en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    es: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+};
+const monthShortByLang: Record<string, Record<number, string>> = {
+    tr: { 1: 'Oca', 2: 'Şub', 3: 'Mar', 4: 'Nis', 5: 'May', 6: 'Haz', 7: 'Tem', 8: 'Ağu', 9: 'Eyl', 10: 'Eki', 11: 'Kas', 12: 'Ara' },
+    de: { 1: 'Jan', 2: 'Feb', 3: 'Mär', 4: 'Apr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Okt', 11: 'Nov', 12: 'Dez' },
+    en: { 1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec' },
+    es: { 1: 'Ene', 2: 'Feb', 3: 'Mar', 4: 'Abr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Ago', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dic' },
+};
+const upcomingCourses = getStartDateOptions(lang as 'tr' | 'de' | 'en' | 'es', COURSE_YEAR)
+    .filter((opt) => {
+        const [d, m] = opt.value.split('.').map(Number);
+        const start = new Date(COURSE_YEAR, m - 1, d);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return start >= today;
+    })
+    .slice(0, 3)
+    .map((opt) => {
+        const [d, m] = opt.value.split('.').map(Number);
+        const dateObj = new Date(COURSE_YEAR, m - 1, d);
+        const months = monthNamesByLang[lang] || monthNamesByLang.en;
+        const monthsShort = monthShortByLang[lang] || monthShortByLang.en;
+        const weekdays = weekdayNamesByLang[lang] || weekdayNamesByLang.en;
+        return {
+            value: opt.value,
+            day: String(d).padStart(2, '0'),
+            month: months[m],
+            monthShort: monthsShort[m],
+            year: COURSE_YEAR,
+            weekday: weekdays[dateObj.getDay()],
+            };
+    });
 
 // Kursları çek (ana sayfa filtre bölümü) – sadece navbar'da olan kurslar, navbar sırasına göre
 const allKurslar = await getCollection('kurslar');
@@ -65,7 +111,6 @@ const t = {
             { number: "98+", label: "Farklı Millet" },
             { number: "15+", label: "Ana Dilinde Eğitmen" }
         ],
-        logoSliderTitle: "Partner Üniversitelerimiz",
         whyChooseTitle: "Neden Campus German?",
         whyChooseSubtitle: "Şeffaflık ve öğrenci başarısına bağlılık: Bremen'de net bir akademik yol ve ölçülebilir, sürdürülebilir ilerleme.",
         whyChooseCards: [
@@ -114,14 +159,16 @@ const t = {
         coursesSidebarOfficeTag: "Vize ve yoğun Almanca hedefine uygun eğitim akışı",
         coursesSidebarOfficeCta: "Şimdi ofis rezervasyonu yap",
         visitPopupFabAria: "Ücretsiz ders ve indirim formunu aç",
-        // Hero video section
-        videoTitle: "Campus German Tanıtım",
-        floatingInfo1Title: "A1-C1 Seviye",
-        floatingInfo1Subtitle: "Sınav Hazırlık",
-        floatingInfo2Title: "Şehir-Uni",
-        floatingInfo2Subtitle: "Gezileri",
-        floatingInfo3Title: "Konuşma",
-        floatingInfo3Subtitle: "Kulübü",
+        upcomingTitle: "Yaklaşan Kurslar",
+        upcomingNext: "Sonraki başlangıç",
+        upcomingProgram: "Yoğun Almanca",
+        upcomingLevels: "A1 → C1",
+        upcomingMeta: "20+4 ders / hafta",
+        upcomingMore: "Diğer tarihler",
+        upcomingCta: "Rezervasyon Yap",
+        upcomingAllDates: "Tüm tarihler & fiyatlar",
+        upcomingEmpty: "Yeni tarihler yakında duyurulacak",
+        upcomingSeats: "Kontenjan açık",
         // Courses section
         bremenDescription: "Yüksek Almancanın konuşulduğu Unesco kültür şehri Bremen'de öğrencilerimiz için başarı odaklı programlarla sizlerleyiz.",
         bremenMiniTitle: "Neden Bremen?",
@@ -139,7 +186,7 @@ const t = {
         whyBremenLabelOthers: "Diğer Şehirler / Eyaletler",
         whyBremenItems: [
             { topic: "Almanca Telaffuz ve Akıcılıkta En İyi", othersTopic: "Fazla Aksanlı Karmaşık Almanca Yapısı ve Zorluk", bremen: "Bremen yüksek Almanca konuşulan bölgede yer almakta olup Almancayı öğrenmek açısından en kolay şehirdir.", others: "Almanca dışında yerelde hakim olan Dialekt (Bayerisch, Kölnisch) Almanca yapısını zorlaştırmaktadır." },
-            { topic: "Üniversite Şehri ve 0 Dille %100 Önkabul İmkanı", othersTopic: "Üniversiteye Zor Giriş ve Yabancı Kontenjanı", bremen: "Bremen Üni ve HS Bremen Lisans ve Master bölümleri için şartlı kabul sunmakta ve uluslararası öğrenci dostudur.", others: "Diğer eyaletlerde üniversite dil hazırlık için şartlı kabul öngörmez ve düşük yabancı öğrenci kontenjanı vardır." },
+            { topic: "Üniversite Şehri ve 0 Dille %100 Önkabul İmkanı", othersTopic: "Üniversiteye Zor Giriş ve Yabancı Kontenjanı", bremen: "Uni Bremen / HS Bremen'de şartlı kabul imkânı bulunabiliyor ve şehir uluslararası öğrenci dostudur.", others: "Diğer eyaletlerde üniversite dil hazırlık için şartlı kabul öngörmez ve düşük yabancı öğrenci kontenjanı vardır." },
             { topic: "2 Yıllık Oturum ve Öğrenci Dostu Yabancılar Dairesi", othersTopic: "Geçici İkamet Kağıdı ve Tekrar Bloke Hesap Sorunu", bremen: "Bremen yabancılar dairesi dil hazırlık öğrencilerine 2 yıla ve üniversite öğrencilerine 3 yıl oturum direkt vermektedir.", others: "Diğer eyaletler öğrencilere direkt oturum vermeyip vizenin sonuna kadar bekletip tekrar bloke hesap istemektedir." },
             { topic: "Güçlü Markaları, İş Piyasası ve Werder Bremen", othersTopic: "Görece Düşük İş Piyasası, Yüksek Yaşam Maliyeti", bremen: "Bremen şehri meşhur Werder Bremen takımı ve tanınmış Becks birası, Jacobs kahvesi ve Airbus, Mercedes fabrikası ile bölgede çeşitli iş fırsatları sunmaktadır.", others: "Büyük şehirlerde yüksek kira fiyatları ve yoğunlaşmış yabancı nüfusu ile iş imkanları oldukça rekabetçi olup, stress seviyesi yüksek ve fırsatlar açısından düşüktür." },
             { topic: "Kültür ve Entelektüel Şehir ve Ucuz Uçuşlar", othersTopic: "Sanayi ve Göçmen Yoğun, Beton Şehirler", bremen: "Bremen şehri orta çağ mimarisiyle, mızıkacıları ve müzik şölenleri ile tanınmaktadır. Şehir merkezine tramvayla 15dk olan havaalanı pek çok Avrupa içi ucuz uçuş imkanı sağlar. Bremen şehri yüksek yeşil oranı ve bisiklet yolları ile Almanya'da öncüdür.", others: "Aşırı sanayileşme, yoğun göç ve plansız yapılaşma yaşam kalitesini ve entegrasyonu zorlaştırmaktadır." }
@@ -309,7 +356,6 @@ const t = {
             { number: "98+", label: "Different Nations" },
             { number: "15+", label: "Native Teachers" }
         ],
-        logoSliderTitle: "Our Partner Universities",
         whyChooseTitle: "Why Campus German?",
         whyChooseSubtitle: "A commitment to transparency and student success: a clear academic pathway in Bremen with measurable, sustainable progress.",
         whyChooseCards: [
@@ -358,13 +404,16 @@ const t = {
         coursesSidebarOfficeTag: "Visa and academic goal aligned learning path",
         coursesSidebarOfficeCta: "Reserve office now",
         visitPopupFabAria: "Open free trial lesson and discount form",
-        videoTitle: "Campus German Introduction",
-        floatingInfo1Title: "A1-C1 Levels",
-        floatingInfo1Subtitle: "Exam Prep",
-        floatingInfo2Title: "City-Uni",
-        floatingInfo2Subtitle: "Tours",
-        floatingInfo3Title: "Speaking",
-        floatingInfo3Subtitle: "Club",
+        upcomingTitle: "Upcoming Courses",
+        upcomingNext: "Next start",
+        upcomingProgram: "Intensive German",
+        upcomingLevels: "A1 → C1",
+        upcomingMeta: "20+4 lessons / week",
+        upcomingMore: "More dates",
+        upcomingCta: "Book Now",
+        upcomingAllDates: "All dates & prices",
+        upcomingEmpty: "New dates will be announced soon",
+        upcomingSeats: "Seats open",
         bremenDescription: "We are with you in Bremen, a UNESCO cultural city where High German is spoken, with success-oriented programs for our students.",
         bremenMiniTitle: "Why Bremen?",
         bremenMiniDesc: "Student-friendly city, social life, Hochdeutsch advantage, and an ideal environment for experience-oriented learning.",
@@ -381,7 +430,7 @@ const t = {
         whyBremenLabelOthers: "Other Cities / States",
         whyBremenItems: [
             { topic: "Best for German Pronunciation and Fluency", bremen: "Bremen is located in a High German-speaking region and is one of the easiest cities to learn German.", others: "Local dialects (Bavarian, Cologne German) dominant in other regions make standard German harder to acquire." },
-            { topic: "University City and 100% Conditional Admission with 0 Language", bremen: "University of Bremen and HS Bremen offer conditional admission for Bachelor and Master programmes and are international-student friendly.", others: "Other states often do not offer conditional admission for language preparation and have lower quotas for international students." },
+            { topic: "University City and 100% Conditional Admission with 0 Language", bremen: "Conditional admission may be available at Uni Bremen / HS Bremen, and the city is international-student friendly.", others: "Other states often do not offer conditional admission for language preparation and have lower quotas for international students." },
             { topic: "2-Year Residence Permit and Student-Friendly Foreigners Office", bremen: "Bremen's foreigners office grants language-prep students 2 years and university students 3 years of residence directly.", others: "Other states often delay residence until the end of the visa and require a new blocked account." },
             { topic: "Strong Brands, Job Market and Werder Bremen", bremen: "Bremen is home to Werder Bremen, Becks beer, Jacobs coffee, and Airbus and Mercedes factories, offering diverse job opportunities in the region.", others: "In larger cities, high rents and concentrated foreign populations make the job market highly competitive with higher stress and fewer opportunities." },
             { topic: "Culture, Green City and Cheap Flights", bremen: "Bremen is known for its medieval architecture, Town Musicians and music festivals. The airport is 15 minutes by tram to the centre and offers many cheap intra-European flights. Bremen leads in green space and cycle paths in Germany.", others: "Over-industrialisation, heavy migration and unplanned development reduce quality of life and make integration harder." }
@@ -561,7 +610,6 @@ const t = {
             { number: "98+", label: "Erfolgsquote" },
             { number: "15+", label: "Lehrkräfte" }
         ],
-        logoSliderTitle: "Partneruniversitäten",
         whyChooseTitle: "Warum Campus German?",
         whyChooseSubtitle: "Transparenz und Studierendenerfolg: ein klarer akademischer Weg in Bremen mit messbarem, finanziell tragfähigem Fortschritt.",
         whyChooseCards: [
@@ -610,14 +658,16 @@ const t = {
         coursesSidebarOfficeTag: "Visa- und studienorientierte Kursstruktur",
         coursesSidebarOfficeCta: "Jetzt Office-Reservierung",
         visitPopupFabAria: "Formular für Probestunde und Rabatt öffnen",
-        // Hero video section
-        videoTitle: "Campus German Vorstellung",
-        floatingInfo1Title: "A1-C1",
-        floatingInfo1Subtitle: "Prüfungsvorbereit.",
-        floatingInfo2Title: "Stadt-Uni",
-        floatingInfo2Subtitle: "Touren",
-        floatingInfo3Title: "Sprach",
-        floatingInfo3Subtitle: "Club",
+        upcomingTitle: "Kommende Kurse",
+        upcomingNext: "Nächster Start",
+        upcomingProgram: "Intensivdeutsch",
+        upcomingLevels: "A1 → C1",
+        upcomingMeta: "20+4 UStd / Woche",
+        upcomingMore: "Weitere Termine",
+        upcomingCta: "Jetzt reservieren",
+        upcomingAllDates: "Alle Termine & Preise",
+        upcomingEmpty: "Neue Termine folgen in Kürze",
+        upcomingSeats: "Plätze frei",
         // Courses section
         bremenDescription: "In Bremen, UNESCO-Kulturstadt mit Hochdeutsch, sind wir mit erfolgsorientierten Programmen für Sie da.",
         bremenMiniTitle: "Warum Bremen?",
@@ -635,7 +685,7 @@ const t = {
         whyBremenLabelOthers: "Andere Städte/Länder",
         whyBremenItems: [
             { topic: "Deutsche Aussprache und Flüssigkeit am besten", bremen: "Bremen liegt in einer Hochdeutsch-sprechenden Region und ist eine der einfachsten Städte zum Deutschlernen.", others: "Lokale Dialekte (Bayerisch, Kölsch) in anderen Regionen erschweren das Standarddeutsche." },
-            { topic: "Universitätsstadt und 100% Vorab-Zulassung ohne Sprache", bremen: "Uni Bremen und HS Bremen bieten bedingte Zulassung für Bachelor und Master und sind international studierendenfreundlich.", others: "Andere Bundesländer bieten oft keine bedingte Zulassung für Sprachvorbereitung und haben geringere Kontingente." },
+            { topic: "Universitätsstadt und 100% Vorab-Zulassung ohne Sprache", bremen: "An der Uni Bremen / HS Bremen kann eine bedingte Zulassung möglich sein, und die Stadt ist international studierendenfreundlich.", others: "Andere Bundesländer bieten oft keine bedingte Zulassung für Sprachvorbereitung und haben geringere Kontingente." },
             { topic: "2 Jahre Aufenthalt und studierendenfreundliches Ausländeramt", bremen: "Das Bremer Ausländeramt erteilt Sprachvorbereitenden 2 Jahre und Studierenden 3 Jahre Aufenthalt direkt.", others: "Andere Bundesländer verzögern oft den Aufenthalt bis zum Visumsende und verlangen erneut ein Sperrkonto." },
             { topic: "Starke Marken, Arbeitsmarkt und Werder Bremen", bremen: "Bremen hat Werder Bremen, Becks, Jacobs, Airbus und Mercedes und bietet vielfältige Jobmöglichkeiten in der Region.", others: "In Großstädten machen hohe Mieten und viele Zugewanderte den Arbeitsmarkt sehr wettbewerbsintensiv." },
             { topic: "Kultur, Grünstadt und günstige Flüge", bremen: "Bremen ist bekannt für mittelalterliche Architektur, Stadtmusikanten und Festivals. Der Flughafen ist 15 Min. mit der Bahn zum Zentrum und bietet viele günstige Europa-Flüge. Bremen führt bei Grünflächen und Radwegen.", others: "Überindustrialisierung, starke Zuwanderung und ungeplante Bebauung mindern Lebensqualität und Integration." }
@@ -803,7 +853,6 @@ const t = {
             { number: "98+", label: "Diferentes Naciones" },
             { number: "15+", label: "Profesores Nativos" }
         ],
-        logoSliderTitle: "Nuestras universidades colaboradoras",
         whyChooseTitle: "¿Por qué Campus German?",
         whyChooseSubtitle: "Compromiso con la transparencia y el éxito del estudiante: un camino académico claro en Bremen con progreso medible y sostenible.",
         whyChooseCards: [
@@ -852,13 +901,16 @@ const t = {
         coursesSidebarOfficeTag: "Planificación alineada con visa y objetivo académico",
         coursesSidebarOfficeCta: "Reservar oficina ahora",
         visitPopupFabAria: "Abrir formulario de clase de prueba y descuento",
-        videoTitle: "Introducción Campus German",
-        floatingInfo1Title: "Niveles A1-C1",
-        floatingInfo1Subtitle: "Preparación de Exámenes",
-        floatingInfo2Title: "Ciudad-Uni",
-        floatingInfo2Subtitle: "Tours",
-        floatingInfo3Title: "Conversación",
-        floatingInfo3Subtitle: "Club",
+        upcomingTitle: "Próximos cursos",
+        upcomingNext: "Próximo inicio",
+        upcomingProgram: "Alemán intensivo",
+        upcomingLevels: "A1 → C1",
+        upcomingMeta: "20+4 clases / semana",
+        upcomingMore: "Más fechas",
+        upcomingCta: "Reservar ahora",
+        upcomingAllDates: "Todas las fechas y precios",
+        upcomingEmpty: "Pronto se anunciarán nuevas fechas",
+        upcomingSeats: "Plazas abiertas",
         bremenDescription: "Estamos contigo en Bremen, una ciudad cultural de la UNESCO donde se habla alemán estándar, con programas orientados al éxito para nuestros estudiantes.",
         bremenMiniTitle: "¿Por qué Bremen?",
         bremenMiniDesc: "Ciudad amigable para estudiantes, vida social, ventaja del alemán estándar y un ambiente ideal para el aprendizaje orientado a la experiencia.",
@@ -875,7 +927,7 @@ const t = {
         whyBremenLabelOthers: "Otras ciudades / Estados",
         whyBremenItems: [
             { topic: "Mejor pronunciación y fluidez en alemán", bremen: "Bremen está en una región de alto alemán y es una de las ciudades más fáciles para aprender alemán.", others: "Los dialectos locales (bávaro, colonés) en otras regiones dificultan el alemán estándar." },
-            { topic: "Ciudad universitaria y admisión condicional 100% sin idioma", bremen: "La Universidad de Bremen y la HS Bremen ofrecen admisión condicional para grado y máster y son amigables con estudiantes internacionales.", others: "Otros estados a menudo no ofrecen admisión condicional para preparación de idiomas y tienen cupos más bajos." },
+            { topic: "Ciudad universitaria y admisión condicional 100% sin idioma", bremen: "En la Uni Bremen / HS Bremen puede existir la posibilidad de admisión condicional, y la ciudad es amigable con estudiantes internacionales.", others: "Otros estados a menudo no ofrecen admisión condicional para preparación de idiomas y tienen cupos más bajos." },
             { topic: "Permiso de residencia de 2 años y oficina de extranjería amigable", bremen: "La oficina de extranjería de Bremen concede 2 años a estudiantes de idiomas y 3 años a universitarios directamente.", others: "Otros estados suelen retrasar la residencia hasta el fin del visado y exigen de nuevo cuenta bloqueada." },
             { topic: "Marcas fuertes, mercado laboral y Werder Bremen", bremen: "Bremen acoge a Werder Bremen, Becks, Jacobs, Airbus y Mercedes y ofrece diversas oportunidades laborales en la región.", others: "En grandes ciudades, alquileres altos y población extranjera concentrada hacen el mercado muy competitivo." },
             { topic: "Cultura, ciudad verde y vuelos baratos", bremen: "Bremen es conocida por su arquitectura medieval, los músicos y festivales. El aeropuerto está a 15 min en tranvía del centro y ofrece vuelos baratos por Europa. Bremen destaca en zonas verdes y carriles bici.", others: "Sobreindustrialización, migración intensa y desarrollo no planificado reducen calidad de vida e integración." }
@@ -1088,6 +1140,7 @@ function getAvatarColor(name: string): string {
 ---
 
 <MainLayout title={translations.title} lang={lang} visitPopupHomeScroll={true}>
+    <div class="page-sky-wallpaper" aria-hidden="true"></div>
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="hero-background">
@@ -1151,99 +1204,156 @@ function getAvatarColor(name: string): string {
                     </div>
                 </div>
                 <div class="hero-visual">
-                    <div class="hero-video-card">
-                        <div class="video-wrapper">
-                            <iframe 
-                                src="https://www.youtube.com/embed/DlsmqlSNwBc?rel=0&modestbranding=1" 
-                                title={translations.videoTitle}
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                        <div class="floating-info floating-info-1">
-                            <div class="info-icon">📚</div>
-                            <div class="info-content">
-                                <div class="info-title">{translations.floatingInfo1Title}</div>
-                                <div class="info-subtitle">{translations.floatingInfo1Subtitle}</div>
-                            </div>
-                        </div>
-                        <div class="floating-info floating-info-2">
-                            <div class="info-icon">🎓</div>
-                            <div class="info-content">
-                                <div class="info-title">{translations.floatingInfo2Title}</div>
-                                <div class="info-subtitle">{translations.floatingInfo2Subtitle}</div>
-                            </div>
-                        </div>
-                        <div class="floating-info floating-info-3">
-                            <div class="info-icon">💬</div>
-                            <div class="info-content">
-                                <div class="info-title">{translations.floatingInfo3Title}</div>
-                                <div class="info-subtitle">{translations.floatingInfo3Subtitle}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <aside class="hu" aria-labelledby="hero-upcoming-title">
+                        {upcomingCourses.length > 0 ? (
+                            <>
+                                <div class="hu__stage">
+                                    <div class="hu__rail hu__rail--top">
+                                        <span class="hu__rail-line" aria-hidden="true"></span>
+                                        <span class="hu__rail-text" id="hero-upcoming-title">{translations.upcomingTitle}</span>
+                                        <span class="hu__rail-line" aria-hidden="true"></span>
+                                    </div>
 
-    <!-- Logo Slider Section (University Partners) -->
-    <section class="logo-slider-section" aria-label={translations.logoSliderTitle}>
-        <div class="logo-slider-wrap">
-            <h2 class="logo-slider-heading">{translations.logoSliderTitle}</h2>
-            <div class="logo-slider-mask">
-                <div class="logo-slider-track">
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Universit%C3%A4t_Bremen.svg" alt="Universität Bremen" width="180" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/UHH_Universit%C3%A4t_Hamburg_Logo.svg" alt="Universität Hamburg" width="160" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/de/thumb/c/c4/Leibniz-Universit%C3%A4t_Hannover.svg/1280px-Leibniz-Universit%C3%A4t_Hannover.svg.png" alt="Leibniz Universität Hannover" width="180" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Uni_G%C3%B6ttingen_Siegel.svg" alt="Universität Göttingen" width="56" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/TU-Berlin-Logo.svg" alt="Technische Universität Berlin" width="160" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Universitaet_zu_Koeln_Logo.jpg/1280px-Universitaet_zu_Koeln_Logo.jpg" alt="Universität zu Köln" width="180" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/LMU_Muenchen_Logo.svg/1280px-LMU_Muenchen_Logo.svg.png" alt="LMU München" width="160" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://res.cloudinary.com/dekm6b2ek/image/upload/v1618157344/Johann_Wolfgang_Goethe_%C3%9Cniversitesi_Frankfurt_unioku.svg" alt="Goethe-Universität Frankfurt" width="160" height="56" loading="lazy" />
-                    </div>
-                    <!-- Duplicate set for infinite loop -->
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Universit%C3%A4t_Bremen.svg" alt="Universität Bremen" width="180" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/UHH_Universit%C3%A4t_Hamburg_Logo.svg" alt="Universität Hamburg" width="160" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/de/thumb/c/c4/Leibniz-Universit%C3%A4t_Hannover.svg/1280px-Leibniz-Universit%C3%A4t_Hannover.svg.png" alt="Leibniz Universität Hannover" width="180" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Uni_G%C3%B6ttingen_Siegel.svg" alt="Universität Göttingen" width="56" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/TU-Berlin-Logo.svg" alt="Technische Universität Berlin" width="160" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Universitaet_zu_Koeln_Logo.jpg/1280px-Universitaet_zu_Koeln_Logo.jpg" alt="Universität zu Köln" width="180" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/LMU_Muenchen_Logo.svg/1280px-LMU_Muenchen_Logo.svg.png" alt="LMU München" width="160" height="56" loading="lazy" />
-                    </div>
-                    <div class="logo-slider-item">
-                        <img src="https://res.cloudinary.com/dekm6b2ek/image/upload/v1618157344/Johann_Wolfgang_Goethe_%C3%9Cniversitesi_Frankfurt_unioku.svg" alt="Goethe-Universität Frankfurt" width="160" height="56" loading="lazy" />
-                    </div>
+                                    <div class="hu__rail hu__rail--side hu__rail--left" aria-hidden="true">
+                                        <span>{translations.upcomingProgram}</span>
+                                    </div>
+                                    <div class="hu__rail hu__rail--side hu__rail--right" aria-hidden="true">
+                                        <span>{translations.upcomingLevels}</span>
+                                    </div>
+
+                                    <div class="hu__deck" id="hu-deck">
+                                        {upcomingCourses.map((c, i) => (
+                                            <article class="hu__card" data-pos={i}>
+                                                <span class="hu__card-shine" aria-hidden="true"></span>
+                                                <div class="hu__card-corner hu__card-corner--tl" aria-hidden="true">
+                                                    <strong>{c.day}</strong>
+                                                    <span>{c.monthShort}</span>
+                                                </div>
+                                                <div class="hu__card-corner hu__card-corner--br" aria-hidden="true">
+                                                    <strong>{c.day}</strong>
+                                                    <span>{c.monthShort}</span>
+                                                </div>
+
+                                                <div class="hu__card-mid">
+                                                    <span class="hu__card-tag">
+                                                        {i === 0 ? translations.upcomingNext : translations.upcomingMore}
+                                                    </span>
+                                                    <p class="hu__card-weekday">{c.weekday}</p>
+                                                    <p class="hu__card-bigday">{c.day}</p>
+                                                    <p class="hu__card-monthline">
+                                                        <span class="hu__card-month">{c.month}</span>
+                                                        <span class="hu__card-year">{c.year}</span>
+                                                    </p>
+                                                    <div class="hu__card-info">
+                                                        <span class="hu__card-info-row">
+                                                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                                                            {translations.upcomingLevels}
+                                                        </span>
+                                                        <span class="hu__card-info-row">
+                                                            <i class="fas fa-clock" aria-hidden="true"></i>
+                                                            {translations.upcomingMeta}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="hu__card-status">
+                                                    <span class="hu__card-status-dot" aria-hidden="true"></span>
+                                                    <span>{translations.upcomingSeats}</span>
+                                                </div>
+                                            </article>
+                                        ))}
+                                    </div>
+
+                                    <div class="hu__rail hu__rail--bottom" aria-hidden="true">
+                                        <span class="hu__rail-dot"></span>
+                                        <span class="hu__rail-text">{translations.upcomingNext}</span>
+                                        <span class="hu__rail-dot"></span>
+                                    </div>
+                                </div>
+
+                                <div class="hu__dots" id="hu-dots">
+                                    {upcomingCourses.map((c, i) => (
+                                        <button
+                                            type="button"
+                                            class={`hu__dot${i === 0 ? ' is-on' : ''}`}
+                                            data-hu-dot={i}
+                                            aria-label={`${c.day} ${c.month}`}
+                                        ></button>
+                                    ))}
+                                </div>
+                            </>
+                        ) : (
+                            <p class="hu__empty" id="hero-upcoming-title">{translations.upcomingEmpty}</p>
+                        )}
+
+                        <div class="hu__foot">
+                            <a href={bookingPath} class="hu__cta">
+                                <span>{translations.upcomingCta}</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                            <a href={pricesDatesPath} class="hu__all">{translations.upcomingAllDates}</a>
+                        </div>
+                    </aside>
                 </div>
+
+                <script>
+                    (function () {
+                        const deck = document.getElementById('hu-deck');
+                        if (!deck) return;
+                        const cards = Array.from(deck.querySelectorAll('.hu__card'));
+                        const dots = Array.from(document.querySelectorAll('[data-hu-dot]'));
+                        if (cards.length < 2) return;
+
+                        const INTERVAL = 3600;
+                        let front = 0;
+                        let timer = null;
+
+                        function render() {
+                            cards.forEach(function (card, i) {
+                                const pos = (i - front + cards.length) % cards.length;
+                                card.dataset.pos = String(pos);
+                                card.setAttribute('aria-hidden', pos === 0 ? 'false' : 'true');
+                            });
+                            dots.forEach(function (dot, i) {
+                                dot.classList.toggle('is-on', i === front);
+                            });
+                        }
+
+                        function advance() {
+                            front = (front + 1) % cards.length;
+                            render();
+                        }
+
+                        function start() {
+                            stop();
+                            timer = window.setInterval(advance, INTERVAL);
+                        }
+
+                        function stop() {
+                            if (timer !== null) {
+                                window.clearInterval(timer);
+                                timer = null;
+                            }
+                        }
+
+                        deck.addEventListener('mouseenter', stop);
+                        deck.addEventListener('mouseleave', start);
+                        deck.addEventListener('click', function () {
+                            advance();
+                            start();
+                        });
+
+                        dots.forEach(function (dot, i) {
+                            dot.addEventListener('click', function () {
+                                front = i;
+                                render();
+                                start();
+                            });
+                        });
+
+                        render();
+                        start();
+                    })();
+                </script>
             </div>
         </div>
     </section>

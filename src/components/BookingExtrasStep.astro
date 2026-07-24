@@ -37,46 +37,28 @@ const { copy } = Astro.props;
     <div class="bk-extras-grid" role="group">
         {copy.cards.map((card) => (
             <article class={`bk-extra-card bk-extra-card--${card.theme}`} data-extra-field={card.field}>
-                <div class="bk-extra-card__media">
-                    <img
-                        class="bk-extra-card__img"
-                        src={card.image}
-                        alt=""
-                        width="900"
-                        height="600"
-                        loading="lazy"
-                        decoding="async"
-                    />
-                    <div class="bk-extra-card__media-shade" aria-hidden="true"></div>
-                    <span class="bk-extra-card__icon-badge" aria-hidden="true">
+                <label class="bk-extra-card__row">
+                    <input type="checkbox" class="bk-extra-card__checkbox" name={card.field} value="yes" />
+                    <span class="bk-extra-card__check-ui" aria-hidden="true">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="bk-extra-card__icon-inline" aria-hidden="true">
                         <i class={`fas fa-${card.icon}`}></i>
                     </span>
-                    <span class="bk-extra-card__price">+{card.price} €</span>
-                </div>
-                <div class="bk-extra-card__body">
-                    <div class="bk-extra-card__head">
-                        <h3 class="bk-extra-card__title">{card.title}</h3>
-                        <button
-                            type="button"
-                            class="bk-extra-info-btn"
-                            data-info-type={card.infoType}
-                            data-info-title={card.title}
-                            aria-label={`${copy.infoBtnLabel}: ${card.title}`}
-                        >
-                            <i class="fas fa-info" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="bk-extra-card__choices" role="group" aria-label={card.title}>
-                        <label class="bk-extra-choice">
-                            <input type="radio" name={card.field} value="yes" required />
-                            <span class="bk-extra-choice__label">{copy.yes}</span>
-                        </label>
-                        <label class="bk-extra-choice">
-                            <input type="radio" name={card.field} value="no" checked />
-                            <span class="bk-extra-choice__label">{copy.no}</span>
-                        </label>
-                    </div>
-                </div>
+                    <span class="bk-extra-card__copy">
+                        <span class="bk-extra-card__title">{card.title}</span>
+                        <span class="bk-extra-card__price">+{card.price} €</span>
+                    </span>
+                </label>
+                <button
+                    type="button"
+                    class="bk-extra-info-btn"
+                    data-info-type={card.infoType}
+                    data-info-title={card.title}
+                    aria-label={`${copy.infoBtnLabel}: ${card.title}`}
+                >
+                    <i class="fas fa-info" aria-hidden="true"></i>
+                </button>
             </article>
         ))}
     </div>
@@ -143,14 +125,12 @@ const { copy } = Astro.props;
         document.querySelectorAll('.booking-extras-step .bk-extra-card').forEach(function (card) {
             const field = card.getAttribute('data-extra-field');
             if (!field) return;
-            const checked = card.querySelector('input[name="' + field + '"]:checked');
-            card.classList.remove('bk-extra-card--yes', 'bk-extra-card--no');
-            if (checked?.value === 'yes') card.classList.add('bk-extra-card--yes');
-            else if (checked?.value === 'no') card.classList.add('bk-extra-card--no');
+            const checked = card.querySelector('input[name="' + field + '"]');
+            card.classList.toggle('bk-extra-card--yes', !!(checked && checked.checked));
         });
     }
 
-    document.querySelectorAll('.booking-extras-step .bk-extra-choice input').forEach(function (input) {
+    document.querySelectorAll('.booking-extras-step .bk-extra-card__checkbox').forEach(function (input) {
         input.addEventListener('change', syncExtraCardStates);
     });
     syncExtraCardStates();

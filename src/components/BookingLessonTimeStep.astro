@@ -652,6 +652,20 @@ const presetIsos = startDateOptions.map((opt) => {
 
     window.resetBookingLessonTimeStep = clearStartDateSelection;
 
+    window.animateBookingLessonTimeSlots = function () {
+      if (!timeSlots) return;
+      timeSlots.querySelectorAll('.qx-time-slot').forEach(function (btn) {
+        if (btn.offsetParent === null) return;
+        btn.classList.remove('qx-time-slot--shake');
+        void btn.offsetWidth;
+        btn.classList.add('qx-time-slot--shake');
+        btn.addEventListener('animationend', function onEnd() {
+          btn.classList.remove('qx-time-slot--shake');
+          btn.removeEventListener('animationend', onEnd);
+        });
+      });
+    };
+
     const initialProgram = document.querySelector('[name="program"]:checked')?.value || '';
     if (initialProgram) window.syncBookingLessonTimeForProgram(initialProgram);
   });
@@ -747,5 +761,68 @@ const presetIsos = startDateOptions.map((opt) => {
   .booking-lesson-time-step .qx-time-slot.is-selected .qx-time-slot__period-clock {
     color: #0a4d6e;
     font-weight: 800;
+  }
+  @keyframes qx-time-slot-shake {
+    0%, 100% { transform: translateX(0); }
+    15% { transform: translateX(-7px); }
+    30% { transform: translateX(7px); }
+    45% { transform: translateX(-5px); }
+    60% { transform: translateX(5px); }
+    75% { transform: translateX(-2px); }
+    90% { transform: translateX(2px); }
+  }
+  .booking-lesson-time-step .qx-time-slot--shake:not(.is-selected) {
+    animation: qx-time-slot-shake 0.65s ease-in-out;
+  }
+  .booking-lesson-time-step .qx-time-slot--shake.is-selected {
+    animation: none;
+  }
+  @media (max-width: 768px) {
+    .booking-lesson-time-step .qx-time-slots:not(.qx-time-slots--online) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+    .booking-lesson-time-step .qx-time-slots--online {
+      grid-template-columns: 1fr;
+      max-width: none;
+    }
+    .booking-lesson-time-step .qx-time-slot__period {
+      padding: 0.5rem 0.55rem 0.55rem;
+      gap: 0.45rem;
+    }
+    .booking-lesson-time-step .qx-time-slot__icon {
+      width: 2.1rem;
+      height: 2.1rem;
+    }
+    .booking-lesson-time-step .qx-time-slot__icon .fas {
+      font-size: 0.82rem;
+    }
+    .booking-lesson-time-step .qx-time-slot__period-label {
+      font-size: 0.72rem;
+      line-height: 1.2;
+    }
+    .booking-lesson-time-step .qx-time-slot__period-clock {
+      font-size: 0.64rem;
+    }
+    .booking-lesson-time-step .qx-time-slot__main {
+      padding: 0.35rem 0.45rem 0.45rem;
+    }
+    .booking-lesson-time-step .qx-time-slot__meta {
+      font-size: 0.6rem;
+      line-height: 1.25;
+    }
+    .booking-lesson-time-step .qx-time-slot.is-selected::after {
+      width: 1.35rem;
+      height: 1.35rem;
+      font-size: 0.72rem;
+      top: 0.4rem;
+      right: 0.45rem;
+    }
+    .booking-lesson-time-step .qx-scene-head--step3 .qx-question {
+      font-size: 1rem;
+    }
+    .booking-lesson-time-step .qx-question-note {
+      font-size: 0.8rem;
+    }
   }
 </style>

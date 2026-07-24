@@ -477,86 +477,6 @@ a.cta-secondary {
     animation: slideInRight 1s ease-out 0.5s both;
 }
 
-/* Main Video Card */
-.hero-video-card {
-    position: relative;
-    border-radius: 25px;
-    overflow: visible;
-    box-shadow: 0 25px 60px rgba(12, 192, 223, 0.2);
-    background: var(--color-bg-white);
-}
-
-.video-wrapper {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
-    overflow: visible;
-}
-
-.video-wrapper iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 25px;
-}
-
-/* Floating Info Cards */
-.floating-info {
-    position: absolute;
-    background: var(--color-bg-white);
-    border-radius: 20px;
-    padding: 15px;
-    box-shadow: 0 15px 40px rgba(12, 192, 223, 0.15);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    animation: float 6s ease-in-out infinite;
-    z-index: 10;
-    border: 1px solid var(--color-primary-light);
-}
-
-.info-icon {
-    font-size: 24px;
-}
-
-.info-content {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-}
-
-.info-title {
-    color: var(--color-text-primary);
-    font-weight: 700;
-    font-size: 14px;
-}
-
-.info-subtitle {
-    color: var(--color-text-muted);
-    font-size: 12px;
-}
-
-.floating-info-1 {
-    top: 15%;
-    left: -30px;
-    animation-delay: 0s;
-}
-
-.floating-info-2 {
-    top: 50%;
-    right: -30px;
-    animation-delay: 2s;
-}
-
-.floating-info-3 {
-    bottom: 15%;
-    left: -30px;
-    animation-delay: 4s;
-}
-
 /* Animations */
 @keyframes slideInLeft {
     from {
@@ -603,10 +523,6 @@ a.cta-secondary {
     
     .hero-trust {
         justify-content: center;
-    }
-    
-    .floating-info {
-        display: none;
     }
 }
 
