@@ -4,15 +4,12 @@
  * Shows on first visit; stores choice in localStorage (campusgerman_cookie_consent).
  * Values: "accepted" | "essential"
  */
-import { getDatenschutzPath } from '../utils/pathHelpers';
-
 interface Props {
   lang?: 'tr' | 'de' | 'en' | 'es';
 }
 
 const { lang = 'tr' } = Astro.props;
-const privacyPath = getDatenschutzPath(lang);
-const privacyHref = `/${lang}/${privacyPath}`;
+const privacyHref = '/datenschutz/';
 
 const t = {
   tr: {

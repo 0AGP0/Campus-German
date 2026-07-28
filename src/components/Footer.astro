@@ -1,7 +1,7 @@
 ﻿---
 // Footer Component - Yeni navbar yapısına göre güncellendi
 import '../styles/footer.css';
-import { getDatenschutzPath, getImpressumPath, getInformationsauskunftPath, getAgbPath } from '../utils/pathHelpers';
+import { getInformationsauskunftPath } from '../utils/pathHelpers';
 
 const { lang = 'tr' } = Astro.props;
 
@@ -514,9 +514,10 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionM
                     <p>&copy; {currentYear} CampusGerman. {currentLang.allRightsReserved}</p>
                 </div>
                 <div class="footer-legal">
-                    <a href={`/${lang}/${getAgbPath(lang as 'tr' | 'de' | 'en' | 'es')}`}>{currentLang.termsOfUse}</a>
-                    <a href={`/${lang}/${getDatenschutzPath(lang as 'tr' | 'de' | 'en' | 'es')}`}>{currentLang.privacyPolicy}</a>
-                    <a href={`/${lang}/${getImpressumPath(lang as 'tr' | 'de' | 'en' | 'es')}`}>{currentLang.impressum}</a>
+                    <a href="/agb/">{currentLang.termsOfUse}</a>
+                    <a href="/datenschutz/">{currentLang.privacyPolicy}</a>
+                    <a href="/widerrufsbelehrung/">Widerrufsbelehrung</a>
+                    <a href="/impressum/">{currentLang.impressum}</a>
                     <a href={`/${lang}/${getInformationsauskunftPath(lang as 'tr' | 'de' | 'en' | 'es')}`}>{currentLang.informationsauskunft}</a>
                 </div>
             </div>

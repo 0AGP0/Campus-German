@@ -5,8 +5,7 @@ import BookingExtrasStep from '../../components/BookingExtrasStep.astro';
 import PromoPrice from '../../components/PromoPrice.astro';
 import '../../styles/pages/buchung.css';
 import { coursePricing } from '../../data/coursePricing.ts';
-import { getStartDateOptions, PROMO_PRICE, LESSONS_UP_TO_200, ONLINE_LEVEL_PRICES } from '../../utils/coursePricingHelper';
-import { getDatenschutzPath, getAgbPath } from '../../utils/pathHelpers';
+import { getFirstMondayStartDateOptions, PROMO_PRICE, LESSONS_UP_TO_200, ONLINE_LEVEL_PRICES } from '../../utils/coursePricingHelper';
 
 export async function getStaticPaths() {
     return [
@@ -20,18 +19,55 @@ export async function getStaticPaths() {
 const { lang } = Astro.params;
 const pricingData = coursePricing[lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en')];
 const pricingLang = lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en');
-const START_DATE_YEAR = 2026;
-const allStartDateOptions = getStartDateOptions(lang as 'tr' | 'de' | 'en' | 'es', START_DATE_YEAR);
-const _today = new Date();
-_today.setHours(0, 0, 0, 0);
-const startDateOptions = allStartDateOptions.filter((opt) => {
-    const [d, m] = opt.value.split('.').map(Number);
-    if (!d || !m) return false;
-    const dt = new Date(START_DATE_YEAR, m - 1, d);
-    return dt >= _today;
-});
-const termsPath = `/${lang}/${getAgbPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
-const privacyPath = `/${lang}/${getDatenschutzPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
+const startDateOptions = getFirstMondayStartDateOptions(lang as 'tr' | 'de' | 'en' | 'es', 12);
+const termsPath = `/agb/`;
+const privacyPath = `/datenschutz/`;
+const widerrufPath = `/widerrufsbelehrung/`;
+
+/** Form checkbox metinleri sayfa dilinde; linkler Almanca kök sayfalara gider */
+const legalCheckboxCopy = {
+    tr: {
+        termsBefore: '(*) ',
+        agbLabel: 'Genel Hüküm ve Koşullar',
+        widerrufMid: ' (ve ',
+        widerrufLabel: 'Cayma Hakkı Bilgilendirmesi',
+        termsAfter: ")'ı okudum ve kabul ediyorum. Cayma süresi dolmadan hizmetin başlamasını açıkça talep ediyorum; hizmet tamamen ifa edilince cayma hakkımın sona ereceğini ve daha önce cayarsam kısmi ifalar (ör. sınav ücretleri, masraflar, alınan dersler) için değer tazmini ödeyebileceğimi biliyorum. *",
+        privacyBefore: '(*) ',
+        privacyLabel: 'Kişisel Verilerin Korunması',
+        privacyAfter: ' hakkındaki bilgilendirmeyi okudum. *',
+    },
+    de: {
+        termsBefore: '(*) Ich habe die ',
+        agbLabel: 'Allgemeinen Geschäftsbedingungen',
+        widerrufMid: ' (samt ',
+        widerrufLabel: 'Widerrufsbelehrung',
+        termsAfter: ') zur Kenntnis genommen und bin damit einverstanden. Ich verlange ausdrücklich den Beginn der Dienstleistung vor Ablauf der Widerrufsfrist und weiß, dass mein Widerrufsrecht bei vollständiger Erfüllung erlischt sowie bei früherem Widerruf Wertersatz für Teilleistungen (z. B. Prüfungsgebühren, Auslagen, Unterrichtseinheiten) anfallen kann. *',
+        privacyBefore: '(*) Die Hinweise zum ',
+        privacyLabel: 'Datenschutz',
+        privacyAfter: ' habe ich zur Kenntnis genommen. *',
+    },
+    en: {
+        termsBefore: '(*) I have read and accept the ',
+        agbLabel: 'General Terms and Conditions',
+        widerrufMid: ' (including the ',
+        widerrufLabel: 'Withdrawal Notice',
+        termsAfter: '). I expressly request that the service begin before the withdrawal period ends, and I understand that my right of withdrawal ends upon full performance and that early withdrawal may require compensation for partial services (e.g. exam fees, expenses, lessons already taken). *',
+        privacyBefore: '(*) I have taken note of the ',
+        privacyLabel: 'Privacy Policy',
+        privacyAfter: '. *',
+    },
+    es: {
+        termsBefore: '(*) He leído y acepto las ',
+        agbLabel: 'Condiciones Generales',
+        widerrufMid: ' (incluida la ',
+        widerrufLabel: 'Información sobre desistimiento',
+        termsAfter: '). Solicito expresamente que el servicio comience antes de que finalice el plazo de desistimiento, y sé que mi derecho de desistimiento se extingue con la ejecución completa y que un desistimiento anticipado puede generar compensación por prestaciones parciales (p. ej. tasas de examen, gastos, clases recibidas). *',
+        privacyBefore: '(*) He tomado nota de la información sobre ',
+        privacyLabel: 'Protección de datos',
+        privacyAfter: '. *',
+    },
+} as const;
+const legalCb = legalCheckboxCopy[(lang as keyof typeof legalCheckboxCopy) || 'de'] || legalCheckboxCopy.de;
 
 const phoneCountries = [
     { iso: 'tr', dial: '+90', name: 'Türkiye' },
@@ -184,7 +220,8 @@ const t = {
         accommodationLabel: "Konaklama desteği ister misiniz?",
         accommodationSupportLabel: "Konaklama desteği",
         accommodationNo: "Hayır",
-        bringFriendDiscountLabel: "Arkadaşını getir, 2x indirimi kap",
+        bringFriendDiscountLabel: "Arkadaşını getir, 50€ indirim kap",
+        bringFriendDiscountRowLabel: "Arkadaş indirimi",
         bringFriendSectionTitle: "Arkadaş bilgileri",
         bringFriendNameLabel: "Arkadaş ad soyad",
         bringFriendEmailLabel: "Arkadaş e-posta",
@@ -435,7 +472,8 @@ const t = {
         accommodationLabel: "Möchten Sie Unterkunftsunterstützung?",
         accommodationSupportLabel: "Unterkunftsunterstützung",
         accommodationNo: "Nein",
-        bringFriendDiscountLabel: "Freund mitbringen — doppelten Rabatt sichern",
+        bringFriendDiscountLabel: "Freund mitbringen — 50€ Rabatt sichern",
+        bringFriendDiscountRowLabel: "Freundesrabatt",
         bringFriendSectionTitle: "Freundesdaten",
         bringFriendNameLabel: "Name des Freundes",
         bringFriendEmailLabel: "E-Mail des Freundes",
@@ -696,7 +734,8 @@ const t = {
         accommodationLabel: "Do you want accommodation support?",
         accommodationSupportLabel: "Accommodation support",
         accommodationNo: "No",
-        bringFriendDiscountLabel: "Bring a friend, get 2x discount",
+        bringFriendDiscountLabel: "Bring a friend, get €50 off",
+        bringFriendDiscountRowLabel: "Friend discount",
         bringFriendSectionTitle: "Friend details",
         bringFriendNameLabel: "Friend's full name",
         bringFriendEmailLabel: "Friend's email",
@@ -957,7 +996,8 @@ const t = {
         accommodationLabel: "¿Desea apoyo de alojamiento?",
         accommodationSupportLabel: "Apoyo de alojamiento",
         accommodationNo: "No",
-        bringFriendDiscountLabel: "Trae a un amigo y consigue el doble de descuento",
+        bringFriendDiscountLabel: "Trae a un amigo y consigue 50€ de descuento",
+        bringFriendDiscountRowLabel: "Descuento por amigo",
         bringFriendSectionTitle: "Datos del amigo/a",
         bringFriendNameLabel: "Nombre completo del amigo/a",
         bringFriendEmailLabel: "Email del amigo/a",
@@ -1538,30 +1578,14 @@ const extrasStepCopy = {
                                                     <input type="checkbox" name="terms-accepted" value="yes" required>
                                                     <span class="checkbox-custom"></span>
                                                     <span class="checkbox-text">
-                                                        {lang === 'tr' ? (
-                                                            <><a href={termsPath} target="_blank" rel="noopener noreferrer">Genel Hüküm ve Koşullar</a>'ı okudum ve kabul ediyorum *</>
-                                                        ) : lang === 'de' ? (
-                                                            <>Ich habe die <a href={termsPath} target="_blank" rel="noopener noreferrer">Allgemeinen Geschäftsbedingungen</a> gelesen und akzeptiere sie *</>
-                                                        ) : lang === 'es' ? (
-                                                            <>He leído y acepto los <a href={termsPath} target="_blank" rel="noopener noreferrer">Términos y Condiciones Generales</a> *</>
-                                                        ) : (
-                                                            <>I have read and accept the <a href={termsPath} target="_blank" rel="noopener noreferrer">General Terms and Conditions</a> *</>
-                                                        )}
+                                                        {legalCb.termsBefore}<a href={termsPath} target="_blank" rel="noopener noreferrer">{legalCb.agbLabel}</a>{legalCb.widerrufMid}<a href={widerrufPath} target="_blank" rel="noopener noreferrer">{legalCb.widerrufLabel}</a>{legalCb.termsAfter}
                                                     </span>
                                                 </label>
                                                 <label class="checkbox-label">
                                                     <input type="checkbox" name="privacy-accepted" value="yes" required>
                                                     <span class="checkbox-custom"></span>
                                                     <span class="checkbox-text">
-                                                        {lang === 'tr' ? (
-                                                            <><a href={privacyPath} target="_blank" rel="noopener noreferrer">Kişisel Verilerin Korunması</a> hakkındaki bilgilendirmeyi okudum ve kabul ediyorum *</>
-                                                        ) : lang === 'de' ? (
-                                                            <>Ich habe die Information zum <a href={privacyPath} target="_blank" rel="noopener noreferrer">Datenschutz</a> gelesen und akzeptiere sie *</>
-                                                        ) : lang === 'es' ? (
-                                                            <>He leído y acepto la información sobre <a href={privacyPath} target="_blank" rel="noopener noreferrer">Protección de datos personales</a> *</>
-                                                        ) : (
-                                                            <>I have read and accept the information about <a href={privacyPath} target="_blank" rel="noopener noreferrer">Personal Data Protection</a> *</>
-                                                        )}
+                                                        {legalCb.privacyBefore}<a href={privacyPath} target="_blank" rel="noopener noreferrer">{legalCb.privacyLabel}</a>{legalCb.privacyAfter}
                                                     </span>
                                                 </label>
                                             </div>
@@ -1604,6 +1628,10 @@ const extrasStepCopy = {
                                         <div class="price-item price-item-coupon" id="bundle-discount-row" style="display: none;">
                                             <span class="price-item-label">{translations.multiCourseDiscountLabel}</span>
                                             <span class="price-item-value" id="bundle-discount-value">-</span>
+                                        </div>
+                                        <div class="price-item price-item-coupon" id="friend-discount-row" style="display: none;">
+                                            <span class="price-item-label">{translations.bringFriendDiscountRowLabel}</span>
+                                            <span class="price-item-value" id="friend-discount-value">-50 €</span>
                                         </div>
                                     </div>
                                     <div class="price-section" id="extras-prices">
@@ -1794,14 +1822,10 @@ const extrasStepCopy = {
             function getSelectedCourseCount(values) {
                 return levelModuleCount(values);
             }
-            function getMultiCourseDiscount(courseCount, grossTotal, bringFriendActive) {
+            function getMultiCourseDiscount(courseCount, grossTotal) {
                 if (courseCount < 2 || grossTotal <= 0) return { percent: 0, amount: 0 };
                 const percent = courseCount;
-                let amount = Math.round(grossTotal * percent / 100);
-                if (bringFriendActive) {
-                    amount *= 2;
-                    return { percent: percent * 2, amount };
-                }
+                const amount = Math.round(grossTotal * percent / 100);
                 return { percent, amount };
             }
 
@@ -1945,8 +1969,7 @@ const extrasStepCopy = {
                     textEl.textContent = courseInfoCopy?.oneCourse || '';
                 } else {
                     box.classList.remove('form-infobox--warning');
-                    let percent = courseCount;
-                    if (document.getElementById('bring-friend-discount')?.checked) percent *= 2;
+                    const percent = courseCount;
                     const tpl = courseInfoCopy?.multiDiscount || 'Total {weeks} weeks — {percent}% discount applied';
                     textEl.textContent = tpl
                         .replace(/\{weeks\}/g, String(totalWeeks))
@@ -2080,6 +2103,7 @@ const extrasStepCopy = {
             const UNIVERSITY_ADMISSION = 400;
             const ACCOMMODATION_SUPPORT = 70;
             const AIRPORT_PICKUP = 100;
+            const FRIEND_DISCOUNT = 50;
 
             // Tiered pricing per week — yalnızca short-term için
             const TIERS_20H = [
@@ -2548,6 +2572,8 @@ const extrasStepCopy = {
                 const durationPrice = document.getElementById('duration-price');
                 const bundleDiscountRow = document.getElementById('bundle-discount-row');
                 const bundleDiscountValue = document.getElementById('bundle-discount-value');
+                const friendDiscountRow = document.getElementById('friend-discount-row');
+                const friendDiscountValue = document.getElementById('friend-discount-value');
                 const visaPriceRow = document.getElementById('visa-price-row');
                 const universityAdmissionPriceRow = document.getElementById('university-admission-price-row');
                 const accommodationPriceRow = document.getElementById('accommodation-price-row');
@@ -2575,8 +2601,7 @@ const extrasStepCopy = {
                     } else if (program === 'intensive' || program === 'online') {
                         if (courseCount > 0) {
                             const gross = getIntensiveCourseGross(pricedCourses);
-                            const bringFriendActive = !!document.getElementById('bring-friend-discount')?.checked;
-                            multiDiscount = getMultiCourseDiscount(courseCount, gross, bringFriendActive);
+                            multiDiscount = getMultiCourseDiscount(courseCount, gross);
                             coursePrice = gross;
                         }
                     } else if (program === 'youth-camp') {
@@ -2627,6 +2652,12 @@ const extrasStepCopy = {
                     }
                 }
 
+                const bringFriendActive = !!document.getElementById('bring-friend-discount')?.checked;
+                if (friendDiscountRow) {
+                    friendDiscountRow.style.display = bringFriendActive ? 'flex' : 'none';
+                    if (friendDiscountValue) friendDiscountValue.textContent = '-' + FRIEND_DISCOUNT + ' €';
+                }
+
                 const courseFeeText = courseTypePrice?.querySelector('.price-item-value')?.textContent?.trim() || '';
                 const courseFeeDisplayed = parseInt(courseFeeText.replace(/[^0-9]/g, ''), 10) || 0;
                 let multiDiscountDisplayed = 0;
@@ -2634,7 +2665,8 @@ const extrasStepCopy = {
                     const discountText = bundleDiscountValue.textContent?.trim() || '';
                     multiDiscountDisplayed = parseInt(discountText.replace(/[^0-9]/g, ''), 10) || 0;
                 }
-                const effectiveCourseFromDOM = Math.max(0, courseFeeDisplayed - multiDiscountDisplayed);
+                const friendDiscountDisplayed = bringFriendActive ? FRIEND_DISCOUNT : 0;
+                const effectiveCourseFromDOM = Math.max(0, courseFeeDisplayed - multiDiscountDisplayed - friendDiscountDisplayed);
 
                 const visaNeeded = document.querySelector('[name="visa-guarantee"]:checked')?.value === 'yes';
                 if (visaPriceRow) {
@@ -2821,6 +2853,7 @@ const extrasStepCopy = {
                         .join(', ');
                     const totalFormatted = document.getElementById('total-price')?.textContent || '0 €';
                     const totalCents = parseInt(String(data.amountInCents || '0').trim(), 10) || 0;
+                    const friendDiscountEuro = bringFriendActive ? FRIEND_DISCOUNT : 0;
 
                     if (paymentChoice === 'pay_now' && totalCents <= 0) {
                         showBookingError(lang === 'tr' ? 'Ödeme için geçerli bir tutar seçiniz.' : lang === 'de' ? 'Bitte wählen Sie einen gültigen Betrag für die Zahlung.' : lang === 'es' ? 'Seleccione un importe válido para el pago.' : 'Please select a valid amount for payment.');
@@ -2870,6 +2903,7 @@ const extrasStepCopy = {
                         bringFriend: bringFriendActive
                             ? {
                                 active: bookingWebhookLabels.yes,
+                                discountEuro: friendDiscountEuro,
                                 name: (data['bring-friend-name'] || '').trim(),
                                 email: (data['bring-friend-email'] || '').trim(),
                                 phone: (data['bring-friend-phone'] || '').trim(),

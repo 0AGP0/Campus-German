@@ -4,7 +4,7 @@ import BilgiAlForm from '../../components/BilgiAlForm.astro';
 import '../../styles/pages/index.css';
 import { getCollection } from 'astro:content';
 import { isOverviewPage, getSectionPath, cleanSlug, getContactPath, getBookingPath, getPricesDatesPath } from '../../utils/pathHelpers';
-import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, getCourseCardDisplayBadges, LESSONS_UP_TO_200, getStartDateOptions } from '../../utils/coursePricingHelper';
+import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, getCourseCardDisplayBadges, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
 import { buildBookingUrl } from '../../utils/bookingPrefillHelper';
 import CourseCardVisaBadge from '../../components/CourseCardVisaBadge.astro';
 import PromoPrice from '../../components/PromoPrice.astro';
@@ -29,8 +29,7 @@ const bookingPath = `/${lang}/${getBookingPath(lang as 'tr' | 'de' | 'en' | 'es'
 const contactPath = getContactPath(lang);
 const pricesDatesPath = `/${lang}/${getPricesDatesPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
 
-/** Bugünden itibaren en yakın N kurs başlangıç tarihi */
-const COURSE_YEAR = 2026;
+/** Bugünden itibaren en yakın N kurs başlangıç tarihi (her ayın ilk Pazartesi) */
 const monthNamesByLang: Record<string, Record<number, string>> = {
     tr: { 1: 'Ocak', 2: 'Şubat', 3: 'Mart', 4: 'Nisan', 5: 'Mayıs', 6: 'Haziran', 7: 'Temmuz', 8: 'Ağustos', 9: 'Eylül', 10: 'Ekim', 11: 'Kasım', 12: 'Aralık' },
     de: { 1: 'Januar', 2: 'Februar', 3: 'März', 4: 'April', 5: 'Mai', 6: 'Juni', 7: 'Juli', 8: 'August', 9: 'September', 10: 'Oktober', 11: 'November', 12: 'Dezember' },
@@ -49,30 +48,61 @@ const monthShortByLang: Record<string, Record<number, string>> = {
     en: { 1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec' },
     es: { 1: 'Ene', 2: 'Feb', 3: 'Mar', 4: 'Abr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Ago', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dic' },
 };
-const upcomingCourses = getStartDateOptions(lang as 'tr' | 'de' | 'en' | 'es', COURSE_YEAR)
-    .filter((opt) => {
-        const [d, m] = opt.value.split('.').map(Number);
-        const start = new Date(COURSE_YEAR, m - 1, d);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        return start >= today;
-    })
-    .slice(0, 3)
-    .map((opt) => {
-        const [d, m] = opt.value.split('.').map(Number);
-        const dateObj = new Date(COURSE_YEAR, m - 1, d);
-        const months = monthNamesByLang[lang] || monthNamesByLang.en;
-        const monthsShort = monthShortByLang[lang] || monthShortByLang.en;
-        const weekdays = weekdayNamesByLang[lang] || weekdayNamesByLang.en;
-        return {
-            value: opt.value,
-            day: String(d).padStart(2, '0'),
-            month: months[m],
-            monthShort: monthsShort[m],
-            year: COURSE_YEAR,
-            weekday: weekdays[dateObj.getDay()],
-            };
-    });
+
+function getFirstMondayOfMonth(year: number, month: number): Date {
+    const d = new Date(year, month - 1, 1);
+    const day = d.getDay(); // 0=Pazar … 1=Pazartesi
+    const add = day === 0 ? 1 : day === 1 ? 0 : 8 - day;
+    d.setDate(1 + add);
+    d.setHours(0, 0, 0, 0);
+    return d;
+}
+
+/** Bugünden itibaren sonraki N ayın ilk Pazartesi’si */
+function getUpcomingFirstMondays(count = 3): Date[] {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const out: Date[] = [];
+    let y = today.getFullYear();
+    let m = today.getMonth() + 1;
+    while (out.length < count) {
+        const d = getFirstMondayOfMonth(y, m);
+        if (d >= today) out.push(d);
+        m += 1;
+        if (m > 12) {
+            m = 1;
+            y += 1;
+        }
+    }
+    return out;
+}
+
+const seatUrgencyByIndex = [
+    { key: 'last2' as const, tone: 'hot' as const, seatsLeft: 2 },
+    { key: 'last3' as const, tone: 'warn' as const, seatsLeft: 3 },
+    { key: 'filling' as const, tone: 'filling' as const, seatsLeft: 0 },
+];
+
+const upcomingCourses = getUpcomingFirstMondays(3).map((dateObj, i) => {
+    const d = dateObj.getDate();
+    const m = dateObj.getMonth() + 1;
+    const y = dateObj.getFullYear();
+    const months = monthNamesByLang[lang] || monthNamesByLang.en;
+    const monthsShort = monthShortByLang[lang] || monthShortByLang.en;
+    const weekdays = weekdayNamesByLang[lang] || weekdayNamesByLang.en;
+    const urgency = seatUrgencyByIndex[i] || seatUrgencyByIndex[2];
+    return {
+        value: `${String(d).padStart(2, '0')}.${String(m).padStart(2, '0')}`,
+        day: String(d).padStart(2, '0'),
+        month: months[m],
+        monthShort: monthsShort[m],
+        year: y,
+        weekday: weekdays[dateObj.getDay()],
+        seatKey: urgency.key,
+        tone: urgency.tone,
+        seatsLeft: urgency.seatsLeft,
+    };
+});
 
 // Kursları çek (ana sayfa filtre bölümü) – sadece navbar'da olan kurslar, navbar sırasına göre
 const allKurslar = await getCollection('kurslar');
@@ -168,7 +198,17 @@ const t = {
         upcomingCta: "Rezervasyon Yap",
         upcomingAllDates: "Tüm tarihler & fiyatlar",
         upcomingEmpty: "Yeni tarihler yakında duyurulacak",
-        upcomingSeats: "Kontenjan açık",
+        upcomingSeatsLast2: "Son 2 kişilik yer",
+        upcomingSeatsLast3: "Son 3 kişilik yer",
+        upcomingSeatsFilling: "Kontenjan bitiyor",
+        upcomingSeatsHintLast2: "Bu başlangıç için acele et",
+        upcomingSeatsHintLast3: "Yerler hızla doluyor",
+        upcomingSeatsHintFilling: "Kayıtlar kapanmak üzere",
+        upcomingSeatsLeftLabel: "kalan yer",
+        upcomingSeatsAlmostLabel: "dolmak üzere",
+        upcomingSeatOpen: "Açık",
+        upcomingSeatFull: "Dolu",
+        upcomingSeatLastOne: "Son yer",
         // Courses section
         bremenDescription: "Yüksek Almancanın konuşulduğu Unesco kültür şehri Bremen'de öğrencilerimiz için başarı odaklı programlarla sizlerleyiz.",
         bremenMiniTitle: "Neden Bremen?",
@@ -413,7 +453,17 @@ const t = {
         upcomingCta: "Book Now",
         upcomingAllDates: "All dates & prices",
         upcomingEmpty: "New dates will be announced soon",
-        upcomingSeats: "Seats open",
+        upcomingSeatsLast2: "Only 2 seats left",
+        upcomingSeatsLast3: "Only 3 seats left",
+        upcomingSeatsFilling: "Almost full",
+        upcomingSeatsHintLast2: "Act fast for this start",
+        upcomingSeatsHintLast3: "Seats are filling quickly",
+        upcomingSeatsHintFilling: "Registration closing soon",
+        upcomingSeatsLeftLabel: "seats left",
+        upcomingSeatsAlmostLabel: "almost gone",
+        upcomingSeatOpen: "Open",
+        upcomingSeatFull: "Taken",
+        upcomingSeatLastOne: "Last seat",
         bremenDescription: "We are with you in Bremen, a UNESCO cultural city where High German is spoken, with success-oriented programs for our students.",
         bremenMiniTitle: "Why Bremen?",
         bremenMiniDesc: "Student-friendly city, social life, Hochdeutsch advantage, and an ideal environment for experience-oriented learning.",
@@ -667,7 +717,17 @@ const t = {
         upcomingCta: "Jetzt reservieren",
         upcomingAllDates: "Alle Termine & Preise",
         upcomingEmpty: "Neue Termine folgen in Kürze",
-        upcomingSeats: "Plätze frei",
+        upcomingSeatsLast2: "Nur noch 2 Plätze",
+        upcomingSeatsLast3: "Nur noch 3 Plätze",
+        upcomingSeatsFilling: "Kontingent fast voll",
+        upcomingSeatsHintLast2: "Schnell sein für diesen Start",
+        upcomingSeatsHintLast3: "Plätze füllen sich schnell",
+        upcomingSeatsHintFilling: "Anmeldung schließt bald",
+        upcomingSeatsLeftLabel: "Plätze frei",
+        upcomingSeatsAlmostLabel: "fast weg",
+        upcomingSeatOpen: "Frei",
+        upcomingSeatFull: "Belegt",
+        upcomingSeatLastOne: "Letzter Platz",
         // Courses section
         bremenDescription: "In Bremen, UNESCO-Kulturstadt mit Hochdeutsch, sind wir mit erfolgsorientierten Programmen für Sie da.",
         bremenMiniTitle: "Warum Bremen?",
@@ -910,7 +970,17 @@ const t = {
         upcomingCta: "Reservar ahora",
         upcomingAllDates: "Todas las fechas y precios",
         upcomingEmpty: "Pronto se anunciarán nuevas fechas",
-        upcomingSeats: "Plazas abiertas",
+        upcomingSeatsLast2: "Solo 2 plazas",
+        upcomingSeatsLast3: "Solo 3 plazas",
+        upcomingSeatsFilling: "Cupos casi agotados",
+        upcomingSeatsHintLast2: "Date prisa con este inicio",
+        upcomingSeatsHintLast3: "Las plazas se agotan rápido",
+        upcomingSeatsHintFilling: "La inscripción cierra pronto",
+        upcomingSeatsLeftLabel: "plazas libres",
+        upcomingSeatsAlmostLabel: "casi lleno",
+        upcomingSeatOpen: "Libre",
+        upcomingSeatFull: "Ocupado",
+        upcomingSeatLastOne: "Última plaza",
         bremenDescription: "Estamos contigo en Bremen, una ciudad cultural de la UNESCO donde se habla alemán estándar, con programas orientados al éxito para nuestros estudiantes.",
         bremenMiniTitle: "¿Por qué Bremen?",
         bremenMiniDesc: "Ciudad amigable para estudiantes, vida social, ventaja del alemán estándar y un ambiente ideal para el aprendizaje orientado a la experiencia.",
@@ -1222,45 +1292,86 @@ function getAvatarColor(name: string): string {
                                     </div>
 
                                     <div class="hu__deck" id="hu-deck">
-                                        {upcomingCourses.map((c, i) => (
-                                            <article class="hu__card" data-pos={i}>
-                                                <span class="hu__card-shine" aria-hidden="true"></span>
-                                                <div class="hu__card-corner hu__card-corner--tl" aria-hidden="true">
-                                                    <strong>{c.day}</strong>
-                                                    <span>{c.monthShort}</span>
-                                                </div>
-                                                <div class="hu__card-corner hu__card-corner--br" aria-hidden="true">
-                                                    <strong>{c.day}</strong>
-                                                    <span>{c.monthShort}</span>
-                                                </div>
-
-                                                <div class="hu__card-mid">
-                                                    <span class="hu__card-tag">
-                                                        {i === 0 ? translations.upcomingNext : translations.upcomingMore}
-                                                    </span>
-                                                    <p class="hu__card-weekday">{c.weekday}</p>
-                                                    <p class="hu__card-bigday">{c.day}</p>
-                                                    <p class="hu__card-monthline">
-                                                        <span class="hu__card-month">{c.month}</span>
-                                                        <span class="hu__card-year">{c.year}</span>
-                                                    </p>
-                                                    <div class="hu__card-info">
-                                                        <span class="hu__card-info-row">
-                                                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                                                            {translations.upcomingLevels}
-                                                        </span>
-                                                        <span class="hu__card-info-row">
-                                                            <i class="fas fa-clock" aria-hidden="true"></i>
-                                                            {translations.upcomingMeta}
+                                        {upcomingCourses.map((c, i) => {
+                                            const seatTitle =
+                                                c.seatKey === 'last2'
+                                                    ? translations.upcomingSeatsLast2
+                                                    : c.seatKey === 'last3'
+                                                      ? translations.upcomingSeatsLast3
+                                                      : translations.upcomingSeatsFilling;
+                                            const seatHint =
+                                                c.seatKey === 'last2'
+                                                    ? translations.upcomingSeatsHintLast2
+                                                    : c.seatKey === 'last3'
+                                                      ? translations.upcomingSeatsHintLast3
+                                                      : translations.upcomingSeatsHintFilling;
+                                            const seatLabel =
+                                                c.seatKey === 'filling'
+                                                    ? translations.upcomingSeatsAlmostLabel
+                                                    : translations.upcomingSeatsLeftLabel;
+                                            return (
+                                            <article class={`hu__card hu__card--${c.tone}`} data-pos={i} data-urgency={c.seatKey}>
+                                                <div class="hu__urgency" aria-label={seatTitle}>
+                                                    <div class="hu__urgency-top">
+                                                        <span class="hu__urgency-badge">
+                                                            <i class="fas fa-bolt" aria-hidden="true"></i>
+                                                            {i === 0 ? translations.upcomingNext : translations.upcomingMore}
                                                         </span>
                                                     </div>
+                                                    <div class="hu__urgency-hero">
+                                                        {c.seatKey === 'filling' ? (
+                                                            <span class="hu__urgency-num hu__urgency-num--mark" aria-hidden="true">!</span>
+                                                        ) : (
+                                                            <span class="hu__urgency-num" aria-hidden="true">{c.seatsLeft}</span>
+                                                        )}
+                                                        <div class="hu__urgency-copy">
+                                                            <strong class="hu__urgency-title">{seatTitle}</strong>
+                                                            <span class="hu__urgency-sub">{seatLabel}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="hu__seatmap" aria-hidden="true">
+                                                        <div class="hu__seatmap-full">
+                                                            {Array.from({ length: c.seatKey === 'last2' ? 4 : c.seatKey === 'last3' ? 3 : 5 }).map(() => (
+                                                                <span class="hu__seat-chip is-full">
+                                                                    <i class="fas fa-user-slash"></i>
+                                                                    {translations.upcomingSeatFull}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                        <div class="hu__seatmap-open">
+                                                            {c.seatKey === 'filling' ? (
+                                                                <span class="hu__seat-ticket is-last">
+                                                                    <i class="fas fa-chair"></i>
+                                                                    <strong>1</strong>
+                                                                    <em>{translations.upcomingSeatLastOne}</em>
+                                                                </span>
+                                                            ) : (
+                                                                Array.from({ length: c.seatsLeft }).map((_, si) => (
+                                                                    <span class="hu__seat-ticket" style={`animation-delay: ${si * 0.15}s`}>
+                                                                        <i class="fas fa-chair"></i>
+                                                                        <strong>{si + 1}</strong>
+                                                                        <em>{translations.upcomingSeatOpen}</em>
+                                                                    </span>
+                                                                ))
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <p class="hu__urgency-hint">{seatHint}</p>
                                                 </div>
-                                                <div class="hu__card-status">
-                                                    <span class="hu__card-status-dot" aria-hidden="true"></span>
-                                                    <span>{translations.upcomingSeats}</span>
+
+                                                <div class="hu__dateblock">
+                                                    <p class="hu__date-weekday">{c.weekday}</p>
+                                                    <p class="hu__date-day">{c.day}</p>
+                                                    <p class="hu__date-month">{c.month} {c.year}</p>
+                                                    <div class="hu__date-meta">
+                                                        <span>{translations.upcomingLevels}</span>
+                                                        <span aria-hidden="true">·</span>
+                                                        <span>{translations.upcomingMeta}</span>
+                                                    </div>
                                                 </div>
                                             </article>
-                                        ))}
+                                            );
+                                        })}
                                     </div>
 
                                     <div class="hu__rail hu__rail--bottom" aria-hidden="true">

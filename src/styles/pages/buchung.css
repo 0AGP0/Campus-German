@@ -451,43 +451,43 @@
 .course-slot--a1 {
     --slot-accent: #0891b2;
     --slot-ring: rgba(8, 145, 178, 0.42);
-    --slot-bar: linear-gradient(118deg, #0891b2 0%, #0cc0df 48%, #06b6d4 100%);
+    --slot-bar: #0891b2;
 }
 
 .course-slot--a2 {
     --slot-accent: #059669;
     --slot-ring: rgba(5, 150, 105, 0.42);
-    --slot-bar: linear-gradient(118deg, #059669 0%, #0d9488 48%, #0f766e 100%);
+    --slot-bar: #059669;
 }
 
 .course-slot--b1 {
     --slot-accent: #2563eb;
     --slot-ring: rgba(37, 99, 235, 0.42);
-    --slot-bar: linear-gradient(118deg, #1d4ed8 0%, #2563eb 45%, #3b82f6 100%);
+    --slot-bar: #2563eb;
 }
 
 .course-slot--b2 {
     --slot-accent: #ea580c;
     --slot-ring: rgba(234, 88, 12, 0.42);
-    --slot-bar: linear-gradient(118deg, #ea580c 0%, #f97316 45%, #fb923c 100%);
+    --slot-bar: #ea580c;
 }
 
 .course-slot--c1 {
     --slot-accent: #7c3aed;
     --slot-ring: rgba(124, 58, 237, 0.42);
-    --slot-bar: linear-gradient(118deg, #4c1d95 0%, #6d28d9 42%, #7c3aed 100%);
+    --slot-bar: #7c3aed;
 }
 
 .course-slot--telc {
     --slot-accent: #d97706;
     --slot-ring: rgba(217, 119, 6, 0.42);
-    --slot-bar: linear-gradient(118deg, #b45309 0%, #d97706 40%, #7c3aed 100%);
+    --slot-bar: #d97706;
 }
 
 .course-slot--unsure {
     --slot-accent: #64748b;
     --slot-ring: rgba(100, 116, 139, 0.35);
-    --slot-bar: linear-gradient(118deg, #475569 0%, #64748b 48%, #94a3b8 100%);
+    --slot-bar: #64748b;
 }
 
 .course-slot:has(input:checked) {
@@ -574,7 +574,7 @@
         0 10px 28px -8px rgba(12, 192, 223, 0.1);
 }
 
-/* Üst bant — gradient + ikon */
+/* Üst bant — düz renk + ikon */
 .course-slot__head {
     position: relative;
     flex-shrink: 0;
@@ -587,52 +587,44 @@
     border-radius: 17px 17px 0 0;
 }
 
-.course-slot__head::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(120% 80% at 100% 0%, rgba(255, 255, 255, 0.22) 0%, transparent 55%);
-    pointer-events: none;
-}
-
 .course-slot--a1 .course-slot__head {
-    background: linear-gradient(118deg, #0891b2 0%, #0cc0df 48%, #06b6d4 100%);
+    background: #0891b2;
     color: #ecfeff;
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.06);
 }
 
 .course-slot--a2 .course-slot__head {
-    background: linear-gradient(118deg, #059669 0%, #0d9488 48%, #0f766e 100%);
+    background: #059669;
     color: #ecfdf5;
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.06);
 }
 
 .course-slot--b1 .course-slot__head {
-    background: linear-gradient(118deg, #1d4ed8 0%, #2563eb 45%, #3b82f6 100%);
+    background: #2563eb;
     color: #eff6ff;
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.06);
 }
 
 .course-slot--b2 .course-slot__head {
-    background: linear-gradient(118deg, #ea580c 0%, #f97316 45%, #fb923c 100%);
+    background: #ea580c;
     color: #fff7ed;
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.06);
 }
 
 .course-slot--c1 .course-slot__head {
-    background: linear-gradient(118deg, #4c1d95 0%, #6d28d9 42%, #7c3aed 100%);
+    background: #7c3aed;
     color: #f5f3ff;
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.12);
 }
 
 .course-slot--telc .course-slot__head {
-    background: linear-gradient(118deg, #b45309 0%, #d97706 40%, #7c3aed 100%);
+    background: #d97706;
     color: #fffbeb;
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08);
 }
 
 .course-slot--unsure .course-slot__head {
-    background: linear-gradient(118deg, #475569 0%, #64748b 48%, #94a3b8 100%);
+    background: #64748b;
     color: #f8fafc;
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08);
 }
@@ -762,7 +754,7 @@
 
 .course-slot__badge--lessons {
     color: #fff;
-    background: var(--gradient-primary, linear-gradient(135deg, #0cc0df, #059669));
+    background: #0cc0df;
     box-shadow: 0 2px 8px rgba(12, 192, 223, 0.28);
 }
 
@@ -1921,8 +1913,15 @@
 }
 
 .terms-section .checkbox-text {
-    line-height: 1.6;
+    line-height: 1.55;
     font-weight: 500;
+    font-size: 0.88rem;
+}
+
+.terms-section .checkbox-text a {
+    color: var(--color-primary, #0cc0df);
+    font-weight: 700;
+    text-decoration: underline;
 }
 
 .terms-section .checkbox-text strong {

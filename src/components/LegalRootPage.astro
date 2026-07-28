@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../layouts/MainLayout.astro';
+
+interface Props {
+  type: 'agb' | 'datenschutz' | 'widerrufsbelehrung' | 'impressum';
+  pageTitle: string;
+}
+
+const { type, pageTitle } = Astro.props;
+const legalCollection = await getCollection('legal');
+const entry = legalCollection.find((e) => e.data.type === type);
+
+if (!entry) {
+  return Astro.redirect('/');
+}
+
+const { Content } = await entry.render();
+---
+
+<MainLayout title={pageTitle} lang="de">
+  <section class="legal-page section-padding">
+    <div class="container">
+      <article class="legal-content prose">
+        <h1 class="legal-page-title">{entry.data.title}</h1>
+        <Content />
+      </article>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .legal-page { padding: 3rem 0; }
+  .legal-content { max-width: 800px; margin: 0 auto; }
+  .legal-page-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--color-text-primary, #1a1a1a);
+  }
+  .legal-content :global(h2) {
+    font-size: 1.35rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-text-primary, #1a1a1a);
+  }
+  .legal-content :global(p),
+  .legal-content :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary, #444);
+  }
+  .legal-content :global(ul) {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .legal-content :global(strong) { color: var(--color-text-primary, #1a1a1a); }
+  .legal-content :global(a) { color: var(--color-primary, #059669); }
+</style>

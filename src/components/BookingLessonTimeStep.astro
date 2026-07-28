@@ -6,7 +6,7 @@ interface Props {
   morningTime: string;
   afternoonTime: string;
   eveningTime?: string;
-  startDateOptions: { value: string; label: string }[];
+  startDateOptions: { value: string; label: string; iso?: string }[];
 }
 
 const { lang, morningTime, afternoonTime, eveningTime = '19:00 – 22:00', startDateOptions } = Astro.props;
@@ -16,31 +16,32 @@ const copy = {
     stepTitle: 'Ders zamanı',
     stepDesc: 'Tercih ettiğiniz ders saati ve başlangıç tarihini seçin.',
     step3Title: 'Ders zamanını seç',
-    step3Subtitle: 'Günlük rutininize en uygun saat dilimini seçin. Tüm gruplarda haftada 20 saat yüz yüze eğitim yer alır.',
-    cardSelectHint: 'Sabah veya öğleden sonra gruplarından birini seçin.',
+    step3Subtitle: 'İsterseniz ders saati seçin; boş bırakarak da devam edebilirsiniz. Tüm gruplarda haftada 20 saat yüz yüze eğitim yer alır.',
+    cardSelectHint: 'İsteğe bağlı: sabah veya öğleden sonra grubundan birini seçin.',
     slotMorningTitle: 'Sabah grubu',
     slotAfternoonTitle: 'Öğleden sonra grubu',
     slotEveningTitle: 'Akşam grubu',
-    step3SubtitleOnline: 'Online programda akşam grubu (19:00 – 22:00) sabittir.',
+    step3SubtitleOnline: 'Online programda akşam grubu (19:00 – 22:00) sabittir; seçmeden de devam edebilirsiniz.',
     step4Title: 'Başlangıç tarihini seç',
-    step4Subtitle: 'Size en uygun başlangıç tarihini seçin veya danışmanla özel bir tarih belirleyin.',
+    step4Subtitle: 'Size en uygun başlangıç tarihini seçin veya takvimden bir Pazartesi seçin.',
     step4PresetTitle: 'Kurs başlangıç dönemleri',
     step4CustomTitle: 'Başlama tarihini kendim seçmek istiyorum',
-    step4CustomF1: 'Özel başlangıç tarihi',
+    step4CustomF1: 'Özel başlangıç tarihi (yalnızca Pazartesi)',
     step4CustomF2: 'Esnek planlama',
     step4CustomF3: 'Size uygun program için danışman desteği',
     step4CustomCta: 'Tarihimi kendim seçmek istiyorum',
     step4Trust: 'Güvenli seçim; başarıya giden en doğru adım.',
     step4PickDateLabel: 'Başlangıç tarihiniz',
-    step4PickDateHint: 'Son kesin tarih danışmanlıkta netleşir.',
-    step4CalendarTrigger: 'Takvimden bir gün seçin',
+    step4PickDateHint: 'Takvimde yalnızca Pazartesi günleri seçilebilir.',
+    step4CalendarTrigger: 'Takvimden bir Pazartesi seçin',
     step4CalPrevMonth: 'Önceki ay',
     step4CalNextMonth: 'Sonraki ay',
     back: 'Geri',
     continueBtn: 'Devam Et',
     needTime: 'Lütfen bir ders saati seçin.',
-    needDate: 'Listeden bir dönem seçin veya özel tarih için takvimden bir gün seçin.',
-    needCustomDate: 'Özel başlangıç için lütfen takvimden bir tarih seçin.',
+    needDate: 'Listeden bir dönem seçin veya özel tarih için takvimden bir Pazartesi seçin.',
+    needCustomDate: 'Özel başlangıç için lütfen takvimden bir Pazartesi seçin.',
+    needMonday: 'Özel başlangıç tarihi yalnızca Pazartesi olabilir.',
     weekdaysShort: 'Pzt, Sal, Çar, Per',
     hoursPerWeek: '20 saat / hafta',
     hoursPerWeekOnline: '16 saat + 4 etüt / hafta',
@@ -50,31 +51,32 @@ const copy = {
     stepTitle: 'Unterrichtszeit',
     stepDesc: 'Wählen Sie Ihre bevorzugte Unterrichtszeit und Ihr Startdatum.',
     step3Title: 'Unterrichtszeit wählen',
-    step3Subtitle: 'Wählen Sie das Zeitfenster, das am besten zu Ihrem Alltag passt. Alle Gruppen umfassen 20 Std./Woche Präsenzunterricht.',
-    cardSelectHint: 'Wählen Sie eine Morgen- oder Nachmittagsgruppe.',
+    step3Subtitle: 'Wählen Sie optional ein Zeitfenster — Sie können auch ohne Auswahl fortfahren. Alle Gruppen umfassen 20 Std./Woche Präsenzunterricht.',
+    cardSelectHint: 'Optional: Morgen- oder Nachmittagsgruppe wählen.',
     slotMorningTitle: 'Morgengruppe',
     slotAfternoonTitle: 'Nachmittagsgruppe',
     slotEveningTitle: 'Abendgruppe',
-    step3SubtitleOnline: 'Beim Online-Programm ist die Abendgruppe (19:00 – 22:00) fest vorgegeben.',
+    step3SubtitleOnline: 'Beim Online-Programm ist die Abendgruppe (19:00 – 22:00) fest — Fortfahren ohne Auswahl ist möglich.',
     step4Title: 'Starttermin wählen',
-    step4Subtitle: 'Wählen Sie Ihren Wunschstarttermin oder vereinbaren Sie einen individuellen Termin.',
+    step4Subtitle: 'Wählen Sie Ihren Wunschstarttermin oder einen Montag im Kalender.',
     step4PresetTitle: 'Starttermine zum Kursbeginn',
     step4CustomTitle: 'Ich möchte meinen Starttermin selbst festlegen',
-    step4CustomF1: 'Individueller Starttermin',
+    step4CustomF1: 'Individueller Starttermin (nur Montage)',
     step4CustomF2: 'Flexible Planung',
     step4CustomF3: 'Beratung für das passende Programm',
     step4CustomCta: 'Starttermin selbst wählen',
     step4Trust: 'Sichere Auswahl – der richtige Schritt zum Erfolg.',
     step4PickDateLabel: 'Ihr Wunsch-Startdatum',
-    step4PickDateHint: 'Der endgültige Termin wird in der Beratung festgelegt.',
-    step4CalendarTrigger: 'Wählen Sie einen Tag im Kalender',
+    step4PickDateHint: 'Im Kalender sind nur Montage wählbar.',
+    step4CalendarTrigger: 'Wählen Sie einen Montag im Kalender',
     step4CalPrevMonth: 'Voriger Monat',
     step4CalNextMonth: 'Nächster Monat',
     back: 'Zurück',
     continueBtn: 'Weiter',
     needTime: 'Bitte wählen Sie eine Unterrichtszeit.',
-    needDate: 'Bitte wählen Sie einen Termin aus der Liste oder im Kalender.',
-    needCustomDate: 'Bitte wählen Sie unten ein Datum für Ihren individuellen Start.',
+    needDate: 'Bitte wählen Sie einen Termin aus der Liste oder einen Montag im Kalender.',
+    needCustomDate: 'Bitte wählen Sie unten einen Montag für Ihren individuellen Start.',
+    needMonday: 'Der individuelle Starttermin muss ein Montag sein.',
     weekdaysShort: 'Mo, Di, Mi, Do',
     hoursPerWeek: '20 Std./Woche',
     hoursPerWeekOnline: '16 Std. + 4 Tutorien / Woche',
@@ -84,31 +86,32 @@ const copy = {
     stepTitle: 'Lesson time',
     stepDesc: 'Choose your preferred lesson time and start date.',
     step3Title: 'Choose lesson time',
-    step3Subtitle: 'Pick the time slot that fits your daily routine. All groups include 20 hours of in-person lessons per week.',
-    cardSelectHint: 'Select a morning or afternoon group.',
+    step3Subtitle: 'Optionally pick a time slot — you can continue without selecting. All groups include 20 hours of in-person lessons per week.',
+    cardSelectHint: 'Optional: select a morning or afternoon group.',
     slotMorningTitle: 'Morning group',
     slotAfternoonTitle: 'Afternoon group',
     slotEveningTitle: 'Evening group',
-    step3SubtitleOnline: 'For the online program, the evening group (19:00 – 22:00) is fixed.',
+    step3SubtitleOnline: 'For the online program, the evening group (19:00 – 22:00) is fixed — you can also continue without selecting.',
     step4Title: 'Choose your start date',
-    step4Subtitle: 'Select the start date that works best for you, or arrange a custom date with an advisor.',
+    step4Subtitle: 'Select a start date that works for you, or pick a Monday on the calendar.',
     step4PresetTitle: 'Course start dates',
     step4CustomTitle: 'I want to choose my own start date',
-    step4CustomF1: 'Custom start date',
+    step4CustomF1: 'Custom start date (Mondays only)',
     step4CustomF2: 'Flexible planning',
     step4CustomF3: 'Advisor support for the right program',
     step4CustomCta: 'Choose my own date',
     step4Trust: 'A secure choice — the right step toward success.',
     step4PickDateLabel: 'Your preferred start date',
-    step4PickDateHint: 'The final date will be confirmed during advising.',
-    step4CalendarTrigger: 'Pick a day on the calendar',
+    step4PickDateHint: 'Only Mondays can be selected on the calendar.',
+    step4CalendarTrigger: 'Pick a Monday on the calendar',
     step4CalPrevMonth: 'Previous month',
     step4CalNextMonth: 'Next month',
     back: 'Back',
     continueBtn: 'Continue',
     needTime: 'Please select a lesson time.',
-    needDate: 'Choose a date from the list or pick a custom date on the calendar.',
-    needCustomDate: 'Please pick a start date on the calendar below.',
+    needDate: 'Choose a date from the list or pick a Monday on the calendar.',
+    needCustomDate: 'Please pick a Monday on the calendar below.',
+    needMonday: 'Custom start dates must be a Monday.',
     weekdaysShort: 'Mon, Tue, Wed, Thu',
     hoursPerWeek: '20 hrs/week',
     hoursPerWeekOnline: '16 hrs + 4 tutorials / week',
@@ -118,31 +121,32 @@ const copy = {
     stepTitle: 'Horario de clase',
     stepDesc: 'Elige tu horario preferido y la fecha de inicio.',
     step3Title: 'Elige el horario de clase',
-    step3Subtitle: 'Selecciona el horario que mejor se adapte a tu rutina. Todos los grupos incluyen 20 horas presenciales por semana.',
-    cardSelectHint: 'Elige un grupo de mañana o de tarde.',
+    step3Subtitle: 'Puedes elegir un horario o continuar sin seleccionar. Todos los grupos incluyen 20 horas presenciales por semana.',
+    cardSelectHint: 'Opcional: elige un grupo de mañana o de tarde.',
     slotMorningTitle: 'Grupo de mañana',
     slotAfternoonTitle: 'Grupo de tarde',
     slotEveningTitle: 'Grupo de tarde-noche',
-    step3SubtitleOnline: 'En el programa online, el grupo de tarde-noche (19:00 – 22:00) es fijo.',
+    step3SubtitleOnline: 'En el programa online, el grupo de tarde-noche (19:00 – 22:00) es fijo; también puedes continuar sin seleccionar.',
     step4Title: 'Elige tu fecha de inicio',
-    step4Subtitle: 'Selecciona la fecha que mejor te convenga o acuerda una fecha personalizada con un asesor.',
+    step4Subtitle: 'Selecciona una fecha de inicio o elige un lunes en el calendario.',
     step4PresetTitle: 'Fechas de inicio del curso',
     step4CustomTitle: 'Quiero elegir mi propia fecha de inicio',
-    step4CustomF1: 'Fecha de inicio personalizada',
+    step4CustomF1: 'Fecha de inicio personalizada (solo lunes)',
     step4CustomF2: 'Planificación flexible',
     step4CustomF3: 'Apoyo del asesor para el mejor programa',
     step4CustomCta: 'Quiero elegir mi fecha',
     step4Trust: 'Una elección segura — el paso correcto hacia el éxito.',
     step4PickDateLabel: 'Tu fecha de inicio deseada',
-    step4PickDateHint: 'La fecha definitiva se confirma con un asesor.',
-    step4CalendarTrigger: 'Elige un día en el calendario',
+    step4PickDateHint: 'En el calendario solo se pueden elegir lunes.',
+    step4CalendarTrigger: 'Elige un lunes en el calendario',
     step4CalPrevMonth: 'Mes anterior',
     step4CalNextMonth: 'Mes siguiente',
     back: 'Atrás',
     continueBtn: 'Continuar',
     needTime: 'Selecciona un horario de clase.',
-    needDate: 'Elige una fecha de la lista o una fecha personalizada en el calendario.',
-    needCustomDate: 'Por favor elige una fecha de inicio abajo.',
+    needDate: 'Elige una fecha de la lista o un lunes en el calendario.',
+    needCustomDate: 'Por favor elige un lunes abajo.',
+    needMonday: 'La fecha personalizada debe ser un lunes.',
     weekdaysShort: 'Lun, Mar, Mié, Jue',
     hoursPerWeek: '20 h/semana',
     hoursPerWeekOnline: '16 h + 4 tutorías / semana',
@@ -153,8 +157,14 @@ const copy = {
 const t = copy[lang as keyof typeof copy] ?? copy.tr;
 
 const presetIsos = startDateOptions.map((opt) => {
-  const [d, m] = opt.value.split('.').map(Number);
-  const iso = d && m ? `2026-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}` : '';
+  if (opt.iso) {
+    return { iso: opt.iso, value: opt.value, label: opt.label };
+  }
+  const parts = opt.value.split('.').map(Number);
+  const d = parts[0];
+  const m = parts[1];
+  const y = parts[2] || 2026;
+  const iso = d && m ? `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}` : '';
   return { iso, value: opt.value, label: opt.label };
 }).filter((p) => p.iso);
 ---
@@ -302,7 +312,7 @@ const presetIsos = startDateOptions.map((opt) => {
   </div>
 </div>
 
-<script define:vars={{ lang, needTime: t.needTime, needDate: t.needDate, needCustomDate: t.needCustomDate, step3Subtitle: t.step3Subtitle, step3SubtitleOnline: t.step3SubtitleOnline }}>
+<script define:vars={{ lang, needDate: t.needDate, needCustomDate: t.needCustomDate, needMonday: t.needMonday, step3Subtitle: t.step3Subtitle, step3SubtitleOnline: t.step3SubtitleOnline }}>
   document.addEventListener('DOMContentLoaded', function () {
     const step = document.querySelector('.booking-lesson-time-step');
     if (!step) return;
@@ -332,6 +342,28 @@ const presetIsos = startDateOptions.map((opt) => {
 
     let calViewYear = new Date().getFullYear();
     let calViewMonth = new Date().getMonth() + 1;
+
+    function startOfToday() {
+      const t = new Date();
+      t.setHours(0, 0, 0, 0);
+      return t;
+    }
+
+    /** Build’de kalmış geçmiş / sonraki yıl seçeneklerini gizle */
+    function prunePastPresetDates() {
+      if (!presetsWrap) return;
+      const today = startOfToday();
+      const year = today.getFullYear();
+      presetsWrap.querySelectorAll('.qx-step4-preset-row').forEach(function (row) {
+        const input = row.querySelector('input[type="radio"]');
+        if (!(input instanceof HTMLInputElement)) return;
+        const d = new Date(input.value + 'T12:00:00');
+        if (Number.isNaN(d.getTime()) || d < today || d.getFullYear() !== year) {
+          row.remove();
+        }
+      });
+    }
+    prunePastPresetDates();
 
     function localeForLang(lc) {
       if (lc === 'de') return 'de-DE';
@@ -523,9 +555,8 @@ const presetIsos = startDateOptions.map((opt) => {
     });
 
     function calBounds() {
-      const min = new Date();
-      min.setHours(0, 0, 0, 0);
-      const max = new Date(2030, 11, 31);
+      const min = startOfToday();
+      const max = new Date(min.getFullYear(), 11, 31);
       max.setHours(0, 0, 0, 0);
       return { min, max };
     }
@@ -593,9 +624,11 @@ const presetIsos = startDateOptions.map((opt) => {
           btn.className = 'qx-inline-cal__day';
           btn.textContent = String(dayNum);
           btn.dataset.calDay = iso;
-          if (cellDate < min || cellDate > max) {
+          const isMonday = cellDate.getDay() === 1;
+          if (cellDate < min || cellDate > max || !isMonday) {
             btn.disabled = true;
             btn.classList.add('is-out');
+            if (!isMonday) btn.classList.add('is-not-monday');
           }
           if (iso === selectedIso) btn.classList.add('is-selected');
           cell.appendChild(btn);
@@ -619,33 +652,48 @@ const presetIsos = startDateOptions.map((opt) => {
     });
 
     calPrevBtn?.addEventListener('click', function () {
-      calViewMonth--;
-      if (calViewMonth < 1) { calViewMonth = 12; calViewYear--; }
+      const { min } = calBounds();
+      const nextM = calViewMonth - 1;
+      const nextY = nextM < 1 ? calViewYear - 1 : calViewYear;
+      const nextMonth = nextM < 1 ? 12 : nextM;
+      if (new Date(nextY, nextMonth - 1, 1) < new Date(min.getFullYear(), min.getMonth(), 1)) return;
+      calViewYear = nextY;
+      calViewMonth = nextMonth;
       renderInlineCalendar();
     });
 
     calNextBtn?.addEventListener('click', function () {
-      calViewMonth++;
-      if (calViewMonth > 12) { calViewMonth = 1; calViewYear++; }
+      const { max } = calBounds();
+      const nextM = calViewMonth + 1;
+      const nextY = nextM > 12 ? calViewYear + 1 : calViewYear;
+      const nextMonth = nextM > 12 ? 1 : nextM;
+      if (new Date(nextY, nextMonth - 1, 1) > new Date(max.getFullYear(), max.getMonth(), 1)) return;
+      calViewYear = nextY;
+      calViewMonth = nextMonth;
       renderInlineCalendar();
     });
 
     window.validateBookingLessonTimeStep = function () {
       hideError();
-      const slot = tzSlotHidden?.value?.trim();
-      if (!slot) {
-        showError(needTime);
-        return false;
-      }
+      // Ders saati isteğe bağlı — seçilmeden devam edilebilir
       const mode = startDateMode?.value?.trim();
       const dateVal = startDateHidden?.value?.trim();
       if (!mode || !dateVal) {
         showError(needDate);
         return false;
       }
-      if (mode === 'custom' && !customDateInput?.value?.trim()) {
-        showError(needCustomDate);
-        return false;
+      if (mode === 'custom') {
+        const customIso = customDateInput?.value?.trim() || '';
+        if (!customIso) {
+          showError(needCustomDate);
+          return false;
+        }
+        const d = new Date(`${customIso}T12:00:00`);
+        const yearNow = startOfToday().getFullYear();
+        if (Number.isNaN(d.getTime()) || d.getDay() !== 1 || d.getFullYear() !== yearNow || d < startOfToday()) {
+          showError(needMonday);
+          return false;
+        }
       }
       return true;
     };

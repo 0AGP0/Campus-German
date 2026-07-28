@@ -1,26 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
-import { getLegalPageType, getDatenschutzPath, getImpressumPath, getInformationsauskunftPath, getAgbPath } from '../../utils/pathHelpers';
+import { getLegalPageType } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
   const legalSlugs = [
-    { lang: 'tr', slug: 'gizlilik-politikasi' },
-    { lang: 'de', slug: 'datenschutz' },
-    { lang: 'en', slug: 'privacy-policy' },
-    { lang: 'es', slug: 'politica-privacidad' },
-    { lang: 'tr', slug: 'yasal-uyari' },
-    { lang: 'de', slug: 'impressum' },
-    { lang: 'en', slug: 'imprint' },
-    { lang: 'es', slug: 'aviso-legal' },
     { lang: 'tr', slug: 'bilgi-talebi' },
     { lang: 'de', slug: 'informationsauskunft' },
     { lang: 'en', slug: 'information-request' },
     { lang: 'es', slug: 'solicitud-informacion' },
-    { lang: 'tr', slug: getAgbPath('tr') },
-    { lang: 'de', slug: getAgbPath('de') },
-    { lang: 'en', slug: getAgbPath('en') },
-    { lang: 'es', slug: getAgbPath('es') },
   ];
   return legalSlugs.map(({ lang, slug }) => ({
     params: { lang, legalSlug: slug },
@@ -30,8 +18,8 @@ export async function getStaticPaths() {
 const { lang, legalSlug } = Astro.params;
 const pageType = getLegalPageType(legalSlug || '');
 
-if (!pageType) {
-  return Astro.redirect(302, `/${lang}/`);
+if (!pageType || pageType === 'agb' || pageType === 'datenschutz' || pageType === 'impressum') {
+  return Astro.redirect(`/${lang}/`);
 }
 
 const legalCollection = await getCollection('legal');

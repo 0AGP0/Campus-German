@@ -3,8 +3,6 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import {
   type SupportedLang,
   isValidLang,
-  getDatenschutzPath,
-  getAgbPath,
   getPrivateDocumentsPath,
   getSupportedLangs,
 } from '../../utils/pathHelpers';
@@ -27,8 +25,8 @@ if (privateDocumentsSlug !== canonicalSlug) {
   return Astro.redirect(301, `/${lang}/${canonicalSlug}/`);
 }
 
-const termsPath = `/${lang}/${getAgbPath(lang)}`;
-const privacyPath = `/${lang}/${getDatenschutzPath(lang)}`;
+const termsPath = `/agb/`;
+const privacyPath = `/datenschutz/`;
 /**
  * Varsayılan: aynı origin PHP proxy (CORS yok, secret sunucuda).
  * Doğrudan portal: PUBLIC_PORTAL_PRIVATE_DOCUMENTS_URL=https://portal... (portalda CORS + PUBLIC_WEBHOOK_SECRET gerekir)

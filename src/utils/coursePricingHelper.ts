@@ -287,7 +287,55 @@ const MONTH_NAMES: Record<string, Record<number, string>> = {
   if (lang === 'en') return `${monthName} ${day}`;
   if (lang === 'de') return `${day}. ${monthName}`;
   return `${day} ${monthName}`;
-}/** Tüm kurs başlangıç tarihlerini dile göre "2 Mart" formatında döndürür */
+}
+
+/** Verilen ayın ilk Pazartesi’si (ay: 1–12). */
+export function getFirstMondayOfMonth(year: number, month: number): Date {
+  const d = new Date(year, month - 1, 1);
+  const day = d.getDay();
+  const add = day === 0 ? 1 : day === 1 ? 0 : 8 - day;
+  d.setDate(1 + add);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+/**
+ * Bugünden itibaren, bulunduğumuz yılın kalan aylarının ilk Pazartesi’si
+ * (geçmiş tarihler ve sonraki yıllar dahil edilmez).
+ * value = "dd.mm.yyyy", iso = "yyyy-mm-dd", label dile göre.
+ */
+export function getFirstMondayStartDateOptions(
+  lang: 'tr' | 'de' | 'en' | 'es',
+  _monthsAheadIgnored = 12,
+): { value: string; label: string; iso: string }[] {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayMs = today.getTime();
+  const year = today.getFullYear();
+  const out: { value: string; label: string; iso: string }[] = [];
+
+  for (let m = today.getMonth() + 1; m <= 12; m += 1) {
+    const d = getFirstMondayOfMonth(year, m);
+    if (d.getTime() < todayMs) continue;
+    const day = d.getDate();
+    const month = d.getMonth() + 1;
+    const dd = String(day).padStart(2, '0');
+    const mm = String(month).padStart(2, '0');
+    const value = `${dd}.${mm}.${year}`;
+    const iso = `${year}-${mm}-${dd}`;
+    const monthName = MONTH_NAMES[lang]?.[month] || MONTH_NAMES.en[month];
+    const label =
+      lang === 'en'
+        ? `${monthName} ${day}, ${year}`
+        : lang === 'de'
+          ? `${day}. ${monthName} ${year}`
+          : `${day} ${monthName} ${year}`;
+    out.push({ value, label, iso });
+  }
+  return out;
+}
+
+/** Tüm kurs başlangıç tarihlerini dile göre "2 Mart" formatında döndürür */
 export function getFormattedStartDates(lang: 'tr' | 'de' | 'en' | 'es') {
   const pricingLang = lang === 'es' ? 'de' : lang;
   const raw = coursePricing[pricingLang].startDates;
