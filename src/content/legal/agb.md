@@ -4,7 +4,7 @@ type: agb
 ---
 
 Allgemeine Geschäftsbedingungen (AGB) - Campus German Sprachschule GmbH  
-Stand: 26.02.2026
+Stand: 29.07.2026
 
 ## § 1 Veranstalter und Geltungsbereich
 
@@ -121,12 +121,22 @@ Bei nicht visumrelevanten Kursen kann Campus German nach freiem Ermessen die Ben
 ## § 5 Zahlungsbedingungen, Zahlungsverzug und Inkasso
 
 ### § 5.1 Fälligkeit der Kursgebühren
-Die vereinbarte Kursgebühr ist mit Vertragsschluss sofort fällig, spätestens jedoch innerhalb von drei Werktagen nach Zugang der Buchungsbestätigung auf das von Campus German benannte Konto zu zahlen.  
+Die vereinbarte Kursgebühr ist mit Vertragsschluss grundsätzlich sofort fällig, spätestens jedoch innerhalb von drei Werktagen nach Zugang der Buchungsbestätigung auf das von Campus German benannte Konto zu zahlen, soweit nachfolgend (§ 5.1a) nichts Abweichendes für eine Online-Reservierung mit Anzahlung vereinbart wird.  
 Die Zahlungspflicht besteht unabhängig davon, ob der Teilnehmer den Kurs tatsächlich besucht, ob eine Einreise erfolgt oder ob der Teilnehmer die Leistung ganz oder teilweise in Anspruch nimmt.
 
+### § 5.1a Online-Reservierung mit Anzahlung (200,00 EUR)
+Bucht der Teilnehmer über das Online-Buchungsformular die Option „Reservierung“ (Anzahlung) statt der sofortigen Zahlung des Gesamtbetrags, gilt Folgendes:
+
+- a) **Anzahlung:** Es wird eine Anzahlung in Höhe von **200,00 EUR** fällig und ist unverzüglich über den angebotenen Zahlungsweg (z. B. Stripe) zu leisten. Liegt der Gesamtbetrag unter 200,00 EUR, entspricht die zu leistende Zahlung dem Gesamtbetrag.
+- b) **Restbetrag:** Der verbleibende Restbetrag (Gesamtbetrag abzüglich geleisteter Anzahlung) ist innerhalb von **14 Kalendertagen** nach erfolgreicher Anzahlungszahlung vollständig zu zahlen.
+- c) **Verfall der Anzahlung:** Wird der Restbetrag nicht fristgerecht vollständig gezahlt, erlischt die vorläufige Kursplatzbindung. Die bereits geleistete Anzahlung von 200,00 EUR (bzw. der gezahlte Betrag bei niedrigerem Gesamtbetrag) wird als pauschalierter Aufwendungs- und Bereithaltungsersatz einbehalten und **nicht erstattet**. Ein Anspruch auf Kursplatz, Unterrichtsteilnahme oder Ausstellung von Bescheinigungen besteht in diesem Fall nicht.
+- d) **Anrechnung:** Wird der Restbetrag fristgerecht gezahlt, wird die Anzahlung auf die vereinbarte Kursgebühr angerechnet.
+- e) **Sofortzahlung:** Wählt der Teilnehmer die sofortige Zahlung des Gesamtbetrags, bleibt § 5.1 unberührt; eine gesonderte Anzahlung entfällt.
+- f) **Widerrufsrecht:** Gesetzliche Widerrufsrechte und die Regelungen der Widerrufsbelehrung sowie § 3.5 dieser AGB bleiben unberührt. Hat der Teilnehmer den vorzeitigen Leistungsbeginn verlangt und wird Widerruf erklärt, kann die Anzahlung ganz oder teilweise auf einen etwaigen Wertersatz angerechnet werden.
+
 ### § 5.2 Zahlungsvoraussetzung für Leistungen
-Ohne vollständigen Zahlungseingang besteht kein Anspruch auf: Teilnahme am Unterricht, Kursplatzreservierung, Ausstellung von Bescheinigungen, Ausstellung visumsrelevanter Dokumente sowie Durchführung von Prüfungen.  
-Campus German ist berechtigt, Leistungen bis zum vollständigen Zahlungseingang zurückzuhalten.
+Ohne vollständigen Zahlungseingang der vereinbarten Kursgebühr - bei Online-Reservierung mit Anzahlung gemäß § 5.1a ohne fristgerechten Eingang von Anzahlung und Restbetrag - besteht kein Anspruch auf: Teilnahme am Unterricht, endgültige Kursplatzgarantie, Ausstellung von Bescheinigungen, Ausstellung visumsrelevanter Dokumente sowie Durchführung von Prüfungen.  
+Campus German ist berechtigt, Leistungen bis zum vollständigen Zahlungseingang zurückzuhalten. Bis zur Zahlung des Restbetrags nach § 5.1a kann Campus German Leistungen vorläufig zurückhalten oder nur eingeschränkt erbringen.
 
 ### § 5.3 Zahlungsverzug
 Gerät der Teilnehmer mit der Zahlung in Verzug, tritt der Verzug automatisch ohne weitere Mahnung spätestens am vierten Werktag nach Fälligkeit ein (§ 286 Abs. 2 Nr. 1 BGB).  

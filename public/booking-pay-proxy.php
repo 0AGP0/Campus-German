@@ -1,8 +1,10 @@
 <?php
 /**
- * Booking ödeme: tarayıcı → aynı origin → Make webhook → Stripe checkout URL (hash dahil).
- * Kanonik URL: /booking-pay-proxy.php
+ * Booking ödeme: tarayıcı → aynı origin → Make webhook → Stripe.
+ * Embedded: clientSecret (+ publishableKey)
+ * Hosted yedek: checkoutUrl (checkout.stripe.com)
  *
+ * Kanonik URL: /booking-pay-proxy.php
  * Kurulum (isteğe bağlı): data/booking-pay-proxy.config.php
  */
 declare(strict_types=1);
@@ -31,9 +33,10 @@ if (!is_array($payload)) {
     exit;
 }
 
-if (($payload['paymentChoice'] ?? '') !== 'pay_now') {
+$paymentChoice = (string) ($payload['paymentChoice'] ?? '');
+if ($paymentChoice !== 'pay_now' && $paymentChoice !== 'reservation') {
     http_response_code(400);
-    echo json_encode(['error' => 'paymentChoice pay_now olmalı'], JSON_UNESCAPED_UNICODE);
+    echo json_encode(['error' => 'paymentChoice pay_now veya reservation olmalı'], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
@@ -42,6 +45,9 @@ $config = is_file($configPath) ? require $configPath : [];
 $target = isset($config['make_webhook_url']) && $config['make_webhook_url'] !== ''
     ? (string) $config['make_webhook_url']
     : 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
+$publishableKey = isset($config['stripe_publishable_key'])
+    ? trim((string) $config['stripe_publishable_key'])
+    : '';
 
 $ch = curl_init($target);
 curl_setopt_array($ch, [
@@ -69,30 +75,57 @@ if ($errno !== 0 || !is_string($response)) {
 }
 
 $checkoutUrl = '';
+$clientSecret = '';
 
 if (preg_match('/^location:\s*(.+)$/im', $response, $matches)) {
     $checkoutUrl = trim($matches[1]);
 }
 
-if ($checkoutUrl === '' && ($httpCode === 200 || $httpCode === 201)) {
-    $parts = preg_split("/\r\n\r\n|\n\n/", $response, 2);
-    $body = isset($parts[1]) ? trim($parts[1]) : '';
-    if ($body !== '') {
-        $json = json_decode($body, true);
-        if (is_array($json)) {
+$parts = preg_split("/\r\n\r\n|\n\n/", $response, 2);
+$body = isset($parts[1]) ? trim($parts[1]) : '';
+if ($body !== '' && ($httpCode === 200 || $httpCode === 201 || $clientSecret === '')) {
+    $json = json_decode($body, true);
+    if (is_array($json)) {
+        if ($checkoutUrl === '') {
             $checkoutUrl = (string) ($json['checkoutUrl'] ?? $json['checkout_url'] ?? '');
+        }
+        $clientSecret = (string) (
+            $json['clientSecret']
+            ?? $json['client_secret']
+            ?? ''
+        );
+        if ($publishableKey === '' && !empty($json['publishableKey'])) {
+            $publishableKey = trim((string) $json['publishableKey']);
+        }
+        if ($publishableKey === '' && !empty($json['publishable_key'])) {
+            $publishableKey = trim((string) $json['publishable_key']);
         }
     }
 }
 
-if ($checkoutUrl === '' || stripos($checkoutUrl, 'checkout.stripe.com') === false) {
-    http_response_code(502);
-    echo json_encode([
-        'error' => 'Stripe checkout URL alınamadı',
-        'upstreamStatus' => $httpCode,
-    ], JSON_UNESCAPED_UNICODE);
+$out = ['ok' => true];
+
+if ($clientSecret !== '' && strncmp($clientSecret, 'cs_', 3) === 0) {
+    $out['mode'] = 'embedded';
+    $out['clientSecret'] = $clientSecret;
+    if ($publishableKey !== '') {
+        $out['publishableKey'] = $publishableKey;
+    }
+    http_response_code(200);
+    echo json_encode($out, JSON_UNESCAPED_UNICODE);
     exit;
 }
 
-http_response_code(200);
-echo json_encode(['ok' => true, 'checkoutUrl' => $checkoutUrl], JSON_UNESCAPED_UNICODE);
+if ($checkoutUrl !== '' && stripos($checkoutUrl, 'checkout.stripe.com') !== false) {
+    $out['mode'] = 'hosted';
+    $out['checkoutUrl'] = $checkoutUrl;
+    http_response_code(200);
+    echo json_encode($out, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+http_response_code(502);
+echo json_encode([
+    'error' => 'Stripe clientSecret veya checkout URL alınamadı',
+    'upstreamStatus' => $httpCode,
+], JSON_UNESCAPED_UNICODE);

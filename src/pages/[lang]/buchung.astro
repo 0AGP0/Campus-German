@@ -2,10 +2,18 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import BookingLessonTimeStep from '../../components/BookingLessonTimeStep.astro';
 import BookingExtrasStep from '../../components/BookingExtrasStep.astro';
-import PromoPrice from '../../components/PromoPrice.astro';
 import '../../styles/pages/buchung.css';
 import { coursePricing } from '../../data/coursePricing.ts';
 import { getFirstMondayStartDateOptions, PROMO_PRICE, LESSONS_UP_TO_200, ONLINE_LEVEL_PRICES } from '../../utils/coursePricingHelper';
+import {
+    RESERVATION_DEPOSIT_EUR,
+    BALANCE_DUE_DAYS,
+    STRIPE_EXTRAS,
+    STRIPE_ADJUST_PRODUCT,
+    TELC_PREP_EUR,
+    TELC_PREP_WEEKS,
+    getIntensiveLevelEur,
+} from '../../data/stripeCatalog';
 
 export async function getStaticPaths() {
     return [
@@ -31,7 +39,7 @@ const legalCheckboxCopy = {
         agbLabel: 'Genel Hüküm ve Koşullar',
         widerrufMid: ' (ve ',
         widerrufLabel: 'Cayma Hakkı Bilgilendirmesi',
-        termsAfter: ")'ı okudum ve kabul ediyorum. Cayma süresi dolmadan hizmetin başlamasını açıkça talep ediyorum; hizmet tamamen ifa edilince cayma hakkımın sona ereceğini ve daha önce cayarsam kısmi ifalar (ör. sınav ücretleri, masraflar, alınan dersler) için değer tazmini ödeyebileceğimi biliyorum. *",
+        termsAfter: ")'ı okudum ve kabul ediyorum; buna online rezervasyonda 200 € kapora / kalan tutarın 14 gün içinde ödenmemesi halinde kaporanın iade edilmemesi (AGB § 5.1a) dahildir. Cayma süresi dolmadan hizmetin başlamasını açıkça talep ediyorum; hizmet tamamen ifa edilince cayma hakkımın sona ereceğini ve daha önce cayarsam kısmi ifalar (ör. sınav ücretleri, masraflar, alınan dersler) için değer tazmini ödeyebileceğimi biliyorum. *",
         privacyBefore: '(*) ',
         privacyLabel: 'Kişisel Verilerin Korunması',
         privacyAfter: ' hakkındaki bilgilendirmeyi okudum. *',
@@ -41,7 +49,7 @@ const legalCheckboxCopy = {
         agbLabel: 'Allgemeinen Geschäftsbedingungen',
         widerrufMid: ' (samt ',
         widerrufLabel: 'Widerrufsbelehrung',
-        termsAfter: ') zur Kenntnis genommen und bin damit einverstanden. Ich verlange ausdrücklich den Beginn der Dienstleistung vor Ablauf der Widerrufsfrist und weiß, dass mein Widerrufsrecht bei vollständiger Erfüllung erlischt sowie bei früherem Widerruf Wertersatz für Teilleistungen (z. B. Prüfungsgebühren, Auslagen, Unterrichtseinheiten) anfallen kann. *',
+        termsAfter: ') zur Kenntnis genommen und bin damit einverstanden, einschließlich der Regelung zur Online-Reservierung mit Anzahlung von 200,00 EUR und Verfall bei nicht fristgerechter Restzahlung binnen 14 Tagen (AGB § 5.1a). Ich verlange ausdrücklich den Beginn der Dienstleistung vor Ablauf der Widerrufsfrist und weiß, dass mein Widerrufsrecht bei vollständiger Erfüllung erlischt sowie bei früherem Widerruf Wertersatz für Teilleistungen (z. B. Prüfungsgebühren, Auslagen, Unterrichtseinheiten) anfallen kann. *',
         privacyBefore: '(*) Die Hinweise zum ',
         privacyLabel: 'Datenschutz',
         privacyAfter: ' habe ich zur Kenntnis genommen. *',
@@ -51,7 +59,7 @@ const legalCheckboxCopy = {
         agbLabel: 'General Terms and Conditions',
         widerrufMid: ' (including the ',
         widerrufLabel: 'Withdrawal Notice',
-        termsAfter: '). I expressly request that the service begin before the withdrawal period ends, and I understand that my right of withdrawal ends upon full performance and that early withdrawal may require compensation for partial services (e.g. exam fees, expenses, lessons already taken). *',
+        termsAfter: '), including the online reservation deposit of €200 and its forfeiture if the balance is not paid within 14 days (T&Cs § 5.1a). I expressly request that the service begin before the withdrawal period ends, and I understand that my right of withdrawal ends upon full performance and that early withdrawal may require compensation for partial services (e.g. exam fees, expenses, lessons already taken). *',
         privacyBefore: '(*) I have taken note of the ',
         privacyLabel: 'Privacy Policy',
         privacyAfter: '. *',
@@ -61,7 +69,7 @@ const legalCheckboxCopy = {
         agbLabel: 'Condiciones Generales',
         widerrufMid: ' (incluida la ',
         widerrufLabel: 'Información sobre desistimiento',
-        termsAfter: '). Solicito expresamente que el servicio comience antes de que finalice el plazo de desistimiento, y sé que mi derecho de desistimiento se extingue con la ejecución completa y que un desistimiento anticipado puede generar compensación por prestaciones parciales (p. ej. tasas de examen, gastos, clases recibidas). *',
+        termsAfter: '), incluida la reserva online con depósito de 200 € y su pérdida si el resto no se paga en 14 días (CG § 5.1a). Solicito expresamente que el servicio comience antes de que finalice el plazo de desistimiento, y sé que mi derecho de desistimiento se extingue con la ejecución completa y que un desistimiento anticipado puede generar compensación por prestaciones parciales (p. ej. tasas de examen, gastos, clases recibidas). *',
         privacyBefore: '(*) He tomado nota de la información sobre ',
         privacyLabel: 'Protección de datos',
         privacyAfter: '. *',
@@ -259,8 +267,9 @@ const t = {
         back: "Geri",
         termsAccepted: "Genel Hüküm ve Koşullar'ı okudum ve kabul ediyorum",
         privacyAccepted: "Kişisel Verilerin Korunması bilgilendirmesini kabul ediyorum",
-        completeBooking: "Rezervasyon yap",
+        completeBooking: "200 € ile rezervasyon",
         payNowBooking: "Ödemeyi yap",
+        depositHint: "Rezervasyon için 200 € depozito alınır. Kalan tutar 14 gün içinde ödenmezse depozito iade edilmez.",
         payNowRedirecting: "Stripe'a yönlendiriliyor...",
         freeReservation: "Ücretsiz rezervasyon",
         priceCalculation: "Fiyat Hesaplaması",
@@ -329,8 +338,9 @@ const t = {
         termsAccepted: "Genel Hüküm ve Koşullar'ı okudum ve kabul ediyorum",
         privacyAccepted: "Kişisel Verilerin Korunması hakkındaki bilgilendirmeyi okudum ve kabul ediyorum",
         back: "Geri",
-        completeBooking: "Rezervasyon yap",
+        completeBooking: "200 € ile rezervasyon",
         payNowBooking: "Ödemeyi yap",
+        depositHint: "Rezervasyon için 200 € depozito alınır. Kalan tutar 14 gün içinde ödenmezse depozito iade edilmez.",
         payNowRedirecting: "Stripe'a yönlendiriliyor...",
         freeReservation: "Ücretsiz rezervasyon",
         priceCalculation: "Fiyat Hesaplaması",
@@ -508,8 +518,9 @@ const t = {
         back: "Zurück",
         termsAccepted: "Ich habe die AGB gelesen und akzeptiert",
         privacyAccepted: "Ich akzeptiere die Datenschutzinformationen",
-        completeBooking: "Reservierung",
+        completeBooking: "Reservierung mit 200 €",
         payNowBooking: "Jetzt bezahlen",
+        depositHint: "Für die Reservierung werden 200 € Anzahlung fällig. Wird der Restbetrag nicht innerhalb von 14 Tagen bezahlt, verfällt die Anzahlung.",
         payNowRedirecting: "Weiterleitung zu Stripe...",
         freeReservation: "Kostenlose Reservierung",
         priceCalculation: "Preisberechnung",
@@ -591,8 +602,9 @@ const t = {
         termsAccepted: "Ich habe die Allgemeinen Geschäftsbedingungen gelesen und akzeptiere sie",
         privacyAccepted: "Ich habe die Informationen zum Datenschutz gelesen und akzeptiere sie",
         back: "Zurück",
-        completeBooking: "Reservierung",
+        completeBooking: "Reservierung mit 200 €",
         payNowBooking: "Jetzt bezahlen",
+        depositHint: "Für die Reservierung werden 200 € Anzahlung fällig. Wird der Restbetrag nicht innerhalb von 14 Tagen bezahlt, verfällt die Anzahlung.",
         payNowRedirecting: "Weiterleitung zu Stripe...",
         freeReservation: "Kostenlose Reservierung",
         priceCalculation: "Preisberechnung",
@@ -770,8 +782,9 @@ const t = {
         back: "Back",
         termsAccepted: "I have read and accept the Terms and Conditions",
         privacyAccepted: "I accept the Privacy Policy information",
-        completeBooking: "Make reservation",
+        completeBooking: "Reserve with €200",
         payNowBooking: "Pay now",
+        depositHint: "A €200 deposit is charged to reserve. If the balance is not paid within 14 days, the deposit is non-refundable.",
         payNowRedirecting: "Redirecting to Stripe...",
         freeReservation: "Free reservation",
         priceCalculation: "Price Calculation",
@@ -853,8 +866,9 @@ const t = {
         termsAccepted: "I have read and accept the General Terms and Conditions",
         privacyAccepted: "I have read and accept the Privacy Policy information",
         back: "Back",
-        completeBooking: "Make reservation",
+        completeBooking: "Reserve with €200",
         payNowBooking: "Pay now",
+        depositHint: "A €200 deposit is charged to reserve. If the balance is not paid within 14 days, the deposit is non-refundable.",
         payNowRedirecting: "Redirecting to Stripe...",
         freeReservation: "Free reservation",
         priceCalculation: "Price Calculation",
@@ -1032,8 +1046,9 @@ const t = {
         back: "Atrás",
         termsAccepted: "He leído y acepto las Condiciones Generales",
         privacyAccepted: "Acepto la información de Protección de datos",
-        completeBooking: "Hacer reserva",
+        completeBooking: "Reservar con 200 €",
         payNowBooking: "Pagar ahora",
+        depositHint: "Para reservar se cobran 200 € de depósito. Si el resto no se paga en 14 días, el depósito no es reembolsable.",
         payNowRedirecting: "Redirigiendo a Stripe...",
         freeReservation: "Reserva gratuita",
         priceCalculation: "Cálculo del precio",
@@ -1115,8 +1130,9 @@ const t = {
         termsAccepted: "He leído y acepto las Condiciones Generales",
         privacyAccepted: "He leído y acepto la información sobre Protección de datos",
         back: "Atrás",
-        completeBooking: "Hacer reserva",
+        completeBooking: "Reservar con 200 €",
         payNowBooking: "Pagar ahora",
+        depositHint: "Para reservar se cobran 200 € de depósito. Si el resto no se paga en 14 días, el depósito no es reembolsable.",
         payNowRedirecting: "Redirigiendo a Stripe...",
         freeReservation: "Reserva gratuita",
         priceCalculation: "Cálculo del precio",
@@ -1136,9 +1152,8 @@ const translations = t[lang as keyof typeof t];
 
 const courseCardLevels = ['a1', 'a2', 'b1', 'b2', 'c1'] as const;
 const courseCardLessonsBadge = LESSONS_UP_TO_200[lang as keyof typeof LESSONS_UP_TO_200] ?? LESSONS_UP_TO_200.en;
-const telcPrepPrice = '640 €';
-const TELC_PREP_PRICE_NUM = 640;
-const TELC_PREP_WEEKS = 4;
+const telcPrepPrice = `${TELC_PREP_EUR} €`;
+const intensiveLevelPriceLabel = `${getIntensiveLevelEur()} €`;
 const programImages = {
     intensive: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80',
     'short-term': 'https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=800&q=80',
@@ -1233,10 +1248,10 @@ const extrasStepCopy = {
     infoClose: translations.extraInfoClose,
     infoBtnLabel: translations.extraInfoBtnLabel,
     cards: [
-        { field: 'visa-guarantee', title: translations.visaLabel, price: 500, image: extraServiceImages.visa, icon: 'passport', theme: 'visa' as const, infoType: 'general' as const },
-        { field: 'university-admission-support', title: translations.universityAdmissionLabel, price: 400, image: extraServiceImages.university, icon: 'user-graduate', theme: 'university' as const, infoType: 'general' as const },
-        { field: 'accommodation-support', title: translations.accommodationLabel, price: 70, image: extraServiceImages.accommodation, icon: 'home', theme: 'accommodation' as const, infoType: 'accommodation' as const },
-        { field: 'airport-pickup', title: translations.airportLabel, price: 100, image: extraServiceImages.airport, icon: 'plane-arrival', theme: 'airport' as const, infoType: 'general' as const },
+        { field: 'visa-guarantee', title: translations.visaLabel, price: STRIPE_EXTRAS.visa.eur, image: extraServiceImages.visa, icon: 'passport', theme: 'visa' as const, infoType: 'general' as const },
+        { field: 'university-admission-support', title: translations.universityAdmissionLabel, price: STRIPE_EXTRAS.university.eur, image: extraServiceImages.university, icon: 'user-graduate', theme: 'university' as const, infoType: 'general' as const },
+        { field: 'accommodation-support', title: translations.accommodationLabel, price: STRIPE_EXTRAS.accommodation.eur, image: extraServiceImages.accommodation, icon: 'home', theme: 'accommodation' as const, infoType: 'accommodation' as const },
+        { field: 'airport-pickup', title: translations.airportLabel, price: STRIPE_EXTRAS.airport.eur, image: extraServiceImages.airport, icon: 'plane-arrival', theme: 'airport' as const, infoType: 'general' as const },
     ],
 };
 ---
@@ -1277,7 +1292,7 @@ const extrasStepCopy = {
                         <!-- Form Section -->
                         <div class="form-section">
                             <!-- Booking Form -->
-                            <form id="booking-form" class="booking-form" data-submit-label={translations.completeBooking} data-pay-label={translations.payNowBooking} data-webhook="https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47" data-pay-proxy="/booking-pay-proxy.php">
+                            <form id="booking-form" class="booking-form" data-submit-label={translations.completeBooking} data-pay-label={translations.payNowBooking} data-webhook="https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47" data-pay-proxy="/booking-pay-proxy.php" data-checkout-ui="embedded">
                                 <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
                                 <input type="hidden" name="amountInCents" id="amount-in-cents" value="0" />
                                 <!-- Honeypot field for spam protection -->
@@ -1351,7 +1366,10 @@ const extrasStepCopy = {
                                                                         <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardOnlineEvening}</span></li>
                                                                     </ul>
                                                                     <div class="course-slot__foot course-slot__foot--promo course-slot__mode-intensive">
-                                                                        <PromoPrice lang={lang} variant="card" />
+                                                                        <div class="course-slot__fixed-price">
+                                                                            <span class="course-slot__fixed-price-amount">{intensiveLevelPriceLabel}</span>
+                                                                            <span class="course-slot__fixed-price-note">{translations.courseWeeksLabel}</span>
+                                                                        </div>
                                                                     </div>
                                                                     {(level === 'a1' || level === 'a2') && (
                                                                         <div class="course-slot__foot course-slot__foot--promo course-slot__foot--fixed-price course-slot__mode-online">
@@ -1602,8 +1620,42 @@ const extrasStepCopy = {
                                             </button>
                                         </div>
                                     </div>
+                                    <p class="booking-deposit-hint">{translations.depositHint}</p>
                                 </div>
                             </form>
+
+                            <div id="booking-payment-stage" class="booking-payment-stage" hidden>
+                                <div class="booking-payment-stage__bar">
+                                    <button type="button" class="booking-payment-stage__back" id="stripe-embed-close">
+                                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                                        {lang === 'tr' ? 'Forma dön' : lang === 'de' ? 'Zurück zum Formular' : lang === 'es' ? 'Volver al formulario' : 'Back to form'}
+                                    </button>
+                                    <p class="booking-payment-stage__secure">
+                                        <i class="fas fa-lock" aria-hidden="true"></i>
+                                        {lang === 'tr' ? 'Güvenli ödeme · Stripe' : lang === 'de' ? 'Sichere Zahlung · Stripe' : lang === 'es' ? 'Pago seguro · Stripe' : 'Secure payment · Stripe'}
+                                    </p>
+                                </div>
+                                <div class="step-header booking-payment-stage__header">
+                                    <h2>{lang === 'tr' ? 'Ödemeyi tamamla' : lang === 'de' ? 'Zahlung abschließen' : lang === 'es' ? 'Completar el pago' : 'Complete payment'}</h2>
+                                    <p>
+                                        {lang === 'tr'
+                                            ? 'Kart bilgilerinizi aşağıya girin. Bu sayfada kalırsınız; ödeme Stripe üzerinden güvenle alınır.'
+                                            : lang === 'de'
+                                              ? 'Geben Sie Ihre Kartendaten unten ein. Sie bleiben auf dieser Seite; die Zahlung wird sicher über Stripe abgewickelt.'
+                                              : lang === 'es'
+                                                ? 'Introduzca los datos de su tarjeta abajo. Permanece en esta página; el pago se procesa de forma segura con Stripe.'
+                                                : 'Enter your card details below. You stay on this page; payment is processed securely by Stripe.'}
+                                    </p>
+                                </div>
+                                <div class="booking-payment-stage__summary" aria-live="polite">
+                                    <span class="booking-payment-stage__summary-label">
+                                        {lang === 'tr' ? 'Ödenecek tutar' : lang === 'de' ? 'Zu zahlender Betrag' : lang === 'es' ? 'Importe a pagar' : 'Amount due'}
+                                    </span>
+                                    <span class="booking-payment-stage__summary-value" id="booking-payment-amount">—</span>
+                                </div>
+                                <div id="stripe-embed-mount" class="stripe-embed-mount"></div>
+                                <p id="stripe-embed-status" class="stripe-embed-status" role="status" aria-live="polite"></p>
+                            </div>
                         </div>
                         
                         <!-- Price Calculator Section -->
@@ -1638,19 +1690,19 @@ const extrasStepCopy = {
                                         <h4 class="price-section-title">{translations.optionalServices}</h4>
                                         <div class="price-item" id="visa-price-row" style="display: none;">
                                             <span class="price-item-label">{translations.visaGuaranteeLabel}</span>
-                                            <span class="price-item-value">500 €</span>
+                                            <span class="price-item-value">{STRIPE_EXTRAS.visa.eur} €</span>
                                         </div>
                                         <div class="price-item" id="university-admission-price-row" style="display: none;">
                                             <span class="price-item-label">{translations.universityAdmissionPriceLabel}</span>
-                                            <span class="price-item-value">400 €</span>
+                                            <span class="price-item-value">{STRIPE_EXTRAS.university.eur} €</span>
                                         </div>
                                         <div class="price-item" id="accommodation-price-row" style="display: none;">
                                             <span class="price-item-label">{translations.accommodationSupportLabel}</span>
-                                            <span class="price-item-value">70 €</span>
+                                            <span class="price-item-value">{STRIPE_EXTRAS.accommodation.eur} €</span>
                                         </div>
                                         <div class="price-item" id="airport-price-row" style="display: none;">
                                             <span class="price-item-label">{translations.airportPickupPrice}</span>
-                                            <span class="price-item-value">100 €</span>
+                                            <span class="price-item-value">{STRIPE_EXTRAS.airport.eur} €</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1674,7 +1726,21 @@ const extrasStepCopy = {
         </div>
     </section>
 
-    <script define:vars={{ pricingData, lang, courseInfoCopy, promoPrice: PROMO_PRICE.discounted, onlineLevelPrices: ONLINE_LEVEL_PRICES, telcPrepPriceNum: TELC_PREP_PRICE_NUM, telcPrepWeeks: TELC_PREP_WEEKS, bookingWebhookLabels }}>
+    <script define:vars={{
+        pricingData,
+        lang,
+        courseInfoCopy,
+        promoPrice: PROMO_PRICE.discounted,
+        intensiveLevelPrice: getIntensiveLevelEur(),
+        onlineLevelPrices: ONLINE_LEVEL_PRICES,
+        telcPrepPriceNum: TELC_PREP_EUR,
+        telcPrepWeeks: TELC_PREP_WEEKS,
+        bookingWebhookLabels,
+        reservationDepositEur: RESERVATION_DEPOSIT_EUR,
+        balanceDueDays: BALANCE_DUE_DAYS,
+        stripeExtras: STRIPE_EXTRAS,
+        stripeAdjustProduct: STRIPE_ADJUST_PRODUCT,
+    }}>
         // Import security utilities
         const { checkRateLimit, sanitizeObject, validateEmail, validatePhone, checkHoneypot } = (() => {
             // Rate limiting
@@ -1887,10 +1953,128 @@ const extrasStepCopy = {
                     if (c === 'telc-c1-prep') return sum + telcPrepPriceNum;
                     if (LEVEL_RE.test(c)) {
                         if (program === 'online') return sum + (onlineLevelPrices[c] || 0);
-                        return sum + promoPrice;
+                        return sum + intensiveLevelPrice;
                     }
                     return sum;
                 }, 0);
+            }
+
+            function buildStripeLineItems(opts) {
+                const items = [];
+                const program = opts.program;
+                const courses = opts.courses || [];
+                const weeksNum = opts.weeksNum || 0;
+                const priced = courses.filter(function (c) { return LEVEL_RE.test(c) || c === 'telc-c1-prep'; });
+
+                if (program === 'short-term' && weeksNum > 0) {
+                    const eur = getTieredPrice(weeksNum);
+                    const stripePackages = { 4: 1, 8: 1, 12: 1, 16: 1, 24: 1, 32: 1, 40: 1 };
+                    items.push({
+                        productKey: stripePackages[weeksNum]
+                            ? ('german_intensive_20_' + weeksNum + 'w')
+                            : stripeAdjustProduct.productKey,
+                        name: stripePackages[weeksNum]
+                            ? ('German Intensive 20L/W - ' + weeksNum + ' Weeks')
+                            : stripeAdjustProduct.name,
+                        amountCents: Math.round(eur * 100),
+                        quantity: 1,
+                        weeks: weeksNum,
+                    });
+                } else if (program === 'intensive' || program === 'online') {
+                    priced.forEach(function (c) {
+                        if (c === 'telc-c1-prep') {
+                            items.push({
+                                productKey: 'telc_b2_c1_prep_20_4w',
+                                name: 'TELC B2/C1 Prep. 20L/W - 4 Weeks',
+                                amountCents: Math.round(telcPrepPriceNum * 100),
+                                quantity: 1,
+                                weeks: telcPrepWeeks,
+                            });
+                            return;
+                        }
+                        if (program === 'online') {
+                            const eur = onlineLevelPrices[c] || 0;
+                            items.push({
+                                productKey: stripeAdjustProduct.productKey,
+                                name: 'Online German ' + String(c).toUpperCase() + ' (8 Weeks)',
+                                amountCents: Math.round(eur * 100),
+                                quantity: 1,
+                                weeks: 8,
+                                level: c,
+                            });
+                            return;
+                        }
+                        items.push({
+                            productKey: 'german_intensive_20_8w',
+                            name: 'German Intensive 20L/W - 8 Weeks',
+                            amountCents: Math.round(intensiveLevelPrice * 100),
+                            quantity: 1,
+                            weeks: 8,
+                            level: c,
+                        });
+                    });
+                } else if (program === 'youth-camp' && weeksNum > 0) {
+                    const eur = opts.courseEur || 0;
+                    items.push({
+                        productKey: stripeAdjustProduct.productKey,
+                        name: stripeAdjustProduct.name,
+                        amountCents: Math.round(eur * 100),
+                        quantity: 1,
+                        weeks: weeksNum,
+                    });
+                }
+
+                if (opts.visa) {
+                    items.push({
+                        productKey: stripeExtras.visa.productKey,
+                        name: stripeExtras.visa.name,
+                        amountCents: Math.round(stripeExtras.visa.eur * 100),
+                        quantity: 1,
+                    });
+                }
+                if (opts.university) {
+                    items.push({
+                        productKey: stripeExtras.university.productKey,
+                        name: stripeExtras.university.name,
+                        amountCents: Math.round(stripeExtras.university.eur * 100),
+                        quantity: 1,
+                    });
+                }
+                if (opts.accommodation) {
+                    items.push({
+                        productKey: stripeExtras.accommodation.productKey,
+                        name: stripeExtras.accommodation.name,
+                        amountCents: Math.round(stripeExtras.accommodation.eur * 100),
+                        quantity: 1,
+                    });
+                }
+                if (opts.airport) {
+                    items.push({
+                        productKey: stripeExtras.airport.productKey,
+                        name: stripeExtras.airport.name,
+                        amountCents: Math.round(stripeExtras.airport.eur * 100),
+                        quantity: 1,
+                    });
+                }
+
+                if (opts.friendDiscountEuro > 0) {
+                    items.push({
+                        productKey: stripeAdjustProduct.productKey,
+                        name: 'Bring-a-friend discount',
+                        amountCents: -Math.round(opts.friendDiscountEuro * 100),
+                        quantity: 1,
+                    });
+                }
+                if (opts.bundleDiscountEuro > 0) {
+                    items.push({
+                        productKey: stripeAdjustProduct.productKey,
+                        name: 'Multi-course discount',
+                        amountCents: -Math.round(opts.bundleDiscountEuro * 100),
+                        quantity: 1,
+                    });
+                }
+
+                return items.filter(function (it) { return it.amountCents !== 0; });
             }
             function syncWeeksFromControl() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
@@ -2099,13 +2283,13 @@ const extrasStepCopy = {
                 return subLevel.split('.')[0];
             }
 
-            const VISA_SUPPORT = 500;
-            const UNIVERSITY_ADMISSION = 400;
-            const ACCOMMODATION_SUPPORT = 70;
-            const AIRPORT_PICKUP = 100;
+            const VISA_SUPPORT = stripeExtras.visa.eur;
+            const UNIVERSITY_ADMISSION = stripeExtras.university.eur;
+            const ACCOMMODATION_SUPPORT = stripeExtras.accommodation.eur;
+            const AIRPORT_PICKUP = stripeExtras.airport.eur;
             const FRIEND_DISCOUNT = 50;
 
-            // Tiered pricing per week — yalnızca short-term için
+            // Tiered pricing per week — short-term, Stripe paketinde yoksa
             const TIERS_20H = [
                 { min: 1, max: 4, perWeek: 190 },
                 { min: 5, max: 8, perWeek: 150 },
@@ -2116,6 +2300,9 @@ const extrasStepCopy = {
             function getTieredPrice(weeks) {
                 const w = parseInt(weeks, 10) || 0;
                 if (w < 1) return 0;
+                // Stripe Intensive 20L/W paket haftaları
+                const stripePackages = { 4: 795, 8: 1232, 12: 1638, 16: 1920, 24: 2808, 32: 3648, 40: 4560 };
+                if (stripePackages[w] != null) return stripePackages[w];
                 const tier = TIERS_20H.find(t => w >= t.min && w <= t.max);
                 return tier ? w * tier.perWeek : 0;
             }
@@ -2126,7 +2313,7 @@ const extrasStepCopy = {
                     return onlineLevelPrices[mainLevel] || 0;
                 }
                 if (program === 'intensive') {
-                    return promoPrice;
+                    return intensiveLevelPrice;
                 }
                 if (program === 'short-term') {
                     return getTieredPrice(weeks);
@@ -2722,6 +2909,7 @@ const extrasStepCopy = {
                 if (payBtn) payBtn.innerHTML = getPayButtonHtml();
             }
             function showBookingThankYou() {
+                try { destroyStripeEmbed(); } catch (_) {}
                 if (window.showSuccessModal) {
                     window.showSuccessModal('success', window.successModalTranslations?.bookingSuccess || 'Rezervasyonunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
                 } else {
@@ -2757,11 +2945,155 @@ const extrasStepCopy = {
                 try {
                     data = text ? JSON.parse(text) : null;
                 } catch (_) {}
-                if (data && data.checkoutUrl) {
-                    return data.checkoutUrl;
+                if (!response.ok) {
+                    throw new Error(data?.error || 'checkout_request_failed');
                 }
-                throw new Error(data?.error || 'no_checkout_url');
+                if (data && data.clientSecret) {
+                    return {
+                        mode: 'embedded',
+                        clientSecret: data.clientSecret,
+                        publishableKey: data.publishableKey || '',
+                    };
+                }
+                if (data && data.checkoutUrl) {
+                    return { mode: 'hosted', checkoutUrl: data.checkoutUrl };
+                }
+                throw new Error(data?.error || 'no_checkout');
             }
+
+            let stripeEmbedCheckout = null;
+            let stripeJsPromise = null;
+
+            function loadStripeJs() {
+                if (window.Stripe) return Promise.resolve(window.Stripe);
+                if (stripeJsPromise) return stripeJsPromise;
+                stripeJsPromise = new Promise(function (resolve, reject) {
+                    const existing = document.querySelector('script[data-stripe-js]');
+                    if (existing) {
+                        existing.addEventListener('load', function () { resolve(window.Stripe); });
+                        existing.addEventListener('error', reject);
+                        return;
+                    }
+                    const s = document.createElement('script');
+                    s.src = 'https://js.stripe.com/v3/';
+                    s.async = true;
+                    s.dataset.stripeJs = '1';
+                    s.onload = function () { resolve(window.Stripe); };
+                    s.onerror = reject;
+                    document.head.appendChild(s);
+                });
+                return stripeJsPromise;
+            }
+
+            function setStripeEmbedStatus(message) {
+                const el = document.getElementById('stripe-embed-status');
+                if (el) el.textContent = message || '';
+            }
+
+            function syncPaymentAmountDisplay(overrideText) {
+                const totalEl = document.getElementById('total-price');
+                const payAmount = document.getElementById('booking-payment-amount');
+                if (!payAmount) return;
+                if (overrideText) {
+                    payAmount.textContent = overrideText;
+                    return;
+                }
+                payAmount.textContent = (totalEl && totalEl.textContent) || '—';
+            }
+
+            function enterPaymentStage(chargeLabel) {
+                const form = document.getElementById('booking-form');
+                const stage = document.getElementById('booking-payment-stage');
+                const content = document.querySelector('.booking-content');
+                if (form) form.hidden = true;
+                if (stage) stage.hidden = false;
+                if (content) content.classList.add('booking-content--paying');
+                syncPaymentAmountDisplay(chargeLabel);
+                const progress = document.querySelector('.form-progress');
+                if (progress) progress.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            function exitPaymentStage() {
+                const form = document.getElementById('booking-form');
+                const stage = document.getElementById('booking-payment-stage');
+                const content = document.querySelector('.booking-content');
+                if (stage) stage.hidden = true;
+                if (form) form.hidden = false;
+                if (content) content.classList.remove('booking-content--paying');
+            }
+
+            async function destroyStripeEmbed() {
+                if (stripeEmbedCheckout) {
+                    try {
+                        if (typeof stripeEmbedCheckout.destroy === 'function') {
+                            stripeEmbedCheckout.destroy();
+                        } else if (typeof stripeEmbedCheckout.unmount === 'function') {
+                            stripeEmbedCheckout.unmount();
+                        }
+                    } catch (_) {}
+                    stripeEmbedCheckout = null;
+                }
+                const mount = document.getElementById('stripe-embed-mount');
+                if (mount) mount.innerHTML = '';
+                exitPaymentStage();
+                setStripeEmbedStatus('');
+            }
+
+            async function mountStripeEmbeddedCheckout(clientSecret, publishableKey, chargeLabel) {
+                if (!publishableKey) {
+                    throw new Error('missing_publishable_key');
+                }
+                const StripeCtor = await loadStripeJs();
+                if (!StripeCtor) throw new Error('stripe_js_failed');
+
+                await destroyStripeEmbed();
+
+                const stage = document.getElementById('booking-payment-stage');
+                const mount = document.getElementById('stripe-embed-mount');
+                if (!stage || !mount) throw new Error('missing_embed_dom');
+
+                enterPaymentStage(chargeLabel);
+                setStripeEmbedStatus(
+                    lang === 'tr' ? 'Ödeme formu yükleniyor…' :
+                    lang === 'de' ? 'Zahlungsformular wird geladen…' :
+                    lang === 'es' ? 'Cargando formulario de pago…' :
+                    'Loading payment form…'
+                );
+
+                const stripe = StripeCtor(publishableKey);
+                const fetchClientSecret = async function () { return clientSecret; };
+
+                let checkout;
+                if (typeof stripe.createEmbeddedCheckoutPage === 'function') {
+                    checkout = await stripe.createEmbeddedCheckoutPage({ fetchClientSecret });
+                } else if (typeof stripe.initEmbeddedCheckout === 'function') {
+                    checkout = await stripe.initEmbeddedCheckout({ fetchClientSecret });
+                } else {
+                    throw new Error('embedded_api_unavailable');
+                }
+
+                checkout.mount('#stripe-embed-mount');
+                stripeEmbedCheckout = checkout;
+                setStripeEmbedStatus('');
+            }
+
+            document.getElementById('stripe-embed-close')?.addEventListener('click', function () {
+                destroyStripeEmbed();
+                setSubmitButtonsDisabled(false);
+                restoreSubmitButtons();
+            });
+
+            function handlePaymentReturnFromStripe() {
+                const params = new URLSearchParams(window.location.search);
+                if (params.get('payment') !== 'success') return;
+                showBookingThankYou();
+                params.delete('payment');
+                params.delete('session_id');
+                const qs = params.toString();
+                const clean = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
+                window.history.replaceState({}, '', clean);
+            }
+            handlePaymentReturnFromStripe();
 
             if (bookingForm) {
                 bookingForm.addEventListener('submit', async function(e) {
@@ -2771,9 +3103,7 @@ const extrasStepCopy = {
                     const formData = new FormData(bookingForm);
 
                     setSubmitButtonsDisabled(true);
-                    const submittingText = paymentChoice === 'pay_now'
-                        ? (lang === 'tr' ? 'Stripe\'a yönlendiriliyor...' : lang === 'de' ? 'Weiterleitung zu Stripe...' : lang === 'es' ? 'Redirigiendo a Stripe...' : 'Redirecting to Stripe...')
-                        : (lang === 'tr' ? 'Gönderiliyor...' : lang === 'de' ? 'Wird gesendet...' : lang === 'es' ? 'Enviando...' : 'Submitting...');
+                    const submittingText = lang === 'tr' ? 'Ödeme hazırlanıyor...' : lang === 'de' ? 'Zahlung wird vorbereitet...' : lang === 'es' ? 'Preparando el pago...' : 'Preparing payment...';
                     setSubmitButtonsText(submittingText);
 
                     // 1. Check rate limiting
@@ -2855,18 +3185,55 @@ const extrasStepCopy = {
                     const totalCents = parseInt(String(data.amountInCents || '0').trim(), 10) || 0;
                     const friendDiscountEuro = bringFriendActive ? FRIEND_DISCOUNT : 0;
 
-                    if (paymentChoice === 'pay_now' && totalCents <= 0) {
+                    if (totalCents <= 0) {
                         showBookingError(lang === 'tr' ? 'Ödeme için geçerli bir tutar seçiniz.' : lang === 'de' ? 'Bitte wählen Sie einen gültigen Betrag für die Zahlung.' : lang === 'es' ? 'Seleccione un importe válido para el pago.' : 'Please select a valid amount for payment.');
                         setSubmitButtonsDisabled(false);
                         restoreSubmitButtons();
                         return;
                     }
 
+                    const depositInfo = paymentChoice === 'reservation'
+                        ? {
+                            chargeCents: Math.min(reservationDepositEur * 100, totalCents),
+                            remainingCents: Math.max(0, totalCents - Math.min(reservationDepositEur * 100, totalCents)),
+                            depositEur: reservationDepositEur,
+                            balanceDueDays: balanceDueDays,
+                        }
+                        : {
+                            chargeCents: totalCents,
+                            remainingCents: 0,
+                            depositEur: 0,
+                            balanceDueDays: 0,
+                        };
+
+                    const chargeEur = Math.round(depositInfo.chargeCents) / 100;
+                    const chargeLabel = chargeEur.toLocaleString(lang === 'de' ? 'de-DE' : lang === 'tr' ? 'tr-TR' : lang === 'es' ? 'es-ES' : 'en-US') + ' €';
+
+                    const weeksNumPayload = effectiveWeeks ? Number(effectiveWeeks) : 0;
+                    const stripeLineItems = buildStripeLineItems({
+                        program,
+                        courses: courseSelectionArr,
+                        weeksNum: weeksNumPayload,
+                        visa: data['visa-guarantee'] === 'yes',
+                        university: data['university-admission-support'] === 'yes',
+                        accommodation: data['accommodation-support'] === 'yes',
+                        airport: data['airport-pickup'] === 'yes',
+                        friendDiscountEuro,
+                        bundleDiscountEuro: 0,
+                        courseEur: Math.round(totalCents / 100),
+                    });
+
                     let standardizedData = {
                         formType: 'booking',
                         lang: typeof lang !== 'undefined' ? lang : 'tr',
                         sourcePage: data.sourcePage || window.location.pathname,
                         submittedAt: new Date().toISOString(),
+                        paymentChoice,
+                        checkoutUiMode: 'embedded',
+                        returnUrl:
+                            window.location.origin +
+                            window.location.pathname +
+                            '?payment=success&session_id={CHECKOUT_SESSION_ID}',
 
                         customer: {
                             firstName: data.first_name || '',
@@ -2915,13 +3282,22 @@ const extrasStepCopy = {
                         price: {
                             total: totalFormatted,
                             totalCents,
+                            chargeCents: depositInfo.chargeCents,
+                            remainingCents: depositInfo.remainingCents,
+                            depositEur: depositInfo.depositEur,
+                            balanceDueDays: depositInfo.balanceDueDays,
+                            depositNonRefundable: paymentChoice === 'reservation',
                         },
 
                         priceCollection: {
                             total: totalFormatted,
                             totalCents,
+                            chargeCents: depositInfo.chargeCents,
+                            remainingCents: depositInfo.remainingCents,
                         },
                         priceTotal: totalFormatted,
+                        amountInCents: depositInfo.chargeCents,
+                        stripeLineItems,
 
                         customerCollection: null,
                         courseCollection: null,
@@ -2935,50 +3311,69 @@ const extrasStepCopy = {
                     standardizedData.customerCollection = { ...standardizedData.customer };
                     standardizedData.courseCollection = { ...standardizedData.course };
 
-                    if (paymentChoice === 'pay_now') {
-                        standardizedData.paymentChoice = 'pay_now';
-                    }
-                    
-                    // Sanitize all inputs
+                    // Sanitize nested fields; keep payment URLs/tokens intact after.
                     standardizedData = sanitizeObject(standardizedData);
+                    standardizedData.paymentChoice = paymentChoice;
+                    standardizedData.checkoutUiMode = 'embedded';
+                    standardizedData.returnUrl =
+                        window.location.origin +
+                        window.location.pathname +
+                        '?payment=success&session_id={CHECKOUT_SESSION_ID}';
+                    standardizedData.amountInCents = depositInfo.chargeCents;
+                    standardizedData.price = {
+                        total: totalFormatted,
+                        totalCents,
+                        chargeCents: depositInfo.chargeCents,
+                        remainingCents: depositInfo.remainingCents,
+                        depositEur: depositInfo.depositEur,
+                        balanceDueDays: depositInfo.balanceDueDays,
+                        depositNonRefundable: paymentChoice === 'reservation',
+                    };
+                    standardizedData.priceCollection = {
+                        total: totalFormatted,
+                        totalCents,
+                        chargeCents: depositInfo.chargeCents,
+                        remainingCents: depositInfo.remainingCents,
+                    };
+                    standardizedData.stripeLineItems = stripeLineItems;
 
-                    const webhookUrl = (bookingForm.dataset.webhook || '').trim() || 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
-                    let navigatedToCheckout = false;
+                    let paymentUiOpen = false;
 
                     try {
-                        if (paymentChoice === 'pay_now') {
-                            const checkoutUrl = await requestPayNowCheckout(standardizedData);
-                            if (checkoutUrl) {
-                                navigatedToCheckout = true;
-                                window.location.assign(checkoutUrl);
-                                return;
-                            }
-                            throw new Error('no_checkout_url');
+                        const checkout = await requestPayNowCheckout(standardizedData);
+                        if (checkout.mode === 'embedded' && checkout.clientSecret) {
+                            await mountStripeEmbeddedCheckout(checkout.clientSecret, checkout.publishableKey, chargeLabel);
+                            paymentUiOpen = true;
+                            return;
                         }
-
-                        const response = await fetch(webhookUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(standardizedData),
-                        });
-
-                        if (response.ok || response.status === 200 || response.status === 201) {
-                            showBookingThankYou();
-                        } else {
-                            throw new Error('Webhook request failed');
+                        if (checkout.mode === 'hosted' && checkout.checkoutUrl) {
+                            paymentUiOpen = true;
+                            window.location.assign(checkout.checkoutUrl);
+                            return;
                         }
+                        throw new Error('no_checkout');
                     } catch (error) {
                         console.error('Error submitting form:', error);
-                        const payError = lang === 'tr'
-                            ? 'Ödeme bağlantısı oluşturulamadı. Lütfen rezervasyon yapın veya bizimle iletişime geçin.'
-                            : lang === 'de'
-                                ? 'Zahlungslink konnte nicht erstellt werden. Bitte reservieren Sie oder kontaktieren Sie uns.'
-                                : lang === 'es'
-                                    ? 'No se pudo crear el enlace de pago. Haga una reserva o contáctenos.'
-                                    : 'Could not create payment link. Please make a reservation or contact us.';
-                        showBookingError(paymentChoice === 'pay_now' ? payError : undefined);
+                        try { await destroyStripeEmbed(); } catch (_) {}
+                        const missingKey = error && error.message === 'missing_publishable_key';
+                        const payError = missingKey
+                            ? (lang === 'tr'
+                                ? 'Stripe publishable key eksik. data/booking-pay-proxy.config.php dosyasına pk_live_... ekleyin.'
+                                : lang === 'de'
+                                    ? 'Stripe Publishable Key fehlt. Bitte pk_live_... in data/booking-pay-proxy.config.php eintragen.'
+                                    : lang === 'es'
+                                        ? 'Falta la clave publicable de Stripe. Añada pk_live_... en data/booking-pay-proxy.config.php.'
+                                        : 'Stripe publishable key missing. Add pk_live_... to data/booking-pay-proxy.config.php.')
+                            : (lang === 'tr'
+                                ? 'Ödeme formu açılamadı. Lütfen tekrar deneyin veya bizimle iletişime geçin.'
+                                : lang === 'de'
+                                    ? 'Zahlungsformular konnte nicht geöffnet werden. Bitte erneut versuchen oder kontaktieren Sie uns.'
+                                    : lang === 'es'
+                                        ? 'No se pudo abrir el formulario de pago. Inténtelo de nuevo o contáctenos.'
+                                        : 'Could not open payment form. Please try again or contact us.');
+                        showBookingError(payError);
                     } finally {
-                        if (!navigatedToCheckout) {
+                        if (!paymentUiOpen) {
                             setSubmitButtonsDisabled(false);
                             restoreSubmitButtons();
                         }

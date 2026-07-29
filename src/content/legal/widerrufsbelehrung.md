@@ -3,7 +3,7 @@ title: Widerrufsbelehrung
 type: widerrufsbelehrung
 ---
 
-Stand: 02.03.2026
+Stand: 29.07.2026
 
 ## Widerrufsrecht
 
@@ -22,6 +22,8 @@ Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von 
 Haben Sie verlangt, dass die Dienstleistungen (insbesondere die Kursplatzreservierung, die organisatorische Kursplanung sowie die Ausstellung von behördlich relevanten Kursbescheinigungen) während der Widerrufsfrist beginnen sollen, so haben Sie uns einen angemessenen Betrag zu zahlen, der dem Anteil der bis zu dem Zeitpunkt, zu dem Sie uns von der Ausübung des Widerrufsrechts hinsichtlich dieses Vertrags unterrichten, bereits erbrachten Dienstleistungen im Vergleich zum Gesamtumfang der im Vertrag vorgesehenen Dienstleistungen entspricht.
 
 Gemäß unseren Allgemeinen Geschäftsbedingungen und dem Zusatzprotokoll für Visumskurse beträgt der Wertersatz für die administrativen Vorleistungen (Dokumentenprüfung, Erstellung von Visumsunterlagen und Kursplatzreservierung) im Falle eines Widerrufs nach bereits erfolgter Dokumentenausstellung mindestens 150,00 EUR.
+
+Wurde im Rahmen einer Online-Reservierung eine Anzahlung gemäß § 5.1a der AGB (in der Regel 200,00 EUR) geleistet, kann diese Anzahlung auf einen nach dem Gesetz und diesen Hinweisen geschuldeten Wertersatz angerechnet werden. Ein automatischer Anspruch auf Rückzahlung der Anzahlung besteht nicht, soweit Wertersatz in mindestens gleicher Höhe geschuldet wird oder die Anzahlung nach § 5.1a der AGB wegen nicht fristgerechter Zahlung des Restbetrags verfallen ist (unbeschadet eines wirksamen Widerrufs vor Verfall, soweit gesetzlich zulässig).
 
 ## Erlöschen des Widerrufsrechts
 
