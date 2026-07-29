@@ -101,12 +101,12 @@ Eine bloße Terminverzögerung, Nachforderung von Unterlagen oder Aussetzung des
 ### § 4.4 Rücktrittsfristen und Stornogebühren bei Visumsablehnung
 Im Falle einer anerkannten Visumsablehnung gelten folgende Regelungen:
 
-- **Bearbeitungspauschale:** In jedem Fall einer Absage wird eine Bearbeitungs- und Organisationspauschale von 150,00 EUR einbehalten. Diese deckt den bereits erbrachten Aufwand der Dokumentenprüfung, Kursplatzreservierung und Bescheinigungserstellung ab.
-- **Fristgerechter Rücktritt (bis 21 Kalendertage vor Kursbeginn):** Der Teilnehmer erhält die gezahlte Kursgebühr abzüglich der Bearbeitungspauschale (150,00 EUR) zurückerstattet.
+- **Bearbeitungspauschale:** In jedem Fall einer Absage wird eine Bearbeitungs- und Organisationspauschale von 200,00 EUR einbehalten. Diese deckt den bereits erbrachten Aufwand der Dokumentenprüfung, Kursplatzreservierung und Bescheinigungserstellung ab.
+- **Fristgerechter Rücktritt (bis 21 Kalendertage vor Kursbeginn):** Der Teilnehmer erhält die gezahlte Kursgebühr abzüglich der Bearbeitungspauschale (200,00 EUR) zurückerstattet.
 - **Kurzfristiger Rücktritt (weniger als 21 Kalendertage vor Kursbeginn):**
   - Grundsatz: Es erfolgt zunächst ein Einbehalt der Kursgebühr in voller Höhe (100 %) als Schadensersatz für den kurzfristig blockierten Kursplatz.
   - Objektive Schadensprüfung: Campus German prüft nach Kursstart, ob durch die Absage ein tatsächlicher Einnahmeausfall entstanden ist.
-  - Erstattung bei Nachbesetzung: Konnte der frei gewordene Platz nachbesetzt werden und hat der Kurs zum Starttermin die geplante maximale Teilnehmerzahl (gemäß jeweiliger Kursbeschreibung) erreicht, wird dem Teilnehmer die Kursgebühr abzüglich der Bearbeitungspauschale (150,00 EUR) erstattet. In diesem Fall verzichtet Campus German auf den weitergehenden Schadensersatz, da kein Einnahmeausfallschaden entstanden ist.
+  - Erstattung bei Nachbesetzung: Konnte der frei gewordene Platz nachbesetzt werden und hat der Kurs zum Starttermin die geplante maximale Teilnehmerzahl (gemäß jeweiliger Kursbeschreibung) erreicht, wird dem Teilnehmer die Kursgebühr abzüglich der Bearbeitungspauschale (200,00 EUR) erstattet. In diesem Fall verzichtet Campus German auf den weitergehenden Schadensersatz, da kein Einnahmeausfallschaden entstanden ist.
   - Einbehalt bei Leerstand: Verbleibt der Platz im Kurs unbesetzt (Teilnehmerzahl unterhalb der geplanten maximalen Kapazität), wird die vereinbarte Kursgebühr in voller Höhe einbehalten, um den entstandenen Einnahmeausfall zu decken.
   - Nachweisrecht: Dem Teilnehmer bleibt in allen Fällen der Nachweis gestattet, dass Campus German ein geringerer Schaden entstanden ist.
 
