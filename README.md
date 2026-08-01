@@ -70,7 +70,3 @@ Build edilmiş dosyalar `dist/` klasöründe oluşur. Bu klasörü public HTML k
 npm run build
 # dist/ klasöründeki dosyaları public HTML'e yükleyin
 ```
-
-## 📄 Lisans
-
-Private project - CampusGerman
