@@ -23,7 +23,7 @@ Haben Sie verlangt, dass die Dienstleistungen (insbesondere die Kursplatzreservi
 
 Gemäß unseren Allgemeinen Geschäftsbedingungen und dem Zusatzprotokoll für Visumskurse beträgt der Wertersatz für die administrativen Vorleistungen (Dokumentenprüfung, Erstellung von Visumsunterlagen und Kursplatzreservierung) im Falle eines Widerrufs nach bereits erfolgter Dokumentenausstellung mindestens 200,00 EUR.
 
-Wurde im Rahmen einer Online-Reservierung eine Anzahlung gemäß § 5.1a der AGB (in der Regel 200,00 EUR) geleistet, kann diese Anzahlung auf einen nach dem Gesetz und diesen Hinweisen geschuldeten Wertersatz angerechnet werden. Ein automatischer Anspruch auf Rückzahlung der Anzahlung besteht nicht, soweit Wertersatz in mindestens gleicher Höhe geschuldet wird oder die Anzahlung nach § 5.1a der AGB wegen nicht fristgerechter Zahlung des Restbetrags verfallen ist (unbeschadet eines wirksamen Widerrufs vor Verfall, soweit gesetzlich zulässig).
+Wurde im Rahmen einer Online-Reservierung eine Anzahlung gemäß § 5.1a der AGB (in der Regel 150,00 EUR) geleistet, kann diese Anzahlung auf einen nach dem Gesetz und diesen Hinweisen geschuldeten Wertersatz angerechnet werden. Ein automatischer Anspruch auf Rückzahlung der Anzahlung besteht nicht, soweit Wertersatz in mindestens gleicher Höhe geschuldet wird oder die Anzahlung nach § 5.1a der AGB wegen nicht fristgerechter Zahlung des Restbetrags verfallen ist (unbeschadet eines wirksamen Widerrufs vor Verfall, soweit gesetzlich zulässig).
 
 ## Erlöschen des Widerrufsrechts
 

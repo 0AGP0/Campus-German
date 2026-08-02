@@ -1,0 +1,236 @@
+.lt-hero {
+  padding: 3.5rem 1.25rem 1.5rem;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(12, 192, 223, 0.12), transparent 45%),
+    linear-gradient(180deg, #f7fafc 0%, #fff 100%);
+}
+
+.lt-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.lt-hero-title {
+  margin: 0 0 0.75rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  color: #0b1f4d;
+  letter-spacing: -0.03em;
+}
+
+.lt-hero-desc {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: #4a5a68;
+}
+
+.lt-section {
+  padding: 1rem 1.25rem 4rem;
+}
+
+.lt-card {
+  border: 1px solid rgba(15, 40, 70, 0.08);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(11, 31, 77, 0.08);
+  padding: 1.5rem 1.35rem 1.6rem;
+}
+
+.lt-head h2 {
+  margin: 0 0 0.35rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.35rem;
+  color: #0b1f4d;
+}
+
+.lt-head p {
+  margin: 0;
+  color: #5b6b76;
+  line-height: 1.45;
+}
+
+.lt-progress {
+  margin-top: 0.55rem !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0aa5c0 !important;
+}
+
+.lt-bar {
+  margin: 1rem 0 1.25rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: #e8eef3;
+  overflow: hidden;
+}
+
+.lt-bar span {
+  display: block;
+  height: 100%;
+  width: 10%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #0cc0df, #ff6b3d);
+  transition: width 0.25s ease;
+}
+
+.lt-prompt {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #12263a;
+  line-height: 1.4;
+}
+
+.lt-options {
+  display: grid;
+  gap: 0.55rem;
+  margin-bottom: 1.15rem;
+}
+
+.lt-option {
+  width: 100%;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 40, 70, 0.12);
+  background: #f8fafc;
+  color: #1a2b3c;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+
+.lt-option:hover {
+  border-color: rgba(12, 192, 223, 0.45);
+  background: #f0fbfd;
+}
+
+.lt-option.is-selected {
+  border-color: #0cc0df;
+  background: rgba(12, 192, 223, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(12, 192, 223, 0.25);
+}
+
+.lt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.9rem;
+  padding: 0.7rem 1.1rem;
+  border-radius: 12px;
+  border: none;
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.lt-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.lt-btn--primary {
+  width: 100%;
+  background: linear-gradient(135deg, #0cc0df, #0891b2);
+  color: #fff;
+}
+
+.lt-btn--accent {
+  background: linear-gradient(135deg, #ff8888, #ff6b3d);
+  color: #fff;
+}
+
+.lt-btn--ghost {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.lt-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.lt-form {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.lt-form label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.lt-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.lt-form input[type="text"],
+.lt-form input[type="email"],
+.lt-form input[type="tel"] {
+  width: 100%;
+  border: 1px solid rgba(15, 40, 70, 0.14);
+  border-radius: 10px;
+  padding: 0.75rem 0.85rem;
+  font-size: 1rem;
+}
+
+.lt-check {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 0.55rem;
+  grid-template-columns: none;
+}
+
+.lt-check input {
+  margin-top: 0.2rem;
+}
+
+.lt-check a {
+  color: #0aa5c0;
+}
+
+.lt-hp {
+  position: absolute !important;
+  left: -9999px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.lt-result-level {
+  margin: 0.85rem 0 0.25rem !important;
+  font-family: 'Outfit', sans-serif;
+  font-size: 3.2rem;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  color: #0b1f4d !important;
+  line-height: 1;
+}
+
+.lt-result-score {
+  font-weight: 700 !important;
+  color: #0aa5c0 !important;
+}
+
+.lt-hint {
+  margin-top: 0.65rem !important;
+  font-size: 0.92rem;
+}
+
+.lt-actions {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .lt-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+}

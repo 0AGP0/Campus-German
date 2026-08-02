@@ -1,6 +1,5 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-import BookingLessonTimeStep from '../../components/BookingLessonTimeStep.astro';
 import BookingExtrasStep from '../../components/BookingExtrasStep.astro';
 import '../../styles/pages/buchung.css';
 import { coursePricing } from '../../data/coursePricing.ts';
@@ -8,13 +7,12 @@ import { getFirstMondayStartDateOptions, PROMO_PRICE, LESSONS_UP_TO_200, ONLINE_
 import {
     RESERVATION_DEPOSIT_EUR,
     BALANCE_DUE_DAYS,
+    FULL_PAYMENT_DISCOUNT_EUR,
     STRIPE_EXTRAS,
     STRIPE_ADJUST_PRODUCT,
     TELC_PREP_EUR,
     TELC_PREP_WEEKS,
-    getIntensiveLevelEur,
 } from '../../data/stripeCatalog';
-
 export async function getStaticPaths() {
     return [
         { params: { lang: 'tr' } },
@@ -28,6 +26,7 @@ const { lang } = Astro.params;
 const pricingData = coursePricing[lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en')];
 const pricingLang = lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en');
 const startDateOptions = getFirstMondayStartDateOptions(lang as 'tr' | 'de' | 'en' | 'es', 12);
+const nearestStartDateValue = startDateOptions[0]?.value ?? '';
 const termsPath = `/agb/`;
 const privacyPath = `/datenschutz/`;
 const widerrufPath = `/widerrufsbelehrung/`;
@@ -39,7 +38,7 @@ const legalCheckboxCopy = {
         agbLabel: 'Genel Hüküm ve Koşullar',
         widerrufMid: ' (ve ',
         widerrufLabel: 'Cayma Hakkı Bilgilendirmesi',
-        termsAfter: ")'ı okudum ve kabul ediyorum; buna online rezervasyonda 200 € kapora / kalan tutarın 14 gün içinde ödenmemesi halinde kaporanın iade edilmemesi (AGB § 5.1a) dahildir. Cayma süresi dolmadan hizmetin başlamasını açıkça talep ediyorum; hizmet tamamen ifa edilince cayma hakkımın sona ereceğini ve daha önce cayarsam kısmi ifalar (ör. sınav ücretleri, masraflar, alınan dersler) için değer tazmini ödeyebileceğimi biliyorum. *",
+        termsAfter: `)'ı okudum ve kabul ediyorum. Kayıt/taksitte ${RESERVATION_DEPOSIT_EUR} € kapora alınır; kalan ${BALANCE_DUE_DAYS} gün içinde ödenmezse kapora iade edilmez (AGB § 5.1a). Hizmetin cayma süresi dolmadan başlamasını talep ediyor, erken caymada değer tazmini doğabileceğini biliyorum. *`,
         privacyBefore: '(*) ',
         privacyLabel: 'Kişisel Verilerin Korunması',
         privacyAfter: ' hakkındaki bilgilendirmeyi okudum. *',
@@ -49,7 +48,7 @@ const legalCheckboxCopy = {
         agbLabel: 'Allgemeinen Geschäftsbedingungen',
         widerrufMid: ' (samt ',
         widerrufLabel: 'Widerrufsbelehrung',
-        termsAfter: ') zur Kenntnis genommen und bin damit einverstanden, einschließlich der Regelung zur Online-Reservierung mit Anzahlung von 200,00 EUR und Verfall bei nicht fristgerechter Restzahlung binnen 14 Tagen (AGB § 5.1a). Ich verlange ausdrücklich den Beginn der Dienstleistung vor Ablauf der Widerrufsfrist und weiß, dass mein Widerrufsrecht bei vollständiger Erfüllung erlischt sowie bei früherem Widerruf Wertersatz für Teilleistungen (z. B. Prüfungsgebühren, Auslagen, Unterrichtseinheiten) anfallen kann. *',
+        termsAfter: `) gelesen und akzeptiere sie. Bei Anmeldung/Ratenzahlung sind ${RESERVATION_DEPOSIT_EUR} € Anzahlung fällig; bei Restzahlung nicht binnen ${BALANCE_DUE_DAYS} Tagen verfällt sie (AGB § 5.1a). Ich verlange den Leistungsbeginn vor Ablauf der Widerrufsfrist und kenne mögliche Wertersatzpflicht bei früherem Widerruf. *`,
         privacyBefore: '(*) Die Hinweise zum ',
         privacyLabel: 'Datenschutz',
         privacyAfter: ' habe ich zur Kenntnis genommen. *',
@@ -57,9 +56,9 @@ const legalCheckboxCopy = {
     en: {
         termsBefore: '(*) I have read and accept the ',
         agbLabel: 'General Terms and Conditions',
-        widerrufMid: ' (including the ',
+        widerrufMid: ' (and the ',
         widerrufLabel: 'Withdrawal Notice',
-        termsAfter: '), including the online reservation deposit of €200 and its forfeiture if the balance is not paid within 14 days (T&Cs § 5.1a). I expressly request that the service begin before the withdrawal period ends, and I understand that my right of withdrawal ends upon full performance and that early withdrawal may require compensation for partial services (e.g. exam fees, expenses, lessons already taken). *',
+        termsAfter: `). For registration/installments a €${RESERVATION_DEPOSIT_EUR} deposit applies and is forfeited if the balance is not paid within ${BALANCE_DUE_DAYS} days (T&Cs § 5.1a). I request that the service begin before the withdrawal period ends and accept possible compensation if I withdraw early. *`,
         privacyBefore: '(*) I have taken note of the ',
         privacyLabel: 'Privacy Policy',
         privacyAfter: '. *',
@@ -67,9 +66,9 @@ const legalCheckboxCopy = {
     es: {
         termsBefore: '(*) He leído y acepto las ',
         agbLabel: 'Condiciones Generales',
-        widerrufMid: ' (incluida la ',
+        widerrufMid: ' (y la ',
         widerrufLabel: 'Información sobre desistimiento',
-        termsAfter: '), incluida la reserva online con depósito de 200 € y su pérdida si el resto no se paga en 14 días (CG § 5.1a). Solicito expresamente que el servicio comience antes de que finalice el plazo de desistimiento, y sé que mi derecho de desistimiento se extingue con la ejecución completa y que un desistimiento anticipado puede generar compensación por prestaciones parciales (p. ej. tasas de examen, gastos, clases recibidas). *',
+        termsAfter: `). En inscripción/plazos se aplica un depósito de ${RESERVATION_DEPOSIT_EUR} €; se pierde si el resto no se paga en ${BALANCE_DUE_DAYS} días (CG § 5.1a). Solicito que el servicio comience antes del plazo de desistimiento y acepto posible compensación si desisto antes. *`,
         privacyBefore: '(*) He tomado nota de la información sobre ',
         privacyLabel: 'Protección de datos',
         privacyAfter: '. *',
@@ -103,8 +102,8 @@ const t = {
     tr: {
         title: "Kurs Rezervasyonu",
         step1: "Program",
-        step2: "Ders zamanı",
-        step3: "Extralar",
+        step2: "Extralar",
+        step3: "Son Adım",
         step4: "Son Adım",
         programLabel: "İlgilendiğiniz Program",
         programPlaceholder: "Program seçiniz",
@@ -113,14 +112,26 @@ const t = {
         learningPurposeCareer: "Kariyer için",
         learningPurposeUni: "Üniversite için",
         learningPurposeComfort: "Günlük hayat",
-        programIntensive: "Yoğun Almanca",
-        programShortTerm: "Short term",
-        programOnlineLabel: "Online kurs",
-        programYouthCampLabel: "Yaz kampı",
-        programIntensiveDesc: "Yüz yüze yoğun Almanca",
-        programShortTermDesc: "Esnek süre, haftalık kayıt",
-        programOnlineDesc: "Uzaktan canlı dersler",
-        programYouthCampDesc: "Yaz dönemi kamp programı",
+        programIntensive: "Yoğun Almanca Yüzyüze (20/24 LH)",
+        programShortTerm: "Kısa Dönem Almanca (10/20 LH)",
+        programOnlineLabel: "Online Almanca",
+        programYouthCampLabel: "Almanca Yaz Kampı",
+        programIntensiveDesc: "Bremen kampüste yüz yüze yoğun program",
+        programShortTermDesc: "Esnek süreyle haftalık Almanca",
+        programOnlineDesc: "Uzaktan canlı ve kayıtlı dersler",
+        programYouthCampDesc: "Lise gruplarına özel yaz programı",
+        programIntensiveKw1: "Vize için Almanca",
+        programIntensiveKw2: "Üniversite Hazırlık Kursu",
+        programOnlineKw1: "Kayıtlı ve Canlı Dersler",
+        programOnlineKw2: "AI Almanca koçu",
+        programShortTermKw1: "1–12 haftalık Almanca kursları",
+        programShortTermKw2: "Her pazartesi",
+        programYouthCampKw1: "Lise gruplarına özel gençlik kampı",
+        programYouthCampKw2: "Talep bazlı",
+        programIntensivePrice: "890 €'dan",
+        programOnlinePrice: "300 €'dan",
+        programShortTermPrice: "190 € / hafta'dan",
+        programYouthCampPrice: "Talep üzerine",
         weeksUnitLabel: "hafta",
         weeksBtnOther: "Diğer",
         weeksOtherPlaceholder: "Hafta sayısı girin",
@@ -155,11 +166,35 @@ const t = {
         courseInfoTwoCourses: "Vize davet mektubu için 3 kur gerekmektedir. 1 kur daha ekleyerek indirimden yararlanabilirsiniz.",
         courseInfoMultiDiscount: "Toplam {weeks} hafta — %{percent} indirim uygulanıyor",
         multiCourseDiscountLabel: "Çoklu kurs indirimi",
+        multiDiscountSavedLabel: "Toplam indirim",
+        multiDiscountTeaserLabel: "Ekleyince",
+        multiDiscountNextHint: "Bir kurs daha ekle → {amount} € daha düş",
+        multiDiscountTeaserHint: "Bir kurs daha ekle → toplam {amount} € düşsün",
         totalWeeksInfo: "Toplam {n} hafta",
         totalWeekOne: "Toplam 1 hafta",
         courseWeeksLabel: "8 hafta",
         courseSelectionSummaryTitle: "Seçilen program",
         courseUnsureLabel: "Emin değilim",
+        levelSummaryTitle: "Yoğun Almanca – Bremen Campus",
+        levelSummaryTitleOnline: "Online Almanca – Canlı + kayıtlı",
+        levelSummaryMeta: "8 hafta · 20h / hafta  |  Vizeye uygun",
+        levelSummaryMetaOnline: "8 hafta · canlı dersler  |  Esnek katılım",
+        levelSummaryDetailsToggle: "Detayları göster",
+        levelSummaryDetailNative: "Ana dili Almanca olan öğretmenler",
+        levelSummaryDetailDefer: "Vize gecikmesinde kurs ötelemesi",
+        levelSummaryDetailFocus: "Küçük focus grupları",
+        levelDescA1: "A1: Temel konuşma, dinleme, okuma, yazma",
+        levelDescA2: "A2: Günlük iletişim, kısa metinler, pratik diyaloglar",
+        levelDescB1: "B1: Fikir belirtme, akıcı konuşma, metin yazma",
+        levelDescB2: "B2: Akademik/mesleki iletişim, tartışma, sunum",
+        levelDescC1: "C1: Akademik yazma, ileri ifade, önsınav hazırlığı",
+        levelSummaryEmpty: "Soldan seviye seçin; özet burada görünür.",
+        startDateNearest: "En yakın başlangıç",
+        lessonTimeOptional: "Ders saati (isteğe bağlı)",
+        slotMorning: "Sabah",
+        slotAfternoon: "Öğleden sonra",
+        slotEvening: "Akşam",
+        needStartDate: "Lütfen bir başlangıç tarihi seçin.",
         telcC1PrepLabel: "Telc C1 prep",
         courseCardFeatureClub: "Konuşma kulübü",
         courseCardFeatureNative: "Ana dili Almanca hocalar",
@@ -263,13 +298,51 @@ const t = {
         no: "Hayır",
         courseInfoDesc: "Program ve seviye seçiniz",
         extrasDesc: "Vize, konaklama ve havaalanı seçenekleri",
+        extraAdd: "Ekle",
+        extraAdded: "Eklendi",
+        extraRemove: "Kaldır",
+        extraFreeLabel: "Ücretsiz",
+        extraFreeForYou: "Size özel ücretsiz",
+        speakcafeLabel: "Lifelong Speakcafé Membership",
+        speakcafeInfo: "Haftalık konuşma kulübü üyeliği. Liste fiyatı 500 € — Campus German kayıtlarında size özel ücretsiz.",
+        germanyLocationLabel: "Konum",
+        germanyLocationYes: "Almanya'dayım",
+        germanyLocationNo: "Farklı ülkedeyim",
+        payNeedGermany: "Lütfen konumunuzu seçin.",
+        extrasSpecialRequestLabel: "Özel istek",
+        extrasSpecialRequestPlaceholder: "Varsa özel isteğinizi yazın...",
         requestDesc: "Kişisel bilgilerinizi giriniz",
         back: "Geri",
         termsAccepted: "Genel Hüküm ve Koşullar'ı okudum ve kabul ediyorum",
         privacyAccepted: "Kişisel Verilerin Korunması bilgilendirmesini kabul ediyorum",
-        completeBooking: "200 € ile rezervasyon",
+        completeBooking: "Gönder",
         payNowBooking: "Ödemeyi yap",
-        depositHint: "Rezervasyon için 200 € depozito alınır. Kalan tutar 14 gün içinde ödenmezse depozito iade edilmez.",
+        depositHint: "",
+        payDocLabel: "Belge",
+        payDocQuote: "Sadece teklif belgesi",
+        payDocQuotePrice: "0 €",
+        payDocReg: "Kayıt belgemı oluştur",
+        payDocRegPrice: "",
+        payPlanLabel: "Plan",
+        payPlanFull: "Tam ödeme",
+        payPlanInstall: "Taksitli ödeme",
+        payFullDiscountTpl: "−{amount} € indirim",
+        payFullVisaInfo: "Vize için tavsiye",
+        payInstallTwo: "2 taksit — vize öncesi / kurs başı",
+        payInstallCourse: "1 kur önceden taksit ödemesi / Kur−1 taksit",
+        payMethodLabel: "Yöntem",
+        payMethodOnline: "Online ödeme",
+        payMethodSwift: "Banka Swift",
+        payMethodSwiftHint: "Mail ile iletilecek",
+        payMethodOffice: "Ofis ödemesi",
+        payMethodInvoiceHint: "",
+        paySubmitQuote: "Teklif al",
+        paySubmitContinue: "Devam et",
+        payNeedDoc: "Lütfen belge seçimi yapın.",
+        payNeedPlan: "Lütfen ödeme planı seçin.",
+        payNeedInstall: "Lütfen taksit seçeneğini seçin.",
+        payNeedMethod: "Lütfen ödeme yöntemi seçin.",
+        payChargeDue: "Ödenecek",
         payNowRedirecting: "Stripe'a yönlendiriliyor...",
         freeReservation: "Ücretsiz rezervasyon",
         priceCalculation: "Fiyat Hesaplaması",
@@ -338,9 +411,35 @@ const t = {
         termsAccepted: "Genel Hüküm ve Koşullar'ı okudum ve kabul ediyorum",
         privacyAccepted: "Kişisel Verilerin Korunması hakkındaki bilgilendirmeyi okudum ve kabul ediyorum",
         back: "Geri",
-        completeBooking: "200 € ile rezervasyon",
+        completeBooking: "Gönder",
         payNowBooking: "Ödemeyi yap",
-        depositHint: "Rezervasyon için 200 € depozito alınır. Kalan tutar 14 gün içinde ödenmezse depozito iade edilmez.",
+        depositHint: "",
+        payDocLabel: "Belge",
+        payDocQuote: "Sadece teklif belgesi",
+        payDocQuotePrice: "0 €",
+        payDocReg: "Kayıt belgemı oluştur",
+        payDocRegPrice: "",
+        payPlanLabel: "Plan",
+        payPlanFull: "Tam ödeme",
+        payPlanInstall: "Taksitli ödeme",
+        payFullDiscountTpl: "−{amount} € indirim",
+        payFullVisaInfo: "Vize için tavsiye",
+        payInstallTwo: "2 taksit — vize öncesi / kurs başı",
+        payInstallCourse: "1 kur önceden taksit ödemesi / Kur−1 taksit",
+        payMethodLabel: "Yöntem",
+        payMethodOnline: "Online ödeme",
+        payMethodSwift: "Banka Swift",
+        payMethodSwiftHint: "Mail ile iletilecek",
+        payMethodOffice: "Ofis ödemesi",
+        payMethodInvoiceHint: "",
+        paySubmitQuote: "Teklif al",
+        paySubmitContinue: "Devam et",
+        payNeedGermany: "Lütfen konumunuzu seçin.",
+        payNeedDoc: "Lütfen belge seçimi yapın.",
+        payNeedPlan: "Lütfen ödeme planı seçin.",
+        payNeedInstall: "Lütfen taksit seçeneğini seçin.",
+        payNeedMethod: "Lütfen ödeme yöntemi seçin.",
+        payChargeDue: "Ödenecek",
         payNowRedirecting: "Stripe'a yönlendiriliyor...",
         freeReservation: "Ücretsiz rezervasyon",
         priceCalculation: "Fiyat Hesaplaması",
@@ -357,8 +456,8 @@ const t = {
     de: {
         title: "Kursreservierung",
         step1: "Programm",
-        step2: "Unterrichtszeit",
-        step3: "Extras",
+        step2: "Extras",
+        step3: "Letzter Schritt",
         step4: "Letzter Schritt",
         programLabel: "Programm Ihrer Wahl",
         programPlaceholder: "Programm wählen",
@@ -367,14 +466,26 @@ const t = {
         learningPurposeCareer: "Für die Karriere",
         learningPurposeUni: "Für die Universität",
         learningPurposeComfort: "Alltag",
-        programIntensive: "Intensiv Deutsch",
-        programShortTerm: "Short term",
-        programOnlineLabel: "Online-Kurs",
-        programYouthCampLabel: "Sommercamp",
-        programIntensiveDesc: "Intensiv vor Ort",
-        programShortTermDesc: "Flexible Dauer, wöchentlich",
-        programOnlineDesc: "Live-Unterricht online",
-        programYouthCampDesc: "Sommercamp-Programm",
+        programIntensive: "Intensiv Deutsch vor Ort (20/24 UE)",
+        programShortTerm: "Kurzzeit Deutsch (10/20 UE)",
+        programOnlineLabel: "Online Deutsch",
+        programYouthCampLabel: "Deutsch Sommercamp",
+        programIntensiveDesc: "Intensivkurs vor Ort am Campus Bremen",
+        programShortTermDesc: "Flexible Dauer, wöchentlicher Einstieg",
+        programOnlineDesc: "Live- und aufgezeichnete Online-Kurse",
+        programYouthCampDesc: "Sommerprogramm für Schulgruppen",
+        programIntensiveKw1: "Deutsch fürs Visum",
+        programIntensiveKw2: "Universitätsvorbereitung",
+        programOnlineKw1: "Live- und aufgezeichnete Kurse",
+        programOnlineKw2: "KI-Deutschcoach",
+        programShortTermKw1: "1–12 Wochen Deutschkurse",
+        programShortTermKw2: "Jeden Montag",
+        programYouthCampKw1: "Jugendcamp für Schulgruppen",
+        programYouthCampKw2: "Auf Anfrage",
+        programIntensivePrice: "ab 890 €",
+        programOnlinePrice: "ab 300 €",
+        programShortTermPrice: "ab 190 € / Woche",
+        programYouthCampPrice: "Auf Anfrage",
         weeksUnitLabel: "Wochen",
         weeksBtnOther: "Andere",
         weeksOtherPlaceholder: "Anzahl Wochen",
@@ -409,11 +520,35 @@ const t = {
         courseInfoTwoCourses: "Für das Visum-Einladungsschreiben sind 3 Kurse erforderlich. Fügen Sie 1 weiteren Kurs hinzu, um vom Rabatt zu profitieren.",
         courseInfoMultiDiscount: "Insgesamt {weeks} Wochen — {percent}% Rabatt wird angewendet",
         multiCourseDiscountLabel: "Mehrkurs-Rabatt",
+        multiDiscountSavedLabel: "Gesamtrabatt",
+        multiDiscountTeaserLabel: "Beim Hinzufügen",
+        multiDiscountNextHint: "Noch einen Kurs → {amount} € mehr sparen",
+        multiDiscountTeaserHint: "Noch einen Kurs → insgesamt {amount} € sparen",
         totalWeeksInfo: "Gesamt {n} Wochen",
         totalWeekOne: "Gesamt 1 Woche",
         courseWeeksLabel: "8 Wochen",
         courseSelectionSummaryTitle: "Gewähltes Programm",
         courseUnsureLabel: "Weiß ich noch nicht",
+        levelSummaryTitle: "Intensiv Deutsch – Bremen Campus",
+        levelSummaryTitleOnline: "Online Deutsch – Live + Aufzeichnung",
+        levelSummaryMeta: "8 Wochen · 20 UE / Woche  |  Visumgeeignet",
+        levelSummaryMetaOnline: "8 Wochen · Live-Unterricht  |  Flexibel",
+        levelSummaryDetailsToggle: "Details anzeigen",
+        levelSummaryDetailNative: "Muttersprachliche Lehrkräfte",
+        levelSummaryDetailDefer: "Kursverschiebung bei Visumverzögerung",
+        levelSummaryDetailFocus: "Kleine Fokusgruppen",
+        levelDescA1: "A1: Grundlegendes Sprechen, Hören, Lesen, Schreiben",
+        levelDescA2: "A2: Alltagskommunikation, kurze Texte, praktische Dialoge",
+        levelDescB1: "B1: Meinung äußern, flüssiger sprechen, Texte schreiben",
+        levelDescB2: "B2: Akademische/berufliche Kommunikation, Diskussion, Präsentation",
+        levelDescC1: "C1: Akademisches Schreiben, fortgeschrittener Ausdruck, Prüfungsvorbereitung",
+        levelSummaryEmpty: "Links ein Niveau wählen – die Zusammenfassung erscheint hier.",
+        startDateNearest: "Nächster Start",
+        lessonTimeOptional: "Unterrichtszeit (optional)",
+        slotMorning: "Morgen",
+        slotAfternoon: "Nachmittag",
+        slotEvening: "Abend",
+        needStartDate: "Bitte wählen Sie ein Startdatum.",
         telcC1PrepLabel: "Telc C1 Prep",
         courseCardFeatureClub: "Sprachclub",
         courseCardFeatureNative: "Muttersprachliche Deutschlehrer",
@@ -518,9 +653,34 @@ const t = {
         back: "Zurück",
         termsAccepted: "Ich habe die AGB gelesen und akzeptiert",
         privacyAccepted: "Ich akzeptiere die Datenschutzinformationen",
-        completeBooking: "Reservierung mit 200 €",
+        completeBooking: "Absenden",
         payNowBooking: "Jetzt bezahlen",
-        depositHint: "Für die Reservierung werden 200 € Anzahlung fällig. Wird der Restbetrag nicht innerhalb von 14 Tagen bezahlt, verfällt die Anzahlung.",
+        depositHint: "Für die Anmeldebestätigung werden 150 € fällig. Der Restbetrag richtet sich nach Ihrem Zahlungsplan.",
+        payDocLabel: "Dokumentauswahl",
+        payDocQuote: "Angebotsdokument",
+        payDocQuotePrice: "0 €",
+        payDocReg: "Anmeldebestätigung erstellen",
+        payDocRegPrice: "150 €",
+        payPlanLabel: "Zahlungsplan",
+        payPlanFull: "Vollzahlung",
+        payPlanInstall: "Ratenzahlung",
+        payFullDiscountTpl: "{amount} € Rabatt",
+        payFullVisaInfo: "Für das Visum empfohlene Option",
+        payInstallTwo: "2 Raten — vor Visum / Kursbeginn",
+        payInstallCourse: "1 Kurs im Voraus — Kurs−1 Rate",
+        payMethodLabel: "Zahlungsart",
+        payMethodOnline: "Online-Zahlung",
+        payMethodSwift: "Bank-Swift",
+        payMethodSwiftHint: "Angaben werden per E-Mail gesendet",
+        payMethodOffice: "Zahlung im Büro",
+        payMethodInvoiceHint: "Rechnung wird zugestellt",
+        paySubmitQuote: "Angebot anfordern",
+        paySubmitContinue: "Weiter",
+        payNeedDoc: "Bitte Dokumentauswahl treffen.",
+        payNeedPlan: "Bitte Zahlungsplan wählen.",
+        payNeedInstall: "Bitte Ratenoption wählen.",
+        payNeedMethod: "Bitte Zahlungsart wählen.",
+        payChargeDue: "Jetzt fällig",
         payNowRedirecting: "Weiterleitung zu Stripe...",
         freeReservation: "Kostenlose Reservierung",
         priceCalculation: "Preisberechnung",
@@ -534,6 +694,19 @@ const t = {
         courseInfo: "Kursinformationen",
         courseInfoDesc: "Programm und Niveau wählen",
         extrasDesc: "Visum, Unterkunft und Flughafenabholung",
+        extraAdd: "Hinzufügen",
+        extraAdded: "Hinzugefügt",
+        extraRemove: "Entfernen",
+        extraFreeLabel: "Kostenlos",
+        extraFreeForYou: "Für Sie kostenlos",
+        speakcafeLabel: "Lifelong Speakcafé Membership",
+        speakcafeInfo: "Wöchentlicher Sprachclub. Listenpreis 500 € — für Campus-German-Anmeldungen für Sie kostenlos.",
+        germanyLocationLabel: "Befinden Sie sich derzeit in Deutschland?",
+        germanyLocationYes: "Ich bin in Deutschland",
+        germanyLocationNo: "Ich bin in einem anderen Land",
+        payNeedGermany: "Bitte wählen Sie Ihren Standort.",
+        extrasSpecialRequestLabel: "Sonderwunsch",
+        extrasSpecialRequestPlaceholder: "Optionaler Sonderwunsch...",
         requestDesc: "Kontaktdaten eingeben",
         optionalServices: "Zusatzleistungen",
         visaGuaranteePrice: "Einladungsschreiben (+50 €)",
@@ -602,9 +775,34 @@ const t = {
         termsAccepted: "Ich habe die Allgemeinen Geschäftsbedingungen gelesen und akzeptiere sie",
         privacyAccepted: "Ich habe die Informationen zum Datenschutz gelesen und akzeptiere sie",
         back: "Zurück",
-        completeBooking: "Reservierung mit 200 €",
+        completeBooking: "Absenden",
         payNowBooking: "Jetzt bezahlen",
-        depositHint: "Für die Reservierung werden 200 € Anzahlung fällig. Wird der Restbetrag nicht innerhalb von 14 Tagen bezahlt, verfällt die Anzahlung.",
+        depositHint: "Für die Anmeldebestätigung werden 150 € fällig. Der Restbetrag richtet sich nach Ihrem Zahlungsplan.",
+        payDocLabel: "Dokumentauswahl",
+        payDocQuote: "Angebotsdokument",
+        payDocQuotePrice: "0 €",
+        payDocReg: "Anmeldebestätigung erstellen",
+        payDocRegPrice: "150 €",
+        payPlanLabel: "Zahlungsplan",
+        payPlanFull: "Vollzahlung",
+        payPlanInstall: "Ratenzahlung",
+        payFullDiscountTpl: "{amount} € Rabatt",
+        payFullVisaInfo: "Für das Visum empfohlene Option",
+        payInstallTwo: "2 Raten — vor Visum / Kursbeginn",
+        payInstallCourse: "1 Kurs im Voraus — Kurs−1 Rate",
+        payMethodLabel: "Zahlungsart",
+        payMethodOnline: "Online-Zahlung",
+        payMethodSwift: "Bank-Swift",
+        payMethodSwiftHint: "Angaben werden per E-Mail gesendet",
+        payMethodOffice: "Zahlung im Büro",
+        payMethodInvoiceHint: "Rechnung wird zugestellt",
+        paySubmitQuote: "Angebot anfordern",
+        paySubmitContinue: "Weiter",
+        payNeedDoc: "Bitte Dokumentauswahl treffen.",
+        payNeedPlan: "Bitte Zahlungsplan wählen.",
+        payNeedInstall: "Bitte Ratenoption wählen.",
+        payNeedMethod: "Bitte Zahlungsart wählen.",
+        payChargeDue: "Jetzt fällig",
         payNowRedirecting: "Weiterleitung zu Stripe...",
         freeReservation: "Kostenlose Reservierung",
         priceCalculation: "Preisberechnung",
@@ -621,8 +819,8 @@ const t = {
     en: {
         title: "Course Booking",
         step1: "Program",
-        step2: "Lesson time",
-        step3: "Extras",
+        step2: "Extras",
+        step3: "Final Step",
         step4: "Final Step",
         programLabel: "Program of Interest",
         programPlaceholder: "Select program",
@@ -631,14 +829,26 @@ const t = {
         learningPurposeCareer: "For my career",
         learningPurposeUni: "For university",
         learningPurposeComfort: "Daily life",
-        programIntensive: "Intensive German",
-        programShortTerm: "Short term",
-        programOnlineLabel: "Online course",
-        programYouthCampLabel: "Summer camp",
-        programIntensiveDesc: "In-person intensive German",
-        programShortTermDesc: "Flexible duration, weekly",
-        programOnlineDesc: "Live online classes",
-        programYouthCampDesc: "Summer camp programme",
+        programIntensive: "Intensive German On-Campus (20/24 LH)",
+        programShortTerm: "Short-Term German (10/20 LH)",
+        programOnlineLabel: "Online German",
+        programYouthCampLabel: "German Summer Camp",
+        programIntensiveDesc: "In-person intensive programme in Bremen",
+        programShortTermDesc: "Flexible weekly German courses",
+        programOnlineDesc: "Live and recorded online classes",
+        programYouthCampDesc: "Summer programme for school groups",
+        programIntensiveKw1: "German for visa",
+        programIntensiveKw2: "University preparation",
+        programOnlineKw1: "Live & recorded lessons",
+        programOnlineKw2: "AI German coach",
+        programShortTermKw1: "1–12 week German courses",
+        programShortTermKw2: "Every Monday",
+        programYouthCampKw1: "Youth camp for school groups",
+        programYouthCampKw2: "On request",
+        programIntensivePrice: "from 890 €",
+        programOnlinePrice: "from 300 €",
+        programShortTermPrice: "from 190 € / week",
+        programYouthCampPrice: "On request",
         weeksUnitLabel: "weeks",
         weeksBtnOther: "Other",
         weeksOtherPlaceholder: "Enter number of weeks",
@@ -673,11 +883,35 @@ const t = {
         courseInfoTwoCourses: "3 courses are required for the visa invitation letter. Add 1 more course to benefit from the discount.",
         courseInfoMultiDiscount: "Total {weeks} weeks — {percent}% discount applied",
         multiCourseDiscountLabel: "Multi-course discount",
+        multiDiscountSavedLabel: "Total discount",
+        multiDiscountTeaserLabel: "If you add one",
+        multiDiscountNextHint: "Add one more course → save {amount} € more",
+        multiDiscountTeaserHint: "Add one more course → save {amount} € total",
         totalWeeksInfo: "Total {n} weeks",
         totalWeekOne: "Total 1 week",
         courseWeeksLabel: "8 weeks",
         courseSelectionSummaryTitle: "Selected program",
         courseUnsureLabel: "Not sure yet",
+        levelSummaryTitle: "Intensive German – Bremen Campus",
+        levelSummaryTitleOnline: "Online German – Live + recorded",
+        levelSummaryMeta: "8 weeks · 20h / week  |  Visa-eligible",
+        levelSummaryMetaOnline: "8 weeks · live lessons  |  Flexible",
+        levelSummaryDetailsToggle: "Show details",
+        levelSummaryDetailNative: "Native German-speaking teachers",
+        levelSummaryDetailDefer: "Course deferral if visa is delayed",
+        levelSummaryDetailFocus: "Small focus groups",
+        levelDescA1: "A1: Basic speaking, listening, reading, writing",
+        levelDescA2: "A2: Everyday communication, short texts, practical dialogues",
+        levelDescB1: "B1: Express opinions, speak more fluently, write texts",
+        levelDescB2: "B2: Academic/professional communication, discussion, presentation",
+        levelDescC1: "C1: Academic writing, advanced expression, exam preparation",
+        levelSummaryEmpty: "Select a level on the left – the summary appears here.",
+        startDateNearest: "Nearest start",
+        lessonTimeOptional: "Lesson time (optional)",
+        slotMorning: "Morning",
+        slotAfternoon: "Afternoon",
+        slotEvening: "Evening",
+        needStartDate: "Please choose a start date.",
         telcC1PrepLabel: "Telc C1 prep",
         courseCardFeatureClub: "Conversation club",
         courseCardFeatureNative: "Native German teachers",
@@ -782,9 +1016,34 @@ const t = {
         back: "Back",
         termsAccepted: "I have read and accept the Terms and Conditions",
         privacyAccepted: "I accept the Privacy Policy information",
-        completeBooking: "Reserve with €200",
+        completeBooking: "Submit",
         payNowBooking: "Pay now",
-        depositHint: "A €200 deposit is charged to reserve. If the balance is not paid within 14 days, the deposit is non-refundable.",
+        depositHint: "A €150 fee applies for the registration document. The remaining balance follows your payment plan.",
+        payDocLabel: "Document choice",
+        payDocQuote: "Quote document",
+        payDocQuotePrice: "€0",
+        payDocReg: "Create my registration document",
+        payDocRegPrice: "€150",
+        payPlanLabel: "Payment plan",
+        payPlanFull: "Full payment",
+        payPlanInstall: "Installments",
+        payFullDiscountTpl: "{amount} € discount",
+        payFullVisaInfo: "Recommended option for visa",
+        payInstallTwo: "2 installments — before visa / course start",
+        payInstallCourse: "1 course in advance — Course−1 installment",
+        payMethodLabel: "Payment method",
+        payMethodOnline: "Online payment",
+        payMethodSwift: "Bank Swift",
+        payMethodSwiftHint: "Details will be sent by email",
+        payMethodOffice: "Office payment",
+        payMethodInvoiceHint: "Invoice will be sent to you",
+        paySubmitQuote: "Get quote",
+        paySubmitContinue: "Continue",
+        payNeedDoc: "Please choose a document option.",
+        payNeedPlan: "Please choose a payment plan.",
+        payNeedInstall: "Please choose an installment option.",
+        payNeedMethod: "Please choose a payment method.",
+        payChargeDue: "Due now",
         payNowRedirecting: "Redirecting to Stripe...",
         freeReservation: "Free reservation",
         priceCalculation: "Price Calculation",
@@ -798,6 +1057,19 @@ const t = {
         courseInfo: "Course Information",
         courseInfoDesc: "Select program and level",
         extrasDesc: "Visa, accommodation and airport pickup",
+        extraAdd: "Add",
+        extraAdded: "Added",
+        extraRemove: "Remove",
+        extraFreeLabel: "Free",
+        extraFreeForYou: "Free for you",
+        speakcafeLabel: "Lifelong Speakcafé Membership",
+        speakcafeInfo: "Weekly conversation club membership. List price €500 — free for you with a Campus German booking.",
+        germanyLocationLabel: "Are you currently in Germany?",
+        germanyLocationYes: "I am in Germany",
+        germanyLocationNo: "I am in another country",
+        payNeedGermany: "Please select your location.",
+        extrasSpecialRequestLabel: "Special request",
+        extrasSpecialRequestPlaceholder: "Any special request...",
         requestDesc: "Enter your contact details",
         optionalServices: "Additional services",
         visaGuaranteePrice: "Letter of invitation (+50 €)",
@@ -866,9 +1138,34 @@ const t = {
         termsAccepted: "I have read and accept the General Terms and Conditions",
         privacyAccepted: "I have read and accept the Privacy Policy information",
         back: "Back",
-        completeBooking: "Reserve with €200",
+        completeBooking: "Submit",
         payNowBooking: "Pay now",
-        depositHint: "A €200 deposit is charged to reserve. If the balance is not paid within 14 days, the deposit is non-refundable.",
+        depositHint: "A €150 fee applies for the registration document. The remaining balance follows your payment plan.",
+        payDocLabel: "Document choice",
+        payDocQuote: "Quote document",
+        payDocQuotePrice: "€0",
+        payDocReg: "Create my registration document",
+        payDocRegPrice: "€150",
+        payPlanLabel: "Payment plan",
+        payPlanFull: "Full payment",
+        payPlanInstall: "Installments",
+        payFullDiscountTpl: "{amount} € discount",
+        payFullVisaInfo: "Recommended option for visa",
+        payInstallTwo: "2 installments — before visa / course start",
+        payInstallCourse: "1 course in advance — Course−1 installment",
+        payMethodLabel: "Payment method",
+        payMethodOnline: "Online payment",
+        payMethodSwift: "Bank Swift",
+        payMethodSwiftHint: "Details will be sent by email",
+        payMethodOffice: "Office payment",
+        payMethodInvoiceHint: "Invoice will be sent to you",
+        paySubmitQuote: "Get quote",
+        paySubmitContinue: "Continue",
+        payNeedDoc: "Please choose a document option.",
+        payNeedPlan: "Please choose a payment plan.",
+        payNeedInstall: "Please choose an installment option.",
+        payNeedMethod: "Please choose a payment method.",
+        payChargeDue: "Due now",
         payNowRedirecting: "Redirecting to Stripe...",
         freeReservation: "Free reservation",
         priceCalculation: "Price Calculation",
@@ -885,8 +1182,8 @@ const t = {
     es: {
         title: "Reserva de curso",
         step1: "Programa",
-        step2: "Horario",
-        step3: "Extras",
+        step2: "Extras",
+        step3: "Último paso",
         step4: "Último paso",
         programLabel: "Programa de interés",
         programPlaceholder: "Seleccione programa",
@@ -895,14 +1192,26 @@ const t = {
         learningPurposeCareer: "Para la carrera",
         learningPurposeUni: "Para la universidad",
         learningPurposeComfort: "Día a día",
-        programIntensive: "Alemán intensivo",
-        programShortTerm: "Short term",
-        programOnlineLabel: "Curso online",
-        programYouthCampLabel: "Campamento de verano",
-        programIntensiveDesc: "Alemán intensivo presencial",
-        programShortTermDesc: "Duración flexible, semanal",
-        programOnlineDesc: "Clases en vivo online",
-        programYouthCampDesc: "Programa de campamento de verano",
+        programIntensive: "Alemán intensivo presencial (20/24 LH)",
+        programShortTerm: "Alemán de corto plazo (10/20 LH)",
+        programOnlineLabel: "Alemán online",
+        programYouthCampLabel: "Campamento de verano de alemán",
+        programIntensiveDesc: "Programa intensivo presencial en Bremen",
+        programShortTermDesc: "Cursos semanales con duración flexible",
+        programOnlineDesc: "Clases en vivo y grabadas a distancia",
+        programYouthCampDesc: "Programa de verano para grupos escolares",
+        programIntensiveKw1: "Alemán para visado",
+        programIntensiveKw2: "Preparación universitaria",
+        programOnlineKw1: "Clases en vivo y grabadas",
+        programOnlineKw2: "Coach de alemán con IA",
+        programShortTermKw1: "Cursos de alemán de 1–12 semanas",
+        programShortTermKw2: "Cada lunes",
+        programYouthCampKw1: "Campamento juvenil para institutos",
+        programYouthCampKw2: "Bajo demanda",
+        programIntensivePrice: "desde 890 €",
+        programOnlinePrice: "desde 300 €",
+        programShortTermPrice: "desde 190 € / semana",
+        programYouthCampPrice: "Bajo demanda",
         weeksUnitLabel: "semanas",
         weeksBtnOther: "Otro",
         weeksOtherPlaceholder: "Introduzca semanas",
@@ -937,11 +1246,35 @@ const t = {
         courseInfoTwoCourses: "Se requieren 3 cursos para la carta de invitación de visado. Añada 1 curso más para beneficiarse del descuento.",
         courseInfoMultiDiscount: "Total {weeks} semanas — {percent}% de descuento aplicado",
         multiCourseDiscountLabel: "Descuento multi-curso",
+        multiDiscountSavedLabel: "Descuento total",
+        multiDiscountTeaserLabel: "Si añade uno",
+        multiDiscountNextHint: "Un curso más → {amount} € más de descuento",
+        multiDiscountTeaserHint: "Un curso más → {amount} € de descuento en total",
         totalWeeksInfo: "Total {n} semanas",
         totalWeekOne: "Total 1 semana",
         courseWeeksLabel: "8 semanas",
         courseSelectionSummaryTitle: "Programa seleccionado",
         courseUnsureLabel: "Aún no lo sé",
+        levelSummaryTitle: "Alemán intensivo – Campus Bremen",
+        levelSummaryTitleOnline: "Alemán online – En vivo + grabado",
+        levelSummaryMeta: "8 semanas · 20h / semana  |  Apto para visado",
+        levelSummaryMetaOnline: "8 semanas · clases en vivo  |  Flexible",
+        levelSummaryDetailsToggle: "Mostrar detalles",
+        levelSummaryDetailNative: "Profesores nativos de alemán",
+        levelSummaryDetailDefer: "Aplazamiento del curso si el visado se retrasa",
+        levelSummaryDetailFocus: "Grupos pequeños de enfoque",
+        levelDescA1: "A1: Hablar, escuchar, leer y escribir básicos",
+        levelDescA2: "A2: Comunicación cotidiana, textos cortos, diálogos prácticos",
+        levelDescB1: "B1: Expresar opiniones, hablar con más fluidez, escribir textos",
+        levelDescB2: "B2: Comunicación académica/profesional, debate, presentación",
+        levelDescC1: "C1: Escritura académica, expresión avanzada, preparación de examen",
+        levelSummaryEmpty: "Elija un nivel a la izquierda; el resumen aparece aquí.",
+        startDateNearest: "Inicio más cercano",
+        lessonTimeOptional: "Horario (opcional)",
+        slotMorning: "Mañana",
+        slotAfternoon: "Tarde",
+        slotEvening: "Noche",
+        needStartDate: "Elija una fecha de inicio.",
         telcC1PrepLabel: "Telc C1 prep",
         courseCardFeatureClub: "Club de conversación",
         courseCardFeatureNative: "Profesores nativos de alemán",
@@ -1046,9 +1379,34 @@ const t = {
         back: "Atrás",
         termsAccepted: "He leído y acepto las Condiciones Generales",
         privacyAccepted: "Acepto la información de Protección de datos",
-        completeBooking: "Reservar con 200 €",
+        completeBooking: "Enviar",
         payNowBooking: "Pagar ahora",
-        depositHint: "Para reservar se cobran 200 € de depósito. Si el resto no se paga en 14 días, el depósito no es reembolsable.",
+        depositHint: "La documentación de inscripción tiene un coste de 150 €. El resto según su plan de pago.",
+        payDocLabel: "Elección de documento",
+        payDocQuote: "Documento de presupuesto",
+        payDocQuotePrice: "0 €",
+        payDocReg: "Crear mi documento de inscripción",
+        payDocRegPrice: "150 €",
+        payPlanLabel: "Plan de pago",
+        payPlanFull: "Pago completo",
+        payPlanInstall: "Pago a plazos",
+        payFullDiscountTpl: "{amount} € de descuento",
+        payFullVisaInfo: "Opción recomendada para el visado",
+        payInstallTwo: "2 plazos — antes del visado / inicio del curso",
+        payInstallCourse: "1 curso por adelantado — plazo Curso−1",
+        payMethodLabel: "Método de pago",
+        payMethodOnline: "Pago online",
+        payMethodSwift: "Swift bancario",
+        payMethodSwiftHint: "Los datos se enviarán por correo",
+        payMethodOffice: "Pago en oficina",
+        payMethodInvoiceHint: "Se enviará la factura",
+        paySubmitQuote: "Pedir presupuesto",
+        paySubmitContinue: "Continuar",
+        payNeedDoc: "Elija una opción de documento.",
+        payNeedPlan: "Elija un plan de pago.",
+        payNeedInstall: "Elija una opción de plazos.",
+        payNeedMethod: "Elija un método de pago.",
+        payChargeDue: "A pagar ahora",
         payNowRedirecting: "Redirigiendo a Stripe...",
         freeReservation: "Reserva gratuita",
         priceCalculation: "Cálculo del precio",
@@ -1062,6 +1420,19 @@ const t = {
         courseInfo: "Información del curso",
         courseInfoDesc: "Seleccione programa y nivel",
         extrasDesc: "Visado, alojamiento y recogida en aeropuerto",
+        extraAdd: "Añadir",
+        extraAdded: "Añadido",
+        extraRemove: "Quitar",
+        extraFreeLabel: "Gratis",
+        extraFreeForYou: "Gratis para usted",
+        speakcafeLabel: "Lifelong Speakcafé Membership",
+        speakcafeInfo: "Membresía del club de conversación semanal. Precio de lista 500 € — gratis para usted con la inscripción en Campus German.",
+        germanyLocationLabel: "¿Está actualmente en Alemania?",
+        germanyLocationYes: "Estoy en Alemania",
+        germanyLocationNo: "Estoy en otro país",
+        payNeedGermany: "Seleccione su ubicación.",
+        extrasSpecialRequestLabel: "Petición especial",
+        extrasSpecialRequestPlaceholder: "Si tiene una petición especial...",
         requestDesc: "Introduzca sus datos de contacto",
         optionalServices: "Servicios adicionales",
         visaGuaranteePrice: "Carta de invitación (+50 €)",
@@ -1130,9 +1501,34 @@ const t = {
         termsAccepted: "He leído y acepto las Condiciones Generales",
         privacyAccepted: "He leído y acepto la información sobre Protección de datos",
         back: "Atrás",
-        completeBooking: "Reservar con 200 €",
+        completeBooking: "Enviar",
         payNowBooking: "Pagar ahora",
-        depositHint: "Para reservar se cobran 200 € de depósito. Si el resto no se paga en 14 días, el depósito no es reembolsable.",
+        depositHint: "La documentación de inscripción tiene un coste de 150 €. El resto según su plan de pago.",
+        payDocLabel: "Elección de documento",
+        payDocQuote: "Documento de presupuesto",
+        payDocQuotePrice: "0 €",
+        payDocReg: "Crear mi documento de inscripción",
+        payDocRegPrice: "150 €",
+        payPlanLabel: "Plan de pago",
+        payPlanFull: "Pago completo",
+        payPlanInstall: "Pago a plazos",
+        payFullDiscountTpl: "{amount} € de descuento",
+        payFullVisaInfo: "Opción recomendada para el visado",
+        payInstallTwo: "2 plazos — antes del visado / inicio del curso",
+        payInstallCourse: "1 curso por adelantado — plazo Curso−1",
+        payMethodLabel: "Método de pago",
+        payMethodOnline: "Pago online",
+        payMethodSwift: "Swift bancario",
+        payMethodSwiftHint: "Los datos se enviarán por correo",
+        payMethodOffice: "Pago en oficina",
+        payMethodInvoiceHint: "Se enviará la factura",
+        paySubmitQuote: "Pedir presupuesto",
+        paySubmitContinue: "Continuar",
+        payNeedDoc: "Elija una opción de documento.",
+        payNeedPlan: "Elija un plan de pago.",
+        payNeedInstall: "Elija una opción de plazos.",
+        payNeedMethod: "Elija un método de pago.",
+        payChargeDue: "A pagar ahora",
         payNowRedirecting: "Redirigiendo a Stripe...",
         freeReservation: "Reserva gratuita",
         priceCalculation: "Cálculo del precio",
@@ -1153,7 +1549,7 @@ const translations = t[lang as keyof typeof t];
 const courseCardLevels = ['a1', 'a2', 'b1', 'b2', 'c1'] as const;
 const courseCardLessonsBadge = LESSONS_UP_TO_200[lang as keyof typeof LESSONS_UP_TO_200] ?? LESSONS_UP_TO_200.en;
 const telcPrepPrice = `${TELC_PREP_EUR} €`;
-const intensiveLevelPriceLabel = `${getIntensiveLevelEur()} €`;
+const intensiveLevelPriceLabel = `${PROMO_PRICE.discounted} €`;
 const programImages = {
     intensive: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80',
     'short-term': 'https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=800&q=80',
@@ -1161,10 +1557,50 @@ const programImages = {
     'youth-camp': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
 } as const;
 const programCardItems = [
-    { value: 'intensive', title: translations.programIntensive, desc: translations.programIntensiveDesc, image: programImages.intensive, mod: 'intensive', icon: 'graduation-cap' },
-    { value: 'short-term', title: translations.programShortTerm, desc: translations.programShortTermDesc, image: programImages['short-term'], mod: 'short-term', icon: 'calendar-alt' },
-    { value: 'online', title: translations.programOnlineLabel, desc: translations.programOnlineDesc, image: programImages.online, mod: 'online', icon: 'laptop' },
-    { value: 'youth-camp', title: translations.programYouthCampLabel, desc: translations.programYouthCampDesc, image: programImages['youth-camp'], mod: 'youth-camp', icon: 'umbrella-beach' },
+    {
+        value: 'intensive',
+        title: translations.programIntensive,
+        desc: translations.programIntensiveDesc,
+        kw1: translations.programIntensiveKw1,
+        kw2: translations.programIntensiveKw2,
+        price: translations.programIntensivePrice,
+        image: programImages.intensive,
+        mod: 'intensive',
+        icon: 'graduation-cap',
+    },
+    {
+        value: 'short-term',
+        title: translations.programShortTerm,
+        desc: translations.programShortTermDesc,
+        kw1: translations.programShortTermKw1,
+        kw2: translations.programShortTermKw2,
+        price: translations.programShortTermPrice,
+        image: programImages['short-term'],
+        mod: 'short-term',
+        icon: 'calendar-alt',
+    },
+    {
+        value: 'online',
+        title: translations.programOnlineLabel,
+        desc: translations.programOnlineDesc,
+        kw1: translations.programOnlineKw1,
+        kw2: translations.programOnlineKw2,
+        price: translations.programOnlinePrice,
+        image: programImages.online,
+        mod: 'online',
+        icon: 'laptop',
+    },
+    {
+        value: 'youth-camp',
+        title: translations.programYouthCampLabel,
+        desc: translations.programYouthCampDesc,
+        kw1: translations.programYouthCampKw1,
+        kw2: translations.programYouthCampKw2,
+        price: translations.programYouthCampPrice,
+        image: programImages['youth-camp'],
+        mod: 'youth-camp',
+        icon: 'umbrella-beach',
+    },
 ] as const;
 const shortTermWeekOptions = [
     { value: 2, mod: 'w2', features: [translations.weekCard2f1, translations.weekCard2f2, translations.weekCard2f3] },
@@ -1188,6 +1624,27 @@ const courseInfoCopy = {
     totalWeeks: translations.totalWeeksInfo,
     totalWeekOne: translations.totalWeekOne,
     discountLabel: translations.multiCourseDiscountLabel,
+    savedLabel: translations.multiDiscountSavedLabel,
+    teaserLabel: translations.multiDiscountTeaserLabel,
+    nextHint: translations.multiDiscountNextHint,
+    teaserHint: translations.multiDiscountTeaserHint,
+};
+
+const levelSummaryCopy = {
+    title: translations.levelSummaryTitle,
+    titleOnline: translations.levelSummaryTitleOnline,
+    meta: translations.levelSummaryMeta,
+    metaOnline: translations.levelSummaryMetaOnline,
+    empty: translations.levelSummaryEmpty,
+    desc: {
+        a1: translations.levelDescA1,
+        a2: translations.levelDescA2,
+        b1: translations.levelDescB1,
+        b2: translations.levelDescB2,
+        c1: translations.levelDescC1,
+        'telc-c1-prep': translations.telcC1PrepLabel,
+        unsure: translations.courseUnsureLabel,
+    },
 };
 
 /** Webhook payload için okunabilir etiketler (form diline göre) */
@@ -1237,14 +1694,25 @@ const extraServiceImages = {
 } as const;
 
 const extrasStepCopy = {
-    stepTitle: translations.step3,
+    stepTitle: translations.step2,
     stepDesc: translations.extrasDesc,
     back: translations.back,
     continueBtn: translations.continueBtn,
     yes: translations.visaYes,
     no: translations.visaNo,
+    add: translations.extraAdd,
+    added: translations.extraAdded,
+    remove: translations.extraRemove,
+    freeLabel: translations.extraFreeLabel,
+    freeForYou: translations.extraFreeForYou,
+    germanyLabel: translations.germanyLocationLabel,
+    germanyYes: translations.germanyLocationYes,
+    germanyNo: translations.germanyLocationNo,
+    specialRequestLabel: translations.extrasSpecialRequestLabel,
+    specialRequestPlaceholder: translations.extrasSpecialRequestPlaceholder,
     infoGeneral: translations.extraInfoGeneral,
     infoAccommodation: translations.extraInfoAccommodation,
+    infoSpeakcafe: translations.speakcafeInfo,
     infoClose: translations.extraInfoClose,
     infoBtnLabel: translations.extraInfoBtnLabel,
     cards: [
@@ -1252,6 +1720,17 @@ const extrasStepCopy = {
         { field: 'university-admission-support', title: translations.universityAdmissionLabel, price: STRIPE_EXTRAS.university.eur, image: extraServiceImages.university, icon: 'user-graduate', theme: 'university' as const, infoType: 'general' as const },
         { field: 'accommodation-support', title: translations.accommodationLabel, price: STRIPE_EXTRAS.accommodation.eur, image: extraServiceImages.accommodation, icon: 'home', theme: 'accommodation' as const, infoType: 'accommodation' as const },
         { field: 'airport-pickup', title: translations.airportLabel, price: STRIPE_EXTRAS.airport.eur, image: extraServiceImages.airport, icon: 'plane-arrival', theme: 'airport' as const, infoType: 'general' as const },
+        {
+            field: 'speakcafe-membership',
+            title: translations.speakcafeLabel,
+            price: 0,
+            listPrice: 500,
+            free: true,
+            image: extraServiceImages.visa,
+            icon: 'comments',
+            theme: 'speakcafe' as const,
+            infoType: 'speakcafe' as const,
+        },
     ],
 };
 ---
@@ -1279,10 +1758,6 @@ const extrasStepCopy = {
                             <div class="step-indicator" data-step="3">
                                 <span class="step-number">3</span>
                                 <span class="step-label">{translations.step3}</span>
-                            </div>
-                            <div class="step-indicator" data-step="4">
-                                <span class="step-number">4</span>
-                                <span class="step-label">{translations.step4}</span>
                             </div>
                         </div>
                     </div>
@@ -1321,6 +1796,13 @@ const extrasStepCopy = {
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="program-slot__body">
+                                                            <div class="program-slot__keywords">
+                                                                <span>{item.kw1}</span>
+                                                                <span>{item.kw2}</span>
+                                                            </div>
+                                                            <p class="program-slot__price">{item.price}</p>
+                                                        </div>
                                                     </label>
                                                 ))}
                                             </div>
@@ -1328,104 +1810,98 @@ const extrasStepCopy = {
                                         <input type="hidden" name="intensive-type" id="intensive-type-hidden" value="intensive" />
                                         <div class="form-group full-width" id="course-selection-group" style="display: none;">
                                             <label>{translations.courseSelectionLabel} *</label>
-                                            <div id="course-bundle-infobox" class="form-infobox" style="display: none;" role="status">
-                                                <i class="fas fa-info-circle" aria-hidden="true"></i>
-                                                <span id="course-bundle-infobox-text"></span>
-                                            </div>
                                             <div id="course-levels-block" class="course-options-group" style="display: none;">
-                                                <div id="course-levels-buttons" class="course-slot-grid" role="group">
-                                                    {courseCardLevels.map((level) => {
-                                                        const theme = courseSlotThemes[level];
-                                                        const isOnlineOnlyLevel = level === 'a1' || level === 'a2';
-                                                        return (
-                                                            <label class={`course-slot course-slot--${theme.mod}${isOnlineOnlyLevel ? '' : ' course-slot--intensive-only'}`} data-course-level={level}>
-                                                                <input type="checkbox" name="course-selection" value={level} class="course-level-cb course-priced-cb" />
-                                                                <div class="course-slot__head" aria-hidden="true">
-                                                                    <span class="course-slot__sel-mark" aria-hidden="true"></span>
-                                                                    <span class="course-slot__icon"><i class={`fas fa-${theme.icon}`}></i></span>
-                                                                    <div class="course-slot__head-copy">
-                                                                        <span class="course-slot__level-label">{level.toUpperCase()}</span>
-                                                                        <span class="course-slot__head-meta">{translations.courseWeeksLabel}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="course-slot__main">
-                                                                    <div class="course-slot__tags">
-                                                                        <span class="course-slot__badge course-slot__badge--lessons course-slot__mode-intensive">{courseCardLessonsBadge}</span>
-                                                                        <span class="course-slot__badge course-slot__badge--period course-slot__mode-intensive">{translations.courseCardInPerson}</span>
-                                                                        <span class="course-slot__badge course-slot__badge--lessons course-slot__mode-online">{translations.courseCardOnlineLessons}</span>
-                                                                    </div>
-                                                                    <ul class="course-slot__features course-slot__mode-intensive">
-                                                                        <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardFeatureClub}</span></li>
-                                                                        <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardFeatureNative}</span></li>
-                                                                        <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardFeatureVisa}</span></li>
-                                                                        <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardLessons}</span></li>
-                                                                    </ul>
-                                                                    <ul class="course-slot__features course-slot__mode-online">
-                                                                        <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardOnlineNoNative}</span></li>
-                                                                        <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardOnlineNoVisa}</span></li>
-                                                                        <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardOnlineEvening}</span></li>
-                                                                    </ul>
-                                                                    <div class="course-slot__foot course-slot__foot--promo course-slot__mode-intensive">
-                                                                        <div class="course-slot__fixed-price">
-                                                                            <span class="course-slot__fixed-price-amount">{intensiveLevelPriceLabel}</span>
-                                                                            <span class="course-slot__fixed-price-note">{translations.courseWeeksLabel}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    {(level === 'a1' || level === 'a2') && (
-                                                                        <div class="course-slot__foot course-slot__foot--promo course-slot__foot--fixed-price course-slot__mode-online">
-                                                                            <div class="course-slot__fixed-price">
-                                                                                <span class="course-slot__fixed-price-amount">{ONLINE_LEVEL_PRICES[level]} €</span>
-                                                                                <span class="course-slot__fixed-price-note">{translations.courseWeeksLabel}</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    )}
-                                                                </div>
+                                                <div class="level-picker" id="level-picker">
+                                                    <div class="level-picker__tiles">
+                                                        <div id="course-levels-buttons" class="course-slot-grid level-tile-grid" role="group" aria-label={translations.courseSelectionLabel}>
+                                                            {courseCardLevels.map((level) => {
+                                                                const theme = courseSlotThemes[level];
+                                                                const isOnlineOnlyLevel = level === 'a1' || level === 'a2';
+                                                                return (
+                                                                    <label class={`lvl-opt course-slot course-slot--${theme.mod}${isOnlineOnlyLevel ? '' : ' course-slot--intensive-only'}`} data-course-level={level}>
+                                                                        <input type="checkbox" name="course-selection" value={level} class="course-level-cb course-priced-cb" />
+                                                                        <span class="lvl-opt__mark course-slot__sel-mark" aria-hidden="true"></span>
+                                                                        <span class="lvl-opt__main">
+                                                                            <span class="lvl-opt__code">{level.toUpperCase()}</span>
+                                                                            <span class="lvl-opt__meta">{translations.courseWeeksLabel}</span>
+                                                                        </span>
+                                                                        <span class="lvl-opt__price course-slot__pricing-data">
+                                                                            <span class="lvl-opt__price-block course-slot__mode-intensive">
+                                                                                <span class="lvl-opt__price-line">
+                                                                                    <span class="lvl-opt__strike" data-lvl-price-old>{PROMO_PRICE.originalText}</span>
+                                                                                    <span class="lvl-opt__now" data-lvl-price-now>{PROMO_PRICE.discountedText}</span>
+                                                                                </span>
+                                                                                <span class="lvl-opt__multi-tag" data-lvl-multi-tag hidden></span>
+                                                                            </span>
+                                                                            {(level === 'a1' || level === 'a2') && (
+                                                                                <span class="lvl-opt__price-block course-slot__mode-online">
+                                                                                    <span class="lvl-opt__amount">{ONLINE_LEVEL_PRICES[level]} €</span>
+                                                                                </span>
+                                                                            )}
+                                                                        </span>
+                                                                    </label>
+                                                                );
+                                                            })}
+                                                            <label class="lvl-opt lvl-opt--aux course-slot course-slot--telc course-slot--intensive-only">
+                                                                <input type="checkbox" name="course-selection" value="telc-c1-prep" class="course-priced-cb course-telc-cb" />
+                                                                <span class="lvl-opt__mark course-slot__sel-mark" aria-hidden="true"></span>
+                                                                <span class="lvl-opt__main">
+                                                                    <span class="lvl-opt__code lvl-opt__code--sm">{translations.telcC1PrepLabel}</span>
+                                                                    <span class="lvl-opt__meta">{translations.telcPriceNote}</span>
+                                                                </span>
+                                                                <span class="lvl-opt__price course-slot__pricing-data">
+                                                                    <span class="lvl-opt__amount">{telcPrepPrice}</span>
+                                                                </span>
                                                             </label>
-                                                        );
-                                                    })}
-                                                    <label class="course-slot course-slot--telc course-slot--intensive-only">
-                                                        <input type="checkbox" name="course-selection" value="telc-c1-prep" class="course-priced-cb course-telc-cb" />
-                                                        <div class="course-slot__head" aria-hidden="true">
-                                                            <span class="course-slot__sel-mark" aria-hidden="true"></span>
-                                                            <span class="course-slot__icon"><i class="fas fa-certificate"></i></span>
-                                                            <div class="course-slot__head-copy">
-                                                                <span class="course-slot__level-label course-slot__level-label--sm">{translations.telcC1PrepLabel}</span>
-                                                                <span class="course-slot__head-meta">{translations.telcWeeksLabel}</span>
-                                                            </div>
+                                                            <label class="lvl-opt lvl-opt--aux lvl-opt--unsure course-slot course-slot--unsure">
+                                                                <input type="checkbox" name="course-selection" value="unsure" id="course-unsure-cb" />
+                                                                <span class="lvl-opt__mark course-slot__sel-mark" aria-hidden="true"></span>
+                                                                <span class="lvl-opt__main">
+                                                                    <span class="lvl-opt__code lvl-opt__code--sm">{translations.courseUnsureLabel}</span>
+                                                                </span>
+                                                            </label>
                                                         </div>
-                                                        <div class="course-slot__main">
-                                                            <div class="course-slot__tags">
-                                                                <span class="course-slot__badge course-slot__badge--lessons">{translations.telcWeeksLabel}</span>
-                                                                <span class="course-slot__badge course-slot__badge--period">{translations.courseCardInPerson}</span>
-                                                            </div>
-                                                            <ul class="course-slot__features">
-                                                                <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardFeatureClub}</span></li>
-                                                                <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardFeatureNative}</span></li>
-                                                                <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardFeatureVisa}</span></li>
-                                                                <li><i class="fas fa-check" aria-hidden="true"></i><span>{translations.courseCardLessons}</span></li>
-                                                            </ul>
-                                                            <div class="course-slot__foot course-slot__foot--promo course-slot__foot--fixed-price">
-                                                                <div class="course-slot__fixed-price">
-                                                                    <div class="course-slot__fixed-price-row">
-                                                                        <span class="course-slot__fixed-price-amount">{telcPrepPrice}</span>
-                                                                        <span class="course-slot__fixed-price-badge">{translations.telcPriceBadge}</span>
-                                                                    </div>
-                                                                    <span class="course-slot__fixed-price-note">{translations.telcPriceNote}</span>
+                                                    </div>
+                                                    <aside class="level-summary" id="level-summary" aria-live="polite">
+                                                        <p class="level-summary__empty" id="level-summary-empty">{translations.levelSummaryEmpty}</p>
+                                                        <div class="level-summary__body" id="level-summary-body" hidden>
+                                                            <h3 class="level-summary__title" id="level-summary-title">{translations.levelSummaryTitle}</h3>
+                                                            <p class="level-summary__meta" id="level-summary-meta">{translations.levelSummaryMeta}</p>
+                                                            <p class="level-summary__levels" id="level-summary-levels"></p>
+                                                            <div class="level-summary__start" id="level-summary-start">
+                                                                <label class="level-summary__start-label" for="level-start-date">{translations.startDateNearest}</label>
+                                                                <div class="level-summary__select-wrap">
+                                                                    <select id="level-start-date" class="level-summary__select" aria-label={translations.startDateNearest}>
+                                                                        {startDateOptions.map((opt, i) => (
+                                                                            <option value={opt.value} selected={i === 0 ? true : undefined}>{opt.label}</option>
+                                                                        ))}
+                                                                    </select>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </label>
-                                                    <label class="course-slot course-slot--unsure">
-                                                        <input type="checkbox" name="course-selection" value="unsure" id="course-unsure-cb" />
-                                                        <div class="course-slot__head" aria-hidden="true">
-                                                            <span class="course-slot__sel-mark" aria-hidden="true"></span>
-                                                            <span class="course-slot__icon"><i class="fas fa-question"></i></span>
-                                                            <div class="course-slot__head-copy">
-                                                                <span class="course-slot__level-label course-slot__level-label--sm">{translations.courseUnsureLabel}</span>
-                                                                <span class="course-slot__head-meta">{translations.courseCardUnsureNote}</span>
+                                                            <div
+                                                                id="multi-discount-card"
+                                                                class="multi-discount-card"
+                                                                hidden
+                                                                role="status"
+                                                            >
+                                                                <div class="multi-discount-card__row">
+                                                                    <span class="multi-discount-card__label" id="multi-discount-label">{translations.multiDiscountSavedLabel}</span>
+                                                                    <strong class="multi-discount-card__amount" id="multi-discount-amount">—</strong>
+                                                                </div>
+                                                                <p class="multi-discount-card__hint" id="multi-discount-hint"></p>
+                                                                <p class="multi-discount-card__visa" id="multi-discount-visa" hidden>{translations.courseInfoOneCourse}</p>
                                                             </div>
+                                                            <details class="level-summary__details">
+                                                                <summary>{translations.levelSummaryDetailsToggle}</summary>
+                                                                <ul class="level-summary__detail-list">
+                                                                    <li>{translations.levelSummaryDetailNative}</li>
+                                                                    <li>{translations.levelSummaryDetailDefer}</li>
+                                                                    <li>{translations.levelSummaryDetailFocus}</li>
+                                                                </ul>
+                                                                <p class="level-summary__level-desc" id="level-summary-desc"></p>
+                                                            </details>
                                                         </div>
-                                                    </label>
+                                                    </aside>
                                                 </div>
                                             </div>
                                             <div id="course-camps-block" class="course-options-group" style="display: none;">
@@ -1502,24 +1978,32 @@ const extrasStepCopy = {
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group full-width booking-start-fallback" id="booking-start-fallback" hidden>
+                                        <label for="fallback-start-date">{translations.startDateNearest} *</label>
+                                        <div class="level-summary__select-wrap">
+                                            <select id="fallback-start-date" class="level-summary__select" aria-label={translations.startDateNearest}>
+                                                {startDateOptions.map((opt, i) => (
+                                                    <option value={opt.value} selected={i === 0 ? true : undefined}>{opt.label}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <p class="booking-start-fallback__error" id="booking-start-date-error" hidden role="alert">{translations.needStartDate}</p>
+                                    </div>
+                                    <input type="hidden" id="start-date" name="start-date" value={nearestStartDateValue} />
+                                    <input type="hidden" id="booking-start-date-mode" name="start-date-mode" value="preset" />
+                                    <input type="hidden" name="timezone-slot" id="booking-timezone-slot" value="" />
+
                                     <div class="form-navigation">
                                         <button type="button" class="btn-next">{translations.continueBtn}</button>
                                     </div>
                                 </div>
 
-                                <BookingLessonTimeStep
-                                    lang={lang}
-                                    morningTime={pricingData?.schedule?.morning?.all?.time ?? '09:00 – 12:30'}
-                                    afternoonTime={pricingData?.schedule?.afternoon?.all?.time ?? '13:00 – 16:30'}
-                                    startDateOptions={startDateOptions}
-                                />
-
                                 <BookingExtrasStep copy={extrasStepCopy} />
 
-                                <!-- Step 4: Final -->
-                                <div class="form-step final-step" data-step="4">
+                                <!-- Step 3: Final -->
+                                <div class="form-step final-step" data-step="3">
                                     <div class="step-header final-step-header">
-                                        <h2>{translations.step4}</h2>
+                                        <h2>{translations.step3}</h2>
                                         <p>{translations.requestDesc}</p>
                                     </div>
 
@@ -1585,11 +2069,6 @@ const extrasStepCopy = {
                                             </div>
                                         </div>
 
-                                        <div class="final-step-block">
-                                            <label for="message">{translations.extraLabel}</label>
-                                            <textarea id="message" name="message" class="message-textarea final-step-message" placeholder={translations.extraPlaceholder} rows="2"></textarea>
-                                        </div>
-
                                         <div class="terms-section final-step-terms">
                                             <div class="checkbox-group">
                                                 <label class="checkbox-label">
@@ -1609,18 +2088,137 @@ const extrasStepCopy = {
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="bk-pay" id="bk-pay">
+                                        <ol class="bk-pay__path">
+                                            <li class="bk-pay__step" data-pay-step="1">
+                                                <div class="bk-pay__head">
+                                                    <span class="bk-pay__num" aria-hidden="true">1</span>
+                                                    <span class="bk-pay__head-label">{translations.germanyLocationLabel}</span>
+                                                </div>
+                                                <div class="bk-pay__opts bk-pay__opts--2" role="radiogroup" aria-label={translations.germanyLocationLabel}>
+                                                    <label class="bk-pay__opt">
+                                                        <input type="radio" name="in-germany" value="yes" />
+                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
+                                                        <span class="bk-pay__opt-body">
+                                                            <span class="bk-pay__opt-title">{translations.germanyLocationYes}</span>
+                                                        </span>
+                                                    </label>
+                                                    <label class="bk-pay__opt">
+                                                        <input type="radio" name="in-germany" value="no" />
+                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
+                                                        <span class="bk-pay__opt-body">
+                                                            <span class="bk-pay__opt-title">{translations.germanyLocationNo}</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </li>
+
+                                            <li class="bk-pay__step" id="bk-pay-step-doc" hidden data-pay-step="2">
+                                                <div class="bk-pay__head">
+                                                    <span class="bk-pay__num" aria-hidden="true">2</span>
+                                                    <span class="bk-pay__head-label">{translations.payDocLabel}</span>
+                                                </div>
+                                                <div class="bk-pay__opts bk-pay__opts--2" role="radiogroup" aria-label={translations.payDocLabel}>
+                                                    <label class="bk-pay__opt">
+                                                        <input type="radio" name="pay-doc" value="quote" />
+                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
+                                                        <span class="bk-pay__opt-body">
+                                                            <span class="bk-pay__opt-title">{translations.payDocQuote}</span>
+                                                        </span>
+                                                        <span class="bk-pay__opt-price">{translations.payDocQuotePrice}</span>
+                                                    </label>
+                                                    <label class="bk-pay__opt">
+                                                        <input type="radio" name="pay-doc" value="registration" />
+                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
+                                                        <span class="bk-pay__opt-body">
+                                                            <span class="bk-pay__opt-title">{translations.payDocReg}</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </li>
+
+                                            <li class="bk-pay__step" id="bk-pay-plan" hidden data-pay-step="3">
+                                                <div class="bk-pay__head">
+                                                    <span class="bk-pay__num" aria-hidden="true">3</span>
+                                                    <span class="bk-pay__head-label">{translations.payPlanLabel}</span>
+                                                </div>
+                                                <div class="bk-pay__opts bk-pay__opts--2" role="radiogroup" aria-label={translations.payPlanLabel}>
+                                                    <label class="bk-pay__opt bk-pay__opt--plan">
+                                                        <input type="radio" name="pay-plan" value="full" />
+                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
+                                                        <span class="bk-pay__opt-body">
+                                                            <span class="bk-pay__opt-title">{translations.payPlanFull}</span>
+                                                            <span class="bk-pay__opt-meta">
+                                                                <span class="bk-pay__save" id="bk-pay-full-save" hidden></span>
+                                                                <span class="bk-pay__hint">{translations.payFullVisaInfo}</span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="bk-pay__opt-price" id="bk-pay-full-amount">—</span>
+                                                    </label>
+                                                    <label class="bk-pay__opt bk-pay__opt--plan">
+                                                        <input type="radio" name="pay-plan" value="installment" />
+                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
+                                                        <span class="bk-pay__opt-body">
+                                                            <span class="bk-pay__opt-title">{translations.payPlanInstall}</span>
+                                                        </span>
+                                                        <span class="bk-pay__opt-price" id="bk-pay-install-amount">—</span>
+                                                    </label>
+                                                </div>
+                                                <div class="bk-pay__branch" id="bk-pay-install" hidden role="radiogroup" aria-label={translations.payPlanInstall}>
+                                                    <label class="bk-pay__branch-opt">
+                                                        <input type="radio" name="pay-install" value="two" />
+                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
+                                                        <span class="bk-pay__branch-text">{translations.payInstallTwo}</span>
+                                                    </label>
+                                                    <label class="bk-pay__branch-opt">
+                                                        <input type="radio" name="pay-install" value="course" />
+                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
+                                                        <span class="bk-pay__branch-text">{translations.payInstallCourse}</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+
+                                            <li class="bk-pay__step" id="bk-pay-method" hidden data-pay-step="4">
+                                                <div class="bk-pay__head">
+                                                    <span class="bk-pay__num" aria-hidden="true">4</span>
+                                                    <span class="bk-pay__head-label">{translations.payMethodLabel}</span>
+                                                </div>
+                                                <div class="bk-pay__opts bk-pay__opts--stack" role="radiogroup" aria-label={translations.payMethodLabel}>
+                                                    <label class="bk-pay__opt bk-pay__opt--row">
+                                                        <input type="radio" name="pay-method" value="swift" />
+                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
+                                                        <span class="bk-pay__opt-body">
+                                                            <span class="bk-pay__opt-title">{translations.payMethodSwift}</span>
+                                                            <span class="bk-pay__hint">{translations.payMethodSwiftHint}</span>
+                                                        </span>
+                                                    </label>
+                                                    <label class="bk-pay__opt bk-pay__opt--row">
+                                                        <input type="radio" name="pay-method" value="online" />
+                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
+                                                        <span class="bk-pay__opt-body">
+                                                            <span class="bk-pay__opt-title">{translations.payMethodOnline}</span>
+                                                        </span>
+                                                    </label>
+                                                    <label class="bk-pay__opt bk-pay__opt--row" id="bk-pay-method-office">
+                                                        <input type="radio" name="pay-method" value="office" />
+                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
+                                                        <span class="bk-pay__opt-body">
+                                                            <span class="bk-pay__opt-title">{translations.payMethodOffice}</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        </ol>
+                                    </div>
+
                                     <div class="form-navigation form-navigation--dual-submit">
                                         <button type="button" class="btn-prev">{translations.back}</button>
                                         <div class="form-submit-actions">
-                                            <button type="submit" class="btn-submit btn-submit-reserve" data-payment-choice="reservation">
-                                                <i class="fas fa-calendar-check" aria-hidden="true"></i> {translations.completeBooking}
-                                            </button>
-                                            <button type="submit" class="btn-submit btn-submit-pay" data-payment-choice="pay_now">
-                                                <i class="fas fa-credit-card" aria-hidden="true"></i> {translations.payNowBooking}
+                                            <button type="submit" class="btn-submit btn-submit-pay" id="bk-pay-submit" data-payment-choice="pay_flow">
+                                                <i class="fas fa-paper-plane" aria-hidden="true"></i> {translations.paySubmitContinue}
                                             </button>
                                         </div>
                                     </div>
-                                    <p class="booking-deposit-hint">{translations.depositHint}</p>
                                 </div>
                             </form>
 
@@ -1659,7 +2257,8 @@ const extrasStepCopy = {
                         </div>
                         
                         <!-- Price Calculator Section -->
-                        <div class="price-calculator">
+                        <aside class="price-calculator-col" id="price-calculator-col" aria-label={translations.priceCalculation}>
+                        <div class="price-calculator" id="price-calculator">
                             <div class="price-calculator-header">
                                 <h3 class="price-calculator-title">{translations.priceCalculation}</h3>
                                 <p class="price-calculator-subtitle">{translations.priceCalculationDesc}</p>
@@ -1704,6 +2303,10 @@ const extrasStepCopy = {
                                             <span class="price-item-label">{translations.airportPickupPrice}</span>
                                             <span class="price-item-value">{STRIPE_EXTRAS.airport.eur} €</span>
                                         </div>
+                                        <div class="price-item price-item-coupon" id="speakcafe-price-row" style="display: none;">
+                                            <span class="price-item-label">{translations.speakcafeLabel}</span>
+                                            <span class="price-item-value">{translations.extraFreeLabel}</span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -1720,6 +2323,7 @@ const extrasStepCopy = {
                                 </label>
                             </div>
                         </div>
+                        </aside>
                     </div>
                 </div>
             </div>
@@ -1730,16 +2334,31 @@ const extrasStepCopy = {
         pricingData,
         lang,
         courseInfoCopy,
+        levelSummaryCopy,
         promoPrice: PROMO_PRICE.discounted,
-        intensiveLevelPrice: getIntensiveLevelEur(),
+        promoPriceOriginal: PROMO_PRICE.original,
+        intensiveLevelPrice: PROMO_PRICE.discounted,
         onlineLevelPrices: ONLINE_LEVEL_PRICES,
         telcPrepPriceNum: TELC_PREP_EUR,
         telcPrepWeeks: TELC_PREP_WEEKS,
         bookingWebhookLabels,
         reservationDepositEur: RESERVATION_DEPOSIT_EUR,
+        fullPaymentDiscountEur: FULL_PAYMENT_DISCOUNT_EUR,
         balanceDueDays: BALANCE_DUE_DAYS,
         stripeExtras: STRIPE_EXTRAS,
         stripeAdjustProduct: STRIPE_ADJUST_PRODUCT,
+        payUiCopy: {
+            submitQuote: translations.paySubmitQuote,
+            submitContinue: translations.paySubmitContinue,
+            needGermany: translations.payNeedGermany,
+            needDoc: translations.payNeedDoc,
+            needPlan: translations.payNeedPlan,
+            needInstall: translations.payNeedInstall,
+            needMethod: translations.payNeedMethod,
+            discountTpl: translations.payFullDiscountTpl,
+        },
+        needStartDateMsg: translations.needStartDate,
+        nearestStartDateValue,
     }}>
         // Import security utilities
         const { checkRateLimit, sanitizeObject, validateEmail, validatePhone, checkHoneypot } = (() => {
@@ -1803,7 +2422,7 @@ const extrasStepCopy = {
         document.addEventListener('DOMContentLoaded', function() {
             // ===== STEP NAVIGATION =====
             let currentStep = 1;
-            const totalSteps = 4;
+            const totalSteps = 3;
             const formSteps = document.querySelectorAll('.form-step');
             const stepIndicators = document.querySelectorAll('.step-indicator');
             const progressFill = document.querySelector('.progress-fill');
@@ -1862,9 +2481,9 @@ const extrasStepCopy = {
             const courseLevelsBlock = document.getElementById('course-levels-block');
             const courseCampsBlock = document.getElementById('course-camps-block');
             const courseSelectionGroup = document.getElementById('course-selection-group');
-            const courseBundleInfobox = document.getElementById('course-bundle-infobox');
             const LEVEL_RE = /^(a1|a2|b1|b2|c1)$/;
             const WEEKS_PER_LEVEL = 8;
+            const MAX_MULTI_COURSE_HINT = 5;
             function mainLevelsFromCourseSelection(values) {
                 const mains = new Set();
                 for (const v of values) {
@@ -1907,6 +2526,7 @@ const extrasStepCopy = {
                         if (cb instanceof HTMLInputElement) cb.checked = false;
                     }
                 });
+                updateLevelSummary();
             }
 
             function toggleProgramExtras() {
@@ -1925,14 +2545,80 @@ const extrasStepCopy = {
                 toggleYouthCampWeeksOnly();
                 syncProgramCardsUI();
                 syncOnlineCourseCards();
-                if (typeof window.syncBookingLessonTimeForProgram === 'function') {
-                    window.syncBookingLessonTimeForProgram(program || '');
-                }
+                syncBookingStartDateVisibility(program || '');
                 toggleBundleInfobox();
                 filterWeeksByLevelCourses();
                 reorderCourseSelectionChain();
                 updatePrice();
             }
+
+            const levelStartSelect = document.getElementById('level-start-date');
+            const fallbackStartSelect = document.getElementById('fallback-start-date');
+            const startDateHidden = document.getElementById('start-date');
+            const startDateModeHidden = document.getElementById('booking-start-date-mode');
+            const startFallbackBlock = document.getElementById('booking-start-fallback');
+            const startDateErrorEl = document.getElementById('booking-start-date-error');
+
+            function activeStartDateSelect() {
+                const program = document.querySelector('[name="program"]:checked')?.value;
+                if (program === 'intensive' || program === 'online') return levelStartSelect;
+                return fallbackStartSelect;
+            }
+
+            function syncStartDateFromUI() {
+                const select = activeStartDateSelect();
+                const value = select?.value || nearestStartDateValue || '';
+                if (startDateHidden) startDateHidden.value = value;
+                if (startDateModeHidden) startDateModeHidden.value = value ? 'preset' : '';
+                return value;
+            }
+
+            function syncBookingStartDateVisibility(program) {
+                const showFallback = program === 'short-term' || program === 'youth-camp';
+                if (startFallbackBlock) startFallbackBlock.hidden = !showFallback;
+                if (startDateErrorEl) startDateErrorEl.hidden = true;
+                if (fallbackStartSelect) fallbackStartSelect.classList.remove('error');
+                if (levelStartSelect) levelStartSelect.classList.remove('error');
+                syncStartDateFromUI();
+            }
+
+            function resetBookingStartDate() {
+                if (levelStartSelect && nearestStartDateValue) levelStartSelect.value = nearestStartDateValue;
+                if (fallbackStartSelect && nearestStartDateValue) fallbackStartSelect.value = nearestStartDateValue;
+                syncStartDateFromUI();
+                if (startDateErrorEl) startDateErrorEl.hidden = true;
+                if (levelStartSelect) levelStartSelect.classList.remove('error');
+                if (fallbackStartSelect) fallbackStartSelect.classList.remove('error');
+            }
+
+            function validateBookingStartDate() {
+                const program = document.querySelector('[name="program"]:checked')?.value;
+                if (!program) return true;
+                const value = syncStartDateFromUI();
+                const select = activeStartDateSelect();
+                const ok = !!value;
+                if (select) select.classList.toggle('error', !ok);
+                if (startDateErrorEl) {
+                    startDateErrorEl.hidden = ok || (program !== 'short-term' && program !== 'youth-camp');
+                    if (!ok) startDateErrorEl.textContent = needStartDateMsg;
+                }
+                if (!ok && (program === 'intensive' || program === 'online') && select) {
+                    select.setAttribute('aria-invalid', 'true');
+                }
+                return ok;
+            }
+
+            window.validateBookingLessonTimeStep = validateBookingStartDate;
+            window.resetBookingLessonTimeStep = resetBookingStartDate;
+
+            levelStartSelect?.addEventListener('change', syncStartDateFromUI);
+            fallbackStartSelect?.addEventListener('change', function () {
+                if (startDateErrorEl) startDateErrorEl.hidden = true;
+                fallbackStartSelect.classList.remove('error');
+                syncStartDateFromUI();
+            });
+            syncBookingStartDateVisibility(document.querySelector('[name="program"]:checked')?.value || '');
+            syncStartDateFromUI();
             const weeksButtonsWrap = document.getElementById('weeks-buttons-wrap');
             const weeksOtherInput = document.getElementById('weeks-other-input');
             const weeksValueInput = document.getElementById('weeks-value');
@@ -1953,128 +2639,156 @@ const extrasStepCopy = {
                     if (c === 'telc-c1-prep') return sum + telcPrepPriceNum;
                     if (LEVEL_RE.test(c)) {
                         if (program === 'online') return sum + (onlineLevelPrices[c] || 0);
-                        return sum + intensiveLevelPrice;
+                        return sum + promoPrice;
                     }
                     return sum;
                 }, 0);
             }
 
+            /**
+             * Checkout satırları — site fiyatı (amountCents) kanonik.
+             * Katalog productKey (german_intensive_20_8w vb.) GÖNDERİLMEZ:
+             * Make/portal Stripe Dashboard fiyatına (~1232€) map ederse B2+C1 ~2500–4000€ olur.
+             */
             function buildStripeLineItems(opts) {
                 const items = [];
                 const program = opts.program;
                 const courses = opts.courses || [];
                 const weeksNum = opts.weeksNum || 0;
                 const priced = courses.filter(function (c) { return LEVEL_RE.test(c) || c === 'telc-c1-prep'; });
+                const adjustKey = stripeAdjustProduct.productKey;
 
                 if (program === 'short-term' && weeksNum > 0) {
                     const eur = getTieredPrice(weeksNum);
-                    const stripePackages = { 4: 1, 8: 1, 12: 1, 16: 1, 24: 1, 32: 1, 40: 1 };
                     items.push({
-                        productKey: stripePackages[weeksNum]
-                            ? ('german_intensive_20_' + weeksNum + 'w')
-                            : stripeAdjustProduct.productKey,
-                        name: stripePackages[weeksNum]
-                            ? ('German Intensive 20L/W - ' + weeksNum + ' Weeks')
-                            : stripeAdjustProduct.name,
+                        productKey: adjustKey,
+                        name: 'German Intensive short-term - ' + weeksNum + ' Weeks',
                         amountCents: Math.round(eur * 100),
                         quantity: 1,
                         weeks: weeksNum,
+                        useCustomAmount: true,
                     });
                 } else if (program === 'intensive' || program === 'online') {
                     priced.forEach(function (c) {
                         if (c === 'telc-c1-prep') {
                             items.push({
-                                productKey: 'telc_b2_c1_prep_20_4w',
+                                productKey: adjustKey,
                                 name: 'TELC B2/C1 Prep. 20L/W - 4 Weeks',
                                 amountCents: Math.round(telcPrepPriceNum * 100),
                                 quantity: 1,
                                 weeks: telcPrepWeeks,
+                                useCustomAmount: true,
                             });
                             return;
                         }
                         if (program === 'online') {
                             const eur = onlineLevelPrices[c] || 0;
                             items.push({
-                                productKey: stripeAdjustProduct.productKey,
+                                productKey: adjustKey,
                                 name: 'Online German ' + String(c).toUpperCase() + ' (8 Weeks)',
                                 amountCents: Math.round(eur * 100),
                                 quantity: 1,
                                 weeks: 8,
                                 level: c,
+                                useCustomAmount: true,
                             });
                             return;
                         }
                         items.push({
-                            productKey: 'german_intensive_20_8w',
-                            name: 'German Intensive 20L/W - 8 Weeks',
-                            amountCents: Math.round(intensiveLevelPrice * 100),
+                            productKey: adjustKey,
+                            name: 'German Intensive ' + String(c).toUpperCase() + ' - 8 Weeks',
+                            amountCents: Math.round(promoPrice * 100),
                             quantity: 1,
                             weeks: 8,
                             level: c,
+                            useCustomAmount: true,
                         });
                     });
                 } else if (program === 'youth-camp' && weeksNum > 0) {
                     const eur = opts.courseEur || 0;
                     items.push({
-                        productKey: stripeAdjustProduct.productKey,
+                        productKey: adjustKey,
                         name: stripeAdjustProduct.name,
                         amountCents: Math.round(eur * 100),
                         quantity: 1,
                         weeks: weeksNum,
+                        useCustomAmount: true,
                     });
                 }
 
                 if (opts.visa) {
                     items.push({
-                        productKey: stripeExtras.visa.productKey,
+                        productKey: adjustKey,
                         name: stripeExtras.visa.name,
                         amountCents: Math.round(stripeExtras.visa.eur * 100),
                         quantity: 1,
+                        useCustomAmount: true,
                     });
                 }
                 if (opts.university) {
                     items.push({
-                        productKey: stripeExtras.university.productKey,
+                        productKey: adjustKey,
                         name: stripeExtras.university.name,
                         amountCents: Math.round(stripeExtras.university.eur * 100),
                         quantity: 1,
+                        useCustomAmount: true,
                     });
                 }
                 if (opts.accommodation) {
                     items.push({
-                        productKey: stripeExtras.accommodation.productKey,
+                        productKey: adjustKey,
                         name: stripeExtras.accommodation.name,
                         amountCents: Math.round(stripeExtras.accommodation.eur * 100),
                         quantity: 1,
+                        useCustomAmount: true,
                     });
                 }
                 if (opts.airport) {
                     items.push({
-                        productKey: stripeExtras.airport.productKey,
+                        productKey: adjustKey,
                         name: stripeExtras.airport.name,
                         amountCents: Math.round(stripeExtras.airport.eur * 100),
                         quantity: 1,
+                        useCustomAmount: true,
                     });
                 }
 
                 if (opts.friendDiscountEuro > 0) {
                     items.push({
-                        productKey: stripeAdjustProduct.productKey,
+                        productKey: adjustKey,
                         name: 'Bring-a-friend discount',
                         amountCents: -Math.round(opts.friendDiscountEuro * 100),
                         quantity: 1,
+                        useCustomAmount: true,
                     });
                 }
                 if (opts.bundleDiscountEuro > 0) {
                     items.push({
-                        productKey: stripeAdjustProduct.productKey,
+                        productKey: adjustKey,
                         name: 'Multi-course discount',
                         amountCents: -Math.round(opts.bundleDiscountEuro * 100),
                         quantity: 1,
+                        useCustomAmount: true,
                     });
                 }
 
-                return items.filter(function (it) { return it.amountCents !== 0; });
+                const filtered = items.filter(function (it) { return it.amountCents !== 0; });
+
+                // Form toplamı ile satır toplamı uyuşmazsa tek satıra düş (çift paket / katalog sapması önlemi)
+                const targetCents = Math.round(Number(opts.targetCents) || 0);
+                if (targetCents > 0) {
+                    const sumCents = filtered.reduce(function (s, it) { return s + it.amountCents * (it.quantity || 1); }, 0);
+                    if (sumCents !== targetCents) {
+                        return [{
+                            productKey: adjustKey,
+                            name: 'Campus German booking total',
+                            amountCents: targetCents,
+                            quantity: 1,
+                            useCustomAmount: true,
+                        }];
+                    }
+                }
+                return filtered;
             }
             function syncWeeksFromControl() {
                 const program = document.querySelector('[name="program"]:checked')?.value;
@@ -2125,40 +2839,64 @@ const extrasStepCopy = {
                     setWeeksValue('');
                 }
             }
+            function estimateNextCourseUnit(program) {
+                if (program === 'online') return onlineLevelPrices.a1 || 0;
+                return promoPrice;
+            }
+
             function toggleBundleInfobox() {
+                const card = document.getElementById('multi-discount-card');
+                const labelEl = document.getElementById('multi-discount-label');
+                const amountEl = document.getElementById('multi-discount-amount');
+                const hintEl = document.getElementById('multi-discount-hint');
+                const visaEl = document.getElementById('multi-discount-visa');
+                if (!card || !labelEl || !amountEl || !hintEl) return;
+
                 const program = document.querySelector('[name="program"]:checked')?.value;
                 const checked = Array.from(document.querySelectorAll('[name="course-selection"]:checked'));
-                const vals = checked.map(c => c.value);
+                const vals = checked.map(function (c) { return c.value; });
+                const priced = vals.filter(function (c) { return LEVEL_RE.test(c) || c === 'telc-c1-prep'; });
                 const courseCount = getSelectedCourseCount(vals);
-                const totalWeeks = (program === 'intensive' || program === 'online')
-                    ? getIntensiveWeeksTotal(vals)
-                    : (program === 'short-term')
-                        ? (parseInt(getWeeksValue(), 10) || 0)
-                        : (parseInt(getWeeksValue(), 10) || 0);
-                const box = courseBundleInfobox;
-                const textEl = document.getElementById('course-bundle-infobox-text');
-                if (!box || !textEl) return;
-                const show =
-                    (program === 'intensive' || program === 'online') &&
-                    courseCount > 0 &&
-                    courseCount !== 2;
-                box.style.display = show ? 'flex' : 'none';
+                const show = (program === 'intensive' || program === 'online') && courseCount > 0;
+
+                card.hidden = !show;
+                card.classList.remove('is-active', 'is-teaser');
+                if (visaEl) visaEl.hidden = true;
                 if (!show) {
-                    box.classList.remove('form-infobox--bundle', 'form-infobox--warning');
+                    amountEl.textContent = '—';
+                    hintEl.textContent = '';
                     return;
                 }
+
+                const gross = getIntensiveCourseGross(priced);
+                const current = getMultiCourseDiscount(courseCount, gross);
+                const nextUnit = estimateNextCourseUnit(program);
+                const nextGross = gross + nextUnit;
+                const next = getMultiCourseDiscount(courseCount + 1, nextGross);
+                const moreSave = Math.max(0, next.amount - current.amount);
+                const canHintNext = courseCount < MAX_MULTI_COURSE_HINT && nextUnit > 0;
+
                 if (courseCount === 1) {
-                    box.classList.remove('form-infobox--bundle');
-                    box.classList.add('form-infobox--warning');
-                    textEl.textContent = courseInfoCopy?.oneCourse || '';
+                    card.classList.add('is-teaser');
+                    labelEl.textContent = courseInfoCopy?.teaserLabel || '';
+                    amountEl.textContent = next.amount > 0 ? ('-' + next.amount + ' €') : '—';
+                    hintEl.textContent = (courseInfoCopy?.teaserHint || '')
+                        .replace(/\{amount\}/g, String(next.amount));
+                    if (visaEl) {
+                        visaEl.textContent = courseInfoCopy?.oneCourse || '';
+                        visaEl.hidden = false;
+                    }
+                    return;
+                }
+
+                card.classList.add('is-active');
+                labelEl.textContent = courseInfoCopy?.savedLabel || courseInfoCopy?.discountLabel || '';
+                amountEl.textContent = current.amount > 0 ? ('-' + current.amount + ' €') : '—';
+                if (canHintNext && moreSave > 0) {
+                    hintEl.textContent = (courseInfoCopy?.nextHint || '')
+                        .replace(/\{amount\}/g, String(moreSave));
                 } else {
-                    box.classList.remove('form-infobox--warning');
-                    const percent = courseCount;
-                    const tpl = courseInfoCopy?.multiDiscount || 'Total {weeks} weeks — {percent}% discount applied';
-                    textEl.textContent = tpl
-                        .replace(/\{weeks\}/g, String(totalWeeks))
-                        .replace(/\{percent\}/g, String(percent));
-                    box.classList.add('form-infobox--bundle');
+                    hintEl.textContent = '';
                 }
             }
             // Seçilen kamp sayısına göre hafta seçeneklerini filtrele (sadece youth-camp)
@@ -2263,7 +3001,55 @@ const extrasStepCopy = {
                     const mark = label.querySelector('.course-slot__sel-mark');
                     if (mark) mark.textContent = n >= 2 ? String(order) : '✓';
                 });
+                updateLevelSummary();
             }
+
+            function updateLevelSummary() {
+                const emptyEl = document.getElementById('level-summary-empty');
+                const bodyEl = document.getElementById('level-summary-body');
+                const titleEl = document.getElementById('level-summary-title');
+                const metaEl = document.getElementById('level-summary-meta');
+                const levelsEl = document.getElementById('level-summary-levels');
+                const descEl = document.getElementById('level-summary-desc');
+                if (!emptyEl || !bodyEl || !titleEl || !metaEl || !levelsEl) return;
+
+                const program = document.querySelector('[name="program"]:checked')?.value;
+                const isOnline = program === 'online';
+                const unsure = document.getElementById('course-unsure-cb');
+                const ordered = getOrderedSelectedCourses();
+                const hasUnsure = !!(unsure && unsure.checked);
+                const hasSelection = ordered.length > 0 || hasUnsure;
+
+                titleEl.textContent = isOnline ? levelSummaryCopy.titleOnline : levelSummaryCopy.title;
+                metaEl.textContent = isOnline ? levelSummaryCopy.metaOnline : levelSummaryCopy.meta;
+
+                if (!hasSelection) {
+                    emptyEl.hidden = false;
+                    bodyEl.hidden = true;
+                    levelsEl.textContent = '';
+                    if (descEl) descEl.textContent = '';
+                    return;
+                }
+
+                emptyEl.hidden = true;
+                bodyEl.hidden = false;
+
+                const labels = ordered.map(function (cb) {
+                    return bookingWebhookLabels.courseLevel[cb.value] || String(cb.value).toUpperCase();
+                });
+                if (hasUnsure) labels.push(bookingWebhookLabels.courseLevel.unsure);
+                levelsEl.textContent = labels.join(' · ');
+
+                if (descEl) {
+                    const focusVal = ordered.length
+                        ? ordered[ordered.length - 1].value
+                        : (hasUnsure ? 'unsure' : '');
+                    const main = LEVEL_RE.test(focusVal) ? focusVal : focusVal;
+                    descEl.textContent = levelSummaryCopy.desc[main] || levelSummaryCopy.desc[focusVal] || '';
+                }
+                toggleBundleInfobox();
+            }
+
             function reorderCourseSelectionChain() {
                 updateCourseSelectionUI();
             }
@@ -2300,9 +3086,6 @@ const extrasStepCopy = {
             function getTieredPrice(weeks) {
                 const w = parseInt(weeks, 10) || 0;
                 if (w < 1) return 0;
-                // Stripe Intensive 20L/W paket haftaları
-                const stripePackages = { 4: 795, 8: 1232, 12: 1638, 16: 1920, 24: 2808, 32: 3648, 40: 4560 };
-                if (stripePackages[w] != null) return stripePackages[w];
                 const tier = TIERS_20H.find(t => w >= t.min && w <= t.max);
                 return tier ? w * tier.perWeek : 0;
             }
@@ -2313,7 +3096,7 @@ const extrasStepCopy = {
                     return onlineLevelPrices[mainLevel] || 0;
                 }
                 if (program === 'intensive') {
-                    return intensiveLevelPrice;
+                    return promoPrice;
                 }
                 if (program === 'short-term') {
                     return getTieredPrice(weeks);
@@ -2331,6 +3114,47 @@ const extrasStepCopy = {
                     return Math.round(pricePerWeek * w);
                 }
                 return 0;
+            }
+
+            function syncCourseSlotBundlePrices() {
+                const program = document.querySelector('[name="program"]:checked')?.value;
+                const checked = Array.from(document.querySelectorAll('[name="course-selection"]:checked'))
+                    .map(function (c) { return c.value; })
+                    .filter(function (c) { return LEVEL_RE.test(c) || c === 'telc-c1-prep'; });
+                const count = checked.length;
+                const nextCount = count + 1;
+                const nextPercent = nextCount >= 2 ? nextCount : 0;
+                const showBundle = program === 'intensive' && count >= 1;
+                const baseOld = String(promoPriceOriginal) + '€';
+                const baseNow = String(promoPrice) + '€';
+
+                document.querySelectorAll('.lvl-opt.course-slot').forEach(function (slot) {
+                    const input = slot.querySelector('[name="course-selection"]');
+                    if (!(input instanceof HTMLInputElement)) return;
+                    const isLevel = LEVEL_RE.test(input.value);
+                    const oldEl = slot.querySelector('[data-lvl-price-old]');
+                    const nowEl = slot.querySelector('[data-lvl-price-now]');
+                    const multiTag = slot.querySelector('[data-lvl-multi-tag]');
+                    if (!oldEl && !nowEl) return;
+
+                    const showTeaser = isLevel && !input.checked && showBundle && nextPercent > 0;
+                    if (showTeaser) {
+                        const unit = Math.round(promoPrice * (100 - nextPercent) / 100);
+                        if (oldEl) oldEl.textContent = baseNow;
+                        if (nowEl) nowEl.textContent = unit + '€';
+                        if (multiTag) {
+                            multiTag.hidden = false;
+                            multiTag.textContent = '−' + nextPercent + '%';
+                        }
+                    } else {
+                        if (oldEl) oldEl.textContent = baseOld;
+                        if (nowEl) nowEl.textContent = baseNow;
+                        if (multiTag) {
+                            multiTag.hidden = true;
+                            multiTag.textContent = '';
+                        }
+                    }
+                });
             }
 
             function updateProgress() {
@@ -2368,15 +3192,6 @@ const extrasStepCopy = {
                 updateProgress();
                 updatePrice();
                 scrollBookingFormToTop();
-                if (step === 2) {
-                    if (typeof window.syncBookingLessonTimeForProgram === 'function') {
-                        const program = document.querySelector('[name="program"]:checked')?.value || '';
-                        window.syncBookingLessonTimeForProgram(program);
-                    }
-                    if (typeof window.animateBookingLessonTimeSlots === 'function') {
-                        window.animateBookingLessonTimeSlots();
-                    }
-                }
             }
             
             function _unusedBookingSummary() {
@@ -2630,17 +3445,13 @@ const extrasStepCopy = {
                         const weeksValid = weeks && parseInt(weeks, 10) >= 1;
                         if (!weeksValid) { weeksBlock?.classList.add('error'); isValid = false; } else { weeksBlock?.classList.remove('error'); }
                     }
-                    return isValid;
-                }
-
-                if (step === 2) {
-                    if (typeof window.validateBookingLessonTimeStep === 'function') {
-                        return window.validateBookingLessonTimeStep();
+                    if (isValid && typeof window.validateBookingLessonTimeStep === 'function') {
+                        isValid = window.validateBookingLessonTimeStep();
                     }
                     return isValid;
                 }
 
-                if (step === 4) {
+                if (step === 3) {
                     const bringFriend = document.getElementById('bring-friend-discount')?.checked;
                     if (bringFriend) {
                         ['bring-friend-name', 'bring-friend-email', 'bring-friend-phone'].forEach(function (id) {
@@ -2707,6 +3518,7 @@ const extrasStepCopy = {
             document.querySelectorAll('[name="university-admission-support"]').forEach(el => el.addEventListener('change', updatePrice));
             document.querySelectorAll('[name="accommodation-support"]').forEach(el => el.addEventListener('change', updatePrice));
             document.querySelectorAll('[name="airport-pickup"]').forEach(el => el.addEventListener('change', updatePrice));
+            document.querySelectorAll('[name="speakcafe-membership"]').forEach(el => el.addEventListener('change', updatePrice));
 
             function initBookingPhoneDialInput() {
                 const dialInput = document.getElementById('phone-country-code');
@@ -2875,6 +3687,12 @@ const extrasStepCopy = {
                     airportPriceRow.style.display = airportPickup ? 'flex' : 'none';
                 }
 
+                const speakcafeNeeded = document.querySelector('[name="speakcafe-membership"]:checked')?.value === 'yes';
+                const speakcafePriceRow = document.getElementById('speakcafe-price-row');
+                if (speakcafePriceRow) {
+                    speakcafePriceRow.style.display = speakcafeNeeded ? 'flex' : 'none';
+                }
+
                 const visaAmount = visaNeeded ? VISA_SUPPORT : 0;
                 const universityAmount = universityNeeded ? UNIVERSITY_ADMISSION : 0;
                 const accommodationAmount = accommodationNeeded ? ACCOMMODATION_SUPPORT : 0;
@@ -2883,6 +3701,8 @@ const extrasStepCopy = {
                 if (totalPriceElement) totalPriceElement.textContent = finalTotal + ' €';
                 const amountCentsEl = document.getElementById('amount-in-cents');
                 if (amountCentsEl) amountCentsEl.value = String(Math.round(finalTotal * 100));
+                syncCourseSlotBundlePrices();
+                if (typeof syncPaymentUI === 'function') syncPaymentUI();
             }
 
             // ===== FORM SUBMISSION =====
@@ -2894,20 +3714,276 @@ const extrasStepCopy = {
             function setSubmitButtonsText(html) {
                 getSubmitButtons().forEach(function(btn) { btn.innerHTML = html; });
             }
-            function getReserveButtonHtml() {
-                const submitLabel = bookingForm?.dataset.submitLabel || (lang === 'tr' ? 'Rezervasyon yap' : lang === 'de' ? 'Reservierung' : lang === 'es' ? 'Hacer reserva' : 'Make reservation');
-                return '<i class="fas fa-calendar-check" aria-hidden="true"></i> ' + submitLabel;
-            }
-            function getPayButtonHtml() {
-                const payLabel = bookingForm?.dataset.payLabel || (lang === 'tr' ? 'Ödemeyi yap' : lang === 'de' ? 'Jetzt bezahlen' : lang === 'es' ? 'Pagar ahora' : 'Pay now');
-                return '<i class="fas fa-credit-card" aria-hidden="true"></i> ' + payLabel;
+            function getPaySubmitHtml(isQuote) {
+                const label = isQuote
+                    ? (payUiCopy?.submitQuote || 'Teklif al')
+                    : (payUiCopy?.submitContinue || 'Devam et');
+                return '<i class="fas fa-paper-plane" aria-hidden="true"></i> ' + label;
             }
             function restoreSubmitButtons() {
-                const reserveBtn = bookingForm?.querySelector('[data-payment-choice="reservation"]');
-                const payBtn = bookingForm?.querySelector('[data-payment-choice="pay_now"]');
-                if (reserveBtn) reserveBtn.innerHTML = getReserveButtonHtml();
-                if (payBtn) payBtn.innerHTML = getPayButtonHtml();
+                const payBtn = bookingForm?.querySelector('#bk-pay-submit');
+                const doc = document.querySelector('[name="pay-doc"]:checked')?.value;
+                if (payBtn) payBtn.innerHTML = getPaySubmitHtml(doc === 'quote');
             }
+
+            function isInGermanySelected() {
+                return document.querySelector('[name="in-germany"]:checked')?.value === 'yes';
+            }
+
+            function computeBookingCharge(opts) {
+                const totalCents = opts.totalCents || 0;
+                const firstCourseCents = opts.firstCourseCents || 0;
+                const inGermany = !!opts.inGermany;
+                const payDoc = opts.payDoc || '';
+                const payPlan = opts.payPlan || '';
+                const installOpt = opts.installOpt || '';
+                const depositCents = reservationDepositEur * 100;
+                const fullDiscCents = (fullPaymentDiscountEur || 0) * 100;
+
+                if (payDoc === 'quote') {
+                    return { chargeCents: 0, remainingCents: totalCents, depositEur: 0, kind: 'quote', fullDiscountEur: 0 };
+                }
+                if (payDoc !== 'registration') {
+                    return { chargeCents: 0, remainingCents: totalCents, depositEur: 0, kind: 'none', fullDiscountEur: 0 };
+                }
+                if (payPlan === 'full') {
+                    let charge = Math.max(0, totalCents - fullDiscCents);
+                    // Almanya + tam ödeme: kayıt ücreti alınmaz (150 ekstra yok; toplam zaten kurs)
+                    return {
+                        chargeCents: charge,
+                        remainingCents: 0,
+                        depositEur: 0,
+                        kind: 'full',
+                        fullDiscountEur: fullPaymentDiscountEur || 0,
+                        germanyNoRegFee: inGermany,
+                    };
+                }
+                if (payPlan === 'installment') {
+                    if (installOpt === 'course') {
+                        const charge = firstCourseCents > 0 ? firstCourseCents : Math.min(depositCents, totalCents || depositCents);
+                        return {
+                            chargeCents: charge,
+                            remainingCents: Math.max(0, totalCents - charge),
+                            depositEur: 0,
+                            kind: 'installment_course',
+                            fullDiscountEur: 0,
+                        };
+                    }
+                    // 2 taksit (veya henüz alt seçim yokken varsayılan): 150 € şimdi
+                    const charge = Math.min(depositCents, totalCents || depositCents);
+                    return {
+                        chargeCents: charge,
+                        remainingCents: Math.max(0, totalCents - charge),
+                        depositEur: reservationDepositEur,
+                        kind: inGermany ? 'installment_de' : 'installment_two',
+                        fullDiscountEur: 0,
+                    };
+                }
+                return { chargeCents: 0, remainingCents: totalCents, depositEur: 0, kind: 'none', fullDiscountEur: 0 };
+            }
+
+            function formatPayEur(cents) {
+                const eur = Math.round(cents) / 100;
+                return eur.toLocaleString(lang === 'de' ? 'de-DE' : lang === 'tr' ? 'tr-TR' : lang === 'es' ? 'es-ES' : 'en-US') + ' €';
+            }
+
+            function syncPaymentUI() {
+                const docStep = document.getElementById('bk-pay-step-doc');
+                const planWrap = document.getElementById('bk-pay-plan');
+                const installWrap = document.getElementById('bk-pay-install');
+                const methodWrap = document.getElementById('bk-pay-method');
+                const fullAmountEl = document.getElementById('bk-pay-full-amount');
+                const fullSaveEl = document.getElementById('bk-pay-full-save');
+                const installAmountEl = document.getElementById('bk-pay-install-amount');
+                const totalPriceEl = document.getElementById('total-price');
+                const totalLabelEl = document.querySelector('.price-total-label');
+                const germanyVal = document.querySelector('[name="in-germany"]:checked')?.value || '';
+                const payDoc = document.querySelector('[name="pay-doc"]:checked')?.value || '';
+                const payPlan = document.querySelector('[name="pay-plan"]:checked')?.value || '';
+                const installOpt = document.querySelector('[name="pay-install"]:checked')?.value || '';
+                const inGermany = germanyVal === 'yes';
+                const totalCents = parseInt(document.getElementById('amount-in-cents')?.value || '0', 10) || 0;
+                const firstCourseCents = Math.round((promoPrice || 0) * 100);
+                const depositCents = (reservationDepositEur || 0) * 100;
+                const fullDiscCents = (fullPaymentDiscountEur || 0) * 100;
+
+                if (docStep) docStep.hidden = !germanyVal;
+
+                if (planWrap) planWrap.hidden = !(germanyVal && payDoc === 'registration');
+                if (payDoc !== 'registration') {
+                    document.querySelectorAll('[name="pay-plan"]').forEach(function (r) { r.checked = false; });
+                    document.querySelectorAll('[name="pay-install"]').forEach(function (r) { r.checked = false; });
+                }
+
+                // Taksitli ödeme seçilince alt seçenekler (2 taksit / 1 kur) — konumdan bağımsız
+                const showInstallOpts = !!(germanyVal && payDoc === 'registration' && payPlan === 'installment');
+                if (installWrap) {
+                    if (showInstallOpts) {
+                        installWrap.hidden = false;
+                        installWrap.removeAttribute('hidden');
+                        installWrap.style.display = '';
+                        installWrap.setAttribute('aria-hidden', 'false');
+                    } else {
+                        installWrap.hidden = true;
+                        installWrap.setAttribute('hidden', '');
+                        installWrap.setAttribute('aria-hidden', 'true');
+                    }
+                }
+                if (!showInstallOpts) {
+                    document.querySelectorAll('[name="pay-install"]').forEach(function (r) { r.checked = false; });
+                }
+
+                const showMethod = germanyVal && payDoc === 'registration' && !!payPlan && (payPlan !== 'installment' || !!installOpt);
+                if (methodWrap) methodWrap.hidden = !showMethod;
+                if (!showMethod) {
+                    document.querySelectorAll('[name="pay-method"]').forEach(function (r) { r.checked = false; });
+                }
+
+                // Ofis ödemesi yalnızca Almanya'dayım seçiliyken
+                const officeOpt = document.getElementById('bk-pay-method-office');
+                const officeRadio = document.querySelector('[name="pay-method"][value="office"]');
+                if (officeOpt) officeOpt.hidden = !inGermany;
+                if (!inGermany && officeRadio instanceof HTMLInputElement && officeRadio.checked) {
+                    officeRadio.checked = false;
+                }
+
+                const fullChargeCents = Math.max(0, totalCents - fullDiscCents);
+                if (fullAmountEl) fullAmountEl.textContent = formatPayEur(fullChargeCents);
+                if (fullSaveEl) {
+                    if (fullDiscCents > 0 && totalCents > 0) {
+                        fullSaveEl.hidden = false;
+                        fullSaveEl.textContent = '−' + formatPayEur(fullDiscCents);
+                    } else {
+                        fullSaveEl.hidden = true;
+                    }
+                }
+                if (installAmountEl) {
+                    const installNow = (installOpt === 'course' && firstCourseCents > 0)
+                        ? firstCourseCents
+                        : Math.min(depositCents, totalCents || depositCents);
+                    installAmountEl.textContent = formatPayEur(installNow);
+                }
+
+                const charge = computeBookingCharge({
+                    totalCents,
+                    firstCourseCents,
+                    inGermany,
+                    payDoc,
+                    payPlan,
+                    installOpt,
+                });
+
+                // Sidebar tutarı = gerçekten ödenecek (formdaki ayrı “Ödenecek” kalktı)
+                if (totalPriceEl && totalLabelEl) {
+                    const labelTotal = lang === 'tr' ? 'Toplam Tutar' : lang === 'de' ? 'Gesamtbetrag' : lang === 'es' ? 'Importe total' : 'Total Amount';
+                    const labelDue = lang === 'tr' ? 'Ödenecek' : lang === 'de' ? 'Zu zahlen' : lang === 'es' ? 'A pagar' : 'Amount due';
+                    const readyDue = !!germanyVal && (
+                        payDoc === 'quote'
+                        || (payDoc === 'registration' && !!payPlan && (payPlan !== 'installment' || !!installOpt))
+                    );
+                    if (readyDue) {
+                        totalLabelEl.textContent = labelDue;
+                        totalPriceEl.textContent = formatPayEur(charge.chargeCents);
+                    } else {
+                        totalLabelEl.textContent = labelTotal;
+                        totalPriceEl.textContent = formatPayEur(totalCents);
+                    }
+                }
+                restoreSubmitButtons();
+            }
+
+            document.querySelectorAll('[name="pay-doc"], [name="pay-plan"], [name="pay-install"], [name="pay-method"], [name="in-germany"]').forEach(function (el) {
+                el.addEventListener('change', syncPaymentUI);
+            });
+
+            // Desktop: sidebar yalnızca kendi hizasını geçince sabitlenir (üstte orijinal yerinde kalır)
+            (function initPinnedPriceSidebar() {
+                const col = document.getElementById('price-calculator-col');
+                const calc = document.getElementById('price-calculator');
+                const content = document.querySelector('.booking-content');
+                const box = document.querySelector('.booking-form-container');
+                if (!col || !calc || !content) return;
+
+                function headerOffset() {
+                    const raw = getComputedStyle(document.documentElement).getPropertyValue('--header-height').trim();
+                    const n = parseFloat(raw);
+                    return (Number.isFinite(n) ? n : 96) + 16;
+                }
+
+                function unpin() {
+                    calc.classList.remove('is-pinned');
+                    calc.style.left = '';
+                    calc.style.width = '';
+                    calc.style.top = '';
+                    calc.style.maxHeight = '';
+                    col.style.height = '';
+                }
+
+                function pinSidebar() {
+                    if (window.matchMedia('(max-width: 992px)').matches) {
+                        unpin();
+                        return;
+                    }
+
+                    const topGap = headerOffset();
+                    const contentRect = content.getBoundingClientRect();
+                    const boxRect = box ? box.getBoundingClientRect() : contentRect;
+                    const colRect = col.getBoundingClientRect();
+                    const calcHeight = calc.offsetHeight || colRect.height;
+
+                    // Placeholder hâlâ header altında değilse → orijinal konum (progress’in üstüne binmez)
+                    if (colRect.top >= topGap - 0.5) {
+                        unpin();
+                        return;
+                    }
+
+                    // Booking içeriği ekrandan çıktıysa bırak
+                    if (contentRect.bottom <= topGap + 24) {
+                        unpin();
+                        return;
+                    }
+
+                    let top = topGap;
+                    const maxTop = contentRect.bottom - calcHeight - 8;
+                    if (top > maxTop) top = maxTop;
+
+                    // booking-content üstünün üstüne çıkmasın
+                    if (top < contentRect.top) top = contentRect.top;
+
+                    let left = colRect.left;
+                    let width = colRect.width;
+                    const pad = 2;
+                    if (left < boxRect.left + pad) left = boxRect.left + pad;
+                    if (left + width > boxRect.right - pad) {
+                        width = Math.max(200, boxRect.right - pad - left);
+                    }
+
+                    col.style.height = calcHeight + 'px';
+                    calc.classList.add('is-pinned');
+                    calc.style.top = top + 'px';
+                    calc.style.left = left + 'px';
+                    calc.style.width = width + 'px';
+                    calc.style.maxHeight = Math.max(120, Math.min(
+                        window.innerHeight - top - 16,
+                        contentRect.bottom - top - 8
+                    )) + 'px';
+                }
+
+                let ticking = false;
+                function onScrollOrResize() {
+                    if (ticking) return;
+                    ticking = true;
+                    requestAnimationFrame(function () {
+                        pinSidebar();
+                        ticking = false;
+                    });
+                }
+                window.addEventListener('scroll', onScrollOrResize, { passive: true });
+                window.addEventListener('resize', onScrollOrResize);
+                pinSidebar();
+                setTimeout(pinSidebar, 100);
+            })();
+
             function showBookingThankYou() {
                 try { destroyStripeEmbed(); } catch (_) {}
                 if (window.showSuccessModal) {
@@ -3098,12 +4174,43 @@ const extrasStepCopy = {
             if (bookingForm) {
                 bookingForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
-                    const submitter = e.submitter;
-                    const paymentChoice = submitter && submitter.dataset && submitter.dataset.paymentChoice === 'pay_now' ? 'pay_now' : 'reservation';
                     const formData = new FormData(bookingForm);
+                    const payDoc = (formData.get('pay-doc') || '').toString();
+                    const payPlan = (formData.get('pay-plan') || '').toString();
+                    const installOpt = (formData.get('pay-install') || '').toString();
+                    const payMethod = (formData.get('pay-method') || '').toString();
+                    const inGermanyRaw = (formData.get('in-germany') || '').toString();
+                    const inGermany = inGermanyRaw === 'yes';
+
+                    if (!inGermanyRaw) {
+                        showBookingError(payUiCopy?.needGermany || 'Lütfen konumunuzu seçin.');
+                        return;
+                    }
+                    if (!payDoc) {
+                        showBookingError(payUiCopy?.needDoc || 'Lütfen belge seçimi yapın.');
+                        return;
+                    }
+                    if (payDoc === 'registration') {
+                        if (!payPlan) {
+                            showBookingError(payUiCopy?.needPlan || 'Lütfen ödeme planı seçin.');
+                            return;
+                        }
+                        if (payPlan === 'installment' && !installOpt) {
+                            showBookingError(payUiCopy?.needInstall || 'Lütfen taksit seçeneğini seçin.');
+                            return;
+                        }
+                        if (!payMethod) {
+                            showBookingError(payUiCopy?.needMethod || 'Lütfen ödeme yöntemi seçin.');
+                            return;
+                        }
+                        if (payMethod === 'office' && !inGermany) {
+                            showBookingError(payUiCopy?.needMethod || 'Lütfen ödeme yöntemi seçin.');
+                            return;
+                        }
+                    }
 
                     setSubmitButtonsDisabled(true);
-                    const submittingText = lang === 'tr' ? 'Ödeme hazırlanıyor...' : lang === 'de' ? 'Zahlung wird vorbereitet...' : lang === 'es' ? 'Preparando el pago...' : 'Preparing payment...';
+                    const submittingText = lang === 'tr' ? 'Gönderiliyor...' : lang === 'de' ? 'Wird gesendet...' : lang === 'es' ? 'Enviando...' : 'Submitting...';
                     setSubmitButtonsText(submittingText);
 
                     // 1. Check rate limiting
@@ -3184,33 +4291,47 @@ const extrasStepCopy = {
                     const totalFormatted = document.getElementById('total-price')?.textContent || '0 €';
                     const totalCents = parseInt(String(data.amountInCents || '0').trim(), 10) || 0;
                     const friendDiscountEuro = bringFriendActive ? FRIEND_DISCOUNT : 0;
+                    const firstCourseCents = Math.round((promoPrice || 0) * 100);
 
-                    if (totalCents <= 0) {
+                    if (payDoc === 'registration' && totalCents <= 0 && payPlan === 'full') {
                         showBookingError(lang === 'tr' ? 'Ödeme için geçerli bir tutar seçiniz.' : lang === 'de' ? 'Bitte wählen Sie einen gültigen Betrag für die Zahlung.' : lang === 'es' ? 'Seleccione un importe válido para el pago.' : 'Please select a valid amount for payment.');
                         setSubmitButtonsDisabled(false);
                         restoreSubmitButtons();
                         return;
                     }
 
-                    const depositInfo = paymentChoice === 'reservation'
-                        ? {
-                            chargeCents: Math.min(reservationDepositEur * 100, totalCents),
-                            remainingCents: Math.max(0, totalCents - Math.min(reservationDepositEur * 100, totalCents)),
-                            depositEur: reservationDepositEur,
-                            balanceDueDays: balanceDueDays,
-                        }
-                        : {
-                            chargeCents: totalCents,
-                            remainingCents: 0,
-                            depositEur: 0,
-                            balanceDueDays: 0,
-                        };
-
+                    const chargeCalc = computeBookingCharge({
+                        totalCents,
+                        firstCourseCents,
+                        inGermany,
+                        payDoc,
+                        payPlan,
+                        installOpt,
+                    });
+                    const depositInfo = {
+                        chargeCents: chargeCalc.chargeCents,
+                        remainingCents: chargeCalc.remainingCents,
+                        depositEur: chargeCalc.depositEur || 0,
+                        balanceDueDays: chargeCalc.depositEur ? balanceDueDays : 0,
+                        kind: chargeCalc.kind,
+                        fullDiscountEur: chargeCalc.fullDiscountEur || 0,
+                        germanyNoRegFee: !!chargeCalc.germanyNoRegFee,
+                    };
+                    const paymentChoice = payDoc === 'quote'
+                        ? 'quote'
+                        : (payPlan === 'full' ? 'pay_now' : 'reservation');
                     const chargeEur = Math.round(depositInfo.chargeCents) / 100;
                     const chargeLabel = chargeEur.toLocaleString(lang === 'de' ? 'de-DE' : lang === 'tr' ? 'tr-TR' : lang === 'es' ? 'es-ES' : 'en-US') + ' €';
 
                     const weeksNumPayload = effectiveWeeks ? Number(effectiveWeeks) : 0;
-                    const stripeLineItems = buildStripeLineItems({
+                    const pricedForDiscount = courseSelectionArr.filter(function (c) { return LEVEL_RE.test(c) || c === 'telc-c1-prep'; });
+                    const courseGrossEuro = (program === 'intensive' || program === 'online')
+                        ? getIntensiveCourseGross(pricedForDiscount)
+                        : Math.round(totalCents / 100);
+                    const multiDiscount = (program === 'intensive' || program === 'online')
+                        ? getMultiCourseDiscount(courseCount, courseGrossEuro)
+                        : { percent: 0, amount: 0 };
+                    const stripeLineItemsDetail = buildStripeLineItems({
                         program,
                         courses: courseSelectionArr,
                         weeksNum: weeksNumPayload,
@@ -3219,16 +4340,32 @@ const extrasStepCopy = {
                         accommodation: data['accommodation-support'] === 'yes',
                         airport: data['airport-pickup'] === 'yes',
                         friendDiscountEuro,
-                        bundleDiscountEuro: 0,
-                        courseEur: Math.round(totalCents / 100),
+                        bundleDiscountEuro: multiDiscount.amount || 0,
+                        courseEur: courseGrossEuro,
+                        targetCents: totalCents,
                     });
+                    // Checkout’ta tek satır = amountInCents (katalog / hafta paketi çift sayımını engeller)
+                    const stripeLineItems = [{
+                        productKey: stripeAdjustProduct.productKey,
+                        name: paymentChoice === 'reservation'
+                            ? ('Reservation deposit ' + reservationDepositEur + ' EUR')
+                            : 'Campus German booking',
+                        amountCents: depositInfo.chargeCents,
+                        quantity: 1,
+                        useCustomAmount: true,
+                    }];
 
                     let standardizedData = {
-                        formType: 'booking',
+                        formType: payDoc === 'quote' ? 'price-quote' : 'booking',
                         lang: typeof lang !== 'undefined' ? lang : 'tr',
                         sourcePage: data.sourcePage || window.location.pathname,
                         submittedAt: new Date().toISOString(),
                         paymentChoice,
+                        paymentDoc: payDoc,
+                        paymentPlan: payPlan || '',
+                        paymentInstallOption: installOpt || '',
+                        paymentMethod: payMethod || (payDoc === 'quote' ? 'none' : ''),
+                        paymentKind: depositInfo.kind,
                         checkoutUiMode: 'embedded',
                         returnUrl:
                             window.location.origin +
@@ -3260,6 +4397,12 @@ const extrasStepCopy = {
                             universityAdmission: yesNo('university-admission-support'),
                             accommodation: yesNo('accommodation-support'),
                             airportPickup: yesNo('airport-pickup'),
+                            speakcafeMembership: yesNo('speakcafe-membership'),
+                            specialRequest: (data['extras-special-request'] || '').trim(),
+                        },
+
+                        location: {
+                            inGermany: yesNo('in-germany'),
                         },
 
                         marketing: {
@@ -3277,7 +4420,7 @@ const extrasStepCopy = {
                             }
                             : { active: bookingWebhookLabels.no },
 
-                        message: (data.message || '').trim(),
+                        message: (data['extras-special-request'] || data.message || '').trim(),
 
                         price: {
                             total: totalFormatted,
@@ -3298,6 +4441,15 @@ const extrasStepCopy = {
                         priceTotal: totalFormatted,
                         amountInCents: depositInfo.chargeCents,
                         stripeLineItems,
+                        stripeLineItemsDetail,
+                        stripePricing: {
+                            mode: 'custom_amount_cents',
+                            mapCatalogPrices: false,
+                            skipWeeksPackage: true,
+                            useLineItemAmounts: true,
+                            chargeCents: depositInfo.chargeCents,
+                            totalCents,
+                        },
 
                         customerCollection: null,
                         courseCollection: null,
@@ -3336,10 +4488,36 @@ const extrasStepCopy = {
                         remainingCents: depositInfo.remainingCents,
                     };
                     standardizedData.stripeLineItems = stripeLineItems;
+                    standardizedData.stripeLineItemsDetail = stripeLineItemsDetail;
+                    standardizedData.stripePricing = {
+                        mode: 'custom_amount_cents',
+                        mapCatalogPrices: false,
+                        skipWeeksPackage: true,
+                        useLineItemAmounts: true,
+                        chargeCents: depositInfo.chargeCents,
+                        totalCents,
+                    };
 
+                    async function postBookingWebhook(payload) {
+                        const webhookUrl = (bookingForm?.dataset.webhook || '').trim();
+                        if (!webhookUrl) throw new Error('missing_webhook');
+                        const res = await fetch(webhookUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload),
+                        });
+                        if (!res.ok) throw new Error('webhook_failed');
+                    }
+
+                    const needsStripe = payDoc === 'registration' && payMethod === 'online' && depositInfo.chargeCents > 0;
                     let paymentUiOpen = false;
 
                     try {
+                        if (!needsStripe) {
+                            await postBookingWebhook(standardizedData);
+                            showBookingThankYou();
+                            return;
+                        }
                         const checkout = await requestPayNowCheckout(standardizedData);
                         if (checkout.mode === 'embedded' && checkout.clientSecret) {
                             await mountStripeEmbeddedCheckout(checkout.clientSecret, checkout.publishableKey, chargeLabel);
@@ -3365,12 +4543,12 @@ const extrasStepCopy = {
                                         ? 'Falta la clave publicable de Stripe. Añada pk_live_... en data/booking-pay-proxy.config.php.'
                                         : 'Stripe publishable key missing. Add pk_live_... to data/booking-pay-proxy.config.php.')
                             : (lang === 'tr'
-                                ? 'Ödeme formu açılamadı. Lütfen tekrar deneyin veya bizimle iletişime geçin.'
+                                ? 'Gönderim tamamlanamadı. Lütfen tekrar deneyin veya bizimle iletişime geçin.'
                                 : lang === 'de'
-                                    ? 'Zahlungsformular konnte nicht geöffnet werden. Bitte erneut versuchen oder kontaktieren Sie uns.'
+                                    ? 'Absenden fehlgeschlagen. Bitte erneut versuchen oder kontaktieren Sie uns.'
                                     : lang === 'es'
-                                        ? 'No se pudo abrir el formulario de pago. Inténtelo de nuevo o contáctenos.'
-                                        : 'Could not open payment form. Please try again or contact us.');
+                                        ? 'No se pudo completar el envío. Inténtelo de nuevo o contáctenos.'
+                                        : 'Could not complete submission. Please try again or contact us.');
                         showBookingError(payError);
                     } finally {
                         if (!paymentUiOpen) {
@@ -3426,6 +4604,7 @@ const extrasStepCopy = {
             updatePrice();
             syncProgramCardsUI();
             syncOnlineCourseCards();
+            syncPaymentUI();
         });
     </script>
 </MainLayout>

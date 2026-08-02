@@ -3,10 +3,12 @@ interface ExtraCard {
     field: string;
     title: string;
     price: number;
+    listPrice?: number;
+    free?: boolean;
     image: string;
     icon: string;
-    theme: 'visa' | 'university' | 'accommodation' | 'airport';
-    infoType: 'general' | 'accommodation';
+    theme: 'visa' | 'university' | 'accommodation' | 'airport' | 'speakcafe';
+    infoType: 'general' | 'accommodation' | 'speakcafe';
 }
 
 interface Props {
@@ -17,8 +19,19 @@ interface Props {
         continueBtn: string;
         yes: string;
         no: string;
+        add: string;
+        added: string;
+        remove: string;
+        freeLabel: string;
+        freeForYou: string;
+        germanyLabel: string;
+        germanyYes: string;
+        germanyNo: string;
+        specialRequestLabel: string;
+        specialRequestPlaceholder: string;
         infoGeneral: string;
         infoAccommodation: string;
+        infoSpeakcafe: string;
         infoClose: string;
         infoBtnLabel: string;
         cards: ExtraCard[];
@@ -26,30 +39,31 @@ interface Props {
 }
 
 const { copy } = Astro.props;
+const mainCards = copy.cards.filter((c) => c.theme !== 'speakcafe');
+const speakcafeCard = copy.cards.find((c) => c.theme === 'speakcafe');
 ---
 
-<div class="form-step booking-extras-step" data-step="3">
+<div class="form-step booking-extras-step" data-step="2">
     <div class="step-header">
         <h2>{copy.stepTitle}</h2>
         <p>{copy.stepDesc}</p>
     </div>
 
     <div class="bk-extras-grid" role="group">
-        {copy.cards.map((card) => (
-            <article class={`bk-extra-card bk-extra-card--${card.theme}`} data-extra-field={card.field}>
-                <label class="bk-extra-card__row">
-                    <input type="checkbox" class="bk-extra-card__checkbox" name={card.field} value="yes" />
-                    <span class="bk-extra-card__check-ui" aria-hidden="true">
-                        <i class="fas fa-check"></i>
-                    </span>
-                    <span class="bk-extra-card__icon-inline" aria-hidden="true">
-                        <i class={`fas fa-${card.icon}`}></i>
-                    </span>
-                    <span class="bk-extra-card__copy">
-                        <span class="bk-extra-card__title">{card.title}</span>
-                        <span class="bk-extra-card__price">+{card.price} €</span>
-                    </span>
-                </label>
+        {mainCards.map((card) => (
+            <article
+                class:list={['bk-extra-card', `bk-extra-card--${card.theme}`]}
+                data-extra-field={card.field}
+            >
+                <input type="checkbox" class="bk-extra-card__checkbox" name={card.field} value="yes" tabindex="-1" />
+                <span class="bk-extra-card__tick" aria-hidden="true"></span>
+                <span class="bk-extra-card__icon-inline" aria-hidden="true">
+                    <i class={`fas fa-${card.icon}`}></i>
+                </span>
+                <div class="bk-extra-card__copy">
+                    <span class="bk-extra-card__title">{card.title}</span>
+                    <span class="bk-extra-card__price">+{card.price} €</span>
+                </div>
                 <button
                     type="button"
                     class="bk-extra-info-btn"
@@ -61,6 +75,53 @@ const { copy } = Astro.props;
                 </button>
             </article>
         ))}
+    </div>
+
+    <div class="bk-extras-bottom">
+        {speakcafeCard && (
+            <article
+                class:list={['bk-extra-card', 'bk-extra-card--speakcafe', speakcafeCard.free && 'bk-extra-card--free']}
+                data-extra-field={speakcafeCard.field}
+                data-extra-free={speakcafeCard.free ? '1' : undefined}
+            >
+                <input type="checkbox" class="bk-extra-card__checkbox" name={speakcafeCard.field} value="yes" tabindex="-1" />
+                <span class="bk-extra-card__tick" aria-hidden="true"></span>
+                <span class="bk-extra-card__icon-inline" aria-hidden="true">
+                    <i class={`fas fa-${speakcafeCard.icon}`}></i>
+                </span>
+                <div class="bk-extra-card__copy">
+                    <span class="bk-extra-card__title">{speakcafeCard.title}</span>
+                    <span class="bk-extra-card__price bk-extra-card__price--free">
+                        <span class="bk-extra-card__list">{speakcafeCard.listPrice ?? 500} €</span>
+                        <span class="bk-extra-card__free-badge">{copy.freeForYou}</span>
+                    </span>
+                </div>
+                <button
+                    type="button"
+                    class="bk-extra-info-btn"
+                    data-info-type={speakcafeCard.infoType}
+                    data-info-title={speakcafeCard.title}
+                    aria-label={`${copy.infoBtnLabel}: ${speakcafeCard.title}`}
+                >
+                    <i class="fas fa-info" aria-hidden="true"></i>
+                </button>
+            </article>
+        )}
+        <div class="bk-extra-card bk-extra-card--request">
+            <span class="bk-extra-card__icon-inline" aria-hidden="true">
+                <i class="fas fa-pen"></i>
+            </span>
+            <div class="bk-extra-card__copy bk-extra-card__copy--request">
+                <label class="bk-extra-card__title" for="extras-special-request">{copy.specialRequestLabel}</label>
+                <textarea
+                    id="extras-special-request"
+                    name="extras-special-request"
+                    class="bk-extra-card__textarea"
+                    rows="2"
+                    placeholder={copy.specialRequestPlaceholder}
+                ></textarea>
+            </div>
+        </div>
     </div>
 
     <div class="form-navigation">
@@ -80,14 +141,20 @@ const { copy } = Astro.props;
     </div>
 </div>
 
-<script define:vars={{ infoGeneral: copy.infoGeneral, infoAccommodation: copy.infoAccommodation }}>
+<script define:vars={{
+    infoGeneral: copy.infoGeneral,
+    infoAccommodation: copy.infoAccommodation,
+    infoSpeakcafe: copy.infoSpeakcafe,
+}}>
     const overlay = document.getElementById('bk-extra-info-overlay');
     const popupTitle = document.getElementById('bk-info-popup-title');
     const popupText = document.getElementById('bk-info-popup-text');
     const closeBtn = document.getElementById('bk-extra-info-close');
 
     function infoTextFor(type) {
-        return type === 'accommodation' ? infoAccommodation : infoGeneral;
+        if (type === 'accommodation') return infoAccommodation;
+        if (type === 'speakcafe') return infoSpeakcafe;
+        return infoGeneral;
     }
 
     function openInfoPopup(title, type) {
@@ -122,16 +189,37 @@ const { copy } = Astro.props;
     });
 
     function syncExtraCardStates() {
-        document.querySelectorAll('.booking-extras-step .bk-extra-card').forEach(function (card) {
+        document.querySelectorAll('.booking-extras-step .bk-extra-card[data-extra-field]').forEach(function (card) {
             const field = card.getAttribute('data-extra-field');
             if (!field) return;
             const checked = card.querySelector('input[name="' + field + '"]');
-            card.classList.toggle('bk-extra-card--yes', !!(checked && checked.checked));
+            const isOn = !!(checked && checked.checked);
+            card.classList.toggle('bk-extra-card--yes', isOn);
+            card.setAttribute('aria-pressed', isOn ? 'true' : 'false');
         });
     }
+
+    document.querySelectorAll('.booking-extras-step .bk-extra-card[data-extra-field]').forEach(function (card) {
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.addEventListener('click', function (e) {
+            if (e.target.closest('.bk-extra-info-btn')) return;
+            const input = card.querySelector('.bk-extra-card__checkbox');
+            if (!(input instanceof HTMLInputElement)) return;
+            input.checked = !input.checked;
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+            syncExtraCardStates();
+        });
+        card.addEventListener('keydown', function (e) {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            e.preventDefault();
+            card.click();
+        });
+    });
 
     document.querySelectorAll('.booking-extras-step .bk-extra-card__checkbox').forEach(function (input) {
         input.addEventListener('change', syncExtraCardStates);
     });
     syncExtraCardStates();
+
 </script>

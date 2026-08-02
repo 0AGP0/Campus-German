@@ -124,12 +124,12 @@ Bei nicht visumrelevanten Kursen kann Campus German nach freiem Ermessen die Ben
 Die vereinbarte Kursgebühr ist mit Vertragsschluss grundsätzlich sofort fällig, spätestens jedoch innerhalb von drei Werktagen nach Zugang der Buchungsbestätigung auf das von Campus German benannte Konto zu zahlen, soweit nachfolgend (§ 5.1a) nichts Abweichendes für eine Online-Reservierung mit Anzahlung vereinbart wird.  
 Die Zahlungspflicht besteht unabhängig davon, ob der Teilnehmer den Kurs tatsächlich besucht, ob eine Einreise erfolgt oder ob der Teilnehmer die Leistung ganz oder teilweise in Anspruch nimmt.
 
-### § 5.1a Online-Reservierung mit Anzahlung (200,00 EUR)
-Bucht der Teilnehmer über das Online-Buchungsformular die Option „Reservierung“ (Anzahlung) statt der sofortigen Zahlung des Gesamtbetrags, gilt Folgendes:
+### § 5.1a Online-Reservierung mit Anzahlung (150,00 EUR)
+Bucht der Teilnehmer über das Online-Buchungsformular die Option „Kayıt / Anmeldebestätigung“ bzw. Ratenzahlung (Anzahlung) statt der sofortigen Zahlung des Gesamtbetrags, gilt Folgendes:
 
-- a) **Anzahlung:** Es wird eine Anzahlung in Höhe von **200,00 EUR** fällig und ist unverzüglich über den angebotenen Zahlungsweg (z. B. Stripe) zu leisten. Liegt der Gesamtbetrag unter 200,00 EUR, entspricht die zu leistende Zahlung dem Gesamtbetrag.
+- a) **Anzahlung:** Es wird eine Anzahlung in Höhe von **150,00 EUR** fällig und ist unverzüglich über den angebotenen Zahlungsweg (z. B. Stripe) zu leisten. Liegt der Gesamtbetrag unter 150,00 EUR, entspricht die zu leistende Zahlung dem Gesamtbetrag. Bei Wahl der sofortigen Vollzahlung entfällt diese Anzahlung.
 - b) **Restbetrag:** Der verbleibende Restbetrag (Gesamtbetrag abzüglich geleisteter Anzahlung) ist innerhalb von **14 Kalendertagen** nach erfolgreicher Anzahlungszahlung vollständig zu zahlen.
-- c) **Verfall der Anzahlung:** Wird der Restbetrag nicht fristgerecht vollständig gezahlt, erlischt die vorläufige Kursplatzbindung. Die bereits geleistete Anzahlung von 200,00 EUR (bzw. der gezahlte Betrag bei niedrigerem Gesamtbetrag) wird als pauschalierter Aufwendungs- und Bereithaltungsersatz einbehalten und **nicht erstattet**. Ein Anspruch auf Kursplatz, Unterrichtsteilnahme oder Ausstellung von Bescheinigungen besteht in diesem Fall nicht.
+- c) **Verfall der Anzahlung:** Wird der Restbetrag nicht fristgerecht vollständig gezahlt, erlischt die vorläufige Kursplatzbindung. Die bereits geleistete Anzahlung von 150,00 EUR (bzw. der gezahlte Betrag bei niedrigerem Gesamtbetrag) wird als pauschalierter Aufwendungs- und Bereithaltungsersatz einbehalten und **nicht erstattet**. Ein Anspruch auf Kursplatz, Unterrichtsteilnahme oder Ausstellung von Bescheinigungen besteht in diesem Fall nicht.
 - d) **Anrechnung:** Wird der Restbetrag fristgerecht gezahlt, wird die Anzahlung auf die vereinbarte Kursgebühr angerechnet.
 - e) **Sofortzahlung:** Wählt der Teilnehmer die sofortige Zahlung des Gesamtbetrags, bleibt § 5.1 unberührt; eine gesonderte Anzahlung entfällt.
 - f) **Widerrufsrecht:** Gesetzliche Widerrufsrechte und die Regelungen der Widerrufsbelehrung sowie § 3.5 dieser AGB bleiben unberührt. Hat der Teilnehmer den vorzeitigen Leistungsbeginn verlangt und wird Widerruf erklärt, kann die Anzahlung ganz oder teilweise auf einen etwaigen Wertersatz angerechnet werden.

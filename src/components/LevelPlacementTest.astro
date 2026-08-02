@@ -1,0 +1,255 @@
+---
+import { PLACEMENT_QUESTIONS, placementUi, type PlacementLang } from '../data/levelPlacementTest';
+import { getBookingPath, getDatenschutzPath } from '../utils/pathHelpers';
+import '../styles/pages/level-test.css';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const L = (['tr', 'de', 'en', 'es'].includes(lang) ? lang : 'en') as PlacementLang;
+const ui = placementUi[L];
+const bookingPath = `/${L}/${getBookingPath(L)}`;
+const privacyHref = L === 'de' ? '/datenschutz/' : `/${L}/${getDatenschutzPath(L)}/`;
+const whatsappUrl = 'https://api.whatsapp.com/send/?phone=4915203823792&text&type=phone_number&app_absent=0';
+const questionsJson = JSON.stringify(PLACEMENT_QUESTIONS);
+---
+
+<section class="lt-hero">
+  <div class="lt-wrap">
+    <h1 class="lt-hero-title">{ui.heroTitle}</h1>
+    <p class="lt-hero-desc">{ui.heroDescription}</p>
+  </div>
+</section>
+
+<section class="lt-section" aria-labelledby="lt-quiz-heading">
+  <div class="lt-wrap">
+    <div class="lt-card" id="lt-app"
+      data-lang={L}
+      data-booking={bookingPath}
+      data-whatsapp={whatsappUrl}
+      data-ui={JSON.stringify(ui)}
+      data-questions={questionsJson}
+    >
+      <div class="lt-panel" data-lt-panel="quiz">
+        <div class="lt-head">
+          <h2 id="lt-quiz-heading">{ui.quizTitle}</h2>
+          <p class="lt-progress" data-lt-progress></p>
+        </div>
+        <div class="lt-bar" aria-hidden="true"><span data-lt-bar></span></div>
+        <p class="lt-prompt" data-lt-prompt></p>
+        <div class="lt-options" data-lt-options role="radiogroup"></div>
+        <button type="button" class="lt-btn lt-btn--primary" data-lt-next disabled>{ui.next}</button>
+      </div>
+
+      <div class="lt-panel" data-lt-panel="form" hidden>
+        <div class="lt-head">
+          <h2>{ui.formTitle}</h2>
+          <p>{ui.formSubtitle}</p>
+        </div>
+        <form class="lt-form" data-lt-form>
+          <input type="hidden" name="formType" value="level-placement" />
+          <input type="hidden" name="lang" value={L} />
+          <input type="hidden" name="score" data-lt-score value="0" />
+          <input type="hidden" name="level" data-lt-level value="" />
+          <input type="text" name="website" class="lt-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <label>
+            <span class="lt-label">{ui.name}</span>
+            <input type="text" name="name" required autocomplete="name" />
+          </label>
+          <label>
+            <span class="lt-label">{ui.email}</span>
+            <input type="email" name="email" required autocomplete="email" />
+          </label>
+          <label>
+            <span class="lt-label">{ui.phone}</span>
+            <input type="tel" name="phone" required autocomplete="tel" />
+          </label>
+          <label class="lt-check">
+            <input type="checkbox" name="privacy" required checked />
+            <span><a href={privacyHref} target="_blank" rel="noopener noreferrer">{ui.privacy}</a></span>
+          </label>
+          <button type="submit" class="lt-btn lt-btn--primary">{ui.showResult}</button>
+        </form>
+      </div>
+
+      <div class="lt-panel" data-lt-panel="result" hidden>
+        <div class="lt-head">
+          <h2>{ui.resultTitle}</h2>
+          <p class="lt-result-level" data-lt-result-level></p>
+          <p class="lt-result-score" data-lt-result-score></p>
+          <p class="lt-hint">{ui.resultHint}</p>
+        </div>
+        <div class="lt-actions">
+          <button type="button" class="lt-btn lt-btn--primary" data-lt-share>{ui.share}</button>
+          <a class="lt-btn lt-btn--accent" data-lt-book href={bookingPath}>{ui.book}</a>
+          <a class="lt-btn lt-btn--ghost" href={whatsappUrl} target="_blank" rel="noopener noreferrer">{ui.whatsapp}</a>
+          <button type="button" class="lt-btn lt-btn--ghost" data-lt-restart>{ui.restart}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { scoreToLevel } from '../data/levelPlacementTest';
+
+  type Q = { id: string; prompt: string; options: { id: string; text: string; correct?: boolean }[] };
+
+  (function () {
+    const app = document.getElementById('lt-app');
+    if (!app) return;
+
+    const ui = JSON.parse(app.dataset.ui || '{}');
+    const questions: Q[] = JSON.parse(app.dataset.questions || '[]');
+    const bookingBase = app.dataset.booking || '/';
+    const total = questions.length;
+    let index = 0;
+    const answers: Record<string, string> = {};
+
+    const panelQuiz = app.querySelector('[data-lt-panel="quiz"]') as HTMLElement;
+    const panelForm = app.querySelector('[data-lt-panel="form"]') as HTMLElement;
+    const panelResult = app.querySelector('[data-lt-panel="result"]') as HTMLElement;
+    const progressEl = app.querySelector('[data-lt-progress]') as HTMLElement;
+    const barEl = app.querySelector('[data-lt-bar]') as HTMLElement;
+    const promptEl = app.querySelector('[data-lt-prompt]') as HTMLElement;
+    const optionsEl = app.querySelector('[data-lt-options]') as HTMLElement;
+    const nextBtn = app.querySelector('[data-lt-next]') as HTMLButtonElement;
+    const form = app.querySelector('[data-lt-form]') as HTMLFormElement;
+    const scoreInput = app.querySelector('[data-lt-score]') as HTMLInputElement;
+    const levelInput = app.querySelector('[data-lt-level]') as HTMLInputElement;
+    const resultLevel = app.querySelector('[data-lt-result-level]') as HTMLElement;
+    const resultScore = app.querySelector('[data-lt-result-score]') as HTMLElement;
+    const shareBtn = app.querySelector('[data-lt-share]') as HTMLButtonElement;
+    const bookLink = app.querySelector('[data-lt-book]') as HTMLAnchorElement;
+    const restartBtn = app.querySelector('[data-lt-restart]') as HTMLButtonElement;
+
+    function show(panel: 'quiz' | 'form' | 'result') {
+      panelQuiz.hidden = panel !== 'quiz';
+      panelForm.hidden = panel !== 'form';
+      panelResult.hidden = panel !== 'result';
+    }
+
+    function correctCount() {
+      return questions.reduce((n, q) => {
+        const chosen = answers[q.id];
+        const ok = q.options.find((o) => o.id === chosen)?.correct;
+        return n + (ok ? 1 : 0);
+      }, 0);
+    }
+
+    function renderQuestion() {
+      const q = questions[index];
+      if (!q) return;
+      progressEl.textContent = String(ui.questionOf || '')
+        .replace('{current}', String(index + 1))
+        .replace('{total}', String(total));
+      barEl.style.width = `${((index + 1) / total) * 100}%`;
+      promptEl.textContent = q.prompt;
+      optionsEl.innerHTML = '';
+      nextBtn.disabled = true;
+      nextBtn.textContent = index === total - 1 ? ui.finish : ui.next;
+
+      q.options.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'lt-option';
+        btn.setAttribute('role', 'radio');
+        btn.setAttribute('aria-checked', 'false');
+        btn.textContent = opt.text;
+        btn.addEventListener('click', () => {
+          answers[q.id] = opt.id;
+          optionsEl.querySelectorAll('.lt-option').forEach((el) => {
+            el.classList.remove('is-selected');
+            el.setAttribute('aria-checked', 'false');
+          });
+          btn.classList.add('is-selected');
+          btn.setAttribute('aria-checked', 'true');
+          nextBtn.disabled = false;
+        });
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (!answers[questions[index].id]) return;
+      if (index < total - 1) {
+        index += 1;
+        renderQuestion();
+        return;
+      }
+      const score = correctCount();
+      const level = scoreToLevel(score);
+      scoreInput.value = String(score);
+      levelInput.value = level;
+      show('form');
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const hp = form.querySelector('[name="website"]') as HTMLInputElement | null;
+      if (hp && hp.value) return;
+
+      const score = Number(scoreInput.value) || 0;
+      const level = levelInput.value || scoreToLevel(score);
+      resultLevel.textContent = level;
+      resultScore.textContent = `${ui.correctLabel}: ${score} ${ui.of} ${total}`;
+      bookLink.href = `${bookingBase}?level=${encodeURIComponent(level.toLowerCase())}`;
+
+      // Lead payload (best-effort; UI result always shows)
+      try {
+        const fd = new FormData(form);
+        const payload = {
+          formType: 'level-placement',
+          lang: app.dataset.lang || 'tr',
+          name: String(fd.get('name') || ''),
+          email: String(fd.get('email') || ''),
+          phone: String(fd.get('phone') || ''),
+          score,
+          level,
+          sourcePage: window.location.pathname,
+          submittedAt: new Date().toISOString(),
+        };
+        const webhook = (window as any).__MAKE_CONTACT_WEBHOOK__ || '';
+        if (webhook) {
+          fetch(webhook, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          }).catch(() => {});
+        }
+      } catch (_) {}
+
+      show('result');
+      panelResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    shareBtn.addEventListener('click', async () => {
+      const level = levelInput.value || 'A1';
+      const text = `${ui.resultTitle}: ${level}`;
+      const url = `${window.location.origin}${window.location.pathname}?level=${encodeURIComponent(level)}`;
+      try {
+        if (navigator.share) {
+          await navigator.share({ title: ui.resultTitle, text, url });
+          return;
+        }
+      } catch (_) {}
+      try {
+        await navigator.clipboard.writeText(`${text}\n${url}`);
+        const prev = shareBtn.textContent;
+        shareBtn.textContent = ui.copied;
+        setTimeout(() => { shareBtn.textContent = prev; }, 1600);
+      } catch (_) {}
+    });
+
+    restartBtn.addEventListener('click', () => {
+      index = 0;
+      Object.keys(answers).forEach((k) => delete answers[k]);
+      show('quiz');
+      renderQuestion();
+    });
+
+    renderQuestion();
+  })();
+</script>

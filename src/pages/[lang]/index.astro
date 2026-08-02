@@ -3,7 +3,7 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import BilgiAlForm from '../../components/BilgiAlForm.astro';
 import '../../styles/pages/index.css';
 import { getCollection } from 'astro:content';
-import { isOverviewPage, getSectionPath, cleanSlug, getContactPath, getBookingPath, getPricesDatesPath } from '../../utils/pathHelpers';
+import { isOverviewPage, getSectionPath, cleanSlug, getContactPath, getBookingPath, getPricesDatesPath, getTrialPath } from '../../utils/pathHelpers';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, getCourseCardDisplayBadges, LESSONS_UP_TO_200 } from '../../utils/coursePricingHelper';
 import { buildBookingUrl } from '../../utils/bookingPrefillHelper';
 import CourseCardVisaBadge from '../../components/CourseCardVisaBadge.astro';
@@ -28,6 +28,7 @@ const courseBasePath = `/${lang}/${courseBase}`;
 const bookingPath = `/${lang}/${getBookingPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
 const contactPath = getContactPath(lang);
 const pricesDatesPath = `/${lang}/${getPricesDatesPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
+const trialPath = `/${lang}/${getTrialPath(lang as 'tr' | 'de' | 'en' | 'es')}`;
 
 /** Bugünden itibaren en yakın N kurs başlangıç tarihi (her ayın ilk Pazartesi) */
 const monthNamesByLang: Record<string, Record<number, string>> = {
@@ -77,20 +78,83 @@ function getUpcomingFirstMondays(count = 3): Date[] {
     return out;
 }
 
-const seatUrgencyByIndex = [
-    { key: 'last2' as const, tone: 'hot' as const, seatsLeft: 2 },
-    { key: 'last3' as const, tone: 'warn' as const, seatsLeft: 3 },
-    { key: 'filling' as const, tone: 'filling' as const, seatsLeft: 0 },
-];
+const heroLevels = ['A1', 'A2', 'B1', 'B2', 'C1'] as const;
 
-const upcomingCourses = getUpcomingFirstMondays(3).map((dateObj, i) => {
+const todayStart = new Date();
+todayStart.setHours(0, 0, 0, 0);
+
+/**
+ * Sahte kontenjan otomasyonu — gün + kurs tarihine göre deterministik azalır.
+ * Aynı gün aynı sonuç; günler geçtikçe / kurs yaklaştıkça düşer (min 1).
+ */
+function computeAutomatedSeatsLeft(courseDate: Date, cardIndex: number, today: Date): number {
+    const MS = 86400000;
+    const daysUntil = Math.max(0, Math.round((courseDate.getTime() - today.getTime()) / MS));
+    const dayIndex = Math.floor(today.getTime() / MS);
+    const courseDay = Math.floor(courseDate.getTime() / MS);
+    const seed = (cardIndex * 19 + courseDay * 7) % 97;
+
+    // Temel havuz: uzak kurslarda daha yüksek
+    let seats = 8;
+    if (daysUntil <= 10) seats = 4;
+    else if (daysUntil <= 25) seats = 5;
+    else if (daysUntil <= 50) seats = 6;
+    else if (daysUntil <= 90) seats = 7;
+
+    // Takvim günü damlası: ~2 günde bir “satış” (seed ile kaydırılmış)
+    const drip = Math.floor((dayIndex + seed) / 2) % 4;
+    seats -= drip;
+
+    // Son hafta ekstra baskı
+    if (daysUntil <= 7) seats = Math.min(seats, 2 + (seed % 2));
+    else if (daysUntil <= 14) seats = Math.min(seats, 3 + (seed % 2));
+
+    return Math.max(1, Math.min(8, seats));
+}
+
+/** En yakın dönemler + her kart için “Diğer tarihler” yedek havuzu */
+const upcomingMondayPool = getUpcomingFirstMondays(10);
+
+function formatHeroDateShort(dateObj: Date): string {
+    const d = dateObj.getDate();
+    const m = dateObj.getMonth() + 1;
+    const monthsShort = monthShortByLang[lang] || monthShortByLang.en;
+    return `${String(d).padStart(2, '0')} ${monthsShort[m]}`;
+}
+
+const upcomingCourses = upcomingMondayPool.slice(0, 5).map((dateObj, i) => {
     const d = dateObj.getDate();
     const m = dateObj.getMonth() + 1;
     const y = dateObj.getFullYear();
     const months = monthNamesByLang[lang] || monthNamesByLang.en;
     const monthsShort = monthShortByLang[lang] || monthShortByLang.en;
     const weekdays = weekdayNamesByLang[lang] || weekdayNamesByLang.en;
-    const urgency = seatUrgencyByIndex[i] || seatUrgencyByIndex[2];
+    const seatsLeft = computeAutomatedSeatsLeft(dateObj, i, todayStart);
+    const courseIso = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    // Kayıt kapanışına kalan gün (kurs başlangıcına değil). Yakın kurs → daha az gün; max 20.
+    // Deterministik “rastgele”: tarih + seviye indeksinden türetilir (her yenilemede zıplamaz).
+    const daysUntilStart = Math.max(0, Math.round((dateObj.getTime() - todayStart.getTime()) / 86400000));
+    const seed = (dateObj.getDate() * 17 + (dateObj.getMonth() + 1) * 31 + i * 13) % 7;
+    let registrationDaysLeft: number;
+    if (daysUntilStart <= 21) {
+        registrationDaysLeft = Math.min(20, Math.max(3, 5 + seed));
+    } else if (daysUntilStart <= 45) {
+        registrationDaysLeft = Math.min(20, Math.max(7, 9 + seed));
+    } else if (daysUntilStart <= 90) {
+        registrationDaysLeft = Math.min(20, Math.max(11, 13 + seed));
+    } else {
+        registrationDaysLeft = Math.min(20, Math.max(14, 16 + (seed % 5)));
+    }
+    let otherDates = upcomingMondayPool
+        .filter((od) => od.getTime() > dateObj.getTime())
+        .slice(0, 4)
+        .map(formatHeroDateShort);
+    if (otherDates.length < 4) {
+        otherDates = upcomingMondayPool
+            .filter((od) => od.getTime() !== dateObj.getTime())
+            .slice(0, 4)
+            .map(formatHeroDateShort);
+    }
     return {
         value: `${String(d).padStart(2, '0')}.${String(m).padStart(2, '0')}`,
         day: String(d).padStart(2, '0'),
@@ -98,9 +162,14 @@ const upcomingCourses = getUpcomingFirstMondays(3).map((dateObj, i) => {
         monthShort: monthsShort[m],
         year: y,
         weekday: weekdays[dateObj.getDay()],
-        seatKey: urgency.key,
-        tone: urgency.tone,
-        seatsLeft: urgency.seatsLeft,
+        level: heroLevels[i] || 'A1',
+        seatsLeft,
+        courseIso,
+        cardIndex: i,
+        daysLeft: registrationDaysLeft,
+        otherDates,
+        price: 890,
+        bundlePrice: Math.round(890 * (100 - Math.min(i + 2, 5)) / 100),
     };
 });
 
@@ -134,7 +203,7 @@ const t = {
         },
         heroDescription: "Campus German ile Almanca öğrenmek artık çok kolay! Konuşma odaklı eğitim, native speaker öğretmenler ve kişiselleştirilmiş programlarla hedeflerinize ulaşın.",
         heroFeatures: ["Sınırlı Kontenjan", "Kültür Programları", "Goethe-Telc-Test Daf-FSP"],
-        heroCta1: "Ücretsiz ders",
+        heroCta1: "Seviyeni şimdi ölç",
         heroCta2: "Whatsapptan Bilgi Al",
         trustItems: [
             { number: "2000+", label: "Mutlu Öğrenci" },
@@ -142,14 +211,14 @@ const t = {
             { number: "15+", label: "Ana Dilinde Eğitmen" }
         ],
         whyChooseTitle: "Neden Campus German?",
-        whyChooseSubtitle: "Şeffaflık ve öğrenci başarısına bağlılık: Bremen'de net bir akademik yol ve ölçülebilir, sürdürülebilir ilerleme.",
+        whyChooseSubtitle: "Bremen'de Hochdeutsch, konuşma odaklı eğitim ve net bir akademik yol.",
         whyChooseCards: [
-            { title: "Bremen'de net akademik yol", desc: "Campus German, Bremen'de profesyonelce yapılandırılmış bir dil enstitüsüdür; uluslararası öğrencilere üniversiteye giriş ve profesyonel entegrasyon için şeffaf, akademik bir hat sunar." },
-            { title: "Şeffaflık, kitlesel pazar değil", desc: "Kendimizi kitlesel bir sağlayıcı olarak değil, Kuzey Almanya'nın şeffaflık odaklı orta ölçekli enstitülerinden biri olarak konumlandırıyoruz; ölçülebilir ilerleme ve mali sürdürülebilirlik temel ilkelerimizdir." },
-            { title: "Misyon: A1'den C1'e yapı", desc: "Yapılandırılmış bir ilerleme modeliyle A1'den C1'e rehberlik ediyoruz; dil yalnızca öğretilmez, pratik edilir ve hayata uygulanır." },
-            { title: "Güvenilir akademik köprü", desc: "Küresel ortaklarımızla adil iş birliği ve istikrarlı bir çalışma ortamı sunarak piyasada sık görülen \"kur tekrarı\" döngüsünü azaltmayı hedefliyoruz." },
-            { title: "Üniversite uyumu ve net fiyat", desc: "Üniversite yollarıyla akademik uyum ve gizli maliyet olmayan açık bir fiyat yapısı; rekabetçi pazarda burada öne çıkıyoruz." },
-            { title: "Optimize gruplar, vize uyumu", desc: "Optimize edilmiş sınıf büyüklükleri ve yalnızca kısa dönem değil, sürdürülebilir uzun vadeli akademik patikalar için de vizeye uygun bir çerçeve." }
+            { title: "Hochdeutsch Bremen avantajı", desc: "Bremen yüksek Almanca konuşulan bölgede; aksanlı diyalekt yoğun şehirlere göre telaffuz ve akıcılık için daha net bir öğrenme ortamı sunar.", icon: "fas fa-map-marker-alt" },
+            { title: "Ana dili Almanca eğitmenler", desc: "Native speaker öğretmenlerle konuşma, dinleme ve günlük iletişim pratikleri önde; gramer ezberi değil kullanılabilir Almanca hedeflenir.", icon: "fas fa-chalkboard-teacher" },
+            { title: "Hibrit ders esnekliği", desc: "Yüz yüze ders günlerinde canlı online katılım da mümkün; vize beklerken veya seyahatte bile dersi kaçırmadan devam edebilirsin.", icon: "fas fa-laptop-house" },
+            { title: "Sınav ve üniversite hattı", desc: "Goethe, telc, TestDaF ve FSP hazırlığı ile A1–C1 yolunu sınav ve üniversite hedeflerine bağlarız; akademik yazma ve strateji de dahildir.", icon: "fas fa-university" },
+            { title: "Küçük odak grupları", desc: "Sınırlı kontenjanlı sınıflarda öğretmen her öğrenciye daha fazla zaman ayırır; kur tekrarı riskini azaltan daha sıkı takip.", icon: "fas fa-users" },
+            { title: "Şeffaf fiyat, net belgeler", desc: "Gizli maliyet olmadan açık fiyatlandırma; ödeme sonrası kurs kayıt belgesi ve ihtiyaç halinde resmi süreçler için gerekli kurs evrakları.", icon: "fas fa-file-invoice" }
         ],
         courseFilterTitle: "Kursunuzu Bulun",
         courseFilterSubtitle: "İhtiyacınıza uygun programı seçin, detaylar için kurslar sayfamıza gidin.",
@@ -184,10 +253,10 @@ const t = {
         courseBookButton: "Yer Ayırt",
         courseDetailsButton: "Detaylar",
         courseRegisterButton: "Kayıt Ol",
-        coursesSidebarOfficeTitle: "Bremen'de yaşayanlara özel ofis indirimi",
-        coursesSidebarOfficeDesc: "%30'a varan ofis indirimi fırsatını hemen değerlendirin.",
-        coursesSidebarOfficeTag: "Vize ve yoğun Almanca hedefine uygun eğitim akışı",
-        coursesSidebarOfficeCta: "Şimdi ofis rezervasyonu yap",
+        coursesSidebarOfficeTitle: "Bremen'de kayıt ücreti yok",
+        coursesSidebarOfficeDesc: "Bremen'de yaşayanlar için kayıt ücreti alınmaz — kurs ücretine odaklanırsın.",
+        coursesSidebarOfficeTag: "Yerel öğrenci avantajı · şeffaf fiyat",
+        coursesSidebarOfficeCta: "WhatsApp ile sor",
         visitPopupFabAria: "Ücretsiz ders ve indirim formunu aç",
         upcomingTitle: "Yaklaşan Kurslar",
         upcomingNext: "Sonraki başlangıç",
@@ -198,17 +267,16 @@ const t = {
         upcomingCta: "Rezervasyon Yap",
         upcomingAllDates: "Tüm tarihler & fiyatlar",
         upcomingEmpty: "Yeni tarihler yakında duyurulacak",
-        upcomingSeatsLast2: "Son 2 kişilik yer",
-        upcomingSeatsLast3: "Son 3 kişilik yer",
-        upcomingSeatsFilling: "Kontenjan bitiyor",
-        upcomingSeatsHintLast2: "Bu başlangıç için acele et",
-        upcomingSeatsHintLast3: "Yerler hızla doluyor",
-        upcomingSeatsHintFilling: "Kayıtlar kapanmak üzere",
-        upcomingSeatsLeftLabel: "kalan yer",
-        upcomingSeatsAlmostLabel: "dolmak üzere",
+        upcomingSeatsLeftTpl: "{n} kişilik yer kaldı",
+        upcomingSeatsHint: "Yerler hızla doluyor",
         upcomingSeatOpen: "Açık",
         upcomingSeatFull: "Dolu",
         upcomingSeatLastOne: "Son yer",
+        upcomingLevelProgram: "Intensive",
+        upcomingPriceLabel: "890 €",
+        upcomingBundleLabel: "Ek kur",
+        upcomingDaysLeftTpl: "Kayıt kapanmasına {n} gün",
+        upcomingOtherDates: "Diğer tarihler",
         // Courses section
         bremenDescription: "Yüksek Almancanın konuşulduğu Unesco kültür şehri Bremen'de öğrencilerimiz için başarı odaklı programlarla sizlerleyiz.",
         bremenMiniTitle: "Neden Bremen?",
@@ -389,7 +457,7 @@ const t = {
         },
         heroDescription: "Learning German is easy with Campus German! Reach your goals with conversation-focused education, native speaker teachers, and personalized programs.",
         heroFeatures: ["Limited Quota", "Cultural Programs", "Goethe-Telc-TestDaF-FSP"],
-        heroCta1: "Free lesson",
+        heroCta1: "Check your level",
         heroCta2: "Get Info via WhatsApp",
         trustItems: [
             { number: "2000+", label: "Happy Students" },
@@ -397,14 +465,14 @@ const t = {
             { number: "15+", label: "Native Teachers" }
         ],
         whyChooseTitle: "Why Campus German?",
-        whyChooseSubtitle: "A commitment to transparency and student success: a clear academic pathway in Bremen with measurable, sustainable progress.",
+        whyChooseSubtitle: "Hochdeutsch in Bremen, speaking-focused teaching, and a clear academic route.",
         whyChooseCards: [
-            { title: "A structured institute in Bremen", desc: "Campus German is a professionally structured language institute in Bremen, dedicated to giving international students a clear academic route to university admission and professional integration." },
-            { title: "Transparency, not mass market", desc: "We position ourselves not as a mass-market provider, but as one of Northern Germany's transparency-driven mid-sized institutes—measurable progress and financial sustainability are core principles." },
-            { title: "Mission: A1 to C1", desc: "We guide students from A1 through C1 with a structured progression model so that language is not only taught, but practised and applied." },
-            { title: "A reliable academic bridge", desc: "Fair cooperation with our global partners and a stable study environment that helps reduce the “repetition cycle” common in the market." },
-            { title: "University pathways & clear pricing", desc: "We stand out through alignment with university routes and a clear pricing structure without hidden costs." },
-            { title: "Right-sized groups & visa framework", desc: "Optimised group sizes and a visa-compliant framework built for short stays and sustainable long-term academic pathways." }
+            { title: "Hochdeutsch Bremen advantage", desc: "Bremen sits in a High German–speaking region—clearer pronunciation practice than dialect-heavy cities.", icon: "fas fa-map-marker-alt" },
+            { title: "Native German teachers", desc: "Lessons prioritise speaking, listening and real communication with native instructors—usable German, not rote grammar only.", icon: "fas fa-chalkboard-teacher" },
+            { title: "Hybrid class flexibility", desc: "Join live online on campus days when needed—keep learning while waiting for a visa or travelling.", icon: "fas fa-laptop-house" },
+            { title: "Exam & university track", desc: "Goethe, telc, TestDaF and FSP prep connect A1–C1 progress to exam and university goals, including academic writing.", icon: "fas fa-university" },
+            { title: "Small focus groups", desc: "Limited class sizes give teachers more time per student and tighter progress tracking—less risk of endless course repeats.", icon: "fas fa-users" },
+            { title: "Clear prices & documents", desc: "Transparent pricing without hidden fees; after payment you receive course registration documents needed for official processes.", icon: "fas fa-file-invoice" }
         ],
         courseFilterTitle: "Find Your Course",
         courseFilterSubtitle: "Choose the programme that suits you and visit our courses page for details.",
@@ -439,10 +507,10 @@ const t = {
         courseBookButton: "Reserve Spot",
         courseDetailsButton: "Details",
         courseRegisterButton: "Register",
-        coursesSidebarOfficeTitle: "Special office discount for residents in Bremen",
-        coursesSidebarOfficeDesc: "Get up to 30% office discount and secure your spot now.",
-        coursesSidebarOfficeTag: "Visa and academic goal aligned learning path",
-        coursesSidebarOfficeCta: "Reserve office now",
+        coursesSidebarOfficeTitle: "No registration fee in Bremen",
+        coursesSidebarOfficeDesc: "If you live in Bremen, you pay no registration fee — just focus on the course price.",
+        coursesSidebarOfficeTag: "Local student benefit · clear pricing",
+        coursesSidebarOfficeCta: "Ask on WhatsApp",
         visitPopupFabAria: "Open free trial lesson and discount form",
         upcomingTitle: "Upcoming Courses",
         upcomingNext: "Next start",
@@ -453,17 +521,16 @@ const t = {
         upcomingCta: "Book Now",
         upcomingAllDates: "All dates & prices",
         upcomingEmpty: "New dates will be announced soon",
-        upcomingSeatsLast2: "Only 2 seats left",
-        upcomingSeatsLast3: "Only 3 seats left",
-        upcomingSeatsFilling: "Almost full",
-        upcomingSeatsHintLast2: "Act fast for this start",
-        upcomingSeatsHintLast3: "Seats are filling quickly",
-        upcomingSeatsHintFilling: "Registration closing soon",
-        upcomingSeatsLeftLabel: "seats left",
-        upcomingSeatsAlmostLabel: "almost gone",
+        upcomingSeatsLeftTpl: "{n} seats left",
+        upcomingSeatsHint: "Seats are filling fast",
         upcomingSeatOpen: "Open",
         upcomingSeatFull: "Taken",
         upcomingSeatLastOne: "Last seat",
+        upcomingLevelProgram: "Intensive",
+        upcomingPriceLabel: "890 €",
+        upcomingBundleLabel: "Add course",
+        upcomingDaysLeftTpl: "Registration closes in {n} days",
+        upcomingOtherDates: "Other dates",
         bremenDescription: "We are with you in Bremen, a UNESCO cultural city where High German is spoken, with success-oriented programs for our students.",
         bremenMiniTitle: "Why Bremen?",
         bremenMiniDesc: "Student-friendly city, social life, Hochdeutsch advantage, and an ideal environment for experience-oriented learning.",
@@ -653,7 +720,7 @@ const t = {
         },
         heroDescription: "Mit Campus German Deutsch lernen – konversationsorientiert, muttersprachliche Lehrer, passende Programme.",
         heroFeatures: ["Kleine Gruppen", "Flexibel", "Goethe-Zertifikat"],
-        heroCta1: "Gratis testen",
+        heroCta1: "Niveau jetzt messen",
         heroCta2: "Infos per WhatsApp",
         trustItems: [
             { number: "2000+", label: "Studenten" },
@@ -661,14 +728,14 @@ const t = {
             { number: "15+", label: "Lehrkräfte" }
         ],
         whyChooseTitle: "Warum Campus German?",
-        whyChooseSubtitle: "Transparenz und Studierendenerfolg: ein klarer akademischer Weg in Bremen mit messbarem, finanziell tragfähigem Fortschritt.",
+        whyChooseSubtitle: "Hochdeutsch in Bremen, sprechorientierter Unterricht und ein klarer akademischer Weg.",
         whyChooseCards: [
-            { title: "Strukturiert in Bremen", desc: "Campus German ist eine professionell aufgebaute Sprachschule in Bremen mit einem klaren akademischen Weg zur Hochschulzulassung und beruflichen Integration für internationale Studierende." },
-            { title: "Transparenz statt Massenmarkt", desc: "Wir verstehen uns nicht als Massenanbieter, sondern als eines der transparenzorientierten mittelgroßen Institute Norddeutschlands—messbarer Fortschritt und finanzielle Nachhaltigkeit sind Kernprinzipien." },
-            { title: "Mission: A1 bis C1", desc: "Wir führen Studierende mit einem strukturierten Aufbaumodell von A1 bis C1; Sprache wird nicht nur vermittelt, sondern geübt und angewendet." },
-            { title: "Zuverlässige akademische Brücke", desc: "Faire Zusammenarbeit mit unseren Partnern weltweit und ein stabiles Lernumfeld, das den markttypischen „Wiederholungszyklus“ reduziert." },
-            { title: "Uni-Pfade & klare Preise", desc: "Akademische Ausrichtung auf Hochschulwege und eine klare Preisstruktur ohne versteckte Kosten." },
-            { title: "Optimale Gruppen & Visum", desc: "Optimale Gruppengrößen und ein visumskonformer Rahmen für kurze Aufenthalte und nachhaltige langfristige Studienwege." }
+            { title: "Hochdeutsch-Vorteil Bremen", desc: "Bremen liegt in einer Hochdeutsch-Region—klarere Aussprachepraxis als in dialektstarken Städten.", icon: "fas fa-map-marker-alt" },
+            { title: "Muttersprachliche Lehrkräfte", desc: "Sprechen, Hören und Alltagskommunikation stehen im Vordergrund—anwendbares Deutsch statt reiner Grammatikdrill.", icon: "fas fa-chalkboard-teacher" },
+            { title: "Hybride Flexibilität", desc: "An Präsenztagen auch live online teilnehmen—weiterlernen während der Visumwartezeit oder auf Reisen.", icon: "fas fa-laptop-house" },
+            { title: "Prüfung & Uni-Pfad", desc: "Goethe-, telc-, TestDaF- und FSP-Vorbereitung verbindet A1–C1 mit Prüfungs- und Hochschulzielen inkl. akademischem Schreiben.", icon: "fas fa-university" },
+            { title: "Kleine Fokusgruppen", desc: "Begrenzte Gruppengrößen bedeuten mehr Zeit pro Lernendem und engere Begleitung—weniger Kurswiederholungsrisiko.", icon: "fas fa-users" },
+            { title: "Klare Preise & Dokumente", desc: "Transparente Preise ohne versteckte Kosten; nach Zahlung erhältst du Kursanmeldeunterlagen für behördliche Prozesse.", icon: "fas fa-file-invoice" }
         ],
         courseFilterTitle: "Ihren Kurs finden",
         courseFilterSubtitle: "Passendes Programm wählen, Kursseite für Details.",
@@ -703,10 +770,10 @@ const t = {
         courseBookButton: "Kurs Buchen",
         courseDetailsButton: "Details",
         courseRegisterButton: "Anmelden",
-        coursesSidebarOfficeTitle: "Sonderrabatt für Menschen in Bremen",
-        coursesSidebarOfficeDesc: "Bis zu 30 % Office-Rabatt – jetzt Platz anfragen.",
-        coursesSidebarOfficeTag: "Visa- und studienorientierte Kursstruktur",
-        coursesSidebarOfficeCta: "Jetzt Office-Reservierung",
+        coursesSidebarOfficeTitle: "Keine Anmeldegebühr in Bremen",
+        coursesSidebarOfficeDesc: "Wer in Bremen wohnt, zahlt keine Anmeldegebühr — Fokus auf die Kursgebühr.",
+        coursesSidebarOfficeTag: "Lokaler Vorteil · transparente Preise",
+        coursesSidebarOfficeCta: "Per WhatsApp fragen",
         visitPopupFabAria: "Formular für Probestunde und Rabatt öffnen",
         upcomingTitle: "Kommende Kurse",
         upcomingNext: "Nächster Start",
@@ -717,17 +784,16 @@ const t = {
         upcomingCta: "Jetzt reservieren",
         upcomingAllDates: "Alle Termine & Preise",
         upcomingEmpty: "Neue Termine folgen in Kürze",
-        upcomingSeatsLast2: "Nur noch 2 Plätze",
-        upcomingSeatsLast3: "Nur noch 3 Plätze",
-        upcomingSeatsFilling: "Kontingent fast voll",
-        upcomingSeatsHintLast2: "Schnell sein für diesen Start",
-        upcomingSeatsHintLast3: "Plätze füllen sich schnell",
-        upcomingSeatsHintFilling: "Anmeldung schließt bald",
-        upcomingSeatsLeftLabel: "Plätze frei",
-        upcomingSeatsAlmostLabel: "fast weg",
+        upcomingSeatsLeftTpl: "Noch {n} Plätze frei",
+        upcomingSeatsHint: "Plätze füllen sich schnell",
         upcomingSeatOpen: "Frei",
         upcomingSeatFull: "Belegt",
         upcomingSeatLastOne: "Letzter Platz",
+        upcomingLevelProgram: "Intensiv",
+        upcomingPriceLabel: "890 €",
+        upcomingBundleLabel: "Weiterer Kurs",
+        upcomingDaysLeftTpl: "Anmeldung schließt in {n} Tagen",
+        upcomingOtherDates: "Weitere Termine",
         // Courses section
         bremenDescription: "In Bremen, UNESCO-Kulturstadt mit Hochdeutsch, sind wir mit erfolgsorientierten Programmen für Sie da.",
         bremenMiniTitle: "Warum Bremen?",
@@ -906,7 +972,7 @@ const t = {
         },
         heroDescription: "¡Aprender alemán es fácil con Campus German! Alcanza tus objetivos con educación centrada en la conversación, profesores nativos y programas personalizados.",
         heroFeatures: ["Cupo Limitado", "Programas Culturales", "Goethe-Telc-TestDaF-FSP"],
-        heroCta1: "Clase gratis",
+        heroCta1: "Mide tu nivel",
         heroCta2: "Obtén Información por WhatsApp",
         trustItems: [
             { number: "2000+", label: "Estudiantes Felices" },
@@ -914,14 +980,14 @@ const t = {
             { number: "15+", label: "Profesores Nativos" }
         ],
         whyChooseTitle: "¿Por qué Campus German?",
-        whyChooseSubtitle: "Compromiso con la transparencia y el éxito del estudiante: un camino académico claro en Bremen con progreso medible y sostenible.",
+        whyChooseSubtitle: "Hochdeutsch en Bremen, clases centradas en hablar y un camino académico claro.",
         whyChooseCards: [
-            { title: "Instituto estructurado en Bremen", desc: "Campus German es un instituto de idiomas profesionalmente estructurado en Bremen, orientado a ofrecer a estudiantes internacionales un itinerario académico claro hacia la admisión universitaria y la integración profesional." },
-            { title: "Transparencia, no mercado masivo", desc: "No nos posicionamos como proveedor de masas, sino como uno de los institutos medianos del norte de Alemania centrados en la transparencia: el progreso medible y la sostenibilidad financiera son principios centrales." },
-            { title: "Misión: de A1 a C1", desc: "Acompañamos de A1 a C1 con un modelo de progresión estructurado para que el idioma no solo se enseñe, sino que se practique y se aplique." },
-            { title: "Puente académico fiable", desc: "Cooperación justa con socios en todo el mundo y un entorno de estudio estable que reduce el ciclo de repetición frecuente en el mercado." },
-            { title: "Itinerarios universitarios y precios claros", desc: "Nos distinguimos por la alineación con vías universitarias y una estructura de precios clara sin costes ocultos." },
-            { title: "Grupos adecuados y marco de visado", desc: "Tamaños de grupo optimizados y un marco conforme al visado pensado para estancias cortas y trayectorias académicas largas y sostenibles." }
+            { title: "Ventaja Hochdeutsch Bremen", desc: "Bremen está en una región de alemán estándar: práctica de pronunciación más clara que en ciudades con dialectos fuertes.", icon: "fas fa-map-marker-alt" },
+            { title: "Profesores nativos", desc: "Priorizamos hablar, escuchar y comunicación real con docentes nativos: alemán usable, no solo gramática memorizada.", icon: "fas fa-chalkboard-teacher" },
+            { title: "Flexibilidad híbrida", desc: "También puedes unirte en vivo online en días presenciales: sigue aprendiendo mientras esperas el visado o viajas.", icon: "fas fa-laptop-house" },
+            { title: "Exámenes y vía universitaria", desc: "Preparación Goethe, telc, TestDaF y FSP une el progreso A1–C1 con metas de examen y universidad, incluida la escritura académica.", icon: "fas fa-university" },
+            { title: "Grupos pequeños", desc: "Cupos limitados: más tiempo por estudiante y seguimiento más cercano, menos riesgo de repetir cursos sin avance.", icon: "fas fa-users" },
+            { title: "Precios claros y documentos", desc: "Precios transparentes sin costes ocultos; tras el pago recibes la documentación de inscripción del curso para trámites oficiales.", icon: "fas fa-file-invoice" }
         ],
         courseFilterTitle: "Encuentra tu curso",
         courseFilterSubtitle: "Elige el programa que te convenga y visita nuestra página de cursos para más información.",
@@ -956,10 +1022,10 @@ const t = {
         courseBookButton: "Reservar Lugar",
         courseDetailsButton: "Detalles",
         courseRegisterButton: "Registrarse",
-        coursesSidebarOfficeTitle: "Descuento especial de oficina para residentes en Bremen",
-        coursesSidebarOfficeDesc: "Hasta un 30% de descuento de oficina. Reserva ahora.",
-        coursesSidebarOfficeTag: "Planificación alineada con visa y objetivo académico",
-        coursesSidebarOfficeCta: "Reservar oficina ahora",
+        coursesSidebarOfficeTitle: "Sin tasa de inscripción en Bremen",
+        coursesSidebarOfficeDesc: "Si vives en Bremen, no pagas tasa de inscripción: te centras en el precio del curso.",
+        coursesSidebarOfficeTag: "Ventaja local · precios claros",
+        coursesSidebarOfficeCta: "Preguntar por WhatsApp",
         visitPopupFabAria: "Abrir formulario de clase de prueba y descuento",
         upcomingTitle: "Próximos cursos",
         upcomingNext: "Próximo inicio",
@@ -970,17 +1036,16 @@ const t = {
         upcomingCta: "Reservar ahora",
         upcomingAllDates: "Todas las fechas y precios",
         upcomingEmpty: "Pronto se anunciarán nuevas fechas",
-        upcomingSeatsLast2: "Solo 2 plazas",
-        upcomingSeatsLast3: "Solo 3 plazas",
-        upcomingSeatsFilling: "Cupos casi agotados",
-        upcomingSeatsHintLast2: "Date prisa con este inicio",
-        upcomingSeatsHintLast3: "Las plazas se agotan rápido",
-        upcomingSeatsHintFilling: "La inscripción cierra pronto",
-        upcomingSeatsLeftLabel: "plazas libres",
-        upcomingSeatsAlmostLabel: "casi lleno",
+        upcomingSeatsLeftTpl: "Quedan {n} plazas",
+        upcomingSeatsHint: "Las plazas se agotan rápido",
         upcomingSeatOpen: "Libre",
         upcomingSeatFull: "Ocupado",
         upcomingSeatLastOne: "Última plaza",
+        upcomingLevelProgram: "Intensivo",
+        upcomingPriceLabel: "890 €",
+        upcomingBundleLabel: "Otro curso",
+        upcomingDaysLeftTpl: "Inscripción cierra en {n} días",
+        upcomingOtherDates: "Otras fechas",
         bremenDescription: "Estamos contigo en Bremen, una ciudad cultural de la UNESCO donde se habla alemán estándar, con programas orientados al éxito para nuestros estudiantes.",
         bremenMiniTitle: "¿Por qué Bremen?",
         bremenMiniDesc: "Ciudad amigable para estudiantes, vida social, ventaja del alemán estándar y un ambiente ideal para el aprendizaje orientado a la experiencia.",
@@ -1246,11 +1311,11 @@ function getAvatarColor(name: string): string {
                         ))}
                     </div>
                     <div class="hero-cta">
-                        <button type="button" class="cta-primary" id="hero-free-lesson-btn" aria-haspopup="dialog">
-                            <i class="fas fa-gift"></i>
+                        <a href={trialPath} class="cta-primary" id="hero-level-test-btn">
+                            <i class="fas fa-clipboard-check"></i>
                             <span>{translations.heroCta1}</span>
                             <div class="cta-arrow">→</div>
-                        </button>
+                        </a>
                         <a
                             href="https://api.whatsapp.com/send/?phone=4915203823792&text&type=phone_number&app_absent=0"
                             class="cta-secondary cta-secondary--quote"
@@ -1293,81 +1358,62 @@ function getAvatarColor(name: string): string {
 
                                     <div class="hu__deck" id="hu-deck">
                                         {upcomingCourses.map((c, i) => {
-                                            const seatTitle =
-                                                c.seatKey === 'last2'
-                                                    ? translations.upcomingSeatsLast2
-                                                    : c.seatKey === 'last3'
-                                                      ? translations.upcomingSeatsLast3
-                                                      : translations.upcomingSeatsFilling;
-                                            const seatHint =
-                                                c.seatKey === 'last2'
-                                                    ? translations.upcomingSeatsHintLast2
-                                                    : c.seatKey === 'last3'
-                                                      ? translations.upcomingSeatsHintLast3
-                                                      : translations.upcomingSeatsHintFilling;
-                                            const seatLabel =
-                                                c.seatKey === 'filling'
-                                                    ? translations.upcomingSeatsAlmostLabel
-                                                    : translations.upcomingSeatsLeftLabel;
+                                            const seatTitle = (translations.upcomingSeatsLeftTpl || '{n}').replace('{n}', String(c.seatsLeft));
+                                            const daysLeftTitle = (translations.upcomingDaysLeftTpl || '{n}').replace('{n}', String(c.daysLeft));
                                             return (
-                                            <article class={`hu__card hu__card--${c.tone}`} data-pos={i} data-urgency={c.seatKey}>
-                                                <div class="hu__urgency" aria-label={seatTitle}>
-                                                    <div class="hu__urgency-top">
-                                                        <span class="hu__urgency-badge">
-                                                            <i class="fas fa-bolt" aria-hidden="true"></i>
-                                                            {i === 0 ? translations.upcomingNext : translations.upcomingMore}
-                                                        </span>
-                                                    </div>
-                                                    <div class="hu__urgency-hero">
-                                                        {c.seatKey === 'filling' ? (
-                                                            <span class="hu__urgency-num hu__urgency-num--mark" aria-hidden="true">!</span>
-                                                        ) : (
-                                                            <span class="hu__urgency-num" aria-hidden="true">{c.seatsLeft}</span>
-                                                        )}
-                                                        <div class="hu__urgency-copy">
-                                                            <strong class="hu__urgency-title">{seatTitle}</strong>
-                                                            <span class="hu__urgency-sub">{seatLabel}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="hu__seatmap" aria-hidden="true">
-                                                        <div class="hu__seatmap-full">
-                                                            {Array.from({ length: c.seatKey === 'last2' ? 4 : c.seatKey === 'last3' ? 3 : 5 }).map(() => (
-                                                                <span class="hu__seat-chip is-full">
-                                                                    <i class="fas fa-user-slash"></i>
-                                                                    {translations.upcomingSeatFull}
-                                                                </span>
-                                                            ))}
-                                                        </div>
-                                                        <div class="hu__seatmap-open">
-                                                            {c.seatKey === 'filling' ? (
-                                                                <span class="hu__seat-ticket is-last">
-                                                                    <i class="fas fa-chair"></i>
-                                                                    <strong>1</strong>
-                                                                    <em>{translations.upcomingSeatLastOne}</em>
-                                                                </span>
-                                                            ) : (
-                                                                Array.from({ length: c.seatsLeft }).map((_, si) => (
-                                                                    <span class="hu__seat-ticket" style={`animation-delay: ${si * 0.15}s`}>
-                                                                        <i class="fas fa-chair"></i>
-                                                                        <strong>{si + 1}</strong>
-                                                                        <em>{translations.upcomingSeatOpen}</em>
-                                                                    </span>
-                                                                ))
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    <p class="hu__urgency-hint">{seatHint}</p>
+                                            <article class="hu__card" data-pos={i} data-bundle-price={c.bundlePrice} data-course-iso={c.courseIso} data-card-index={c.cardIndex}>
+                                                <span class="hu__card-shine" aria-hidden="true"></span>
+                                                <div class="hu__card-corner hu__card-corner--tl" aria-hidden="true">
+                                                    <strong>{c.day}</strong>
+                                                    <span>{c.monthShort}</span>
+                                                </div>
+                                                <div class="hu__card-corner hu__card-corner--br" aria-hidden="true">
+                                                    <strong>{c.day}</strong>
+                                                    <span>{c.monthShort}</span>
                                                 </div>
 
-                                                <div class="hu__dateblock">
-                                                    <p class="hu__date-weekday">{c.weekday}</p>
-                                                    <p class="hu__date-day">{c.day}</p>
-                                                    <p class="hu__date-month">{c.month} {c.year}</p>
-                                                    <div class="hu__date-meta">
-                                                        <span>{translations.upcomingLevels}</span>
-                                                        <span aria-hidden="true">·</span>
-                                                        <span>{translations.upcomingMeta}</span>
+                                                <div class="hu__card-mid">
+                                                    <span class="hu__card-tag">
+                                                        {i === 0 ? translations.upcomingNext : translations.upcomingMore}
+                                                    </span>
+                                                    <p class="hu__card-level">{c.level}</p>
+                                                    <p class="hu__card-program">{translations.upcomingLevelProgram}</p>
+                                                    <p class="hu__card-daysleft">{daysLeftTitle}</p>
+                                                    <div class="hu__card-info">
+                                                        <span class="hu__card-info-row">
+                                                            <i class="fas fa-clock" aria-hidden="true"></i>
+                                                            {translations.upcomingMeta}
+                                                        </span>
+                                                        <span class="hu__card-info-row hu__card-price-base" data-hu-price-base>
+                                                            <i class="fas fa-tag" aria-hidden="true"></i>
+                                                            {translations.upcomingPriceLabel}
+                                                        </span>
+                                                        <span class="hu__card-info-row hu__card-price-bundle" data-hu-price-bundle hidden>
+                                                            <i class="fas fa-tag" aria-hidden="true"></i>
+                                                            <em>{translations.upcomingPriceLabel}</em>
+                                                            <strong>{c.bundlePrice} €</strong>
+                                                            <span>{translations.upcomingBundleLabel}</span>
+                                                        </span>
                                                     </div>
+                                                    {c.otherDates.length > 0 && (
+                                                        <div class="hu__card-other">
+                                                            <span class="hu__card-other-label">{translations.upcomingOtherDates}</span>
+                                                            <div class="hu__card-other-list">
+                                                                {c.otherDates.map((od) => (
+                                                                    <span class="hu__card-other-date">{od}</span>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div
+                                                    class:list={['hu__card-status', c.seatsLeft <= 2 && 'is-urgent']}
+                                                    aria-label={seatTitle}
+                                                    data-hu-seats
+                                                    data-seats-tpl={translations.upcomingSeatsLeftTpl}
+                                                >
+                                                    <span class="hu__card-status-dot" aria-hidden="true"></span>
+                                                    <span data-hu-seats-label>{seatTitle}</span>
                                                 </div>
                                             </article>
                                             );
@@ -1412,6 +1458,73 @@ function getAvatarColor(name: string): string {
                         if (!deck) return;
                         const cards = Array.from(deck.querySelectorAll('.hu__card'));
                         const dots = Array.from(document.querySelectorAll('[data-hu-dot]'));
+
+                        /** Build ile aynı formül — ziyaret gününe göre kontenjan düşer */
+                        function computeAutomatedSeatsLeft(courseIso, cardIndex) {
+                            if (!courseIso) return 1;
+                            const parts = courseIso.split('-').map(Number);
+                            const courseDate = new Date(parts[0], (parts[1] || 1) - 1, parts[2] || 1);
+                            courseDate.setHours(0, 0, 0, 0);
+                            const today = new Date();
+                            today.setHours(0, 0, 0, 0);
+                            const MS = 86400000;
+                            const daysUntil = Math.max(0, Math.round((courseDate.getTime() - today.getTime()) / MS));
+                            const dayIndex = Math.floor(today.getTime() / MS);
+                            const courseDay = Math.floor(courseDate.getTime() / MS);
+                            const seed = (cardIndex * 19 + courseDay * 7) % 97;
+
+                            let seats = 8;
+                            if (daysUntil <= 10) seats = 4;
+                            else if (daysUntil <= 25) seats = 5;
+                            else if (daysUntil <= 50) seats = 6;
+                            else if (daysUntil <= 90) seats = 7;
+
+                            const drip = Math.floor((dayIndex + seed) / 2) % 4;
+                            seats -= drip;
+
+                            if (daysUntil <= 7) seats = Math.min(seats, 2 + (seed % 2));
+                            else if (daysUntil <= 14) seats = Math.min(seats, 3 + (seed % 2));
+
+                            return Math.max(1, Math.min(8, seats));
+                        }
+
+                        function applySeatAutomation() {
+                            cards.forEach(function (card) {
+                                const iso = card.getAttribute('data-course-iso') || '';
+                                const idx = parseInt(card.getAttribute('data-card-index') || '0', 10) || 0;
+                                const status = card.querySelector('[data-hu-seats]');
+                                const label = card.querySelector('[data-hu-seats-label]');
+                                if (!status || !label) return;
+                                const tpl = status.getAttribute('data-seats-tpl') || '{n}';
+                                let seats = computeAutomatedSeatsLeft(iso, idx);
+                                const key = 'cg-hu-seats-' + iso;
+                                const dripKey = key + '-bucket';
+                                try {
+                                    const prev = parseInt(localStorage.getItem(key) || '', 10);
+                                    if (!Number.isNaN(prev) && prev >= 1) {
+                                        seats = Math.min(prev, seats);
+                                    }
+                                    // ~6 saatte bir deterministik ekstra damla (asla artmaz)
+                                    const hourBucket = Math.floor(Date.now() / (6 * 3600000));
+                                    const lastBucket = parseInt(localStorage.getItem(dripKey) || '', 10);
+                                    if (lastBucket !== hourBucket) {
+                                        localStorage.setItem(dripKey, String(hourBucket));
+                                        if (seats > 1 && ((hourBucket + idx * 3) % 5) === 0) {
+                                            seats -= 1;
+                                        }
+                                    }
+                                    localStorage.setItem(key, String(seats));
+                                } catch (_) { /* private mode */ }
+
+                                const text = tpl.replace('{n}', String(seats));
+                                label.textContent = text;
+                                status.setAttribute('aria-label', text);
+                                status.classList.toggle('is-urgent', seats <= 2);
+                            });
+                        }
+
+                        applySeatAutomation();
+
                         if (cards.length < 2) return;
 
                         const INTERVAL = 3600;
@@ -1423,6 +1536,13 @@ function getAvatarColor(name: string): string {
                                 const pos = (i - front + cards.length) % cards.length;
                                 card.dataset.pos = String(pos);
                                 card.setAttribute('aria-hidden', pos === 0 ? 'false' : 'true');
+                                const base = card.querySelector('[data-hu-price-base]');
+                                const bundle = card.querySelector('[data-hu-price-bundle]');
+                                if (base && bundle) {
+                                    const showBundle = pos > 0;
+                                    base.hidden = showBundle;
+                                    bundle.hidden = !showBundle;
+                                }
                             });
                             dots.forEach(function (dot, i) {
                                 dot.classList.toggle('is-on', i === front);
@@ -1484,7 +1604,7 @@ function getAvatarColor(name: string): string {
                     {translations.whyChooseCards.map((card) => (
                         <div class="why-campusgerman-card">
                             <div class="why-campusgerman-card-icon">
-                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <i class={card.icon || 'fas fa-check'} aria-hidden="true"></i>
                             </div>
                             <div class="why-campusgerman-card-content">
                                 <h3 class="why-campusgerman-card-title">{card.title}</h3>
@@ -1509,7 +1629,7 @@ function getAvatarColor(name: string): string {
             </div>
             <div class="index-courses-layout">
                 <aside class="index-courses-sidebar">
-                    <!-- Bremen ofis indirimi – mobilde filtreden önce, masaüstünde filtrenin altında -->
+                    <!-- Bremen: kayıt ücreti yok vurgusu -->
                     <div class="index-sidebar-office-promo" role="complementary" aria-label={translations.coursesSidebarOfficeTitle}>
                         <h3 class="index-sidebar-office-promo__title">{translations.coursesSidebarOfficeTitle}</h3>
                         <p class="index-sidebar-office-promo__desc">{translations.coursesSidebarOfficeDesc}</p>
@@ -1590,7 +1710,7 @@ function getAvatarColor(name: string): string {
                     </div>
                 </aside>
                 <div class="index-courses-main">
-                    <div class="courses-grid" id="indexCoursesGrid">
+                    <div class="courses-grid courses-grid--simple" id="indexCoursesGrid">
                         {anaKurslar.map((kurs) => {
                             let courseType = 'yuz-yuze';
                             let courseLevel = 'all';
@@ -1608,56 +1728,36 @@ function getAvatarColor(name: string): string {
                             const registerHref = buildBookingUrl(lang as 'tr' | 'de' | 'en' | 'es', slug);
                             const levelLabel = courseLevel === 'all' ? '' : courseLevel.toUpperCase();
                             const typeLabel = courseType === 'online' ? translations.courseFilterTypeOnline : translations.courseFilterInPerson;
-                            const periodLabel = coursePeriod === 'yaz-donemi' ? translations.courseFilterSummer : translations.courseFilterYearRound;
-                            const features = (kurs.data.features || []).slice(0, 2);
                             const cardBadges = getCourseCardDisplayBadges(lang as 'tr' | 'de' | 'en' | 'es', slug);
                             const pricingData = getCoursePricingData(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
                             const perWeekPrice = getCourseCardPerWeekPrice(lang as 'tr' | 'de' | 'en' | 'es', kurs.slug);
                             const hasPrice = !!perWeekPrice
                                 || !!pricingData?.pricing?.fullCourse
                                 || !!(pricingData?.isWeeklyOnly && pricingData?.weeklyPricing);
+                            const metaLine = [cardBadges?.weekly, cardBadges?.duration].filter(Boolean).join(' · ');
                             return (
-                                <article class="course-card" data-level={`all ${courseLevel}`} data-type={courseType} data-period={coursePeriod}>
-                                    <a href={href} class="course-card-link">
-                                        <div class="course-card-media">
-                                            <img src={kurs.data.image} alt={kurs.data.title} loading="lazy" />
+                                <article class="course-card course-card--simple" data-level={`all ${courseLevel}`} data-type={courseType} data-period={coursePeriod}>
+                                    <div class="course-card-body">
+                                        <div class="course-card-tags">
+                                            {levelLabel ? <span class="course-card-badge">{levelLabel}</span> : null}
+                                            <span class="course-card-meta-chip">{typeLabel}</span>
+                                            <CourseCardVisaBadge lang={lang} slug={slug} />
                                         </div>
-                                        <div class="course-card-body">
-                                            <div class="course-card-tags">
-                                                {levelLabel ? <span class="course-card-badge">{levelLabel}</span> : ''}
-                                                <CourseCardVisaBadge lang={lang} slug={slug} />
-                                                <span class="course-card-period">{periodLabel}</span>
-                                            </div>
-                                            <h3 class="course-title">{kurs.data.title}</h3>
-                                            <p class="course-description">{kurs.data.description}</p>
-                                            {cardBadges?.highlight ? (
-                                                <span class="course-card-lessons">{cardBadges.highlight}</span>
-                                            ) : null}
-                                            <span class="course-card-meta">{typeLabel}</span>
-                                            {(cardBadges || features.length > 0) ? (
-                                                <ul class="course-card-features" aria-hidden="true">
-                                                    {cardBadges ? (
-                                                        <>
-                                                            <li>{cardBadges.weekly}</li>
-                                                            <li>{cardBadges.duration}</li>
-                                                        </>
-                                                    ) : (
-                                                        features.map((f) => <li key={f.title}>{f.title}</li>)
-                                                    )}
-                                                </ul>
-                                            ) : null}
-                                            {hasPrice
-                                                ? <div class="course-card-price"><PromoPrice lang={lang} variant="card" /></div>
-                                                : <p class="course-card-price">{translations.courseCardContactUs}</p>}
-                                        </div>
-                                    </a>
+                                        <h3 class="course-title">
+                                            <a href={href}>{kurs.data.title}</a>
+                                        </h3>
+                                        {metaLine ? <p class="course-card-line">{metaLine}</p> : null}
+                                        {hasPrice
+                                            ? <div class="course-card-price"><PromoPrice lang={lang} variant="card" /></div>
+                                            : <p class="course-card-price">{translations.courseCardContactUs}</p>}
+                                    </div>
                                     <div class="course-card-footer">
-                                        <a href={href} class="course-card-btn course-card-btn--detail">
-                                            <span>{translations.courseDetailsButton}</span>
-                                        </a>
                                         <a href={registerHref} class="course-card-btn course-card-btn--register">
                                             <span>{translations.courseRegisterButton}</span>
                                             <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                        </a>
+                                        <a href={href} class="course-card-btn course-card-btn--detail">
+                                            <span>{translations.courseDetailsButton}</span>
                                         </a>
                                     </div>
                                 </article>
@@ -2060,10 +2160,6 @@ function getAvatarColor(name: string): string {
 <script>
     // Wait for DOM to be ready
     document.addEventListener('DOMContentLoaded', function() {
-
-    document.getElementById('hero-free-lesson-btn')?.addEventListener('click', function () {
-        if (typeof window.openVisitPopup === 'function') window.openVisitPopup();
-    });
 
     document.getElementById('visit-popup-fab')?.addEventListener('click', function () {
         if (typeof window.openVisitPopup === 'function') window.openVisitPopup();
