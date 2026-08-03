@@ -2485,7 +2485,7 @@
 }
 
 .bk-pay__opt--plan {
-    min-height: 5.4rem;
+    min-height: 5.8rem;
     flex-direction: column;
     align-items: stretch;
     gap: 0.55rem;
@@ -2503,10 +2503,53 @@
     padding-right: 0.15rem;
 }
 
-.bk-pay__opt--plan .bk-pay__opt-price {
+.bk-pay__opt--plan .bk-pay__price-block {
     align-self: flex-end;
     margin-top: auto;
     padding-left: 1.85rem;
+    text-align: right;
+}
+
+.bk-pay__opt--visa {
+    border-color: rgba(14, 116, 144, 0.28);
+    background: linear-gradient(165deg, #f3fafc 0%, #fff 55%);
+}
+
+.bk-pay__opt--visa:has(input:checked) {
+    border-color: #0e7490;
+    box-shadow: 0 8px 22px rgba(14, 116, 144, 0.12);
+}
+
+.bk-pay__visa {
+    display: inline-flex;
+    align-self: flex-start;
+    max-width: 100%;
+    margin-bottom: 0.15rem;
+    padding: 0.28rem 0.55rem;
+    border-radius: 6px;
+    border: 1px solid rgba(14, 116, 144, 0.22);
+    background: rgba(14, 116, 144, 0.08);
+    color: #0e7490;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.25;
+}
+
+.bk-pay__price-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.2rem;
+}
+
+.bk-pay__price-cap {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748b;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
 }
 
 .bk-pay__opt--row {
@@ -2602,6 +2645,12 @@
 
 .bk-pay__opt--plan .bk-pay__opt-price {
     font-size: 1.45rem;
+    margin-left: 0;
+    align-self: flex-end;
+}
+
+.bk-pay__opt--plan .bk-pay__opt-title {
+    font-size: 1.02rem;
 }
 
 .bk-pay__branch {
@@ -2628,40 +2677,77 @@
     display: flex;
     align-items: flex-start;
     gap: 0.65rem;
-    padding: 0.75rem 0.85rem;
+    padding: 0.85rem 0.95rem;
     border: 1.5px solid var(--bk-pay-line);
     border-radius: 12px;
-    background: var(--bk-pay-soft);
+    background: #fff;
     cursor: pointer;
     transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
 }
 
 .bk-pay__branch-opt:hover {
     border-color: rgba(12, 192, 223, 0.55);
-    background: #fff;
 }
 
 .bk-pay__branch-opt:has(input:checked) {
     border-color: var(--bk-pay-accent);
-    background: #fff;
+    background: linear-gradient(180deg, #f3fcfe 0%, #fff 100%);
     box-shadow: 0 6px 16px rgba(12, 192, 223, 0.1);
 }
 
 .bk-pay__branch-opt .bk-pay__radio {
-    margin-top: 0.15rem;
+    margin-top: 0.2rem;
+}
+
+.bk-pay__branch-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    min-width: 0;
+    flex: 1 1 auto;
 }
 
 .bk-pay__branch-text {
     font-family: 'Outfit', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: #334155;
-    line-height: 1.4;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--bk-pay-ink);
+    line-height: 1.35;
 }
 
-.bk-pay__branch-opt:has(input:checked) .bk-pay__branch-text {
+.bk-pay__branch-prices {
+    display: grid;
+    gap: 0.25rem;
+    padding-top: 0.35rem;
+    border-top: 1px dashed var(--bk-pay-line);
+}
+
+.bk-pay__branch-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.bk-pay__branch-row strong {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
     color: var(--bk-pay-ink);
+    letter-spacing: -0.02em;
+}
+
+.bk-pay__branch-row--muted {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.bk-pay__branch-row--muted span:last-child {
     font-weight: 700;
+    color: #64748b;
 }
 
 .bk-pay__due {
