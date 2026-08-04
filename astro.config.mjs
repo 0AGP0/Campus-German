@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { bookingPayProxyDev } from './scripts/booking-pay-proxy-dev.mjs';
 
 // https://astro.build/config
 // Sitemap: resmi @astrojs/sitemap (sitemap-index.xml) — GSC farklı URL ile denemek için
@@ -8,6 +9,9 @@ export default defineConfig({
   output: 'static',
   build: {
     inlineStylesheets: 'never'
+  },
+  vite: {
+    plugins: [bookingPayProxyDev()],
   },
   integrations: [sitemap()],
   redirects: {

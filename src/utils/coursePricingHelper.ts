@@ -300,25 +300,28 @@ export function getFirstMondayOfMonth(year: number, month: number): Date {
 }
 
 /**
- * Bugünden itibaren, bulunduğumuz yılın kalan aylarının ilk Pazartesi’si
- * (geçmiş tarihler ve sonraki yıllar dahil edilmez).
+ * Bugünden itibaren önümüzdeki `monthsAhead` adet başlangıç tarihi
+ * (her ayın ilk Pazartesi’si; geçmiş Pazartesiler atlanır, yıl sınırı yok).
  * value = "dd.mm.yyyy", iso = "yyyy-mm-dd", label dile göre.
  */
 export function getFirstMondayStartDateOptions(
   lang: 'tr' | 'de' | 'en' | 'es',
-  _monthsAheadIgnored = 12,
+  monthsAhead = 10,
 ): { value: string; label: string; iso: string }[] {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const todayMs = today.getTime();
-  const year = today.getFullYear();
   const out: { value: string; label: string; iso: string }[] = [];
+  const limit = Math.max(1, Math.min(24, monthsAhead | 0));
 
-  for (let m = today.getMonth() + 1; m <= 12; m += 1) {
-    const d = getFirstMondayOfMonth(year, m);
+  // Bu ayın ilk Pazartesi’si geçmiş olabilir → atlanır; yine de `limit` adet toplanır.
+  for (let i = 0; out.length < limit && i < limit + 12; i += 1) {
+    const cursor = new Date(today.getFullYear(), today.getMonth() + i, 1);
+    const year = cursor.getFullYear();
+    const month = cursor.getMonth() + 1;
+    const d = getFirstMondayOfMonth(year, month);
     if (d.getTime() < todayMs) continue;
     const day = d.getDate();
-    const month = d.getMonth() + 1;
     const dd = String(day).padStart(2, '0');
     const mm = String(month).padStart(2, '0');
     const value = `${dd}.${mm}.${year}`;
@@ -333,6 +336,94 @@ export function getFirstMondayStartDateOptions(
     out.push({ value, label, iso });
   }
   return out;
+}
+
+/** Tarihi Pazartesi’ye çeker (geçmişe / ileriye en yakını). */
+export function snapToNearestMonday(date: Date): Date {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  const day = d.getDay(); // 0 Paz, 1 Pzt
+  if (day === 1) return d;
+  const toPrev = day === 0 ? 6 : day - 1;
+  const toNext = day === 0 ? 1 : 8 - day;
+  if (toNext < toPrev) d.setDate(d.getDate() + toNext);
+  else d.setDate(d.getDate() - toPrev);
+  return d;
+}
+
+/** Tarihi en yakın Cuma’ya çeker. */
+export function snapToNearestFriday(date: Date): Date {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  const day = d.getDay(); // 5 = Cuma
+  if (day === 5) return d;
+  const toPrev = (day - 5 + 7) % 7;
+  const toNext = (5 - day + 7) % 7;
+  if (toNext === 0) return d;
+  if (toNext <= toPrev) d.setDate(d.getDate() + toNext);
+  else d.setDate(d.getDate() - toPrev);
+  return d;
+}
+
+/**
+ * Kurs süresi: ilk Pazartesi → son Cuma.
+ * N hafta = N adet Pzt–Cum; bitiş = start + (N−1)×7 + 4 gün.
+ * Sonuç Cuma değilse (veya N haftayı aşıyorsa) en yakın Cuma’ya çekilir.
+ */
+export function getCourseEndFriday(startMonday: Date, weeks: number): Date {
+  const w = Math.max(1, Math.round(weeks) || 1);
+  const start = snapToNearestMonday(startMonday);
+  const ideal = new Date(start);
+  ideal.setDate(ideal.getDate() + (w - 1) * 7 + 4);
+  const end = snapToNearestFriday(ideal);
+  // 8 haftayı aşmasın: start’tan (w*7) gün sonrası Cuma’dan ileriye gitmesin
+  const maxEnd = new Date(start);
+  maxEnd.setDate(maxEnd.getDate() + w * 7);
+  if (end.getTime() > maxEnd.getTime()) {
+    return snapToNearestFriday(maxEnd);
+  }
+  return end;
+}
+
+/** Bir kursun Cuma bitişinden sonraki kursun Pazartesi başlangıcı. */
+export function getNextCourseMonday(endFriday: Date): Date {
+  const d = new Date(endFriday);
+  d.setHours(0, 0, 0, 0);
+  const day = d.getDay();
+  const add = day === 5 ? 3 : day === 6 ? 2 : day === 0 ? 1 : (8 - day);
+  d.setDate(d.getDate() + add);
+  return snapToNearestMonday(d);
+}
+
+export function formatCourseDayMonth(date: Date, lang: 'tr' | 'de' | 'en' | 'es'): string {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const monthName = MONTH_NAMES[lang]?.[month] || MONTH_NAMES.en[month];
+  if (lang === 'en') return `${monthName} ${day}`;
+  if (lang === 'de') return `${day}. ${monthName}`;
+  return `${day} ${monthName}`;
+}
+
+export function formatCourseDateRange(start: Date, end: Date, lang: 'tr' | 'de' | 'en' | 'es'): string {
+  return `${formatCourseDayMonth(start, lang)} → ${formatCourseDayMonth(end, lang)}`;
+}
+
+export function parseDdMmYyyy(value: string): Date | null {
+  const m = String(value || '').trim().match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+  if (!m) return null;
+  const day = parseInt(m[1], 10);
+  const month = parseInt(m[2], 10);
+  const year = parseInt(m[3], 10);
+  if (!day || !month || !year) return null;
+  const d = new Date(year, month - 1, day);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+export function toDdMmYyyy(date: Date): string {
+  const dd = String(date.getDate()).padStart(2, '0');
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  return `${dd}.${mm}.${date.getFullYear()}`;
 }
 
 /** Tüm kurs başlangıç tarihlerini dile göre "2 Mart" formatında döndürür */

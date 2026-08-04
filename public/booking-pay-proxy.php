@@ -128,4 +128,6 @@ http_response_code(502);
 echo json_encode([
     'error' => 'Stripe clientSecret veya checkout URL alınamadı',
     'upstreamStatus' => $httpCode,
+    'detail' => mb_substr($body, 0, 300),
+    'hint' => 'Make webhook yanıtı clientSecret dönmeli. Düz "Accepted" veya ok:true yetmez. Router’da paymentChoice=pay_now VE reservation kolları Webhook response ile clientSecret vermeli.',
 ], JSON_UNESCAPED_UNICODE);

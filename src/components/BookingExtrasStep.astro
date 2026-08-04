@@ -2,6 +2,7 @@
 interface ExtraCard {
     field: string;
     title: string;
+    fullTitle?: string;
     price: number;
     listPrice?: number;
     free?: boolean;
@@ -39,8 +40,6 @@ interface Props {
 }
 
 const { copy } = Astro.props;
-const mainCards = copy.cards.filter((c) => c.theme !== 'speakcafe');
-const speakcafeCard = copy.cards.find((c) => c.theme === 'speakcafe');
 ---
 
 <div class="form-step booking-extras-step" data-step="2">
@@ -50,77 +49,72 @@ const speakcafeCard = copy.cards.find((c) => c.theme === 'speakcafe');
     </div>
 
     <div class="bk-extras-grid" role="group">
-        {mainCards.map((card) => (
-            <article
-                class:list={['bk-extra-card', `bk-extra-card--${card.theme}`]}
-                data-extra-field={card.field}
-            >
-                <input type="checkbox" class="bk-extra-card__checkbox" name={card.field} value="yes" tabindex="-1" />
-                <span class="bk-extra-card__tick" aria-hidden="true"></span>
-                <span class="bk-extra-card__icon-inline" aria-hidden="true">
-                    <i class={`fas fa-${card.icon}`}></i>
-                </span>
-                <div class="bk-extra-card__copy">
-                    <span class="bk-extra-card__title">{card.title}</span>
-                    <span class="bk-extra-card__price">+{card.price} €</span>
-                </div>
-                <button
-                    type="button"
-                    class="bk-extra-info-btn"
-                    data-info-type={card.infoType}
-                    data-info-title={card.title}
-                    aria-label={`${copy.infoBtnLabel}: ${card.title}`}
+        {copy.cards.map((card) => {
+            const infoTitle = card.fullTitle || card.title;
+            return (
+                <article
+                    class:list={[
+                        'bk-extra-card',
+                        `bk-extra-card--${card.theme}`,
+                        card.free && 'bk-extra-card--free',
+                    ]}
+                    data-extra-field={card.field}
+                    data-extra-free={card.free ? '1' : undefined}
                 >
-                    <i class="fas fa-info" aria-hidden="true"></i>
-                </button>
-            </article>
-        ))}
-    </div>
-
-    <div class="bk-extras-bottom">
-        {speakcafeCard && (
-            <article
-                class:list={['bk-extra-card', 'bk-extra-card--speakcafe', speakcafeCard.free && 'bk-extra-card--free']}
-                data-extra-field={speakcafeCard.field}
-                data-extra-free={speakcafeCard.free ? '1' : undefined}
-            >
-                <input type="checkbox" class="bk-extra-card__checkbox" name={speakcafeCard.field} value="yes" tabindex="-1" />
-                <span class="bk-extra-card__tick" aria-hidden="true"></span>
-                <span class="bk-extra-card__icon-inline" aria-hidden="true">
-                    <i class={`fas fa-${speakcafeCard.icon}`}></i>
-                </span>
-                <div class="bk-extra-card__copy">
-                    <span class="bk-extra-card__title">{speakcafeCard.title}</span>
-                    <span class="bk-extra-card__price bk-extra-card__price--free">
-                        <span class="bk-extra-card__list">{speakcafeCard.listPrice ?? 500} €</span>
-                        <span class="bk-extra-card__free-badge">{copy.freeForYou}</span>
-                    </span>
-                </div>
-                <button
-                    type="button"
-                    class="bk-extra-info-btn"
-                    data-info-type={speakcafeCard.infoType}
-                    data-info-title={speakcafeCard.title}
-                    aria-label={`${copy.infoBtnLabel}: ${speakcafeCard.title}`}
-                >
-                    <i class="fas fa-info" aria-hidden="true"></i>
-                </button>
-            </article>
-        )}
+                    <input
+                        type="checkbox"
+                        class="bk-extra-card__checkbox"
+                        name={card.field}
+                        value="yes"
+                        tabindex="-1"
+                        checked={card.free ? true : undefined}
+                    />
+                    <div class="bk-extra-card__media">
+                        <img src={card.image} alt="" width="640" height="360" loading="lazy" class="bk-extra-card__photo" />
+                        <span class="bk-extra-card__tick" aria-hidden="true"></span>
+                        <button
+                            type="button"
+                            class="bk-extra-info-btn"
+                            data-info-type={card.infoType}
+                            data-info-title={infoTitle}
+                            aria-label={`${copy.infoBtnLabel}: ${infoTitle}`}
+                        >
+                            <i class="fas fa-info" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="bk-extra-card__body">
+                        <span class="bk-extra-card__icon-inline" aria-hidden="true">
+                            <i class={`fas fa-${card.icon}`}></i>
+                        </span>
+                        <div class="bk-extra-card__copy">
+                            <span class="bk-extra-card__title">{card.title}</span>
+                            {card.free ? (
+                                <span class="bk-extra-card__price bk-extra-card__price--free">
+                                    <span class="bk-extra-card__list">{card.listPrice ?? 500} €</span>
+                                    <span class="bk-extra-card__free-badge">{copy.freeLabel}</span>
+                                </span>
+                            ) : (
+                                <span class="bk-extra-card__price">+{card.price} €</span>
+                            )}
+                        </div>
+                    </div>
+                </article>
+            );
+        })}
         <div class="bk-extra-card bk-extra-card--request">
-            <span class="bk-extra-card__icon-inline" aria-hidden="true">
-                <i class="fas fa-pen"></i>
-            </span>
-            <div class="bk-extra-card__copy bk-extra-card__copy--request">
+            <div class="bk-extra-card__request-head">
+                <span class="bk-extra-card__icon-inline" aria-hidden="true">
+                    <i class="fas fa-pen"></i>
+                </span>
                 <label class="bk-extra-card__title" for="extras-special-request">{copy.specialRequestLabel}</label>
-                <textarea
-                    id="extras-special-request"
-                    name="extras-special-request"
-                    class="bk-extra-card__textarea"
-                    rows="2"
-                    placeholder={copy.specialRequestPlaceholder}
-                ></textarea>
             </div>
+            <textarea
+                id="extras-special-request"
+                name="extras-special-request"
+                class="bk-extra-card__textarea"
+                rows="4"
+                placeholder={copy.specialRequestPlaceholder}
+            ></textarea>
         </div>
     </div>
 
@@ -199,6 +193,18 @@ const speakcafeCard = copy.cards.find((c) => c.theme === 'speakcafe');
         });
     }
 
+    function ensureFreeExtrasSelected() {
+        document.querySelectorAll('.booking-extras-step .bk-extra-card[data-extra-free="1"]').forEach(function (card) {
+            const input = card.querySelector('.bk-extra-card__checkbox');
+            if (!(input instanceof HTMLInputElement)) return;
+            if (!input.checked) {
+                input.checked = true;
+                input.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        });
+        syncExtraCardStates();
+    }
+
     document.querySelectorAll('.booking-extras-step .bk-extra-card[data-extra-field]').forEach(function (card) {
         card.setAttribute('role', 'button');
         card.setAttribute('tabindex', '0');
@@ -220,6 +226,6 @@ const speakcafeCard = copy.cards.find((c) => c.theme === 'speakcafe');
     document.querySelectorAll('.booking-extras-step .bk-extra-card__checkbox').forEach(function (input) {
         input.addEventListener('change', syncExtraCardStates);
     });
-    syncExtraCardStates();
-
+    ensureFreeExtrasSelected();
+    setTimeout(ensureFreeExtrasSelected, 0);
 </script>

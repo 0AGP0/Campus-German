@@ -5,8 +5,8 @@
 /** Kayıt belgesi / taksit ön ödemesi (€) */
 export const RESERVATION_DEPOSIT_EUR = 150;
 export const BALANCE_DUE_DAYS = 14;
-/** Tam ödemede gösterilen indirim (€) */
-export const FULL_PAYMENT_DISCOUNT_EUR = 50;
+/** Tam ödemede gösterilen indirim (€) — kayıt ücretiyle eşleşir (+150 / −150) */
+export const FULL_PAYMENT_DISCOUNT_EUR = 150;
 
 /** Intensive 20 ders/hafta — Stripe paket fiyatları (€) */
 export const INTENSIVE_20_EUR_BY_WEEKS: Record<number, number> = {

@@ -112,8 +112,9 @@ function computeAutomatedSeatsLeft(courseDate: Date, cardIndex: number, today: D
     return Math.max(1, Math.min(8, seats));
 }
 
-/** En yakın dönemler + her kart için “Diğer tarihler” yedek havuzu */
+/** En yakın dönem + “Diğer tarihler” yedek havuzu — tüm seviye kartları aynı başlangıç tarihini gösterir */
 const upcomingMondayPool = getUpcomingFirstMondays(10);
+const nearestCourseDate = upcomingMondayPool[0] || null;
 
 function formatHeroDateShort(dateObj: Date): string {
     const d = dateObj.getDate();
@@ -122,56 +123,56 @@ function formatHeroDateShort(dateObj: Date): string {
     return `${String(d).padStart(2, '0')} ${monthsShort[m]}`;
 }
 
-const upcomingCourses = upcomingMondayPool.slice(0, 5).map((dateObj, i) => {
-    const d = dateObj.getDate();
-    const m = dateObj.getMonth() + 1;
-    const y = dateObj.getFullYear();
-    const months = monthNamesByLang[lang] || monthNamesByLang.en;
-    const monthsShort = monthShortByLang[lang] || monthShortByLang.en;
-    const weekdays = weekdayNamesByLang[lang] || weekdayNamesByLang.en;
-    const seatsLeft = computeAutomatedSeatsLeft(dateObj, i, todayStart);
-    const courseIso = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+function computeRegistrationDaysLeft(dateObj: Date, cardIndex: number): number {
     // Kayıt kapanışına kalan gün (kurs başlangıcına değil). Yakın kurs → daha az gün; max 20.
-    // Deterministik “rastgele”: tarih + seviye indeksinden türetilir (her yenilemede zıplamaz).
     const daysUntilStart = Math.max(0, Math.round((dateObj.getTime() - todayStart.getTime()) / 86400000));
-    const seed = (dateObj.getDate() * 17 + (dateObj.getMonth() + 1) * 31 + i * 13) % 7;
-    let registrationDaysLeft: number;
-    if (daysUntilStart <= 21) {
-        registrationDaysLeft = Math.min(20, Math.max(3, 5 + seed));
-    } else if (daysUntilStart <= 45) {
-        registrationDaysLeft = Math.min(20, Math.max(7, 9 + seed));
-    } else if (daysUntilStart <= 90) {
-        registrationDaysLeft = Math.min(20, Math.max(11, 13 + seed));
-    } else {
-        registrationDaysLeft = Math.min(20, Math.max(14, 16 + (seed % 5)));
-    }
-    let otherDates = upcomingMondayPool
-        .filter((od) => od.getTime() > dateObj.getTime())
-        .slice(0, 4)
-        .map(formatHeroDateShort);
-    if (otherDates.length < 4) {
-        otherDates = upcomingMondayPool
-            .filter((od) => od.getTime() !== dateObj.getTime())
+    const seed = (dateObj.getDate() * 17 + (dateObj.getMonth() + 1) * 31 + cardIndex * 13) % 7;
+    if (daysUntilStart <= 21) return Math.min(20, Math.max(3, 5 + seed));
+    if (daysUntilStart <= 45) return Math.min(20, Math.max(7, 9 + seed));
+    if (daysUntilStart <= 90) return Math.min(20, Math.max(11, 13 + seed));
+    return Math.min(20, Math.max(14, 16 + (seed % 5)));
+}
+
+const upcomingCourses = nearestCourseDate
+    ? heroLevels.map((level, i) => {
+        const dateObj = nearestCourseDate;
+        const d = dateObj.getDate();
+        const m = dateObj.getMonth() + 1;
+        const y = dateObj.getFullYear();
+        const months = monthNamesByLang[lang] || monthNamesByLang.en;
+        const monthsShort = monthShortByLang[lang] || monthShortByLang.en;
+        const weekdays = weekdayNamesByLang[lang] || weekdayNamesByLang.en;
+        const seatsLeft = computeAutomatedSeatsLeft(dateObj, i, todayStart);
+        const courseIso = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const registrationDaysLeft = computeRegistrationDaysLeft(dateObj, i);
+        let otherDates = upcomingMondayPool
+            .filter((od) => od.getTime() > dateObj.getTime())
             .slice(0, 4)
             .map(formatHeroDateShort);
-    }
-    return {
-        value: `${String(d).padStart(2, '0')}.${String(m).padStart(2, '0')}`,
-        day: String(d).padStart(2, '0'),
-        month: months[m],
-        monthShort: monthsShort[m],
-        year: y,
-        weekday: weekdays[dateObj.getDay()],
-        level: heroLevels[i] || 'A1',
-        seatsLeft,
-        courseIso,
-        cardIndex: i,
-        daysLeft: registrationDaysLeft,
-        otherDates,
-        price: 890,
-        bundlePrice: Math.round(890 * (100 - Math.min(i + 2, 5)) / 100),
-    };
-});
+        if (otherDates.length < 4) {
+            otherDates = upcomingMondayPool
+                .filter((od) => od.getTime() !== dateObj.getTime())
+                .slice(0, 4)
+                .map(formatHeroDateShort);
+        }
+        return {
+            value: `${String(d).padStart(2, '0')}.${String(m).padStart(2, '0')}`,
+            day: String(d).padStart(2, '0'),
+            month: months[m],
+            monthShort: monthsShort[m],
+            year: y,
+            weekday: weekdays[dateObj.getDay()],
+            level,
+            seatsLeft,
+            courseIso,
+            cardIndex: i,
+            daysLeft: registrationDaysLeft,
+            otherDates,
+            price: 890,
+            bundlePrice: Math.round(890 * (100 - Math.min(i + 2, 5)) / 100),
+        };
+    })
+    : [];
 
 // Kursları çek (ana sayfa filtre bölümü) – sadece navbar'da olan kurslar, navbar sırasına göre
 const allKurslar = await getCollection('kurslar');
@@ -262,7 +263,7 @@ const t = {
         upcomingNext: "Sonraki başlangıç",
         upcomingProgram: "Yoğun Almanca",
         upcomingLevels: "A1 → C1",
-        upcomingMeta: "20+4 ders / hafta",
+        upcomingMeta: "20 ders / hafta",
         upcomingMore: "Diğer tarihler",
         upcomingCta: "Rezervasyon Yap",
         upcomingAllDates: "Tüm tarihler & fiyatlar",
@@ -516,7 +517,7 @@ const t = {
         upcomingNext: "Next start",
         upcomingProgram: "Intensive German",
         upcomingLevels: "A1 → C1",
-        upcomingMeta: "20+4 lessons / week",
+        upcomingMeta: "20 lessons / week",
         upcomingMore: "More dates",
         upcomingCta: "Book Now",
         upcomingAllDates: "All dates & prices",
@@ -779,7 +780,7 @@ const t = {
         upcomingNext: "Nächster Start",
         upcomingProgram: "Intensivdeutsch",
         upcomingLevels: "A1 → C1",
-        upcomingMeta: "20+4 UStd / Woche",
+        upcomingMeta: "20 UStd / Woche",
         upcomingMore: "Weitere Termine",
         upcomingCta: "Jetzt reservieren",
         upcomingAllDates: "Alle Termine & Preise",
@@ -1031,7 +1032,7 @@ const t = {
         upcomingNext: "Próximo inicio",
         upcomingProgram: "Alemán intensivo",
         upcomingLevels: "A1 → C1",
-        upcomingMeta: "20+4 clases / semana",
+        upcomingMeta: "20 clases / semana",
         upcomingMore: "Más fechas",
         upcomingCta: "Reservar ahora",
         upcomingAllDates: "Todas las fechas y precios",
@@ -1373,12 +1374,9 @@ function getAvatarColor(name: string): string {
                                                 </div>
 
                                                 <div class="hu__card-mid">
-                                                    <span class="hu__card-tag">
-                                                        {i === 0 ? translations.upcomingNext : translations.upcomingMore}
-                                                    </span>
+                                                    <span class="hu__card-tag">{daysLeftTitle}</span>
                                                     <p class="hu__card-level">{c.level}</p>
                                                     <p class="hu__card-program">{translations.upcomingLevelProgram}</p>
-                                                    <p class="hu__card-daysleft">{daysLeftTitle}</p>
                                                     <div class="hu__card-info">
                                                         <span class="hu__card-info-row">
                                                             <i class="fas fa-clock" aria-hidden="true"></i>

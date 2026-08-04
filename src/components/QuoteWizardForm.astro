@@ -1,5 +1,6 @@
 ---
 import '../styles/pages/quote-wizard.css';
+import { getFirstMondayStartDateOptions } from '../utils/coursePricingHelper';
 const {
   lang = 'tr',
   bookingPath = '/tr/buchung',
@@ -14,6 +15,11 @@ const quoteMode = embedded ? 'embedded' : 'standalone';
 const pw = (base: string) => `${base}-${instanceSuffix}`;
 const BOOKING_FREE_WEBHOOK = 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
 const quoteWebhook = import.meta.env.PUBLIC_MAKE_QUOTE_WEBHOOK || BOOKING_FREE_WEBHOOK;
+const quoteStartDateOptions = getFirstMondayStartDateOptions(
+  (['tr', 'de', 'en', 'es'].includes(lang) ? lang : 'en') as 'tr' | 'de' | 'en' | 'es',
+  10,
+);
+const quoteStartDateIsos = quoteStartDateOptions.map((o) => o.iso);
 
 const programImageMap = {
   intensive: 'https://images.unsplash.com/photo-1663493955721-110e7e1ae36c?auto=format&fit=crop&w=900&q=80',
@@ -721,6 +727,7 @@ const quoteWebhookLabelsJson = JSON.stringify(quoteWebhookLabels);
 <div class="quote-wizard-instance" data-quote-instance={instanceSuffix}>
   <script type="application/json" id={pw('pwStep3Json')} set:html={step3Json} />
   <script type="application/json" id={pw('pwStep4Json')} set:html={step4Json} />
+  <script type="application/json" id={pw('pwStartDateIsos')} set:html={JSON.stringify(quoteStartDateIsos)} />
 <div class={`qx-page-bg ${quoteMode === 'standalone' ? 'qx-page-bg--standalone' : 'qx-page-bg--embedded'} ${modalMode ? 'qx-page-bg--modal' : ''}`}>
 <section class="qx qx-layout-flow" id={pw('pwRoot')} data-qx-mode={quoteMode} data-qx-active-step="1">
   <header class="qx-wiz-header">
@@ -1150,19 +1157,17 @@ const quoteWebhookLabelsJson = JSON.stringify(quoteWebhookLabels);
     }
   }
 
-  /** Sabit kur başlangıç tarihleri (Mart–Aralık 2026) — fiyat gösterilmez */
-  const PRESET_COURSE_START_ISOS = [
-    '2026-03-02',
-    '2026-04-07',
-    '2026-05-05',
-    '2026-06-02',
-    '2026-07-07',
-    '2026-08-04',
-    '2026-09-01',
-    '2026-10-06',
-    '2026-11-03',
-    '2026-12-01'
-  ];
+  /** Dinamik: bugünden itibaren ~10 ay (her ayın ilk Pazartesi’si) */
+  function loadPresetStartIsos(mount: HTMLElement, S: string): string[] {
+    try {
+      const raw = mount.querySelector(`#pwStartDateIsos-${S}`)?.textContent;
+      if (!raw) return [];
+      const parsed = JSON.parse(raw.trim());
+      return Array.isArray(parsed) ? parsed.filter((x) => typeof x === 'string') : [];
+    } catch {
+      return [];
+    }
+  }
 
   type Step3Copy = Record<string, string>;
   type Step4Copy = { step4NeedPick?: string; step4NeedCustomDate?: string; step4CustomSummary?: string };
@@ -1262,6 +1267,7 @@ const quoteWebhookLabelsJson = JSON.stringify(quoteWebhookLabels);
     const form = mount.querySelector<HTMLFormElement>('form.qx-form');
     const root = q<HTMLElement>('pwRoot');
     if (!form || !root) return;
+    const PRESET_COURSE_START_ISOS = loadPresetStartIsos(mount, S);
 
     const total = 5;
     let step = 1;
