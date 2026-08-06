@@ -2,11 +2,11 @@
  * Stripe Dashboard ürün kataloğu (Campus German).
  * Form fiyatları ve checkout lineItems buradan türetilir.
  */
-/** Kayıt belgesi / taksit ön ödemesi (€) */
-export const RESERVATION_DEPOSIT_EUR = 150;
+/** Kayıt ücreti — tek seferlik (€). Almanya’da 2+ kur seçilirse 0. */
+export const RESERVATION_DEPOSIT_EUR = 50;
 export const BALANCE_DUE_DAYS = 14;
-/** Tam ödemede gösterilen indirim (€) — kayıt ücretiyle eşleşir (+150 / −150) */
-export const FULL_PAYMENT_DISCOUNT_EUR = 150;
+/** Tam ödemede gösterilen indirim (€) — kayıt ücretiyle eşleşir (+50 / −50) */
+export const FULL_PAYMENT_DISCOUNT_EUR = 50;
 
 /** Intensive 20 ders/hafta — Stripe paket fiyatları (€) */
 export const INTENSIVE_20_EUR_BY_WEEKS: Record<number, number> = {

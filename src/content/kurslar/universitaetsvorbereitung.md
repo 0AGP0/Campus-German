@@ -59,7 +59,7 @@ tabs:
         - name: "A2 Seviyesi (8 Hafta)"
           duration: "8 Hafta"
           schedule: "Pzt - Cum (Yoğun)"
-          price: "890 €"
+          price: "840 €"
         - name: "B1 Seviyesi (8 Hafta)"
           duration: "8 Hafta"
           schedule: "Pzt - Cum (Yoğun)"

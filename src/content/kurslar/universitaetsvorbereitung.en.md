@@ -59,7 +59,7 @@ tabs:
         - name: "A2 Level (8 Weeks)"
           duration: "8 Weeks"
           schedule: "Mon - Fri (Intensive)"
-          price: "890 €"
+          price: "840 €"
         - name: "B1 Level (8 Weeks)"
           duration: "8 Weeks"
           schedule: "Mon - Fri (Intensive)"

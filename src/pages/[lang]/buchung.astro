@@ -144,7 +144,7 @@ const t = {
         programShortTermKw2: "Her pazartesi",
         programYouthCampKw1: "Gençlik kampı",
         programYouthCampKw2: "Talep bazlı",
-        programIntensivePrice: "890 €'dan",
+        programIntensivePrice: "840 €'dan",
         programOnlinePrice: "300 €'dan",
         programShortTermPrice: "190 € / hafta'dan",
         programYouthCampPrice: "Talep üzerine",
@@ -357,7 +357,7 @@ const t = {
         payDocQuote: "Sadece teklif belgesi",
         payDocQuotePrice: "0 €",
         payDocReg: "Kayıt belgemı oluştur",
-        payDocRegPrice: "150 €",
+        payDocRegPrice: `${RESERVATION_DEPOSIT_EUR} €`,
         payPlanLabel: "Plan",
         payPlanFull: "Tam ödeme",
         payPlanInstall: "Taksitli ödeme",
@@ -466,7 +466,7 @@ const t = {
         payDocQuote: "Sadece teklif belgesi",
         payDocQuotePrice: "0 €",
         payDocReg: "Kayıt belgemı oluştur",
-        payDocRegPrice: "150 €",
+        payDocRegPrice: `${RESERVATION_DEPOSIT_EUR} €`,
         payPlanLabel: "Plan",
         payPlanFull: "Tam ödeme",
         payPlanInstall: "Taksitli ödeme",
@@ -545,7 +545,7 @@ const t = {
         programShortTermKw2: "Jeden Montag",
         programYouthCampKw1: "Jugendcamp",
         programYouthCampKw2: "Auf Anfrage",
-        programIntensivePrice: "ab 890 €",
+        programIntensivePrice: "ab 840 €",
         programOnlinePrice: "ab 300 €",
         programShortTermPrice: "ab 190 € / Woche",
         programYouthCampPrice: "Auf Anfrage",
@@ -732,12 +732,12 @@ const t = {
         privacyAccepted: "Ich akzeptiere die Datenschutzinformationen",
         completeBooking: "Absenden",
         payNowBooking: "Jetzt bezahlen",
-        depositHint: "Für die Anmeldebestätigung werden 150 € fällig. Der Restbetrag richtet sich nach Ihrem Zahlungsplan.",
+        depositHint: `Für die Anmeldebestätigung werden ${RESERVATION_DEPOSIT_EUR} € fällig. Der Restbetrag richtet sich nach Ihrem Zahlungsplan.`,
         payDocLabel: "Dokumentauswahl",
         payDocQuote: "Angebotsdokument",
         payDocQuotePrice: "0 €",
         payDocReg: "Anmeldebestätigung erstellen",
-        payDocRegPrice: "150 €",
+        payDocRegPrice: `${RESERVATION_DEPOSIT_EUR} €`,
         payPlanLabel: "Zahlungsplan",
         payPlanFull: "Vollzahlung",
         payPlanInstall: "Ratenzahlung",
@@ -872,12 +872,12 @@ const t = {
         back: "Zurück",
         completeBooking: "Absenden",
         payNowBooking: "Jetzt bezahlen",
-        depositHint: "Für die Anmeldebestätigung werden 150 € fällig. Der Restbetrag richtet sich nach Ihrem Zahlungsplan.",
+        depositHint: `Für die Anmeldebestätigung werden ${RESERVATION_DEPOSIT_EUR} € fällig. Der Restbetrag richtet sich nach Ihrem Zahlungsplan.`,
         payDocLabel: "Dokumentauswahl",
         payDocQuote: "Angebotsdokument",
         payDocQuotePrice: "0 €",
         payDocReg: "Anmeldebestätigung erstellen",
-        payDocRegPrice: "150 €",
+        payDocRegPrice: `${RESERVATION_DEPOSIT_EUR} €`,
         payPlanLabel: "Zahlungsplan",
         payPlanFull: "Vollzahlung",
         payPlanInstall: "Ratenzahlung",
@@ -955,7 +955,7 @@ const t = {
         programShortTermKw2: "Every Monday",
         programYouthCampKw1: "Youth camp",
         programYouthCampKw2: "On request",
-        programIntensivePrice: "from 890 €",
+        programIntensivePrice: "from 840 €",
         programOnlinePrice: "from 300 €",
         programShortTermPrice: "from 190 € / week",
         programYouthCampPrice: "On request",
@@ -1142,12 +1142,12 @@ const t = {
         privacyAccepted: "I accept the Privacy Policy information",
         completeBooking: "Submit",
         payNowBooking: "Pay now",
-        depositHint: "A €150 fee applies for the registration document. The remaining balance follows your payment plan.",
+        depositHint: `A €${RESERVATION_DEPOSIT_EUR} fee applies for the registration document. The remaining balance follows your payment plan.`,
         payDocLabel: "Document choice",
         payDocQuote: "Quote document",
         payDocQuotePrice: "€0",
         payDocReg: "Create my registration document",
-        payDocRegPrice: "€150",
+        payDocRegPrice: `€${RESERVATION_DEPOSIT_EUR}`,
         payPlanLabel: "Payment plan",
         payPlanFull: "Full payment",
         payPlanInstall: "Installments",
@@ -1282,12 +1282,12 @@ const t = {
         back: "Back",
         completeBooking: "Submit",
         payNowBooking: "Pay now",
-        depositHint: "A €150 fee applies for the registration document. The remaining balance follows your payment plan.",
+        depositHint: `A €${RESERVATION_DEPOSIT_EUR} fee applies for the registration document. The remaining balance follows your payment plan.`,
         payDocLabel: "Document choice",
         payDocQuote: "Quote document",
         payDocQuotePrice: "€0",
         payDocReg: "Create my registration document",
-        payDocRegPrice: "€150",
+        payDocRegPrice: `€${RESERVATION_DEPOSIT_EUR}`,
         payPlanLabel: "Payment plan",
         payPlanFull: "Full payment",
         payPlanInstall: "Installments",
@@ -1365,7 +1365,7 @@ const t = {
         programShortTermKw2: "Cada lunes",
         programYouthCampKw1: "Campamento juvenil",
         programYouthCampKw2: "Bajo demanda",
-        programIntensivePrice: "desde 890 €",
+        programIntensivePrice: "desde 840 €",
         programOnlinePrice: "desde 300 €",
         programShortTermPrice: "desde 190 € / semana",
         programYouthCampPrice: "Bajo demanda",
@@ -1552,12 +1552,12 @@ const t = {
         privacyAccepted: "Acepto la información de Protección de datos",
         completeBooking: "Enviar",
         payNowBooking: "Pagar ahora",
-        depositHint: "La documentación de inscripción tiene un coste de 150 €. El resto según su plan de pago.",
+        depositHint: `La documentación de inscripción tiene un coste de ${RESERVATION_DEPOSIT_EUR} €. El resto según su plan de pago.`,
         payDocLabel: "Elección de documento",
         payDocQuote: "Documento de presupuesto",
         payDocQuotePrice: "0 €",
         payDocReg: "Crear mi documento de inscripción",
-        payDocRegPrice: "150 €",
+        payDocRegPrice: `${RESERVATION_DEPOSIT_EUR} €`,
         payPlanLabel: "Plan de pago",
         payPlanFull: "Pago completo",
         payPlanInstall: "Pago a plazos",
@@ -1692,12 +1692,12 @@ const t = {
         back: "Atrás",
         completeBooking: "Enviar",
         payNowBooking: "Pagar ahora",
-        depositHint: "La documentación de inscripción tiene un coste de 150 €. El resto según su plan de pago.",
+        depositHint: `La documentación de inscripción tiene un coste de ${RESERVATION_DEPOSIT_EUR} €. El resto según su plan de pago.`,
         payDocLabel: "Elección de documento",
         payDocQuote: "Documento de presupuesto",
         payDocQuotePrice: "0 €",
         payDocReg: "Crear mi documento de inscripción",
-        payDocRegPrice: "150 €",
+        payDocRegPrice: `${RESERVATION_DEPOSIT_EUR} €`,
         payPlanLabel: "Plan de pago",
         payPlanFull: "Pago completo",
         payPlanInstall: "Pago a plazos",
@@ -1765,7 +1765,7 @@ const programCardItems = [
         desc: translations.programIntensiveDesc,
         tag: translations.programTagInPerson,
         keywords: [translations.programIntensiveKw1, translations.programIntensiveKw2, translations.programIntensiveKw3] as string[],
-        priceAmount: '890',
+        priceAmount: '840',
         priceUnit: '',
         priceOnRequest: false,
         image: programImages.intensive,
@@ -3994,7 +3994,7 @@ const extrasStepCopy = {
                     let priceHtml = '<div class="summary-item">';
                     
                     // Registration fee
-                    priceHtml += `<div class="summary-row"><strong>${labels.registrationFee}:</strong> <span>150 €</span></div>`;
+                    priceHtml += `<div class="summary-row"><strong>${labels.registrationFee}:</strong> <span>${reservationDepositEur} €</span></div>`;
                     
                     // Course price
                     const courseTypePriceEl = document.getElementById('course-type-price');
@@ -4387,14 +4387,28 @@ const extrasStepCopy = {
                 const firstCourseCents = opts.firstCourseCents || 0;
                 const payPlan = opts.payPlan || '';
                 const installOpt = opts.installOpt || '';
-                const depositCents = reservationDepositEur * 100;
-                const fullDiscCents = (fullPaymentDiscountEur || 0) * 100;
+                const inGermany = !!opts.inGermany;
+                const courseCount = opts.courseCount || 0;
+                // Almanya + 2 kur → kayıt ücreti yok; aksi halde tek seferlik 50 €
+                const waiveRegFee = inGermany && courseCount >= 2;
+                const depositEur = waiveRegFee ? 0 : (reservationDepositEur || 0);
+                const depositCents = depositEur * 100;
+                const fullDiscEur = waiveRegFee ? 0 : (fullPaymentDiscountEur || 0);
+                const fullDiscCents = fullDiscEur * 100;
                 const unitCourse = firstCourseCents > 0
                     ? firstCourseCents
-                    : Math.min(depositCents, totalCents || depositCents);
+                    : Math.round((typeof promoPrice === 'number' ? promoPrice : 0) * 100);
 
                 if (!payPlan) {
-                    return { chargeCents: 0, remainingCents: totalCents, depositEur: 0, kind: 'none', fullDiscountEur: 0 };
+                    return {
+                        chargeCents: 0,
+                        remainingCents: totalCents,
+                        depositEur: 0,
+                        kind: 'none',
+                        fullDiscountEur: 0,
+                        registrationFeeEur: 0,
+                        germanyNoRegFee: waiveRegFee,
+                    };
                 }
                 if (payPlan === 'full') {
                     const charge = Math.max(0, totalCents + depositCents - fullDiscCents);
@@ -4403,39 +4417,49 @@ const extrasStepCopy = {
                         remainingCents: 0,
                         depositEur: 0,
                         kind: 'full',
-                        fullDiscountEur: fullPaymentDiscountEur || 0,
-                        registrationFeeEur: reservationDepositEur || 0,
-                        germanyNoRegFee: true,
+                        fullDiscountEur: fullDiscEur,
+                        registrationFeeEur: depositEur,
+                        germanyNoRegFee: waiveRegFee,
                     };
                 }
                 if (payPlan === 'installment') {
                     if (installOpt === 'course') {
-                        // 1. kur + kayıt; kalan kurlar CRM’de (başlangıç −17 gün)
+                        // 1. kur + kayıt (varsa); kalan kurlar CRM’de (başlangıç −17 gün)
                         const charge = Math.min(unitCourse + depositCents, totalCents + depositCents);
                         const remaining = Math.max(0, totalCents - unitCourse);
                         return {
                             chargeCents: charge,
                             remainingCents: remaining,
-                            depositEur: reservationDepositEur,
+                            depositEur: depositEur,
                             kind: 'installment_course',
                             fullDiscountEur: 0,
-                            registrationFeeEur: reservationDepositEur || 0,
+                            registrationFeeEur: depositEur,
+                            germanyNoRegFee: waiveRegFee,
                         };
                     }
-                    // %50/%50: kurs toplamı yarıya; ilk takside +150 kayıt
+                    // %50/%50: kurs toplamı yarıya; ilk takside +kayıt (varsa)
                     const halfPackage = Math.round(totalCents / 2);
                     const charge = halfPackage + depositCents;
                     const remaining = Math.max(0, totalCents - halfPackage);
                     return {
                         chargeCents: charge,
                         remainingCents: remaining,
-                        depositEur: reservationDepositEur,
+                        depositEur: depositEur,
                         kind: 'installment_half',
                         fullDiscountEur: 0,
-                        registrationFeeEur: reservationDepositEur || 0,
+                        registrationFeeEur: depositEur,
+                        germanyNoRegFee: waiveRegFee,
                     };
                 }
-                return { chargeCents: 0, remainingCents: totalCents, depositEur: 0, kind: 'none', fullDiscountEur: 0 };
+                return {
+                    chargeCents: 0,
+                    remainingCents: totalCents,
+                    depositEur: 0,
+                    kind: 'none',
+                    fullDiscountEur: 0,
+                    registrationFeeEur: 0,
+                    germanyNoRegFee: waiveRegFee,
+                };
             }
 
             function formatPayEur(cents) {
@@ -4456,10 +4480,13 @@ const extrasStepCopy = {
                 const installOpt = document.querySelector('[name="pay-install"]:checked')?.value || '';
                 const inGermany = germanyVal === 'yes';
                 const totalCents = parseInt(document.getElementById('amount-in-cents')?.value || '0', 10) || 0;
-                const depositCents = (reservationDepositEur || 0) * 100;
-                const fullDiscCents = (fullPaymentDiscountEur || 0) * 100;
                 const checkedCourses = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(function (c) { return c.value; });
                 const courseCount = getSelectedCourseCount(checkedCourses);
+                const waiveRegFee = inGermany && courseCount >= 2;
+                const depositEur = waiveRegFee ? 0 : (reservationDepositEur || 0);
+                const depositCents = depositEur * 100;
+                const fullDiscEur = waiveRegFee ? 0 : (fullPaymentDiscountEur || 0);
+                const fullDiscCents = fullDiscEur * 100;
                 const unitCourseCents = courseCount > 0
                     ? Math.round(totalCents / courseCount)
                     : Math.round((promoPrice || 0) * 100);
@@ -4516,16 +4543,16 @@ const extrasStepCopy = {
                 // Sidebar: kayıt ücreti / tam ödeme indirimi
                 const regFeeRow = document.getElementById('registration-fee-row');
                 const fullDiscRow = document.getElementById('full-payment-discount-row');
-                const showRegFee = !!payPlan && totalCents > 0;
-                const showFullDisc = showRegFee && payPlan === 'full';
+                const showRegFee = !!payPlan && totalCents > 0 && depositEur > 0;
+                const showFullDisc = showRegFee && payPlan === 'full' && fullDiscEur > 0;
                 if (regFeeRow) regFeeRow.style.display = showRegFee ? 'flex' : 'none';
                 if (fullDiscRow) fullDiscRow.style.display = showFullDisc ? 'flex' : 'none';
                 const regFeeVal = document.getElementById('registration-fee-value');
                 const fullDiscVal = document.getElementById('full-payment-discount-value');
-                if (regFeeVal) regFeeVal.textContent = (reservationDepositEur || 0) + ' €';
-                if (fullDiscVal) fullDiscVal.textContent = '-' + (fullPaymentDiscountEur || 0) + ' €';
+                if (regFeeVal) regFeeVal.textContent = depositEur + ' €';
+                if (fullDiscVal) fullDiscVal.textContent = '-' + fullDiscEur + ' €';
 
-                // %50/%50: yarı paket + 150 | Kur kur: 1 kur + 150
+                // %50/%50: yarı paket + kayıt | Kur kur: 1 kur + kayıt
                 const halfPackageCents = Math.round(totalCents / 2);
                 const halfNowCents = halfPackageCents + depositCents;
                 const halfRestCents = Math.max(0, totalCents - halfPackageCents);
@@ -4550,6 +4577,7 @@ const extrasStepCopy = {
                     totalCents,
                     firstCourseCents: unitCourseCents,
                     inGermany,
+                    courseCount,
                     payPlan,
                     installOpt,
                 });
@@ -4894,6 +4922,7 @@ const extrasStepCopy = {
                         totalCents,
                         firstCourseCents,
                         inGermany,
+                        courseCount,
                         payPlan,
                         installOpt,
                     });
@@ -4905,6 +4934,7 @@ const extrasStepCopy = {
                         kind: wantsQuote ? 'quote' : chargeCalc.kind,
                         fullDiscountEur: chargeCalc.fullDiscountEur || 0,
                         germanyNoRegFee: !!chargeCalc.germanyNoRegFee,
+                        registrationFeeEur: chargeCalc.registrationFeeEur || 0,
                     };
                     // Ödeme butonu: her zaman pay_now (Stripe). Taksit bilgisi paymentPlan / paymentKind / installmentSchedule ile gider.
                     // reservation eski Make filter'larında {"ok":true} koluna düşüp clientSecret'ı kaçırıyordu.
@@ -4962,7 +4992,7 @@ const extrasStepCopy = {
                                 type: installOpt === 'course' ? 'course_by_course' : 'half_half',
                                 nowCents: depositInfo.chargeCents,
                                 remainingCents: depositInfo.remainingCents,
-                                registrationFeeEur: reservationDepositEur,
+                                registrationFeeEur: depositInfo.registrationFeeEur,
                                 dueDaysBeforeCourseStart: 17,
                                 note: installOpt === 'course'
                                     ? 'First charge = 1 course unit + registration fee. Remaining courses: CRM emails payment request 17 days before each course start (approx. every 8 weeks).'
