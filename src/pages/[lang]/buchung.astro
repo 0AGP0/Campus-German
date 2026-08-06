@@ -2635,6 +2635,16 @@ const extrasStepCopy = {
                 </div>
             </div>
         </div>
+
+        <div class="bk-mobile-dock" id="bk-mobile-dock">
+            <div class="bk-mobile-dock__sum">
+                <span class="bk-mobile-dock__label" id="bk-mobile-total-label">{lang === 'tr' ? 'Toplam' : lang === 'de' ? 'Gesamt' : lang === 'es' ? 'Total' : 'Total'}</span>
+                <strong class="bk-mobile-dock__value" id="bk-mobile-total">0 €</strong>
+            </div>
+            <button type="button" class="bk-mobile-dock__cta" id="bk-mobile-dock-cta">
+                {lang === 'tr' ? 'Devam' : lang === 'de' ? 'Weiter' : lang === 'es' ? 'Continuar' : 'Continue'}
+            </button>
+        </div>
     </section>
 
     <script define:vars={{
@@ -2657,7 +2667,7 @@ const extrasStepCopy = {
         payUiCopy: {
             submitQuote: translations.paySubmitQuote,
             submitPay: translations.paySubmitPay,
-            submitContinue: translations.paySubmitPay,
+            submitContinue: translations.continueBtn,
             needGermany: translations.payNeedGermany,
             needPlan: translations.payNeedPlan,
             needInstall: translations.payNeedInstall,
@@ -3790,6 +3800,15 @@ const extrasStepCopy = {
                 });
             }
 
+            function syncMobileDockCta() {
+                const cta = document.getElementById('bk-mobile-dock-cta');
+                if (!(cta instanceof HTMLElement)) return;
+                const isFinal = currentStep >= totalSteps;
+                cta.textContent = isFinal
+                    ? (payUiCopy?.submitPay || 'Pay')
+                    : (payUiCopy?.submitContinue || 'Continue');
+            }
+
             function showStep(step) {
                 formSteps.forEach((s, index) => {
                     if (index + 1 === step) {
@@ -3801,6 +3820,7 @@ const extrasStepCopy = {
                 currentStep = step;
                 updateProgress();
                 updatePrice();
+                syncMobileDockCta();
                 scrollBookingFormToTop();
             }
             
@@ -4349,6 +4369,8 @@ const extrasStepCopy = {
                 const airportAmount = airportPickup ? AIRPORT_PICKUP : 0;
                 const finalTotal = Math.max(0, effectiveCourseFromDOM + visaAmount + universityAmount + accommodationAmount + airportAmount);
                 if (totalPriceElement) totalPriceElement.textContent = finalTotal + ' €';
+                const mobileTotalEarly = document.getElementById('bk-mobile-total');
+                if (mobileTotalEarly && totalPriceElement) mobileTotalEarly.textContent = totalPriceElement.textContent || '0 €';
                 const amountCentsEl = document.getElementById('amount-in-cents');
                 if (amountCentsEl) amountCentsEl.value = String(Math.round(finalTotal * 100));
                 syncCourseSlotBundlePrices();
@@ -4390,12 +4412,10 @@ const extrasStepCopy = {
                 const installOpt = opts.installOpt || '';
                 const inGermany = !!opts.inGermany;
                 const courseCount = opts.courseCount || 0;
-                // Almanya + 2 kur → kayıt ücreti yok; aksi halde tek seferlik kayıt ücreti
-                const waiveRegFee = inGermany && courseCount >= 2;
+                // 80 € her türlü; yalnızca Almanya + tam ödemede kayıt ücreti yok
+                const waiveRegFee = inGermany && payPlan === 'full';
                 const depositEur = waiveRegFee ? 0 : (reservationDepositEur || 0);
                 const depositCents = depositEur * 100;
-                const fullDiscEur = waiveRegFee ? 0 : (fullPaymentDiscountEur || 0);
-                const fullDiscCents = fullDiscEur * 100;
                 const unitCourse = firstCourseCents > 0
                     ? firstCourseCents
                     : Math.round((typeof promoPrice === 'number' ? promoPrice : 0) * 100);
@@ -4412,13 +4432,13 @@ const extrasStepCopy = {
                     };
                 }
                 if (payPlan === 'full') {
-                    const charge = Math.max(0, totalCents + depositCents - fullDiscCents);
+                    const charge = Math.max(0, totalCents + depositCents);
                     return {
                         chargeCents: charge,
                         remainingCents: 0,
                         depositEur: 0,
                         kind: 'full',
-                        fullDiscountEur: fullDiscEur,
+                        fullDiscountEur: 0,
                         registrationFeeEur: depositEur,
                         germanyNoRegFee: waiveRegFee,
                     };
@@ -4483,11 +4503,10 @@ const extrasStepCopy = {
                 const totalCents = parseInt(document.getElementById('amount-in-cents')?.value || '0', 10) || 0;
                 const checkedCourses = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(function (c) { return c.value; });
                 const courseCount = getSelectedCourseCount(checkedCourses);
-                const waiveRegFee = inGermany && courseCount >= 2;
+                // 80 € her türlü; yalnızca Almanya + tam ödemede yok
+                const waiveRegFee = inGermany && payPlan === 'full';
                 const depositEur = waiveRegFee ? 0 : (reservationDepositEur || 0);
                 const depositCents = depositEur * 100;
-                const fullDiscEur = waiveRegFee ? 0 : (fullPaymentDiscountEur || 0);
-                const fullDiscCents = fullDiscEur * 100;
                 const unitCourseCents = courseCount > 0
                     ? Math.round(totalCents / courseCount)
                     : Math.round((promoPrice || 0) * 100);
@@ -4522,62 +4541,59 @@ const extrasStepCopy = {
                 const multiForFull = getMultiCourseDiscount(courseCount, grossCoursesEur);
                 const multiSaveEur = multiForFull.amount || 0;
                 const multiSaveCents = multiSaveEur * 100;
-                const discEur = Math.max(0, Math.round(fullDiscCents / 100));
-                // Paket totalCents zaten çoklu kur % indirimli (tam ödeme ve taksit aynı paket)
+                // Tam ödeme kartı: Almanya’da kayıt yok, aksi halde +80
+                const fullDepositEur = inGermany ? 0 : (reservationDepositEur || 0);
+                const fullDepositCents = fullDepositEur * 100;
+                const waivedRegEur = inGermany ? (reservationDepositEur || 0) : 0;
                 const fullPackageCents = totalCents;
-                const fullChargeCents = Math.max(0, fullPackageCents + depositCents - fullDiscCents);
-                const fullWasCents = fullPackageCents + multiSaveCents + depositCents;
+                const fullChargeCents = Math.max(0, fullPackageCents + fullDepositCents);
+                const fullWasCents = fullPackageCents + multiSaveCents + (reservationDepositEur || 0) * 100;
 
                 if (fullAmountEl) fullAmountEl.textContent = formatPayEur(fullChargeCents);
                 const fullWasEl = document.getElementById('bk-pay-full-was');
                 if (fullWasEl) {
-                    // Toplu ödemede % indirimi yeşil kart / üstü çizili brüt ile yansıt
                     if (multiSaveEur > 0 && fullPackageCents > 0) {
                         fullWasEl.hidden = false;
-                        fullWasEl.textContent = formatPayEur(fullWasCents);
-                    } else if (discEur > 0 && fullPackageCents > 0) {
+                        fullWasEl.textContent = formatPayEur(fullPackageCents + multiSaveCents + fullDepositCents);
+                    } else if (waivedRegEur > 0 && fullPackageCents > 0) {
                         fullWasEl.hidden = false;
-                        fullWasEl.textContent = formatPayEur(fullPackageCents + depositCents);
+                        fullWasEl.textContent = formatPayEur(fullPackageCents + waivedRegEur * 100);
                     } else {
                         fullWasEl.hidden = true;
                         fullWasEl.textContent = '';
                     }
                 }
                 if (fullSaveEl) {
-                    // Yeşil kart: yapılan çoklu kur % indirimi (tam ödeme kartında her zaman görünür)
                     if (multiSaveEur > 0) {
                         fullSaveEl.hidden = false;
                         const pct = multiForFull.percent ? (' −%' + multiForFull.percent) : '';
                         const tpl = (payUiCopy && payUiCopy.discountTpl) || '−{amount} €';
                         fullSaveEl.textContent = String(tpl).replace(/\{amount\}/g, String(multiSaveEur)) + pct;
-                    } else if (discEur > 0 && fullPackageCents > 0) {
-                        // Tek kursta kayıt iptali (+80/−80) yeşil etiket
+                    } else if (waivedRegEur > 0) {
                         fullSaveEl.hidden = false;
                         const tpl = (payUiCopy && payUiCopy.discountTpl) || '−{amount} €';
-                        fullSaveEl.textContent = String(tpl).replace(/\{amount\}/g, String(discEur));
+                        fullSaveEl.textContent = String(tpl).replace(/\{amount\}/g, String(waivedRegEur));
                     } else {
                         fullSaveEl.hidden = true;
                         fullSaveEl.textContent = '';
                     }
                 }
 
-                // Sidebar: kayıt ücreti / tam ödeme indirimi
+                // Sidebar: kayıt ücreti (Almanya + tam ödemede yok)
                 const regFeeRow = document.getElementById('registration-fee-row');
                 const fullDiscRow = document.getElementById('full-payment-discount-row');
                 const showRegFee = !!payPlan && totalCents > 0 && depositEur > 0;
-                const showFullDisc = showRegFee && payPlan === 'full' && fullDiscEur > 0;
                 if (regFeeRow) regFeeRow.style.display = showRegFee ? 'flex' : 'none';
-                if (fullDiscRow) fullDiscRow.style.display = showFullDisc ? 'flex' : 'none';
+                if (fullDiscRow) fullDiscRow.style.display = 'none';
                 const regFeeVal = document.getElementById('registration-fee-value');
-                const fullDiscVal = document.getElementById('full-payment-discount-value');
                 if (regFeeVal) regFeeVal.textContent = depositEur + ' €';
-                if (fullDiscVal) fullDiscVal.textContent = '-' + fullDiscEur + ' €';
 
-                // %50/%50: yarı paket + kayıt | Kur kur: 1 kur + kayıt
+                // %50/%50: yarı paket + kayıt | Kur kur: 1 kur + kayıt (kayıt taksitte her zaman)
+                const installDepositCents = (reservationDepositEur || 0) * 100;
                 const halfPackageCents = Math.round(totalCents / 2);
-                const halfNowCents = halfPackageCents + depositCents;
+                const halfNowCents = halfPackageCents + installDepositCents;
                 const halfRestCents = Math.max(0, totalCents - halfPackageCents);
-                const courseNowCents = unitCourseCents + depositCents;
+                const courseNowCents = unitCourseCents + installDepositCents;
                 const courseRestCents = Math.max(0, totalCents - unitCourseCents);
 
                 const halfNowEl = document.getElementById('bk-pay-half-now');
@@ -4612,7 +4628,6 @@ const extrasStepCopy = {
                     let packageDisplayCents = totalCents;
                     if (payPlan && totalCents > 0) {
                         packageDisplayCents += depositCents;
-                        if (payPlan === 'full') packageDisplayCents -= fullDiscCents;
                     }
                     if (readyDue && payPlan === 'installment') {
                         totalLabelEl.textContent = labelDue;
@@ -4625,6 +4640,10 @@ const extrasStepCopy = {
                         totalPriceEl.textContent = formatPayEur(Math.max(0, packageDisplayCents));
                     }
                 }
+                const mobileTotal = document.getElementById('bk-mobile-total');
+                const mobileLabel = document.getElementById('bk-mobile-total-label');
+                if (mobileTotal && totalPriceEl) mobileTotal.textContent = totalPriceEl.textContent || '0 €';
+                if (mobileLabel && totalLabelEl) mobileLabel.textContent = totalLabelEl.textContent || '';
                 restoreSubmitButtons();
             }
 
@@ -5263,6 +5282,27 @@ const extrasStepCopy = {
             syncProgramCardsUI();
             syncOnlineCourseCards();
             syncPaymentUI();
+
+            const mobileDockCta = document.getElementById('bk-mobile-dock-cta');
+            if (mobileDockCta) {
+                syncMobileDockCta();
+                mobileDockCta.addEventListener('click', function () {
+                    const activeStep = document.querySelector('.form-step.active');
+                    if (!activeStep) return;
+                    const nextBtn = activeStep.querySelector('.btn-next');
+                    if (nextBtn instanceof HTMLElement) {
+                        nextBtn.click();
+                        return;
+                    }
+                    const payBtn = activeStep.querySelector('#bk-pay-submit');
+                    if (payBtn instanceof HTMLElement) {
+                        payBtn.click();
+                        return;
+                    }
+                    const quoteBtn = activeStep.querySelector('#bk-submit-quote');
+                    if (quoteBtn instanceof HTMLElement) quoteBtn.click();
+                });
+            }
         });
     </script>
 </MainLayout>

@@ -2,10 +2,10 @@
  * Stripe Dashboard ürün kataloğu (Campus German).
  * Form fiyatları ve checkout lineItems buradan türetilir.
  */
-/** Kayıt ücreti — tek seferlik (€). Almanya’da 2+ kur seçilirse 0. */
+/** Kayıt ücreti — tek seferlik (€). Yalnızca Almanya + tam ödemede alınmaz. */
 export const RESERVATION_DEPOSIT_EUR = 80;
 export const BALANCE_DUE_DAYS = 14;
-/** Tam ödemede gösterilen indirim (€) — kayıt ücretiyle eşleşir (+80 / −80) */
+/** Almanya tam ödemede muafiyet tutarı (gösterim); yurtdışı/taksitte kayıt ücreti iptal edilmez */
 export const FULL_PAYMENT_DISCOUNT_EUR = 80;
 
 /** Intensive 20 ders/hafta — Stripe paket fiyatları (€) */

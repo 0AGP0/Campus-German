@@ -247,6 +247,18 @@ button.top-header-register--btn {
     box-shadow: 0 2px 12px rgba(12, 192, 223, 0.35);
 }
 
+.top-header-register--bar {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    font-size: 12px;
+    gap: 6px;
+    border-radius: 999px;
+}
+
+.top-header-register--bar i {
+    font-size: 11px;
+}
+
 .top-header-register:hover {
     background: linear-gradient(135deg, #0dd4f0 0%, var(--color-primary) 100%);
     box-shadow: 0 4px 16px rgba(12, 192, 223, 0.45);
@@ -1521,11 +1533,27 @@ span.hamburger-line,
     .top-header-link i {
         font-size: 11px;
     }
+    .top-header-register--bar {
+        padding: 7px 12px;
+        font-size: 12px;
+        box-shadow: 0 2px 10px rgba(12, 192, 223, 0.4);
+    }
+    .top-header-email,
+    .top-header-prices,
+    .top-header-divider--desktop {
+        display: none !important;
+    }
     .top-header-divider {
         height: 12px;
         margin: 0 2px;
         flex-shrink: 0;
     }
+}
+
+/* Booking sayfasında üst bardaki self-link CTA’yı gizle */
+body:has(.booking-form-section) .top-header-register--bar,
+body:has(.booking-form-section) .top-header-register--bar + .top-header-divider {
+    display: none !important;
 }
 
 @media (max-width: 480px) {

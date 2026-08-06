@@ -1086,26 +1086,41 @@
 
 @media (max-width: 560px) {
     .level-tile-grid.course-slot-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1fr;
         gap: 0.55rem;
     }
 
     .level-tile-grid .lvl-opt.course-slot {
-        padding: 0.75rem 0.7rem;
-        gap: 0.55rem;
+        padding: 0.9rem 0.85rem;
+        gap: 0.65rem;
+        min-height: 3.25rem;
     }
 
     .lvl-opt__code {
-        font-size: 1.2rem;
+        font-size: 1.28rem;
     }
 
     .lvl-opt__amount,
     .lvl-opt__now {
-        font-size: 1.12rem;
+        font-size: 1.18rem;
     }
 
     .lvl-opt__tag {
-        padding: 0.4rem 0.58rem 0.4rem 0.9rem;
+        padding: 0.45rem 0.65rem 0.45rem 0.95rem;
+    }
+
+    .lvl-opt__dates {
+        font-size: 0.78rem;
+    }
+
+    .lvl-opt__meta {
+        font-size: 0.84rem;
+    }
+
+    .level-tile-grid .bk-extra-info-btn.lvl-opt__info {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 0.78rem;
     }
 }
 
@@ -1592,11 +1607,11 @@
     .course-slot-grid,
     .week-slot-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.45rem;
+        gap: 0.6rem;
     }
 
     .course-slot {
-        border-radius: 12px;
+        border-radius: 14px;
     }
 
     .course-slot:has(input:checked) {
@@ -1609,7 +1624,7 @@
 
     .course-slot__head {
         min-height: 0;
-        padding: 0.45rem 0.5rem 0.35rem;
+        padding: 0.7rem 0.7rem 0.55rem;
         gap: 0;
     }
 
@@ -1618,21 +1633,22 @@
     }
 
     .course-slot__level-label {
-        font-size: 0.95rem;
-        line-height: 1.15;
+        font-size: 1.05rem;
+        line-height: 1.2;
     }
 
     .course-slot__level-label--sm {
-        font-size: 0.78rem;
+        font-size: 0.88rem;
     }
 
     .course-slot__head-meta {
-        font-size: 0.62rem;
-        margin-top: 0.15rem;
+        font-size: 0.72rem;
+        margin-top: 0.2rem;
+        line-height: 1.3;
     }
 
     .course-slot__main {
-        padding: 0.25rem 0.45rem 0.4rem;
+        padding: 0.45rem 0.65rem 0.55rem;
     }
 
     .course-slot__features,
@@ -1643,32 +1659,32 @@
     }
 
     .course-slot__tags {
-        margin: 0 0 0.2rem;
+        margin: 0 0 0.3rem;
         padding: 0;
-        gap: 0.25rem;
+        gap: 0.3rem;
     }
 
     .course-slot__badge--lessons {
-        font-size: 0.58rem;
-        padding: 2px 6px;
+        font-size: 0.7rem;
+        padding: 3px 8px;
     }
 
     .course-slot__foot--promo {
-        padding: 0.3rem 0.45rem;
+        padding: 0.5rem 0.65rem;
         margin: 0;
         min-height: 0;
     }
 
     .course-slot__foot--promo :global(.promo-price-new) {
-        font-size: 0.82rem;
+        font-size: 0.95rem;
     }
 
     .course-slot__foot--promo :global(.promo-price-old) {
-        font-size: 0.65rem;
+        font-size: 0.72rem;
     }
 
     .course-slot__fixed-price-amount {
-        font-size: 0.82rem;
+        font-size: 0.95rem;
     }
 
     .course-slot__fixed-price-row {
@@ -1676,11 +1692,11 @@
     }
 
     .course-slot__sel-mark {
-        top: 0.3rem;
-        right: 0.35rem;
-        min-width: 1.15rem;
-        height: 1.15rem;
-        font-size: 0.6rem;
+        top: 0.45rem;
+        right: 0.45rem;
+        min-width: 1.45rem;
+        height: 1.45rem;
+        font-size: 0.7rem;
     }
 
     .course-slot--unsure {
@@ -1688,7 +1704,7 @@
     }
 
     .course-slot--unsure .course-slot__head-copy {
-        padding-right: 1.5rem;
+        padding-right: 1.75rem;
     }
 
     .course-slot--week .course-slot__features {
@@ -2322,22 +2338,51 @@
 @media (max-width: 768px) {
     .program-slot-grid {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .program-slot__head {
+        min-height: 7.5rem;
+    }
+
+    .program-slot__title {
+        font-size: 1.15rem;
+    }
+
+    .program-slot__meta {
+        font-size: 0.82rem;
+    }
+
+    .program-slot__price-num {
+        font-size: 1.35rem;
     }
 
     .program-slot-grid--compact {
-        flex-wrap: nowrap;
-        gap: 0.4rem;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+    }
+
+    .program-slot-grid--compact .program-slot {
+        flex: 1 1 calc(50% - 0.3rem);
+        min-width: 0;
     }
 
     .program-slot-grid--compact .program-slot:not(.program-slot--selected) .program-slot__head-inner,
     .program-slot-grid--compact .program-slot--selected .program-slot__head-inner {
-        min-height: 4rem;
+        min-height: 3.5rem;
+        padding: 0.75rem 0.65rem;
     }
 
     .program-slot-grid--compact .program-slot:not(.program-slot--selected) .program-slot__title,
     .program-slot-grid--compact .program-slot--selected .program-slot__title {
-        font-size: 0.74rem;
-        line-height: 1.22;
+        font-size: 0.88rem;
+        line-height: 1.25;
+    }
+
+    .program-slot-grid--compact .program-slot__sel-mark {
+        width: 1.45rem;
+        height: 1.45rem;
+        font-size: 0.7rem;
     }
 }
 
@@ -3220,21 +3265,59 @@
         grid-template-columns: 1fr;
     }
 
+    /* Konum (1. soru): tek kolon — uzun etiket taşmasın */
+    .bk-pay__opts--location {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
     .bk-pay__opts,
     .bk-pay__branch {
-        margin-left: 0;
+        margin-left: 2.35rem;
     }
 
     .bk-pay__step:not(:last-child)::after {
         left: 0.85rem;
+        top: 2.2rem;
+        bottom: 0.2rem;
+        z-index: 0;
     }
 
     .bk-pay__branch {
-        padding-left: 0.75rem;
+        padding-left: 0;
+        margin-top: 0.55rem;
     }
 
     .bk-pay__opt--plan {
         min-height: 0;
+    }
+
+    .bk-pay__opt--location {
+        min-height: 3.35rem;
+        padding: 0.85rem 0.9rem;
+        gap: 0.55rem;
+        overflow: hidden;
+    }
+
+    .bk-pay__opt--location .bk-pay__opt-body--location {
+        flex: 1 1 auto;
+        min-width: 0;
+        gap: 0.55rem;
+    }
+
+    .bk-pay__opt--location .bk-pay__flag {
+        width: 2.2rem;
+        height: 1.55rem;
+        flex-shrink: 0;
+    }
+
+    .bk-pay__opt--location .bk-pay__opt-title {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: 0.92rem;
+        line-height: 1.3;
+        white-space: normal;
+        overflow-wrap: break-word;
     }
 }
 
@@ -3715,40 +3798,43 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .booking-hero {
-        padding: 24px 0 10px 0;
+        padding: 18px 0 8px 0;
     }
     
     .booking-hero .hero-content {
-        padding: 0 10px;
+        padding: 0 12px;
     }
     
     .booking-hero .hero-title {
-        font-size: 1.6rem;
-        gap: 12px;
+        font-size: 1.45rem;
+        gap: 10px;
     }
     
     .booking-hero .hero-title::before {
         width: 3px;
-        height: 30px;
+        height: 26px;
     }
     
     .booking-hero .hero-description {
-        font-size: 0.9rem;
-        margin: 6px 0 0 40px;
+        font-size: 0.88rem;
+        margin: 6px 0 0 36px;
+        line-height: 1.45;
     }
     
     .booking-form-section {
-        padding: 24px 0;
+        padding: 12px 0 calc(var(--bk-dock-h, 5.75rem) + env(safe-area-inset-bottom, 0px) + 1.25rem);
     }
     
     .booking-form-section .container {
-        padding-left: 0;
-        padding-right: 0;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
     }
     
     .booking-form-container {
         margin: 0;
-        border-radius: 0;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 28px rgba(10, 41, 89, 0.08);
     }
     
     .booking-content {
@@ -3761,6 +3847,7 @@
         width: 100%;
         order: 2;
         top: auto;
+        display: none;
     }
     
     .price-calculator {
@@ -3785,93 +3872,127 @@
     }
     
     .form-progress {
-        padding: 20px;
+        padding: 1rem 1rem 1.15rem;
+    }
+
+    .progress-bar {
+        margin-bottom: 1rem;
     }
     
     .step-indicators {
-        flex-wrap: wrap;
-        gap: 15px;
+        flex-wrap: nowrap;
+        gap: 0.35rem;
+        justify-content: space-between;
+    }
+
+    .step-indicator {
+        flex: 1 1 0;
+        min-width: 0;
+        gap: 0.35rem;
+    }
+
+    .step-indicator.active {
+        transform: none;
     }
     
     .step-number {
-        width: 35px;
-        height: 35px;
-        font-size: 14px;
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.8rem;
     }
     
     .step-label {
-        font-size: 12px;
+        font-size: 0.62rem;
+        line-height: 1.2;
+        text-align: center;
+        max-width: 100%;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
     }
     
     .form-step {
-        padding: 30px 25px;
+        padding: 1.25rem 1rem 1.5rem;
+    }
+
+    .step-header {
+        margin-bottom: 1.25rem;
+        text-align: left;
     }
     
     .step-header h2 {
-        font-size: 1.8rem;
+        font-size: 1.35rem;
+        margin-bottom: 0.45rem;
+        line-height: 1.25;
+    }
+
+    .step-header p {
+        font-size: 0.9rem;
+        margin: 0;
+        max-width: none;
+        line-height: 1.4;
     }
     
     .form-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.85rem 0.95rem;
+        font-size: 16px;
     }
     
-    /* Program butonları (Yoğun, Online, Yaz Kampı) mobilde tek satırda yan yana */
-    .program-options {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 6px;
-        flex-wrap: nowrap;
-    }
-    .program-options .option-btn {
-        padding: 10px 6px;
-        font-size: 12px;
-        min-width: 0;
-        white-space: nowrap;
-    }
-    .program-options .option-btn-text {
-        white-space: normal;
-        line-height: 1.2;
-        text-align: center;
-    }
-    
-    /* Saat butonları (Sabah, Öğle, Akşam) mobilde tek satırda yan yana */
+    /* Program / saat — dikey stack, okunaklı dokunma */
+    .program-options,
     .timezone-options {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 6px;
-        flex-wrap: nowrap;
+        grid-template-columns: 1fr;
+        gap: 0.55rem;
     }
+    .program-options .option-btn,
     .timezone-options .option-btn {
-        padding: 10px 6px;
-        font-size: 11px;
+        padding: 0.9rem 1rem;
+        font-size: 0.95rem;
+        min-height: 3rem;
         min-width: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+        white-space: normal;
+        justify-content: flex-start;
+        text-align: left;
     }
+    .program-options .option-btn-text,
     .timezone-options .option-btn-text {
         white-space: normal;
-        line-height: 1.25;
+        line-height: 1.3;
+        text-align: left;
+    }
+    .timezone-options .option-btn {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.55rem;
     }
     
     .accommodation-details,
     .transfer-details {
         grid-template-columns: 1fr;
-        padding: 20px;
+        padding: 1rem;
     }
     
     .radio-group,
     .checkbox-group {
         flex-direction: column;
-        gap: 12px;
+        gap: 0.65rem;
     }
     
     .radio-label,
     .checkbox-label {
-        padding: 10px 14px;
-        font-size: 14px;
+        padding: 0.75rem 0.9rem;
+        font-size: 0.9rem;
+        min-height: 2.75rem;
     }
     
     .form-navigation {
@@ -3879,7 +4000,7 @@
         flex-wrap: nowrap;
         align-items: stretch;
         gap: 0.65rem;
-        padding-top: 1.25rem;
+        padding-top: 1rem;
     }
 
     .form-navigation--dual-submit {
@@ -3887,11 +4008,11 @@
     }
 
     .form-submit-actions {
-        flex: 1 1 auto;
-        width: auto;
+        flex: 1 1 100%;
+        width: 100%;
         margin-left: 0;
-        flex-direction: row;
-        gap: 0.5rem;
+        flex-direction: column;
+        gap: 0.55rem;
     }
     
     .btn-prev,
@@ -3899,9 +4020,10 @@
         flex: 1 1 0;
         width: auto;
         min-width: 0;
+        min-height: 3rem;
         margin-left: 0;
-        padding: 12px 14px;
-        font-size: 14px;
+        padding: 0.85rem 1rem;
+        font-size: 0.95rem;
         justify-content: center;
     }
 
@@ -3910,16 +4032,17 @@
     }
 
     .form-navigation--dual-submit .btn-prev {
-        flex: 0 0 auto;
-        min-width: 5.5rem;
+        flex: 1 1 100%;
+        min-width: 0;
     }
 
     .form-submit-actions .btn-submit {
-        flex: 1 1 0;
-        width: auto;
+        flex: 1 1 auto;
+        width: 100%;
         min-width: 0;
-        padding: 12px 10px;
-        font-size: 13px;
+        min-height: 3rem;
+        padding: 0.85rem 1rem;
+        font-size: 0.95rem;
         justify-content: center;
     }
 }
@@ -4680,13 +4803,23 @@
 
 @media (max-width: 640px) {
     .form-step.final-step {
-        padding: 1.25rem 1rem 1.5rem;
+        padding: 1.15rem 0.9rem 1.75rem;
     }
     .final-step-panel {
-        padding: 1rem;
+        padding: 0.95rem;
+        border-radius: 12px;
     }
     .final-step-grid {
         grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+    .final-step-header h2 {
+        font-size: 1.25rem;
+    }
+    .final-step-terms .checkbox-label {
+        font-size: 0.86rem;
+        line-height: 1.4;
+        padding: 0.7rem 0.75rem;
     }
 }
 
@@ -4840,4 +4973,216 @@
 .bring-friend-fields {
     border-color: rgba(255, 210, 31, 0.55);
     background: rgba(255, 210, 31, 0.06);
+}
+
+/* Mobil booking dock + tablet/phone polish */
+.bk-mobile-dock {
+    display: none;
+}
+@media (max-width: 900px) {
+    :root {
+        --bk-dock-h: 5.75rem;
+    }
+
+    .booking-form-section {
+        padding-bottom: calc(var(--bk-dock-h) + env(safe-area-inset-bottom, 0px) + 1.25rem);
+    }
+
+    .booking-form-section .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .booking-form-container {
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .form-step {
+        padding: 1.25rem 1rem 1.5rem;
+    }
+
+    .form-step.final-step {
+        padding-bottom: 1.75rem;
+    }
+
+    .price-calculator-col {
+        display: none;
+    }
+
+    /* Dock varken birincil CTA’yı form içinde gizle — geri + teklif kalsın */
+    .form-navigation .btn-next,
+    .form-submit-actions .btn-submit-pay,
+    #bk-pay-submit {
+        display: none !important;
+    }
+
+    .form-navigation:not(:has(.btn-prev)) {
+        display: none !important;
+    }
+
+    .form-navigation--dual-submit .form-submit-actions {
+        display: flex;
+    }
+
+    .form-submit-actions .btn-submit-quote,
+    #bk-submit-quote {
+        display: inline-flex !important;
+        width: 100%;
+        min-height: 3rem;
+    }
+
+    .bk-mobile-dock {
+        display: flex;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 60;
+        align-items: center;
+        gap: 0.85rem;
+        padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
+        background: rgba(255, 255, 255, 0.97);
+        border-top: 1px solid #e2e8f0;
+        box-shadow: 0 -10px 32px rgba(10, 41, 89, 0.14);
+        backdrop-filter: blur(12px);
+    }
+    .bk-mobile-dock__sum {
+        display: flex;
+        flex-direction: column;
+        gap: 0.12rem;
+        min-width: 0;
+        flex: 1 1 auto;
+    }
+    .bk-mobile-dock__label {
+        font-size: 0.68rem;
+        font-weight: 650;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .bk-mobile-dock__value {
+        font-family: Outfit, sans-serif;
+        font-size: clamp(1rem, 4.2vw, 1.2rem);
+        font-weight: 800;
+        color: #0a2959;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .bk-mobile-dock__cta {
+        flex: 0 0 auto;
+        min-width: 8rem;
+        min-height: 3rem;
+        padding: 0.8rem 1.15rem;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #0cc0df, #0a2959);
+        color: #fff;
+        font-family: Outfit, sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 6px 18px rgba(12, 192, 223, 0.28);
+    }
+    .bk-mobile-dock__cta:active {
+        transform: scale(0.98);
+    }
+
+    .bk-pay__opt--location,
+    .bk-pay__opt--plan {
+        min-height: 3.25rem;
+        padding: 0.9rem 1rem;
+    }
+
+    .bk-pay__opt-price {
+        font-size: 1.2rem;
+        white-space: normal;
+        text-align: right;
+    }
+
+    /* Çizgi butonların üstüne binmesin — gutter koru */
+    .bk-pay__opts,
+    .bk-pay__branch {
+        margin-left: 2.35rem;
+    }
+
+    .bk-pay__step:not(:last-child)::after {
+        left: 0.85rem;
+        z-index: 0;
+    }
+
+    .bk-extra-info-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 0.78rem;
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+
+    .bk-germany__opt {
+        min-height: 2.75rem;
+        padding: 0.65rem 1rem;
+        border-radius: 12px;
+        font-size: 0.9rem;
+    }
+
+    .bk-extra-card__media {
+        height: 8.5rem;
+    }
+
+    .bk-extra-card__title {
+        font-size: 1rem;
+    }
+
+    .bk-extra-card__price {
+        font-size: 1.1rem;
+    }
+
+    .start-date-btn {
+        min-height: 2.75rem;
+        padding: 0.7rem 0.95rem;
+        font-size: 0.92rem;
+    }
+
+    .option-buttons--accommodation-2x2 {
+        grid-template-columns: 1fr;
+    }
+
+    .option-buttons--accommodation-2x2 .option-btn {
+        min-height: 3rem;
+    }
+
+    .phone-country-menu {
+        min-width: min(100vw - 2rem, 280px);
+        left: 0;
+        right: auto;
+    }
+
+    body:has(.booking-content--paying) .bk-mobile-dock,
+    body:has(.booking-payment-stage:not([hidden])) .bk-mobile-dock {
+        display: none;
+    }
+
+    body:has(.booking-content--paying) .booking-form-section,
+    body:has(.booking-payment-stage:not([hidden])) .booking-form-section {
+        padding-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .week-slot-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.55rem;
+    }
+
+    .course-slot-grid {
+        gap: 0.55rem;
+    }
+
+    .bk-pay__opt-body {
+        gap: 0.35rem;
+    }
 }

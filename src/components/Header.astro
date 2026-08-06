@@ -569,11 +569,16 @@ const whatsappHref = 'https://wa.me/4915203823792';
             </div>
             <!-- Orta: Fiyat teklifi, Email, WhatsApp, Fiyat ve Tarihler -->
             <div class="top-header-center">
+                <a href={`/${lang}/${sections.booking}`} class="top-header-register top-header-register--bar">
+                    <i class="fas fa-credit-card" aria-hidden="true"></i>
+                    <span>{t.register}</span>
+                </a>
+                <span class="top-header-divider"></span>
                 <button type="button" class="top-header-link top-header-link--btn" data-open-quote-modal>
                     <i class="fas fa-file-alt"></i>
                     <span>{t.getQuote}</span>
                 </button>
-                <span class="top-header-divider"></span>
+                <span class="top-header-divider top-header-divider--desktop"></span>
                 <a href="mailto:info@campusgerman.com" class="top-header-link top-header-email">
                     <i class="fas fa-envelope"></i>
                     <span>{t.email}</span>
@@ -583,8 +588,8 @@ const whatsappHref = 'https://wa.me/4915203823792';
                     <i class="fab fa-whatsapp"></i>
                     <span>{t.contactUs}</span>
                 </a>
-                <span class="top-header-divider"></span>
-                <a href={`/${lang}/${lang === 'tr' ? 'fiyatlar-tarihler' : lang === 'de' ? 'preise-termine' : lang === 'en' ? 'prices-dates' : 'precios-fechas'}`} class="top-header-link">
+                <span class="top-header-divider top-header-divider--desktop"></span>
+                <a href={`/${lang}/${lang === 'tr' ? 'fiyatlar-tarihler' : lang === 'de' ? 'preise-termine' : lang === 'en' ? 'prices-dates' : 'precios-fechas'}`} class="top-header-link top-header-prices">
                     <i class="fas fa-euro-sign"></i>
                     <span>{t.pricesDates}</span>
                 </a>
