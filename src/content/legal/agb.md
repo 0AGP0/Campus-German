@@ -124,12 +124,12 @@ Bei nicht visumrelevanten Kursen kann Campus German nach freiem Ermessen die Ben
 Die vereinbarte Kursgebühr ist mit Vertragsschluss grundsätzlich sofort fällig, spätestens jedoch innerhalb von drei Werktagen nach Zugang der Buchungsbestätigung auf das von Campus German benannte Konto zu zahlen, soweit nachfolgend (§ 5.1a) nichts Abweichendes für eine Online-Reservierung mit Anzahlung vereinbart wird.  
 Die Zahlungspflicht besteht unabhängig davon, ob der Teilnehmer den Kurs tatsächlich besucht, ob eine Einreise erfolgt oder ob der Teilnehmer die Leistung ganz oder teilweise in Anspruch nimmt.
 
-### § 5.1a Online-Reservierung mit Anzahlung (50,00 EUR)
+### § 5.1a Online-Reservierung mit Anzahlung (80,00 EUR)
 Bucht der Teilnehmer über das Online-Buchungsformular die Option „Kayıt / Anmeldebestätigung“ bzw. Ratenzahlung (Anzahlung) statt der sofortigen Zahlung des Gesamtbetrags, gilt Folgendes:
 
-- a) **Anzahlung:** Es wird eine Anzahlung in Höhe von **50,00 EUR** fällig und ist unverzüglich über den angebotenen Zahlungsweg (z. B. Stripe) zu leisten. Liegt der Gesamtbetrag unter 50,00 EUR, entspricht die zu leistende Zahlung dem Gesamtbetrag. Bei Wahl der sofortigen Vollzahlung entfällt diese Anzahlung.
+- a) **Anzahlung:** Es wird eine Anzahlung in Höhe von **80,00 EUR** fällig und ist unverzüglich über den angebotenen Zahlungsweg (z. B. Stripe) zu leisten. Liegt der Gesamtbetrag unter 80,00 EUR, entspricht die zu leistende Zahlung dem Gesamtbetrag. Bei Wahl der sofortigen Vollzahlung entfällt diese Anzahlung.
 - b) **Restbetrag:** Der verbleibende Restbetrag (Gesamtbetrag abzüglich geleisteter Anzahlung) ist innerhalb von **14 Kalendertagen** nach erfolgreicher Anzahlungszahlung vollständig zu zahlen.
-- c) **Verfall der Anzahlung:** Wird der Restbetrag nicht fristgerecht vollständig gezahlt, erlischt die vorläufige Kursplatzbindung. Die bereits geleistete Anzahlung von 50,00 EUR (bzw. der gezahlte Betrag bei niedrigerem Gesamtbetrag) wird als pauschalierter Aufwendungs- und Bereithaltungsersatz einbehalten und **nicht erstattet**. Ein Anspruch auf Kursplatz, Unterrichtsteilnahme oder Ausstellung von Bescheinigungen besteht in diesem Fall nicht.
+- c) **Verfall der Anzahlung:** Wird der Restbetrag nicht fristgerecht vollständig gezahlt, erlischt die vorläufige Kursplatzbindung. Die bereits geleistete Anzahlung von 80,00 EUR (bzw. der gezahlte Betrag bei niedrigerem Gesamtbetrag) wird als pauschalierter Aufwendungs- und Bereithaltungsersatz einbehalten und **nicht erstattet**. Ein Anspruch auf Kursplatz, Unterrichtsteilnahme oder Ausstellung von Bescheinigungen besteht in diesem Fall nicht.
 - d) **Anrechnung:** Wird der Restbetrag fristgerecht gezahlt, wird die Anzahlung auf die vereinbarte Kursgebühr angerechnet.
 - e) **Sofortzahlung:** Wählt der Teilnehmer die sofortige Zahlung des Gesamtbetrags, bleibt § 5.1 unberührt; eine gesonderte Anzahlung entfällt.
 - f) **Widerrufsrecht:** Gesetzliche Widerrufsrechte und die Regelungen der Widerrufsbelehrung sowie § 3.5 dieser AGB bleiben unberührt. Hat der Teilnehmer den vorzeitigen Leistungsbeginn verlangt und wird Widerruf erklärt, kann die Anzahlung ganz oder teilweise auf einen etwaigen Wertersatz angerechnet werden.
@@ -212,9 +212,14 @@ Ein Rücktritt ist ausschließlich nach Maßgabe von § 7.4 dieser AGB möglich.
 ### § 7.4 Visumserteilung oder Einreise
 Wurde das Visum erteilt oder ist der Teilnehmer nach Deutschland eingereist, ist ein Rücktritt, eine Kündigung oder eine Rückerstattung vollständig ausgeschlossen, unabhängig davon, ob der Kurs begonnen wird, der Kurs fortgesetzt wird oder der Aufenthaltstitel später widerrufen oder geändert wird.
 
+### § 7.4a Visumsablehnung (90 %-Rückerstattung)
+Wird ein Visumsantrag unter Vorlage einer von Campus German ausgestellten visumsrelevanten Kursbescheinigung nachweislich abgelehnt, erstattet Campus German **90 %** der bereits gezahlten und gebuchten Kursgebühr. Die verbleibenden **10 %** werden als Service- und Bearbeitungsgebühr einbehalten.  
+Anspruchsvoraussetzung ist die Vorlage des behördlichen Ablehnungsbescheids sowie der Nachweis, dass die Kursbescheinigung für den Antrag verwendet wurde. Bereits in Anspruch genommene Zusatzleistungen (z. B. Unterkunft, Transfer) sind hiervon ausgenommen, soweit gesondert erbracht.
+
 ### § 7.5 Verschiebung bei Visumsverzögerung
 Bei einer nachweisbaren Visumsverzögerung kann Campus German einmalig und nach eigenem Ermessen eine Kursverschiebung auf einen Folgekurs zulassen.  
 Ein Anspruch hierauf besteht nicht.  
+Für die Verschiebung wird eine **neue Anmelde-/Bearbeitungsgebühr** (Registrierungsgebühr gemäß aktueller Preisliste) erhoben.  
 Eine Rückerstattung der Kursgebühr ist auch in diesem Fall ausgeschlossen.
 
 ### § 7.6 Kein Widerrufsrecht bei Visumskursen
