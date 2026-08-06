@@ -3179,7 +3179,6 @@ const extrasStepCopy = {
                 if (!card || !labelEl || !amountEl || !hintEl) return;
 
                 const program = document.querySelector('[name="program"]:checked')?.value;
-                const payPlanSel = document.querySelector('[name="pay-plan"]:checked')?.value || '';
                 const checked = Array.from(document.querySelectorAll('[name="course-selection"]:checked'));
                 const vals = checked.map(function (c) { return c.value; });
                 const priced = vals.filter(function (c) { return LEVEL_RE.test(c) || c === 'telc-c1-prep'; });
@@ -3211,25 +3210,6 @@ const extrasStepCopy = {
                     return String(tpl || '').replace(/\{(\w+)\}/g, function (_, key) {
                         return map[key] != null ? String(map[key]) : '';
                     });
-                }
-
-                // Taksitte % indirim uygulanmaz — yeşil kart yalnızca tam ödeme avantajını gösterir
-                if (payPlanSel === 'installment') {
-                    card.classList.add('is-teaser');
-                    labelEl.textContent = courseInfoCopy?.savedLabel || '';
-                    amountEl.textContent = current.amount > 0 ? ('−' + current.amount + ' €') : '—';
-                    hintEl.textContent = lang === 'tr'
-                        ? 'Bu indirim yalnızca tam ödemede uygulanır'
-                        : lang === 'de'
-                            ? 'Dieser Rabatt gilt nur bei Vollzahlung'
-                            : lang === 'es'
-                                ? 'Este descuento solo aplica en pago completo'
-                                : 'This discount applies only with full payment';
-                    if (subEl) {
-                        subEl.hidden = true;
-                        subEl.textContent = '';
-                    }
-                    return;
                 }
 
                 if (courseCount === 1) {
@@ -3709,12 +3689,10 @@ const extrasStepCopy = {
                     .map(function (c) { return c.value; })
                     .filter(function (c) { return LEVEL_RE.test(c) || c === 'telc-c1-prep'; });
                 const count = checked.length;
-                const payPlanSel = document.querySelector('[name="pay-plan"]:checked')?.value || '';
-                const multiEnabled = payPlanSel !== 'installment';
                 const nextCount = count + 1;
-                const activePercent = (multiEnabled && count >= 2) ? count : 0;
-                const nextPercent = (multiEnabled && nextCount >= 2) ? nextCount : 0;
-                const showMulti = multiEnabled && (program === 'intensive' || program === 'online') && count >= 1;
+                const activePercent = count >= 2 ? count : 0;
+                const nextPercent = nextCount >= 2 ? nextCount : 0;
+                const showMulti = (program === 'intensive' || program === 'online') && count >= 1;
                 const baseOld = String(promoPriceOriginal) + '€';
                 const baseNow = String(promoPrice) + '€';
                 const isOnline = program === 'online';
@@ -4251,18 +4229,13 @@ const extrasStepCopy = {
                 if (program && (checkedCourses.length > 0 || program === 'short-term')) {
                     let coursePrice = 0;
                     let multiDiscount = { percent: 0, amount: 0 };
-                    // Çoklu kur % indirimi yalnızca tam ödemede (veya plan henüz seçilmemişken önizleme)
-                    const payPlanSel = document.querySelector('[name="pay-plan"]:checked')?.value || '';
-                    const allowMultiDiscount = payPlanSel !== 'installment';
 
                     if (program === 'short-term') {
                         coursePrice = getTieredPrice(weeksNum);
                     } else if (program === 'intensive' || program === 'online') {
                         if (courseCount > 0) {
                             const gross = getIntensiveCourseGross(pricedCourses);
-                            multiDiscount = allowMultiDiscount
-                                ? getMultiCourseDiscount(courseCount, gross)
-                                : { percent: 0, amount: 0 };
+                            multiDiscount = getMultiCourseDiscount(courseCount, gross);
                             coursePrice = gross;
                         }
                     } else if (program === 'youth-camp') {
@@ -4550,17 +4523,15 @@ const extrasStepCopy = {
                 const multiSaveEur = multiForFull.amount || 0;
                 const multiSaveCents = multiSaveEur * 100;
                 const discEur = Math.max(0, Math.round(fullDiscCents / 100));
-                // Taksitte totalCents brüt; tam ödemede totalCents zaten % indirimli.
-                // Tam ödeme kartı her zaman indirimli tutarı göstersin.
-                const fullPackageCents = payPlan === 'installment'
-                    ? Math.max(0, totalCents - multiSaveCents)
-                    : totalCents;
+                // Paket totalCents zaten çoklu kur % indirimli (tam ödeme ve taksit aynı paket)
+                const fullPackageCents = totalCents;
                 const fullChargeCents = Math.max(0, fullPackageCents + depositCents - fullDiscCents);
                 const fullWasCents = fullPackageCents + multiSaveCents + depositCents;
 
                 if (fullAmountEl) fullAmountEl.textContent = formatPayEur(fullChargeCents);
                 const fullWasEl = document.getElementById('bk-pay-full-was');
                 if (fullWasEl) {
+                    // Toplu ödemede % indirimi yeşil kart / üstü çizili brüt ile yansıt
                     if (multiSaveEur > 0 && fullPackageCents > 0) {
                         fullWasEl.hidden = false;
                         fullWasEl.textContent = formatPayEur(fullWasCents);
@@ -4573,13 +4544,14 @@ const extrasStepCopy = {
                     }
                 }
                 if (fullSaveEl) {
-                    // Yeşil kart: çoklu kur indirimi (tam ödeme avantajı)
+                    // Yeşil kart: yapılan çoklu kur % indirimi (tam ödeme kartında her zaman görünür)
                     if (multiSaveEur > 0) {
                         fullSaveEl.hidden = false;
                         const pct = multiForFull.percent ? (' −%' + multiForFull.percent) : '';
                         const tpl = (payUiCopy && payUiCopy.discountTpl) || '−{amount} €';
                         fullSaveEl.textContent = String(tpl).replace(/\{amount\}/g, String(multiSaveEur)) + pct;
                     } else if (discEur > 0 && fullPackageCents > 0) {
+                        // Tek kursta kayıt iptali (+80/−80) yeşil etiket
                         fullSaveEl.hidden = false;
                         const tpl = (payUiCopy && payUiCopy.discountTpl) || '−{amount} €';
                         fullSaveEl.textContent = String(tpl).replace(/\{amount\}/g, String(discEur));
