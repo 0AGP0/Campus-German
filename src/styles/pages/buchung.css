@@ -3245,6 +3245,21 @@
     color: #64748b;
 }
 
+#bk-pay-half-now-hint-row,
+#bk-pay-course-now-hint-row {
+    margin-top: -0.25rem;
+}
+
+#bk-pay-half-now-hint,
+#bk-pay-course-now-hint {
+    display: block;
+    width: 100%;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #0e7490;
+    line-height: 1.35;
+}
+
 .bk-pay__due {
     display: none !important;
 }

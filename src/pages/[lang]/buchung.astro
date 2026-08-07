@@ -2355,6 +2355,9 @@ const extrasStepCopy = {
                                                                     <span>{translations.payNowShort}</span>
                                                                     <strong id="bk-pay-half-now">—</strong>
                                                                 </span>
+                                                                <span class="bk-pay__branch-row bk-pay__branch-row--muted" id="bk-pay-half-now-hint-row">
+                                                                    <span id="bk-pay-half-now-hint"></span>
+                                                                </span>
                                                                 <span class="bk-pay__branch-row bk-pay__branch-row--muted" id="bk-pay-half-rest-row">
                                                                     <span id="bk-pay-half-rest-label">{translations.payInstallHalfRest}</span>
                                                                     <span id="bk-pay-half-rest">—</span>
@@ -2371,6 +2374,9 @@ const extrasStepCopy = {
                                                                 <span class="bk-pay__branch-row">
                                                                     <span>{translations.payNowShort}</span>
                                                                     <strong id="bk-pay-course-now">—</strong>
+                                                                </span>
+                                                                <span class="bk-pay__branch-row bk-pay__branch-row--muted" id="bk-pay-course-now-hint-row">
+                                                                    <span id="bk-pay-course-now-hint"></span>
                                                                 </span>
                                                                 <span class="bk-pay__branch-row bk-pay__branch-row--muted">
                                                                     <span id="bk-pay-course-rest-label">{translations.payInstallCourseRest}</span>
@@ -4600,10 +4606,25 @@ const extrasStepCopy = {
                 const halfRestEl = document.getElementById('bk-pay-half-rest');
                 const courseNowEl = document.getElementById('bk-pay-course-now');
                 const courseRestEl = document.getElementById('bk-pay-course-rest');
+                const halfNowHintEl = document.getElementById('bk-pay-half-now-hint');
+                const courseNowHintEl = document.getElementById('bk-pay-course-now-hint');
                 if (halfNowEl) halfNowEl.textContent = formatPayEur(halfNowCents);
                 if (halfRestEl) halfRestEl.textContent = formatPayEur(halfRestCents);
                 if (courseNowEl) courseNowEl.textContent = formatPayEur(courseNowCents);
                 if (courseRestEl) courseRestEl.textContent = formatPayEur(courseRestCents);
+                if (halfNowHintEl) {
+                    const tpl = (payUiCopy && payUiCopy.installNowTpl) || '{course} + {fee}';
+                    halfNowHintEl.textContent = String(tpl)
+                        .replace(/\{course\}/g, formatPayEur(halfPackageCents))
+                        .replace(/\{fee\}/g, formatPayEur(installDepositCents));
+                }
+                if (courseNowHintEl) {
+                    // Kur kur: ilk kur ücreti + kayıt ücreti
+                    const tpl = (payUiCopy && payUiCopy.installCourseNowTpl) || '1. kur + kayıt: {course} + {fee}';
+                    courseNowHintEl.textContent = String(tpl)
+                        .replace(/\{course\}/g, formatPayEur(unitCourseCents))
+                        .replace(/\{fee\}/g, formatPayEur(installDepositCents));
+                }
 
                 if (installAmountEl) {
                     const hintNow = installOpt === 'course' ? courseNowCents : halfNowCents;
