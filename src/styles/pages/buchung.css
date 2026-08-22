@@ -3,7 +3,7 @@
 /* Booking Hero Section */
 .booking-hero {
     background: #ffffff;
-    padding: 40px 0 20px 0;
+    padding: 18px 0 10px 0;
     border-bottom: 1px solid #f1f3f4;
 }
 
@@ -14,19 +14,19 @@
 }
 
 .booking-hero .hero-title {
-    font-size: 2rem;
+    font-size: 1.55rem;
     font-weight: 600;
     color: var(--color-text-primary);
     margin: 0;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
 }
 
 .booking-hero .hero-title::before {
     content: '';
     width: 4px;
-    height: 40px;
+    height: 28px;
     background: var(--color-primary);
     border-radius: 2px;
 }
@@ -41,14 +41,15 @@
 }
 
 .booking-hero .hero-description {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: var(--color-text-secondary);
-    margin: 8px 0 0 59px;
+    margin: 4px 0 0 44px;
     font-weight: 500;
+    line-height: 1.35;
 }
 
 .booking-hero-quote-cta {
-    margin: 14px 0 0 59px;
+    margin: 8px 0 0 44px;
 }
 
 .booking-hero-quote-btn {
@@ -73,7 +74,7 @@
 
 /* Booking Form Section */
 .booking-form-section {
-    padding: 80px 0;
+    padding: 24px 0 40px;
     background: #f5f7f9;
     min-height: 100vh;
 }
@@ -104,6 +105,7 @@
 .form-section {
     padding: 0;
     min-width: 0;
+    overflow: visible;
 }
 
 .price-calculator-col {
@@ -152,17 +154,119 @@
 .form-progress {
     scroll-margin-top: calc(var(--header-height, 112px) + 12px);
     background: var(--color-secondary);
-    padding: 30px;
+    padding: 0.75rem 1.1rem 0.85rem;
     color: white;
     position: relative;
 }
 
+/* Minimal 2-step progress */
+.form-progress--minimal {
+    background: #f8fafc;
+    color: #0a2959;
+    padding: 0.45rem 1rem 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.bk-progress-min {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    max-width: 28rem;
+    margin: 0 auto;
+}
+
+.bk-progress-min__track {
+    flex: 1;
+    height: 2px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+    min-width: 2.5rem;
+}
+
+.bk-progress-min__track .progress-fill {
+    display: block;
+    height: 100%;
+    background: #0cc0df;
+    border-radius: 999px;
+    transition: width 0.35s ease;
+}
+
+.bk-progress-min__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.45rem;
+    border-radius: 999px;
+    transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.bk-progress-min__num {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.68rem;
+    font-weight: 800;
+    background: #e2e8f0;
+    color: #64748b;
+    flex-shrink: 0;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.form-progress--minimal .step-indicator {
+    flex-direction: row;
+    opacity: 0.55;
+    cursor: default;
+    gap: 0;
+}
+
+.form-progress--minimal .step-indicator.active {
+    opacity: 1;
+}
+
+.form-progress--minimal .step-indicator.completed {
+    opacity: 0.85;
+}
+
+.form-progress--minimal .step-indicator.active .bk-progress-min__pill {
+    background: rgba(12, 192, 223, 0.12);
+}
+
+.form-progress--minimal .step-indicator.active .bk-progress-min__num {
+    background: #0cc0df;
+    color: #fff;
+}
+
+.form-progress--minimal .step-indicator.completed .bk-progress-min__num {
+    background: #0a2959;
+    color: #fff;
+}
+
+.form-progress--minimal .step-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #0a2959;
+    white-space: nowrap;
+}
+
+.form-progress--minimal .step-indicator:not(.active):not(.completed) .step-label {
+    color: #64748b;
+}
+
+/* Mobile progress summary — desktop hidden */
+.bk-progress-mobile-summary {
+    display: none;
+}
+
 .progress-bar {
     width: 100%;
-    height: 4px;
+    height: 3px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 2px;
-    margin-bottom: 30px;
+    margin-bottom: 0.75rem;
     position: relative;
     overflow: hidden;
 }
@@ -194,7 +298,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 0.35rem;
     opacity: 0.5;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -202,7 +306,7 @@
 
 .step-indicator.active {
     opacity: 1;
-    transform: scale(1.1);
+    transform: none;
 }
 
 .step-indicator.completed {
@@ -210,8 +314,8 @@
 }
 
 .step-number {
-    width: 40px;
-    height: 40px;
+    width: 1.85rem;
+    height: 1.85rem;
     background: rgba(255, 255, 255, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
@@ -219,7 +323,7 @@
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 0.8rem;
     transition: all 0.3s ease;
 }
 
@@ -237,9 +341,10 @@
 }
 
 .step-label {
-    font-size: 13px;
+    font-size: 0.7rem;
     font-weight: 600;
     text-align: center;
+    line-height: 1.2;
 }
 
 /* Form Steps */
@@ -248,7 +353,7 @@
 }
 
 .form-step {
-    padding: 50px;
+    padding: 1.15rem 1.5rem 1.5rem;
     display: none;
     animation: fadeInUp 0.6s ease;
 }
@@ -260,32 +365,32 @@
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
     }
 }
 
 .step-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 0.85rem;
 }
 
 .step-header h2 {
     color: var(--color-text-primary);
-    font-size: 2.2rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    margin-bottom: 15px;
+    margin-bottom: 0.35rem;
+    line-height: 1.25;
 }
 
 .step-header p {
     color: var(--color-text-secondary);
-    font-size: 1.1rem;
-    max-width: 500px;
+    font-size: 0.88rem;
+    max-width: 520px;
     margin: 0 auto;
     font-weight: 500;
+    line-height: 1.35;
 }
 
 /* Form Grid */
@@ -347,6 +452,12 @@
 .form-group textarea.error {
     border-color: #dc3545;
     animation: shake 0.5s ease;
+}
+
+.checkbox-label.error,
+.final-step-terms .checkbox-label:has(input.error) {
+    border-color: #dc3545;
+    background: rgba(220, 53, 69, 0.06);
 }
 
 .message-textarea {
@@ -2651,6 +2762,7 @@
 }
 
 .btn-prev {
+    display: none !important;
     background: #6c757d;
     color: white;
     box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
@@ -3780,6 +3892,97 @@
     z-index: 1;
 }
 
+/* Sidebar quote CTA (desktop) */
+.price-quote-cta {
+    margin-top: 1rem;
+    padding: 1rem 0 0.15rem;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.price-quote-cta[hidden] {
+    display: none !important;
+}
+
+.price-quote-cta__lead {
+    margin: 0;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    color: #475569;
+    font-weight: 500;
+}
+
+.price-quote-cta__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    width: 100%;
+    min-height: 3.35rem;
+    padding: 0.95rem 1.25rem;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #fff;
+    background: linear-gradient(135deg, #0cc0df 0%, #0a7ea4 52%, #0a2959 100%);
+    box-shadow:
+        0 10px 28px rgba(12, 192, 223, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.price-quote-cta__btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow:
+        0 14px 34px rgba(12, 192, 223, 0.38),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    filter: saturate(1.05);
+}
+
+.price-quote-cta__btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.price-quote-cta__btn:disabled {
+    opacity: 0.72;
+    cursor: wait;
+}
+
+.price-quote-cta__btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.65rem;
+    height: 1.65rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    font-size: 0.82rem;
+}
+
+.price-quote-cta__btn-text {
+    line-height: 1.2;
+}
+
+.price-quote-cta__note {
+    margin: 0;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: #64748b;
+    text-align: center;
+}
+
+@media (min-width: 901px) {
+    .price-quote-cta:not([hidden]) {
+        display: flex;
+    }
+}
+
 .price-notes {
     margin-top: 15px;
     padding: 15px;
@@ -3848,7 +4051,7 @@
     .booking-form-container {
         margin: 0;
         border-radius: 16px;
-        overflow: hidden;
+        overflow: visible;
         box-shadow: 0 8px 28px rgba(10, 41, 89, 0.08);
     }
     
@@ -3887,66 +4090,37 @@
     }
     
     .form-progress {
-        padding: 1rem 1rem 1.15rem;
+        padding: 0.65rem 0.85rem 0.75rem;
     }
 
-    .progress-bar {
-        margin-bottom: 1rem;
-    }
-    
-    .step-indicators {
-        flex-wrap: nowrap;
-        gap: 0.35rem;
-        justify-content: space-between;
+    .form-progress--minimal {
+        padding: 0.35rem 0.75rem 0.4rem;
     }
 
-    .step-indicator {
-        flex: 1 1 0;
-        min-width: 0;
-        gap: 0.35rem;
-    }
-
-    .step-indicator.active {
-        transform: none;
-    }
-    
-    .step-number {
-        width: 2rem;
-        height: 2rem;
-        font-size: 0.8rem;
-    }
-    
-    .step-label {
-        font-size: 0.62rem;
-        line-height: 1.2;
-        text-align: center;
-        max-width: 100%;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+    .form-step .step-header {
+        scroll-margin-top: calc(var(--header-height, 96px) + 12px);
     }
     
     .form-step {
-        padding: 1.25rem 1rem 1.5rem;
+        padding: 0.85rem 0.85rem 1.15rem;
     }
 
     .step-header {
-        margin-bottom: 1.25rem;
+        margin-bottom: 0.75rem;
         text-align: left;
     }
     
     .step-header h2 {
-        font-size: 1.35rem;
-        margin-bottom: 0.45rem;
+        font-size: 1.15rem;
+        margin-bottom: 0.3rem;
         line-height: 1.25;
     }
 
     .step-header p {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         margin: 0;
         max-width: none;
-        line-height: 1.4;
+        line-height: 1.35;
     }
     
     .form-grid {
@@ -4681,6 +4855,7 @@
 /* —— Son adım: kompakt düzen —— */
 .form-step.final-step {
     padding: 1.75rem 1.5rem 2rem;
+    overflow: visible;
 }
 
 .final-step-header {
@@ -4708,6 +4883,40 @@
     border-radius: 12px;
     padding: 1.15rem 1.2rem;
     background: #fafbfc;
+    overflow: visible;
+}
+
+.final-step-grid .form-group--select {
+    position: relative;
+    z-index: 2;
+}
+
+.final-step-grid .form-group--select:focus-within {
+    z-index: 5;
+}
+
+.final-step-block .booking-start-select {
+    width: 100%;
+    margin-top: 0;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    border: 2px solid var(--color-border-light, #e9ecef);
+    background: #fff;
+    color: var(--color-text-primary, #0a2959);
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+}
+
+.final-step-block .booking-start-select:hover,
+.final-step-block .booking-start-select:focus {
+    border-color: rgba(12, 192, 223, 0.55);
+    outline: none;
+}
+
+.final-step-block .booking-start-select.error {
+    border-color: #dc2626;
+    background: #fef2f2;
 }
 
 .final-step-block label {
@@ -4850,11 +5059,33 @@
     gap: 0.5rem;
     margin-top: 6px;
 }
+.phone-input-wrap--dial .phone-dial-field {
+    position: relative;
+    flex: 0 0 6.75rem;
+    min-width: 5.75rem;
+}
+
+.phone-dial-flag {
+    position: absolute;
+    left: 0.55rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.2rem;
+    height: auto;
+    border-radius: 2px;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 1;
+    box-shadow: 0 0 0 1px rgba(10, 41, 89, 0.08);
+}
+
 .phone-input-wrap--dial .phone-dial-input {
-    flex: 0 0 5.25rem;
-    width: 5.25rem;
-    min-width: 4.5rem;
-    text-align: center;
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    padding-left: 2rem;
+    padding-right: 0.45rem;
+    text-align: left;
     font-weight: 600;
     letter-spacing: 0.02em;
 }
@@ -4949,6 +5180,11 @@
     user-select: none;
 }
 
+.bring-friend-discount-prompt.is-hidden,
+.bring-friend-discount-prompt[hidden] {
+    display: none !important;
+}
+
 .bring-friend-discount-text {
     font-size: 0.86rem;
     font-weight: 600;
@@ -5010,41 +5246,88 @@
 
     .booking-form-container {
         border-radius: 16px;
-        overflow: hidden;
+        overflow: visible;
     }
 
     .form-step {
-        padding: 1.25rem 1rem 1.5rem;
+        padding: 0.85rem 0.85rem 1.15rem;
     }
 
     .form-step.final-step {
-        padding-bottom: 1.75rem;
+        padding-bottom: 1.5rem;
     }
 
     .price-calculator-col {
         display: none;
     }
 
-    /* Dock varken birincil CTA’yı form içinde gizle — geri + teklif kalsın */
+    .form-progress.form-progress--minimal {
+        position: relative;
+        top: auto;
+        z-index: 1;
+        padding: 0.35rem 0.75rem 0.4rem;
+        background: #fff;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .bk-progress-mobile-summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 0.3rem;
+        min-width: 0;
+    }
+
+    .bk-progress-mobile-summary__count {
+        flex: 0 0 auto;
+        font-size: 0.65rem;
+        font-weight: 700;
+        color: #94a3b8;
+        letter-spacing: 0.03em;
+        white-space: nowrap;
+    }
+
+    .bk-progress-mobile-summary__label {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: 0.76rem;
+        font-weight: 700;
+        color: #0a2959;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .bk-progress-min {
+        display: block;
+        max-width: none;
+    }
+
+    .bk-progress-min .step-indicator {
+        display: none !important;
+    }
+
+    .bk-progress-min__track {
+        height: 3px;
+        min-width: 0;
+        width: 100%;
+    }
+
+    /* Adım 1: dock birincil CTA — form içi Devam gizli */
+    .form-step:not(.final-step) .form-navigation {
+        display: none !important;
+    }
+
     .form-navigation .btn-next,
     .form-submit-actions .btn-submit-pay,
     #bk-pay-submit {
         display: none !important;
     }
 
-    .form-navigation:not(:has(.btn-prev)) {
-        display: none !important;
-    }
-
-    .form-navigation--dual-submit .form-submit-actions {
-        display: flex;
-    }
-
-    .form-submit-actions .btn-submit-quote,
-    #bk-submit-quote {
-        display: inline-flex !important;
-        width: 100%;
-        min-height: 3rem;
+    .price-quote-cta {
+        display: none;
     }
 
     .bk-mobile-dock {
@@ -5106,27 +5389,27 @@
         transform: scale(0.98);
     }
 
-    .bk-pay__opt--location,
-    .bk-pay__opt--plan {
+    .bk-pay-plans {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+    }
+
+    .bk-pay-plan {
         min-height: 3.25rem;
         padding: 0.9rem 1rem;
     }
 
-    .bk-pay__opt-price {
+    .bk-pay-plan__price {
         font-size: 1.2rem;
-        white-space: normal;
-        text-align: right;
     }
 
-    /* Çizgi butonların üstüne binmesin — gutter koru */
-    .bk-pay__opts,
-    .bk-pay__branch {
-        margin-left: 2.35rem;
+    .final-step-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
     }
 
-    .bk-pay__step:not(:last-child)::after {
-        left: 0.85rem;
-        z-index: 0;
+    .extras-step-grid {
+        grid-template-columns: 1fr;
     }
 
     .bk-extra-info-btn {
@@ -5200,4 +5483,331 @@
     .bk-pay__opt-body {
         gap: 0.35rem;
     }
+}
+
+/* ===== Compact final-step extras / pay plans ===== */
+.bk-final-extras {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    margin: 0.55rem 0 0.45rem;
+}
+
+@media (min-width: 700px) {
+    .bk-final-extras {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.6rem;
+    }
+}
+
+.bk-extra-mini {
+    display: block;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    min-width: 0;
+}
+
+.bk-extra-mini__input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+}
+
+.bk-extra-mini__card {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.55rem;
+    height: 100%;
+    min-height: 4rem;
+    padding: 0.5rem 0.55rem 0.5rem 0.5rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 11px;
+    background: #fff;
+    overflow: hidden;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.bk-extra-mini:hover .bk-extra-mini__card {
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 8px rgba(10, 41, 89, 0.05);
+}
+
+.bk-extra-mini:has(.bk-extra-mini__input:checked) .bk-extra-mini__card {
+    border-color: #0cc0df;
+    box-shadow: 0 0 0 2px rgba(12, 192, 223, 0.2);
+    background: #f8fdfe;
+}
+
+.bk-extra-mini__media {
+    position: relative;
+    width: 3.25rem;
+    height: 3.25rem;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: #e2e8f0;
+    border-radius: 8px;
+}
+
+.bk-extra-mini__media--icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    color: #b45309;
+    font-size: 1.15rem;
+}
+
+.bk-extra-mini__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.bk-extra-mini__media::after {
+    display: none;
+}
+
+.bk-extra-mini__tick {
+    position: absolute;
+    right: -0.15rem;
+    bottom: -0.15rem;
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    color: #0cc0df;
+    border: 1.5px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.55rem;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 1;
+}
+
+.bk-extra-mini:has(.bk-extra-mini__input:checked) .bk-extra-mini__tick {
+    opacity: 1;
+    transform: scale(1);
+    background: #0cc0df;
+    color: #fff;
+    border-color: #0cc0df;
+}
+
+.bk-extra-mini__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    flex: 1;
+    min-width: 0;
+    padding: 0 1.35rem 0 0;
+}
+
+.bk-extra-mini__title {
+    font-weight: 700;
+    color: #0a2959;
+    font-size: 0.78rem;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.bk-extra-mini__price {
+    font-weight: 800;
+    color: #0e7490;
+    font-size: 0.76rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    line-height: 1.2;
+}
+
+.bk-extra-mini__price--muted {
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.7rem;
+}
+
+.bk-extra-mini__was {
+    text-decoration: line-through;
+    color: #94a3b8;
+    font-weight: 600;
+    font-size: 0.68rem;
+}
+
+.bk-extra-mini__free {
+    color: #059669;
+}
+
+.bk-extra-mini__info {
+    position: absolute;
+    top: 0.35rem;
+    right: 0.35rem;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: none;
+    border-radius: 50%;
+    background: rgba(248, 250, 252, 0.95);
+    color: #64748b;
+    font-size: 0.65rem;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.bk-extra-mini__info:hover {
+    background: #fff;
+    color: #0e7490;
+}
+
+.bk-bremen-note {
+    font-size: 0.8rem;
+    color: #b45309;
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-radius: 8px;
+    padding: 0.55rem 0.75rem;
+    margin: 0.5rem 0;
+    line-height: 1.4;
+    font-family: 'Outfit', sans-serif;
+}
+
+.bk-pay-plans {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
+}
+
+@media (max-width: 900px) {
+    .bk-pay-plans {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bk-pay-plan {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.85rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    background: #fff;
+    font-family: 'Outfit', sans-serif;
+    position: relative;
+}
+
+.bk-pay-plan:has(input:checked) {
+    border-color: #0a2959;
+    box-shadow: 0 0 0 3px rgba(12, 192, 223, 0.25);
+}
+
+.bk-pay-plan.is-disabled,
+.bk-pay-plan:has(input:disabled) {
+    opacity: 0.45;
+    cursor: not-allowed;
+    filter: grayscale(0.3);
+}
+
+.bk-pay-plan input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.bk-pay-plan__title {
+    font-weight: 800;
+    color: #0a2959;
+    font-size: 0.92rem;
+}
+
+.bk-pay-plan__price {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #0e7490;
+}
+
+.bk-pay-plan__hint {
+    font-size: 0.72rem;
+    color: #64748b;
+    line-height: 1.3;
+}
+
+.bk-quote-pay-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(10, 41, 89, 0.45);
+}
+
+.bk-quote-pay-modal[hidden] {
+    display: none !important;
+}
+
+.bk-quote-pay-modal__dialog {
+    width: min(100%, 420px);
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.25rem 1.35rem;
+    box-shadow: 0 20px 50px rgba(10, 41, 89, 0.2);
+    font-family: 'Outfit', sans-serif;
+}
+
+.bk-quote-pay-modal__title {
+    margin: 0 0 0.5rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0a2959;
+}
+
+.bk-quote-pay-modal__text {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.45;
+}
+
+.bk-quote-pay-modal__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    justify-content: flex-end;
+}
+
+.bk-quote-pay-modal__dismiss {
+    padding: 0.75rem 1.15rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    background: #6c757d;
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bk-quote-pay-modal__dismiss:hover {
+    transform: translateY(-2px);
 }

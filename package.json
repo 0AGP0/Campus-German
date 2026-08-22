@@ -7,6 +7,8 @@
     "start": "astro dev",
     "build": "astro build",
     "build:hostinger": "astro build && node -e \"try{require('fs').rmSync('dist/k',{recursive:true,force:true});console.log('dist/k kaldırıldı (Hostinger için k.php kullanılacak)');}catch(e){}\"",
+    "pack:dist": "node scripts/pack-dist.mjs",
+    "deploy:rsync": "bash scripts/deploy-rsync.sh",
     "postbuild": "node scripts/verify-sitemap.js",
     "sitemap:copy": "node scripts/copy-sitemap-for-vercel.js",
     "preview": "astro preview",

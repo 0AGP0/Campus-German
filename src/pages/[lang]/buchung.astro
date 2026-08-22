@@ -1,6 +1,5 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-import BookingExtrasStep from '../../components/BookingExtrasStep.astro';
 import '../../styles/pages/buchung.css';
 import { coursePricing } from '../../data/coursePricing.ts';
 import { getFirstMondayStartDateOptions, PROMO_PRICE, LESSONS_UP_TO_200, ONLINE_LEVEL_PRICES, parseDdMmYyyy, snapToNearestMonday, getCourseEndFriday, formatCourseDateRange } from '../../utils/coursePricingHelper';
@@ -12,6 +11,8 @@ import {
     STRIPE_ADJUST_PRODUCT,
     TELC_PREP_EUR,
     TELC_PREP_WEEKS,
+    STRIPE_FEE_RATE,
+    STRIPE_FEE_FIXED_EUR,
 } from '../../data/stripeCatalog';
 export async function getStaticPaths() {
     return [
@@ -52,7 +53,7 @@ const legalCheckboxCopy = {
         agbLabel: 'Genel Hüküm ve Koşullar',
         widerrufMid: ' (ve ',
         widerrufLabel: 'Cayma Hakkı Bilgilendirmesi',
-        termsAfter: `)'ı okudum ve kabul ediyorum. Kayıt/taksitte ${RESERVATION_DEPOSIT_EUR} € kapora alınır; kalan ${BALANCE_DUE_DAYS} gün içinde ödenmezse kapora iade edilmez (AGB § 5.1a). Hizmetin cayma süresi dolmadan başlamasını talep ediyor, erken caymada değer tazmini doğabileceğini biliyorum. *`,
+        termsAfter: `)'ı okudum ve kabul ediyorum. Hizmetin cayma süresi dolmadan başlamasını talep ediyor, erken caymada değer tazmini doğabileceğini biliyorum. *`,
         privacyBefore: '(*) ',
         privacyLabel: 'Kişisel Verilerin Korunması',
         privacyAfter: ' hakkındaki bilgilendirmeyi okudum. *',
@@ -62,7 +63,7 @@ const legalCheckboxCopy = {
         agbLabel: 'Allgemeinen Geschäftsbedingungen',
         widerrufMid: ' (samt ',
         widerrufLabel: 'Widerrufsbelehrung',
-        termsAfter: `) gelesen und akzeptiere sie. Bei Anmeldung/Ratenzahlung sind ${RESERVATION_DEPOSIT_EUR} € Anzahlung fällig; bei Restzahlung nicht binnen ${BALANCE_DUE_DAYS} Tagen verfällt sie (AGB § 5.1a). Ich verlange den Leistungsbeginn vor Ablauf der Widerrufsfrist und kenne mögliche Wertersatzpflicht bei früherem Widerruf. *`,
+        termsAfter: `) gelesen und akzeptiere sie. Ich verlange den Leistungsbeginn vor Ablauf der Widerrufsfrist und kenne mögliche Wertersatzpflicht bei früherem Widerruf. *`,
         privacyBefore: '(*) Die Hinweise zum ',
         privacyLabel: 'Datenschutz',
         privacyAfter: ' habe ich zur Kenntnis genommen. *',
@@ -72,7 +73,7 @@ const legalCheckboxCopy = {
         agbLabel: 'General Terms and Conditions',
         widerrufMid: ' (and the ',
         widerrufLabel: 'Withdrawal Notice',
-        termsAfter: `). For registration/installments a €${RESERVATION_DEPOSIT_EUR} deposit applies and is forfeited if the balance is not paid within ${BALANCE_DUE_DAYS} days (T&Cs § 5.1a). I request that the service begin before the withdrawal period ends and accept possible compensation if I withdraw early. *`,
+        termsAfter: `). I request that the service begin before the withdrawal period ends and accept possible compensation if I withdraw early. *`,
         privacyBefore: '(*) I have taken note of the ',
         privacyLabel: 'Privacy Policy',
         privacyAfter: '. *',
@@ -82,7 +83,7 @@ const legalCheckboxCopy = {
         agbLabel: 'Condiciones Generales',
         widerrufMid: ' (y la ',
         widerrufLabel: 'Información sobre desistimiento',
-        termsAfter: `). En inscripción/plazos se aplica un depósito de ${RESERVATION_DEPOSIT_EUR} €; se pierde si el resto no se paga en ${BALANCE_DUE_DAYS} días (CG § 5.1a). Solicito que el servicio comience antes del plazo de desistimiento y acepto posible compensación si desisto antes. *`,
+        termsAfter: `). Solicito que el servicio comience antes del plazo de desistimiento y acepto posible compensación si desisto antes. *`,
         privacyBefore: '(*) He tomado nota de la información sobre ',
         privacyLabel: 'Protección de datos',
         privacyAfter: '. *',
@@ -326,8 +327,8 @@ const t = {
         submitButton: "Gönder",
         yes: "Evet",
         no: "Hayır",
-        courseInfoDesc: "Program ve seviye seçiniz",
-        extrasDesc: "Vize, konaklama ve havaalanı seçenekleri",
+        courseInfoDesc: "Programınızı ve kurs seçimlerinizi yapın",
+        extrasDesc: "Konaklama, havaalanı karşılama ve Speakcafé",
         extraAdd: "Ekle",
         extraAdded: "Eklendi",
         extraRemove: "Kaldır",
@@ -346,7 +347,7 @@ const t = {
         payNeedGermany: "Lütfen konumunuzu seçin.",
         extrasSpecialRequestLabel: "Özel istek",
         extrasSpecialRequestPlaceholder: "Varsa özel isteğinizi yazın...",
-        requestDesc: "Kişisel bilgilerinizi giriniz",
+        requestDesc: "Kişisel bilgiler, başlangıç tarihi, ek hizmetler ve ödeme planı",
         back: "Geri",
         termsAccepted: "Genel Hüküm ve Koşullar'ı okudum ve kabul ediyorum",
         privacyAccepted: "Kişisel Verilerin Korunması bilgilendirmesini kabul ediyorum",
@@ -401,8 +402,6 @@ const t = {
         selectDuration: "Süre seçiniz",
         total: "Toplam",
         continueBtn: "Devam Et",
-        courseInfo: "Kurs Bilgileri",
-        courseInfoDesc: "Program ve tarih bilgilerinizi seçin",
         duration: "Süre",
         durationPlaceholder: "Süre seçiniz",
         weeks: "Hafta",
@@ -782,7 +781,7 @@ const t = {
         total: "Gesamt",
         continueBtn: "Weiter",
         courseInfo: "Kursinformationen",
-        courseInfoDesc: "Programm und Niveau wählen",
+        courseInfoDesc: "Programm und Kursauswahl treffen",
         extrasDesc: "Visum, Unterkunft und Flughafenabholung",
         extraAdd: "Hinzufügen",
         extraAdded: "Hinzugefügt",
@@ -802,7 +801,7 @@ const t = {
         payNeedGermany: "Bitte wählen Sie Ihren Standort.",
         extrasSpecialRequestLabel: "Sonderwunsch",
         extrasSpecialRequestPlaceholder: "Optionaler Sonderwunsch...",
-        requestDesc: "Kontaktdaten eingeben",
+        requestDesc: "Kontaktdaten, Startdatum, Extras und Zahlungsplan",
         optionalServices: "Zusatzleistungen",
         visaGuaranteePrice: "Einladungsschreiben (+50 €)",
         airportPickupPrice: "Flughafenabholung (100 €)",
@@ -1192,7 +1191,7 @@ const t = {
         total: "Total",
         continueBtn: "Continue",
         courseInfo: "Course Information",
-        courseInfoDesc: "Select program and level",
+        courseInfoDesc: "Choose your program and courses",
         extrasDesc: "Visa, accommodation and airport pickup",
         extraAdd: "Add",
         extraAdded: "Added",
@@ -1212,7 +1211,7 @@ const t = {
         payNeedGermany: "Please select your location.",
         extrasSpecialRequestLabel: "Special request",
         extrasSpecialRequestPlaceholder: "Any special request...",
-        requestDesc: "Enter your contact details",
+        requestDesc: "Contact details, start date, extras and payment plan",
         optionalServices: "Additional services",
         visaGuaranteePrice: "Letter of invitation (+50 €)",
         airportPickupPrice: "Airport pickup (100 €)",
@@ -1602,7 +1601,7 @@ const t = {
         total: "Total",
         continueBtn: "Continuar",
         courseInfo: "Información del curso",
-        courseInfoDesc: "Seleccione programa y nivel",
+        courseInfoDesc: "Seleccione programa y cursos",
         extrasDesc: "Visado, alojamiento y recogida en aeropuerto",
         extraAdd: "Añadir",
         extraAdded: "Añadido",
@@ -1622,7 +1621,7 @@ const t = {
         payNeedGermany: "Seleccione su ubicación.",
         extrasSpecialRequestLabel: "Petición especial",
         extrasSpecialRequestPlaceholder: "Si tiene una petición especial...",
-        requestDesc: "Introduzca sus datos de contacto",
+        requestDesc: "Datos de contacto, fecha de inicio, extras y plan de pago",
         optionalServices: "Servicios adicionales",
         visaGuaranteePrice: "Carta de invitación (+50 €)",
         airportPickupPrice: "Recogida en aeropuerto (100 €)",
@@ -1937,8 +1936,6 @@ const extrasStepCopy = {
     infoClose: translations.extraInfoClose,
     infoBtnLabel: translations.extraInfoBtnLabel,
     cards: [
-        { field: 'visa-guarantee', title: translations.extraShortVisa, fullTitle: translations.visaGuaranteeLabel, price: STRIPE_EXTRAS.visa.eur, image: extraServiceImages.visa, icon: 'passport', theme: 'visa' as const, infoType: 'general' as const },
-        { field: 'university-admission-support', title: translations.extraShortUniversity, fullTitle: translations.universityAdmissionPriceLabel, price: STRIPE_EXTRAS.university.eur, image: extraServiceImages.university, icon: 'user-graduate', theme: 'university' as const, infoType: 'general' as const },
         { field: 'accommodation-support', title: translations.extraShortAccommodation, fullTitle: translations.accommodationSupportLabel, price: STRIPE_EXTRAS.accommodation.eur, image: extraServiceImages.accommodation, icon: 'home', theme: 'accommodation' as const, infoType: 'accommodation' as const },
         { field: 'airport-pickup', title: translations.extraShortAirport, fullTitle: translations.airportPickupPrice, price: STRIPE_EXTRAS.airport.eur, image: extraServiceImages.airport, icon: 'plane-arrival', theme: 'airport' as const, infoType: 'general' as const },
         {
@@ -1963,27 +1960,27 @@ const extrasStepCopy = {
             <div class="booking-form-container">
                 <!-- Main Form Section -->
                 <div class="booking-form-main">
-                    <!-- Progress Steps (4 steps) -->
-                    <div class="form-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 20%"></div>
+                    <!-- Progress (2 steps, minimal) -->
+                    <div class="form-progress form-progress--minimal" aria-label={lang === 'tr' ? 'Form adımları' : 'Form steps'}>
+                        <div class="bk-progress-mobile-summary" id="bk-progress-mobile-summary" aria-live="polite">
+                            <span class="bk-progress-mobile-summary__count" id="bk-progress-mobile-count">1/2</span>
+                            <span class="bk-progress-mobile-summary__label" id="bk-progress-mobile-label">{translations.step1}</span>
                         </div>
-                        <div class="step-indicators">
+                        <div class="bk-progress-min">
                             <div class="step-indicator active" data-step="1">
-                                <span class="step-number">1</span>
-                                <span class="step-label">{translations.step1}</span>
+                                <span class="bk-progress-min__pill">
+                                    <span class="bk-progress-min__num">1</span>
+                                    <span class="step-label">{translations.step1}</span>
+                                </span>
+                            </div>
+                            <div class="bk-progress-min__track" aria-hidden="true">
+                                <span class="progress-fill" style="width: 50%"></span>
                             </div>
                             <div class="step-indicator" data-step="2">
-                                <span class="step-number">2</span>
-                                <span class="step-label">{translations.step2}</span>
-                            </div>
-                            <div class="step-indicator" data-step="3">
-                                <span class="step-number">3</span>
-                                <span class="step-label">{translations.step3}</span>
-                            </div>
-                            <div class="step-indicator" data-step="4">
-                                <span class="step-number">4</span>
-                                <span class="step-label">{translations.step4}</span>
+                                <span class="bk-progress-min__pill">
+                                    <span class="bk-progress-min__num">2</span>
+                                    <span class="step-label">{translations.step4}</span>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -2001,7 +1998,7 @@ const extrasStepCopy = {
                                 <!-- Step 1: Program -->
                                 <div class="form-step active" data-step="1">
                                     <div class="step-header">
-                                        <h2>{translations.courseInfo}</h2>
+                                        <h2>{translations.step1}</h2>
                                         <p>{translations.courseInfoDesc}</p>
                                     </div>
                                     <div class="form-grid">
@@ -2062,20 +2059,7 @@ const extrasStepCopy = {
                                                 <div class="level-picker" id="level-picker">
                                                     <div class="level-picker__tiles">
                                                         <div id="course-levels-buttons" class="course-slot-grid level-tile-grid" role="group" aria-label={translations.courseSelectionLabel}>
-                                                            <div class="lvl-opt lvl-opt--start" id="level-summary-start">
-                                                                <span class="lvl-opt__start-icon" aria-hidden="true"><i class="fas fa-calendar-alt"></i></span>
-                                                                <div class="lvl-opt__start-body">
-                                                                    <label class="lvl-opt__start-label" for="level-start-date">{translations.startDateNearest}</label>
-                                                                    <div class="level-summary__select-wrap">
-                                                                        <select id="level-start-date" class="level-summary__select" aria-label={translations.startDateNearest}>
-                                                                            {startDateOptions.map((opt, i) => (
-                                                                                <option value={opt.value} selected={i === 0 ? true : undefined}>{opt.label}</option>
-                                                                            ))}
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            {courseCardLevels.map((level) => {
+                                                                                                                        {courseCardLevels.map((level) => {
                                                                 const theme = courseSlotThemes[level];
                                                                 const isOnlineOnlyLevel = level === 'a1' || level === 'a2';
                                                                 const levelTitle = level.toUpperCase();
@@ -2245,17 +2229,7 @@ const extrasStepCopy = {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group full-width booking-start-fallback" id="booking-start-fallback" hidden>
-                                        <label for="fallback-start-date">{translations.startDateNearest} *</label>
-                                        <div class="level-summary__select-wrap">
-                                            <select id="fallback-start-date" class="level-summary__select" aria-label={translations.startDateNearest}>
-                                                {startDateOptions.map((opt, i) => (
-                                                    <option value={opt.value} selected={i === 0 ? true : undefined}>{opt.label}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                        <p class="booking-start-fallback__error" id="booking-start-date-error" hidden role="alert">{translations.needStartDate}</p>
-                                    </div>
+                                    <div id="booking-start-fallback" hidden></div>
                                     <input type="hidden" id="start-date" name="start-date" value={nearestStartDateValue} />
                                     <input type="hidden" id="booking-start-date-mode" name="start-date-mode" value="preset" />
                                     <input type="hidden" name="timezone-slot" id="booking-timezone-slot" value="" />
@@ -2265,139 +2239,9 @@ const extrasStepCopy = {
                                     </div>
                                 </div>
 
-                                <BookingExtrasStep copy={extrasStepCopy} />
 
-                                <!-- Step 3: Payment -->
-                                <div class="form-step" data-step="3">
-                                    <div class="step-header">
-                                        <h2>{translations.step3}</h2>
-                                        <p>{translations.payStepDesc}</p>
-                                    </div>
-
-                                    <div class="bk-pay" id="bk-pay">
-                                        <ol class="bk-pay__path">
-                                            <li class="bk-pay__step" data-pay-step="1">
-                                                <div class="bk-pay__head">
-                                                    <span class="bk-pay__num" aria-hidden="true">1</span>
-                                                    <span class="bk-pay__head-label">{translations.germanyLocationLabel}</span>
-                                                </div>
-                                                <div class="bk-pay__opts bk-pay__opts--2 bk-pay__opts--location" role="radiogroup" aria-label={translations.germanyLocationLabel}>
-                                                    <label class="bk-pay__opt bk-pay__opt--location">
-                                                        <input type="radio" name="in-germany" value="yes" />
-                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
-                                                        <span class="bk-pay__opt-body bk-pay__opt-body--location">
-                                                            <span class="bk-pay__flag bk-pay__flag--de" aria-hidden="true" title="Deutschland">
-                                                                <span class="bk-pay__flag-stripe bk-pay__flag-stripe--black"></span>
-                                                                <span class="bk-pay__flag-stripe bk-pay__flag-stripe--red"></span>
-                                                                <span class="bk-pay__flag-stripe bk-pay__flag-stripe--gold"></span>
-                                                            </span>
-                                                            <span class="bk-pay__opt-title">{translations.germanyLocationYes}</span>
-                                                        </span>
-                                                    </label>
-                                                    <label class="bk-pay__opt bk-pay__opt--location">
-                                                        <input type="radio" name="in-germany" value="no" />
-                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
-                                                        <span class="bk-pay__opt-body bk-pay__opt-body--location">
-                                                            <span class="bk-pay__flag bk-pay__flag--world" aria-hidden="true" title="International">
-                                                                <i class="fas fa-globe-europe" aria-hidden="true"></i>
-                                                            </span>
-                                                            <span class="bk-pay__opt-title">{translations.germanyLocationNo}</span>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </li>
-
-                                            <li class="bk-pay__step" id="bk-pay-plan" hidden data-pay-step="2">
-                                                <div class="bk-pay__head">
-                                                    <span class="bk-pay__num" aria-hidden="true">2</span>
-                                                    <span class="bk-pay__head-label">{translations.payPlanLabel}</span>
-                                                </div>
-                                                <div class="bk-pay__opts bk-pay__opts--2" role="radiogroup" aria-label={translations.payPlanLabel}>
-                                                    <label class="bk-pay__opt bk-pay__opt--plan bk-pay__opt--visa">
-                                                        <input type="radio" name="pay-plan" value="full" />
-                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
-                                                        <span class="bk-pay__opt-body">
-                                                            <span class="bk-pay__visa">{translations.payFullVisaInfo}</span>
-                                                            <span class="bk-pay__opt-title">{translations.payPlanFull}</span>
-                                                            <span class="bk-pay__opt-meta">
-                                                                <span class="bk-pay__save" id="bk-pay-full-save" hidden></span>
-                                                            </span>
-                                                        </span>
-                                                        <span class="bk-pay__price-block">
-                                                            <span class="bk-pay__opt-was" id="bk-pay-full-was" hidden></span>
-                                                            <span class="bk-pay__opt-price" id="bk-pay-full-amount">—</span>
-                                                            <span class="bk-pay__price-cap">{translations.payPriceOnce}</span>
-                                                        </span>
-                                                    </label>
-                                                    <label class="bk-pay__opt bk-pay__opt--plan">
-                                                        <input type="radio" name="pay-plan" value="installment" />
-                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
-                                                        <span class="bk-pay__opt-body">
-                                                            <span class="bk-pay__opt-title">{translations.payPlanInstall}</span>
-                                                        </span>
-                                                        <span class="bk-pay__price-block">
-                                                            <span class="bk-pay__opt-price" id="bk-pay-install-amount">—</span>
-                                                            <span class="bk-pay__price-cap" id="bk-pay-install-hint">{translations.payInstallDepositHint}</span>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="bk-pay__branch" id="bk-pay-install" hidden role="radiogroup" aria-label={translations.payPlanInstall}>
-                                                    <label class="bk-pay__branch-opt bk-pay__branch-opt--featured">
-                                                        <input type="radio" name="pay-install" value="half" />
-                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
-                                                        <span class="bk-pay__branch-body">
-                                                            <span class="bk-pay__branch-title-row">
-                                                                <span class="bk-pay__branch-text">{translations.payInstallHalfTitle}</span>
-                                                                <span class="bk-pay__branch-badge">{translations.payInstallHalfBadge}</span>
-                                                            </span>
-                                                            <span class="bk-pay__branch-prices">
-                                                                <span class="bk-pay__branch-row">
-                                                                    <span>{translations.payNowShort}</span>
-                                                                    <strong id="bk-pay-half-now">—</strong>
-                                                                </span>
-                                                                <span class="bk-pay__branch-row bk-pay__branch-row--muted" id="bk-pay-half-now-hint-row">
-                                                                    <span id="bk-pay-half-now-hint"></span>
-                                                                </span>
-                                                                <span class="bk-pay__branch-row bk-pay__branch-row--muted" id="bk-pay-half-rest-row">
-                                                                    <span id="bk-pay-half-rest-label">{translations.payInstallHalfRest}</span>
-                                                                    <span id="bk-pay-half-rest">—</span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </label>
-                                                    <label class="bk-pay__branch-opt">
-                                                        <input type="radio" name="pay-install" value="course" />
-                                                        <span class="bk-pay__radio" aria-hidden="true"></span>
-                                                        <span class="bk-pay__branch-body">
-                                                            <span class="bk-pay__branch-text">{translations.payInstallCourseTitle}</span>
-                                                            <span class="bk-pay__branch-prices">
-                                                                <span class="bk-pay__branch-row">
-                                                                    <span>{translations.payNowShort}</span>
-                                                                    <strong id="bk-pay-course-now">—</strong>
-                                                                </span>
-                                                                <span class="bk-pay__branch-row bk-pay__branch-row--muted" id="bk-pay-course-now-hint-row">
-                                                                    <span id="bk-pay-course-now-hint"></span>
-                                                                </span>
-                                                                <span class="bk-pay__branch-row bk-pay__branch-row--muted">
-                                                                    <span id="bk-pay-course-rest-label">{translations.payInstallCourseRest}</span>
-                                                                    <span id="bk-pay-course-rest">—</span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </li>
-                                        </ol>
-                                    </div>
-
-                                    <div class="form-navigation">
-                                        <button type="button" class="btn-prev">{translations.back}</button>
-                                        <button type="button" class="btn-next">{translations.continueBtn}</button>
-                                    </div>
-                                </div>
-
-                                <!-- Step 4: Personal -->
-                                <div class="form-step final-step" data-step="4">
+                                <!-- Step 2: Personal + date + extras + payment -->
+                                <div class="form-step final-step" data-step="2">
                                     <div class="step-header final-step-header">
                                         <h2>{translations.step4}</h2>
                                         <p>{translations.requestDesc}</p>
@@ -2417,18 +2261,29 @@ const extrasStepCopy = {
                                                 <div class="form-group form-group--phone">
                                                     <label for="phone">{translations.phoneLabel} *</label>
                                                     <div class="phone-input-wrap phone-input-wrap--dial">
-                                                        <input
-                                                            type="text"
-                                                            id="phone-country-code"
-                                                            name="phone-country-code"
-                                                            class="booking-text-input phone-dial-input"
-                                                            value={defaultPhoneCountry.dial}
-                                                            placeholder={translations.phoneDialPlaceholder}
-                                                            inputmode="tel"
-                                                            autocomplete="tel-country-code"
-                                                            aria-label={translations.phoneDialLabel}
-                                                            required
-                                                        />
+                                                        <div class="phone-dial-field">
+                                                            <img
+                                                                id="phone-dial-flag"
+                                                                class="phone-dial-flag"
+                                                                src={`https://flagcdn.com/w40/${defaultPhoneCountry.iso}.png`}
+                                                                alt=""
+                                                                width="20"
+                                                                height="14"
+                                                                loading="lazy"
+                                                            />
+                                                            <input
+                                                                type="text"
+                                                                id="phone-country-code"
+                                                                name="phone-country-code"
+                                                                class="booking-text-input phone-dial-input"
+                                                                value={defaultPhoneCountry.dial}
+                                                                placeholder={translations.phoneDialPlaceholder}
+                                                                inputmode="tel"
+                                                                autocomplete="tel-country-code"
+                                                                aria-label={translations.phoneDialLabel}
+                                                                required
+                                                            />
+                                                        </div>
                                                         <input type="tel" id="phone" name="phone" required class="booking-text-input phone-number-input" placeholder={translations.phonePlaceholder} autocomplete="tel-national">
                                                     </div>
                                                 </div>
@@ -2437,32 +2292,145 @@ const extrasStepCopy = {
                                                     <input type="email" id="email" name="email" required class="booking-text-input" placeholder={translations.emailPlaceholder}>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="city">{translations.cityLabel} *</label>
-                                                    <input type="text" id="city" name="city" required class="booking-text-input" placeholder={translations.cityPlaceholder}>
+                                                    <label for="address">{translations.addressLine}</label>
+                                                    <input type="text" id="address" name="address" class="booking-text-input" placeholder={translations.addressLinePlaceholder} autocomplete="street-address">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="country">{translations.countryLabel} *</label>
-                                                    <input type="text" id="country" name="country" required class="booking-text-input" placeholder={translations.countryPlaceholder}>
+                                                    <input type="text" id="country" name="country" required class="booking-text-input" placeholder={translations.countryPlaceholder} autocomplete="country-name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="heard-from">{translations.hearAboutLabel}</label>
+                                                    <input
+                                                        type="text"
+                                                        id="heard-from"
+                                                        name="heard-from"
+                                                        class="booking-text-input"
+                                                        placeholder={lang === 'tr' ? 'Örn. Google, arkadaş, acenta…' : lang === 'de' ? 'z. B. Google, Freund, Agentur…' : lang === 'es' ? 'p. ej. Google, amigo, agencia…' : 'e.g. Google, friend, agency…'}
+                                                        autocomplete="off"
+                                                    />
+                                                </div>
+                                                <div class="form-group form-group--select">
+                                                    <label for="level-start-date">{translations.startDateNearest} *</label>
+                                                    <select id="level-start-date" class="booking-select-input booking-start-select" aria-label={translations.startDateNearest}>
+                                                        {startDateOptions.map((opt, i) => (
+                                                            <option value={opt.value} selected={i === 0 ? true : undefined}>{opt.label}</option>
+                                                        ))}
+                                                    </select>
+                                                    <select id="fallback-start-date" class="booking-start-select" hidden aria-hidden="true" tabindex="-1">
+                                                        {startDateOptions.map((opt, i) => (
+                                                            <option value={opt.value} selected={i === 0 ? true : undefined}>{opt.label}</option>
+                                                        ))}
+                                                    </select>
+                                                    <p class="booking-start-fallback__error" id="booking-start-date-error" hidden role="alert">{translations.needStartDate}</p>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div id="bring-friend-fields" class="final-step-block bring-friend-fields" style="display: none;">
-                                            <p class="final-step-subtitle">{translations.bringFriendSectionTitle}</p>
-                                            <div class="form-grid final-step-grid">
-                                                <div class="form-group full-width">
-                                                    <label for="bring-friend-name">{translations.bringFriendNameLabel} *</label>
-                                                    <input type="text" id="bring-friend-name" name="bring-friend-name" class="booking-text-input" placeholder={translations.bringFriendNameLabel}>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="bring-friend-email">{translations.bringFriendEmailLabel} *</label>
-                                                    <input type="email" id="bring-friend-email" name="bring-friend-email" class="booking-text-input" placeholder={translations.bringFriendEmailLabel}>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="bring-friend-phone">{translations.bringFriendPhoneLabel} *</label>
-                                                    <input type="tel" id="bring-friend-phone" name="bring-friend-phone" class="booking-text-input" placeholder={translations.bringFriendPhoneLabel}>
-                                                </div>
+                                        <div class="final-step-block">
+                                            <p class="final-step-subtitle">{translations.step2}</p>
+                                            <div class="bk-final-extras" role="group" aria-label={translations.step2}>
+                                                {extrasStepCopy.cards.map((card) => (
+                                                    <label
+                                                        class:list={['bk-extra-mini', `bk-extra-mini--${card.theme}`, card.free && 'bk-extra-mini--free']}
+                                                        data-extra-field={card.field}
+                                                    >
+                                                        <input
+                                                            type="checkbox"
+                                                            class="bk-extra-mini__input"
+                                                            name={card.field}
+                                                            value="yes"
+                                                            checked={card.free ? true : undefined}
+                                                        />
+                                                        <span class="bk-extra-mini__card">
+                                                            <span class="bk-extra-mini__media">
+                                                                <img src={card.image} alt="" width="80" height="80" loading="lazy" class="bk-extra-mini__photo" />
+                                                                <span class="bk-extra-mini__tick" aria-hidden="true"><i class="fas fa-check"></i></span>
+                                                            </span>
+                                                            <span class="bk-extra-mini__body">
+                                                                <span class="bk-extra-mini__title">{card.title}</span>
+                                                                <span class="bk-extra-mini__price">
+                                                                    {card.free ? (
+                                                                        <>
+                                                                            {card.listPrice && <span class="bk-extra-mini__was">{card.listPrice} €</span>}
+                                                                            <span class="bk-extra-mini__free">{extrasStepCopy.freeLabel}</span>
+                                                                        </>
+                                                                    ) : (
+                                                                        <>+{card.price} €</>
+                                                                    )}
+                                                                </span>
+                                                            </span>
+                                                            <button
+                                                                type="button"
+                                                                class="bk-extra-info-btn bk-extra-mini__info"
+                                                                data-info-type={card.infoType}
+                                                                data-info-title={card.fullTitle || card.title}
+                                                                aria-label={`${extrasStepCopy.infoBtnLabel}: ${card.fullTitle || card.title}`}
+                                                            >
+                                                                <i class="fas fa-info" aria-hidden="true"></i>
+                                                            </button>
+                                                        </span>
+                                                    </label>
+                                                ))}
+                                                <label class="bk-extra-mini bk-extra-mini--bremen" id="bk-bremen-extra">
+                                                    <input type="checkbox" class="bk-extra-mini__input" name="bremen-resident" id="bremen-resident" value="yes" />
+                                                    <span class="bk-extra-mini__card">
+                                                        <span class="bk-extra-mini__media bk-extra-mini__media--icon" aria-hidden="true">
+                                                            <i class="fas fa-map-marker-alt"></i>
+                                                            <span class="bk-extra-mini__tick" aria-hidden="true"><i class="fas fa-check"></i></span>
+                                                        </span>
+                                                        <span class="bk-extra-mini__body">
+                                                            <span class="bk-extra-mini__title">{lang === 'tr' ? 'Bremen indirimi' : lang === 'de' ? 'Bremen-Rabatt' : lang === 'es' ? 'Descuento Bremen' : 'Bremen discount'}</span>
+                                                            <span class="bk-extra-mini__price bk-extra-mini__price--muted">
+                                                                {lang === 'tr' ? 'Almanya ikameti' : lang === 'de' ? 'Wohnsitz DE' : lang === 'es' ? 'Residencia DE' : 'DE residents'}
+                                                            </span>
+                                                        </span>
+                                                        <button
+                                                            type="button"
+                                                            class="bk-extra-info-btn bk-extra-mini__info"
+                                                            data-info-type="bremen"
+                                                            data-info-title={lang === 'tr' ? 'Bremen indirimi' : lang === 'de' ? 'Bremen-Rabatt' : lang === 'es' ? 'Descuento Bremen' : 'Bremen discount'}
+                                                            aria-label={`${extrasStepCopy.infoBtnLabel}: ${lang === 'tr' ? 'Bremen indirimi' : 'Bremen'}`}
+                                                        >
+                                                            <i class="fas fa-info" aria-hidden="true"></i>
+                                                        </button>
+                                                    </span>
+                                                </label>
                                             </div>
+                                            <p class="bk-bremen-note" id="bk-bremen-note">
+                                                {lang === 'tr'
+                                                    ? 'Bremen / Almanya ikamet indirimi yalnızca Almanya’da yaşayanlar içindir. Aylık ödeme bu seçenek açıksa kullanılabilir.'
+                                                    : lang === 'de'
+                                                      ? 'Der Bremen-/Deutschland-Rabatt gilt nur für Personen mit Wohnsitz in Deutschland. Monatliche Zahlung ist nur mit dieser Option verfügbar.'
+                                                      : lang === 'es'
+                                                        ? 'El descuento Bremen/Alemania solo aplica a residentes en Alemania. El pago mensual solo está disponible con esta opción.'
+                                                        : 'The Bremen/Germany discount is only for residents in Germany. Monthly payment is available only when this option is selected.'}
+                                            </p>
+                                        </div>
+
+                                        <div class="final-step-block">
+                                            <p class="final-step-subtitle">{translations.payPlanLabel}</p>
+                                            <div class="bk-pay-plans" role="radiogroup" aria-label={translations.payPlanLabel}>
+                                                <label class="bk-pay-plan">
+                                                    <input type="radio" name="pay-plan" value="full" />
+                                                    <span class="bk-pay-plan__title">{lang === 'tr' ? 'Peşin ödeme' : lang === 'de' ? 'Sofortzahlung' : lang === 'es' ? 'Pago al contado' : 'Pay in full'}</span>
+                                                    <strong class="bk-pay-plan__price" id="bk-pay-full-amount">—</strong>
+                                                    <span class="bk-pay-plan__hint" id="bk-pay-full-save" hidden></span>
+                                                </label>
+                                                <label class="bk-pay-plan">
+                                                    <input type="radio" name="pay-plan" value="course" />
+                                                    <span class="bk-pay-plan__title">{lang === 'tr' ? 'Kur kur ödeme' : lang === 'de' ? 'Kursweise Zahlung' : lang === 'es' ? 'Pago curso a curso' : 'Course-by-course'}</span>
+                                                    <strong class="bk-pay-plan__price" id="bk-pay-course-now">—</strong>
+                                                    <span class="bk-pay-plan__hint" id="bk-pay-course-hint">{lang === 'tr' ? 'İlk kur + kayıt' : lang === 'de' ? '1. Kurs + Gebühr' : '1st course + fee'}</span>
+                                                </label>
+                                                <label class="bk-pay-plan bk-pay-plan--monthly is-disabled" id="bk-pay-monthly-plan">
+                                                    <input type="radio" name="pay-plan" value="monthly" disabled />
+                                                    <span class="bk-pay-plan__title">{lang === 'tr' ? 'Aylık ödeme' : lang === 'de' ? 'Monatliche Zahlung' : lang === 'es' ? 'Pago mensual' : 'Monthly payment'}</span>
+                                                    <strong class="bk-pay-plan__price" id="bk-pay-monthly-now">—</strong>
+                                                    <span class="bk-pay-plan__hint" id="bk-pay-monthly-hint">{lang === 'tr' ? 'Yalnızca Bremen indirimi ile' : lang === 'de' ? 'Nur mit Bremen-Rabatt' : 'Only with Bremen discount'}</span>
+                                                </label>
+                                            </div>
+                                            <input type="hidden" name="in-germany" id="in-germany-hidden" value="no" />
                                         </div>
 
                                         <div class="terms-section final-step-terms">
@@ -2484,16 +2452,17 @@ const extrasStepCopy = {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-navigation form-navigation--dual-submit">
-                                        <button type="button" class="btn-prev">{translations.back}</button>
-                                        <div class="form-submit-actions form-submit-actions--split">
-                                            <button type="submit" class="btn-submit btn-submit-quote" id="bk-submit-quote" data-submit-intent="quote" data-payment-choice="quote">
-                                                {translations.paySubmitQuote}
-                                            </button>
-                                            <button type="submit" class="btn-submit btn-submit-pay" id="bk-pay-submit" data-submit-intent="pay" data-payment-choice="pay_now">
-                                                <i class="fas fa-credit-card" aria-hidden="true"></i> {translations.paySubmitPay}
-                                            </button>
-                                        </div>
+                                </div>
+
+
+                                <div class="bk-info-overlay" id="bk-extra-info-overlay" hidden>
+                                    <div class="bk-info-popup" role="dialog" aria-modal="true" aria-labelledby="bk-info-popup-title">
+                                        <button type="button" class="bk-info-popup__close" id="bk-extra-info-close" aria-label={extrasStepCopy.infoClose}>
+                                            <i class="fas fa-times" aria-hidden="true"></i>
+                                        </button>
+                                        <div class="bk-info-popup__icon" aria-hidden="true"><i class="fas fa-info-circle"></i></div>
+                                        <h3 id="bk-info-popup-title" class="bk-info-popup__title"></h3>
+                                        <p class="bk-info-popup__text" id="bk-info-popup-text"></p>
                                     </div>
                                 </div>
 
@@ -2629,15 +2598,54 @@ const extrasStepCopy = {
                                     </div>
                                 </details>
 
-                                <label class="bring-friend-discount-prompt">
-                                    <input type="checkbox" form="booking-form" name="bring-friend-discount" id="bring-friend-discount" value="yes">
-                                    <span class="bring-friend-discount-box" aria-hidden="true"></span>
-                                    <span class="bring-friend-discount-text">{translations.bringFriendDiscountLabel}</span>
-                                </label>
+                                <div class="price-quote-cta" id="price-quote-cta" hidden>
+                                    <p class="price-quote-cta__lead">
+                                        {lang === 'tr'
+                                            ? 'Formu tamamlayıp ücretsiz kişisel teklifinizi alın.'
+                                            : lang === 'de'
+                                              ? 'Formular ausfüllen und Ihr kostenloses Angebot erhalten.'
+                                              : lang === 'es'
+                                                ? 'Complete el formulario y reciba su presupuesto personalizado gratis.'
+                                                : 'Complete the form and receive your free personal quote.'}
+                                    </p>
+                                    <button
+                                        type="submit"
+                                        form="booking-form"
+                                        class="price-quote-cta__btn"
+                                        id="bk-submit-quote"
+                                        data-submit-intent="quote"
+                                        data-payment-choice="quote"
+                                    >
+                                        <span class="price-quote-cta__btn-icon" aria-hidden="true"><i class="fas fa-paper-plane"></i></span>
+                                        <span class="price-quote-cta__btn-text">{translations.paySubmitQuote}</span>
+                                    </button>
+                                    <p class="price-quote-cta__note">
+                                        {lang === 'tr'
+                                            ? 'Bağlayıcı değil · Teklif sonrası isterseniz ödeyebilirsiniz'
+                                            : lang === 'de'
+                                              ? 'Unverbindlich · Zahlung optional nach dem Angebot'
+                                              : lang === 'es'
+                                                ? 'Sin compromiso · Puede pagar después del presupuesto'
+                                                : 'Non-binding · Pay later if you wish'}
+                                    </p>
+                                </div>
+
                             </div>
                         </div>
                         </aside>
                     </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bk-quote-pay-modal" id="bk-quote-pay-modal" hidden>
+            <div class="bk-quote-pay-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="bk-quote-pay-title">
+                <h3 id="bk-quote-pay-title">{lang === 'tr' ? 'Nasıl devam edelim?' : lang === 'de' ? 'Wie möchten Sie fortfahren?' : lang === 'es' ? '¿Cómo desea continuar?' : 'How would you like to proceed?'}</h3>
+                <p id="bk-quote-pay-desc">{lang === 'tr' ? 'Kaydınız henüz gönderilmedi. Teklif olarak iletebilir veya hemen ödeme yapabilirsiniz.' : lang === 'de' ? 'Ihre Anmeldung wurde noch nicht gesendet. Als Angebot senden oder jetzt bezahlen.' : lang === 'es' ? 'Su solicitud aún no se ha enviado. Enviar como presupuesto o pagar ahora.' : 'Your booking has not been sent yet. Send as a quote or pay now.'}</p>
+                <div class="bk-quote-pay-modal__actions">
+                    <button type="button" class="bk-quote-pay-modal__dismiss" id="bk-quote-pay-no">{translations.paySubmitQuote}</button>
+                    <button type="button" class="btn-submit btn-submit-pay" id="bk-quote-pay-yes">{translations.payNowBooking}</button>
                 </div>
             </div>
         </div>
@@ -2648,7 +2656,7 @@ const extrasStepCopy = {
                 <strong class="bk-mobile-dock__value" id="bk-mobile-total">0 €</strong>
             </div>
             <button type="button" class="bk-mobile-dock__cta" id="bk-mobile-dock-cta">
-                {lang === 'tr' ? 'Devam' : lang === 'de' ? 'Weiter' : lang === 'es' ? 'Continuar' : 'Continue'}
+                {translations.continueBtn}
             </button>
         </div>
     </section>
@@ -2656,6 +2664,7 @@ const extrasStepCopy = {
     <script define:vars={{
         pricingData,
         lang,
+        phoneCountries,
         courseInfoCopy,
         levelSummaryCopy,
         promoPrice: PROMO_PRICE.discounted,
@@ -2667,6 +2676,8 @@ const extrasStepCopy = {
         bookingWebhookLabels,
         reservationDepositEur: RESERVATION_DEPOSIT_EUR,
         fullPaymentDiscountEur: FULL_PAYMENT_DISCOUNT_EUR,
+        stripeFeeRate: STRIPE_FEE_RATE,
+        stripeFeeFixedEur: STRIPE_FEE_FIXED_EUR,
         balanceDueDays: BALANCE_DUE_DAYS,
         stripeExtras: STRIPE_EXTRAS,
         stripeAdjustProduct: STRIPE_ADJUST_PRODUCT,
@@ -2680,6 +2691,18 @@ const extrasStepCopy = {
             discountTpl: translations.payFullDiscountTpl,
             installNowTpl: translations.payInstallNowTpl,
             installCourseNowTpl: translations.payInstallCourseNowTpl,
+        },
+        extraInfoCopy: {
+            general: extrasStepCopy.infoGeneral,
+            accommodation: extrasStepCopy.infoAccommodation,
+            speakcafe: extrasStepCopy.infoSpeakcafe,
+            bremen: lang === 'tr'
+                ? 'Bremen indirimi yalnızca Almanya’da ikamet edenler için uygundur. Aylık ödeme bu seçenek işaretlenmeden kullanılamaz.'
+                : lang === 'de'
+                  ? 'Der Bremen-Rabatt gilt nur für Personen mit Wohnsitz in Deutschland. Monatliche Zahlung ist ohne diese Option nicht verfügbar.'
+                  : lang === 'es'
+                    ? 'El descuento Bremen solo aplica a residentes en Alemania. El pago mensual no está disponible sin esta opción.'
+                    : 'The Bremen discount is only for residents in Germany. Monthly payment cannot be used without this option.',
         },
         needStartDateMsg: translations.needStartDate,
         nearestStartDateValue,
@@ -2751,12 +2774,11 @@ const extrasStepCopy = {
         document.addEventListener('DOMContentLoaded', function() {
             // ===== STEP NAVIGATION =====
             let currentStep = 1;
-            const totalSteps = 4;
+            const totalSteps = 2;
             const formSteps = document.querySelectorAll('.form-step');
             const stepIndicators = document.querySelectorAll('.step-indicator');
             const progressFill = document.querySelector('.progress-fill');
-            const btnNext = document.querySelectorAll('.btn-next');
-            const btnPrev = document.querySelectorAll('.btn-prev');
+            const btnNext = document.querySelectorAll('#booking-form .btn-next');
 
             // Format date for display: "2 March" (day + month name, no leading zero)
             const localeForLang = (lang === 'tr' ? 'tr-TR' : lang === 'de' ? 'de-DE' : lang === 'es' ? 'es-ES' : 'en-GB');
@@ -2900,9 +2922,7 @@ const extrasStepCopy = {
             const startDateErrorEl = document.getElementById('booking-start-date-error');
 
             function activeStartDateSelect() {
-                const program = document.querySelector('[name="program"]:checked')?.value;
-                if (program === 'intensive' || program === 'online') return levelStartSelect;
-                return fallbackStartSelect;
+                return levelStartSelect || fallbackStartSelect;
             }
 
             function syncStartDateFromUI() {
@@ -2915,11 +2935,14 @@ const extrasStepCopy = {
             }
 
             function syncBookingStartDateVisibility(program) {
-                const showFallback = program === 'short-term' || program === 'youth-camp';
-                if (startFallbackBlock) startFallbackBlock.hidden = !showFallback;
+                if (startFallbackBlock) startFallbackBlock.hidden = true;
                 if (startDateErrorEl) startDateErrorEl.hidden = true;
                 if (fallbackStartSelect) fallbackStartSelect.classList.remove('error');
                 if (levelStartSelect) levelStartSelect.classList.remove('error');
+                // Keep hidden fallback in sync with visible date for any legacy readers
+                if (levelStartSelect && fallbackStartSelect && levelStartSelect.value) {
+                    fallbackStartSelect.value = levelStartSelect.value;
+                }
                 syncStartDateFromUI();
             }
 
@@ -2988,8 +3011,7 @@ const extrasStepCopy = {
 
             /**
              * Checkout satırları — site fiyatı (amountCents) kanonik.
-             * Katalog productKey (german_intensive_20_8w vb.) GÖNDERİLMEZ:
-             * Make/portal Stripe Dashboard fiyatına (~1232€) map ederse B2+C1 ~2500–4000€ olur.
+             * Hepsi adjust ürünü + useCustomAmount; eski haftalık paket productKey’leri kullanılmaz.
              */
             function buildStripeLineItems(opts) {
                 const items = [];
@@ -3115,7 +3137,7 @@ const extrasStepCopy = {
 
                 const filtered = items.filter(function (it) { return it.amountCents !== 0; });
 
-                // Form toplamı ile satır toplamı uyuşmazsa tek satıra düş (çift paket / katalog sapması önlemi)
+                // Form toplamı ile satır toplamı uyuşmazsa tek satıra düş
                 const targetCents = Math.round(Number(opts.targetCents) || 0);
                 if (targetCents > 0) {
                     const sumCents = filtered.reduce(function (s, it) { return s + it.amountCents * (it.quantity || 1); }, 0);
@@ -3641,6 +3663,49 @@ const extrasStepCopy = {
                 updatePrice();
             }
 
+            (function initFinalExtraInfo() {
+                const overlay = document.getElementById('bk-extra-info-overlay');
+                const popupTitle = document.getElementById('bk-info-popup-title');
+                const popupText = document.getElementById('bk-info-popup-text');
+                const closeBtn = document.getElementById('bk-extra-info-close');
+                function closeInfo() {
+                    if (!overlay) return;
+                    overlay.hidden = true;
+                    document.body.style.overflow = '';
+                }
+                function openInfo(title, type) {
+                    if (!overlay || !popupTitle || !popupText) return;
+                    const copy = typeof extraInfoCopy !== 'undefined' ? extraInfoCopy : {};
+                    popupTitle.textContent = title || '';
+                    if (type === 'accommodation') popupText.textContent = copy.accommodation || '';
+                    else if (type === 'speakcafe') popupText.textContent = copy.speakcafe || '';
+                    else if (type === 'bremen') popupText.textContent = copy.bremen || '';
+                    else popupText.textContent = copy.general || '';
+                    overlay.hidden = false;
+                    document.body.style.overflow = 'hidden';
+                    closeBtn?.focus();
+                }
+                document.querySelectorAll('.bk-extra-mini__info').forEach(function (btn) {
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openInfo(btn.getAttribute('data-info-title') || '', btn.getAttribute('data-info-type') || 'general');
+                    });
+                    btn.addEventListener('mousedown', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    });
+                });
+                closeBtn?.addEventListener('click', closeInfo);
+                overlay?.addEventListener('click', function (e) {
+                    if (e.target === overlay) closeInfo();
+                });
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape' && overlay && !overlay.hidden) closeInfo();
+                });
+            })();
+
+
             // Extract numeric price from string like "790€" -> 790
             function extractPrice(priceStr) {
                 if (priceStr == null || priceStr === '') return 0;
@@ -3785,7 +3850,7 @@ const extrasStepCopy = {
 
             function updateProgress() {
                 const progress = Math.round((currentStep / totalSteps) * 100);
-                progressFill.style.width = progress + '%';
+                if (progressFill) progressFill.style.width = progress + '%';
                 
                 stepIndicators.forEach((indicator, index) => {
                     const stepNum = index + 1;
@@ -3796,11 +3861,19 @@ const extrasStepCopy = {
                         indicator.classList.add('active');
                     }
                 });
+
+                const mobileCount = document.getElementById('bk-progress-mobile-count');
+                const mobileLabel = document.getElementById('bk-progress-mobile-label');
+                const activeStepLabel = document.querySelector('.step-indicator.active .step-label');
+                if (mobileCount) mobileCount.textContent = currentStep + '/' + totalSteps;
+                if (mobileLabel && activeStepLabel) mobileLabel.textContent = activeStepLabel.textContent.trim();
             }
 
             function scrollBookingFormToTop() {
                 requestAnimationFrame(function () {
-                    const anchor = document.querySelector('.form-progress') || document.querySelector('.booking-form-container');
+                    const anchor = document.querySelector('.form-step.active .step-header')
+                        || document.querySelector('.form-progress')
+                        || document.querySelector('.booking-form-container');
                     if (!anchor) return;
                     anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
@@ -3811,8 +3884,17 @@ const extrasStepCopy = {
                 if (!(cta instanceof HTMLElement)) return;
                 const isFinal = currentStep >= totalSteps;
                 cta.textContent = isFinal
-                    ? (payUiCopy?.submitPay || 'Pay')
+                    ? (payUiCopy?.submitQuote || 'Teklif al')
                     : (payUiCopy?.submitContinue || 'Continue');
+            }
+
+            function syncQuoteCtaVisibility() {
+                const cta = document.getElementById('price-quote-cta');
+                if (!(cta instanceof HTMLElement)) return;
+                const paymentStage = document.getElementById('booking-payment-stage');
+                const paying = document.body.classList.contains('booking-content--paying')
+                    || (paymentStage instanceof HTMLElement && !paymentStage.hidden);
+                cta.hidden = paying || currentStep !== totalSteps;
             }
 
             function showStep(step) {
@@ -3827,6 +3909,7 @@ const extrasStepCopy = {
                 updateProgress();
                 updatePrice();
                 syncMobileDockCta();
+                syncQuoteCtaVisibility();
                 scrollBookingFormToTop();
             }
             
@@ -4081,40 +4164,34 @@ const extrasStepCopy = {
                         const weeksValid = weeks && parseInt(weeks, 10) >= 1;
                         if (!weeksValid) { weeksBlock?.classList.add('error'); isValid = false; } else { weeksBlock?.classList.remove('error'); }
                     }
-                    if (isValid && typeof window.validateBookingLessonTimeStep === 'function') {
-                        isValid = window.validateBookingLessonTimeStep();
-                    }
                     return isValid;
                 }
 
-                if (step === 3) {
-                    return validatePaymentChoices(true);
-                }
-
-                if (step === 4) {
-                    const bringFriend = document.getElementById('bring-friend-discount')?.checked;
-                    if (bringFriend) {
-                        ['bring-friend-name', 'bring-friend-email', 'bring-friend-phone'].forEach(function (id) {
-                            const el = document.getElementById(id);
-                            const val = el?.value?.trim();
-                            if (!val) {
-                                el?.classList.add('error');
-                                isValid = false;
-                            } else {
-                                el?.classList.remove('error');
-                            }
-                        });
+                if (step === 2) {
+                    if (typeof window.validateBookingLessonTimeStep === 'function') {
+                        if (!window.validateBookingLessonTimeStep()) isValid = false;
                     }
+                    if (!validatePaymentChoices(false)) isValid = false;
                 }
 
                 const requiredFields = currentStepElement.querySelectorAll('[required]');
                 requiredFields.forEach(field => {
                     if (field.offsetParent !== null) {
-                        if (!field.value || (field.type === 'radio' && !currentStepElement.querySelector(`[name="${field.name}"]:checked`))) {
+                        let fieldInvalid = false;
+                        if (field.type === 'checkbox') {
+                            fieldInvalid = !field.checked;
+                        } else if (field.type === 'radio') {
+                            fieldInvalid = !currentStepElement.querySelector(`[name="${field.name}"]:checked`);
+                        } else {
+                            fieldInvalid = !String(field.value || '').trim();
+                        }
+                        if (fieldInvalid) {
                             isValid = false;
                             field.classList.add('error');
+                            field.closest('.checkbox-label, .form-group')?.classList.add('error');
                         } else {
                             field.classList.remove('error');
+                            field.closest('.checkbox-label, .form-group')?.classList.remove('error');
                         }
                     }
                 });
@@ -4124,20 +4201,20 @@ const extrasStepCopy = {
             function validatePaymentChoices(showError) {
                 const formData = bookingForm ? new FormData(bookingForm) : null;
                 const payPlan = (formData?.get('pay-plan') || '').toString();
-                const installOpt = (formData?.get('pay-install') || '').toString();
-                const inGermanyRaw = (formData?.get('in-germany') || '').toString();
+                const bremenOn = !!document.getElementById('bremen-resident')?.checked;
                 const fail = function (msg) {
                     if (showError) showBookingError(msg);
                     return false;
                 };
-                if (!inGermanyRaw) {
-                    return fail(payUiCopy?.needGermany || 'Lütfen konumunuzu seçin.');
-                }
                 if (!payPlan) {
                     return fail(payUiCopy?.needPlan || 'Lütfen ödeme planı seçin.');
                 }
-                if (payPlan === 'installment' && !installOpt) {
-                    return fail(payUiCopy?.needInstall || 'Lütfen taksit seçeneğini seçin.');
+                if (payPlan === 'monthly' && !bremenOn) {
+                    return fail(lang === 'tr'
+                        ? 'Aylık ödeme için Bremen indirimini seçmeniz gerekir.'
+                        : lang === 'de'
+                          ? 'Für monatliche Zahlung bitte Bremen-Rabatt wählen.'
+                          : 'Select Bremen discount to enable monthly payment.');
                 }
                 return true;
             }
@@ -4149,15 +4226,6 @@ const extrasStepCopy = {
                         if (currentStep < totalSteps) {
                             showStep(currentStep + 1);
                         }
-                    }
-                });
-            });
-
-            // Prev button handlers
-            btnPrev.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    if (currentStep > 1) {
-                        showStep(currentStep - 1);
                     }
                 });
             });
@@ -4175,23 +4243,62 @@ const extrasStepCopy = {
             });
             reorderCourseSelectionChain();
             weeksSelect?.addEventListener('change', function() { setWeeksValue(this.value); toggleBundleInfobox(); updatePrice(); });
-            document.querySelectorAll('[name="visa-guarantee"]').forEach(el => el.addEventListener('change', updatePrice));
-            document.querySelectorAll('[name="university-admission-support"]').forEach(el => el.addEventListener('change', updatePrice));
             document.querySelectorAll('[name="accommodation-support"]').forEach(el => el.addEventListener('change', updatePrice));
             document.querySelectorAll('[name="airport-pickup"]').forEach(el => el.addEventListener('change', updatePrice));
             document.querySelectorAll('[name="speakcafe-membership"]').forEach(el => el.addEventListener('change', updatePrice));
 
             function initBookingPhoneDialInput() {
                 const dialInput = document.getElementById('phone-country-code');
+                const flagEl = document.getElementById('phone-dial-flag');
                 if (!(dialInput instanceof HTMLInputElement)) return;
-                function normalizeDial() {
-                    let v = dialInput.value.trim().replace(/\s/g, '');
-                    if (!v) return;
+
+                const countries = Array.isArray(phoneCountries) ? phoneCountries : [];
+                const globeSrc = 'data:image/svg+xml,' + encodeURIComponent(
+                    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#64748b" stroke-width="1.5"/><path d="M3 12h18M12 3c2.5 2.8 3.8 6 3.8 9s-1.3 6.2-3.8 9M12 3C9.5 5.8 8.2 9 8.2 12s1.3 6.2 3.8 9" stroke="#64748b" stroke-width="1.5"/></svg>'
+                );
+
+                function normalizeDialValue(raw) {
+                    let v = String(raw || '').trim().replace(/\s/g, '');
+                    if (!v) return '';
                     if (!v.startsWith('+')) v = '+' + v.replace(/^\+*/, '');
-                    dialInput.value = v;
+                    return v;
                 }
+
+                function findCountryByDial(raw) {
+                    const v = normalizeDialValue(raw);
+                    if (!v || v === '+') return null;
+                    const exact = countries.find(function (c) { return c.dial === v; });
+                    if (exact) return exact;
+                    const uniquePrefix = countries.filter(function (c) { return c.dial.startsWith(v); });
+                    if (uniquePrefix.length === 1) return uniquePrefix[0];
+                    const dialPrefix = countries
+                        .filter(function (c) { return v.startsWith(c.dial); })
+                        .sort(function (a, b) { return b.dial.length - a.dial.length; });
+                    return dialPrefix[0] || null;
+                }
+
+                function updateDialFlag() {
+                    if (!(flagEl instanceof HTMLImageElement)) return;
+                    const match = findCountryByDial(dialInput.value);
+                    if (match && match.iso) {
+                        flagEl.src = 'https://flagcdn.com/w40/' + match.iso + '.png';
+                        flagEl.alt = match.name || '';
+                    } else {
+                        flagEl.src = globeSrc;
+                        flagEl.alt = '';
+                    }
+                }
+
+                function normalizeDial() {
+                    const v = normalizeDialValue(dialInput.value);
+                    if (v) dialInput.value = v;
+                    updateDialFlag();
+                }
+
+                dialInput.addEventListener('input', updateDialFlag);
                 dialInput.addEventListener('blur', normalizeDial);
                 dialInput.addEventListener('change', normalizeDial);
+                updateDialFlag();
             }
             initBookingPhoneDialInput();
 
@@ -4386,45 +4493,101 @@ const extrasStepCopy = {
 
             // ===== FORM SUBMISSION =====
             const bookingForm = document.getElementById('booking-form');
-            function getSubmitButtons() { return bookingForm ? Array.from(bookingForm.querySelectorAll('button[type="submit"]')) : []; }
+            function getSubmitButtons() {
+                if (!bookingForm) return [];
+                const inside = Array.from(bookingForm.querySelectorAll('button[type="submit"]'));
+                const linked = Array.from(document.querySelectorAll('button[type="submit"][form="booking-form"]'));
+                const byId = document.getElementById('bk-submit-quote');
+                const merged = [...inside, ...linked];
+                if (byId instanceof HTMLButtonElement && !merged.includes(byId)) merged.push(byId);
+                return merged;
+            }
             function setSubmitButtonsDisabled(disabled) {
                 getSubmitButtons().forEach(function(btn) { btn.disabled = disabled; });
             }
-            function setSubmitButtonsText(html) {
-                getSubmitButtons().forEach(function(btn) { btn.innerHTML = html; });
+            function setSubmitButtonsText(text) {
+                getSubmitButtons().forEach(function(btn) {
+                    const label = btn.querySelector('.price-quote-cta__btn-text');
+                    if (label) label.textContent = text;
+                    else btn.textContent = text;
+                });
             }
             function getPaySubmitHtml(isQuote) {
                 if (isQuote) {
                     return payUiCopy?.submitQuote || 'Teklif al';
                 }
                 const label = payUiCopy?.submitPay || payUiCopy?.submitContinue || 'Ödeme yap';
-                return '<i class="fas fa-credit-card" aria-hidden="true"></i> ' + label;
+                return label;
             }
             function restoreSubmitButtons() {
-                const quoteBtn = bookingForm?.querySelector('#bk-submit-quote');
-                const payBtn = bookingForm?.querySelector('#bk-pay-submit');
-                if (quoteBtn) quoteBtn.innerHTML = getPaySubmitHtml(true);
-                if (payBtn) payBtn.innerHTML = getPaySubmitHtml(false);
+                const quoteBtn = document.getElementById('bk-submit-quote');
+                if (!(quoteBtn instanceof HTMLButtonElement)) return;
+                const label = quoteBtn.querySelector('.price-quote-cta__btn-text');
+                const text = getPaySubmitHtml(true);
+                if (label) label.textContent = text;
+                else quoteBtn.textContent = text;
             }
 
             function isInGermanySelected() {
-                return document.querySelector('[name="in-germany"]:checked')?.value === 'yes';
+                return !!document.getElementById('bremen-resident')?.checked
+                    || document.getElementById('in-germany-hidden')?.value === 'yes'
+                    || document.querySelector('[name="in-germany"]:checked')?.value === 'yes';
+            }
+
+            function normalizePaySelection(rawPlan) {
+                const plan = (rawPlan || '').toString();
+                if (plan === 'full') return { payPlan: 'full', installOpt: '' };
+                if (plan === 'course') return { payPlan: 'installment', installOpt: 'course' };
+                if (plan === 'monthly') return { payPlan: 'installment', installOpt: 'monthly' };
+                if (plan === 'installment') return { payPlan: 'installment', installOpt: 'course' };
+                return { payPlan: plan, installOpt: '' };
+            }
+
+            function syncBremenPayLock() {
+                const bremenOn = !!document.getElementById('bremen-resident')?.checked;
+                const hidden = document.getElementById('in-germany-hidden');
+                if (hidden) hidden.value = bremenOn ? 'yes' : 'no';
+                const monthlyPlan = document.getElementById('bk-pay-monthly-plan');
+                const monthlyInput = monthlyPlan?.querySelector('input[name="pay-plan"]');
+                if (monthlyPlan) monthlyPlan.classList.toggle('is-disabled', !bremenOn);
+                if (monthlyInput) {
+                    monthlyInput.disabled = !bremenOn;
+                    if (!bremenOn && monthlyInput.checked) monthlyInput.checked = false;
+                }
+            }
+
+            /** Kayıt ücreti (€): Bremen/Almanya ikameti seçiliyse tüm planlarda 0 */
+            function getRegistrationEur(inGermany) {
+                return inGermany ? 0 : (reservationDepositEur || 80);
+            }
+
+            /** Kur kur + Bremen: kur başına indirim (cent) */
+            function getBremenCourseDiscountCents(inGermany, isCoursePlan) {
+                if (!inGermany || !isCoursePlan) return 0;
+                return (reservationDepositEur || 80) * 100;
             }
 
             function computeBookingCharge(opts) {
                 const totalCents = opts.totalCents || 0;
                 const firstCourseCents = opts.firstCourseCents || 0;
-                const payPlan = opts.payPlan || '';
-                const installOpt = opts.installOpt || '';
+                let payPlan = opts.payPlan || '';
+                let installOpt = opts.installOpt || '';
+                const normalized = normalizePaySelection(payPlan);
+                if (payPlan === 'full' || payPlan === 'course' || payPlan === 'monthly') {
+                    payPlan = normalized.payPlan;
+                    installOpt = normalized.installOpt || installOpt;
+                }
                 const inGermany = !!opts.inGermany;
-                const courseCount = opts.courseCount || 0;
-                // 80 € her türlü; yalnızca Almanya + tam ödemede kayıt ücreti yok
-                const waiveRegFee = inGermany && payPlan === 'full';
-                const depositEur = waiveRegFee ? 0 : (reservationDepositEur || 0);
-                const depositCents = depositEur * 100;
+                const courseCount = Math.max(0, opts.courseCount || 0);
+                const registrationEur = getRegistrationEur(inGermany);
+                const registrationCents = registrationEur * 100;
                 const unitCourse = firstCourseCents > 0
                     ? firstCourseCents
                     : Math.round((typeof promoPrice === 'number' ? promoPrice : 0) * 100);
+                const isCoursePlan = payPlan === 'installment' && installOpt === 'course';
+                const bremenPerCourseCents = getBremenCourseDiscountCents(inGermany, isCoursePlan);
+                const unitAfterBremen = Math.max(0, unitCourse - bremenPerCourseCents);
+                const discountedPackageCents = Math.max(0, totalCents - (courseCount * bremenPerCourseCents));
 
                 if (!payPlan) {
                     return {
@@ -4434,48 +4597,69 @@ const extrasStepCopy = {
                         kind: 'none',
                         fullDiscountEur: 0,
                         registrationFeeEur: 0,
-                        germanyNoRegFee: waiveRegFee,
+                        germanyNoRegFee: inGermany,
+                        bremenCourseDiscountEur: 0,
                     };
                 }
                 if (payPlan === 'full') {
-                    const charge = Math.max(0, totalCents + depositCents);
+                    const charge = Math.max(0, totalCents + registrationCents);
                     return {
                         chargeCents: charge,
                         remainingCents: 0,
                         depositEur: 0,
                         kind: 'full',
                         fullDiscountEur: 0,
-                        registrationFeeEur: depositEur,
-                        germanyNoRegFee: waiveRegFee,
+                        registrationFeeEur: registrationEur,
+                        germanyNoRegFee: inGermany,
+                        bremenCourseDiscountEur: 0,
                     };
                 }
                 if (payPlan === 'installment') {
                     if (installOpt === 'course') {
-                        // 1. kur + kayıt (varsa); kalan kurlar CRM’de (başlangıç −17 gün)
-                        const charge = Math.min(unitCourse + depositCents, totalCents + depositCents);
-                        const remaining = Math.max(0, totalCents - unitCourse);
+                        const charge = inGermany
+                            ? Math.min(unitAfterBremen, discountedPackageCents)
+                            : Math.min(unitCourse + registrationCents, totalCents + registrationCents);
+                        const remaining = inGermany
+                            ? Math.max(0, discountedPackageCents - unitAfterBremen)
+                            : Math.max(0, totalCents - unitCourse);
                         return {
                             chargeCents: charge,
                             remainingCents: remaining,
-                            depositEur: depositEur,
+                            depositEur: 0,
                             kind: 'installment_course',
                             fullDiscountEur: 0,
-                            registrationFeeEur: depositEur,
-                            germanyNoRegFee: waiveRegFee,
+                            registrationFeeEur: registrationEur,
+                            germanyNoRegFee: inGermany,
+                            bremenCourseDiscountEur: (courseCount * bremenPerCourseCents) / 100,
                         };
                     }
-                    // %50/%50: kurs toplamı yarıya; ilk takside +kayıt (varsa)
+                    if (installOpt === 'monthly') {
+                        const months = Math.max(2, courseCount * 2);
+                        const monthUnit = Math.round(totalCents / months);
+                        const charge = monthUnit + registrationCents;
+                        const remaining = Math.max(0, totalCents - monthUnit);
+                        return {
+                            chargeCents: charge,
+                            remainingCents: remaining,
+                            depositEur: 0,
+                            kind: 'installment_monthly',
+                            fullDiscountEur: 0,
+                            registrationFeeEur: registrationEur,
+                            germanyNoRegFee: inGermany,
+                            monthlyMonths: months,
+                        };
+                    }
                     const halfPackage = Math.round(totalCents / 2);
-                    const charge = halfPackage + depositCents;
+                    const charge = halfPackage + registrationCents;
                     const remaining = Math.max(0, totalCents - halfPackage);
                     return {
                         chargeCents: charge,
                         remainingCents: remaining,
-                        depositEur: depositEur,
+                        depositEur: 0,
                         kind: 'installment_half',
                         fullDiscountEur: 0,
-                        registrationFeeEur: depositEur,
-                        germanyNoRegFee: waiveRegFee,
+                        registrationFeeEur: registrationEur,
+                        germanyNoRegFee: inGermany,
                     };
                 }
                 return {
@@ -4485,7 +4669,7 @@ const extrasStepCopy = {
                     kind: 'none',
                     fullDiscountEur: 0,
                     registrationFeeEur: 0,
-                    germanyNoRegFee: waiveRegFee,
+                    germanyNoRegFee: inGermany,
                 };
             }
 
@@ -4494,81 +4678,210 @@ const extrasStepCopy = {
                 return eur.toLocaleString(lang === 'de' ? 'de-DE' : lang === 'tr' ? 'tr-TR' : lang === 'es' ? 'es-ES' : 'en-US') + ' €';
             }
 
+            /** Net cent → Stripe çekilecek (fee dahil). Oran: uluslararası kart örneği. */
+            function withStripeFeeCents(netCents) {
+                const net = Math.max(0, Math.round(Number(netCents) || 0));
+                if (net <= 0) return 0;
+                const rate = typeof stripeFeeRate === 'number' ? stripeFeeRate : 0.0325;
+                const fixed = typeof stripeFeeFixedEur === 'number' ? stripeFeeFixedEur : 0.25;
+                if (!(rate > 0) || rate >= 1) return net;
+                const grossEur = (net / 100 + fixed) / (1 - rate);
+                return Math.max(net, Math.round(grossEur * 100));
+            }
+
+            function buildDepositInfo(chargeCalc, forQuote) {
+                const netChargeCents = forQuote ? 0 : chargeCalc.chargeCents;
+                const stripeChargeCents = forQuote ? 0 : withStripeFeeCents(netChargeCents);
+                const stripeFeeCents = Math.max(0, stripeChargeCents - netChargeCents);
+                return {
+                    chargeCents: stripeChargeCents,
+                    netChargeCents,
+                    stripeFeeCents,
+                    remainingCents: chargeCalc.remainingCents,
+                    depositEur: chargeCalc.registrationFeeEur || 0,
+                    balanceDueDays: chargeCalc.registrationFeeEur ? balanceDueDays : 0,
+                    kind: forQuote ? 'quote' : chargeCalc.kind,
+                    fullDiscountEur: chargeCalc.fullDiscountEur || 0,
+                    germanyNoRegFee: !!chargeCalc.germanyNoRegFee,
+                    registrationFeeEur: chargeCalc.registrationFeeEur || 0,
+                };
+            }
+
+            function buildStripeLineItemsForDeposit(depositInfo, payPlan) {
+                const isInstallmentPay = payPlan === 'installment';
+                const chargeEur = Math.round(depositInfo.netChargeCents) / 100;
+                const feeLineName = lang === 'tr'
+                    ? 'Kart işlem ücreti'
+                    : lang === 'de'
+                      ? 'Kartengebühr'
+                      : lang === 'es'
+                        ? 'Comisión de tarjeta'
+                        : 'Card processing fee';
+                const bookingLineName = isInstallmentPay
+                    ? ('Installment payment ' + chargeEur + ' EUR')
+                    : 'Campus German booking';
+                const items = [];
+                if (depositInfo.netChargeCents > 0) {
+                    items.push({
+                        productKey: stripeAdjustProduct.productKey,
+                        name: bookingLineName,
+                        amountCents: depositInfo.netChargeCents,
+                        quantity: 1,
+                        useCustomAmount: true,
+                    });
+                }
+                if (depositInfo.stripeFeeCents > 0) {
+                    items.push({
+                        productKey: stripeAdjustProduct.productKey,
+                        name: feeLineName,
+                        amountCents: depositInfo.stripeFeeCents,
+                        quantity: 1,
+                        useCustomAmount: true,
+                    });
+                }
+                return items;
+            }
+
+            function applyDepositToPayload(payload, depositInfo, payPlan, totalFormatted, totalCents) {
+                const isInstallmentPay = payPlan === 'installment';
+                payload.paymentKind = depositInfo.kind;
+                payload.amountInCents = depositInfo.chargeCents;
+                payload.price = {
+                    total: totalFormatted,
+                    totalCents,
+                    chargeCents: depositInfo.chargeCents,
+                    netChargeCents: depositInfo.netChargeCents,
+                    stripeFeeCents: depositInfo.stripeFeeCents,
+                    remainingCents: depositInfo.remainingCents,
+                    depositEur: depositInfo.depositEur,
+                    balanceDueDays: depositInfo.balanceDueDays,
+                    depositNonRefundable: isInstallmentPay,
+                };
+                payload.priceCollection = {
+                    total: totalFormatted,
+                    totalCents,
+                    chargeCents: depositInfo.chargeCents,
+                    netChargeCents: depositInfo.netChargeCents,
+                    stripeFeeCents: depositInfo.stripeFeeCents,
+                    remainingCents: depositInfo.remainingCents,
+                };
+                payload.priceTotal = totalFormatted;
+                payload.stripeLineItems = buildStripeLineItemsForDeposit(depositInfo, payPlan);
+                payload.stripePricing = {
+                    mode: 'custom_amount_cents',
+                    mapCatalogPrices: false,
+                    skipWeeksPackage: true,
+                    useLineItemAmounts: true,
+                    chargeCents: depositInfo.chargeCents,
+                    netChargeCents: depositInfo.netChargeCents,
+                    stripeFeeCents: depositInfo.stripeFeeCents,
+                    totalCents,
+                };
+                if (payload.installmentSchedule) {
+                    payload.installmentSchedule = Object.assign({}, payload.installmentSchedule, {
+                        nowCents: depositInfo.netChargeCents,
+                        remainingCents: depositInfo.remainingCents,
+                        registrationFeeEur: depositInfo.registrationFeeEur,
+                    });
+                }
+            }
+
+            function buildPayFollowUpPayload(quotePayload, chargeCalc, payPlan, installOpt, totalFormatted, totalCents) {
+                const payDeposit = buildDepositInfo(chargeCalc, false);
+                const payload = Object.assign({}, quotePayload, {
+                    formType: 'booking',
+                    paymentChoice: 'pay_now',
+                    paymentDoc: 'registration',
+                    paymentMethod: 'online',
+                });
+                applyDepositToPayload(payload, payDeposit, payPlan, totalFormatted, totalCents);
+                return payload;
+            }
+
             function syncPaymentUI() {
-                const planWrap = document.getElementById('bk-pay-plan');
-                const installWrap = document.getElementById('bk-pay-install');
+                syncBremenPayLock();
                 const fullAmountEl = document.getElementById('bk-pay-full-amount');
                 const fullSaveEl = document.getElementById('bk-pay-full-save');
-                const installAmountEl = document.getElementById('bk-pay-install-amount');
+                const courseNowEl = document.getElementById('bk-pay-course-now');
+                const courseHintEl = document.getElementById('bk-pay-course-hint');
+                const monthlyNowEl = document.getElementById('bk-pay-monthly-now');
+                const monthlyHintEl = document.getElementById('bk-pay-monthly-hint');
                 const totalPriceEl = document.getElementById('total-price');
                 const totalLabelEl = document.querySelector('.price-total-label');
-                const germanyVal = document.querySelector('[name="in-germany"]:checked')?.value || '';
-                const payPlan = document.querySelector('[name="pay-plan"]:checked')?.value || '';
-                const installOpt = document.querySelector('[name="pay-install"]:checked')?.value || '';
-                const inGermany = germanyVal === 'yes';
+                const rawPlan = document.querySelector('[name="pay-plan"]:checked')?.value || '';
+                const inGermany = isInGermanySelected();
                 const totalCents = parseInt(document.getElementById('amount-in-cents')?.value || '0', 10) || 0;
                 const checkedCourses = Array.from(document.querySelectorAll('[name="course-selection"]:checked')).map(function (c) { return c.value; });
                 const courseCount = getSelectedCourseCount(checkedCourses);
-                // 80 € her türlü; yalnızca Almanya + tam ödemede yok
-                const waiveRegFee = inGermany && payPlan === 'full';
-                const depositEur = waiveRegFee ? 0 : (reservationDepositEur || 0);
-                const depositCents = depositEur * 100;
+                const registrationEur = getRegistrationEur(inGermany);
                 const unitCourseCents = courseCount > 0
                     ? Math.round(totalCents / courseCount)
                     : Math.round((promoPrice || 0) * 100);
-
-                // Konum → doğrudan plan (belge/yöntem yok)
-                if (planWrap) planWrap.hidden = !germanyVal;
-                if (!germanyVal) {
-                    document.querySelectorAll('[name="pay-plan"]').forEach(function (r) { r.checked = false; });
-                    document.querySelectorAll('[name="pay-install"]').forEach(function (r) { r.checked = false; });
-                }
-
-                // Taksit alt seçenekleri: Almanya ve yurtdışı aynı
-                const showInstallOpts = !!(germanyVal && payPlan === 'installment');
-                if (installWrap) {
-                    if (showInstallOpts) {
-                        installWrap.hidden = false;
-                        installWrap.removeAttribute('hidden');
-                        installWrap.style.display = '';
-                        installWrap.setAttribute('aria-hidden', 'false');
-                    } else {
-                        installWrap.hidden = true;
-                        installWrap.setAttribute('hidden', '');
-                        installWrap.setAttribute('aria-hidden', 'true');
-                    }
-                }
-                if (!showInstallOpts) {
-                    document.querySelectorAll('[name="pay-install"]').forEach(function (r) { r.checked = false; });
-                }
 
                 const pricedForMulti = checkedCourses.filter(function (c) { return LEVEL_RE.test(c) || c === 'telc-c1-prep'; });
                 const grossCoursesEur = pricedForMulti.length > 0 ? getIntensiveCourseGross(pricedForMulti) : 0;
                 const multiForFull = getMultiCourseDiscount(courseCount, grossCoursesEur);
                 const multiSaveEur = multiForFull.amount || 0;
-                const multiSaveCents = multiSaveEur * 100;
-                // Tam ödeme kartı: Almanya’da kayıt yok, aksi halde +80
-                const fullDepositEur = inGermany ? 0 : (reservationDepositEur || 0);
-                const fullDepositCents = fullDepositEur * 100;
                 const waivedRegEur = inGermany ? (reservationDepositEur || 0) : 0;
-                const fullPackageCents = totalCents;
-                const fullChargeCents = Math.max(0, fullPackageCents + fullDepositCents);
-                const fullWasCents = fullPackageCents + multiSaveCents + (reservationDepositEur || 0) * 100;
 
-                if (fullAmountEl) fullAmountEl.textContent = formatPayEur(fullChargeCents);
-                const fullWasEl = document.getElementById('bk-pay-full-was');
-                if (fullWasEl) {
-                    if (multiSaveEur > 0 && fullPackageCents > 0) {
-                        fullWasEl.hidden = false;
-                        fullWasEl.textContent = formatPayEur(fullPackageCents + multiSaveCents + fullDepositCents);
-                    } else if (waivedRegEur > 0 && fullPackageCents > 0) {
-                        fullWasEl.hidden = false;
-                        fullWasEl.textContent = formatPayEur(fullPackageCents + waivedRegEur * 100);
-                    } else {
-                        fullWasEl.hidden = true;
-                        fullWasEl.textContent = '';
-                    }
+                const fullCharge = computeBookingCharge({
+                    totalCents,
+                    firstCourseCents: unitCourseCents,
+                    inGermany,
+                    courseCount,
+                    payPlan: 'full',
+                    installOpt: '',
+                });
+                const courseCharge = computeBookingCharge({
+                    totalCents,
+                    firstCourseCents: unitCourseCents,
+                    inGermany,
+                    courseCount,
+                    payPlan: 'course',
+                    installOpt: 'course',
+                });
+                const monthlyCharge = computeBookingCharge({
+                    totalCents,
+                    firstCourseCents: unitCourseCents,
+                    inGermany,
+                    courseCount,
+                    payPlan: 'monthly',
+                    installOpt: 'monthly',
+                });
+                const activeCharge = computeBookingCharge({
+                    totalCents,
+                    firstCourseCents: unitCourseCents,
+                    inGermany,
+                    courseCount,
+                    payPlan: rawPlan || '',
+                    installOpt: normalizePaySelection(rawPlan).installOpt,
+                });
+
+                if (fullAmountEl) fullAmountEl.textContent = formatPayEur(fullCharge.chargeCents);
+                if (courseNowEl) courseNowEl.textContent = formatPayEur(courseCharge.chargeCents);
+                if (monthlyNowEl) monthlyNowEl.textContent = formatPayEur(monthlyCharge.chargeCents);
+
+                if (courseHintEl) {
+                    courseHintEl.textContent = inGermany
+                        ? (lang === 'tr'
+                            ? 'İlk kur (−' + (reservationDepositEur || 80) + ' € Bremen)'
+                            : lang === 'de'
+                              ? '1. Kurs (−' + (reservationDepositEur || 80) + ' € Bremen)'
+                              : lang === 'es'
+                                ? '1.er curso (−' + (reservationDepositEur || 80) + ' € Bremen)'
+                                : '1st course (−€' + (reservationDepositEur || 80) + ' Bremen)')
+                        : (lang === 'tr' ? 'İlk kur + kayıt' : lang === 'de' ? '1. Kurs + Gebühr' : lang === 'es' ? '1.er curso + matrícula' : '1st course + fee');
                 }
+                if (monthlyHintEl) {
+                    monthlyHintEl.textContent = lang === 'tr'
+                        ? 'İlk ay (Bremen indirimi)'
+                        : lang === 'de'
+                          ? 'Erster Monat (Bremen-Rabatt)'
+                          : lang === 'es'
+                            ? 'Primer mes (descuento Bremen)'
+                            : 'First month (Bremen discount)';
+                }
+
                 if (fullSaveEl) {
                     if (multiSaveEur > 0) {
                         fullSaveEl.hidden = false;
@@ -4585,80 +4898,23 @@ const extrasStepCopy = {
                     }
                 }
 
-                // Sidebar: kayıt ücreti (Almanya + tam ödemede yok)
                 const regFeeRow = document.getElementById('registration-fee-row');
                 const fullDiscRow = document.getElementById('full-payment-discount-row');
-                const showRegFee = !!payPlan && totalCents > 0 && depositEur > 0;
+                const showRegFee = !!rawPlan && totalCents > 0 && registrationEur > 0;
                 if (regFeeRow) regFeeRow.style.display = showRegFee ? 'flex' : 'none';
                 if (fullDiscRow) fullDiscRow.style.display = 'none';
                 const regFeeVal = document.getElementById('registration-fee-value');
-                if (regFeeVal) regFeeVal.textContent = depositEur + ' €';
+                if (regFeeVal) regFeeVal.textContent = registrationEur + ' €';
 
-                // %50/%50: yarı paket + kayıt | Kur kur: 1 kur + kayıt (kayıt taksitte her zaman)
-                const installDepositCents = (reservationDepositEur || 0) * 100;
-                const halfPackageCents = Math.round(totalCents / 2);
-                const halfNowCents = halfPackageCents + installDepositCents;
-                const halfRestCents = Math.max(0, totalCents - halfPackageCents);
-                const courseNowCents = unitCourseCents + installDepositCents;
-                const courseRestCents = Math.max(0, totalCents - unitCourseCents);
-
-                const halfNowEl = document.getElementById('bk-pay-half-now');
-                const halfRestEl = document.getElementById('bk-pay-half-rest');
-                const courseNowEl = document.getElementById('bk-pay-course-now');
-                const courseRestEl = document.getElementById('bk-pay-course-rest');
-                const halfNowHintEl = document.getElementById('bk-pay-half-now-hint');
-                const courseNowHintEl = document.getElementById('bk-pay-course-now-hint');
-                if (halfNowEl) halfNowEl.textContent = formatPayEur(halfNowCents);
-                if (halfRestEl) halfRestEl.textContent = formatPayEur(halfRestCents);
-                if (courseNowEl) courseNowEl.textContent = formatPayEur(courseNowCents);
-                if (courseRestEl) courseRestEl.textContent = formatPayEur(courseRestCents);
-                if (halfNowHintEl) {
-                    const tpl = (payUiCopy && payUiCopy.installNowTpl) || '{course} + {fee}';
-                    halfNowHintEl.textContent = String(tpl)
-                        .replace(/\{course\}/g, formatPayEur(halfPackageCents))
-                        .replace(/\{fee\}/g, formatPayEur(installDepositCents));
-                }
-                if (courseNowHintEl) {
-                    // Kur kur: ilk kur ücreti + kayıt ücreti
-                    const tpl = (payUiCopy && payUiCopy.installCourseNowTpl) || '1. kur + kayıt: {course} + {fee}';
-                    courseNowHintEl.textContent = String(tpl)
-                        .replace(/\{course\}/g, formatPayEur(unitCourseCents))
-                        .replace(/\{fee\}/g, formatPayEur(installDepositCents));
-                }
-
-                if (installAmountEl) {
-                    const hintNow = installOpt === 'course' ? courseNowCents : halfNowCents;
-                    installAmountEl.textContent = formatPayEur(payPlan === 'installment' ? hintNow : halfNowCents);
-                }
-
-                const charge = computeBookingCharge({
-                    totalCents,
-                    firstCourseCents: unitCourseCents,
-                    inGermany,
-                    courseCount,
-                    payPlan,
-                    installOpt,
-                });
-
-                // Sidebar tutarı: satırlarla uyumlu
                 if (totalPriceEl && totalLabelEl) {
                     const labelTotal = lang === 'tr' ? 'Toplam Tutar' : lang === 'de' ? 'Gesamtbetrag' : lang === 'es' ? 'Importe total' : 'Total Amount';
                     const labelDue = lang === 'tr' ? 'Ödenecek' : lang === 'de' ? 'Zu zahlen' : lang === 'es' ? 'A pagar' : 'Amount due';
-                    const installReady = payPlan !== 'installment' || !!installOpt;
-                    const readyDue = !!germanyVal && !!payPlan && installReady;
-                    let packageDisplayCents = totalCents;
-                    if (payPlan && totalCents > 0) {
-                        packageDisplayCents += depositCents;
-                    }
-                    if (readyDue && payPlan === 'installment') {
+                    if (rawPlan && totalCents > 0) {
                         totalLabelEl.textContent = labelDue;
-                        totalPriceEl.textContent = formatPayEur(charge.chargeCents);
-                    } else if (readyDue && payPlan === 'full') {
-                        totalLabelEl.textContent = labelDue;
-                        totalPriceEl.textContent = formatPayEur(charge.chargeCents);
+                        totalPriceEl.textContent = formatPayEur(activeCharge.chargeCents);
                     } else {
                         totalLabelEl.textContent = labelTotal;
-                        totalPriceEl.textContent = formatPayEur(Math.max(0, packageDisplayCents));
+                        totalPriceEl.textContent = formatPayEur(totalCents);
                     }
                 }
                 const mobileTotal = document.getElementById('bk-mobile-total');
@@ -4668,12 +4924,18 @@ const extrasStepCopy = {
                 restoreSubmitButtons();
             }
 
-            document.querySelectorAll('[name="pay-plan"], [name="pay-install"], [name="in-germany"]').forEach(function (el) {
+            document.querySelectorAll('[name="pay-plan"]').forEach(function (el) {
                 el.addEventListener('change', function () {
                     if (typeof updatePrice === 'function') updatePrice();
                     else syncPaymentUI();
                 });
             });
+            document.getElementById('bremen-resident')?.addEventListener('change', function () {
+                syncBremenPayLock();
+                if (typeof updatePrice === 'function') updatePrice();
+                else syncPaymentUI();
+            });
+            syncBremenPayLock();
 
             // Desktop: CSS sticky yeterli — fixed pin / maxHeight scrollbar yok
             (function initPinnedPriceSidebar() {
@@ -4695,8 +4957,7 @@ const extrasStepCopy = {
                     alert(successMsg);
                 }
                 bookingForm.reset();
-                const cityInput = document.getElementById('city');
-                if (cityInput) cityInput.removeAttribute('readonly');
+                document.getElementById('phone-country-code')?.dispatchEvent(new Event('input', { bubbles: true }));
                 showStep(1);
                 if (typeof toggleProgramExtras === 'function') toggleProgramExtras();
                 if (typeof toggleAccommodationMonths === 'function') toggleAccommodationMonths();
@@ -4739,8 +5000,28 @@ const extrasStepCopy = {
                 throw new Error(data?.error || 'no_checkout');
             }
 
-            let stripeEmbedCheckout = null;
+            async function postBookingWebhook(payload) {
+                const webhookUrl = (bookingForm?.dataset.webhook || '').trim();
+                if (!webhookUrl) throw new Error('missing_webhook');
+                const res = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+                if (!res.ok) {
+                    const detail = await res.text().catch(function () { return ''; });
+                    console.error('Booking webhook failed', res.status, detail.slice(0, 500));
+                    throw new Error('webhook_failed');
+                }
+            }
+
+            function clearPendingBookingPayloads() {
+                window.__pendingBookingQuotePayload = null;
+                window.__lastBookingPayPayload = null;
+            }
+
             let stripeJsPromise = null;
+            let stripeEmbedCheckout = null;
 
             function loadStripeJs() {
                 if (window.Stripe) return Promise.resolve(window.Stripe);
@@ -4787,6 +5068,7 @@ const extrasStepCopy = {
                 if (stage) stage.hidden = false;
                 if (content) content.classList.add('booking-content--paying');
                 syncPaymentAmountDisplay(chargeLabel);
+                syncQuoteCtaVisibility();
                 const progress = document.querySelector('.form-progress');
                 if (progress) progress.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
@@ -4798,6 +5080,7 @@ const extrasStepCopy = {
                 if (stage) stage.hidden = true;
                 if (form) form.hidden = false;
                 if (content) content.classList.remove('booking-content--paying');
+                syncQuoteCtaVisibility();
             }
 
             async function destroyStripeEmbed() {
@@ -4877,21 +5160,22 @@ const extrasStepCopy = {
                 bookingForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     const formData = new FormData(bookingForm);
-                    const payPlan = (formData.get('pay-plan') || '').toString();
-                    const installOpt = (formData.get('pay-install') || '').toString();
-                    const inGermanyRaw = (formData.get('in-germany') || '').toString();
-                    const inGermany = inGermanyRaw === 'yes';
-                    const submitter = e.submitter;
-                    const submitIntent = (submitter && submitter.getAttribute('data-submit-intent')) || 'pay';
-                    const wantsQuote = submitIntent === 'quote';
+                    syncBremenPayLock();
+                    const rawPayPlan = (formData.get('pay-plan') || '').toString();
+                    const normalizedPay = normalizePaySelection(rawPayPlan);
+                    const payPlan = normalizedPay.payPlan;
+                    const installOpt = normalizedPay.installOpt || (formData.get('pay-install') || '').toString();
+                    const inGermany = isInGermanySelected();
+                    const inGermanyRaw = inGermany ? 'yes' : 'no';
+                    // Form yalnızca teklif gönderir; isteğe bağlı ödeme popup/proxy ile yapılır.
+                    const wantsQuote = true;
 
-                    if (!validatePaymentChoices(true)) {
+                    if (!validateStep(2)) {
+                        validatePaymentChoices(true);
+                        const firstInvalid = bookingForm.querySelector('.error, .form-group.error, .checkbox-label.error');
+                        firstInvalid?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         return;
                     }
-
-                    setSubmitButtonsDisabled(true);
-                    const submittingText = lang === 'tr' ? 'Gönderiliyor...' : lang === 'de' ? 'Wird gesendet...' : lang === 'es' ? 'Enviando...' : 'Submitting...';
-                    setSubmitButtonsText(submittingText);
 
                     // 1. Check rate limiting
                     if (!checkRateLimit('booking', 5, 1)) {
@@ -4968,15 +5252,15 @@ const extrasStepCopy = {
                     const courseLevelsText = courseSelectionArr
                         .map((v) => bookingWebhookLabels.courseLevel[v] || String(v).toUpperCase())
                         .join(', ');
-                    const totalFormatted = document.getElementById('total-price')?.textContent || '0 €';
                     const totalCents = parseInt(String(data.amountInCents || '0').trim(), 10) || 0;
+                    const totalFormatted = formatPayEur(totalCents);
                     const friendDiscountEuro = bringFriendActive ? FRIEND_DISCOUNT : 0;
                     const firstCourseCents = courseCount > 0
                         ? Math.round(totalCents / courseCount)
                         : Math.round((promoPrice || 0) * 100);
 
-                    if (!wantsQuote && totalCents <= 0 && payPlan === 'full') {
-                        showBookingError(lang === 'tr' ? 'Ödeme için geçerli bir tutar seçiniz.' : lang === 'de' ? 'Bitte wählen Sie einen gültigen Betrag für die Zahlung.' : lang === 'es' ? 'Seleccione un importe válido para el pago.' : 'Please select a valid amount for payment.');
+                    if (totalCents <= 0) {
+                        showBookingError(lang === 'tr' ? 'Lütfen önce program ve kurs seçimi yapın.' : lang === 'de' ? 'Bitte wählen Sie zuerst Programm und Kurs.' : lang === 'es' ? 'Seleccione primero programa y curso.' : 'Please select program and courses first.');
                         setSubmitButtonsDisabled(false);
                         restoreSubmitButtons();
                         return;
@@ -4987,26 +5271,13 @@ const extrasStepCopy = {
                         firstCourseCents,
                         inGermany,
                         courseCount,
-                        payPlan,
+                        payPlan: rawPayPlan || payPlan,
                         installOpt,
                     });
-                    const depositInfo = {
-                        chargeCents: wantsQuote ? 0 : chargeCalc.chargeCents,
-                        remainingCents: chargeCalc.remainingCents,
-                        depositEur: chargeCalc.depositEur || 0,
-                        balanceDueDays: chargeCalc.depositEur ? balanceDueDays : 0,
-                        kind: wantsQuote ? 'quote' : chargeCalc.kind,
-                        fullDiscountEur: chargeCalc.fullDiscountEur || 0,
-                        germanyNoRegFee: !!chargeCalc.germanyNoRegFee,
-                        registrationFeeEur: chargeCalc.registrationFeeEur || 0,
-                    };
-                    // Ödeme butonu: her zaman pay_now (Stripe). Taksit bilgisi paymentPlan / paymentKind / installmentSchedule ile gider.
-                    // reservation eski Make filter'larında {"ok":true} koluna düşüp clientSecret'ı kaçırıyordu.
-                    const paymentChoice = wantsQuote ? 'quote' : 'pay_now';
-                    const payMethod = wantsQuote ? 'none' : 'online';
-                    const isInstallmentPay = !wantsQuote && payPlan === 'installment';
-                    const chargeEur = Math.round(depositInfo.chargeCents) / 100;
-                    const chargeLabel = chargeEur.toLocaleString(lang === 'de' ? 'de-DE' : lang === 'tr' ? 'tr-TR' : lang === 'es' ? 'es-ES' : 'en-US') + ' €';
+                    const depositInfo = buildDepositInfo(chargeCalc, true);
+                    const paymentChoice = 'quote';
+                    const payMethod = 'none';
+                    const isInstallmentPay = payPlan === 'installment';
 
                     const weeksNumPayload = effectiveWeeks ? Number(effectiveWeeks) : 0;
                     const pricedForDiscount = courseSelectionArr.filter(function (c) { return LEVEL_RE.test(c) || c === 'telc-c1-prep'; });
@@ -5029,38 +5300,35 @@ const extrasStepCopy = {
                         courseEur: courseGrossEuro,
                         targetCents: totalCents,
                     });
-                    // Checkout’ta tek satır = amountInCents (katalog / hafta paketi çift sayımını engeller)
-                    const stripeLineItems = [{
-                        productKey: stripeAdjustProduct.productKey,
-                        name: isInstallmentPay
-                            ? ('Installment payment ' + chargeEur + ' EUR')
-                            : 'Campus German booking',
-                        amountCents: depositInfo.chargeCents,
-                        quantity: 1,
-                        useCustomAmount: true,
-                    }];
+                    const stripeLineItems = buildStripeLineItemsForDeposit(depositInfo, payPlan);
 
                     let standardizedData = {
-                        formType: wantsQuote ? 'price-quote' : 'booking',
+                        formType: 'booking',
                         lang: typeof lang !== 'undefined' ? lang : 'tr',
                         sourcePage: data.sourcePage || window.location.pathname,
                         submittedAt: new Date().toISOString(),
                         paymentChoice,
-                        paymentDoc: wantsQuote ? 'quote' : 'registration',
+                        paymentDoc: 'quote',
                         paymentPlan: payPlan || '',
                         paymentInstallOption: installOpt || '',
                         paymentMethod: payMethod,
                         paymentKind: depositInfo.kind,
                         installmentSchedule: payPlan === 'installment'
                             ? {
-                                type: installOpt === 'course' ? 'course_by_course' : 'half_half',
-                                nowCents: depositInfo.chargeCents,
+                                type: installOpt === 'course'
+                                    ? 'course_by_course'
+                                    : installOpt === 'monthly'
+                                      ? 'monthly'
+                                      : 'half_half',
+                                nowCents: depositInfo.netChargeCents,
                                 remainingCents: depositInfo.remainingCents,
                                 registrationFeeEur: depositInfo.registrationFeeEur,
                                 dueDaysBeforeCourseStart: 17,
                                 note: installOpt === 'course'
                                     ? 'First charge = 1 course unit + registration fee. Remaining courses: CRM emails payment request 17 days before each course start (approx. every 8 weeks).'
-                                    : 'Course package split 50/50; first charge = half package + registration fee. Remaining half due 17 days before overall course start.',
+                                    : installOpt === 'monthly'
+                                      ? 'First charge = first month (package / (courses*2)) + registration fee. Remaining months collected via CRM.'
+                                      : 'Course package split 50/50; first charge = half package + registration fee. Remaining half due 17 days before overall course start.',
                               }
                             : null,
                         checkoutUiMode: 'embedded',
@@ -5074,9 +5342,9 @@ const extrasStepCopy = {
                             lastName: data.last_name || '',
                             email: data.email || '',
                             phone,
-                            address: '',
+                            address: (data.address || '').trim(),
                             postalCode: '',
-                            city: data.city || '',
+                            city: '',
                             country: data.country || '',
                         },
 
@@ -5100,11 +5368,12 @@ const extrasStepCopy = {
                         },
 
                         location: {
-                            inGermany: yesNo('in-germany'),
+                            inGermany: inGermany ? 'yes' : 'no',
+                            bremenResident: document.getElementById('bremen-resident')?.checked ? 'yes' : 'no',
                         },
 
                         marketing: {
-                            heardFrom: '',
+                            heardFrom: (data['heard-from'] || '').trim(),
                             referrerName: '',
                         },
 
@@ -5124,6 +5393,8 @@ const extrasStepCopy = {
                             total: totalFormatted,
                             totalCents,
                             chargeCents: depositInfo.chargeCents,
+                            netChargeCents: depositInfo.netChargeCents,
+                            stripeFeeCents: depositInfo.stripeFeeCents,
                             remainingCents: depositInfo.remainingCents,
                             depositEur: depositInfo.depositEur,
                             balanceDueDays: depositInfo.balanceDueDays,
@@ -5134,6 +5405,8 @@ const extrasStepCopy = {
                             total: totalFormatted,
                             totalCents,
                             chargeCents: depositInfo.chargeCents,
+                            netChargeCents: depositInfo.netChargeCents,
+                            stripeFeeCents: depositInfo.stripeFeeCents,
                             remainingCents: depositInfo.remainingCents,
                         },
                         priceTotal: totalFormatted,
@@ -5146,6 +5419,8 @@ const extrasStepCopy = {
                             skipWeeksPackage: true,
                             useLineItemAmounts: true,
                             chargeCents: depositInfo.chargeCents,
+                            netChargeCents: depositInfo.netChargeCents,
+                            stripeFeeCents: depositInfo.stripeFeeCents,
                             totalCents,
                         },
 
@@ -5169,93 +5444,125 @@ const extrasStepCopy = {
                         window.location.origin +
                         window.location.pathname +
                         '?payment=success&session_id={CHECKOUT_SESSION_ID}';
-                    standardizedData.amountInCents = depositInfo.chargeCents;
-                    standardizedData.price = {
-                        total: totalFormatted,
-                        totalCents,
-                        chargeCents: depositInfo.chargeCents,
-                        remainingCents: depositInfo.remainingCents,
-                        depositEur: depositInfo.depositEur,
-                        balanceDueDays: depositInfo.balanceDueDays,
-                        depositNonRefundable: isInstallmentPay,
-                    };
-                    standardizedData.priceCollection = {
-                        total: totalFormatted,
-                        totalCents,
-                        chargeCents: depositInfo.chargeCents,
-                        remainingCents: depositInfo.remainingCents,
-                    };
-                    standardizedData.stripeLineItems = stripeLineItems;
+                    applyDepositToPayload(standardizedData, depositInfo, payPlan, totalFormatted, totalCents);
                     standardizedData.stripeLineItemsDetail = stripeLineItemsDetail;
-                    standardizedData.stripePricing = {
-                        mode: 'custom_amount_cents',
-                        mapCatalogPrices: false,
-                        skipWeeksPackage: true,
-                        useLineItemAmounts: true,
-                        chargeCents: depositInfo.chargeCents,
-                        totalCents,
-                    };
-
-                    async function postBookingWebhook(payload) {
-                        const webhookUrl = (bookingForm?.dataset.webhook || '').trim();
-                        if (!webhookUrl) throw new Error('missing_webhook');
-                        const res = await fetch(webhookUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload),
-                        });
-                        if (!res.ok) throw new Error('webhook_failed');
-                    }
-
-                    const needsStripe = !wantsQuote && depositInfo.chargeCents > 0;
-                    let paymentUiOpen = false;
 
                     try {
-                        if (!needsStripe) {
+                        window.__pendingBookingQuotePayload = standardizedData;
+                        window.__lastBookingPayPayload = buildPayFollowUpPayload(
+                            standardizedData,
+                            chargeCalc,
+                            payPlan,
+                            installOpt,
+                            totalFormatted,
+                            totalCents
+                        );
+                        const modal = document.getElementById('bk-quote-pay-modal');
+                        if (modal) modal.hidden = false;
+                        else {
                             await postBookingWebhook(standardizedData);
+                            clearPendingBookingPayloads();
                             showBookingThankYou();
-                            return;
                         }
-                        const checkout = await requestPayNowCheckout(standardizedData);
+                    } catch (error) {
+                        console.error('Error preparing booking:', error);
+                        showBookingError(lang === 'tr'
+                            ? 'İşlem tamamlanamadı. Lütfen tekrar deneyin.'
+                            : lang === 'de'
+                                ? 'Vorgang konnte nicht abgeschlossen werden. Bitte erneut versuchen.'
+                                : lang === 'es'
+                                    ? 'No se pudo completar. Inténtelo de nuevo.'
+                                    : 'Could not complete. Please try again.');
+                    }
+                });
+            }
+
+            (function initQuotePayModal() {
+                const modal = document.getElementById('bk-quote-pay-modal');
+                const yesBtn = document.getElementById('bk-quote-pay-yes');
+                const noBtn = document.getElementById('bk-quote-pay-no');
+                function closeModal() {
+                    if (modal) modal.hidden = true;
+                }
+                function modalRateLimitError() {
+                    if (window.showSuccessModal) {
+                        window.showSuccessModal('error', window.successModalTranslations?.rateLimitError || 'Çok fazla istek gönderdiniz. Lütfen bir dakika bekleyin.');
+                    } else {
+                        const rateLimitMsg = lang === 'tr' ? 'Çok fazla istek gönderdiniz. Lütfen bir dakika bekleyin.' : lang === 'de' ? 'Zu viele Anfragen. Bitte warten Sie eine Minute.' : lang === 'es' ? 'Demasiadas solicitudes. Espere un minuto.' : 'Too many requests. Please wait a minute.';
+                        alert(rateLimitMsg);
+                    }
+                }
+                noBtn?.addEventListener('click', async function () {
+                    const payload = window.__pendingBookingQuotePayload;
+                    if (!payload) {
+                        closeModal();
+                        showBookingThankYou();
+                        return;
+                    }
+                    if (!checkRateLimit('booking', 5, 1)) {
+                        modalRateLimitError();
+                        return;
+                    }
+                    noBtn.disabled = true;
+                    try {
+                        await postBookingWebhook(payload);
+                        clearPendingBookingPayloads();
+                        closeModal();
+                        showBookingThankYou();
+                    } catch (err) {
+                        console.error(err);
+                        noBtn.disabled = false;
+                        showBookingError(lang === 'tr'
+                            ? 'Teklif gönderilemedi. Lütfen tekrar deneyin.'
+                            : lang === 'de'
+                                ? 'Angebot konnte nicht gesendet werden. Bitte erneut versuchen.'
+                                : lang === 'es'
+                                    ? 'No se pudo enviar el presupuesto. Inténtelo de nuevo.'
+                                    : 'Could not send quote. Please try again.');
+                    }
+                });
+                yesBtn?.addEventListener('click', async function () {
+                    const payload = window.__lastBookingPayPayload;
+                    if (!payload) {
+                        closeModal();
+                        showBookingError(lang === 'tr'
+                            ? 'Ödeme bilgileri bulunamadı. Lütfen formu tekrar gönderin.'
+                            : 'Payment data missing. Please submit the form again.');
+                        return;
+                    }
+                    if (!checkRateLimit('booking', 5, 1)) {
+                        modalRateLimitError();
+                        return;
+                    }
+                    yesBtn.disabled = true;
+                    try {
+                        const checkout = await requestPayNowCheckout(payload);
+                        clearPendingBookingPayloads();
+                        closeModal();
+                        const chargeLabel = (document.getElementById('total-price')?.textContent || '').trim() || '—';
                         if (checkout.mode === 'embedded' && checkout.clientSecret) {
                             await mountStripeEmbeddedCheckout(checkout.clientSecret, checkout.publishableKey, chargeLabel);
-                            paymentUiOpen = true;
                             return;
                         }
                         if (checkout.mode === 'hosted' && checkout.checkoutUrl) {
-                            paymentUiOpen = true;
                             window.location.assign(checkout.checkoutUrl);
                             return;
                         }
                         throw new Error('no_checkout');
-                    } catch (error) {
-                        console.error('Error submitting form:', error);
-                        try { await destroyStripeEmbed(); } catch (_) {}
-                        const missingKey = error && error.message === 'missing_publishable_key';
-                        const payError = missingKey
+                    } catch (err) {
+                        console.error(err);
+                        yesBtn.disabled = false;
+                        const missingKey = err && err.message === 'missing_publishable_key';
+                        showBookingError(missingKey
                             ? (lang === 'tr'
                                 ? 'Stripe publishable key eksik. data/booking-pay-proxy.config.php dosyasına pk_live_... ekleyin.'
-                                : lang === 'de'
-                                    ? 'Stripe Publishable Key fehlt. Bitte pk_live_... in data/booking-pay-proxy.config.php eintragen.'
-                                    : lang === 'es'
-                                        ? 'Falta la clave publicable de Stripe. Añada pk_live_... en data/booking-pay-proxy.config.php.'
-                                        : 'Stripe publishable key missing. Add pk_live_... to data/booking-pay-proxy.config.php.')
+                                : 'Stripe publishable key missing. Add pk_live_... to data/booking-pay-proxy.config.php.')
                             : (lang === 'tr'
-                                ? 'Gönderim tamamlanamadı. Lütfen tekrar deneyin veya bizimle iletişime geçin.'
-                                : lang === 'de'
-                                    ? 'Absenden fehlgeschlagen. Bitte erneut versuchen oder kontaktieren Sie uns.'
-                                    : lang === 'es'
-                                        ? 'No se pudo completar el envío. Inténtelo de nuevo o contáctenos.'
-                                        : 'Could not complete submission. Please try again or contact us.');
-                        showBookingError(payError);
-                    } finally {
-                        if (!paymentUiOpen) {
-                            setSubmitButtonsDisabled(false);
-                            restoreSubmitButtons();
-                        }
+                                ? 'Ödeme başlatılamadı. Lütfen tekrar deneyin.'
+                                : 'Could not start payment. Please try again.'));
                     }
                 });
-            }
+            })();
 
             function applyBookingPrefillFromUrl() {
                 const params = new URLSearchParams(window.location.search);
@@ -5303,25 +5610,27 @@ const extrasStepCopy = {
             syncProgramCardsUI();
             syncOnlineCourseCards();
             syncPaymentUI();
+            syncQuoteCtaVisibility();
 
             const mobileDockCta = document.getElementById('bk-mobile-dock-cta');
             if (mobileDockCta) {
                 syncMobileDockCta();
                 mobileDockCta.addEventListener('click', function () {
                     const activeStep = document.querySelector('.form-step.active');
-                    if (!activeStep) return;
-                    const nextBtn = activeStep.querySelector('.btn-next');
-                    if (nextBtn instanceof HTMLElement) {
-                        nextBtn.click();
+                    if (!activeStep || !bookingForm) return;
+                    if (currentStep < totalSteps) {
+                        const nextBtn = activeStep.querySelector('.btn-next');
+                        if (nextBtn instanceof HTMLElement) nextBtn.click();
                         return;
                     }
-                    const payBtn = activeStep.querySelector('#bk-pay-submit');
-                    if (payBtn instanceof HTMLElement) {
-                        payBtn.click();
-                        return;
+                    const quoteBtn = document.getElementById('bk-submit-quote');
+                    if (quoteBtn instanceof HTMLButtonElement) {
+                        if (typeof bookingForm.requestSubmit === 'function') {
+                            bookingForm.requestSubmit(quoteBtn);
+                        } else {
+                            quoteBtn.click();
+                        }
                     }
-                    const quoteBtn = activeStep.querySelector('#bk-submit-quote');
-                    if (quoteBtn instanceof HTMLElement) quoteBtn.click();
                 });
             }
         });
