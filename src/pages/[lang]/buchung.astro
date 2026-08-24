@@ -2859,8 +2859,11 @@ const extrasStepCopy = {
                 return levelModuleCount(values);
             }
             function getMultiCourseDiscount(courseCount, grossTotal) {
-                // N kurs → toplam üzerinden N% indirim (2→%2, 3→%3 …). 1 kursta indirim yok.
-                if (courseCount < 2 || grossTotal <= 0) return { percent: 0, amount: 0 };
+                // Yüzdelik çoklu-kurs indirimi yalnızca Bremen sakini için.
+                // N kurs → toplam üzerinden N% (2→%2, 3→%3 …). 1 kursta / Bremen yoksa 0.
+                if (!isInGermanySelected() || courseCount < 2 || grossTotal <= 0) {
+                    return { percent: 0, amount: 0 };
+                }
                 const percent = courseCount;
                 const amount = Math.round(grossTotal * percent / 100);
                 return { percent, amount };
@@ -2868,7 +2871,7 @@ const extrasStepCopy = {
 
             function unitPriceAfterMultiDiscount(baseEur, courseCount) {
                 if (!(baseEur > 0)) return 0;
-                if (courseCount < 2) return Math.round(baseEur);
+                if (!isInGermanySelected() || courseCount < 2) return Math.round(baseEur);
                 return Math.round(baseEur * (100 - courseCount) / 100);
             }
 
@@ -3221,7 +3224,10 @@ const extrasStepCopy = {
                 const vals = checked.map(function (c) { return c.value; });
                 const priced = vals.filter(function (c) { return LEVEL_RE.test(c) || c === 'telc-c1-prep'; });
                 const courseCount = getSelectedCourseCount(vals);
-                const show = (program === 'intensive' || program === 'online') && courseCount > 0;
+                // Multi % teaser/kart yalnızca Bremen sakini seçiliyken
+                const show = isInGermanySelected()
+                    && (program === 'intensive' || program === 'online')
+                    && courseCount > 0;
 
                 card.hidden = !show;
                 card.classList.remove('is-active', 'is-teaser');
@@ -3771,9 +3777,10 @@ const extrasStepCopy = {
                     .filter(function (c) { return LEVEL_RE.test(c) || c === 'telc-c1-prep'; });
                 const count = checked.length;
                 const nextCount = count + 1;
-                const activePercent = count >= 2 ? count : 0;
-                const nextPercent = nextCount >= 2 ? nextCount : 0;
-                const showMulti = (program === 'intensive' || program === 'online') && count >= 1;
+                const bremenOn = isInGermanySelected();
+                const activePercent = bremenOn && count >= 2 ? count : 0;
+                const nextPercent = bremenOn && nextCount >= 2 ? nextCount : 0;
+                const showMulti = bremenOn && (program === 'intensive' || program === 'online') && count >= 1;
                 const baseOld = String(promoPriceOriginal) + '€';
                 const baseNow = String(promoPrice) + '€';
                 const isOnline = program === 'online';
@@ -5633,6 +5640,32 @@ const extrasStepCopy = {
                     }
                 });
             }
+
+            // Mobil dock: footer görünür olunca üstüne takılsın (fixed + bottom offset)
+            (function initMobileDockAboveFooter() {
+                const dock = document.getElementById('bk-mobile-dock');
+                const footer = document.querySelector('footer.footer');
+                if (!dock || !footer) return;
+                const mq = window.matchMedia('(max-width: 900px)');
+                function pinDock() {
+                    if (!mq.matches || dock.hidden || getComputedStyle(dock).display === 'none') {
+                        dock.style.bottom = '';
+                        return;
+                    }
+                    const footerTop = footer.getBoundingClientRect().top;
+                    const vh = window.innerHeight || document.documentElement.clientHeight;
+                    if (footerTop < vh) {
+                        dock.style.bottom = Math.max(0, Math.round(vh - footerTop)) + 'px';
+                    } else {
+                        dock.style.bottom = '0px';
+                    }
+                }
+                window.addEventListener('scroll', pinDock, { passive: true });
+                window.addEventListener('resize', pinDock, { passive: true });
+                if (typeof mq.addEventListener === 'function') mq.addEventListener('change', pinDock);
+                else if (typeof mq.addListener === 'function') mq.addListener(pinDock);
+                pinDock();
+            })();
         });
     </script>
 </MainLayout>
