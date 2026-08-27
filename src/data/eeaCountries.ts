@@ -1,0 +1,153 @@
+/**
+ * EEA (European Economic Area) ISO 3166-1 alpha-2.
+ * CH / GB / TR vb. EEA dışı → kart işlem ücreti / SWIFT buffer uygulanabilir.
+ */
+export const EEA_COUNTRY_ISO = new Set([
+  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU',
+  'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES',
+  'SE', 'IS', 'LI', 'NO',
+]);
+
+/** Serbest metin ülke → ISO (küçük harf anahtar) */
+export const COUNTRY_NAME_TO_ISO: Record<string, string> = {
+  turkey: 'TR',
+  türkiye: 'TR',
+  turkiye: 'TR',
+  turkei: 'TR',
+  türkei: 'TR',
+  turquia: 'TR',
+  germany: 'DE',
+  deutschland: 'DE',
+  alemanya: 'DE',
+  alemania: 'DE',
+  austria: 'AT',
+  österreich: 'AT',
+  osterreich: 'AT',
+  switzerland: 'CH',
+  schweiz: 'CH',
+  suisse: 'CH',
+  isviçre: 'CH',
+  isvicre: 'CH',
+  'united kingdom': 'GB',
+  uk: 'GB',
+  britain: 'GB',
+  england: 'GB',
+  'united states': 'US',
+  usa: 'US',
+  america: 'US',
+  spain: 'ES',
+  españa: 'ES',
+  espana: 'ES',
+  ispanya: 'ES',
+  france: 'FR',
+  frankreich: 'FR',
+  fransa: 'FR',
+  italy: 'IT',
+  italia: 'IT',
+  italien: 'IT',
+  netherlands: 'NL',
+  nederland: 'NL',
+  holland: 'NL',
+  poland: 'PL',
+  polska: 'PL',
+  polonya: 'PL',
+  russia: 'RU',
+  russland: 'RU',
+  rusya: 'RU',
+  'saudi arabia': 'SA',
+  uae: 'AE',
+  'united arab emirates': 'AE',
+  china: 'CN',
+  korea: 'KR',
+  'south korea': 'KR',
+  belgien: 'BE',
+  belgium: 'BE',
+  belçika: 'BE',
+  belcika: 'BE',
+  portugal: 'PT',
+  greece: 'GR',
+  griechenland: 'GR',
+  yunanistan: 'GR',
+  ireland: 'IE',
+  irland: 'IE',
+  irlanda: 'IE',
+  sweden: 'SE',
+  schweden: 'SE',
+  isveç: 'SE',
+  isvec: 'SE',
+  norway: 'NO',
+  norwegen: 'NO',
+  norveç: 'NO',
+  norvec: 'NO',
+  denmark: 'DK',
+  dänemark: 'DK',
+  danemark: 'DK',
+  danimarka: 'DK',
+  finland: 'FI',
+  finnland: 'FI',
+  finlandiya: 'FI',
+  czech: 'CZ',
+  'czech republic': 'CZ',
+  tschechien: 'CZ',
+  çekya: 'CZ',
+  cekya: 'CZ',
+  hungary: 'HU',
+  ungarn: 'HU',
+  macaristan: 'HU',
+  romania: 'RO',
+  rumänien: 'RO',
+  rumanien: 'RO',
+  romanya: 'RO',
+  bulgaria: 'BG',
+  bulgarien: 'BG',
+  bulgaristan: 'BG',
+  croatia: 'HR',
+  kroatien: 'HR',
+  hırvatistan: 'HR',
+  hirvatistan: 'HR',
+  slovakia: 'SK',
+  slowakei: 'SK',
+  slovakya: 'SK',
+  slovenia: 'SI',
+  slowenien: 'SI',
+  slovenya: 'SI',
+  estonia: 'EE',
+  estland: 'EE',
+  estonya: 'EE',
+  latvia: 'LV',
+  lettland: 'LV',
+  letonya: 'LV',
+  lithuania: 'LT',
+  litauen: 'LT',
+  litvanya: 'LT',
+  luxembourg: 'LU',
+  luxemburg: 'LU',
+  malta: 'MT',
+  cyprus: 'CY',
+  zypern: 'CY',
+  kıbrıs: 'CY',
+  kibris: 'CY',
+  iceland: 'IS',
+  island: 'IS',
+  izlanda: 'IS',
+  liechtenstein: 'LI',
+};
+
+export function normalizeCountryIso(raw: string | null | undefined): string {
+  const s = String(raw || '').trim();
+  if (!s) return '';
+  if (/^[a-zA-Z]{2}$/.test(s)) return s.toUpperCase();
+  const key = s
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+  return COUNTRY_NAME_TO_ISO[key] || COUNTRY_NAME_TO_ISO[s.toLowerCase()] || '';
+}
+
+export function isEeaCountryIso(iso: string | null | undefined): boolean {
+  const code = String(iso || '').trim().toUpperCase();
+  if (!code) return false;
+  return EEA_COUNTRY_ISO.has(code);
+}

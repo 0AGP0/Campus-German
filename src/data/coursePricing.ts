@@ -4,14 +4,14 @@ export const coursePricing = {
     // Yoğun Almanca Kursları Fiyatları (Yoğun) – yeni fiyatlar
     intensive: {
       a1: {
-        fullCourse: "840€",
+        fullCourse: "890€",
         lessons: "20+ 4 ders",
         duration: "8 hafta",
         weeklyLessons: "20 ders",
         totalLessons: "20+ 4",
       },
       a2: {
-        fullCourse: "840€",
+        fullCourse: "890€",
         lessons: "20+ 4 ders",
         duration: "8 hafta",
         weeklyLessons: "20 ders",
@@ -205,14 +205,14 @@ export const coursePricing = {
     // Yoğun Almanca Kursları Fiyatları (Yoğun) – neue Preise
     intensive: {
       a1: {
-        fullCourse: "840€",
+        fullCourse: "890€",
         lessons: "20+ 4 UStd",
         duration: "8 Wochen",
         weeklyLessons: "20 UStd",
         totalLessons: "20+ 4",
       },
       a2: {
-        fullCourse: "840€",
+        fullCourse: "890€",
         lessons: "20+ 4 UStd",
         duration: "8 Wochen",
         weeklyLessons: "20 UStd",
@@ -406,14 +406,14 @@ export const coursePricing = {
     // Intensive German Courses Pricing (Intensive) – new prices
     intensive: {
       a1: {
-        fullCourse: "840€",
+        fullCourse: "890€",
         lessons: "20+ 4 lessons",
         duration: "8 weeks",
         weeklyLessons: "20 lessons",
         totalLessons: "20+ 4",
       },
       a2: {
-        fullCourse: "840€",
+        fullCourse: "890€",
         lessons: "20+ 4 lessons",
         duration: "8 weeks",
         weeklyLessons: "20 lessons",

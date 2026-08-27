@@ -59,7 +59,7 @@ tabs:
         - name: "Nivel A2 (8 Semanas)"
           duration: "8 Semanas"
           schedule: "Lun - Vie (Intensivo)"
-          price: "840 €"
+          price: "890 €"
         - name: "Nivel B1 (8 Semanas)"
           duration: "8 Semanas"
           schedule: "Lun - Vie (Intensivo)"

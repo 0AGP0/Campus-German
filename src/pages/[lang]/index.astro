@@ -147,12 +147,12 @@ const upcomingCourses = nearestCourseDate
         const registrationDaysLeft = computeRegistrationDaysLeft(dateObj, i);
         let otherDates = upcomingMondayPool
             .filter((od) => od.getTime() > dateObj.getTime())
-            .slice(0, 4)
+            .slice(0, 3)
             .map(formatHeroDateShort);
-        if (otherDates.length < 4) {
+        if (otherDates.length < 3) {
             otherDates = upcomingMondayPool
                 .filter((od) => od.getTime() !== dateObj.getTime())
-                .slice(0, 4)
+                .slice(0, 3)
                 .map(formatHeroDateShort);
         }
         return {
@@ -168,8 +168,8 @@ const upcomingCourses = nearestCourseDate
             cardIndex: i,
             daysLeft: registrationDaysLeft,
             otherDates,
-            price: 840,
-            bundlePrice: Math.round(840 * (100 - Math.min(i + 2, 5)) / 100),
+            price: 890,
+            bundlePrice: Math.round(890 * (100 - Math.min(i + 2, 5)) / 100),
         };
     })
     : [];
@@ -274,7 +274,7 @@ const t = {
         upcomingSeatFull: "Dolu",
         upcomingSeatLastOne: "Son yer",
         upcomingLevelProgram: "Intensive",
-        upcomingPriceLabel: "840 €",
+        upcomingPriceLabel: "890 €",
         upcomingBundleLabel: "Ek kur",
         upcomingDaysLeftTpl: "Kayıt kapanmasına {n} gün",
         upcomingOtherDates: "Diğer tarihler",
@@ -528,7 +528,7 @@ const t = {
         upcomingSeatFull: "Taken",
         upcomingSeatLastOne: "Last seat",
         upcomingLevelProgram: "Intensive",
-        upcomingPriceLabel: "840 €",
+        upcomingPriceLabel: "890 €",
         upcomingBundleLabel: "Add course",
         upcomingDaysLeftTpl: "Registration closes in {n} days",
         upcomingOtherDates: "Other dates",
@@ -791,7 +791,7 @@ const t = {
         upcomingSeatFull: "Belegt",
         upcomingSeatLastOne: "Letzter Platz",
         upcomingLevelProgram: "Intensiv",
-        upcomingPriceLabel: "840 €",
+        upcomingPriceLabel: "890 €",
         upcomingBundleLabel: "Weiterer Kurs",
         upcomingDaysLeftTpl: "Anmeldung schließt in {n} Tagen",
         upcomingOtherDates: "Weitere Termine",
@@ -1043,7 +1043,7 @@ const t = {
         upcomingSeatFull: "Ocupado",
         upcomingSeatLastOne: "Última plaza",
         upcomingLevelProgram: "Intensivo",
-        upcomingPriceLabel: "840 €",
+        upcomingPriceLabel: "890 €",
         upcomingBundleLabel: "Otro curso",
         upcomingDaysLeftTpl: "Inscripción cierra en {n} días",
         upcomingOtherDates: "Otras fechas",

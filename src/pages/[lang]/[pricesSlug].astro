@@ -66,12 +66,13 @@ const t = {
     heroText:
       'Akıllı tahta destekli sınıflar, yapılandırılmış seviye takibi ve vize uyumlu eğitim planı ile sürecini netleştiriyoruz.',
     heroText2: 'Yoğun program, güçlü yoğun Almanca altyapısı ve düzenli danışmanlıkla seni bir üst seviyeye taşıyoruz.',
-    officeCardTitle: "Arkadaşınla gel, haftaları birleştir, bonusları kap",
+    officeCardTitle: 'Kupon kodunuz yok mu?',
     officeCardText:
-      'İki kişi birlikte kayıt olduğunuzda toplam hafta planını birleştirip ek avantajlardan faydalanın.',
-    officeCardCta: 'Detaylı bilgi al',
+      'Bu ayın Campus German kupon kodunu WhatsApp’tan hemen alın — kaçırmayın.',
+    officeCardCta: 'Kupon kodunu WhatsApp’tan al',
+    couponMonthHint: '{month} kupon kodunu kaçırmayın',
     bremenCardTitle: "Bremen'de kayıt ücreti yok",
-    bremenCardText: "Bremen'de yaşayanlar için kayıt ücreti alınmaz — kurs ücretine odaklanırsın.",
+    bremenCardText: "Bremen'de yaşayanlar için peşin ve kur kur ödemede 80 € indirim — aylık planda geçerli değildir.",
     bremenCardCta: 'WhatsApp ile sor',
     heroPoint1: 'Akıllı tahta destekli modern sınıflar',
     heroPoint2: 'A1–C1 arası planlı seviye takibi',
@@ -110,12 +111,13 @@ const t = {
     heroText:
       'Mit Smartboard-Unterricht, klarer Niveaustruktur und visakonformer Planung halten wir Ihren Lernweg transparent.',
     heroText2: 'Intensives Programm, starke Intensiv-Deutsch-Basis und laufende Beratung aus einer Hand.',
-    officeCardTitle: 'Mit Freund*in kommen, Wochen kombinieren, Bonus sichern',
+    officeCardTitle: 'Noch keinen Gutscheincode?',
     officeCardText:
-      'Wenn Sie zu zweit buchen, bündeln wir die Wochenplanung und prüfen zusätzliche Vorteile für Sie.',
-    officeCardCta: 'Mehr Infos',
+      'Holen Sie sich den Campus German Gutscheincode dieses Monats per WhatsApp — nicht verpassen.',
+    officeCardCta: 'Code per WhatsApp holen',
+    couponMonthHint: '{month}-Gutscheincode nicht verpassen',
     bremenCardTitle: 'Keine Anmeldegebühr in Bremen',
-    bremenCardText: 'Wer in Bremen wohnt, zahlt keine Anmeldegebühr — Fokus auf die Kursgebühr.',
+    bremenCardText: 'Für Bremen-Bewohner: 80 € Rabatt bei Sofort- und Kurszahlung — nicht bei monatlicher Zahlung.',
     bremenCardCta: 'Per WhatsApp fragen',
     heroPoint1: 'Moderne Klassen mit Smartboard-Unterstützung',
     heroPoint2: 'Geplanter Fortschritt von A1 bis C1',
@@ -154,12 +156,13 @@ const t = {
     heroText:
       'With smart-board supported classes, clear level tracking, and visa-friendly planning, your path stays transparent.',
     heroText2: 'An intensive structure with strong academic support and continuous guidance.',
-    officeCardTitle: 'Come with a friend, combine weeks, unlock bonuses',
+    officeCardTitle: 'Don’t have a coupon code?',
     officeCardText:
-      'When two students book together, we combine the week plan and unlock extra benefits.',
-    officeCardCta: 'Get details',
+      'Get this month’s Campus German coupon code on WhatsApp — don’t miss it.',
+    officeCardCta: 'Get code on WhatsApp',
+    couponMonthHint: 'Don’t miss the {month} coupon code',
     bremenCardTitle: 'No registration fee in Bremen',
-    bremenCardText: 'If you live in Bremen, you pay no registration fee — just focus on the course price.',
+    bremenCardText: 'Bremen residents: €80 off on pay-in-full and course-by-course — not on monthly plans.',
     bremenCardCta: 'Ask on WhatsApp',
     heroPoint1: 'Smart-board supported modern classrooms',
     heroPoint2: 'Structured A1 to C1 level progression',
@@ -198,12 +201,13 @@ const t = {
     heroText:
       'Con aulas apoyadas por pizarra inteligente, seguimiento claro por nivel y planificación compatible con visado.',
     heroText2: 'Programa intensivo, base académica sólida y acompañamiento continuo.',
-    officeCardTitle: 'Ven con un amigo, combina semanas y consigue bonus',
+    officeCardTitle: '¿No tienes código de cupón?',
     officeCardText:
-      'Si reservan dos personas, unificamos el plan de semanas y activamos ventajas adicionales.',
-    officeCardCta: 'Más información',
+      'Consigue el código de cupón de Campus German de este mes por WhatsApp — no te lo pierdas.',
+    officeCardCta: 'Obtener código por WhatsApp',
+    couponMonthHint: 'No te pierdas el cupón de {month}',
     bremenCardTitle: 'Sin tasa de inscripción en Bremen',
-    bremenCardText: 'Si vives en Bremen, no pagas tasa de inscripción: te centras en el precio del curso.',
+    bremenCardText: 'Residentes en Bremen: 80 € de descuento en pago al contado y curso a curso — no en plan mensual.',
     bremenCardCta: 'Preguntar por WhatsApp',
     heroPoint1: 'Aulas modernas con pizarra inteligente',
     heroPoint2: 'Progresión estructurada de A1 a C1',
@@ -212,6 +216,24 @@ const t = {
     heroSecondaryCta: 'Info por WhatsApp',
   },
 }[lang];
+
+const monthNamesCoupon: Record<string, string[]> = {
+  tr: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+  de: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+  en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  es: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+};
+const couponMonth = (monthNamesCoupon[lang] || monthNamesCoupon.en)[new Date().getMonth()];
+const couponMonthHint = String(t.couponMonthHint || '').replace('{month}', couponMonth);
+const couponWaText =
+  lang === 'tr'
+    ? `Merhaba, ${couponMonth} kupon kodumu almak istiyorum.`
+    : lang === 'de'
+      ? `Hallo, ich möchte den Gutscheincode für ${couponMonth} erhalten.`
+      : lang === 'es'
+        ? `Hola, quiero recibir el código de cupón de ${couponMonth}.`
+        : `Hi, I’d like to get the ${couponMonth} coupon code.`;
+const couponWaHref = `https://wa.me/4915203823792?text=${encodeURIComponent(couponWaText)}`;
 
 const levels = ['a1', 'a2', 'b1', 'b2', 'c1'] as const;
 const levelLabels = { a1: 'A1', a2: 'A2', b1: 'B1', b2: 'B2', c1: 'C1' };
@@ -245,12 +267,9 @@ const simpleStartDates = uniqueDdMmMonday.map((ddmm) =>
       <div class="fiyatlar-promo-grid">
         <article class="fiyatlar-promo-card fiyatlar-promo-card--hero">
           <h3>{t.officeCardTitle}</h3>
+          <p>{couponMonthHint}</p>
           <p>{t.officeCardText}</p>
-          <div class="fiyatlar-promo-tags">
-            <span>{t.heroPoint1}</span>
-            <span>{t.heroPoint2}</span>
-          </div>
-          <a href="https://wa.me/4915203823792" target="_blank" rel="noopener noreferrer" class="fiyatlar-wa-btn">
+          <a href={couponWaHref} target="_blank" rel="noopener noreferrer" class="fiyatlar-wa-btn">
             <i class="fab fa-whatsapp"></i>
             {t.officeCardCta}
           </a>

@@ -411,7 +411,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionM
         <div class="footer-top">
             <div class="footer-grid">
                 <!-- Company Info -->
-                <div class="footer-column">
+                <div class="footer-column footer-column--brand">
                     <div class="footer-logo">
                         <img src="/Campusgerman_footer.png" alt="Campus German" class="footer-logo-img">
                     </div>
@@ -435,7 +435,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionM
                 </div>
                 
                 <!-- Quick Links -->
-                <div class="footer-column">
+                <div class="footer-column footer-column--nav">
                     <h3 class="footer-title">{currentLang.quickLinks}</h3>
                     <ul class="footer-links">
                         <li><a href={`/${lang}/`}>{currentLang.home}</a></li>
@@ -448,7 +448,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionM
                 </div>
                 
                 <!-- Courses - Sadece Ana Kategoriler -->
-                <div class="footer-column">
+                <div class="footer-column footer-column--extra">
                     <h3 class="footer-title">{currentLang.courses}</h3>
                     <ul class="footer-links">
                         <li><a href={`/${lang}/${sections.courses}/intensiv-deutsch`}>{currentLang.intensiveOverview}</a></li>
@@ -460,7 +460,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionM
                 </div>
                 
                 <!-- About & Services -->
-                <div class="footer-column">
+                <div class="footer-column footer-column--extra">
                     <h3 class="footer-title">{currentLang.about}</h3>
                     <ul class="footer-links">
                         <li><a href={`/${lang}/${sections.about}`}>{currentLang.about}</a></li>
@@ -471,7 +471,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionM
                 </div>
                 
                 <!-- Contact Info -->
-                <div class="footer-column">
+                <div class="footer-column footer-column--contact">
                     <h3 class="footer-title">{currentLang.contactInfo}</h3>
                     <div class="contact-info">
                         <div class="contact-item">
@@ -495,7 +495,7 @@ const sections = sectionMapping[lang as keyof typeof sectionMapping] || sectionM
                                 <span>info@campusgerman.com</span>
                             </div>
                         </div>
-                        <div class="contact-item">
+                        <div class="contact-item contact-item--hours">
                             <i class="fas fa-clock"></i>
                             <div>
                                 <strong>{currentLang.workingHours}</strong>

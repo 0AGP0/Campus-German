@@ -894,16 +894,83 @@
     border-style: solid;
 }
 
-.lvl-opt--unsure {
+.lvl-coupon {
     grid-column: 1 / -1;
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.15rem;
+    padding: 0.55rem 0.7rem 0.6rem;
+    border: 1px dashed #c9d6e2;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.lvl-coupon__label {
+    font-size: 0.72rem;
+    font-weight: 650;
+    color: #64748b;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.01em;
+}
+
+.lvl-coupon__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem 0.65rem;
+}
+
+.lvl-coupon__input {
+    flex: 1 1 10rem;
+    min-width: 0;
+    height: 2.35rem;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.88rem;
+}
+
+.lvl-coupon__status {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 650;
+    line-height: 1.35;
+    font-family: 'Outfit', sans-serif;
+}
+
+.lvl-coupon__status.is-ok {
+    color: #047857;
+}
+
+.lvl-coupon__status.is-bad {
+    color: #b91c1c;
+}
+
+.lvl-coupon__wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex: 1 1 12rem;
+    min-width: 0;
+    max-width: 100%;
+    font-size: 0.74rem;
+    font-weight: 650;
+    line-height: 1.3;
+    color: #128c7e;
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    white-space: normal;
+}
+
+.lvl-coupon__wa:hover {
+    color: #0b6b61;
+    text-decoration: underline;
+}
+
+.lvl-coupon__wa i {
+    font-size: 0.95rem;
 }
 
 .level-tile-grid.course-slot-grid--online {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.level-tile-grid.course-slot-grid--online .lvl-opt--unsure {
-    grid-column: 1 / -1;
 }
 
 .level-summary {
@@ -1314,12 +1381,6 @@
     --slot-bar: #d97706;
 }
 
-.course-slot--unsure {
-    --slot-accent: #64748b;
-    --slot-ring: rgba(100, 116, 139, 0.35);
-    --slot-bar: #64748b;
-}
-
 .course-slot:has(input:checked) {
     border-color: var(--slot-accent);
     background: #fff;
@@ -1450,12 +1511,6 @@
 .course-slot--telc .course-slot__head {
     background: #d97706;
     color: #fffbeb;
-    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08);
-}
-
-.course-slot--unsure .course-slot__head {
-    background: #64748b;
-    color: #f8fafc;
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08);
 }
 
@@ -1716,15 +1771,6 @@
     color: var(--slot-accent);
 }
 
-/* Emin değilim — tam genişlik, sade kart */
-.course-slot--unsure {
-    grid-column: 1 / -1;
-}
-
-.course-slot--unsure .course-slot__head-copy {
-    padding-right: 1.75rem;
-}
-
 @media (max-width: 768px) {
     .course-slot-grid,
     .week-slot-grid {
@@ -1819,14 +1865,6 @@
         min-width: 1.45rem;
         height: 1.45rem;
         font-size: 0.7rem;
-    }
-
-    .course-slot--unsure {
-        grid-column: 1 / -1;
-    }
-
-    .course-slot--unsure .course-slot__head-copy {
-        padding-right: 1.75rem;
     }
 
     .course-slot--week .course-slot__features {
@@ -2159,6 +2197,15 @@
         0 2px 10px rgba(0, 0, 0, 0.35);
 }
 
+.program-slot__title-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    width: 100%;
+    min-width: 0;
+}
+
 .program-slot__meta {
     font-size: clamp(0.78rem, 1.8vw, 0.88rem);
     font-weight: 600;
@@ -2170,34 +2217,41 @@
 }
 
 .program-slot__body {
-    padding: 0.85rem 0.95rem 1rem;
+    padding: 0.75rem 0.9rem 0.85rem;
     background: #fff;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
-    gap: 0.65rem 0.75rem;
-    min-height: 4.1rem;
+    gap: 0.55rem 0.7rem;
+    min-height: 3.75rem;
 }
 
 .program-slot__keywords {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem;
+    gap: 0.32rem;
     flex: 1 1 auto;
     min-width: 0;
+    max-width: calc(100% - 6.75rem);
+    align-content: center;
     align-self: center;
 }
 
 .program-slot__keyword {
     display: inline-flex;
     align-items: center;
-    padding: 0.28rem 0.55rem;
+    justify-content: center;
+    padding: 0.26rem 0.58rem;
     border-radius: 999px;
-    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
     color: #0f172a;
+    font-family: 'Outfit', sans-serif;
     font-size: 0.72rem;
-    font-weight: 750;
-    line-height: 1.25;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
 }
 
 .program-slot__price {
@@ -2223,6 +2277,16 @@
     transform: rotate(-2.5deg);
     line-height: 1;
     z-index: 1;
+}
+
+/* Desktop: başlıktaki fiyat gizli (mobilde media query açar) */
+.program-slot__price.program-slot__price--head {
+    display: none !important;
+}
+
+.program-slot__price.program-slot__price--body {
+    display: inline-flex;
+    flex-shrink: 0;
 }
 
 .program-slot__price::before {
@@ -2461,11 +2525,7 @@
     /* Mobil program düzeni ≤900px bloğunda; burada eski 1-sütun/büyük head yok */
     .program-slot-grid:not(.program-slot-grid--compact) {
         grid-template-columns: 1fr 1fr;
-        gap: 0.5rem;
-    }
-
-    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__head {
-        min-height: 0;
+        gap: 0.65rem;
     }
 
     .program-slot-grid--compact {
@@ -4703,26 +4763,30 @@
 
 .bk-extra-info-btn {
     position: absolute;
-    top: 0.45rem;
-    right: 0.45rem;
-    z-index: 2;
-    width: 1.45rem;
-    height: 1.45rem;
+    top: 0.4rem;
+    right: 0.4rem;
+    z-index: 3;
+    width: 1.75rem;
+    height: 1.75rem;
     padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.55);
+    border: 2px solid #0cc0df;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.92);
+    background: #fff;
     color: #0a2959;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.62rem;
-    transition: background 0.15s ease;
+    font-size: 0.78rem;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(12, 192, 223, 0.35);
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 
 .bk-extra-info-btn:hover {
-    background: #fff;
+    background: #0cc0df;
+    color: #fff;
+    transform: scale(1.06);
 }
 
 /* Eski Ekle butonu / choices stilleri */
@@ -4815,6 +4879,31 @@
     line-height: 1.55;
     color: #475569;
     white-space: pre-line;
+}
+
+.bk-info-popup__link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 0.85rem;
+    padding: 0.55rem 0.8rem;
+    border-radius: 10px;
+    background: #ecfeff;
+    border: 1px solid #a5f3fc;
+    color: #0e7490;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+    line-height: 1.35;
+}
+
+.bk-info-popup__link:hover {
+    background: #cffafe;
+    text-decoration: underline;
+}
+
+.bk-info-popup__link[hidden] {
+    display: none !important;
 }
 
 .compact-section-card {
@@ -5208,6 +5297,40 @@
     background: rgba(255, 210, 31, 0.06);
 }
 
+/* Desktop program kartları: keyword chipleri + gövde fiyatı */
+@media (min-width: 901px) {
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__body {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__keywords {
+        display: flex !important;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__keyword {
+        display: inline-flex !important;
+    }
+
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price--head {
+        display: none !important;
+    }
+
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price--body {
+        display: inline-flex !important;
+        flex-shrink: 0;
+    }
+
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__tag {
+        position: static;
+        display: inline-flex;
+        margin: 0;
+    }
+}
+
 /* Mobil booking dock + tablet/phone polish */
 .bk-mobile-dock {
     display: none;
@@ -5266,104 +5389,219 @@
     }
 
     /*
-     * Program — seçim YOK: 2×2, 4 kart tek ekrana sığsın.
-     * Seçim VAR (--compact): tek satır şerit, kurlar alta sığsın.
+     * Program — mobil poster kart (UI)
+     * Sol: ikon + etiket + başlık
+     * Sağ alt: büyük çapraz sarı fiyat sticker’ı (başlığın üstüne binmez)
      */
     .program-slot-grid:not(.program-slot-grid--compact) {
         display: grid !important;
         grid-template-columns: 1fr 1fr;
-        gap: 0.5rem;
-        margin-top: 0.25rem;
+        gap: 0.65rem;
+        margin-top: 0.4rem;
+        align-items: stretch;
     }
 
     .program-slot-grid:not(.program-slot-grid--compact) .program-slot {
+        display: flex;
         flex-direction: column;
-        border-radius: 14px;
-        min-height: 0;
+        height: 100%;
+        min-height: 10.25rem;
+        border-radius: 16px;
+        overflow: hidden;
     }
 
-    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__photo,
-    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__meta,
-    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__tag,
-    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__keywords {
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__body,
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__keywords,
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price--body,
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__meta {
         display: none !important;
     }
 
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__photo {
+        display: block !important;
+    }
+
     .program-slot-grid:not(.program-slot-grid--compact) .program-slot__head {
-        min-height: 0;
-        background: var(--slot-accent, #0cc0df);
+        position: relative;
         flex: 1 1 auto;
+        min-height: 10.25rem;
     }
 
     .program-slot-grid:not(.program-slot-grid--compact) .program-slot__head::before {
-        background: rgba(0, 0, 0, 0.1);
+        background: linear-gradient(
+            165deg,
+            rgba(0, 0, 0, 0.18) 0%,
+            rgba(0, 0, 0, 0.42) 55%,
+            rgba(0, 0, 0, 0.55) 100%
+        );
     }
 
     .program-slot-grid:not(.program-slot-grid--compact) .program-slot__head-inner {
-        min-height: 4.5rem;
-        height: auto;
-        padding: 0.7rem 0.65rem 0.55rem;
+        position: relative;
+        min-height: 10.25rem;
+        height: 100%;
+        padding: 0.8rem 0.7rem 0.85rem;
+        padding-right: 1.65rem;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        gap: 0.35rem;
-    }
-
-    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__head-copy {
-        padding-right: 0;
-        align-items: center;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0;
+        text-align: left;
     }
 
     .program-slot-grid:not(.program-slot-grid--compact) .program-slot__icon {
-        width: 2.1rem;
-        height: 2.1rem;
+        display: flex !important;
+        position: absolute;
+        top: 0.75rem;
+        left: 0.7rem;
+        z-index: 2;
+        width: 2.35rem;
+        height: 2.35rem;
+        flex: 0 0 auto;
+        margin: 0;
     }
 
     .program-slot-grid:not(.program-slot-grid--compact) .program-slot__icon .fas {
-        font-size: 0.95rem;
+        font-size: 1.05rem;
+    }
+
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__tag {
+        display: inline-flex !important;
+        position: absolute;
+        top: 0.85rem;
+        left: 3.35rem;
+        z-index: 2;
+        font-size: 0.6rem;
+        padding: 0.16rem 0.45rem;
+        margin: 0;
+    }
+
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__head-copy {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 0;
+        min-width: 0;
+        padding: 0;
+        padding-top: 2.85rem;
+        padding-bottom: 3.6rem; /* büyük fiyat için alt boşluk */
+        gap: 0;
+        justify-content: flex-start;
+    }
+
+    /* Başlık yukarıda */
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__title-row {
+        position: static;
+        display: block;
+        width: 100%;
+        min-height: 0;
+        padding-right: 0;
+        flex: 0 0 auto;
+        box-sizing: border-box;
     }
 
     .program-slot-grid:not(.program-slot-grid--compact) .program-slot__title {
-        font-size: 0.88rem;
-        line-height: 1.2;
         display: -webkit-box;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        padding-right: 0.25rem;
+        font-size: 1.28rem;
+        line-height: 1.2;
+        font-weight: 800;
+        letter-spacing: -0.015em;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
 
-    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__body {
-        display: flex !important;
-        align-items: center;
+    /* Büyük çapraz sarı fiyat — kartın sağ altında (head-inner’a göre) */
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price--head {
+        display: inline-flex !important;
+        position: absolute !important;
+        right: 0.35rem;
+        bottom: 0.55rem;
+        left: auto;
+        top: auto;
+        flex: none;
+        flex-direction: column !important;
+        align-items: flex-end;
         justify-content: center;
-        min-height: 0;
-        padding: 0.4rem 0.5rem 0.55rem;
-        background: #fff;
+        width: auto;
+        min-width: 4.85rem;
+        max-width: 5.5rem;
+        margin: 0;
+        padding: 0.62rem 0.78rem 0.58rem 1.15rem;
+        border-radius: 11px 20px 11px 20px;
+        transform: rotate(-7deg);
+        z-index: 3;
+        overflow: visible;
+        gap: 0.06rem;
+        background:
+            linear-gradient(155deg, #ffe95a 0%, #ffd21f 48%, #f5c400 100%);
+        box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.6) inset,
+            0 10px 24px rgba(245, 196, 0, 0.58),
+            0 4px 10px rgba(11, 31, 77, 0.24);
     }
 
-    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price {
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price--head::before {
+        left: 0.36rem;
+        width: 0.45rem;
+        height: 0.45rem;
+    }
+
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price--head .program-slot__price-prefix,
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price--head .program-slot__price-suffix,
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price--head .program-slot__price-unit {
+        display: none !important;
+    }
+
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price--head .program-slot__price-value {
         margin: 0;
+        margin-left: 0.4rem;
+        gap: 0.08rem;
+    }
+
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price--head .program-slot__price-num {
+        font-size: 1.65rem;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        color: #0b1f4d;
+    }
+
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price--head .program-slot__price-cur {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #0b1f4d;
+    }
+
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price--head.program-slot__price--request {
+        min-width: 4.85rem;
+        max-width: 5.6rem;
+        padding: 0.58rem 0.7rem 0.58rem 1.05rem;
+        flex-direction: row !important;
+        align-items: center;
+    }
+
+    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price--head .program-slot__price-request {
+        margin: 0;
+        margin-left: 0.35rem;
+        font-size: 0.78rem;
+        font-weight: 800;
+        line-height: 1.15;
+        color: #0b1f4d;
+        white-space: normal;
         text-align: center;
     }
 
-    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price-num {
-        font-size: 1.05rem;
-    }
-
-    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price-prefix,
-    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price-suffix,
-    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price-unit,
-    .program-slot-grid:not(.program-slot-grid--compact) .program-slot__price-request {
-        font-size: 0.65rem;
-    }
-
     .program-slot-grid:not(.program-slot-grid--compact) .program-slot__sel-mark {
-        width: 1.35rem;
-        height: 1.35rem;
+        width: 1.4rem;
+        height: 1.4rem;
         font-size: 0.65rem;
-        top: 0.4rem;
-        right: 0.4rem;
+        top: 0.45rem;
+        right: 0.45rem;
     }
 
     /* Seçildi: 4 program tek satırda küçülür */
@@ -5388,7 +5626,9 @@
     .program-slot-grid--compact .program-slot__meta,
     .program-slot-grid--compact .program-slot__tag,
     .program-slot-grid--compact .program-slot__keywords,
-    .program-slot-grid--compact .program-slot__body {
+    .program-slot-grid--compact .program-slot__body,
+    .program-slot-grid--compact .program-slot__price--head,
+    .program-slot-grid--compact .program-slot__price--body {
         display: none !important;
     }
 
@@ -5557,7 +5797,7 @@
         margin-left: 0;
     }
 
-    /* TELC C1 Prep: C1 ile yan yana; sadece “Emin değilim” tam satır */
+    /* TELC C1 Prep: C1 ile yan yana */
     .level-tile-grid .lvl-opt--aux.course-slot--telc {
         grid-column: auto;
         min-height: 2.55rem !important;
@@ -5574,10 +5814,19 @@
         overflow: hidden;
     }
 
-    .level-tile-grid .lvl-opt--aux.lvl-opt--unsure {
-        grid-column: 1 / -1;
-        min-height: 2.4rem !important;
-        padding: 0.45rem 0.55rem !important;
+    .level-tile-grid .lvl-coupon {
+        margin-top: 0.1rem;
+        padding: 0.45rem 0.55rem 0.5rem;
+        border-radius: 10px;
+    }
+
+    .level-tile-grid .lvl-coupon__label {
+        font-size: 0.68rem;
+    }
+
+    .level-tile-grid .lvl-coupon__input {
+        height: 2.15rem;
+        font-size: 0.82rem;
     }
 
     .level-tile-grid .lvl-opt--aux .lvl-opt__code,
@@ -5755,6 +6004,10 @@
     .bk-pay-plans {
         grid-template-columns: 1fr;
         gap: 0.65rem;
+    }
+
+    .bk-pay-channels {
+        grid-template-columns: 1fr;
     }
 
     .bk-pay-plan {
@@ -6013,30 +6266,32 @@
 
 .bk-extra-mini__info {
     position: absolute;
-    top: 0.35rem;
-    right: 0.35rem;
-    z-index: 2;
+    top: 0.28rem;
+    right: 0.28rem;
+    z-index: 3;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.25rem;
-    height: 1.25rem;
-    border: none;
+    width: 1.55rem;
+    height: 1.55rem;
+    border: 2px solid #0cc0df;
     border-radius: 50%;
-    background: rgba(248, 250, 252, 0.95);
-    color: #64748b;
-    font-size: 0.65rem;
+    background: #fff;
+    color: #0a2959;
+    font-size: 0.72rem;
     font-weight: 800;
     font-family: inherit;
     cursor: pointer;
     line-height: 1;
     padding: 0;
-    transition: background 0.15s ease, color 0.15s ease;
+    box-shadow: 0 2px 8px rgba(12, 192, 223, 0.32);
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 
 .bk-extra-mini__info:hover {
-    background: #fff;
-    color: #0e7490;
+    background: #0cc0df;
+    color: #fff;
+    transform: scale(1.08);
 }
 
 .bk-bremen-note {
@@ -6048,6 +6303,40 @@
     padding: 0.55rem 0.75rem;
     margin: 0.5rem 0;
     line-height: 1.4;
+    font-family: 'Outfit', sans-serif;
+}
+
+.bk-bremen-plz {
+    margin: 0.55rem 0 0.35rem;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid #fcd34d;
+    border-radius: 10px;
+    background: #fffbeb;
+    display: grid;
+    gap: 0.4rem;
+}
+
+.bk-bremen-plz[hidden] {
+    display: none !important;
+}
+
+.bk-bremen-plz.error {
+    border-color: #f87171;
+    background: #fef2f2;
+}
+
+.bk-bremen-plz__label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #92400e;
+    font-family: 'Outfit', sans-serif;
+}
+
+.bk-bremen-plz__warn {
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: #b45309;
     font-family: 'Outfit', sans-serif;
 }
 
@@ -6112,6 +6401,138 @@
     line-height: 1.3;
 }
 
+.bk-pay-card-warn {
+    margin: 0.75rem 0 0;
+    padding: 0.7rem 0.8rem;
+    border-radius: 10px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #92400e;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    font-family: 'Outfit', sans-serif;
+}
+
+.bk-wg-guide-note {
+    display: none !important;
+}
+
+.bk-pay-channels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+}
+
+@media (max-width: 640px) {
+    .bk-pay-channels {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bk-pay-channel {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.85rem 0.9rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    background: #fff;
+    font-family: 'Outfit', sans-serif;
+    position: relative;
+}
+
+.bk-pay-channel:has(input:checked) {
+    border-color: #0a2959;
+    box-shadow: 0 0 0 3px rgba(12, 192, 223, 0.25);
+}
+
+.bk-pay-channel input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.bk-pay-channel__icon {
+    flex-shrink: 0;
+    width: 2.1rem;
+    height: 2.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #f0f9ff;
+    color: #0e7490;
+    font-size: 0.95rem;
+}
+
+.bk-pay-channel:has(input:checked) .bk-pay-channel__icon {
+    background: #0a2959;
+    color: #fff;
+}
+
+.bk-pay-channel__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.bk-pay-channel__title {
+    font-weight: 800;
+    color: #0a2959;
+    font-size: 0.92rem;
+}
+
+.bk-pay-channel__hint {
+    font-size: 0.72rem;
+    color: #64748b;
+    line-height: 1.35;
+}
+
+.bk-pay-channel__due {
+    margin-top: 0.2rem;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: #0e7490;
+}
+
+.bk-quote-pay-channel-lead {
+    margin: 0 0 0.85rem;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: #475569;
+    font-family: 'Outfit', sans-serif;
+}
+
+.bk-pay-channel-note {
+    margin: 0.65rem 0 0;
+    padding: 0.65rem 0.75rem;
+    border-radius: 10px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #92400e;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    font-family: 'Outfit', sans-serif;
+}
+
+.bk-pay-channel-note--bank {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #166534;
+}
+
+.bk-pay-channel-note--eea {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    color: #1e40af;
+}
+
+.bk-pay-channel-note[hidden] {
+    display: none !important;
+}
+
 .bk-quote-pay-modal {
     position: fixed;
     inset: 0;
@@ -6128,12 +6549,21 @@
 }
 
 .bk-quote-pay-modal__dialog {
-    width: min(100%, 420px);
+    width: min(100%, 520px);
     background: #fff;
     border-radius: 16px;
     padding: 1.25rem 1.35rem;
     box-shadow: 0 20px 50px rgba(10, 41, 89, 0.2);
     font-family: 'Outfit', sans-serif;
+}
+
+#bk-quote-pay-step-channel .bk-pay-channels {
+    margin-bottom: 0.35rem;
+}
+
+#bk-quote-pay-step-channel[hidden],
+#bk-quote-pay-step-choice[hidden] {
+    display: none !important;
 }
 
 .bk-quote-pay-modal__title {

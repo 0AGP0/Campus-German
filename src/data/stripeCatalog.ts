@@ -17,6 +17,9 @@ export const FULL_PAYMENT_DISCOUNT_EUR = 80;
 export const STRIPE_FEE_RATE = 0.0325;
 export const STRIPE_FEE_FIXED_EUR = 0.25;
 
+/** Havale / SWIFT buffer (€) — kart komisyonu yerine şeffaf ek */
+export const SWIFT_TRANSFER_BUFFER_EUR = 20;
+
 /** Net cent → Stripe’a çekilecek cent (fee dahil) */
 export function amountWithStripeFeeCents(netCents: number): number {
   const net = Math.max(0, Math.round(Number(netCents) || 0));

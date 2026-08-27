@@ -106,6 +106,7 @@ const navTranslations = {
         visaGuidance: 'Vize Rehberliği',
         housingExplorer: 'Konaklama seçenekleri',
         accommodation: 'Bremen Konaklama ve Yurt Yerleştirmesi',
+        wgGuide: 'WG & Konaklama rehberi (Bremen)',
         airportPickup: 'Havaalanı Karşılama',
         insuranceBank: 'Sağlık Sigortası/Bloke ve Banka Hesabı',
         bureaucracy: 'Almanya Bürokrasi Desteği',
@@ -208,6 +209,7 @@ const navTranslations = {
         visaGuidance: 'Visumsberatung',
         housingExplorer: 'Unterkunftsoptionen',
         accommodation: 'Unterkunft Bremen',
+        wgGuide: 'WG & Unterkunft Bremen (Ratgeber)',
         airportPickup: 'Flughafenabholung',
         insuranceBank: 'Versicherung & Bank',
         bureaucracy: 'Bürokratie-Support',
@@ -313,6 +315,7 @@ const navTranslations = {
         visaGuidance: 'Visa Guidance',
         housingExplorer: 'Housing options',
         accommodation: 'Bremen Accommodation and Dormitory Placement',
+        wgGuide: 'WG & Accommodation guide (Bremen)',
         airportPickup: 'Airport Pickup',
         insuranceBank: 'Health Insurance/Blocked Account and Bank Account',
         bureaucracy: 'Germany Bureaucracy Support',
@@ -418,6 +421,7 @@ const navTranslations = {
         visaGuidance: 'Orientación de Visa',
         housingExplorer: 'Opciones de alojamiento',
         accommodation: 'Alojamiento en Bremen y Colocación en Residencia',
+        wgGuide: 'Guía WG y alojamiento (Bremen)',
         airportPickup: 'Recogida en el Aeropuerto',
         insuranceBank: 'Seguro de Salud/Cuenta Bloqueada y Cuenta Bancaria',
         bureaucracy: 'Apoyo Burocrático en Alemania',
@@ -452,6 +456,7 @@ const slugMapping = {
     universityPlacement: { tr: 'universite-yerlestirme', de: 'universitaetsvermittlung', en: 'university-placement', es: 'colocacion-universitaria' },
     visaGuidance: { tr: 'vize-rehberligi', de: 'visumsberatung', en: 'visa-guidance', es: 'orientacion-visa' },
     accommodation: { tr: 'konaklama', de: 'unterkunft', en: 'accommodation', es: 'alojamiento' },
+    wgGuide: { tr: 'wg-konaklama-bremen', de: 'wg-unterkunft-bremen', en: 'wg-accommodation-bremen', es: 'wg-alojamiento-bremen' },
     airportPickup: { tr: 'havalimani-karsilama', de: 'flughafenabholung', en: 'airport-pickup', es: 'recogida-aeropuerto' },
     insuranceBank: { tr: 'sigorta-banka', de: 'krankenversicherung-und-bank', en: 'insurance-and-bank', es: 'seguro-banco' },
     bureaucracy: { tr: 'burokrasi-destegi', de: 'buerokratische-unterstuetzung', en: 'bureaucratic-support', es: 'apoyo-burocratico' },
@@ -766,6 +771,7 @@ const whatsappHref = 'https://wa.me/4915203823792';
                             <a href={`/${lang}/${sections.services}/${slugs.universityPlacement[lang]}`} class="dropdown-link">{t.universityPlacement}</a>
                             <a href={`/${lang}/${sections.services}/${slugs.visaGuidance[lang]}`} class="dropdown-link">{t.visaGuidance}</a>
                             <a href={`/${lang}/${sections.services}/konaklama`} class="dropdown-link">{t.housingExplorer}</a>
+                            <a href={`/${lang}/${sections.services}/${slugs.wgGuide[lang]}`} class="dropdown-link">{t.wgGuide}</a>
                             <a href={`/${lang}/${sections.services}/${slugs.accommodation[lang]}`} class="dropdown-link">{t.accommodation}</a>
                             <a href={`/${lang}/${sections.services}/${slugs.airportPickup[lang]}`} class="dropdown-link">{t.airportPickup}</a>
                             <a href={`/${lang}/${sections.services}/${slugs.insuranceBank[lang]}`} class="dropdown-link">{t.insuranceBank}</a>
@@ -1070,6 +1076,9 @@ const whatsappHref = 'https://wa.me/4915203823792';
                         </li>
                         <li class="mobile-submenu-item">
                             <a href={`/${lang}/${sections.services}/konaklama`} class="mobile-submenu-link">{t.housingExplorer}</a>
+                        </li>
+                        <li class="mobile-submenu-item">
+                            <a href={`/${lang}/${sections.services}/${slugs.wgGuide[lang]}`} class="mobile-submenu-link">{t.wgGuide}</a>
                         </li>
                         <li class="mobile-submenu-item">
                             <a href={`/${lang}/${sections.services}/${slugs.accommodation[lang]}`} class="mobile-submenu-link">{t.accommodation}</a>

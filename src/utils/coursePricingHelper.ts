@@ -516,10 +516,10 @@ export function formatOnlineLevelPrice(level: string): string {
 /** Tüm kurslarda gösterilen tek/sabit indirim fiyatı (üstü çizili eski → indirimli). */
 export const PROMO_PRICE = {
   original: 990,
-  discounted: 840,
-  percent: 15,
+  discounted: 890,
+  percent: 10,
   originalText: '990€',
-  discountedText: '840€',
+  discountedText: '890€',
 };
 
 /** "%10 indirim" etiketini dile göre döndürür. */
