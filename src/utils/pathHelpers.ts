@@ -86,6 +86,17 @@ export function getServicesPath(lang: SupportedLang): string {
   return mapping[lang] || 'our-services';
 }
 
+/** Geçici konaklama hizmet sayfası slug'ı (ilan explorer değil) */
+export function getAccommodationSlug(lang: SupportedLang): string {
+  const mapping: Record<SupportedLang, string> = {
+    tr: 'konaklama',
+    de: 'unterkunft',
+    en: 'accommodation',
+    es: 'alojamiento',
+  };
+  return mapping[lang] || 'accommodation';
+}
+
 /**
  * Dil bazlı success stories/başarı hikayeleri path'ini döndürür
  */

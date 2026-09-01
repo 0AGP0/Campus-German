@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import MainLayout from '../../../layouts/MainLayout.astro';
 import QuoteWizardForm from '../../../components/QuoteWizardForm.astro';
-import { cleanSlug, getBookingPath, getServicesPath, getContactPath, isValidLang } from '../../../utils/pathHelpers';
+import { cleanSlug, getBookingPath, getServicesPath, getAccommodationSlug, getContactPath, isValidLang } from '../../../utils/pathHelpers';
 
 export async function getStaticPaths() {
   const allSunduklarimiz = await getCollection('unsere-dienstleistungen');
@@ -47,6 +47,7 @@ if (!isValidLang(lang)) {
 // Path helper'ları
 const servicesPath = getServicesPath(lang);
 const contactPath = getContactPath(lang);
+const accommodationSlug = getAccommodationSlug(lang);
 const bookingFull = `/${lang}/${getBookingPath(lang)}`;
 const homePath = `/${lang}`;
 ---
@@ -149,7 +150,7 @@ const homePath = `/${lang}`;
                                         </a>
                                     </li>
                                     <li>
-                                        <a href={`/${lang}/${servicesPath}/konaklama`}>
+                                        <a href={`/${lang}/${servicesPath}/${accommodationSlug}`}>
                                             <i class="fas fa-home"></i>
                                             {lang === 'tr' ? 'Konaklama' : 'Unterkunft'}
                                         </a>

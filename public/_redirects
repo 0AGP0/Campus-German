@@ -52,6 +52,14 @@
 /es/partner-egitmen-basvuru   /es/solicitud-socio-profesor   301!
 /es/partner-egitmen-basvuru/   /es/solicitud-socio-profesor/   301!
 
+# Eski konaklama ilan listesi (explorer) -> geçici konaklama hizmet sayfası
+/de/unsere-dienstleistungen/konaklama      /de/unsere-dienstleistungen/unterkunft/      301!
+/de/unsere-dienstleistungen/konaklama/     /de/unsere-dienstleistungen/unterkunft/      301!
+/en/our-services/konaklama      /en/our-services/accommodation/      301!
+/en/our-services/konaklama/     /en/our-services/accommodation/      301!
+/es/nuestros-servicios/konaklama      /es/nuestros-servicios/alojamiento/      301!
+/es/nuestros-servicios/konaklama/     /es/nuestros-servicios/alojamiento/      301!
+
 # Google aramada site simgesi: /favicon.ico isteği logoya yönlendir
 /favicon.ico    /Campusgerman.png     301!
 

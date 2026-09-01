@@ -40,6 +40,10 @@
   RewriteRule ^es/ozel-evrak-formu/?$ /es/documentos-privados/ [R=301,L]
   # Eski özel evrak proxy yolu (api klasörü sunucuda yok / 404) -> kökteki kanonik PHP
   RewriteRule ^api/private-documents\.php$ /private-documents-proxy.php [R=301,L,QSA]
+  # Eski konaklama ilan listesi (explorer) -> geçici konaklama hizmet sayfası
+  RewriteRule ^de/unsere-dienstleistungen/konaklama/?$ /de/unsere-dienstleistungen/unterkunft/ [R=301,L]
+  RewriteRule ^en/our-services/konaklama/?$ /en/our-services/accommodation/ [R=301,L]
+  RewriteRule ^es/nuestros-servicios/konaklama/?$ /es/nuestros-servicios/alojamiento/ [R=301,L]
   # Eski TR "Über uns" path'i -> hakkimizda (Netlify _redirects ile aynı; HTML meta-refresh sayfası yok)
   RewriteRule ^tr/ueber-uns/?$ /tr/hakkimizda/ [R=301,L]
   RewriteRule ^tr/ueber-uns/(.+)$ /tr/hakkimizda/$1 [R=301,L,QSA]
