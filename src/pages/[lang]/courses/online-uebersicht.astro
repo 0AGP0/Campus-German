@@ -5,7 +5,7 @@ import IntensivePricingSection from '../../../components/IntensivePricingSection
 import '../../../styles/pages/kurslar.css';
 import { coursePricing } from '../../../data/coursePricing';
 import { getSimpleCourseStartDates, LESSONS_UP_TO_200 } from '../../../utils/coursePricingHelper';
-import { getContactPath, getSectionPath } from '../../../utils/pathHelpers';
+import { getContactPath, getSectionPath, getAccommodationPath } from '../../../utils/pathHelpers';
 import CourseCardActions from '../../../components/CourseCardActions.astro';
 import CourseCardVisaBadge from '../../../components/CourseCardVisaBadge.astro';
 
@@ -446,7 +446,7 @@ const translations = t[lang as keyof typeof t];
                                 : lang === 'de' ? "Eine der wichtigsten Fragen beim Beginn des Studiums in Deutschland ist die Suche nach einer sicheren und geeigneten Unterkunft. Besonders für Studierende aus dem Ausland kann der Prozess der Unterkunftssuche komplex und stressig sein. Unser Service für Unterkunft und Wohnheim in Bremen zielt darauf ab, Studierenden diesen Prozess reibungslos und sicher zu ermöglichen."
                                 : "One of the most important issues when starting education in Germany is finding safe and suitable accommodation. The accommodation process can be complex and stressful, especially for students coming from abroad. The Bremen Accommodation and Dormitory Placement service we offer as Campus German aims for students to complete this process smoothly and safely."}
                         </p>
-                        <a href={`/${lang}/${lang === 'tr' ? 'sunduklarimiz' : lang === 'de' ? 'unsere-dienstleistungen' : 'our-services'}/${lang === 'tr' ? 'konaklama' : lang === 'de' ? 'unterkunft' : 'accommodation'}`} class="service-cta">
+                        <a href={getAccommodationPath(lang as 'tr' | 'de' | 'en' | 'es')} class="service-cta">
                             <span>{lang === 'tr' ? "Detayları Gör" : lang === 'de' ? "Details ansehen" : "View Details"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>

@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { bookingPayProxyDev } from './scripts/booking-pay-proxy-dev.mjs';
+import { getLegacyAccommodationExplorerRedirects } from './src/config/serviceSlugs.mjs';
 
 // https://astro.build/config
 // Sitemap: resmi @astrojs/sitemap (sitemap-index.xml) — GSC farklı URL ile denemek için
@@ -39,6 +40,7 @@ export default defineConfig({
     '/en/imprint/': '/impressum/',
     '/es/aviso-legal': '/impressum/',
     '/es/aviso-legal/': '/impressum/',
+    ...getLegacyAccommodationExplorerRedirects(),
   },
 });
 

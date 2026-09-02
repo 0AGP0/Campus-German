@@ -6,7 +6,7 @@ import PromoPrice from '../../../components/PromoPrice.astro';
 import '../../../styles/pages/kurslar.css';
 import { coursePricing } from '../../../data/coursePricing';
 import { getCoursePricingData, getWeeklyPricingCategory, extractCourseInfo, getCourseCardPerWeekPrice, getSimpleCourseStartDates, LESSONS_UP_TO_200 } from '../../../utils/coursePricingHelper';
-import { getContactPath } from '../../../utils/pathHelpers';
+import { getContactPath, getAccommodationPath } from '../../../utils/pathHelpers';
 import CourseCardActions from '../../../components/CourseCardActions.astro';
 import CourseCardVisaBadge from '../../../components/CourseCardVisaBadge.astro';
 
@@ -450,7 +450,7 @@ function shortenLabels(text: string): string {
                                 ? "Almanya'da eğitime başlarken en önemli konulardan biri güvenli ve uygun konaklama bulmaktır. Özellikle yurtdışından gelen öğrenciler için konaklama süreci karmaşık ve stresli olabilir. Campus German olarak sunduğumuz Bremen Konaklama ve Yurt Yerleştirmesi hizmeti, öğrencilerin bu süreci sorunsuz ve güvenli şekilde tamamlamasını hedefler."
                                 : "Eine der wichtigsten Fragen beim Beginn des Studiums in Deutschland ist die Suche nach einer sicheren und geeigneten Unterkunft. Besonders für Studierende aus dem Ausland kann der Prozess der Unterkunftssuche komplex und stressig sein. Unser Service für Unterkunft und Wohnheim in Bremen zielt darauf ab, Studierenden diesen Prozess reibungslos und sicher zu ermöglichen."}
                         </p>
-                        <a href={`/${lang}/unsere-dienstleistungen/unterkunft`} class="service-cta">
+                        <a href={getAccommodationPath(lang as 'tr' | 'de' | 'en' | 'es')} class="service-cta">
                             <span>{lang === 'tr' ? "Detay" : "Details"}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>

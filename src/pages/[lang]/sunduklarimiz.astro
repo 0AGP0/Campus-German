@@ -1,7 +1,7 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import '../../styles/pages/dienstleistungen.css';
-import { getServicesPath, getAccommodationSlug, isValidLang } from '../../utils/pathHelpers';
+import { getServicesPath, getAccommodationPath, isValidLang } from '../../utils/pathHelpers';
 
 export async function getStaticPaths() {
     return [
@@ -18,7 +18,7 @@ if (!isValidLang(lang)) {
 
 // Path helper'ları
 const servicesPath = getServicesPath(lang);
-const accommodationSlug = getAccommodationSlug(lang);
+const accommodationPath = getAccommodationPath(lang);
 
 // Translations
 const t = {
@@ -239,7 +239,7 @@ const translations = t[lang as keyof typeof t];
                         </ul>
                     </div>
                     <div class="service-footer">
-                        <a href={`/${lang}/${servicesPath}/${accommodationSlug}`} class="service-link">
+                        <a href={accommodationPath} class="service-link">
                             <span>{lang === 'tr' ? 'Daha Fazla Bilgi' : 'Mehr erfahren'}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>

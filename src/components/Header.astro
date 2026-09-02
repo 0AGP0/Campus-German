@@ -2,6 +2,7 @@
 // Header Component - Orijinal Yapı
 import '../styles/header.css';
 import { getTrialPath, getPartnerApplicationPath } from '../utils/pathHelpers';
+import { ACCOMMODATION_SLUG, WG_GUIDE_SLUG } from '../config/serviceSlugs.mjs';
 
 const { lang = 'tr' } = Astro.props;
 const trialSlug = getTrialPath(lang as 'tr'|'de'|'en'|'es');
@@ -104,7 +105,6 @@ const navTranslations = {
         // Services dropdown
         universityPlacement: 'Üniversite Yerleştirme Programı / Pathway',
         visaGuidance: 'Vize Rehberliği',
-        housingExplorer: 'Konaklama seçenekleri',
         accommodation: 'Bremen Konaklama ve Yurt Yerleştirmesi',
         wgGuide: 'WG & Konaklama rehberi (Bremen)',
         airportPickup: 'Havaalanı Karşılama',
@@ -207,7 +207,6 @@ const navTranslations = {
         advantagesCta: 'Niveau jetzt messen',
         universityPlacement: 'Uni-Vermittlung / Pathway',
         visaGuidance: 'Visumsberatung',
-        housingExplorer: 'Unterkunftsoptionen',
         accommodation: 'Unterkunft Bremen',
         wgGuide: 'WG & Unterkunft Bremen (Ratgeber)',
         airportPickup: 'Flughafenabholung',
@@ -313,7 +312,6 @@ const navTranslations = {
         // Services dropdown
         universityPlacement: 'University Placement Program / Pathway',
         visaGuidance: 'Visa Guidance',
-        housingExplorer: 'Housing options',
         accommodation: 'Bremen Accommodation and Dormitory Placement',
         wgGuide: 'WG & Accommodation guide (Bremen)',
         airportPickup: 'Airport Pickup',
@@ -419,7 +417,6 @@ const navTranslations = {
         // Services dropdown
         universityPlacement: 'Programa de Colocación Universitaria / Pathway',
         visaGuidance: 'Orientación de Visa',
-        housingExplorer: 'Opciones de alojamiento',
         accommodation: 'Alojamiento en Bremen y Colocación en Residencia',
         wgGuide: 'Guía WG y alojamiento (Bremen)',
         airportPickup: 'Recogida en el Aeropuerto',
@@ -455,8 +452,8 @@ const slugMapping = {
     // Unsere-dienstleistungen pages
     universityPlacement: { tr: 'universite-yerlestirme', de: 'universitaetsvermittlung', en: 'university-placement', es: 'colocacion-universitaria' },
     visaGuidance: { tr: 'vize-rehberligi', de: 'visumsberatung', en: 'visa-guidance', es: 'orientacion-visa' },
-    accommodation: { tr: 'konaklama', de: 'unterkunft', en: 'accommodation', es: 'alojamiento' },
-    wgGuide: { tr: 'wg-konaklama-bremen', de: 'wg-unterkunft-bremen', en: 'wg-accommodation-bremen', es: 'wg-alojamiento-bremen' },
+    accommodation: ACCOMMODATION_SLUG,
+    wgGuide: WG_GUIDE_SLUG,
     airportPickup: { tr: 'havalimani-karsilama', de: 'flughafenabholung', en: 'airport-pickup', es: 'recogida-aeropuerto' },
     insuranceBank: { tr: 'sigorta-banka', de: 'krankenversicherung-und-bank', en: 'insurance-and-bank', es: 'seguro-banco' },
     bureaucracy: { tr: 'burokrasi-destegi', de: 'buerokratische-unterstuetzung', en: 'bureaucratic-support', es: 'apoyo-burocratico' },

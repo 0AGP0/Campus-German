@@ -17,7 +17,7 @@ import {
 } from '../../data/stripeCatalog';
 import { BOOKING_COUPONS, BOOKING_COUPON_DEFAULT_EUR } from '../../data/bookingCoupons';
 import { EEA_COUNTRY_ISO, COUNTRY_NAME_TO_ISO } from '../../data/eeaCountries';
-import { getServicesPath } from '../../utils/pathHelpers';
+import { getWgGuidePath } from '../../utils/pathHelpers';
 export async function getStaticPaths() {
     return [
         { params: { lang: 'tr' } },
@@ -30,15 +30,7 @@ export async function getStaticPaths() {
 const { lang } = Astro.params;
 const pricingData = coursePricing[lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en')];
 const pricingLang = lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en');
-const wgGuideSlug =
-    lang === 'tr'
-        ? 'wg-konaklama-bremen'
-        : lang === 'de'
-          ? 'wg-unterkunft-bremen'
-          : lang === 'es'
-            ? 'wg-alojamiento-bremen'
-            : 'wg-accommodation-bremen';
-const wgGuideHref = `/${lang}/${getServicesPath(lang as 'tr' | 'de' | 'en' | 'es')}/${wgGuideSlug}`;
+const wgGuideHref = getWgGuidePath(lang as 'tr' | 'de' | 'en' | 'es');
 const startDateOptions = getFirstMondayStartDateOptions(lang as 'tr' | 'de' | 'en' | 'es', 10);
 const nearestStartDateValue = startDateOptions[0]?.value ?? '';
 const defaultCourseStart = (() => {

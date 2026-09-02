@@ -5,6 +5,13 @@
  * Tüm dil bazlı path'ler buradan yönetilir.
  */
 
+import {
+  getAccommodationSlug as getAccommodationSlugFromConfig,
+  getWgGuideSlug as getWgGuideSlugFromConfig,
+  getAccommodationPath as getAccommodationPathFromConfig,
+  getWgGuidePath as getWgGuidePathFromConfig,
+} from '../config/serviceSlugs.mjs';
+
 export type SupportedLang = 'tr' | 'de' | 'en' | 'es';
 
 /**
@@ -86,15 +93,24 @@ export function getServicesPath(lang: SupportedLang): string {
   return mapping[lang] || 'our-services';
 }
 
-/** Geçici konaklama hizmet sayfası slug'ı (ilan explorer değil) */
+/** Geçici konaklama hizmet sayfası slug'ı — bkz. src/config/serviceSlugs.mjs */
 export function getAccommodationSlug(lang: SupportedLang): string {
-  const mapping: Record<SupportedLang, string> = {
-    tr: 'konaklama',
-    de: 'unterkunft',
-    en: 'accommodation',
-    es: 'alojamiento',
-  };
-  return mapping[lang] || 'accommodation';
+  return getAccommodationSlugFromConfig(lang);
+}
+
+/** WG rehberi slug'ı */
+export function getWgGuideSlug(lang: SupportedLang): string {
+  return getWgGuideSlugFromConfig(lang);
+}
+
+/** Tam URL path: geçici konaklama hizmet sayfası */
+export function getAccommodationPath(lang: SupportedLang): string {
+  return getAccommodationPathFromConfig(lang);
+}
+
+/** Tam URL path: WG rehberi */
+export function getWgGuidePath(lang: SupportedLang): string {
+  return getWgGuidePathFromConfig(lang);
 }
 
 /**
