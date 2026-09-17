@@ -4,10 +4,11 @@
  * checkout her zaman custom amount + adjust ürünü ile gider.
  */
 
-/** Kayıt ücreti — tek seferlik (€). Yalnızca Almanya + tam ödemede alınmaz. */
+/** Rezervasyon ücreti — sitede tahsil edilen tek tutar (€). Bremen (PLZ+DE) muaf. */
 export const RESERVATION_DEPOSIT_EUR = 80;
+/** Kalan paket bedeli için CRM ödeme süresi (gün). Süre dolunca rezervasyon ücreti iade edilmez. */
 export const BALANCE_DUE_DAYS = 14;
-/** Almanya tam ödemede muafiyet tutarı (gösterim); yurtdışı/taksitte kayıt ücreti iptal edilmez */
+/** Eski peşin indirim etiketi (gösterim); sitede paket bedeline eklenmez */
 export const FULL_PAYMENT_DISCOUNT_EUR = 80;
 
 /**

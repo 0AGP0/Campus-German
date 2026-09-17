@@ -1551,6 +1551,14 @@ span.hamburger-line,
     }
 }
 
+/* Desktop: üst bardaki “Kurs rezerve et” gizli (nav’daki kalsın); mobilde görünür */
+@media (min-width: 769px) {
+    .top-header-register--bar,
+    .top-header-register--bar + .top-header-divider {
+        display: none !important;
+    }
+}
+
 /* Booking sayfasında üst bardaki self-link CTA’yı gizle */
 body:has(.booking-form-section) .top-header-register--bar,
 body:has(.booking-form-section) .top-header-register--bar + .top-header-divider {

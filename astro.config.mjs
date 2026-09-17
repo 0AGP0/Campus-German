@@ -1,10 +1,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { bookingPayProxyDev } from './scripts/booking-pay-proxy-dev.mjs';
-import { getLegacyAccommodationExplorerRedirects } from './src/config/serviceSlugs.mjs';
 
 // https://astro.build/config
-// Sitemap: resmi @astrojs/sitemap (sitemap-index.xml) — GSC farklı URL ile denemek için
+// Eski konaklama explorer redirect: public/.htaccess (HTTP 301) — Astro HTML redirect kullanılmaz (beyaz ara sayfa).
 export default defineConfig({
   site: 'https://campusgerman.com',
   output: 'static',
@@ -40,7 +39,6 @@ export default defineConfig({
     '/en/imprint/': '/impressum/',
     '/es/aviso-legal': '/impressum/',
     '/es/aviso-legal/': '/impressum/',
-    ...getLegacyAccommodationExplorerRedirects(),
   },
 });
 

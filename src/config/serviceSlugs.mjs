@@ -60,19 +60,18 @@ export function getWgGuidePath(lang) {
 }
 
 /**
- * Astro static redirect haritası: eski explorer URL → geçici konaklama hizmet sayfası.
- * TR hariç (orada `konaklama` zaten kanonik slug).
- * @returns {Record<string, string>}
+ * Eski explorer URL'leri için HTTP 301 kuralları public/.htaccess içinde (Hostinger/LiteSpeed).
+ * Astro static redirect (HTML ara sayfa) bilinçli olarak kullanılmıyor.
  */
-export function getLegacyAccommodationExplorerRedirects() {
-  /** @type {Record<string, string>} */
-  const redirects = {};
+export function getLegacyAccommodationExplorerRewriteRules() {
+  /** @type {string[]} */
+  const rules = [];
   for (const lang of /** @type {const} */ (['de', 'en', 'es'])) {
     const section = SERVICES_SECTION[lang];
-    const from = `/${lang}/${section}/${LEGACY_ACCOMMODATION_EXPLORER_SLUG}`;
-    const to = getAccommodationPath(lang);
-    redirects[from] = to;
-    redirects[`${from}/`] = to;
+    const target = getAccommodationPath(lang);
+    rules.push(
+      `RewriteRule ^${lang}/${section}/${LEGACY_ACCOMMODATION_EXPLORER_SLUG}/?$ ${target} [R=301,L]`,
+    );
   }
-  return redirects;
+  return rules;
 }

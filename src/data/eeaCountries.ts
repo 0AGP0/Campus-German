@@ -18,6 +18,7 @@ export const COUNTRY_NAME_TO_ISO: Record<string, string> = {
   turquia: 'TR',
   germany: 'DE',
   deutschland: 'DE',
+  almanya: 'DE',
   alemanya: 'DE',
   alemania: 'DE',
   austria: 'AT',
