@@ -426,10 +426,10 @@ const chipHiddenId = (name: string) => {
         <div class="qx-pref-list">
           {chipGroups.map((group, i) => (
             <div class={`qx-choice qx-choice--n${group.options.length}`} data-qx-chip-group={group.name}>
-              <p class="qx-choice__label">
+              <div class="qx-choice__label">
                 <span class="qx-choice__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <span class="qx-choice__q">{group.label}</span>
-              </p>
+              </div>
               <div class="qx-choice__options" role="radiogroup" aria-label={group.label}>
                 {group.options.map((opt) => (
                   <button

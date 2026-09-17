@@ -90,7 +90,7 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  padding: 0.85rem 1.35rem 0.7rem;
+  padding: 0.75rem 1.35rem 0.45rem;
   background: #fff;
   border-bottom: 1px solid var(--qw-line);
   flex-shrink: 0;
@@ -122,15 +122,16 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   line-height: 1.35;
 }
 
-.qx-page-bg--modal .qx-compact-subtitle {
+.qx-page-bg--modal .qx-compact-subtitle,
+.qx-page-bg--embedded:not(.qx-page-bg--modal) .qx-compact-subtitle {
   display: none;
 }
 
 .qx-compact-body {
-  padding: 0.85rem 1.35rem 1rem;
+  padding: 0.5rem 1.35rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0;
   background: #fff;
 }
 
@@ -145,6 +146,14 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   margin: 0;
   font-size: 0.8rem;
   font-weight: 600;
+}
+
+.qx-submit-feedback:empty {
+  display: none;
+}
+
+.qx-submit-feedback:not(:empty) {
+  margin-bottom: 0.45rem;
 }
 
 .qx-submit-feedback.is-success {
@@ -184,7 +193,7 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 .qx-field {
   display: flex;
   flex-direction: column;
-  gap: 0.28rem;
+  gap: 0.15rem;
   min-width: 0;
 }
 
@@ -250,18 +259,19 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.08rem;
 }
 
 .qx-choice__label {
   display: flex;
   align-items: baseline;
   gap: 0.45rem;
-  margin: 0;
+  margin: 0 !important;
+  padding: 0;
   font-size: 0.9rem;
   font-weight: 700;
   color: var(--qw-ink);
-  line-height: 1.3;
+  line-height: 1.2;
   letter-spacing: -0.015em;
 }
 
@@ -285,6 +295,8 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   flex-wrap: wrap;
   gap: 0.3rem;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .qx-choice-btn {
@@ -492,7 +504,7 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
 }
 
 .qx-page-bg--modal .qx-compact-header {
-  padding: 0.8rem 3.2rem 0.65rem 1.25rem;
+  padding: 0.7rem 3.2rem 0.4rem 1.25rem;
 }
 
 .qx-page-bg--modal .qx-compact-header__logo,
@@ -506,11 +518,11 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   }
 
   .qx-compact-header {
-    padding: 0.7rem 1rem;
+    padding: 0.65rem 1rem 0.35rem;
   }
 
   .qx-compact-body {
-    padding: 0.7rem 1rem 0.85rem;
+    padding: 0.4rem 1rem 0.85rem;
   }
 }
 
@@ -534,16 +546,76 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   }
 }
 
+/* —— Sayfa içi gömülü: boyutlar popup ile aynı, sadece dikey boşluk sıkı —— */
+.qx-page-bg--embedded:not(.qx-page-bg--modal) .qx.qx-layout-flow {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.qx-page-bg--embedded:not(.qx-page-bg--modal) .qx-compact-header {
+  padding: 0.65rem 1.2rem 0.35rem;
+}
+
+.qx-page-bg--embedded:not(.qx-page-bg--modal) .qx-compact-body {
+  padding: 0.4rem 1.2rem 0.85rem;
+}
+
+.qx-page-bg--embedded:not(.qx-page-bg--modal) .qx-form--compact {
+  gap: 0.65rem;
+}
+
+.qx-page-bg--embedded:not(.qx-page-bg--modal) .qx-block--contact {
+  gap: 0.45rem;
+}
+
+.qx-page-bg--embedded:not(.qx-page-bg--modal) .qx-row {
+  gap: 0.45rem 0.65rem;
+}
+
+/* Soru ↔ buton / etiket ↔ input arası */
+.qx-page-bg--embedded:not(.qx-page-bg--modal) .qx-field {
+  gap: 0.12rem;
+}
+
+.qx-page-bg--embedded:not(.qx-page-bg--modal) .qx-block--prefs {
+  padding-top: 0.55rem;
+}
+
+.qx-page-bg--embedded:not(.qx-page-bg--modal) .qx-pref-list {
+  gap: 0.5rem 0.65rem;
+}
+
+.qx-page-bg--embedded:not(.qx-page-bg--modal) .qx-choice {
+  gap: 0.06rem;
+  padding: 0.55rem 0.7rem 0.6rem;
+}
+
+.qx-page-bg--embedded:not(.qx-page-bg--modal) .qx-choice__label {
+  margin: 0 !important;
+}
+
+.qx-page-bg--embedded:not(.qx-page-bg--modal) .qx-footer {
+  padding-top: 0;
+}
+
+/* Dış sarmalayıcıdaki çift kartı kaldır — form kendi kartı */
+.cta-form:has(.quote-wizard-instance),
+.demand-form-section-inline:has(.quote-wizard-instance) {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
 .demand-form-section-inline .quote-wizard-instance,
-.demand-form-section-inline .qx-page-bg--embedded {
+.demand-form-section-inline .qx-page-bg--embedded,
+.cta-form .quote-wizard-instance,
+.cta-form .qx-page-bg--embedded {
   width: 100%;
   max-width: 100%;
   min-width: 0;
-}
-
-.demand-form-section-inline .qx.qx-layout-flow {
-  max-width: 100%;
-  border-radius: 14px;
 }
 
 .faq-form-layout .demand-form-section-inline,
@@ -551,4 +623,65 @@ main:has(section.qx[data-qx-mode='standalone']) .qx-page-bg--standalone {
   min-width: 0;
   max-width: 100%;
   overflow-x: clip;
+}
+
+/* Kurs: FAQ sol, form sağ — genişlik aynı, sadece form boyu kompakt */
+.faq-form-layout.has-form:has(.quote-wizard-instance) {
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  max-width: 1400px;
+}
+
+.faq-form-layout.has-form:has(.quote-wizard-instance) .demand-form-section-inline {
+  position: sticky;
+  top: 100px;
+}
+
+@media (max-width: 980px) {
+  .faq-form-layout.has-form:has(.quote-wizard-instance) {
+    grid-template-columns: 1fr;
+  }
+
+  .faq-form-layout.has-form:has(.quote-wizard-instance) .demand-form-section-inline {
+    position: static;
+  }
+}
+
+/* Hizmet CTA: metin sol, form sağ — oranlar eski */
+.cta-section .cta-content:has(.quote-wizard-instance) {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 1.5rem !important;
+}
+
+.cta-section .cta-content:has(.quote-wizard-instance) .cta-text {
+  flex: 0 0 38% !important;
+  max-width: 38% !important;
+  min-width: 0;
+}
+
+.cta-section .cta-content:has(.quote-wizard-instance) .cta-form {
+  flex: 1 1 62% !important;
+  max-width: 62% !important;
+  min-width: 0;
+  order: 0;
+}
+
+@media (max-width: 980px) {
+  .cta-section .cta-content:has(.quote-wizard-instance) {
+    flex-direction: column !important;
+  }
+
+  .cta-section .cta-content:has(.quote-wizard-instance) .cta-text,
+  .cta-section .cta-content:has(.quote-wizard-instance) .cta-form {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .cta-section .cta-content:has(.quote-wizard-instance) .cta-form {
+    order: 2;
+  }
 }

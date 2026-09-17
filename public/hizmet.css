@@ -1067,6 +1067,14 @@ section .container,
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.article-section + .cta-section .cta-form:has(.quote-wizard-instance) {
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+}
+
 .article-section + .cta-section .form-header {
     text-align: center;
     margin-bottom: 30px;
