@@ -15,7 +15,7 @@ import {
     STRIPE_FEE_FIXED_EUR,
     SWIFT_TRANSFER_BUFFER_EUR,
 } from '../../data/stripeCatalog';
-import { BOOKING_COUPONS, BOOKING_COUPON_DEFAULT_EUR } from '../../data/bookingCoupons';
+import { BOOKING_COUPON_DEFAULT_EUR, getActiveBookingCoupons } from '../../data/bookingCoupons';
 import { EEA_COUNTRY_ISO, COUNTRY_NAME_TO_ISO } from '../../data/eeaCountries';
 import { getWgGuidePath } from '../../utils/pathHelpers';
 export async function getStaticPaths() {
@@ -33,6 +33,7 @@ const pricingLang = lang === 'es' ? 'de' : (lang as 'tr' | 'de' | 'en');
 const wgGuideHref = getWgGuidePath(lang as 'tr' | 'de' | 'en' | 'es');
 const startDateOptions = getFirstMondayStartDateOptions(lang as 'tr' | 'de' | 'en' | 'es', 10);
 const nearestStartDateValue = startDateOptions[0]?.value ?? '';
+const activeBookingCoupons = getActiveBookingCoupons();
 const defaultCourseStart = (() => {
     const raw = nearestStartDateValue ? parseDdMmYyyy(nearestStartDateValue) : null;
     return raw ? snapToNearestMonday(raw) : null;
@@ -2931,7 +2932,7 @@ const extrasStepCopy = {
         bookingWebhookLabels,
         reservationDepositEur: RESERVATION_DEPOSIT_EUR,
         fullPaymentDiscountEur: FULL_PAYMENT_DISCOUNT_EUR,
-        bookingCoupons: BOOKING_COUPONS,
+        bookingCoupons: activeBookingCoupons,
         bookingCouponDefaultEur: BOOKING_COUPON_DEFAULT_EUR,
         stripeFeeRate: STRIPE_FEE_RATE,
         stripeFeeFixedEur: STRIPE_FEE_FIXED_EUR,
@@ -5876,6 +5877,16 @@ const extrasStepCopy = {
             })();
             function applyBookingPrefillFromUrl() {
                 const params = new URLSearchParams(window.location.search);
+
+                const couponFromUrl = (params.get('coupon') || '').trim();
+                if (couponFromUrl) {
+                    const couponInput = document.getElementById('coupon-code');
+                    if (couponInput instanceof HTMLInputElement) {
+                        couponInput.value = couponFromUrl;
+                        if (typeof syncCouponUI === 'function') syncCouponUI();
+                    }
+                }
+
                 const program = params.get('program');
                 if (!program) return;
 

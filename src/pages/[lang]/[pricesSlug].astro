@@ -68,8 +68,8 @@ const t = {
     heroText2: 'Yoğun program, güçlü yoğun Almanca altyapısı ve düzenli danışmanlıkla seni bir üst seviyeye taşıyoruz.',
     officeCardTitle: 'Kupon kodunuz yok mu?',
     officeCardText:
-      'Bu ayın Campus German kupon kodunu WhatsApp’tan hemen alın — kaçırmayın.',
-    officeCardCta: 'Kupon kodunu WhatsApp’tan al',
+      'Bu ayın Campus German kupon kodu için formu doldurun — kaçırmayın.',
+    officeCardCta: 'Kupon için formu doldurun',
     couponMonthHint: '{month} kupon kodunu kaçırmayın',
     bremenCardTitle: "Bremen'de kayıt ücreti yok",
     bremenCardText: "Bremen'de yaşayanlar için peşin ve kur kur ödemede 80 € indirim — aylık planda geçerli değildir.",
@@ -113,8 +113,8 @@ const t = {
     heroText2: 'Intensives Programm, starke Intensiv-Deutsch-Basis und laufende Beratung aus einer Hand.',
     officeCardTitle: 'Noch keinen Gutscheincode?',
     officeCardText:
-      'Holen Sie sich den Campus German Gutscheincode dieses Monats per WhatsApp — nicht verpassen.',
-    officeCardCta: 'Code per WhatsApp holen',
+      'Füllen Sie das Formular aus und holen Sie den Campus German Gutscheincode dieses Monats — nicht verpassen.',
+    officeCardCta: 'Formular für Coupon ausfüllen',
     couponMonthHint: '{month}-Gutscheincode nicht verpassen',
     bremenCardTitle: 'Keine Anmeldegebühr in Bremen',
     bremenCardText: 'Für Bremen-Bewohner: 80 € Rabatt bei Sofort- und Kurszahlung — nicht bei monatlicher Zahlung.',
@@ -158,8 +158,8 @@ const t = {
     heroText2: 'An intensive structure with strong academic support and continuous guidance.',
     officeCardTitle: 'Don’t have a coupon code?',
     officeCardText:
-      'Get this month’s Campus German coupon code on WhatsApp — don’t miss it.',
-    officeCardCta: 'Get code on WhatsApp',
+      'Fill the form to get this month’s Campus German coupon code — don’t miss it.',
+    officeCardCta: 'Fill the form for a coupon',
     couponMonthHint: 'Don’t miss the {month} coupon code',
     bremenCardTitle: 'No registration fee in Bremen',
     bremenCardText: 'Bremen residents: €80 off on pay-in-full and course-by-course — not on monthly plans.',
@@ -203,8 +203,8 @@ const t = {
     heroText2: 'Programa intensivo, base académica sólida y acompañamiento continuo.',
     officeCardTitle: '¿No tienes código de cupón?',
     officeCardText:
-      'Consigue el código de cupón de Campus German de este mes por WhatsApp — no te lo pierdas.',
-    officeCardCta: 'Obtener código por WhatsApp',
+      'Completa el formulario para obtener el cupón de Campus German de este mes — no te lo pierdas.',
+    officeCardCta: 'Rellenar formulario para cupón',
     couponMonthHint: 'No te pierdas el cupón de {month}',
     bremenCardTitle: 'Sin tasa de inscripción en Bremen',
     bremenCardText: 'Residentes en Bremen: 80 € de descuento en pago al contado y curso a curso — no en plan mensual.',
@@ -225,15 +225,6 @@ const monthNamesCoupon: Record<string, string[]> = {
 };
 const couponMonth = (monthNamesCoupon[lang] || monthNamesCoupon.en)[new Date().getMonth()];
 const couponMonthHint = String(t.couponMonthHint || '').replace('{month}', couponMonth);
-const couponWaText =
-  lang === 'tr'
-    ? `Merhaba, ${couponMonth} kupon kodumu almak istiyorum.`
-    : lang === 'de'
-      ? `Hallo, ich möchte den Gutscheincode für ${couponMonth} erhalten.`
-      : lang === 'es'
-        ? `Hola, quiero recibir el código de cupón de ${couponMonth}.`
-        : `Hi, I’d like to get the ${couponMonth} coupon code.`;
-const couponWaHref = `https://wa.me/4915203823792?text=${encodeURIComponent(couponWaText)}`;
 
 const levels = ['a1', 'a2', 'b1', 'b2', 'c1'] as const;
 const levelLabels = { a1: 'A1', a2: 'A2', b1: 'B1', b2: 'B2', c1: 'C1' };
@@ -269,10 +260,9 @@ const simpleStartDates = uniqueDdMmMonday.map((ddmm) =>
           <h3>{t.officeCardTitle}</h3>
           <p>{couponMonthHint}</p>
           <p>{t.officeCardText}</p>
-          <a href={couponWaHref} target="_blank" rel="noopener noreferrer" class="fiyatlar-wa-btn">
-            <i class="fab fa-whatsapp"></i>
+          <button type="button" class="fiyatlar-wa-btn" data-open-quote-modal>
             {t.officeCardCta}
-          </a>
+          </button>
         </article>
         <article class="fiyatlar-promo-card fiyatlar-promo-card--hero fiyatlar-promo-card--highlight">
           <h3>{t.bremenCardTitle}</h3>

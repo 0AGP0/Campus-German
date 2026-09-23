@@ -1,0 +1,318 @@
+/* ===== Ofis kartı (bayraklı — mockup düzeni) ===== */
+
+.contact-card--office {
+    padding: 0;
+    overflow: hidden;
+}
+
+.office-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.35rem 1.4rem 1.25rem;
+    background:
+        linear-gradient(135deg, rgba(12, 192, 223, 0.12) 0%, rgba(31, 58, 95, 0.06) 55%, #fff 100%);
+    border-bottom: 1px solid rgba(31, 58, 95, 0.08);
+}
+
+.office-head__flag {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid rgba(31, 58, 95, 0.1);
+    box-shadow: 0 6px 16px rgba(31, 58, 95, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.office-head__flag img {
+    width: 36px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.office-head__badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #088a9e;
+    background: rgba(12, 192, 223, 0.14);
+    border-radius: 999px;
+    padding: 0.2rem 0.55rem;
+    margin-bottom: 0.35rem;
+}
+
+.office-head__company {
+    margin: 0 0 0.35rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--color-text-primary);
+}
+
+.office-head__city {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+.office-head__pin-flag {
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.office-block {
+    padding: 1.1rem 1.4rem;
+    border-bottom: 1px solid rgba(31, 58, 95, 0.08);
+}
+
+.office-block__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.45rem;
+}
+
+.office-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(12, 192, 223, 0.12);
+    color: #088a9e;
+    font-size: 0.75rem;
+}
+
+.office-block__text {
+    margin: 0 0 0.55rem;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.office-map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.office-map-link:hover {
+    text-decoration: underline;
+}
+
+/* ----- Mockup iletişim listesi ----- */
+.office-simple {
+    padding: 1.15rem 1.4rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+.office-simple__row {
+    margin: 0;
+}
+
+.office-simple__label {
+    margin: 0 0 0.2rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+}
+
+.office-simple__value {
+    display: inline-block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    word-break: break-word;
+}
+
+.office-simple__value:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.office-simple__row--wa {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.office-simple__label--wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+}
+
+.office-simple__label--wa i {
+    color: #25d366;
+    font-size: 1.2rem;
+}
+
+.office-wa-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.office-wa {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 0.95rem 1rem 1rem 1.05rem;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid rgba(37, 211, 102, 0.28);
+    box-shadow: 0 4px 14px rgba(31, 58, 95, 0.06);
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.office-wa::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #25d366;
+}
+
+.office-wa--de {
+    background: linear-gradient(135deg, rgba(37, 211, 102, 0.08) 0%, #fff 55%);
+}
+
+.office-wa--intl {
+    background: linear-gradient(135deg, rgba(12, 192, 223, 0.08) 0%, #fff 55%);
+    border-color: rgba(12, 192, 223, 0.28);
+}
+
+.office-wa--intl::before {
+    background: linear-gradient(180deg, #0cc0df 0%, #25d366 100%);
+}
+
+.office-wa:hover {
+    border-color: rgba(37, 211, 102, 0.55);
+    box-shadow: 0 8px 22px rgba(31, 58, 95, 0.1);
+    transform: translateY(-1px);
+}
+
+.office-wa--intl:hover {
+    border-color: rgba(12, 192, 223, 0.5);
+}
+
+.office-wa__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem 0.55rem;
+}
+
+.office-wa__head--stack {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+}
+
+.office-wa__title {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+.office-wa__flags {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.office-wa__flags img {
+    width: 24px;
+    height: 16px;
+    object-fit: cover;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.office-wa__flags--row {
+    gap: 5px;
+}
+
+.office-wa__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.office-wa__link i {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: #25d366;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    box-shadow: 0 3px 10px rgba(37, 211, 102, 0.35);
+}
+
+.office-wa__num {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    color: var(--color-text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.office-wa:hover .office-wa__num {
+    color: #128c7e;
+}
+
+.office-simple__row--hours {
+    padding-top: 0.35rem;
+    border-top: 1px dashed rgba(31, 58, 95, 0.2);
+}
+
+.office-simple__hours {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    line-height: 1.45;
+}

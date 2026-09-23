@@ -31,7 +31,7 @@
 
 .campus-quote-modal__panel {
   position: relative;
-  width: min(900px, 100%);
+  width: min(520px, 100%);
   height: auto;
   max-height: min(94vh, 920px);
   margin: 0;

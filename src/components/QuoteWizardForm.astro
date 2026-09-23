@@ -1,12 +1,14 @@
 ---
 import '../styles/pages/quote-wizard.css';
+import { PHONE_COUNTRIES, findCountryByIso } from '../data/phoneCountries';
+import { getCurrentMonthCoupon } from '../data/monthlyCoupons';
+
 const {
   lang = 'tr',
   bookingPath = '/tr/buchung',
   homePath: homePathProp,
   embedded = false,
   modalMode = false,
-  /** Aynı sayfada modal + gömülü için benzersiz id: modal='m', sayfa gövdesi='e' */
   instanceSuffix = 'm',
 } = Astro.props;
 const homePath = homePathProp ?? `/${lang}`;
@@ -14,42 +16,41 @@ const quoteMode = embedded ? 'embedded' : 'standalone';
 const pw = (base: string) => `${base}-${instanceSuffix}`;
 const BOOKING_FREE_WEBHOOK = 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
 const quoteWebhook = import.meta.env.PUBLIC_MAKE_QUOTE_WEBHOOK || BOOKING_FREE_WEBHOOK;
+const langKey = (['tr', 'de', 'en', 'es'].includes(lang) ? lang : 'tr') as 'tr' | 'de' | 'en' | 'es';
+const monthCoupon = getCurrentMonthCoupon();
+const defaultCountry = findCountryByIso('DE') || PHONE_COUNTRIES[1];
 
 type ChipOption = { value: string; label: string };
 
 const copy = {
   tr: {
-    title: 'Fiyat teklifi al',
-    subtitle: 'Birkaç bilgiyle size özel teklif hazırlayalım.',
-    sectionContact: 'İletişim bilgileri',
-    sectionPrefs: 'Birkaç soru',
-    tabInfo: 'Bilgileriniz',
-    tabPrefs: 'Tercihleriniz',
+    title: 'İndirim kuponu al',
+    subtitle: 'Formu doldurun — bu ayın kuponu ve fiyat teklifiniz hazırlansın.',
     fullName: 'İsim Soyisim',
     fullNamePlaceholder: 'Adınız ve soyadınız',
-    ageRange: 'Yaş aralığınız?',
-    occupation: 'Meslek',
-    occupationPlaceholder: 'Mesleğiniz',
-    country: 'Ülke',
-    countryPlaceholder: 'Yaşadığınız ülke',
-    startTimeline: 'Ne zaman başlamak istersiniz?',
-    hasFriend: 'Birlikte gelecek arkadaşınız var mı?',
-    friendName: 'Arkadaşınızın adı',
-    friendNamePlaceholder: 'Arkadaşınızın adı',
-    germanLevel: 'Almanca seviyeniz?',
-    interestedCourse: 'Hangi kurs ilginizi çekiyor?',
-    visaSupport: 'Vize desteği ister misiniz?',
-    agencyName: 'Acenta',
-    agencyNamePlaceholder: 'Acenta adı',
     email: 'E-posta',
     emailPlaceholder: 'ornek@mail.com',
     phone: 'Telefon',
     phonePlaceholder: '5XX XXX XX XX',
-    contactHint: 'E-posta veya telefondan biri yeterli.',
-    submit: 'Teklifimi Al',
-    doneTitle: 'Teşekkürler',
-    doneText: 'Danismanlarimiz size ulasacak.',
-    doneClose: 'Ana sayfaya dön',
+    dialSearch: 'Ülke ara…',
+    ageRange: 'Yaş aralığınız?',
+    occupation: 'Meslek',
+    occupationOther: 'Diğer (yazınız)',
+    occupationOtherPlaceholder: 'Mesleğinizi yazın',
+    startTimeline: 'Ne zaman başlamak istersiniz?',
+    germanLevel: 'Almanca seviyeniz?',
+    interestedCourse: 'Hangi kurs ilginizi çekiyor?',
+    withAgency: 'Sürecinizi acentayla mı ilerletiyorsunuz?',
+    agencyName: 'Acenta adı',
+    agencyNamePlaceholder: 'Acenta adı',
+    agencyPhone: 'Acenta telefonu',
+    agencyPhonePlaceholder: 'Acenta telefon numarası',
+    submit: 'Kuponumu Al',
+    doneTitle: 'Kuponunuz hazır',
+    doneText: 'Bu kupon yalnızca {month} ayında geçerlidir. Rezervasyona geçerek kullanabilirsiniz.',
+    doneCouponLabel: 'Kupon kodunuz',
+    doneBook: 'Rezervasyona git',
+    doneClose: 'Kapat',
     close: 'Kapat',
     error: 'Form gönderilemedi. Lütfen tekrar deneyin.',
     sending: 'Gönderiliyor...',
@@ -58,24 +59,27 @@ const copy = {
       contactRequired: 'Lütfen e-posta veya telefon girin.',
       emailInvalid: 'Geçerli bir e-posta adresi girin.',
       required: 'Lütfen tüm zorunlu alanları doldurun.',
+      phoneRequired: 'Lütfen telefon numarası girin.',
     },
     chips: {
       ageRange: [
-        { value: '18-24', label: '18–24' },
-        { value: '25-34', label: '25–34' },
-        { value: '35-44', label: '35–44' },
-        { value: '45-54', label: '45–54' },
-        { value: '55+', label: '55+' },
+        { value: '10-15', label: '10–15' },
+        { value: '16-24', label: '16–24' },
+        { value: '25-35', label: '25–35' },
+        { value: '35+', label: '35+' },
+      ],
+      occupation: [
+        { value: 'student', label: 'Öğrenci' },
+        { value: 'azubi', label: 'Azubi' },
+        { value: 'volunteer', label: 'Gönüllü' },
+        { value: 'medical', label: 'Sağlıkçı' },
+        { value: 'other', label: 'Diğer' },
       ],
       startTimeline: [
         { value: 'immediate', label: 'Hemen' },
         { value: '1-2-months', label: '1–2 Ay' },
         { value: '3-6-months', label: '3–6 Ay' },
-        { value: 'later', label: 'Daha sonra' },
-      ],
-      hasFriend: [
-        { value: 'yes', label: 'Evet' },
-        { value: 'no', label: 'Hayır' },
+        { value: 'after-visa', label: 'Vize aldıktan sonra' },
       ],
       germanLevel: [
         { value: 'A0', label: 'A0' },
@@ -92,70 +96,69 @@ const copy = {
         { value: 'exam-prep', label: 'Sınav' },
         { value: 'online', label: 'Online' },
       ],
-      visaSupport: [
+      withAgency: [
         { value: 'yes', label: 'Evet' },
         { value: 'no', label: 'Hayır' },
       ],
     },
   },
   de: {
-    title: 'Preisangebot anfordern',
-    subtitle: 'Mit wenigen Angaben erstellen wir Ihr persönliches Angebot.',
-    sectionContact: 'Kontaktdaten',
-    sectionPrefs: 'Ein paar Fragen',
-    tabInfo: 'Ihre Angaben',
-    tabPrefs: 'Ihre Präferenzen',
+    title: 'Rabattcoupon holen',
+    subtitle: 'Formular ausfüllen — Coupon des Monats und Angebot folgen.',
     fullName: 'Vor- und Nachname',
     fullNamePlaceholder: 'Ihr vollständiger Name',
-    ageRange: 'Wie alt sind Sie?',
-    occupation: 'Beruf',
-    occupationPlaceholder: 'Ihr Beruf',
-    country: 'Land',
-    countryPlaceholder: 'Ihr Wohnsitzland',
-    startTimeline: 'Wann möchten Sie starten?',
-    hasFriend: 'Lernen Sie mit einer Begleitung?',
-    friendName: 'Name der Begleitung',
-    friendNamePlaceholder: 'Name eingeben',
-    germanLevel: 'Welches Deutsch-Niveau haben Sie?',
-    interestedCourse: 'Welcher Kurs interessiert Sie?',
-    visaSupport: 'Benötigen Sie Visum-Unterstützung?',
-    agencyName: 'Agentur',
-    agencyNamePlaceholder: 'Name der Agentur',
     email: 'E-Mail',
     emailPlaceholder: 'name@mail.de',
     phone: 'Telefon',
-    phonePlaceholder: '+49 …',
-    contactHint: 'E-Mail oder Telefon genügt.',
-    submit: 'Angebot anfordern',
-    doneTitle: 'Danke',
-    doneText: 'Unsere Berater melden sich bei Ihnen.',
-    doneClose: 'Zur Startseite',
+    phonePlaceholder: '151 …',
+    dialSearch: 'Land suchen…',
+    ageRange: 'Altersgruppe?',
+    occupation: 'Beruf',
+    occupationOther: 'Andere (bitte angeben)',
+    occupationOtherPlaceholder: 'Beruf eingeben',
+    startTimeline: 'Wann möchten Sie starten?',
+    germanLevel: 'Deutsch-Niveau?',
+    interestedCourse: 'Welcher Kurs interessiert Sie?',
+    withAgency: 'Laufen Sie den Prozess über eine Agentur?',
+    agencyName: 'Agenturname',
+    agencyNamePlaceholder: 'Name der Agentur',
+    agencyPhone: 'Agentur-Telefon',
+    agencyPhonePlaceholder: 'Telefon der Agentur',
+    submit: 'Coupon holen',
+    doneTitle: 'Ihr Coupon ist bereit',
+    doneText: 'Dieser Coupon gilt nur im {month}. Zur Buchung wechseln und einlösen.',
+    doneCouponLabel: 'Ihr Coupon-Code',
+    doneBook: 'Zur Buchung',
+    doneClose: 'Schliessen',
     close: 'Schliessen',
     error: 'Formular konnte nicht gesendet werden.',
     sending: 'Wird gesendet...',
-    success: 'Ihr Formular wurde erfolgreich gesendet.',
+    success: 'Erfolgreich gesendet.',
     validation: {
-      contactRequired: 'Bitte geben Sie E-Mail oder Telefon ein.',
-      emailInvalid: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
-      required: 'Bitte füllen Sie alle Pflichtfelder aus.',
+      contactRequired: 'Bitte E-Mail oder Telefon eingeben.',
+      emailInvalid: 'Bitte gültige E-Mail eingeben.',
+      required: 'Bitte alle Pflichtfelder ausfüllen.',
+      phoneRequired: 'Bitte Telefonnummer eingeben.',
     },
     chips: {
       ageRange: [
-        { value: '18-24', label: '18–24' },
-        { value: '25-34', label: '25–34' },
-        { value: '35-44', label: '35–44' },
-        { value: '45-54', label: '45–54' },
-        { value: '55+', label: '55+' },
+        { value: '10-15', label: '10–15' },
+        { value: '16-24', label: '16–24' },
+        { value: '25-35', label: '25–35' },
+        { value: '35+', label: '35+' },
+      ],
+      occupation: [
+        { value: 'student', label: 'Student' },
+        { value: 'azubi', label: 'Azubi' },
+        { value: 'volunteer', label: 'Freiwilliger' },
+        { value: 'medical', label: 'Mediziner' },
+        { value: 'other', label: 'Andere' },
       ],
       startTimeline: [
         { value: 'immediate', label: 'Sofort' },
         { value: '1-2-months', label: '1–2 Monate' },
         { value: '3-6-months', label: '3–6 Monate' },
-        { value: 'later', label: 'Später' },
-      ],
-      hasFriend: [
-        { value: 'yes', label: 'Ja' },
-        { value: 'no', label: 'Nein' },
+        { value: 'after-visa', label: 'Nach dem Visum' },
       ],
       germanLevel: [
         { value: 'A0', label: 'A0' },
@@ -172,70 +175,69 @@ const copy = {
         { value: 'exam-prep', label: 'Prüfung' },
         { value: 'online', label: 'Online' },
       ],
-      visaSupport: [
+      withAgency: [
         { value: 'yes', label: 'Ja' },
         { value: 'no', label: 'Nein' },
       ],
     },
   },
   en: {
-    title: 'Get a price quote',
-    subtitle: 'Share a few details and we will prepare a tailored offer.',
-    sectionContact: 'Contact details',
-    sectionPrefs: 'A few questions',
-    tabInfo: 'Your details',
-    tabPrefs: 'Your preferences',
+    title: 'Get a discount coupon',
+    subtitle: 'Fill the form — get this month’s coupon and your quote.',
     fullName: 'Full name',
     fullNamePlaceholder: 'Your full name',
-    ageRange: 'What is your age range?',
-    occupation: 'Occupation',
-    occupationPlaceholder: 'Your occupation',
-    country: 'Country',
-    countryPlaceholder: 'Country of residence',
-    startTimeline: 'When would you like to start?',
-    hasFriend: 'Will you study with a friend?',
-    friendName: "Friend's name",
-    friendNamePlaceholder: "Friend's name",
-    germanLevel: 'What is your German level?',
-    interestedCourse: 'Which course interests you?',
-    visaSupport: 'Do you need visa support?',
-    agencyName: 'Agency',
-    agencyNamePlaceholder: 'Agency name',
     email: 'Email',
     emailPlaceholder: 'you@example.com',
     phone: 'Phone',
-    phonePlaceholder: '+49 …',
-    contactHint: 'Email or phone — one is enough.',
-    submit: 'Get my quote',
-    doneTitle: 'Thank you',
-    doneText: 'Our advisors will contact you.',
-    doneClose: 'Back to home',
+    phonePlaceholder: '151 …',
+    dialSearch: 'Search country…',
+    ageRange: 'Age range?',
+    occupation: 'Occupation',
+    occupationOther: 'Other (please specify)',
+    occupationOtherPlaceholder: 'Your occupation',
+    startTimeline: 'When would you like to start?',
+    germanLevel: 'German level?',
+    interestedCourse: 'Which course interests you?',
+    withAgency: 'Are you proceeding with an agency?',
+    agencyName: 'Agency name',
+    agencyNamePlaceholder: 'Agency name',
+    agencyPhone: 'Agency phone',
+    agencyPhonePlaceholder: 'Agency phone number',
+    submit: 'Get my coupon',
+    doneTitle: 'Your coupon is ready',
+    doneText: 'This coupon is valid only in {month}. Continue to booking to use it.',
+    doneCouponLabel: 'Your coupon code',
+    doneBook: 'Go to booking',
+    doneClose: 'Close',
     close: 'Close',
     error: 'Form submission failed. Please try again.',
     sending: 'Sending...',
-    success: 'Your form was submitted successfully.',
+    success: 'Submitted successfully.',
     validation: {
       contactRequired: 'Please enter email or phone.',
-      emailInvalid: 'Please enter a valid email address.',
+      emailInvalid: 'Please enter a valid email.',
       required: 'Please fill in all required fields.',
+      phoneRequired: 'Please enter a phone number.',
     },
     chips: {
       ageRange: [
-        { value: '18-24', label: '18–24' },
-        { value: '25-34', label: '25–34' },
-        { value: '35-44', label: '35–44' },
-        { value: '45-54', label: '45–54' },
-        { value: '55+', label: '55+' },
+        { value: '10-15', label: '10–15' },
+        { value: '16-24', label: '16–24' },
+        { value: '25-35', label: '25–35' },
+        { value: '35+', label: '35+' },
+      ],
+      occupation: [
+        { value: 'student', label: 'Student' },
+        { value: 'azubi', label: 'Azubi' },
+        { value: 'volunteer', label: 'Volunteer' },
+        { value: 'medical', label: 'Healthcare' },
+        { value: 'other', label: 'Other' },
       ],
       startTimeline: [
         { value: 'immediate', label: 'Immediately' },
         { value: '1-2-months', label: '1–2 months' },
         { value: '3-6-months', label: '3–6 months' },
-        { value: 'later', label: 'Later' },
-      ],
-      hasFriend: [
-        { value: 'yes', label: 'Yes' },
-        { value: 'no', label: 'No' },
+        { value: 'after-visa', label: 'After getting a visa' },
       ],
       germanLevel: [
         { value: 'A0', label: 'A0' },
@@ -252,70 +254,69 @@ const copy = {
         { value: 'exam-prep', label: 'Exam' },
         { value: 'online', label: 'Online' },
       ],
-      visaSupport: [
+      withAgency: [
         { value: 'yes', label: 'Yes' },
         { value: 'no', label: 'No' },
       ],
     },
   },
   es: {
-    title: 'Solicitar presupuesto',
-    subtitle: 'Con unos datos prepararemos una oferta personalizada.',
-    sectionContact: 'Datos de contacto',
-    sectionPrefs: 'Algunas preguntas',
-    tabInfo: 'Tus datos',
-    tabPrefs: 'Tus preferencias',
+    title: 'Obtener cupón de descuento',
+    subtitle: 'Completa el formulario — cupón del mes y presupuesto.',
     fullName: 'Nombre completo',
     fullNamePlaceholder: 'Tu nombre completo',
-    ageRange: '¿Cuál es tu rango de edad?',
-    occupation: 'Ocupación',
-    occupationPlaceholder: 'Tu ocupación',
-    country: 'País',
-    countryPlaceholder: 'País de residencia',
-    startTimeline: '¿Cuándo quieres empezar?',
-    hasFriend: '¿Estudiarás con un amigo/a?',
-    friendName: 'Nombre del amigo/a',
-    friendNamePlaceholder: 'Nombre del amigo/a',
-    germanLevel: '¿Cuál es tu nivel de alemán?',
-    interestedCourse: '¿Qué curso te interesa?',
-    visaSupport: '¿Necesitas apoyo con el visado?',
-    agencyName: 'Agencia',
-    agencyNamePlaceholder: 'Nombre de la agencia',
     email: 'Email',
     emailPlaceholder: 'ejemplo@correo.com',
     phone: 'Teléfono',
-    phonePlaceholder: '+34 …',
-    contactHint: 'Email o teléfono — uno basta.',
-    submit: 'Pedir presupuesto',
-    doneTitle: 'Gracias',
-    doneText: 'Nuestros asesores te contactaran.',
-    doneClose: 'Volver al inicio',
+    phonePlaceholder: '612 …',
+    dialSearch: 'Buscar país…',
+    ageRange: '¿Rango de edad?',
+    occupation: 'Ocupación',
+    occupationOther: 'Otra (especificar)',
+    occupationOtherPlaceholder: 'Tu ocupación',
+    startTimeline: '¿Cuándo quieres empezar?',
+    germanLevel: '¿Nivel de alemán?',
+    interestedCourse: '¿Qué curso te interesa?',
+    withAgency: '¿Avanzas el proceso con una agencia?',
+    agencyName: 'Nombre de la agencia',
+    agencyNamePlaceholder: 'Nombre de la agencia',
+    agencyPhone: 'Teléfono de la agencia',
+    agencyPhonePlaceholder: 'Teléfono de la agencia',
+    submit: 'Obtener mi cupón',
+    doneTitle: 'Tu cupón está listo',
+    doneText: 'Este cupón solo es válido en {month}. Continúa a la reserva para usarlo.',
+    doneCouponLabel: 'Tu código de cupón',
+    doneBook: 'Ir a reservar',
+    doneClose: 'Cerrar',
     close: 'Cerrar',
     error: 'No se pudo enviar.',
     sending: 'Enviando...',
-    success: 'Tu formulario se envió correctamente.',
+    success: 'Enviado correctamente.',
     validation: {
       contactRequired: 'Introduce email o teléfono.',
-      emailInvalid: 'Introduce una dirección de email válida.',
+      emailInvalid: 'Introduce un email válido.',
       required: 'Completa todos los campos obligatorios.',
+      phoneRequired: 'Introduce un teléfono.',
     },
     chips: {
       ageRange: [
-        { value: '18-24', label: '18–24' },
-        { value: '25-34', label: '25–34' },
-        { value: '35-44', label: '35–44' },
-        { value: '45-54', label: '45–54' },
-        { value: '55+', label: '55+' },
+        { value: '10-15', label: '10–15' },
+        { value: '16-24', label: '16–24' },
+        { value: '25-35', label: '25–35' },
+        { value: '35+', label: '35+' },
+      ],
+      occupation: [
+        { value: 'student', label: 'Estudiante' },
+        { value: 'azubi', label: 'Azubi' },
+        { value: 'volunteer', label: 'Voluntario' },
+        { value: 'medical', label: 'Sanitario' },
+        { value: 'other', label: 'Otra' },
       ],
       startTimeline: [
         { value: 'immediate', label: 'Inmediatamente' },
         { value: '1-2-months', label: '1–2 meses' },
         { value: '3-6-months', label: '3–6 meses' },
-        { value: 'later', label: 'Más tarde' },
-      ],
-      hasFriend: [
-        { value: 'yes', label: 'Sí' },
-        { value: 'no', label: 'No' },
+        { value: 'after-visa', label: 'Después del visado' },
       ],
       germanLevel: [
         { value: 'A0', label: 'A0' },
@@ -332,7 +333,7 @@ const copy = {
         { value: 'exam-prep', label: 'Examen' },
         { value: 'online', label: 'Online' },
       ],
-      visaSupport: [
+      withAgency: [
         { value: 'yes', label: 'Sí' },
         { value: 'no', label: 'No' },
       ],
@@ -340,15 +341,23 @@ const copy = {
   },
 };
 
-const t = copy[lang as keyof typeof copy] ?? copy.tr;
+const t = copy[langKey];
+const monthNames: Record<string, string[]> = {
+  tr: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+  de: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+  en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  es: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+};
+const couponMonthLabel = (monthNames[langKey] || monthNames.en)[new Date().getMonth()];
+const doneText = t.doneText.replace('{month}', couponMonthLabel);
+const bookingWithCoupon = `${bookingPath}${bookingPath.includes('?') ? '&' : '?'}coupon=${encodeURIComponent(monthCoupon.code)}`;
 
 const chipGroups: { name: string; label: string; options: ChipOption[] }[] = [
   { name: 'ageRange', label: t.ageRange, options: t.chips.ageRange },
+  { name: 'occupation', label: t.occupation, options: t.chips.occupation },
   { name: 'startTimeline', label: t.startTimeline, options: t.chips.startTimeline },
   { name: 'germanLevel', label: t.germanLevel, options: t.chips.germanLevel },
   { name: 'interestedCourse', label: t.interestedCourse, options: t.chips.interestedCourse },
-  { name: 'hasFriend', label: t.hasFriend, options: t.chips.hasFriend },
-  { name: 'visaSupport', label: t.visaSupport, options: t.chips.visaSupport },
 ];
 
 const chipHiddenId = (name: string) => {
@@ -357,9 +366,15 @@ const chipHiddenId = (name: string) => {
 };
 ---
 
-<div class="quote-wizard-instance" data-quote-instance={instanceSuffix}>
+<div
+  class="quote-wizard-instance"
+  data-quote-instance={instanceSuffix}
+  data-coupon-code={monthCoupon.code}
+  data-coupon-month={monthCoupon.monthKey}
+  data-booking-path={bookingWithCoupon}
+>
 <div class={`qx-page-bg ${quoteMode === 'standalone' ? 'qx-page-bg--standalone' : 'qx-page-bg--embedded'} ${modalMode ? 'qx-page-bg--modal' : ''}`}>
-<section class="qx qx-layout-flow" id={pw('pwRoot')} data-qx-mode={quoteMode}>
+<section class="qx qx-layout-flow qx-layout-flow--vertical" id={pw('pwRoot')} data-qx-mode={quoteMode}>
   <header class="qx-compact-header">
     <div class="qx-compact-header__logo" aria-hidden={modalMode || embedded ? 'true' : 'false'}>
       <img src="/German_logo.webp" alt="" class="qx-compact-logo" width="40" height="40" loading="lazy" decoding="async" />
@@ -384,46 +399,77 @@ const chipHiddenId = (name: string) => {
       data-val-contact={t.validation.contactRequired}
       data-val-email={t.validation.emailInvalid}
       data-val-required={t.validation.required}
+      data-val-phone={t.validation.phoneRequired}
       novalidate
     >
       <input type="hidden" name="formType" value="price-quote" />
       <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
       <input type="hidden" name="lang" value={lang} />
+      <input type="hidden" name="couponCode" value={monthCoupon.code} />
+      <input type="hidden" name="couponMonth" value={monthCoupon.monthKey} />
 
       <div class="qx-block qx-block--contact" id={pw('qxPanelInfo')} data-qx-tab-panel="info">
-        <div class="qx-row qx-row--3">
-          <label class="qx-field">
-            <span class="qx-field-label">{t.fullName}</span>
-            <input type="text" name="fullName" required autocomplete="name" class="qx-input" placeholder={t.fullNamePlaceholder} />
-          </label>
+        <label class="qx-field">
+          <span class="qx-field-label">{t.fullName}</span>
+          <input type="text" name="fullName" required autocomplete="name" class="qx-input" placeholder={t.fullNamePlaceholder} />
+        </label>
+
+        <div class="qx-row qx-row--2">
           <label class="qx-field">
             <span class="qx-field-label">{t.email}</span>
             <input type="email" name="email" autocomplete="email" class="qx-input" placeholder={t.emailPlaceholder} />
           </label>
-          <label class="qx-field">
+
+          <div class="qx-field qx-field--phone">
             <span class="qx-field-label">{t.phone}</span>
-            <input type="tel" name="phone" autocomplete="tel" class="qx-input" placeholder={t.phonePlaceholder} />
-          </label>
+            <div class="qx-phone" data-qx-phone>
+              <button type="button" class="qx-phone__dial" id={pw('pwDialBtn')} aria-haspopup="listbox" aria-expanded="false">
+                <span class="qx-phone__flag" data-qx-flag>{defaultCountry.flag}</span>
+                <span class="qx-phone__code" data-qx-code>+{defaultCountry.dial}</span>
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+              </button>
+              <input
+                type="tel"
+                name="phoneNational"
+                id={pw('pwPhoneNational')}
+                class="qx-input qx-phone__input"
+                autocomplete="tel-national"
+                placeholder={t.phonePlaceholder}
+                inputmode="tel"
+              />
+              <input type="hidden" name="phone" id={pw('pwPhone')} value="" />
+              <input type="hidden" name="country" id={pw('pwCountry')} value={defaultCountry.name[langKey]} />
+              <input type="hidden" name="countryCode" id={pw('pwCountryCode')} value={defaultCountry.iso} />
+              <input type="hidden" name="dialCode" id={pw('pwDialCode')} value={defaultCountry.dial} />
+              <div class="qx-phone__menu" id={pw('pwDialMenu')} hidden role="listbox">
+                <input type="search" class="qx-phone__search" id={pw('pwDialSearch')} placeholder={t.dialSearch} autocomplete="off" />
+                <div class="qx-phone__list">
+                  {PHONE_COUNTRIES.map((c) => (
+                    <button
+                      type="button"
+                      class="qx-phone__option"
+                      role="option"
+                      data-iso={c.iso}
+                      data-dial={c.dial}
+                      data-flag={c.flag}
+                      data-name={c.name[langKey]}
+                    >
+                      <span class="qx-phone__option-flag">{c.flag}</span>
+                      <span class="qx-phone__option-name">{c.name[langKey]}</span>
+                      <span class="qx-phone__option-dial">+{c.dial}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <p class="qx-field-error" id={pw('pwPhoneError')} hidden role="alert"></p>
+          </div>
         </div>
         <p class="qx-field-error qx-field-error--contact" id={pw('pwContactError')} hidden role="alert"></p>
-        <div class="qx-row qx-row--3">
-          <label class="qx-field">
-            <span class="qx-field-label">{t.occupation}</span>
-            <input type="text" name="occupation" required autocomplete="organization-title" class="qx-input" placeholder={t.occupationPlaceholder} />
-          </label>
-          <label class="qx-field">
-            <span class="qx-field-label">{t.country}</span>
-            <input type="text" name="country" required autocomplete="country-name" class="qx-input" placeholder={t.countryPlaceholder} />
-          </label>
-          <label class="qx-field">
-            <span class="qx-field-label">{t.agencyName}</span>
-            <input type="text" name="agencyName" required class="qx-input" placeholder={t.agencyNamePlaceholder} />
-          </label>
-        </div>
       </div>
 
       <div class="qx-block qx-block--prefs" id={pw('qxPanelPrefs')} data-qx-tab-panel="prefs">
-        <div class="qx-pref-list">
+        <div class="qx-pref-list qx-pref-list--vertical">
           {chipGroups.map((group, i) => (
             <div class={`qx-choice qx-choice--n${group.options.length}`} data-qx-chip-group={group.name}>
               <div class="qx-choice__label">
@@ -442,25 +488,57 @@ const chipHiddenId = (name: string) => {
                   >{opt.label}</button>
                 ))}
               </div>
-              <input type="hidden" name={group.name} id={chipHiddenId(group.name)} value="" data-required="true" />
+              <input type="hidden" name={group.name} id={chipHiddenId(group.name)} value="" />
               <p class="qx-field-error" hidden role="alert"></p>
-              {group.name === 'hasFriend' && (
-                <div class="qx-friend qx-field-group--collapsible" id={pw('friendNameGroup')} hidden aria-hidden="true">
+              {group.name === 'occupation' && (
+                <div class="qx-occupation-other qx-field-group--collapsible" id={pw('occupationOtherGroup')} hidden aria-hidden="true">
                   <label class="qx-field">
-                    <span class="qx-field-label">{t.friendName}</span>
-                    <input type="text" name="friendName" id={pw('pwFriendName')} class="qx-input" placeholder={t.friendNamePlaceholder} />
+                    <span class="qx-field-label">{t.occupationOther}</span>
+                    <input type="text" name="occupationOther" id={pw('pwOccupationOther')} class="qx-input" placeholder={t.occupationOtherPlaceholder} />
                   </label>
                 </div>
               )}
             </div>
           ))}
+
+          <div class="qx-agency-flow qx-field-group--collapsible" id={pw('agencyFlowGroup')} hidden aria-hidden="true">
+            <div class="qx-choice qx-choice--n2" data-qx-chip-group="withAgency">
+              <div class="qx-choice__label">
+                <span class="qx-choice__num" aria-hidden="true">06</span>
+                <span class="qx-choice__q">{t.withAgency}</span>
+              </div>
+              <div class="qx-choice__options" role="radiogroup" aria-label={t.withAgency}>
+                {t.chips.withAgency.map((opt) => (
+                  <button
+                    type="button"
+                    class="qx-choice-btn"
+                    data-chip-field="withAgency"
+                    data-chip-value={opt.value}
+                    data-chip-label={opt.label}
+                    aria-pressed="false"
+                  >{opt.label}</button>
+                ))}
+              </div>
+              <input type="hidden" name="withAgency" id={chipHiddenId('withAgency')} value="" />
+              <p class="qx-field-error" hidden role="alert"></p>
+            </div>
+
+            <div class="qx-agency-details qx-field-group--collapsible" id={pw('agencyDetailsGroup')} hidden aria-hidden="true">
+              <label class="qx-field">
+                <span class="qx-field-label">{t.agencyName}</span>
+                <input type="text" name="agencyName" id={pw('pwAgencyName')} class="qx-input" placeholder={t.agencyNamePlaceholder} />
+              </label>
+              <label class="qx-field">
+                <span class="qx-field-label">{t.agencyPhone}</span>
+                <input type="tel" name="agencyPhone" id={pw('pwAgencyPhone')} class="qx-input" placeholder={t.agencyPhonePlaceholder} />
+              </label>
+            </div>
+          </div>
         </div>
       </div>
 
       <footer class="qx-footer">
-        <button type="submit" class="qx-send" id={pw('pwSubmitBtn')}>
-          {t.submit}
-        </button>
+        <button type="submit" class="qx-send" id={pw('pwSubmitBtn')}>{t.submit}</button>
       </footer>
     </form>
   </div>
@@ -468,13 +546,16 @@ const chipHiddenId = (name: string) => {
 </div>
 
 <div class="pw-overlay" id={pw('pwOverlay')} data-home={homePath} aria-hidden="true">
-  <div class="pw-dialog pw-dialog--done" data-pw-dialog role="dialog" aria-modal="true" aria-labelledby={pw('pwDoneTitle')}>
+  <div class="pw-dialog pw-dialog--done pw-dialog--coupon" data-pw-dialog role="dialog" aria-modal="true" aria-labelledby={pw('pwDoneTitle')}>
     <button type="button" class="pw-dialog-dismiss" data-pw-close aria-label={t.doneClose}><i class="fas fa-times" aria-hidden="true"></i></button>
-    <div class="pw-dialog-icon" aria-hidden="true"><i class="fas fa-check"></i></div>
+    <div class="pw-dialog-icon" aria-hidden="true"><i class="fas fa-ticket-alt"></i></div>
     <h3 id={pw('pwDoneTitle')} class="pw-dialog-title">{t.doneTitle}</h3>
-    <p class="pw-dialog-text">{t.doneText}</p>
+    <p class="pw-coupon-label">{t.doneCouponLabel}</p>
+    <p class="pw-coupon-code" id={pw('pwCouponCode')}>{monthCoupon.code}</p>
+    <p class="pw-dialog-text">{doneText}</p>
     <div class="pw-dialog-cta-wrap">
-      <button type="button" class="pw-dialog-home" data-pw-close>{t.doneClose}</button>
+      <a class="pw-dialog-home pw-dialog-book" id={pw('pwBookLink')} href={bookingWithCoupon}>{t.doneBook}</a>
+      <button type="button" class="pw-dialog-close-text" data-pw-close>{t.doneClose}</button>
     </div>
   </div>
 </div>
@@ -489,11 +570,26 @@ const chipHiddenId = (name: string) => {
 
     const submitFeedback = q('pwSubmitFeedback');
     const contactError = q('pwContactError');
-    const friendNameGroup = q('friendNameGroup');
-    const friendNameInput = q<HTMLInputElement>('pwFriendName');
+    const phoneError = q('pwPhoneError');
+    const agencyFlowGroup = q('agencyFlowGroup');
+    const agencyDetailsGroup = q('agencyDetailsGroup');
+    const occupationOtherGroup = q('occupationOtherGroup');
+    const occupationOtherInput = q<HTMLInputElement>('pwOccupationOther');
+    const agencyNameInput = q<HTMLInputElement>('pwAgencyName');
+    const agencyPhoneInput = q<HTMLInputElement>('pwAgencyPhone');
     const submitBtn = q<HTMLButtonElement>('pwSubmitBtn');
+    const phoneNational = q<HTMLInputElement>('pwPhoneNational');
+    const phoneFull = q<HTMLInputElement>('pwPhone');
+    const countryInput = q<HTMLInputElement>('pwCountry');
+    const countryCodeInput = q<HTMLInputElement>('pwCountryCode');
+    const dialCodeInput = q<HTMLInputElement>('pwDialCode');
+    const dialBtn = q<HTMLButtonElement>('pwDialBtn');
+    const dialMenu = q('pwDialMenu');
+    const dialSearch = q<HTMLInputElement>('pwDialSearch');
+    const flagEl = mount.querySelector<HTMLElement>('[data-qx-flag]');
+    const codeEl = mount.querySelector<HTMLElement>('[data-qx-code]');
 
-    const chipFields = ['ageRange', 'startTimeline', 'hasFriend', 'germanLevel', 'interestedCourse', 'visaSupport'];
+    const chipFields = ['ageRange', 'occupation', 'startTimeline', 'germanLevel', 'interestedCourse'];
 
     function getHiddenInput(field: string): HTMLInputElement | null {
       return form!.querySelector<HTMLInputElement>(`input[name="${field}"]`);
@@ -504,30 +600,98 @@ const chipHiddenId = (name: string) => {
       return btn?.dataset.chipLabel || value;
     }
 
-    function switchToFirstInvalidTab() {
-      /* Tek sayfa — sekme yok; hatalı alana kaydır */
-      const invalid = form!.querySelector('.is-invalid, .qx-field-error:not([hidden])');
-      if (invalid instanceof HTMLElement) {
-        invalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+    function syncPhoneFull() {
+      if (!phoneFull || !dialCodeInput || !phoneNational) return;
+      const national = phoneNational.value.replace(/[^\d]/g, '');
+      const dial = (dialCodeInput.value || '').replace(/[^\d]/g, '');
+      phoneFull.value = national ? `+${dial}${national}` : '';
     }
 
-    function initTabLayout() {
-      form!.querySelectorAll<HTMLElement>('[data-qx-tab-panel]').forEach((panel) => {
-        panel.removeAttribute('hidden');
-        panel.setAttribute('aria-hidden', 'false');
-        panel.classList.add('is-active');
+    function setCountry(iso: string, dial: string, flag: string, name: string) {
+      if (countryCodeInput) countryCodeInput.value = iso;
+      if (dialCodeInput) dialCodeInput.value = dial;
+      if (countryInput) countryInput.value = name;
+      if (flagEl) flagEl.textContent = flag;
+      if (codeEl) codeEl.textContent = `+${dial}`;
+      syncPhoneFull();
+    }
+
+    function closeDialMenu() {
+      if (!dialMenu || !dialBtn) return;
+      dialMenu.hidden = true;
+      dialBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    function openDialMenu() {
+      if (!dialMenu || !dialBtn) return;
+      dialMenu.hidden = false;
+      dialBtn.setAttribute('aria-expanded', 'true');
+      dialSearch?.focus();
+    }
+
+    dialBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (dialMenu?.hidden) openDialMenu();
+      else closeDialMenu();
+    });
+
+    mount.querySelectorAll<HTMLButtonElement>('.qx-phone__option').forEach((opt) => {
+      opt.addEventListener('click', () => {
+        setCountry(opt.dataset.iso || '', opt.dataset.dial || '', opt.dataset.flag || '', opt.dataset.name || '');
+        closeDialMenu();
+        phoneNational?.focus();
       });
+    });
+
+    dialSearch?.addEventListener('input', () => {
+      const term = dialSearch.value.trim().toLowerCase();
+      mount.querySelectorAll<HTMLButtonElement>('.qx-phone__option').forEach((opt) => {
+        const hay = `${opt.dataset.name || ''} ${opt.dataset.iso || ''} ${opt.dataset.dial || ''}`.toLowerCase();
+        opt.hidden = term !== '' && !hay.includes(term);
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      const phoneWrap = mount.querySelector('[data-qx-phone]');
+      if (!phoneWrap || !(e.target instanceof Node) || phoneWrap.contains(e.target)) return;
+      closeDialMenu();
+    });
+
+    phoneNational?.addEventListener('input', syncPhoneFull);
+
+    // IP → otomatik bayrak (başarısız olursa varsayılan kalır)
+    const geoCtrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const geoTimer = window.setTimeout(() => geoCtrl?.abort(), 3500);
+    fetch('https://ipapi.co/json/', geoCtrl ? { signal: geoCtrl.signal } : undefined)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        const iso = String(data?.country_code || '').toUpperCase();
+        if (!iso) return;
+        const opt = mount.querySelector<HTMLButtonElement>(`.qx-phone__option[data-iso="${iso}"]`);
+        if (!opt) return;
+        setCountry(opt.dataset.iso || '', opt.dataset.dial || '', opt.dataset.flag || '', opt.dataset.name || '');
+      })
+      .catch(() => {})
+      .finally(() => window.clearTimeout(geoTimer));
+
+    function switchToFirstInvalid() {
+      const invalid = form!.querySelector('.is-invalid, .qx-field-error:not([hidden])');
+      if (invalid instanceof HTMLElement) invalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    initTabLayout();
+    form!.querySelectorAll<HTMLElement>('[data-qx-tab-panel]').forEach((panel) => {
+      panel.removeAttribute('hidden');
+      panel.setAttribute('aria-hidden', 'false');
+      panel.classList.add('is-active');
+    });
 
     function clearFieldErrors() {
       form!.querySelectorAll('.qx-field-error').forEach((el) => {
-        el.textContent = '';
-        el.hidden = true;
+        const err = el as HTMLElement;
+        err.textContent = '';
+        err.hidden = true;
       });
-      form!.querySelectorAll('.qx-choice.is-invalid, .qx-pref-row.is-invalid, .qx-field-group.is-invalid, .qx-field.is-invalid, .qx-friend.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
+      form!.querySelectorAll('.qx-choice.is-invalid, .qx-field.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
     }
 
     function showGroupError(field: string, msg: string) {
@@ -546,19 +710,53 @@ const chipHiddenId = (name: string) => {
       input?.closest('.qx-field')?.classList.add('is-invalid');
     }
 
-    function toggleFriendName(show: boolean) {
-      if (!friendNameGroup || !friendNameInput) return;
+    function setExpanded(el: HTMLElement | null, show: boolean) {
+      if (!el) return;
       if (show) {
-        friendNameGroup.removeAttribute('hidden');
-        friendNameGroup.setAttribute('aria-hidden', 'false');
-        friendNameGroup.classList.add('is-expanded');
-        friendNameInput.required = true;
+        el.removeAttribute('hidden');
+        el.setAttribute('aria-hidden', 'false');
+        el.classList.add('is-expanded');
       } else {
-        friendNameGroup.setAttribute('hidden', '');
-        friendNameGroup.setAttribute('aria-hidden', 'true');
-        friendNameGroup.classList.remove('is-expanded', 'is-invalid');
-        friendNameInput.required = false;
-        friendNameInput.value = '';
+        el.setAttribute('hidden', '');
+        el.setAttribute('aria-hidden', 'true');
+        el.classList.remove('is-expanded', 'is-invalid');
+      }
+    }
+
+    function clearChipField(field: string) {
+      const hidden = getHiddenInput(field);
+      if (hidden) hidden.value = '';
+      form!.querySelectorAll(`[data-chip-field="${field}"]`).forEach((b) => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+    }
+
+    function toggleOccupationOther(show: boolean) {
+      setExpanded(occupationOtherGroup, show);
+      if (occupationOtherInput) {
+        occupationOtherInput.required = show;
+        if (!show) occupationOtherInput.value = '';
+      }
+    }
+
+    function toggleAgencyDetails(show: boolean) {
+      setExpanded(agencyDetailsGroup, show);
+      if (agencyNameInput) {
+        agencyNameInput.required = show;
+        if (!show) agencyNameInput.value = '';
+      }
+      if (agencyPhoneInput) {
+        agencyPhoneInput.required = show;
+        if (!show) agencyPhoneInput.value = '';
+      }
+    }
+
+    function toggleAgencyFlow(show: boolean) {
+      setExpanded(agencyFlowGroup, show);
+      if (!show) {
+        clearChipField('withAgency');
+        toggleAgencyDetails(false);
       }
     }
 
@@ -585,23 +783,18 @@ const chipHiddenId = (name: string) => {
           err.textContent = '';
         }
 
-        if (field === 'hasFriend') {
-          toggleFriendName(value === 'yes');
-        }
+        if (field === 'occupation') toggleOccupationOther(value === 'other');
+        if (field === 'startTimeline') toggleAgencyFlow(value === 'after-visa');
+        if (field === 'withAgency') toggleAgencyDetails(value === 'yes');
       });
     });
 
     function resetForm() {
       form!.reset();
-      chipFields.forEach((field) => {
-        const hidden = getHiddenInput(field);
-        if (hidden) hidden.value = '';
-        form!.querySelectorAll(`[data-chip-field="${field}"]`).forEach((b) => {
-          b.classList.remove('is-active');
-          b.setAttribute('aria-pressed', 'false');
-        });
-      });
-      toggleFriendName(false);
+      [...chipFields, 'withAgency'].forEach(clearChipField);
+      toggleOccupationOther(false);
+      toggleAgencyFlow(false);
+      syncPhoneFull();
       clearFieldErrors();
       if (submitFeedback) {
         submitFeedback.textContent = '';
@@ -610,9 +803,7 @@ const chipHiddenId = (name: string) => {
     }
 
     if (form.dataset.modalMode === 'true') {
-      window.addEventListener('campus-quote-modal-close', () => {
-        resetForm();
-      });
+      window.addEventListener('campus-quote-modal-close', () => resetForm());
     }
 
     const overlay = q('pwOverlay');
@@ -624,58 +815,56 @@ const chipHiddenId = (name: string) => {
       overlay.setAttribute('aria-hidden', 'false');
     }
 
-    function dismissToHome() {
+    function dismissOverlay() {
       if (form!.dataset.modalMode === 'true') {
-        window.closeCampusQuoteModal?.();
+        (window as Window & { closeCampusQuoteModal?: () => void }).closeCampusQuoteModal?.();
         return;
       }
-      let target = (overlay?.dataset.home || '/').trim();
-      if (!target.startsWith('/')) target = `/${target}`;
-      if (target.length > 1 && target.endsWith('/')) target = target.slice(0, -1);
-      window.location.href = target;
+      overlay?.classList.remove('is-open');
+      overlay?.setAttribute('aria-hidden', 'true');
     }
 
-    mount.querySelectorAll<HTMLButtonElement>('[data-pw-close]').forEach((btn) =>
-      btn.addEventListener('click', dismissToHome),
+    mount.querySelectorAll<HTMLElement>('[data-pw-close]').forEach((btn) =>
+      btn.addEventListener('click', dismissOverlay),
     );
     overlay?.addEventListener('click', (e) => {
-      if (e.target === overlay) dismissToHome();
+      if (e.target === overlay) dismissOverlay();
     });
 
     const DEFAULT_MAKE_WEBHOOK = 'https://hook.eu2.make.com/40s1h4a3wra21aszpa9y9erfsfooso47';
 
     function validateForm(): boolean {
       clearFieldErrors();
-      const valRequired = form!.dataset.valRequired || 'Please fill in all required fields.';
-      const valContact = form!.dataset.valContact || 'Please enter email or phone.';
-      const valEmail = form!.dataset.valEmail || 'Please enter a valid email address.';
+      const valRequired = form!.dataset.valRequired || 'Required';
+      const valContact = form!.dataset.valContact || 'Contact required';
+      const valEmail = form!.dataset.valEmail || 'Invalid email';
+      const valPhone = form!.dataset.valPhone || 'Phone required';
       let valid = true;
 
       const fullName = (form!.querySelector<HTMLInputElement>('input[name="fullName"]')?.value || '').trim();
-      const occupation = (form!.querySelector<HTMLInputElement>('input[name="occupation"]')?.value || '').trim();
-      const country = (form!.querySelector<HTMLInputElement>('input[name="country"]')?.value || '').trim();
-      const agencyName = (form!.querySelector<HTMLInputElement>('input[name="agencyName"]')?.value || '').trim();
       const email = (form!.querySelector<HTMLInputElement>('input[name="email"]')?.value || '').trim();
-      const phone = (form!.querySelector<HTMLInputElement>('input[name="phone"]')?.value || '').trim();
-      const hasFriend = getHiddenInput('hasFriend')?.value || '';
-      const friendName = (friendNameInput?.value || '').trim();
+      syncPhoneFull();
+      const phone = (phoneFull?.value || '').trim();
+      const startTimeline = getHiddenInput('startTimeline')?.value || '';
+      const withAgency = getHiddenInput('withAgency')?.value || '';
+      const occupation = getHiddenInput('occupation')?.value || '';
 
       if (!fullName) { markTextFieldInvalid('fullName'); valid = false; }
-      if (!occupation) { markTextFieldInvalid('occupation'); valid = false; }
-      if (!country) { markTextFieldInvalid('country'); valid = false; }
-      if (!agencyName) { markTextFieldInvalid('agencyName'); valid = false; }
 
-      chipFields.forEach((field) => {
-        const hidden = getHiddenInput(field);
-        if (!hidden?.value.trim()) {
-          showGroupError(field, valRequired);
-          valid = false;
-        }
-      });
-
-      if (hasFriend === 'yes' && !friendName) {
+      // Tercih chip'leri opsiyonel; seçildiyse "Diğer" / ajans akışı şartları geçerli
+      if (occupation === 'other' && !(occupationOtherInput?.value || '').trim()) {
+        markTextFieldInvalid('occupationOther');
         valid = false;
-        friendNameGroup?.classList.add('is-invalid');
+      }
+
+      if (startTimeline === 'after-visa') {
+        if (!withAgency) {
+          showGroupError('withAgency', valRequired);
+          valid = false;
+        } else if (withAgency === 'yes') {
+          if (!(agencyNameInput?.value || '').trim()) { markTextFieldInvalid('agencyName'); valid = false; }
+          if (!(agencyPhoneInput?.value || '').trim()) { markTextFieldInvalid('agencyPhone'); valid = false; }
+        }
       }
 
       if (!email && !phone) {
@@ -684,15 +873,25 @@ const chipHiddenId = (name: string) => {
           contactError.textContent = valContact;
           contactError.hidden = false;
         }
-      } else if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        valid = false;
-        if (contactError) {
-          contactError.textContent = valEmail;
-          contactError.hidden = false;
+      } else {
+        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          valid = false;
+          if (contactError) {
+            contactError.textContent = valEmail;
+            contactError.hidden = false;
+          }
+        }
+        if (!phone) {
+          valid = false;
+          if (phoneError) {
+            phoneError.textContent = valPhone;
+            phoneError.hidden = false;
+          }
+          phoneNational?.closest('.qx-field')?.classList.add('is-invalid');
         }
       }
 
-      if (!valid) switchToFirstInvalidTab();
+      if (!valid) switchToFirstInvalid();
       return valid;
     }
 
@@ -700,9 +899,7 @@ const chipHiddenId = (name: string) => {
       e.preventDefault();
       if (!validateForm()) {
         const msg = form!.dataset.valRequired || form!.dataset.error || 'Error';
-        if ((window as unknown as { showSuccessModal?: (t: string, m: string) => void }).showSuccessModal) {
-          (window as unknown as { showSuccessModal: (t: string, m: string) => void }).showSuccessModal('error', msg);
-        }
+        (window as unknown as { showSuccessModal?: (t: string, m: string) => void }).showSuccessModal?.('error', msg);
         return;
       }
 
@@ -716,40 +913,58 @@ const chipHiddenId = (name: string) => {
         submitBtn.textContent = form!.dataset.sending || 'Sending...';
       }
 
+      syncPhoneFull();
       const fd = new FormData(form!);
       const data = Object.fromEntries(fd.entries()) as Record<string, string>;
 
       const ageRange = String(data.ageRange || '').trim();
+      const occupation = String(data.occupation || '').trim();
       const startTimeline = String(data.startTimeline || '').trim();
       const germanLevel = String(data.germanLevel || '').trim();
       const interestedCourse = String(data.interestedCourse || '').trim();
-      const visaSupport = String(data.visaSupport || '').trim();
-      const hasFriendVal = String(data.hasFriend || '').trim();
+      const withAgency = String(data.withAgency || '').trim();
+      const agencyYes = startTimeline === 'after-visa' && withAgency === 'yes';
+      const occupationLabel =
+        occupation === 'other'
+          ? String(data.occupationOther || '').trim() || getChipLabel('occupation', occupation)
+          : getChipLabel('occupation', occupation);
 
       const payload = {
         formType: 'price-quote',
-        formVersion: 'compact-v1',
+        formVersion: 'vertical-v3',
         lang: String(data.lang || '').trim(),
         sourcePage: String(data.sourcePage || '').trim() || window.location.pathname,
         submittedAt: new Date().toISOString(),
+        coupon: {
+          code: String(data.couponCode || mount.dataset.couponCode || '').trim(),
+          monthKey: String(data.couponMonth || mount.dataset.couponMonth || '').trim(),
+        },
         customer: {
           fullName: String(data.fullName || '').trim(),
           email: String(data.email || '').trim(),
           phone: String(data.phone || '').trim(),
+          dialCode: String(data.dialCode || '').trim(),
+          countryCode: String(data.countryCode || '').trim(),
+          country: String(data.country || '').trim(),
           ageRange,
           ageRangeLabel: getChipLabel('ageRange', ageRange),
-          occupation: String(data.occupation || '').trim(),
-          country: String(data.country || '').trim(),
+          occupation,
+          occupationLabel,
+          occupationOther: occupation === 'other' ? String(data.occupationOther || '').trim() : '',
           startTimeline,
           startTimelineLabel: getChipLabel('startTimeline', startTimeline),
-          hasFriend: hasFriendVal,
-          friendName: hasFriendVal === 'yes' ? String(data.friendName || '').trim() : '',
           germanLevel,
           germanLevelLabel: getChipLabel('germanLevel', germanLevel),
           interestedCourse,
           interestedCourseLabel: getChipLabel('interestedCourse', interestedCourse),
-          visaSupportNeeded: visaSupport,
-          agencyName: String(data.agencyName || '').trim(),
+          withAgency: startTimeline === 'after-visa' ? withAgency : '',
+          withAgencyLabel:
+            startTimeline === 'after-visa' && withAgency ? getChipLabel('withAgency', withAgency) : '',
+          agencyName: agencyYes ? String(data.agencyName || '').trim() : '',
+          agencyPhone: agencyYes ? String(data.agencyPhone || '').trim() : '',
+          hasFriend: '',
+          friendName: '',
+          visaSupportNeeded: '',
         },
       };
 
@@ -773,11 +988,7 @@ const chipHiddenId = (name: string) => {
           submitFeedback.textContent = msg;
           submitFeedback.classList.add('is-error');
         }
-        if ((window as unknown as { showSuccessModal?: (t: string, m: string) => void }).showSuccessModal) {
-          (window as unknown as { showSuccessModal: (t: string, m: string) => void }).showSuccessModal('error', msg);
-        } else {
-          alert(msg);
-        }
+        (window as unknown as { showSuccessModal?: (t: string, m: string) => void }).showSuccessModal?.('error', msg);
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
