@@ -53,11 +53,12 @@ $ch = curl_init($target);
 curl_setopt_array($ch, [
     CURLOPT_POST => true,
     CURLOPT_POSTFIELDS => $raw,
-    CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+    CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'Accept: application/json'],
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_FOLLOWLOCATION => false,
     CURLOPT_HEADER => true,
     CURLOPT_TIMEOUT => 60,
+    CURLOPT_ENCODING => '',
 ]);
 
 $response = curl_exec($ch);
@@ -76,6 +77,7 @@ if ($errno !== 0 || !is_string($response)) {
 
 $checkoutUrl = '';
 $clientSecret = '';
+$checkoutError = '';
 
 if (preg_match('/^location:\s*(.+)$/im', $response, $matches)) {
     $checkoutUrl = trim($matches[1]);
@@ -83,24 +85,34 @@ if (preg_match('/^location:\s*(.+)$/im', $response, $matches)) {
 
 $parts = preg_split("/\r\n\r\n|\n\n/", $response, 2);
 $body = isset($parts[1]) ? trim($parts[1]) : '';
-if ($body !== '' && ($httpCode === 200 || $httpCode === 201 || $clientSecret === '')) {
-    $json = json_decode($body, true);
-    if (is_array($json)) {
-        if ($checkoutUrl === '') {
-            $checkoutUrl = (string) ($json['checkoutUrl'] ?? $json['checkout_url'] ?? '');
-        }
-        $clientSecret = (string) (
-            $json['clientSecret']
-            ?? $json['client_secret']
-            ?? ''
-        );
-        if ($publishableKey === '' && !empty($json['publishableKey'])) {
-            $publishableKey = trim((string) $json['publishableKey']);
-        }
-        if ($publishableKey === '' && !empty($json['publishable_key'])) {
-            $publishableKey = trim((string) $json['publishable_key']);
-        }
+$json = null;
+if ($body !== '') {
+    $decoded = json_decode($body, true);
+    if (is_array($decoded)) {
+        $json = $decoded;
     }
+}
+
+if (is_array($json)) {
+    if ($checkoutUrl === '') {
+        $checkoutUrl = (string) ($json['checkoutUrl'] ?? $json['checkout_url'] ?? '');
+    }
+    $clientSecret = trim((string) (
+        $json['clientSecret']
+        ?? $json['client_secret']
+        ?? ''
+    ));
+    $checkoutError = trim((string) ($json['checkoutError'] ?? $json['checkout_error'] ?? ''));
+    if ($publishableKey === '' && !empty($json['publishableKey'])) {
+        $publishableKey = trim((string) $json['publishableKey']);
+    }
+    if ($publishableKey === '' && !empty($json['publishable_key'])) {
+        $publishableKey = trim((string) $json['publishable_key']);
+    }
+}
+
+if ($clientSecret === '' && preg_match('/"(?:clientSecret|client_secret)"\s*:\s*"(cs_[^"\\\\]+)"/', $body, $secretMatch)) {
+    $clientSecret = $secretMatch[1];
 }
 
 $out = ['ok' => true];
@@ -126,8 +138,11 @@ if ($checkoutUrl !== '' && stripos($checkoutUrl, 'checkout.stripe.com') !== fals
 
 http_response_code(502);
 echo json_encode([
-    'error' => 'Stripe clientSecret veya checkout URL alınamadı',
+    'error' => $checkoutError !== ''
+        ? $checkoutError
+        : 'Stripe clientSecret veya checkout URL alınamadı',
+    'checkoutError' => $checkoutError !== '' ? $checkoutError : null,
     'upstreamStatus' => $httpCode,
     'detail' => mb_substr($body, 0, 300),
-    'hint' => 'Make webhook yanıtı clientSecret dönmeli. Düz "Accepted" veya ok:true yetmez. Router’da paymentChoice=pay_now VE reservation kolları Webhook response ile clientSecret vermeli.',
+    'hint' => 'Make webhook yanıtı clientSecret dönmeli. Düz "Accepted" veya ok:true yetmez. paymentChoice=reservation kolu Webhook response ile CRM’deki clientSecret’i geri vermeli.',
 ], JSON_UNESCAPED_UNICODE);

@@ -1,0 +1,21 @@
+---
+export async function getStaticPaths() {
+    return [{ params: { lang: 'tr' } }, { params: { lang: 'de' } }, { params: { lang: 'en' } }, { params: { lang: 'es' } }];
+}
+
+const { lang } = Astro.params;
+const target = `/${lang}/buchung`;
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={target} />
+    <title>Kurs Rezervasyonu</title>
+</head>
+<body>
+    <p><a href={target}>Rezervasyon formuna geç</a></p>
+</body>
+</html>
