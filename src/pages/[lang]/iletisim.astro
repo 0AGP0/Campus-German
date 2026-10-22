@@ -1,7 +1,8 @@
-﻿---
+---
 import MainLayout from '../../layouts/MainLayout.astro';
 import BilgiAlForm from '../../components/BilgiAlForm.astro';
 import ContactOfficeCard from '../../components/ContactOfficeCard.astro';
+import PersonalHelpCarousel from '../../components/PersonalHelpCarousel.astro';
 import '../../styles/pages/kontakt.css';
 
 export async function getStaticPaths() {
@@ -44,6 +45,7 @@ const t = {
                 <div class="contact-main__grid">
                     <aside class="contact-aside">
                         <ContactOfficeCard lang={lang!} mapLinkUrl={MAP_LINK_URL} />
+                        <PersonalHelpCarousel lang={lang!} class="contact-help" />
 
                         <div class="contact-social">
                             <p class="contact-social__title">{t.socialTitle}</p>

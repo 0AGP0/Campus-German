@@ -1275,7 +1275,8 @@ function getAvatarColor(name: string): string {
 }
 ---
 
-<MainLayout title={translations.title} lang={lang} visitPopupHomeScroll={true}>
+<!-- visitPopupHomeScroll kapalı: ana sayfa kurs popup’ı revizyonla kaldırıldı (geri açmak için true) -->
+<MainLayout title={translations.title} lang={lang} visitPopupHomeScroll={false}>
     <div class="page-sky-wallpaper" aria-hidden="true"></div>
     <!-- Hero Section -->
     <section class="hero-section">
@@ -2150,18 +2151,11 @@ function getAvatarColor(name: string): string {
         </div>
     </section>
 
-    <button type="button" class="visit-popup-fab" id="visit-popup-fab" aria-label={translations.visitPopupFabAria}>
-        <span class="visit-popup-fab__mark" aria-hidden="true">?</span>
-    </button>
 </MainLayout>
 
 <script>
     // Wait for DOM to be ready
     document.addEventListener('DOMContentLoaded', function() {
-
-    document.getElementById('visit-popup-fab')?.addEventListener('click', function () {
-        if (typeof window.openVisitPopup === 'function') window.openVisitPopup();
-    });
 
     // Neden Campus German – mobilde carousel (önceki/sonraki)
     (function() {
