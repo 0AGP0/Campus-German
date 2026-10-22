@@ -69,3 +69,17 @@ build/
 # package-lock.json
 # yarn.lock
 # pnpm-lock.yaml
+
+# Yerel / geçici — repoda olmasın
+.cursor/
+.playwright-mcp/
+backup-booking-form/
+revizyon-notu/
+design-examples/
+Tek sayfalar/
+docs/
+Campus-German-Revizyon-Once-Sonra.html
+campusgerman-public_html.zip
+booking-form-*.pdf
+*.docx
+german_wallpaper.png

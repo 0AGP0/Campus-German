@@ -1,9 +1,0 @@
----
-description: 
-alwaysApply: true
----
-
-- Terminal üzerinden silme komutları kullanma (ör. `rm`, `del`, `Remove-Item`).
-- Bir dosya silinecekse yalnızca dosya aracıyla ve tek tek sil.
-- Toplu/wildcard silme yapma.
-- Silmeden önce hedef dosya adını net doğrula.
