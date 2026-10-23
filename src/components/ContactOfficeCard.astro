@@ -13,14 +13,15 @@ const OFFICE = {
   company: 'Campus German Sprachschule GmbH',
   address: 'Bürgermeister Smidt Str. 80, 28195 Bremen, Germany',
   email: 'info@campusgerman.com',
-  waBremen: '+49 163 692 7842',
-  waBremenHref: 'https://wa.me/491636927842',
+  /** Bremen ofis sabit hattı (eski WA +49 163 692 7842 kaldırıldı) */
+  waBremen: '+49 421 4851 7985',
+  waBremenHref: 'tel:+4942148517985',
   waIntl: '+49 1520 3823792',
   waIntlHref: 'https://wa.me/4915203823792',
 };
 
-const BREMEN_FLAGS = ['de', 'gb'] as const;
-const INTL_FLAGS = ['gb', 'fr', 'es', 'pt', 'tr', 'uz', 'cn', 'kr'] as const;
+const BREMEN_LANGS = ['DE', 'EN'] as const;
+const INTL_LANGS = ['EN', 'FR', 'ES', 'PT', 'TR', 'UZ', 'CN', 'KR'] as const;
 
 const copy = {
   tr: {
@@ -90,20 +91,18 @@ const copy = {
 } as const;
 
 const t = copy[(lang as keyof typeof copy) || 'en'] || copy.en;
-
-const FLAG = (iso: string) => `https://flagcdn.com/w40/${iso}.png`;
 ---
 
 <div class="contact-card contact-card--office">
   <header class="office-head">
-    <div class="office-head__flag" aria-hidden="true">
-      <img src={FLAG('de')} alt="" width="40" height="28" loading="lazy" decoding="async" />
+    <div class="office-head__flag office-head__flag--mark" aria-hidden="true">
+      <img src="/German_mark.webp" alt="" width="40" height="40" loading="lazy" decoding="async" />
     </div>
     <div class="office-head__copy">
       <span class="office-head__badge">{t.officeBadge}</span>
       <h2 class="office-head__company">{OFFICE.company}</h2>
       <p class="office-head__city">
-        <img class="office-head__pin-flag" src={FLAG('de')} alt="" width="18" height="12" loading="lazy" decoding="async" aria-hidden="true" />
+        <img class="office-head__pin-flag" src="https://flagcdn.com/de.svg" alt="" width="18" height="12" loading="lazy" decoding="async" aria-hidden="true" />
         {t.city}
       </p>
     </div>
@@ -134,17 +133,17 @@ const FLAG = (iso: string) => `https://flagcdn.com/w40/${iso}.png`;
       </p>
 
       <div class="office-wa-list">
-        <a class="office-wa office-wa--de" href={OFFICE.waBremenHref} target="_blank" rel="noopener noreferrer">
+        <a class="office-wa office-wa--de" href={OFFICE.waBremenHref}>
           <div class="office-wa__head">
             <span class="office-wa__title">{t.waBremenLabel}</span>
-            <span class="office-wa__flags" aria-hidden="true">
-              {BREMEN_FLAGS.map((iso) => (
-                <img src={FLAG(iso)} alt="" width="24" height="16" loading="lazy" decoding="async" />
+            <span class="office-wa__langs" aria-hidden="true">
+              {BREMEN_LANGS.map((code) => (
+                <span class="office-wa__lang">{code}</span>
               ))}
             </span>
           </div>
           <span class="office-wa__link">
-            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+            <i class="fas fa-phone" aria-hidden="true"></i>
             <span class="office-wa__num">{OFFICE.waBremen}</span>
           </span>
         </a>
@@ -152,9 +151,9 @@ const FLAG = (iso: string) => `https://flagcdn.com/w40/${iso}.png`;
         <a class="office-wa office-wa--intl" href={OFFICE.waIntlHref} target="_blank" rel="noopener noreferrer">
           <div class="office-wa__head office-wa__head--stack">
             <span class="office-wa__title">{t.waIntlLabel}</span>
-            <span class="office-wa__flags office-wa__flags--row" aria-hidden="true">
-              {INTL_FLAGS.map((iso) => (
-                <img src={FLAG(iso)} alt="" width="24" height="16" loading="lazy" decoding="async" />
+            <span class="office-wa__langs office-wa__langs--row" aria-hidden="true">
+              {INTL_LANGS.map((code) => (
+                <span class="office-wa__lang">{code}</span>
               ))}
             </span>
           </div>

@@ -1,7 +1,9 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import PersonalHelpCarousel from '../../components/PersonalHelpCarousel.astro';
 import { getFirstMondayStartDateOptions } from '../../utils/coursePricingHelper';
 import { bookingFormCopy } from '../../data/bookingFormCopy';
+import { formatCampaignUrgency, getBookingCampaign } from '../../data/bookingCoupons';
 
 export async function getStaticPaths() {
     return [{ params: { lang: 'tr' } }, { params: { lang: 'de' } }, { params: { lang: 'en' } }, { params: { lang: 'es' } }];
@@ -11,6 +13,11 @@ const { lang } = Astro.params;
 const pageLang = lang === 'de' || lang === 'en' || lang === 'es' ? lang : 'tr';
 const copy = bookingFormCopy[pageLang];
 const startDates = getFirstMondayStartDateOptions(pageLang, 8);
+const campaign = getBookingCampaign();
+const campaignActive = campaign.active;
+const campaignDiscountEur = campaign.discountEur;
+const campaignLabel = campaign.label;
+const campaignUrgency = formatCampaignUrgency(campaign.daysLeft, copy);
 ---
 
 <MainLayout title={copy.pageTitle} lang={lang}>
@@ -19,8 +26,11 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
             <div class="bkx-bar" id="step-bar-wrap" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" aria-label={`${copy.step} 1 / 6`}>
                 <span id="step-bar"></span>
             </div>
-
+            <div class="bkx-shell">
             <div class="bkx-card">
+                <button type="button" class="bkx-back" id="bkx-back" hidden aria-label={copy.btnBack}>
+                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </button>
                 <form id="booking-form" data-lang={pageLang} data-pay-proxy="/booking-pay-proxy.php" onsubmit="return false">
                     <div class="bkx-screen is-on" data-screen="program">
                         <h2>{copy.hProgram}</h2>
@@ -30,59 +40,159 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
                     </div>
 
                     <div class="bkx-screen" data-screen="level">
-                        <h2>{copy.hLevel}</h2>
-                        <p class="bkx-hook" id="level-lead">{copy.levelHook}</p>
-                        <p class="bkx-thin">{copy.levelThin}</p>
+                        <div class="bkx-level-head">
+                            <div class="bkx-title-row">
+                                <div class="bkx-back-mount"></div>
+                                <div class="bkx-title-row__text">
+                                    <h2>{copy.hLevel}</h2>
+                                    <p class="bkx-thin">{copy.levelThin}</p>
+                                </div>
+                            </div>
+                            <p class="bkx-hook" id="level-lead">{copy.levelHook}</p>
+                        </div>
                         <div class="bkx-scale" id="level-grid"></div>
+                        <PersonalHelpCarousel lang={pageLang} class="bkx-help" />
                         <button type="button" class="bkx-next" id="go-level" disabled>{copy.btnPickPack}</button>
                     </div>
 
                     <div class="bkx-screen" data-screen="examlevel">
-                        <h2>{copy.hExam}</h2>
-                        <p class="bkx-lead">{copy.leadExam}</p>
+                        <div class="bkx-title-row">
+                            <div class="bkx-back-mount"></div>
+                            <div class="bkx-title-row__text">
+                                <h2>{copy.hExam}</h2>
+                                <p class="bkx-lead">{copy.leadExam}</p>
+                            </div>
+                        </div>
                         <div class="bkx-exams" id="exam-grid"></div>
                         <button type="button" class="bkx-next" id="go-exam" disabled>{copy.btnPickPack}</button>
                     </div>
 
                     <div class="bkx-screen" data-screen="packages">
-                        <h2>{copy.hPackage}</h2>
-                        <p class="bkx-lead" id="pkg-lead">{copy.leadLevel}</p>
+                        <div class="bkx-pkg-head">
+                            <div class="bkx-pkg-head__left">
+                                <div class="bkx-back-mount"></div>
+                                <div class="bkx-pkg-head__titles">
+                                    <h2>{copy.hPackage}</h2>
+                                    <p class="bkx-lead" id="pkg-lead">{copy.leadLevel}</p>
+                                </div>
+                            </div>
+                            {campaignActive && (
+                                <aside class="bkx-coupon-chip" id="pkg-coupon" aria-label={copy.couponTitle}>
+                                    <div class="bkx-coupon-chip__idle">
+                                        <span class="bkx-coupon-chip__offer">
+                                            <span class="bkx-coupon-chip__amt">−{campaignDiscountEur}&nbsp;€</span>
+                                            {campaignUrgency && (
+                                                <span class="bkx-coupon-chip__urgency">
+                                                    <i class="fas fa-clock" aria-hidden="true"></i>
+                                                    {campaignUrgency}
+                                                </span>
+                                            )}
+                                        </span>
+                                        <span class="bkx-coupon-chip__meta">
+                                            <span class="bkx-coupon-chip__tag">{copy.couponTag}</span>
+                                            <span class="bkx-coupon-chip__title">{copy.couponTitle}</span>
+                                        </span>
+                                        <button type="button" class="bkx-coupon-chip__btn" id="pkg-coupon-apply">{copy.couponApply}</button>
+                                    </div>
+                                    <div class="bkx-coupon-chip__done" hidden>
+                                        <span class="bkx-coupon-chip__offer">
+                                            <span class="bkx-coupon-chip__amt">−{campaignDiscountEur}&nbsp;€</span>
+                                            {campaignUrgency && (
+                                                <span class="bkx-coupon-chip__urgency">
+                                                    <i class="fas fa-clock" aria-hidden="true"></i>
+                                                    {campaignUrgency}
+                                                </span>
+                                            )}
+                                        </span>
+                                        <span class="bkx-coupon-chip__meta">
+                                            <span class="bkx-coupon-chip__tag-row">
+                                                <span class="bkx-coupon-chip__tag">{copy.couponTag}</span>
+                                                <span class="bkx-coupon-chip__badge">
+                                                    <i class="fas fa-check" aria-hidden="true"></i>
+                                                    {copy.couponAppliedBadge}
+                                                </span>
+                                            </span>
+                                            <span class="bkx-coupon-chip__title">{copy.couponTitle}</span>
+                                        </span>
+                                        <button type="button" class="bkx-coupon-chip__btn bkx-coupon-chip__btn--remove" id="pkg-coupon-remove">{copy.couponRemove}</button>
+                                    </div>
+                                </aside>
+                            )}
+                        </div>
                         <div class="bkx-pkgs" id="pack-grid"></div>
                     </div>
 
                     <div class="bkx-screen" data-screen="exampack">
-                        <h2>{copy.hExamPack}</h2>
-                        <p class="bkx-lead">{copy.leadExamPack}</p>
+                        <div class="bkx-title-row">
+                            <div class="bkx-back-mount"></div>
+                            <div class="bkx-title-row__text">
+                                <h2>{copy.hExamPack}</h2>
+                                <p class="bkx-lead">{copy.leadExamPack}</p>
+                            </div>
+                        </div>
                         <div class="bkx-pkgs" id="exampack-grid"></div>
                         <button type="button" class="bkx-next" id="go-exampack" disabled>{copy.btnExtras}</button>
                     </div>
 
                     <div class="bkx-screen" data-screen="special">
-                        <h2>{copy.hSpecial}</h2>
+                        <div class="bkx-title-row">
+                            <div class="bkx-back-mount"></div>
+                            <h2>{copy.hSpecial}</h2>
+                        </div>
                         <div class="bkx-spec" id="special-grid"></div>
                     </div>
 
                     <div class="bkx-screen" data-screen="extras">
-                        <h2>{copy.hExtras}</h2>
-                        <p class="bkx-lead">{copy.leadExtras}</p>
-                        <div class="bkx-field">
-                            <span class="bkx-field__row">
-                                <span>{copy.startLabel}</span>
-                                <button type="button" class="bkx-info" data-info-title={copy.startLabel} data-info-desc={copy.startInfo} aria-label={copy.info}><i class="fas fa-info"></i></button>
-                            </span>
-                            <select id="start-date">
-                                {startDates.map((d) => <option value={d.value}>{d.label}</option>)}
-                            </select>
-                        </div>
-                        <fieldset class="bkx-cert">
-                            <legend>{copy.certAsk}</legend>
-                            <div class="bkx-cert__choice">
-                                <label><input type="radio" name="cert" value="no" checked /> {copy.certNo}</label>
-                                <label><input type="radio" name="cert" value="yes" /> {copy.certYes}</label>
+                        <div class="bkx-title-row">
+                            <div class="bkx-back-mount"></div>
+                            <div class="bkx-title-row__text">
+                                <h2>{copy.hExtras}</h2>
+                                <p class="bkx-lead">{copy.leadExtras}</p>
                             </div>
-                            <div id="cert-exams" hidden></div>
-                            <p class="bkx-course-line" id="course-line"></p>
-                        </fieldset>
+                        </div>
+
+                        <div class="bkx-extras-pair">
+                            <section class="bkx-panel" aria-labelledby="bkx-start-heading">
+                                <div class="bkx-panel__head">
+                                    <span class="bkx-panel__icon" aria-hidden="true"><i class="fas fa-calendar-alt"></i></span>
+                                    <div class="bkx-panel__titles">
+                                        <h3 id="bkx-start-heading">{copy.startLabel}</h3>
+                                    </div>
+                                    <button type="button" class="bkx-info" data-info-title={copy.startLabel} data-info-desc={copy.startInfo} aria-label={copy.info}><i class="fas fa-info"></i></button>
+                                </div>
+                                <label class="bkx-sr-only" for="start-date">{copy.startLabel}</label>
+                                <select id="start-date" class="bkx-select">
+                                    {startDates.map((d) => <option value={d.value}>{d.label}</option>)}
+                                </select>
+                            </section>
+
+                            <section class="bkx-panel" aria-labelledby="bkx-cert-heading">
+                                <div class="bkx-panel__head">
+                                    <span class="bkx-panel__icon bkx-panel__icon--amber" aria-hidden="true"><i class="fas fa-certificate"></i></span>
+                                    <div class="bkx-panel__titles">
+                                        <h3 id="bkx-cert-heading">{copy.certAsk}</h3>
+                                        <p class="bkx-course-line" id="course-line"></p>
+                                    </div>
+                                </div>
+                                <fieldset class="bkx-cert">
+                                    <legend class="bkx-sr-only">{copy.certAsk}</legend>
+                                    <div class="bkx-cert__choice">
+                                        <label class="bkx-cert__opt">
+                                            <input type="radio" name="cert" value="no" checked />
+                                            <span class="bkx-cert__mark" aria-hidden="true"><i class="fas fa-times"></i></span>
+                                            <span>{copy.certNo}</span>
+                                        </label>
+                                        <label class="bkx-cert__opt">
+                                            <input type="radio" name="cert" value="yes" />
+                                            <span class="bkx-cert__mark" aria-hidden="true"><i class="fas fa-check"></i></span>
+                                            <span>{copy.certYes}</span>
+                                        </label>
+                                        <div id="cert-exams" hidden></div>
+                                    </div>
+                                </fieldset>
+                            </section>
+                        </div>
+
                         <div id="stay-wrap">
                             <div class="bkx-svcs" id="stay-grid"></div>
                             <p class="bkx-warn" id="acc-warn" hidden>{copy.accWarn}</p>
@@ -91,17 +201,37 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
                     </div>
 
                     <div class="bkx-screen" data-screen="summary">
-                        <h2>{copy.hSummary}</h2>
-                        <p class="bkx-lead">{copy.leadSummary}</p>
+                        <div class="bkx-title-row">
+                            <div class="bkx-back-mount"></div>
+                            <div class="bkx-title-row__text">
+                                <h2>{copy.hSummary}</h2>
+                                <p class="bkx-lead">{copy.leadSummary}</p>
+                            </div>
+                        </div>
                         <div class="bkx-summary" id="summary-box"></div>
                         <button type="button" class="bkx-next" id="go-summary">{copy.payGo}</button>
                     </div>
 
                     <div class="bkx-screen" data-screen="stripe">
-                        <h2>{copy.hPay}</h2>
-                        <p class="bkx-lead" id="pay-status">{copy.payPreparing}</p>
+                        <div class="bkx-title-row">
+                            <div class="bkx-back-mount"></div>
+                            <div class="bkx-title-row__text">
+                                <h2>{copy.hPay}</h2>
+                                <p class="bkx-lead" id="pay-status">{copy.payPreparing}</p>
+                            </div>
+                        </div>
                         <p class="bkx-pay-error" id="pay-error" hidden></p>
-                        <div id="stripe-embed-mount"></div>
+                        <div class="bkx-pay-stage" id="pay-stage">
+                            <div id="pay-loader" class="bkx-pay-loader" hidden>
+                                <div class="bkx-pay-bar" aria-hidden="true"><span id="pay-bar-fill"></span></div>
+                                <ul class="bkx-pay-checks" id="pay-checks">
+                                    <li data-pay-step="0">{copy.payCheck1}</li>
+                                    <li data-pay-step="1">{copy.payCheck2}</li>
+                                    <li data-pay-step="2">{copy.payCheck3}</li>
+                                </ul>
+                            </div>
+                            <div id="stripe-embed-mount"></div>
+                        </div>
                     </div>
 
                     <div class="bkx-screen" data-screen="thanks">
@@ -116,6 +246,7 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
                         </div>
                     </div>
                 </form>
+            </div>
             </div>
         </div>
     </section>
@@ -137,7 +268,7 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
     }
     .bkx {
         width: min(760px, 100%);
-        margin: 0 auto;
+        margin-inline: auto;
     }
     .bkx-bar {
         height: 6px;
@@ -154,12 +285,75 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
         border-radius: inherit;
         transition: width 0.25s ease;
     }
+    /* Icon-only back chevron — absolute in mount so it does not shift the h2 */
+    .bkx-title-row,
+    .bkx-pkg-head__left {
+        position: relative;
+    }
+    .bkx-title-row:has(.bkx-back:not([hidden])),
+    .bkx-pkg-head__left:has(.bkx-back:not([hidden])) {
+        padding-left: 32px;
+    }
+    .bkx-title-row {
+        display: flex;
+        align-items: flex-start;
+    }
+    .bkx-title-row__text {
+        min-width: 0;
+        flex: 1 1 auto;
+    }
+    .bkx-title-row__text h2 { margin: 0; }
+    .bkx-back-mount {
+        position: absolute;
+        left: 0;
+        top: 0.1rem;
+        width: 0;
+        height: 28px;
+        overflow: visible;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    .bkx-back-mount:empty,
+    .bkx-back-mount:has(.bkx-back[hidden]) { display: none; }
+    .bkx-back {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: #94a3b8;
+        cursor: pointer;
+        transition: color 0.15s ease;
+        flex: 0 0 auto;
+    }
+    .bkx-back[hidden] { display: none !important; }
+    .bkx-back i { font-size: 0.72rem; opacity: 0.9; line-height: 1; }
+    .bkx-back:hover,
+    .bkx-back:focus-visible {
+        color: #0a2959;
+        outline: none;
+    }
+    .bkx-shell {
+        width: 100%;
+        min-width: 0;
+        margin-inline: auto;
+    }
     .bkx-card {
+        position: relative;
         background: #fff;
         border: 1px solid rgba(44, 54, 63, 0.08);
         border-radius: 20px;
         box-shadow: 0 16px 40px rgba(44, 54, 63, 0.06);
         padding: 26px 22px 22px;
+        min-width: 0;
+        max-width: 760px;
+        width: 100%;
+        box-sizing: border-box;
     }
     .bkx-pay-error {
         margin: 0 0 12px;
@@ -171,9 +365,307 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
         font-size: 14px;
         font-weight: 700;
     }
-    #stripe-embed-mount:not(:empty) { min-height: 480px; }
+    .bkx-pay-stage {
+        position: relative;
+        min-height: 480px;
+    }
+    #pay-loader {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        margin: 0;
+        padding: 24px 12px;
+        background: #fff;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    #pay-loader[hidden] {
+        display: none !important;
+    }
+    #stripe-embed-mount {
+        min-height: 480px;
+    }
     .bkx-screen { display: none; }
     .bkx-screen.is-on { display: block; }
+    .bkx-level-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 4px;
+    }
+    .bkx-level-head .bkx-title-row {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+    .bkx-level-head h2 { margin: 0; min-width: 0; }
+    .bkx-level-head .bkx-thin { margin-bottom: 12px; }
+    .bkx-level-head .bkx-hook {
+        margin: 0;
+        flex: 0 0 auto;
+        text-align: right;
+        color: #0a2959;
+        font-size: clamp(1.35rem, 3.2vw, 1.85rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+        white-space: nowrap;
+    }
+    @media (max-width: 560px) {
+        .bkx-level-head { flex-wrap: wrap; align-items: flex-end; }
+        .bkx-level-head .bkx-hook { width: 100%; text-align: right; font-size: 1.45rem; }
+    }
+    .bkx-pkg-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px 16px;
+        margin-bottom: 18px;
+    }
+    .bkx-pkg-head__left {
+        display: flex;
+        align-items: flex-start;
+        min-width: 0;
+        flex: 1 1 12rem;
+    }
+    .bkx-pkg-head__titles {
+        min-width: 0;
+    }
+    .bkx-pkg-head__titles h2 {
+        margin: 0;
+    }
+    .bkx-pkg-head__titles .bkx-lead {
+        margin: 6px 0 0;
+    }
+    .bkx-coupon-chip {
+        flex: 0 1 auto;
+        width: max-content;
+        min-width: min(300px, 100%);
+        max-width: min(420px, 100%);
+        margin: 0;
+        padding: 0;
+        border: 1.5px solid rgba(15, 118, 110, 0.22);
+        border-radius: 14px;
+        background:
+            linear-gradient(135deg, rgba(15, 118, 110, 0.08), rgba(12, 192, 223, 0.1));
+        box-shadow: 0 4px 14px rgba(15, 118, 110, 0.08);
+        transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+    .bkx-coupon-chip.is-applied {
+        border-color: rgba(12, 192, 223, 0.55);
+        background:
+            linear-gradient(135deg, rgba(15, 118, 110, 0.14), rgba(12, 192, 223, 0.18));
+        box-shadow: 0 4px 18px rgba(12, 192, 223, 0.2);
+    }
+    .bkx-coupon-chip__idle,
+    .bkx-coupon-chip__done {
+        display: flex;
+        align-items: center;
+        gap: 8px 12px;
+        padding: 8px 12px;
+        box-sizing: border-box;
+        min-width: 0;
+    }
+    .bkx-coupon-chip__idle[hidden],
+    .bkx-coupon-chip__done[hidden] {
+        display: none !important;
+    }
+    .bkx-coupon-chip__offer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        flex: 0 0 auto;
+        min-width: 0;
+    }
+    .bkx-coupon-chip__amt {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.15rem;
+        font-weight: 850;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        color: #0f766e;
+        white-space: nowrap;
+    }
+    .bkx-coupon-chip__meta {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        min-width: 0;
+        flex: 1 1 auto;
+    }
+    .bkx-coupon-chip__tag-row {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 4px 6px;
+        min-width: 0;
+    }
+    .bkx-coupon-chip__tag {
+        font-size: 0.62rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: #0b1f4d;
+        line-height: 1.2;
+    }
+    .bkx-coupon-chip__badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        padding: 1px 7px;
+        border-radius: 999px;
+        background: rgba(15, 118, 110, 0.14);
+        color: #0f766e;
+        font-size: 0.6rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        line-height: 1.35;
+        white-space: nowrap;
+    }
+    .bkx-coupon-chip__badge i {
+        font-size: 0.55rem;
+    }
+    .bkx-coupon-chip__title {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #334155;
+        line-height: 1.25;
+        white-space: nowrap;
+        overflow: visible;
+        text-overflow: clip;
+    }
+    .bkx-coupon-chip__urgency {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 3px 9px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #f97316, #ea580c);
+        color: #fff;
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        line-height: 1.3;
+        white-space: nowrap;
+        box-shadow: 0 2px 8px rgba(234, 88, 12, 0.35);
+    }
+    .bkx-coupon-chip__urgency i {
+        font-size: 0.62rem;
+        color: #fff;
+        flex: 0 0 auto;
+    }
+    .bkx-coupon-chip__btn {
+        flex: 0 0 auto;
+        margin: 0;
+        padding: 6px 11px;
+        border: 0;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #0f766e, #0cc0df);
+        color: #fff;
+        font: inherit;
+        font-size: 0.72rem;
+        font-weight: 750;
+        letter-spacing: 0.01em;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: filter 0.15s ease, transform 0.15s ease;
+    }
+    .bkx-coupon-chip__btn:hover,
+    .bkx-coupon-chip__btn:focus-visible {
+        filter: brightness(1.05);
+        outline: none;
+    }
+    .bkx-coupon-chip__btn--remove {
+        background: transparent;
+        color: #64748b;
+        border: 1px solid #cbd5e1;
+        box-sizing: border-box;
+        padding: 5px 11px;
+    }
+    .bkx-coupon-chip__btn--remove:hover,
+    .bkx-coupon-chip__btn--remove:focus-visible {
+        filter: none;
+        color: #0a2959;
+        border-color: #94a3b8;
+        background: #f8fafc;
+        outline: none;
+    }
+    @media (max-width: 720px) {
+        .bkx-pkg-head {
+            flex-wrap: wrap;
+            align-items: stretch;
+        }
+        .bkx-coupon-chip {
+            width: 100%;
+            min-width: 0;
+            max-width: none;
+            flex: 1 1 100%;
+        }
+        .bkx-coupon-chip__title {
+            white-space: normal;
+        }
+    }
+    .bkx-help {
+        margin: 18px 0 4px;
+    }
+    .bkx-pay-loader { margin: 8px 0 18px; }
+    .bkx-pay-bar {
+        height: 8px;
+        margin: 12px 0 16px;
+        border-radius: 99px;
+        background: #e2e8f0;
+        overflow: hidden;
+    }
+    .bkx-pay-bar span {
+        display: block;
+        height: 100%;
+        width: 8%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #0cc0df, #5ae0f0);
+        transition: width 0.45s ease;
+    }
+    .bkx-pay-checks {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 8px;
+    }
+    .bkx-pay-checks li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #94a3b8;
+        font-size: 0.92rem;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+    .bkx-pay-checks li::before {
+        content: '';
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 2px solid #cbd5e1;
+        background: #fff;
+        flex: 0 0 auto;
+    }
+    .bkx-pay-checks li.is-on {
+        color: #0a2959;
+    }
+    .bkx-pay-checks li.is-on::before {
+        border-color: #0cc0df;
+        background: #0cc0df;
+        box-shadow: inset 0 0 0 3px #fff;
+    }
+    .bkx-pay-checks li.is-done::before {
+        border-color: #0cc0df;
+        background: #0cc0df url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23fff' d='M4.7 9.2 1.8 6.3l1.1-1.1 1.8 1.8 4-4 1.1 1.1z'/%3E%3C/svg%3E") center / 12px no-repeat;
+        box-shadow: none;
+    }
     .bkx-card h2 {
         margin: 0;
         font-size: 1.55rem;
@@ -377,7 +869,6 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
         grid-template-columns: repeat(3, 1fr);
         gap: 10px;
     }
-    .bkx-pkgs--2 { grid-template-columns: 1fr 1fr; }
     .bkx-pack, .bkx-stay label {
         display: flex;
         flex-direction: column;
@@ -391,10 +882,14 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
     .bkx-stay label b { font-size: 1.45rem; line-height: 1; }
     .bkx-pkgs {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 16px;
         align-items: stretch;
         padding-top: 12px;
+        width: 100%;
+    }
+    .bkx-pkgs.bkx-pkgs--2 {
+        grid-template-columns: 1fr 1fr;
     }
     .bkx-pkg {
         position: relative;
@@ -433,7 +928,41 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
     .bkx-pkg.is-best { border-color: #0a2959; }
     .bkx-pkg.is-best .bkx-pkg__pick { background: #0a2959; color: #fff; }
     .bkx-pkg__sum { margin: 14px 0 0; font-size: 2.15rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; color: #0a2959; }
+    .bkx-pkg__sum .bkx-pkg__was {
+        display: inline-block;
+        margin-right: 0.35em;
+        color: #94a3b8;
+        font-size: 0.58em;
+        font-weight: 700;
+        text-decoration: line-through;
+        text-decoration-thickness: 2px;
+        vertical-align: baseline;
+    }
     .bkx-pkg__total { margin: 6px 0 0; color: #334155; font-size: 15px; font-weight: 650; }
+    .bkx-pkg__total .bkx-pkg__was {
+        margin-right: 0.35em;
+        color: #94a3b8;
+        font-weight: 650;
+        text-decoration: line-through;
+    }
+    .bkx-pkg__sum.is-tick,
+    .bkx-pkg__total.is-tick,
+    .bkx-pkg__save.is-tick {
+        animation: bkxPriceTick 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @keyframes bkxPriceTick {
+        0% { opacity: 0.25; transform: translateY(8px) scale(0.94); filter: blur(1px); }
+        55% { opacity: 1; transform: translateY(-2px) scale(1.03); filter: none; }
+        100% { opacity: 1; transform: none; filter: none; }
+    }
+    .bkx-pkg.is-coupon-flash {
+        animation: bkxPkgFlash 0.7s ease;
+    }
+    @keyframes bkxPkgFlash {
+        0% { box-shadow: 0 0 0 0 rgba(12, 192, 223, 0); }
+        35% { box-shadow: 0 0 0 4px rgba(12, 192, 223, 0.28); }
+        100% { box-shadow: 0 0 0 0 rgba(12, 192, 223, 0); }
+    }
     .bkx-pkg__save {
         margin: 0;
         width: fit-content;
@@ -475,57 +1004,247 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
     }
     .bkx-pkg.is-pop .bkx-pkg__pick { background: #ffd21f; color: #2c363f; }
     .bkx-pkg:has(input:checked) .bkx-pkg__pick { box-shadow: inset 0 0 0 2px #fff; }
-    .bkx-svcs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .bkx-panel {
+        position: relative;
+        margin: 0 0 14px;
+        padding: 14px 14px 12px;
+        border: 1.5px solid #e6edf2;
+        border-radius: 18px;
+        background: linear-gradient(180deg, #f8fcfd 0%, #fff 55%);
+    }
+    .bkx-panel__head {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+    .bkx-panel__icon {
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: rgba(12, 192, 223, 0.14);
+        color: #0a8fa6;
+        font-size: 0.95rem;
+    }
+    .bkx-panel__icon--amber {
+        background: rgba(255, 210, 31, 0.28);
+        color: #9a7b00;
+    }
+    .bkx-panel__titles { flex: 1 1 auto; min-width: 0; }
+    .bkx-panel__titles h3 {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: #0a2959;
+        letter-spacing: -0.02em;
+    }
+    .bkx-panel__titles p {
+        margin: 3px 0 0;
+        color: #64748b;
+        font-size: 0.78rem;
+        font-weight: 550;
+        line-height: 1.35;
+    }
+    .bkx-panel__head .bkx-info { position: static; flex: 0 0 auto; margin-top: 2px; }
+    .bkx-extras-pair {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin: 0 0 14px;
+        align-items: stretch;
+    }
+    .bkx-extras-pair .bkx-panel {
+        margin: 0;
+        height: 100%;
+        min-height: 160px;
+        padding: 12px 12px 10px;
+        box-sizing: border-box;
+    }
+    .bkx-extras-pair .bkx-panel__head { margin-bottom: 10px; }
+    .bkx-sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+    .bkx-select {
+        appearance: none;
+        width: 100%;
+        height: 46px;
+        padding: 0 2.4rem 0 14px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 12px;
+        background:
+            #fff
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%230a2959' d='M1.1 1.2 6 6.1l4.9-4.9 1.1 1.1L6 8.3 0 2.3z'/%3E%3C/svg%3E")
+            right 14px center / 12px no-repeat;
+        color: #0a2959;
+        font: inherit;
+        font-size: 0.92rem;
+        font-weight: 700;
+        line-height: 1.2;
+        cursor: pointer;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .bkx-select:hover { border-color: #0cc0df; }
+    .bkx-select:focus {
+        outline: none;
+        border-color: #0cc0df;
+        box-shadow: 0 0 0 3px rgba(12, 192, 223, 0.16);
+    }
+    .bkx-cert { margin: 0; padding: 0; border: 0; min-width: 0; }
+    .bkx-cert__choice {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
+    .bkx-cert__opt {
+        display: flex !important;
+        align-items: center;
+        gap: 8px;
+        flex: 0 0 auto;
+        margin: 0;
+        height: 46px;
+        padding: 0 12px;
+        border: 1.5px solid #e4ebf2;
+        border-radius: 12px;
+        background: #fff;
+        font-size: 0.86rem;
+        font-weight: 750;
+        color: #0a2959;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    }
+    .bkx-cert__opt input { position: absolute; opacity: 0; pointer-events: none; }
+    .bkx-cert__mark {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: #f1f5f9;
+        color: #64748b;
+        font-size: 0.7rem;
+        flex: 0 0 auto;
+    }
+    .bkx-cert__opt:has(input:checked) {
+        border-color: #0cc0df;
+        background: #f3fcfe;
+        box-shadow: 0 0 0 3px rgba(12, 192, 223, 0.16);
+    }
+    .bkx-cert__opt:has(input:checked) .bkx-cert__mark {
+        background: #0cc0df;
+        color: #fff;
+    }
+    #cert-exams {
+        margin: 0;
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+    #cert-exams[hidden] { display: none; }
+    #cert-exams .bkx-select {
+        height: 46px;
+        font-size: 0.86rem;
+        font-weight: 650;
+        padding-right: 2.2rem;
+    }
+    .bkx-course-line { margin: 0; }
+    .bkx-svcs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .bkx-svc[hidden] { display: none; }
     .bkx-svc {
         position: relative;
         display: grid;
-        grid-template-columns: 52px minmax(0, 1fr);
-        height: 72px;
+        grid-template-columns: 48px minmax(0, 1fr);
+        min-height: 76px;
+        gap: 0;
         border: 1.5px solid #e6edf2;
-        border-radius: 14px;
+        border-radius: 16px;
         background: #fff;
         overflow: hidden;
         cursor: pointer;
         color: #2c363f;
-        align-items: stretch;
+        align-items: center;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
     }
-    .bkx-svc__photo {
-        display: block;
-        width: 52px;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        background-color: #dbe7ee;
+    .bkx-svc:hover { border-color: #cfe8ef; }
+    .bkx-svc__emblem {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        margin-left: 10px;
+        border-radius: 14px;
+        background: rgba(12, 192, 223, 0.12);
+        color: #0a8fa6;
+        font-size: 1.05rem;
     }
+    .bkx-svc__emblem--home { background: rgba(12, 192, 223, 0.14); color: #0a8fa6; }
+    .bkx-svc__emblem--visa { background: rgba(10, 41, 89, 0.1); color: #0a2959; }
+    .bkx-svc__emblem--cafe { background: rgba(255, 210, 31, 0.28); color: #9a7b00; }
+    .bkx-svc__emblem--onboard { background: rgba(22, 163, 74, 0.12); color: #15803d; }
     .bkx-svc strong s { display: inline; margin-right: 5px; color: #ff3a3a; font-size: 0.72rem; font-weight: 700; letter-spacing: 0; }
     .bkx-svc__body {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 2px;
-        padding: 6px 26px 6px 8px;
+        gap: 3px;
+        padding: 10px 28px 10px 12px;
         min-width: 0;
-        background: #fff;
     }
     .bkx-svc b {
-        font-size: 0.78rem;
+        font-size: 0.82rem;
         font-weight: 800;
-        line-height: 1.2;
+        line-height: 1.25;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        color: #0a2959;
     }
     .bkx-svc strong { font-size: 0.92rem; font-weight: 800; color: #0a2959; letter-spacing: -0.02em; line-height: 1.1; }
-    .bkx-svc:has(input:checked) { border-color: #0cc0df; box-shadow: 0 0 0 3px rgba(12, 192, 223, 0.18); }
-    .bkx-svc .bkx-info { width: 20px; height: 20px; top: 6px; right: 6px; font-size: 0.6rem; }
-    .bkx-svc__tick {
-        position: absolute; top: 4px; left: 4px; width: 16px; height: 16px; border-radius: 50%;
-        border: 1.5px solid #fff; background: rgba(255,255,255,0.9); color: transparent;
-        display: grid; place-items: center; font-size: 10px; font-weight: 800;
+    .bkx-svc:has(input:checked) {
+        border-color: #0cc0df;
+        box-shadow: 0 0 0 3px rgba(12, 192, 223, 0.18);
+        background: #f7fcfd;
     }
-    .bkx-svc:has(input:checked) .bkx-svc__tick { background: #0cc0df; color: #fff; border-color: #0cc0df; }
+    .bkx-svc:has(input:checked) .bkx-svc__emblem {
+        background: #0cc0df;
+        color: #fff;
+    }
+    .bkx-svc .bkx-info { width: 20px; height: 20px; top: 8px; right: 8px; font-size: 0.6rem; }
+    .bkx-svc__tick {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 0;
+        background: #0a2959;
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-size: 10px;
+        font-weight: 800;
+        opacity: 0;
+        transform: scale(0.7);
+        transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+    .bkx-svc:has(input:checked) .bkx-svc__tick {
+        opacity: 1;
+        transform: scale(1);
+    }
     .bkx-warn {
         margin: 12px 0 0;
         padding: 10px 12px;
@@ -634,7 +1353,8 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
         font-size: 0.72rem;
     }
     .bkx-info:hover { background: #0cc0df; color: #fff; }
-    .bkx-screen[data-screen="special"] h2 { margin-bottom: 14px; }
+    .bkx-screen[data-screen="special"] .bkx-title-row { margin-bottom: 14px; }
+    .bkx-screen[data-screen="special"] .bkx-title-row h2 { margin: 0; }
     .bkx-switch {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -737,24 +1457,6 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
     .bkx-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; font-size: 0.82rem; font-weight: 700; color: #2c363f; }
     .bkx-field__row { display: flex; align-items: center; gap: 8px; }
     .bkx-field__row .bkx-info { position: static; }
-    .bkx-cert { margin: 0 0 12px; padding: 0; border: 0; }
-    .bkx-cert legend { padding: 0; font-size: 0.82rem; font-weight: 800; color: #0a2959; }
-    .bkx-cert__choice, #cert-exams { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
-    .bkx-cert__choice label, #cert-exams label {
-        display: inline-flex;
-        align-items: center;
-        width: auto;
-        gap: 0;
-        border: 1.5px solid #e4ebf2;
-        border-radius: 999px;
-        padding: 4px 10px;
-        font-size: 13px;
-        font-weight: 650;
-        line-height: 1.2;
-    }
-    .bkx-cert label:has(input:checked) { border-color: #0cc0df; background: #f3fcfe; }
-    #cert-exams[hidden] { display: none; }
-    .bkx-course-line { margin: 4px 0 0; color: #64748b; font-size: 13px; font-weight: 550; }
     .bkx-field input, .bkx-field select {
         height: 48px;
         border-radius: 12px;
@@ -926,7 +1628,9 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
     .st-powered { margin: 14px 0 0; text-align: center; color: #6d6e78; font-size: 12px; }
     .st-powered b { color: #635bff; font-weight: 700; letter-spacing: -0.03em; }
     @media (max-width: 720px) {
-        .bkx-programs, .bkx-pkgs, .bkx-split, .bkx-svcs, .bkx-cols, .bkx-sheet__top, .bkx-pair, .bkx-exams, .bkx-thanks__actions { grid-template-columns: 1fr; }
+        .bkx-programs, .bkx-pkgs, .bkx-split, .bkx-svcs, .bkx-cols, .bkx-sheet__top, .bkx-pair, .bkx-exams, .bkx-thanks__actions, .bkx-extras-pair { grid-template-columns: 1fr; }
+        .bkx-pkgs,
+        .bkx-pkgs.bkx-pkgs--2 { grid-template-columns: 1fr; width: 100%; }
         .bkx-kinds { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .bkx-switch { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .bkx-prices { grid-template-columns: 1fr; }
@@ -940,7 +1644,7 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
     }
 </style>
 
-<script is:inline define:vars={{ copy }}>
+<script is:inline define:vars={{ copy, campaignActive, campaignDiscountEur, campaignLabel }}>
 (() => {
     const t = copy;
     function fmt(s, map) {
@@ -950,9 +1654,10 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
         return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
     }
     const euro = (n) => new Intl.NumberFormat('de-DE').format(n) + ' €';
+    const PRICE = { flexMonth: 640, flexTotal: 640, visaMonth: 499, visaTotal: 1497, academicMonth: 469, academicCourse: 938 };
     const programs = [
-        { id: 'intensive', title: 'Intensive German', meta: t.intensive.meta, tag: t.intensive.tag, tone: 'cyan', kws: t.intensive.kws, price: '445', prefix: t.intensive.prefix, img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80', info: t.intensive.info, next: t.intensive.next },
-        { id: 'online', title: 'Online German', meta: t.online.meta, tag: t.online.tag, tone: 'blue', kws: t.online.kws, price: '445', prefix: t.online.prefix, img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80', info: t.online.info, next: t.online.next },
+        { id: 'intensive', title: 'Intensive German', meta: t.intensive.meta, tag: t.intensive.tag, tone: 'cyan', kws: t.intensive.kws, price: String(PRICE.academicMonth), prefix: t.intensive.prefix, img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80', info: t.intensive.info, next: t.intensive.next },
+        { id: 'online', title: 'Online German', meta: t.online.meta, tag: t.online.tag, tone: 'blue', kws: t.online.kws, price: String(PRICE.academicMonth), prefix: t.online.prefix, img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80', info: t.online.info, next: t.online.next },
         { id: 'exam', title: 'German Exams', meta: t.exam.meta, tag: t.exam.tag, tone: 'green', kws: t.exam.kws, price: '200', prefix: t.exam.prefix, img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=400&q=80', info: t.exam.info, next: t.exam.next },
         { id: 'special', title: t.specialProg.title, meta: t.specialProg.meta, tag: t.specialProg.tag, tone: 'orange', kws: t.specialProg.kws, price: '', prefix: '', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400&q=80', info: t.specialProg.info, next: t.specialProg.next }
     ];
@@ -968,13 +1673,14 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
     function halfRange(level, slots) {
         const start = CEFR.indexOf(level) * 2;
         const slice = HALVES.slice(start, start + slots);
-        if (slice.length < 2) return slice[0] || '';
-        return slice[0] + ' – ' + slice[slice.length - 1];
+        if (!slice.length) return '';
+        if (slice.length === 1) return slice[0];
+        return slice.join(', ');
     }
     function coursePacks(level) {
         const count = CEFR.length - CEFR.indexOf(level);
         const weeks = count * 8;
-        const price = count * 890;
+        const price = count * PRICE.academicCourse;
         const monthLine = (n) => fmt(t.perMonth, { money: euro(n) });
         const totalLine = (n) => fmt(t.totalUnder, { money: euro(n) });
         const fullRange = halfRange(level, count * 2);
@@ -982,8 +1688,8 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
             id: 'full',
             name: t.fullName,
             badge: t.bestBadge,
-            month: 445,
-            monthLabel: monthLine(445),
+            month: PRICE.academicMonth,
+            monthLabel: monthLine(PRICE.academicMonth),
             totalLabel: totalLine(price),
             meta: fullRange,
             rate: weeks + ' ' + t.weekWord,
@@ -995,12 +1701,12 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
         const four = {
             id: '4',
             name: t.fourName,
-            month: 600,
-            monthLabel: monthLine(600),
-            totalLabel: totalLine(600),
+            month: PRICE.flexMonth,
+            monthLabel: monthLine(PRICE.flexMonth),
+            totalLabel: totalLine(PRICE.flexTotal),
             meta: fourRange,
             rate: '4 ' + t.weekWord,
-            price: 600,
+            price: PRICE.flexTotal,
             weeks: 4,
             info: fmt(t.fourInfo, { range: fourRange })
         };
@@ -1010,13 +1716,13 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
             name: t.twelveName,
             badge: t.twelveBadge,
             rec: true,
-            month: 500,
-            monthLabel: monthLine(500),
-            totalLabel: totalLine(1500),
+            month: PRICE.visaMonth,
+            monthLabel: monthLine(PRICE.visaMonth),
+            totalLabel: totalLine(PRICE.visaTotal),
             save: t.saveLine,
             meta: twelveRange,
             rate: '12 ' + t.weekWord,
-            price: 1500,
+            price: PRICE.visaTotal,
             weeks: 12,
             info: fmt(t.twelveInfo, { range: twelveRange })
         };
@@ -1056,7 +1762,36 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
         ]}
     ];
 
-    const state = { program: '', level: '', exam: '', pack: null, stay: 'none', contact: false };
+    const state = { program: '', level: '', exam: '', pack: null, stay: 'none', contact: false, couponCode: '', couponEur: 0 };
+    function syncCouponChip() {
+        const chip = document.getElementById('pkg-coupon');
+        if (!chip) return;
+        const applied = state.couponEur > 0;
+        const idle = chip.querySelector('.bkx-coupon-chip__idle');
+        const done = chip.querySelector('.bkx-coupon-chip__done');
+        if (idle) idle.hidden = applied;
+        if (done) done.hidden = !applied;
+        chip.classList.toggle('is-applied', applied);
+    }
+    function setCampaignDiscount(on) {
+        if (on && campaignActive && Number(campaignDiscountEur) > 0) {
+            state.couponCode = campaignLabel || 'CAMPAIGN';
+            state.couponEur = Number(campaignDiscountEur);
+        } else {
+            state.couponCode = '';
+            state.couponEur = 0;
+        }
+        syncCouponChip();
+        if (state.level) paintPackages({ animate: !!on });
+    }
+    function couponDiscountFor(course) {
+        if (!(state.couponEur > 0) || state.contact) return 0;
+        const base = Math.max(0, Number(course) || 0);
+        return Math.min(state.couponEur, base);
+    }
+    syncCouponChip();
+    document.getElementById('pkg-coupon-apply')?.addEventListener('click', () => setCampaignDiscount(true));
+    document.getElementById('pkg-coupon-remove')?.addEventListener('click', () => setCampaignDiscount(false));
 
     function infoBtn(title, text) {
         return `<button type="button" class="bkx-info" data-info-title="${esc(title)}" data-info-desc="${esc(text)}" aria-label="${esc(t.info)}"><i class="fas fa-info"></i></button>`;
@@ -1151,13 +1886,13 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
     });
     document.getElementById('special-grid').addEventListener('change', chooseSpecial);
     document.getElementById('stay-grid').innerHTML = [
-        { id: 'acc', title: t.accTitle, price: '+100 €', lodging: true, photo: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80', info: t.accInfo },
-        { id: 'visa', title: t.visaTitle, price: '+80 €', lodging: false, photo: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=600&q=80', info: t.visaInfo },
-        { id: 'cafe', title: t.cafeTitle, price: t.cafePrice, lodging: false, checked: true, photo: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80', info: t.cafeInfo },
-        { id: 'onboard', title: t.onboardTitle, price: t.onboardPrice, lodging: false, photo: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80', info: t.onboardInfo }
+        { id: 'acc', title: t.accTitle, price: '+100 €', lodging: true, icon: 'fa-home', tone: 'home', info: t.accInfo },
+        { id: 'visa', title: t.visaTitle, price: '+80 €', lodging: false, icon: 'fa-passport', tone: 'visa', info: t.visaInfo },
+        { id: 'cafe', title: t.cafeTitle, price: t.cafePrice, lodging: false, checked: true, icon: 'fa-comments', tone: 'cafe', info: t.cafeInfo },
+        { id: 'onboard', title: t.onboardTitle, price: t.onboardPrice, lodging: false, icon: 'fa-handshake', tone: 'onboard', info: t.onboardInfo }
     ].map((p) => `<label class="bkx-svc" ${p.lodging ? 'data-svc="lodging"' : ''}>
         <input type="checkbox" name="svc-${p.id}" value="${p.id}" ${p.checked ? 'checked' : ''} />
-        <span class="bkx-svc__photo" style="background-image:url('${p.photo}')"></span>
+        <span class="bkx-svc__emblem bkx-svc__emblem--${p.tone}" aria-hidden="true"><i class="fas ${p.icon}"></i></span>
         <span class="bkx-svc__tick">✓</span>
         <span class="bkx-svc__body"><b>${p.title}</b><strong>${p.price}</strong></span>
         ${infoBtn(p.title, p.info)}
@@ -1176,15 +1911,42 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
     });
 
     const screenIndex = { program: 0, level: 1, examlevel: 1, packages: 2, exampack: 2, special: 2, extras: 3, summary: 4, stripe: 5, thanks: 5 };
-    function show(id) {
+    const screenHistory = [];
+    let currentScreen = 'program';
+    function syncBackBtn(id) {
+        const btn = document.getElementById('bkx-back');
+        if (!btn) return;
+        const hide = id === 'program' || id === 'thanks' || screenHistory.length === 0;
+        btn.hidden = hide;
+        const mount = document.querySelector('.bkx-screen[data-screen="' + id + '"] .bkx-back-mount');
+        if (mount && btn.parentElement !== mount) mount.appendChild(btn);
+    }
+    function show(id, opts) {
+        const push = !(opts && opts.replace);
+        if (push && currentScreen && currentScreen !== id) {
+            screenHistory.push(currentScreen);
+            if (screenHistory.length > 12) screenHistory.shift();
+        }
+        currentScreen = id;
         document.querySelectorAll('.bkx-screen').forEach((s) => s.classList.toggle('is-on', s.dataset.screen === id));
         const idx = screenIndex[id] ?? 0;
         const bar = document.getElementById('step-bar-wrap');
         document.getElementById('step-bar').style.width = (((idx + 1) / 6) * 100) + '%';
         bar.setAttribute('aria-valuenow', String(idx + 1));
         bar.setAttribute('aria-label', t.step + ' ' + (idx + 1) + ' / 6');
+        syncBackBtn(id);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+    function goBack() {
+        const prev = screenHistory.pop();
+        if (!prev) return;
+        if (prev === 'stripe') {
+            document.getElementById('pay-loader')?.setAttribute('hidden', '');
+            document.getElementById('stripe-embed-mount')?.replaceChildren();
+        }
+        show(prev, { replace: true });
+    }
+    document.getElementById('bkx-back')?.addEventListener('click', goBack);
     function selected(name) {
         return document.querySelector(`input[name="${name}"]:checked`);
     }
@@ -1226,23 +1988,68 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
         opts.push(t.certOther, t.certCampus);
         const box = document.getElementById('cert-exams');
         if (!box) return;
-        box.innerHTML = opts.map((name) => `<label><input type="radio" name="cert-exam" value="${esc(name)}" /> ${esc(name)}</label>`).join('');
+        const keep = (() => {
+            const prev = box.querySelector('select[name="cert-exam"]');
+            return prev && prev.value ? prev.value : '';
+        })();
+        box.innerHTML = `<label class="bkx-sr-only" for="cert-exam">${esc(t.certAsk)}</label>` +
+            `<select id="cert-exam" name="cert-exam" class="bkx-select">` +
+            opts.map((name) => `<option value="${esc(name)}"${keep === name ? ' selected' : ''}>${esc(name)}</option>`).join('') +
+            `</select>`;
         const yes = document.querySelector('input[name="cert"][value="yes"]');
         box.hidden = !(yes && yes.checked);
     }
     function certPick() {
         const yes = document.querySelector('input[name="cert"][value="yes"]');
         if (!yes || !yes.checked) return '';
-        const picked = document.querySelector('input[name="cert-exam"]:checked');
-        return picked ? picked.value : '';
+        const picked = document.querySelector('select[name="cert-exam"]');
+        return picked && picked.value ? picked.value : '';
+    }
+    function paintPackages({ animate } = {}) {
+        if (!state.level) return;
+        const list = coursePacks(state.level);
+        const grid = document.getElementById('pack-grid');
+        const keep = selected('pack') ? selected('pack').value : '';
+        grid.className = 'bkx-pkgs' + (list.length === 2 ? ' bkx-pkgs--2' : '');
+        grid.innerHTML = list.map((p) => {
+            const disc = couponDiscountFor(p.price);
+            if (!(disc > 0)) return packCard('pack', p);
+            const net = Math.max(0, p.price - disc);
+            const monthBase = Number(p.month) > 0 ? Number(p.month) : 0;
+            const monthNet = monthBase > 0 ? Math.max(0, monthBase - disc) : 0;
+            const monthLine = (n) => fmt(t.perMonth, { money: euro(n) });
+            return packCard('pack', {
+                ...p,
+                monthLabel: monthBase > 0
+                    ? `<span class="bkx-pkg__was">${euro(monthBase)}</span>${monthLine(monthNet)}`
+                    : `<span class="bkx-pkg__was">${euro(p.price)}</span>${euro(net)}`,
+                totalLabel: `<span class="bkx-pkg__was">${euro(p.price)}</span>${fmt(t.totalUnder, { money: euro(net) })}`,
+                save: [p.save, fmt(t.couponPackSave, { money: euro(disc) })].filter(Boolean).join(' · '),
+            });
+        }).join('');
+        if (keep) {
+            const input = grid.querySelector('input[value="' + keep + '"]');
+            if (input) input.checked = true;
+        }
+        if (animate) {
+            requestAnimationFrame(() => {
+                grid.querySelectorAll('.bkx-pkg').forEach((card) => {
+                    card.classList.remove('is-coupon-flash');
+                    void card.offsetWidth;
+                    card.classList.add('is-coupon-flash');
+                });
+                grid.querySelectorAll('.bkx-pkg__sum, .bkx-pkg__total, .bkx-pkg__save').forEach((el) => {
+                    el.classList.remove('is-tick');
+                    void el.offsetWidth;
+                    el.classList.add('is-tick');
+                });
+            });
+        }
     }
     document.getElementById('go-level').onclick = () => {
         state.level = selected('level').value;
-        const list = coursePacks(state.level);
-        const grid = document.getElementById('pack-grid');
-        grid.className = 'bkx-pkgs' + (list.length === 2 ? ' bkx-pkgs--2' : '');
-        grid.innerHTML = list.map((p) => packCard('pack', p)).join('');
         document.getElementById('pkg-lead').textContent = fmt(t.levelPicked, { level: state.level });
+        paintPackages();
         show('packages');
     };
     document.getElementById('pack-grid').addEventListener('change', () => {
@@ -1274,12 +2081,13 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
     }
     function paintSummary() {
         const course = state.pack ? state.pack.price : 0;
+        const disc = couponDiscountFor(course);
         const accOn = svcOn('svc-acc');
         const visaOn = svcOn('svc-visa');
         const onboardOn = svcOn('svc-onboard');
         const cafeOn = svcOn('svc-cafe');
         const extra = (accOn ? 100 : 0) + (visaOn ? 80 : 0);
-        const total = course + extra;
+        const total = Math.max(0, course - disc) + extra;
         const program = programs.find((p) => p.id === state.program) || {};
         const pace = state.program === 'online' ? t.paceOnline : (state.program === 'exam' ? t.paceExam : (state.program === 'special' ? t.paceSpecial : t.paceIntensive));
         const startDate = document.getElementById('start-date') ? document.getElementById('start-date').value : '';
@@ -1288,6 +2096,7 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
         const checks = [
             (state.level ? state.level + ' · ' : '') + packName,
             state.pack && state.pack.monthLabel ? state.pack.monthLabel : '',
+            disc > 0 ? fmt(t.couponCheck, { money: euro(disc) }) : '',
             fmt(t.startCheck, { date: startDate }),
             fmt(t.typeCheck, { pace }),
             courseFixed(),
@@ -1300,6 +2109,7 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
             ? [[t.courseLine, t.contactWord]]
             : [
                 [t.courseLine, euro(course)],
+                disc > 0 ? [t.couponLine, '−' + euro(disc)] : null,
                 accOn ? [t.accTitle, euro(100)] : null,
                 visaOn ? [t.visaTitle, euro(80)] : null,
                 onboardOn ? [t.onboardTitle, t.onboardPrice] : null,
@@ -1314,7 +2124,7 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
                         <p>${state.pack ? ((state.pack.name || state.pack.title) + ' · ' + state.pack.meta) : ''}</p>
                     </div>
                 </div>
-                <div class="bkx-sheet__price">${state.pack && state.pack.monthLabel ? `<span>${state.pack.monthLabel}</span>` : ''}<strong>${state.contact ? t.quote : euro(course)}</strong></div>
+                <div class="bkx-sheet__price">${state.pack && state.pack.monthLabel ? `<span>${state.pack.monthLabel}</span>` : ''}<strong>${state.contact ? t.quote : euro(total)}</strong></div>
                 <ul class="bkx-checks">${checks.map((c) => `<li><i>✓</i>${c}</li>`).join('')}</ul>
             </div>
             <div class="bkx-sheet">
@@ -1332,22 +2142,24 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
     }
     function buildPayPayload() {
         const course = state.pack ? Number(state.pack.price) || 0 : 0;
+        const disc = couponDiscountFor(course);
+        const courseNet = Math.max(0, course - disc);
         const accOn = svcOn('svc-acc');
         const visaOn = svcOn('svc-visa');
         const onboardOn = svcOn('svc-onboard');
         const cafeOn = svcOn('svc-cafe');
         const extra = (accOn ? 100 : 0) + (visaOn ? 80 : 0);
-        const totalCents = Math.round((course + extra) * 100);
+        const totalCents = Math.round((courseNet + extra) * 100);
         const program = programs.find((p) => p.id === state.program) || {};
         const packName = state.pack ? ((state.pack.name || state.pack.title) + (state.pack.meta ? ' · ' + state.pack.meta : '')) : '';
         const pace = state.program === 'online' ? t.paceOnline : (state.program === 'exam' ? t.paceExam : (state.program === 'special' ? t.paceSpecial : t.paceIntensive));
         const startDate = document.getElementById('start-date') ? document.getElementById('start-date').value : '';
         const items = [];
-        if (course > 0) {
+        if (courseNet > 0) {
             items.push({
                 productKey: ADJUST_KEY,
                 name: packName || 'Campus German paket',
-                amountCents: Math.round(course * 100),
+                amountCents: Math.round(courseNet * 100),
                 quantity: 1,
                 weeks: state.pack.weeks || 0,
                 useCustomAmount: true,
@@ -1393,6 +2205,7 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
                 onboarding: onboardOn ? 'yes' : 'no',
                 speakcafeMembership: cafeOn ? 'yes' : 'no',
             },
+            coupon: disc > 0 ? { code: state.couponCode, discountEur: disc } : null,
             location: { bremenResident: 'no', bremenChangesTotal: false },
             price: {
                 total: money,
@@ -1403,6 +2216,7 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
                 remainingCents: 0,
                 depositEur: 0,
                 registrationFeeEur: 0,
+                couponDiscountEur: disc,
             },
             stripeLineItems: items,
             stripePricing: {
@@ -1451,24 +2265,136 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
     let stripeEmbed = null;
     async function mountStripe(clientSecret, publishableKey) {
         if (!publishableKey) throw new Error(t.noKey);
+        const mountEl = document.getElementById('stripe-embed-mount');
+        if (mountEl) {
+            // Stripe measures container size on mount — keep real dimensions
+            mountEl.style.minHeight = '480px';
+        }
         const StripeCtor = await loadStripeJs();
-        if (stripeEmbed && stripeEmbed.destroy) stripeEmbed.destroy();
+        if (stripeEmbed && stripeEmbed.destroy) {
+            try { stripeEmbed.destroy(); } catch (_) {}
+            stripeEmbed = null;
+        }
         const stripe = StripeCtor(publishableKey);
         const checkout = await stripe.initEmbeddedCheckout({ fetchClientSecret: async () => clientSecret });
         checkout.mount('#stripe-embed-mount');
         stripeEmbed = checkout;
+        // Help Stripe reflow after overlay layout
+        window.dispatchEvent(new Event('resize'));
     }
     function showPayError(message) {
         const errEl = document.getElementById('pay-error');
+        const loader = document.getElementById('pay-loader');
+        const stage = document.getElementById('pay-stage');
+        if (loader) loader.hidden = true;
+        if (stage) stage.classList.remove('is-loading');
         errEl.hidden = false;
         errEl.textContent = message;
-        document.getElementById('pay-status').textContent = '';
+        const status = document.getElementById('pay-status');
+        if (status) status.textContent = '';
+    }
+    function startPayLoader() {
+        const loader = document.getElementById('pay-loader');
+        const fill = document.getElementById('pay-bar-fill');
+        const status = document.getElementById('pay-status');
+        const list = document.getElementById('pay-checks');
+        const stage = document.getElementById('pay-stage');
+        if (!loader || !fill || !list) return async () => {};
+        const hasCoupon = state.couponEur > 0;
+        const labels = [t.payCheck1];
+        if (hasCoupon) labels.push(fmt(t.payCheckCoupon, { money: euro(state.couponEur) }));
+        [
+            { key: 'svc-acc', title: t.accTitle },
+            { key: 'svc-visa', title: t.visaTitle },
+            { key: 'svc-cafe', title: t.cafeTitle },
+            { key: 'svc-onboard', title: t.onboardTitle },
+        ].forEach((svc) => {
+            if (svcOn(svc.key)) labels.push(fmt(t.payCheckService, { name: svc.title }));
+        });
+        labels.push(t.payCheck2, t.payCheck3);
+        list.innerHTML = labels.map((label, i) => `<li data-pay-step="${i}">${label}</li>`).join('');
+        const checks = Array.from(list.querySelectorAll('[data-pay-step]'));
+        const lastIdx = Math.max(0, checks.length - 1);
+        const stepSpan = lastIdx > 0 ? Math.floor(70 / lastIdx) : 70;
+        const tickMs = checks.length > 5 ? 360 : 480;
+        if (stage) stage.classList.add('is-loading');
+        loader.hidden = false;
+        if (status) status.textContent = t.payPreparing;
+        fill.style.width = '10%';
+        let step = 0;
+        let ready = false;
+        const paintStep = () => {
+            checks.forEach((li, i) => {
+                li.classList.toggle('is-on', i === step || (ready && i <= step));
+                li.classList.toggle('is-done', i < step || ready);
+            });
+            if (ready) {
+                fill.style.width = '100%';
+                return;
+            }
+            const atHold = step >= lastIdx;
+            fill.style.width = atHold ? '88%' : String(12 + step * stepSpan) + '%';
+        };
+        const advance = () => {
+            if (ready) return;
+            if (step < lastIdx) step += 1;
+            paintStep();
+        };
+        paintStep();
+        const timer = setInterval(advance, tickMs);
+        return async () => {
+            ready = true;
+            clearInterval(timer);
+            step = lastIdx;
+            paintStep();
+            checks.forEach((li) => li.classList.add('is-on', 'is-done'));
+            fill.style.width = '100%';
+            await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+            loader.hidden = true;
+            if (stage) stage.classList.remove('is-loading');
+            window.dispatchEvent(new Event('resize'));
+        };
+    }
+    function isStripeMountReady(el) {
+        if (!el) return false;
+        const iframe = el.querySelector('iframe');
+        if (iframe) {
+            const h = iframe.offsetHeight || iframe.getBoundingClientRect().height;
+            if (h > 40) return true;
+        }
+        return el.childElementCount > 0 && (el.offsetHeight > 80 || el.scrollHeight > 80);
+    }
+    function waitForStripeMount(timeoutMs = 20000) {
+        const el = document.getElementById('stripe-embed-mount');
+        if (!el) return Promise.reject(new Error(t.noSession));
+        if (isStripeMountReady(el)) return Promise.resolve();
+        return new Promise((resolve, reject) => {
+            let done = false;
+            const finish = (ok) => {
+                if (done) return;
+                done = true;
+                obs.disconnect();
+                clearInterval(poll);
+                clearTimeout(timer);
+                if (ok) resolve();
+                else reject(new Error(t.noSession));
+            };
+            const obs = new MutationObserver(() => {
+                if (isStripeMountReady(el)) finish(true);
+            });
+            obs.observe(el, { childList: true, subtree: true, attributes: true });
+            const poll = setInterval(() => {
+                if (isStripeMountReady(el)) finish(true);
+            }, 250);
+            const timer = setTimeout(() => finish(isStripeMountReady(el)), timeoutMs);
+        });
     }
     async function startPay() {
         document.getElementById('pay-error').hidden = true;
-        document.getElementById('pay-status').textContent = t.payPreparing;
-        document.getElementById('stripe-embed-mount').replaceChildren();
+        const mountEl = document.getElementById('stripe-embed-mount');
+        mountEl.replaceChildren();
         show('stripe');
+        const finishLoader = startPayLoader();
         let payload;
         try { payload = buildPayPayload(); }
         catch (error) { showPayError(error.message || t.amountFail); return; }
@@ -1478,10 +2404,14 @@ const startDates = getFirstMondayStartDateOptions(pageLang, 8);
             const checkout = await requestCheckout(payload);
             if (checkout.mode === 'embedded') {
                 await mountStripe(checkout.clientSecret, checkout.publishableKey);
-                document.getElementById('pay-status').textContent = fmt(t.stripeNote, { money: payload.price.total });
+                await waitForStripeMount();
+                await finishLoader();
+                const status = document.getElementById('pay-status');
+                if (status) status.textContent = fmt(t.stripeNote, { money: payload.price.total });
                 return;
             }
             if (checkout.mode === 'hosted' && checkout.checkoutUrl) {
+                await finishLoader();
                 window.location.assign(checkout.checkoutUrl);
                 return;
             }
