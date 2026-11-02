@@ -48,27 +48,31 @@ const t = {
             subtitle: "We are with you on your German learning journey with our experienced and expert instructors. Our team, consisting of professionals who specialize in their own fields and make a difference with their student-oriented approaches, not only teach languages but also guide you to achieve your education and career goals in Germany.",
             members: [
                 {
-                    name: "Education Coordinators",
-                    role: "Course Programs",
-                    description: "Our expert team that designs and continuously develops our course programs offers an effective learning experience suitable for every level. By blending modern teaching methods with traditional approaches, we ensure our students reach their goals in the shortest time. Each program is continuously updated in line with student feedback and academic research.",
-                    skills: ["Program Development", "Educational Technologies", "Quality Control"]
+                    name: "Akman",
+                    role: "Education Coordinator",
+                    image: "/images/team/akman.jpg",
+                    description: "Akman designs and refines our course programs so every level has a clear, effective learning path. He blends modern teaching methods with proven approaches and keeps programs updated from student feedback and academic insight.",
+                    skills: ["Program Development", "Curriculum Design", "Quality Control"]
                 },
                 {
-                    name: "German Instructors",
-                    role: "Language Education",
-                    description: "Our experienced instructors, who are native German speakers and know Turkish, improve both your grammar and speaking skills. Each of our instructors has received academic training in German teaching and are professionals with years of experience. Understanding cultural differences, we provide support in both language and cultural integration.",
-                    skills: ["A1-C2 Levels", "Conversation Practice", "Exam Preparation"]
+                    name: "Elif",
+                    role: "English, German",
+                    image: "/images/team/elif.jpg",
+                    description: "Elif supports learners across levels with clear explanations, conversation practice, and exam-focused guidance. She helps students build confident German skills for study and everyday life.",
+                    skills: ["A1–C2 Levels", "Conversation Practice", "Exam Preparation"]
                 },
                 {
-                    name: "Student Advisors",
-                    role: "Support Services",
-                    description: "Our advisor team, who are with you in any problem you encounter during your course process, provides continuous support for your success. By preparing personal learning plans, we keep your motivation high and help you focus on your goals. We also provide guidance on education and career opportunities in Germany.",
-                    skills: ["Personal Counseling", "Progress Tracking", "Motivation"]
+                    name: "Lara",
+                    role: "Spanish, English",
+                    image: "/images/team/lara.jpg",
+                    description: "Lara accompanies students throughout their course journey with personal learning plans and steady motivation. She also guides learners on education and career opportunities in Germany.",
+                    skills: ["Student Advising", "Progress Tracking", "Motivation"]
                 },
                 {
-                    name: "Technology Team",
-                    role: "Online Platform",
-                    description: "Our technology team, which develops and continuously improves our online education platform, enriches your learning experience with modern tools. We bring together the power of technology with education through AI-supported learning tools, interactive course materials, and personalized learning paths.",
+                    name: "Emir",
+                    role: "Turkish",
+                    image: "/images/team/emir.jpg",
+                    description: "Emir develops and improves our online learning platform so students enjoy a smooth, modern experience. He focuses on reliable tools, technical support, and continuous product improvements.",
                     skills: ["Platform Development", "Technical Support", "Innovation"]
                 }
             ]
@@ -167,7 +171,7 @@ const translations = t[lang as keyof typeof t];
                 {translations.team.members.map((member) => (
                     <div class="team-card">
                         <div class="team-avatar">
-                            <img src={`https://images.unsplash.com/photo-${member.name === "Education Coordinators" ? "1507003211169-0a1dd7228f2d" : member.name === "German Instructors" ? "1494790108755-2616b612b786" : member.name === "Student Advisors" ? "1472099645785-5658abf4ff4e" : "1519085360753-af0119f7cbe7"}?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80`} alt={member.name} class="team-photo">
+                            <img src={member.image} alt={member.name} class="team-photo">
                         </div>
                         <h3 class="team-name">{member.name}</h3>
                         <p class="team-role">{member.role}</p>

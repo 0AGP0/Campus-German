@@ -48,27 +48,31 @@ const t = {
             subtitle: "Estamos con usted en su viaje de aprendizaje de alemán con nuestros instructores experimentados y expertos. Nuestro equipo, formado por profesionales que se especializan en sus propios campos y marcan la diferencia con sus enfoques orientados al estudiante, no solo enseña idiomas sino que también lo guía para lograr sus objetivos educativos y profesionales en Alemania.",
             members: [
                 {
-                    name: "Coordinadores de Educación",
-                    role: "Programas de Cursos",
-                    description: "Nuestro equipo experto que diseña y desarrolla continuamente nuestros programas de cursos ofrece una experiencia de aprendizaje efectiva adecuada para todos los niveles. Al combinar métodos de enseñanza modernos con enfoques tradicionales, aseguramos que nuestros estudiantes alcancen sus objetivos en el menor tiempo posible. Cada programa se actualiza continuamente según los comentarios de los estudiantes y la investigación académica.",
-                    skills: ["Desarrollo de Programas", "Tecnologías Educativas", "Control de Calidad"]
+                    name: "Akman",
+                    role: "Coordinador de Educación",
+                    image: "/images/team/akman.jpg",
+                    description: "Akman diseña y mejora nuestros programas de cursos para que cada nivel tenga un camino de aprendizaje claro y efectivo. Combina métodos modernos con enfoques contrastados y actualiza los programas con el feedback de los estudiantes.",
+                    skills: ["Desarrollo de Programas", "Diseño Curricular", "Control de Calidad"]
                 },
                 {
-                    name: "Instructores de Alemán",
-                    role: "Educación de Idiomas",
-                    description: "Nuestros instructores experimentados, que son hablantes nativos de alemán y conocen turco, mejoran tanto sus habilidades gramaticales como de conversación. Cada uno de nuestros instructores ha recibido capacitación académica en enseñanza de alemán y son profesionales con años de experiencia. Comprendiendo las diferencias culturales, proporcionamos apoyo tanto en idioma como en integración cultural.",
-                    skills: ["Niveles A1-C2", "Práctica de Conversación", "Preparación de Exámenes"]
+                    name: "Elif",
+                    role: "Inglés, Alemán",
+                    image: "/images/team/elif.jpg",
+                    description: "Elif acompaña a los estudiantes en todos los niveles con explicaciones claras, práctica de conversación y orientación orientada a exámenes. Les ayuda a ganar confianza en alemán para los estudios y la vida diaria.",
+                    skills: ["Niveles A1–C2", "Práctica de Conversación", "Preparación de Exámenes"]
                 },
                 {
-                    name: "Asesores Estudiantiles",
-                    role: "Servicios de Apoyo",
-                    description: "Nuestro equipo de asesores, que está con usted en cualquier problema que encuentre durante su proceso de curso, proporciona apoyo continuo para su éxito. Al preparar planes de aprendizaje personalizados, mantenemos su motivación alta y lo ayudamos a enfocarse en sus objetivos. También proporcionamos orientación sobre oportunidades educativas y profesionales en Alemania.",
-                    skills: ["Asesoramiento Personal", "Seguimiento del Progreso", "Motivación"]
+                    name: "Lara",
+                    role: "Español, Inglés",
+                    image: "/images/team/lara.jpg",
+                    description: "Lara acompaña a los estudiantes durante su curso con planes de aprendizaje personales y motivación constante. También orienta sobre oportunidades educativas y profesionales en Alemania.",
+                    skills: ["Asesoramiento", "Seguimiento del Progreso", "Motivación"]
                 },
                 {
-                    name: "Equipo de Tecnología",
-                    role: "Plataforma Online",
-                    description: "Nuestro equipo de tecnología, que desarrolla y mejora continuamente nuestra plataforma de educación online, enriquece su experiencia de aprendizaje con herramientas modernas. Reunimos el poder de la tecnología con la educación a través de herramientas de aprendizaje asistidas por IA, materiales de curso interactivos y rutas de aprendizaje personalizadas.",
+                    name: "Emir",
+                    role: "Turco",
+                    image: "/images/team/emir.jpg",
+                    description: "Emir desarrolla y mejora nuestra plataforma de aprendizaje online para una experiencia moderna y fluida. Se centra en herramientas fiables, soporte técnico y mejoras continuas del producto.",
                     skills: ["Desarrollo de Plataforma", "Soporte Técnico", "Innovación"]
                 }
             ]
@@ -167,7 +171,7 @@ const translations = t[lang as keyof typeof t];
                 {translations.team.members.map((member) => (
                     <div class="team-card">
                         <div class="team-avatar">
-                            <img src={`https://images.unsplash.com/photo-${member.name === "Coordinadores de Educación" ? "1507003211169-0a1dd7228f2d" : member.name === "Instructores de Alemán" ? "1494790108755-2616b612b786" : member.name === "Asesores Estudiantiles" ? "1472099645785-5658abf4ff4e" : "1519085360753-af0119f7cbe7"}?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80`} alt={member.name} class="team-photo">
+                            <img src={member.image} alt={member.name} class="team-photo">
                         </div>
                         <h3 class="team-name">{member.name}</h3>
                         <p class="team-role">{member.role}</p>
